@@ -462,31 +462,31 @@
                 </div>
 
                 <!-- Redes sociais -->
-                @if (isset($contact) && 
-                $contact->link_insta <> null ||
-                $contact->link_face <> null ||
-                $contact->link_tik_tok <> null)
-                    
-                @endif
-                <div class="col-lg-2 text-lg-end">
-                    <div class="d-flex gap-3 justify-content-lg-end">
-                        @if ($contact->link_insta <> null)                            
-                            <a href="{{$contact->link_insta}}" target="_blank" rel="noopener noreferrer" class="text-white fs-5">
-                                <i class="bi bi-instagram"></i>
-                            </a>
-                        @endif
-                        @if ($contact->link_face <> null)                            
-                            <a href="{{$contact->link_face}}" target="_blank" rel="noopener noreferrer" class="text-white fs-5">
-                                <i class="bi bi-facebook"></i>
-                            </a>
-                        @endif
-                        @if ($contact->link_tik_tok <> null)                            
-                            <a href="{{$contact->link_tik_tok}}" target="_blank" rel="noopener noreferrer" class="text-white fs-5">
-                                <i class="bi bi-linkedin"></i>
-                            </a>
-                        @endif
+                @if (isset($contact) && (
+                $contact->link_insta ||
+                $contact->link_face ||
+                $contact->link_tik_tok
+                ))                    
+                    <div class="col-lg-2 text-lg-end">
+                        <div class="d-flex gap-3 justify-content-lg-end">
+                            @if ($contact->link_insta <> null)                            
+                                <a href="{{$contact->link_insta}}" target="_blank" rel="noopener noreferrer" class="text-white fs-5">
+                                    <i class="bi bi-instagram"></i>
+                                </a>
+                            @endif
+                            @if ($contact->link_face <> null)                            
+                                <a href="{{$contact->link_face}}" target="_blank" rel="noopener noreferrer" class="text-white fs-5">
+                                    <i class="bi bi-facebook"></i>
+                                </a>
+                            @endif
+                            @if ($contact->link_tik_tok <> null)                            
+                                <a href="{{$contact->link_tik_tok}}" target="_blank" rel="noopener noreferrer" class="text-white fs-5">
+                                    <i class="bi bi-linkedin"></i>
+                                </a>
+                            @endif
+                        </div>
                     </div>
-                </div>
+                @endif
 
             </div>
 
