@@ -134,7 +134,7 @@
 <body>
     <div id="organization" hidden></div>
 
-    @include('client/includes/lgpd/lgpd')
+    @include('client/themes/petshop/tp-01/includes/lgpd/lgpd')
 
      @if (isset($contact) && $contact->phone_one <> null)
         @php

@@ -1,4 +1,4 @@
-@extends('client.core.client')
+@extends('client.themes.petshop.tp-01.core.client')
 @section('content')
 <section class="hero">
   <div class="swiper main-swiper">
