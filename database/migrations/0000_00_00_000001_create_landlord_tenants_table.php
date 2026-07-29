@@ -18,6 +18,10 @@ return new class extends Migration
             $table->string('domain')->unique();
             $table->boolean('active')->default(true);
             $table->string('database')->nullable();
+            $table->foreignId('template_theme_id')
+            ->nullable()
+            ->constrained('template_themes')
+            ->nullOnDelete();
             $table->timestamps();
         });
     }

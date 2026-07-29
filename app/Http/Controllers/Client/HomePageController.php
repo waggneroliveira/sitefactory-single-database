@@ -21,11 +21,12 @@ use App\Models\Slide;
 use App\Models\Statute;
 use App\Models\Topic;
 use App\Models\Video;
+use App\Services\ThemeManager;
 use Carbon\Carbon;
 
 class HomePageController extends Controller
 {
-    public function index()
+    public function index(ThemeManager $theme)
     {
         $blogSuperHighlights = Blog::whereHas('category', function($active){
             $active->where('active', 1);
@@ -149,8 +150,8 @@ class HomePageController extends Controller
         ->orderBy('date', 'asc')
         ->get();
         $popUp = PopUp::active()->first();
-        
-        return view('client.themes.petshop.tp-01.blades.index', compact(
+
+        return view($theme->view('index'), compact(
             'sessaoFaq', 
             'faqs', 
             'depoiments', 
@@ -175,6 +176,7 @@ class HomePageController extends Controller
             'productCategorieHighlights', 
             'productCategories', 
             'products', 
+            'theme', 
             'blogNoBairros')
         );
     }
