@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('topics', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->constrained();
             $table->string('path_image')->nullable();
             $table->string('title')->nullable();
             $table->text('link')->nullable();

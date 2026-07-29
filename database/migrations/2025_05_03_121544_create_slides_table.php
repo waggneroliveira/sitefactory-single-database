@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('slides', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->constrained();
             $table->string('title')->nullable();
             $table->string('btn_title')->nullable();
             $table->string('link')->nullable();

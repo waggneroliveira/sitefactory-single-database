@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('depoiments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->constrained();
             $table->string('name')->nullable();
             $table->string('function')->nullable();
             $table->string('path_image')->nullable();

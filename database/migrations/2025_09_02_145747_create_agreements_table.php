@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('agreements', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->constrained();
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->string('path_image')->nullable();

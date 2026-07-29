@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('unionizeds', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->constrained();
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->boolean('active')->default(0);

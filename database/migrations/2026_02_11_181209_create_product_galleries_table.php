@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('product_galleries', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->constrained();
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->text('file')->nullable();
             $table->boolean('active')->default(1);

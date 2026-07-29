@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('pop_ups', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->constrained();
             $table->string('path_image')->nullable();
             $table->string('link')->nullable();
             $table->boolean('active')->default(0);

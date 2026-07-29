@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('form_indices', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->foreignId('tenant_id')->constrained();
             $table->string('email');
             $table->string('phone');
             $table->string('subject')->nullable();

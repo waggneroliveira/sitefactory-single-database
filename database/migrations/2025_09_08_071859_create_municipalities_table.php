@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('municipalities', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->constrained();
             $table->foreignId('regional_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->string('slug');

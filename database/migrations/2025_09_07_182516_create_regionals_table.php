@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('regionals', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->constrained();
             $table->string('title');
             $table->string('slug');
             $table->boolean('active')->default(0);

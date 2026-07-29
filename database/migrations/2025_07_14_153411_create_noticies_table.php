@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('noticies', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->constrained();
             $table->string('title');
             $table->date('date');
             $table->boolean('active')->default(0);

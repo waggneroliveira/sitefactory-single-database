@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('download_fichas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->constrained();
             $table->string('name');
             $table->string('cnpj');
             $table->string('phone');

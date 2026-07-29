@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('statutes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->constrained();
             $table->string('title')->nullable();
             $table->string('subtitle')->nullable();
             $table->string('phone')->nullable();

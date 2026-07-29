@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->constrained();
             $table->string('name_section')->nullable();
             $table->string('name_section_social_media')->nullable();
             $table->string('mention')->nullable();

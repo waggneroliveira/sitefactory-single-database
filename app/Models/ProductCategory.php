@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Product;
 use App\Services\ActivityLogService;
+use App\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -12,7 +13,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class ProductCategory extends Model
 {
-    use Notifiable, HasFactory, LogsActivity;
+    use Notifiable, HasFactory, LogsActivity, BelongsToTenant;
     
     protected $fillable = [
         'title',

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->constrained();
             $table->text('link')->nullable();
             $table->string('path_image')->nullable();
             $table->string('path_image_mobile')->nullable();

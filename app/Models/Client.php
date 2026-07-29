@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
-use Spatie\Activitylog\LogOptions;
-use App\Services\ActivityLogService;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
-use Spatie\Activitylog\Traits\LogsActivity;
 use App\Notifications\ClientResetPasswordNotification;
+use App\Services\ActivityLogService;
+use App\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Client extends Authenticatable
 {
-    use Notifiable, HasFactory, LogsActivity;
+    use Notifiable, HasFactory, LogsActivity, BelongsToTenant;
     
     protected $fillable = [
         'name',

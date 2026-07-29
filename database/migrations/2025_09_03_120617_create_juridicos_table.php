@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('juridicos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->constrained();
             $table->enum('legal', ['leis', 'decretos', 'portaria'])->nullable();
             $table->enum('region', ['nacional', 'municipal'])->nullable();
             $table->string('title')->nullable();

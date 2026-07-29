@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('faqs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->constrained();
             $table->string('question')->nullable();
             $table->text('answer')->nullable();
             $table->integer('sorting')->default(0);

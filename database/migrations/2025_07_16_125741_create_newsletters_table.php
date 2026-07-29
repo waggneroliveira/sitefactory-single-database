@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('newsletters', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->constrained();
             $table->string('email');
             $table->boolean('term_privacy');
             $table->timestamps();

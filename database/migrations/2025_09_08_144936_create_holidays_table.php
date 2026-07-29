@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('holidays', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->constrained();
             $table->date('date')->nullable();
             $table->string('name')->nullable();
             $table->timestamps();
