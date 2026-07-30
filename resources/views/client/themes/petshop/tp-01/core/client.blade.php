@@ -59,10 +59,11 @@
 
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <link href="{{ asset('build/client/css/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link rel="preload" href="{{ asset('build/client/css/bootstrap-icons/bootstrap-icons.css') }}" as="style" onload="this.rel='stylesheet'">
-    <link href="{{ asset('build/client/css/style.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('build/client/css/responsivo.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('build/client/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="preload" href="{{ asset('build/client/bootstrap-icons/bootstrap-icons.css') }}" as="style" onload="this.rel='stylesheet'">
+    <link href="{{ asset('build/client/themes/petshop/tp-01/css/style.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('build/client/themes/petshop/tp-01/css/responsivo.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('build/client/css/default.css') }}" rel="stylesheet" type="text/css" />
 
     <script type=application/ld+json>
         {
@@ -525,9 +526,9 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('build/client/css/bootstrap/js/bootstrap.bundle.js') }}"></script>
+    <script src="{{ asset('build/client/bootstrap/js/bootstrap.bundle.js') }}"></script>
     <script src="{{ asset('build/client/lgpd/script.js') }}"></script>
-    <script src="{{ asset('build/client/js/default.js') }}"></script>
+    <script src="{{ asset('build/client/themes/petshop/tp-01/default.js') }}"></script>
 
     {{-- Modais alert --}}
     <script>

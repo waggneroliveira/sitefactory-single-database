@@ -16,25 +16,21 @@ export default defineConfig({
                     dest: 'client'
                 },
                 {
-                    src: 'resources/assets/client/css/',
+                    src: 'resources/assets/client/themes/',
                     dest: 'client'
                 },
                 {
-                    src: 'resources/assets/client/css/bootstrap',
+                    src: 'resources/assets/client/bootstrap',
                     dest: 'client'
                 },
                 {
-                    src: 'resources/assets/client/css/bootstrap-icons',
+                    src: 'resources/assets/client/bootstrap-icons',
                     dest: 'client'
-                },
+                },              
                 {
-                    src: 'resources/assets/client/images',
+                    src: 'resources/assets/client/css',
                     dest: 'client'
-                },                
-                {
-                    src: 'resources/assets/client/js/',
-                    dest: 'client'
-                },                
+                },              
                 {
                     src: 'resources/assets/admin/css',
                     dest: 'admin'

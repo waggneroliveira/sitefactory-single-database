@@ -74,6 +74,10 @@ Route::middleware([AuthClientMiddleware::class])->group(function () {
     Route::get('logout', [AuthClientController::class, 'logout'])->name('client.user.logout');
 });
 
+Route::get('/imovel', function () {
+    return view('client.themes.corretora.tp-01.blades.imovel');
+})->name('imovel');
+
 Route::get('contato', [ContactPageController::class, 'index'])
 ->name('contact');
 Route::post('send-contact', [FormIndexController::class, 'store'])->name('send-contact');
