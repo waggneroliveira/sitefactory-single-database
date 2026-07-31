@@ -16,7 +16,7 @@ class DashboardController extends Controller
         $settingTheme = (new SettingThemeRepository())->settingTheme();
         
         if (isset($user)) {
-            return view('admin.dashboard', compact('settingTheme'));
+            return view('admin.dashboard', compact('user', 'settingTheme'));
         }
         return redirect()->route('admin.dashboard.painel');
     }
