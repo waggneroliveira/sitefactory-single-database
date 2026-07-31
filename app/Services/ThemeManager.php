@@ -15,7 +15,7 @@ class ThemeManager
     {
         $path = Tenant::current()?->templateTheme?->template_variation;
 
-        dd("client.themes.{$this->current()}.{$path}.blades.{$view}");
+        dd(Tenant::current(), "client.themes.{$this->current()}.{$path}.blades.{$view}");
         return "client.themes.{$this->current()}.{$path}.blades.{$view}";
     
     }
