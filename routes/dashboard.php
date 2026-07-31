@@ -337,7 +337,7 @@ Route::prefix('painel/')->group(function () {
 View::composer('admin.core.admin', function ($view) {
     $currentUser = Auth::user();
     $user = User::where('id', $currentUser->id)->active()->first();
-    
+    dd($user);
     $notifications = (new AuditCountRepository());
     $auditorias = $notifications->allAudit();
     $auditCount = $notifications->auditCount();
