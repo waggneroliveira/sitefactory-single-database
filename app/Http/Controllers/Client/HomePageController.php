@@ -150,7 +150,7 @@ class HomePageController extends Controller
         ->orderBy('date', 'asc')
         ->get();
         $popUp = PopUp::active()->first();
-
+        dd($theme->view('index'));
         return view($theme->view('index'), compact(
             'sessaoFaq', 
             'faqs', 
