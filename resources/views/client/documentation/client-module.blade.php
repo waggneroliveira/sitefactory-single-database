@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documentação do módulo Client</title>
+    <title>Documentação arquitetural — Client e Admin</title>
     <style>
         :root {
             color-scheme: light;
@@ -17,7 +17,7 @@
             color: #1f2937;
         }
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             background: #ffffff;
             border-radius: 20px;
@@ -42,11 +42,16 @@
             margin-right: 0.5rem;
             margin-bottom: 0.5rem;
         }
+        .grid {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            margin-bottom: 1rem;
+        }
         .card {
             border: 1px solid #e5e7eb;
             border-radius: 14px;
             padding: 1rem 1.2rem;
-            margin-bottom: 1rem;
             background: #fafafa;
         }
         code {
@@ -66,13 +71,13 @@
 <body>
     <div class="container">
         <div class="hero">
-            <h1>Documentação do módulo Client</h1>
-            <p>Estrutura organizada para manutenção, escalabilidade e clareza de responsabilidades.</p>
+            <h1>Documentação arquitetural do projeto</h1>
+            <p>Separação entre o fluxo público/Client e o fluxo administrativo/Admin, com organização mais clara por camadas.</p>
         </div>
 
         <div class="card">
             <h2>Visão geral</h2>
-            <p>O módulo Client foi reorganizado com uma separação clara entre camada de apresentação, regras de negócio e acesso a dados, seguindo um padrão mais próximo de arquiteturas modernas.</p>
+            <p>O projeto passou por uma reorganização inicial para reduzir acoplamento e deixar as regras de negócio mais fáceis de manter. A estrutura agora foi iniciada tanto no lado do Client quanto no lado do Admin, com foco em Presentation, Business e Data.</p>
         </div>
 
         <div class="card">
@@ -83,11 +88,11 @@
             <span class="badge">DTO</span>
             <span class="badge">Contracts</span>
             <ul>
-                <li><strong>Presentation</strong>: controllers e requests que recebem a requisição.</li>
-                <li><strong>Business</strong>: services com regras específicas do módulo.</li>
+                <li><strong>Presentation</strong>: controllers e requests responsáveis por receber a requisição.</li>
+                <li><strong>Business</strong>: services com as regras específicas do domínio.</li>
                 <li><strong>Data</strong>: repositórios para acesso e persistência.</li>
-                <li><strong>DTO</strong>: transferência de dados entre camadas.</li>
-                <li><strong>Contracts</strong>: interfaces para abstração do repositório.</li>
+                <li><strong>DTO</strong>: transporte de dados entre camadas.</li>
+                <li><strong>Contracts</strong>: interfaces para abstração e testes futuros.</li>
             </ul>
         </div>
 
@@ -96,17 +101,38 @@
             <div class="flow">
                 <strong>Route</strong> → <strong>Controller</strong> → <strong>Service</strong> → <strong>Repository</strong> → <strong>Model</strong>
             </div>
-            <p>Esse fluxo deixa o código mais previsível, facilita testes e reduz o acoplamento entre as partes do sistema.</p>
+            <p>Esse fluxo torna o código mais previsível, facilita manutenção e deixa o entendimento do fluxo mais claro para novos desenvolvedores.</p>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h2>Módulo Client</h2>
+                <ul>
+                    <li>Controllers de páginas públicas reorganizados para Presentation.</li>
+                    <li>Fluxos de Home, Blog, Produtos, Contato, Sobre e Eventos separados por responsabilidade.</li>
+                    <li>Validação e tratamento de dados movidos para requests e services.</li>
+                    <li>Documentação pública acessível através da rota <code>/client-documentation</code>.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>Módulo Admin</h2>
+                <ul>
+                    <li>Dashboard e rotas administrativas passaram a apontar para controllers de apresentação específicos.</li>
+                    <li>Blog, Product e User já foram iniciados com a camada Business para concentrar a regra de negócio.</li>
+                    <li>As ações de criação, edição, exclusão e ordenação foram organizadas para seguir esse novo padrão.</li>
+                    <li>O objetivo é manter consistência entre o fluxo público e o painel administrativo.</li>
+                </ul>
+            </div>
         </div>
 
         <div class="card">
-            <h2>O que já está implementado</h2>
+            <h2>O que já foi implementado</h2>
             <ul>
-                <li>Cadastro e atualização de Client</li>
-                <li>Upload de imagem de perfil</li>
-                <li>Validação em requests separados</li>
-                <li>Controllers de páginas públicas: Home, Blog, Produtos, Contato, Sobre e Eventos</li>
-                <li>Documentação pública acessível via rota</li>
+                <li>Estrutura modular iniciada para Client e Admin.</li>
+                <li>Controllers de presentation criados para as rotas públicas e administrativas principais.</li>
+                <li>Services com regras de negócio para Blog, Product, User e Dashboard.</li>
+                <li>Rotas do painel e da área pública já apontando para essa organização inicial.</li>
             </ul>
         </div>
 
@@ -125,7 +151,7 @@
 
         <div class="card">
             <h2>Próximos passos</h2>
-            <p>Aplicar essa mesma abordagem para os módulos de Admin, User, Product e Blog, mantendo consistência em todo o projeto.</p>
+            <p>Continuar a expansão desse padrão para os demais módulos administrativos, mantendo Client e Admin com uma estrutura consistente e fácil de evoluir.</p>
         </div>
     </div>
 </body>
