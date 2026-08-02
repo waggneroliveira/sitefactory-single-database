@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\EnsureTenantForAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Modules\Blog\Presentation\Controllers\BlogController;
 use App\Http\Controllers\RoleController;
@@ -89,7 +90,7 @@ Route::prefix('painel/')->group(function () {
 
     /*=====================FINAL REDEFINICAO DE SENHA=========================*/
 
-    Route::middleware([Authenticate::class])->group(function(){ 
+    Route::middleware([Authenticate::class, EnsureTenantForAdmin::class])->group(function(){ 
         Route::get('documentation', function () {
             return view('admin.documentation.introduction');
         })->name('admin.dashboard.documentation.introduction');

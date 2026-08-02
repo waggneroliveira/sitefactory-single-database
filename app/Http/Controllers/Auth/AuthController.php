@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Spatie\Multitenancy\Actions\MakeTenantCurrentAction;
+use App\Models\Tenant;
 
 class AuthController extends Controller
 {
@@ -34,6 +36,14 @@ class AuthController extends Controller
 
         $userAuthenticate = Auth::user();
         $user = User::find($userAuthenticate->id);
+
+        if ($user->tenant_id) {
+            $tenant = Tenant::find($user->tenant_id);
+
+            if ($tenant) {
+                app(MakeTenantCurrentAction::class)->execute($tenant);
+            }
+        }
 
         if (!$user->hasRole('Super')) {            
             activity()
