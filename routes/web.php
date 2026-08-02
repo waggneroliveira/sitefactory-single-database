@@ -3,14 +3,15 @@
 use App\Http\Controllers\Auth\AuthClientController;
 use App\Http\Controllers\Auth\PasswordEmailClientController;
 use App\Http\Controllers\Auth\ResetPasswordClientController;
-use App\Http\Controllers\Client\AboutPageController;
-use App\Http\Controllers\Client\BlogPageController;
-use App\Http\Controllers\Client\ContactPageController;
-use App\Http\Controllers\Client\EventPageController;
-use App\Http\Controllers\Client\HomePageController;
-use App\Http\Controllers\Client\ProductPageController;
-use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CommentController;
+use App\Modules\Client\Presentation\Controllers\AboutPageController;
+use App\Modules\Client\Presentation\Controllers\BlogPageController;
+use App\Modules\Client\Presentation\Controllers\ContactPageController;
+use App\Modules\Client\Presentation\Controllers\DocumentationController;
+use App\Modules\Client\Presentation\Controllers\EventPageController;
+use App\Modules\Client\Presentation\Controllers\HomePageController;
+use App\Modules\Client\Presentation\Controllers\ProductPageController;
+use App\Modules\Client\Presentation\Controllers\ClientController;
 use App\Http\Controllers\DownloadFichaController;
 use App\Http\Controllers\FormIndexController;
 use App\Http\Controllers\NewsletterController;
@@ -138,6 +139,8 @@ Route::middleware([NeedsTenant::class])->group(function () {
     Route::get('eventos', [EventPageController::class, 'index'])
         ->name('client.event');
 
+    Route::get('client-documentation', [DocumentationController::class, 'index'])
+        ->name('client.documentation');
 
     Route::get('blog/filter/{category?}', [HomePageController::class, 'filterByCategory'])
         ->name('blog.filter');

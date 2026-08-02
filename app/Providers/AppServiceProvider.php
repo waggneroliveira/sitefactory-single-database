@@ -2,12 +2,10 @@
 
 namespace App\Providers;
 
-use Exception;
-use App\Models\SettingEmail;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\ServiceProvider;
+use App\Modules\Client\Contracts\ClientRepositoryInterface;
+use App\Modules\Client\Data\EloquentClientRepository;
 use Carbon\Carbon;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(ClientRepositoryInterface::class, EloquentClientRepository::class);
     }
 
     /**

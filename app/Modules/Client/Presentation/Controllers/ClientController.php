@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Modules\Client\Presentation\Controllers;
 
 use App\Models\Client;
 use App\Modules\Client\Business\ClientService;
@@ -11,7 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
-class ClientController extends Controller
+class ClientController
 {
     public function __construct(protected ClientService $service)
     {
@@ -64,4 +64,3 @@ class ClientController extends Controller
         return redirect()->back();
     }
 }
-
