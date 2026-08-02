@@ -379,6 +379,12 @@
                 ])
             @endif
 
+            @include('admin.components.dashboard-card', [
+                'route' => route('admin.dashboard.templateTheme.index'),
+                'icon' => 'mdi-account-multiple',
+                'title' => 'Configuração de temna'
+            ])
+
         </div>
     @endif
     <!-- Footer Start -->

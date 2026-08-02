@@ -1,50 +1,51 @@
 <?php
 
-use App\Models\User;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\View;
-use App\Http\Middleware\Authenticate;
-use App\Http\Middleware\EnsureTenantForAdmin;
-use Illuminate\Support\Facades\Route;
-use App\Modules\Blog\Presentation\Controllers\BlogController;
-use App\Http\Controllers\RoleController;
-use App\Modules\User\Presentation\Controllers\UserController;
 use App\Http\Controllers\AboutController;
-use App\Http\Controllers\BrandController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\PopUpController;
-use App\Http\Controllers\SlideController;
-use App\Http\Controllers\TopicController;
-use App\Http\Controllers\VideoController;
-use App\Http\Controllers\ReportController;
-use App\Repositories\AuditCountRepository;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\ContactController;
-use App\Modules\Product\Presentation\Controllers\ProductController;
-use App\Http\Controllers\StatuteController;
-use App\Repositories\SettingThemeRepository;
-use App\Http\Controllers\Auth\AuthController;
-use App\Modules\Admin\Presentation\Controllers\DashboardController;
-use App\Http\Controllers\DirectionController;
-use App\Http\Controllers\FormIndexController;
-use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\AnnouncementController;
-use App\Http\Controllers\BenefitTopicController;
-use App\Http\Controllers\BlogCategoryController;
-use App\Http\Controllers\SettingEmailController;
-use App\Http\Controllers\SettingThemeController;
 use App\Http\Controllers\AuditActivityController;
-use App\Http\Controllers\ProductGalleryController;
-use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\PasswordEmailController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\BenefitTopicController;
+use App\Http\Controllers\BlogCategoryController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DepoimentController;
+use App\Http\Controllers\DirectionController;
 use App\Http\Controllers\DownloadFichaController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\FormIndexController;
 use App\Http\Controllers\LetsgoController;
+use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\PopUpController;
+use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProductGalleryController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ServiceLocationController;
 use App\Http\Controllers\SessaoFaqController;
+use App\Http\Controllers\SettingEmailController;
+use App\Http\Controllers\SettingThemeController;
+use App\Http\Controllers\SlideController;
+use App\Http\Controllers\StatuteController;
+use App\Http\Controllers\TemplateThemeController;
+use App\Http\Controllers\TopicController;
+use App\Http\Controllers\VideoController;
+use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\EnsureTenantForAdmin;
+use App\Models\User;
+use App\Modules\Admin\Presentation\Controllers\DashboardController;
+use App\Modules\Blog\Presentation\Controllers\BlogController;
+use App\Modules\Product\Presentation\Controllers\ProductController;
+use App\Modules\User\Presentation\Controllers\UserController;
+use App\Repositories\AuditCountRepository;
+use App\Repositories\SettingThemeRepository;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 
 Route::get('painel/', function () {
     return redirect()->route('admin.dashboard.painel');
@@ -319,6 +320,10 @@ Route::prefix('painel/')->group(function () {
         // SETTINGS THEME
         Route::post('setting', [SettingThemeController::class, 'setting'])->name('admin.dashboard.settingTheme'); 
         Route::post('setting/update', [SettingThemeController::class, 'settingUpdate'])->name('admin.dashboard.settingThemeUpdate'); 
+
+        Route::resource('theme-setting', TemplateThemeController::class)
+        ->names('admin.dashboard.templateTheme')
+        ->parameters(['theme-setting'=>'templateTheme']);
     });
 
     // LANGUAGES
