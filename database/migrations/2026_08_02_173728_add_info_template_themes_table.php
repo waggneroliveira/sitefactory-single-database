@@ -12,9 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('template_themes', function (Blueprint $table) {
-            $table->string('text_button_one')->default('#FFF');
+            $table->string('text_button_one')->default('Saiba mais');
+            $table->string('color_button_one')->default('#FFF');
             $table->string('bg_button_one')->default('#10131C');
-            $table->string('text_button_two')->default('#000');
+            $table->string('text_button_two')->default('Ver mais');
+            $table->string('color_button_two')->default('#000');
             $table->string('bg_button_two')->default('#FDC20C');
             $table->string('text_color_header')->default('#000');
             $table->string('bg_header')->default('#FFF');

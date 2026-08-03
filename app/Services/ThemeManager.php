@@ -3,29 +3,39 @@
 namespace App\Services;
 
 // use Spatie\Multitenancy\Models\Tenant;
+use App\Models\TemplateTheme;
 use App\Models\Tenant;
+
 class ThemeManager
 {
+    public function theme(): ?TemplateTheme
+    {
+        return Tenant::current()?->templateTheme;
+    }
+
+    public function __get($name)
+    {
+        return $this->theme()?->{$name};
+    }
+
     public function current(): string
-    {   
-        return Tenant::current()?->templateTheme?->slug ?? 'default';
+    {
+        return $this->theme()?->slug ?? 'default';
+    }
+
+    public function variation(): ?string
+    {
+        return $this->theme()?->template_variation;
+    }
+
+    public function core(string $view): string
+    {
+        return "client.themes.{$this->current()}.{$this->variation()}.core.{$view}";
     }
 
     public function view(string $view): string
     {
-        $path = Tenant::current()?->templateTheme?->template_variation;
-        return "client.themes.{$this->current()}.{$path}.blades.{$view}";
-    
-    }
-    public function core(string $view): string
-    {
-        $path = Tenant::current()?->templateTheme?->template_variation;
-        return "client.themes.{$this->current()}.{$path}.core.{$view}";
-    }
-    public function viewIncludes(string $view): string
-    {
-        $path = Tenant::current()?->templateTheme?->template_variation;
-        return "client.themes.includes.{$view}";
+        return "client.themes.{$this->current()}.{$this->variation()}.blades.{$view}";
     }
 
     public function asset(string $path): string

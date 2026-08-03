@@ -139,8 +139,7 @@
 
                 <!-- Logo -->
                 <a class="navbar-brand me-5" href="{{route('index')}}">
-                    {{-- <img src="{{asset('storage/' .$theme->path_image_logo_header)}}" alt="Girollato" height="40"> --}}
-                    <img src="{{asset('build/client/images/logo.svg')}}" alt="Girollato" height="40">
+                    <img src="{{asset('storage/' .$themeData->path_image_logo_header)}}" alt="Girollato" height="40">
                 </a>
 
                 <!-- Mobile -->
@@ -221,8 +220,7 @@
 
                 <!-- Logo + botão -->
                 <div class="col-lg-4 mb-4 mb-lg-0">
-                    {{-- <img src="{{asset('storage/' .$theme->path_image_logo_footer)}}" alt="Girollato" height="40"> --}}
-                    <img src="{{asset('build/client/images/logo.svg')}}" alt="Girollato" height="40">
+                    <img src="{{asset('storage/' .$themeData->path_image_logo_footer)}}" alt="Girollato" height="40">
 
                     <div class="mt-5">
                         <a href="{{ request()->routeIs('about') ? '#team-section' : route('about') . '#team-section' }}" class="border-btn-footer btn bg-yellow px-4 py-2 rounded-pill font-changa color-green font-16 font-medium text-decoration-none">

@@ -1,39 +1,28 @@
 
 
 .bg-yellow{
-    background: var(--yellow-color);
+    background: var(--secondary-color);
 }
 .color-yellow{
-    color: var(--yellow-color);
-}
-.bg-green{
-    background: var(--green-color);
-}
-.color-green{
-    color: var(--green-color);
-}
-.bg-grey-light{
-    background: var(--grey-color-light);
-}
-.bg-grey-medium{
-    background: var(--grey-color-medium);
-}
-.color-grey{
-    color: var(--grey-color);
+    color: var(--secondary-color);
 }
 
- .border-btn-footer{
-    border: 1px solid var(--white-color) !important;
- }
+.bg-grey-light{
+    background: var(--text-color-light);
+}
+.bg-grey-medium{
+    background: var(--text-color-medium);
+}
+.color-grey{
+    color: var(--text-color);
+}
+
  .bt-hover:hover{
-    color:  var(--green-color) !important;
+    color:  var(--primary-color) !important;
  }
 /* =========================
    HEADER
 ========================= */
-.btn-header.btn:hover{
-    border: 1px solid var(--black-color);
-}
 
 /* =========================
    HERO
@@ -85,15 +74,9 @@
   gap: 15px;
 }
 
-.btn-hero.btn:hover {
-    border: 1px solid var(--white-color);
-}
-.btn-hero.btn:hover svg, .btn-product svg, #shareBtn svg{
-    filter: brightness(10) saturate(0.1) contrast(10);
-}
 .btn-outline {
-  border: 2px solid var(--yellow-color);
-  color: var(--yellow-color);
+  border: 2px solid var(--secondary-color);
+  color: var(--secondary-color);
   padding: 12px 28px;
   border-radius: 50px;
   font-weight: 600;
@@ -109,7 +92,7 @@
 }
 
 .main-swiper .swiper-pagination-bullet-active {
-  background: var(--yellow-color);
+  background: var(--secondary-color);
 }
 
 /* =========================
@@ -204,7 +187,7 @@
     top: -50px;
 }
 .about-subtitle{
-    border-bottom: 1px solid var(--green-color);
+    border-bottom: 1px solid var(--secondary-color);
 }
 .firula-count{
     width: 175px;
@@ -247,18 +230,7 @@
     border-left: 2px dashed #CCCCCC;
     z-index: -1;
 }
-.step-actions .btn, .btn-about .btn, .step-actions .btn{
-    border: 1px solid var(--green-color) !important;
-}
-.step-actions .btn:hover, .btn-about .btn:hover{
-    color: var(--green-color) !important;
-}
-.step-actions svg , .btn-about svg, .to-back svg{
-    filter: brightness(10) saturate(0.1) contrast(10);
-}
-.step-actions .btn:hover svg, .btn-about .btn:hover svg, .btn-product:hover svg, #shareBtn:hover svg, .to-back:hover svg {
-    filter: inherit;
-}
+
 .about-image img {
     object-fit: cover;
     height: 100%;
@@ -325,11 +297,11 @@
 .btn-filter {
   border-radius: 25px;
   background: transparent;
-  color: var(--green-color);
+  color: var(--primary-color);
 }
 
 .btn-filter.active {
-    background: var(--green-color);
+    background: var(--primary-color);
     color: #fff;
 }
 
@@ -341,10 +313,10 @@
 }
 .product-card .image{
     aspect-ratio: 1 / 1;
+    background-color: #cccccc52;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-color: var(--green-color) !important;
     -webkit-transition: all 0.5s ease;
 	-moz-transition: all 0.5s ease;
 	-ms-transition: all 0.5s ease;
@@ -354,7 +326,7 @@
 
 .product-card img {
     width: 100%;
-    height: 270px;
+    height: 237px;
     object-fit: contain;
 }
 
@@ -363,57 +335,17 @@
 }
 
 .btn-view {
-    background: #F9F9F9;
-    color: var(--green-color);
     border-radius: 25px;
     padding: 6px 16px;
     margin-bottom: 15px;
     display: inline-block;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
     -webkit-transition: all 0.5s ease;
 	-moz-transition: all 0.5s ease;
 	-ms-transition: all 0.5s ease;
 	-o-transition: all 0.5s ease;
 	transition: all 0.5s ease;
 }
-.product-card .image:after{
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background: rgb(16 81 61 / 67%);
-    -webkit-transition: all 0.5s ease;
-	-moz-transition: all 0.5s ease;
-	-ms-transition: all 0.5s ease;
-	-o-transition: all 0.5s ease;
-	transition: all 0.5s ease;
-    opacity: 0;
-    z-index: 1;
-}
-.product-card:hover .image:after{
-    -webkit-transition: all 0.5s ease;
-	-moz-transition: all 0.5s ease;
-	-ms-transition: all 0.5s ease;
-	-o-transition: all 0.5s ease;
-	transition: all 0.5s ease;
-    opacity: 1;
-}
-.product-card:hover .btn-view{
-    background: #F9F9F9 !important;
-    color: var(--green-color) !important;
-    opacity: 1 !important;
-    -webkit-transition: all 0.5s ease;
-	-moz-transition: all 0.5s ease;
-	-ms-transition: all 0.5s ease;
-	-o-transition: all 0.5s ease;
-	transition: all 0.5s ease;
-    z-index: 2;
-}
+
 .thumbs-width {
     height: 130px !important;
 }
@@ -435,10 +367,10 @@
 }
 .gallery-thumbs .swiper-slide-thumb-active {
     opacity: 1;
-    border: 2px solid var(--grey-color-light);
+    border: 2px solid var(--text-color-light);
 }
 .btn-prod a{
-    border: 1px solid var(--yellow-color) !important;
+    border: 1px solid var(--secondary-color) !important;
 }
 .navigation-swiper{
     position: absolute;
@@ -451,7 +383,7 @@
     z-index: 9;
 }
 .navigation-swiper .swiper-button-prev, .navigation-swiper .swiper-button-next{
-    color: var(--green-color);
+    color: var(--primary-color);
 }
 .navigation-swiper .swiper-button-prev:after,
 .navigation-swiper .swiper-button-next:after{
@@ -519,12 +451,6 @@
     opacity: 1;
 }
 
-.btn-product{
-    border: 1px solid var(--green-color) !important;
-}
-.btn-product:hover{
-    color: var(--green-color) !important;
-}
 .firula-products{
     top: -50px;
     left: 50%;
@@ -585,14 +511,14 @@
 }
 
 .filter-list li:hover {
-    background: var(--grey-color-medium);
+    background: var(--text-color-medium);
 }
 
 .filter-list li.active {
-    color: var(--green-color);
+    color: var(--primary-color);
 }
 .blog-subtitle{
-    border-bottom: 1px solid var(--green-color);
+    border-bottom: 1px solid var(--primary-color);
 }
 .blog-subtitle{
     width: 61.5% !important;
@@ -690,9 +616,6 @@
 .about-subtitle{
     width: 87%;
 }
-.btn-faq {
-    border: 1px solid var(--green-color);
-}
 
 /* ACCORDION */
 .accordion-item {
@@ -709,12 +632,12 @@
 }
 
 .accordion-button:not(.collapsed) {
-  background: var(--green-color);
+  background: var(--secondary-color);
   color: #fff;
 }
 
 .accordion-body {
-  background: var(--green-color);
+  background: var(--secondary-color);
   color: #eaeaea;
 }
 
@@ -727,7 +650,7 @@
     font-style: normal;
     font-size: 1rem;
     font-family: 400;
-    color: var(--grey-color);
+    color: var(--text-color);
 }
 .testimonial-card {
     background: #fff;
@@ -743,7 +666,7 @@
     border-top: 1px solid #E9E9E9;
 }
 .testimonial-swiper .swiper-pagination-bullet{
-    background: var(--green-color);
+    background: var(--primary-color);
     opacity: 1;   
     padding: 4px;
     border: 1px solid transparent;
@@ -754,7 +677,7 @@
     content: '';
     height: 8px;
     width: 8px;
-    background-color: var(--green-color);
+    background-color: var(--primary-color);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -764,13 +687,13 @@
 .testimonial-swiper .swiper-pagination-bullet-active {
     background: #FFF;
     padding: 8px;
-    border: 3px solid var(--yellow-color);
+    border: 3px solid var(--secondary-color);
     width: 17px;
 }
 
 /* bullets base */
 .swiper-pagination-blog .swiper-pagination-bullet {
-    background: var(--green-color);
+    background: var(--primary-color);
     opacity: 1;
     width: 8px;
     height: 8px;
@@ -783,7 +706,7 @@
 .swiper-pagination-blog .swiper-pagination-bullet-active {
     background: #fff;
     padding: 8px;
-    border: 3px solid var(--yellow-color);
+    border: 3px solid var(--secondary-color);
     width: 17px;
     height: 17px;
 }
@@ -793,7 +716,7 @@
     content: '';
     width: 8px;
     height: 8px;
-    background-color: var(--green-color);
+    background-color: var(--primary-color);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -942,14 +865,14 @@
   box-shadow: 0 0 0 12px rgba(255, 0, 0, 0.25);
 }
 #shareBtn{
-    border: 1px solid var(--green-color);
+    border: 1px solid var(--primary-color);
 }
 #shareBtn:hover, .to-back:hover{
-    color: var(--green-color) !important;
+    color: var(--primary-color) !important;
     background: transparent;
 }
 .to-back{
-    border: 1px solid var(--green-color);
+    border: 1px solid var(--primary-color);
 }
 
 .list-service strong{
@@ -959,7 +882,7 @@
     font-weight: 500;
     font-size: 2.5rem;
     line-height: 1.2;
-    color: var(--yellow-color);
+    color: var(--secondary-color);
 }
 .list-service ul{
     column-count: 2;

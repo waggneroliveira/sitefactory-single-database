@@ -24,7 +24,7 @@ use App\Services\ThemeManager;
 
 class HomePageService
 {
-    public function getIndexData(ThemeManager $theme): array
+    public function getIndexData(ThemeManager $themeManager): array
     {
         $blogSuperHighlights = Blog::whereHas('category', function ($active) {
             $active->where('active', 1);
@@ -150,6 +150,9 @@ class HomePageService
 
         $popUp = PopUp::active()->first();
 
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+
         return compact(
             'sessaoFaq',
             'faqs',
@@ -176,6 +179,7 @@ class HomePageService
             'productCategories',
             'products',
             'theme',
+            'themeData',
             'blogNoBairros'
         );
     }

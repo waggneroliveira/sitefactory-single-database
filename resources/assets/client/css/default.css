@@ -307,10 +307,16 @@ a {
     transition: color 0.3s ease;
 }
 
-a:hover {
-    color: var(--green-color);
+.hover-zoom {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transform: scale(1);
+    cursor: pointer;
 }
 
+.hover-zoom:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
 
 /* =========================
    FORM ELEMENTS
@@ -400,3 +406,26 @@ select {
      opacity: 1;
      bottom: 15px
  }
+ .whatsapp-float {
+    position: fixed;
+    bottom: 30%;
+    right: 18px;
+    transform: translateY(-30%);
+    width: 56px;
+    height: 56px;
+    border-radius: 9999px;
+    background: #25D366;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .15);
+    z-index: 9999;
+    transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
+}
+.whatsapp-float svg {
+    width: 40px;
+    height: 40px;
+    fill: #fff;
+    display: block;
+}

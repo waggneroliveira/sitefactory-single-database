@@ -161,59 +161,101 @@
     @endif
 
     <style>
-        .whatsapp-float{
-            position: fixed;
-            bottom: 30%;
-            right: 18px;
-            transform: translateY(-30%);
-            width: 56px;
-            height: 56px;
-            border-radius: 9999px;
-            background: #25D366;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            box-shadow: 0 10px 25px rgba(0,0,0,.15);
-            z-index: 9999;
-            transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
+        :root {
+            /* Cores Gerais */
+            --primary-color: {{ $themeData->primary_color ? $themeData->primary_color : '#10513D' }};
+            --secondary-color: {{ $themeData->secondary_color ? $themeData->secondary_color : '#FDC20C' }};
+            --accent-color: {{ $themeData->accent_color ? $themeData->accent_color : 'rgba(16, 81, 61, 0.5)' }};
+            --text-color: {{ $themeData->text_color ? $themeData->text_color : '#565656' }};
+            
+            /* Header */
+            --text-color-header: {{ $themeData->text_color_header ? $themeData->text_color_header : '#FFFFFF' }};
+            --bg-header: {{ $themeData->bg_header ? $themeData->bg_header : '#10513D' }};
+            
+            /* Footer */
+            --bg-scroll: {{ $themeData->bg_scroll ? $themeData->bg_scroll : '#F8F9FA' }};
+            
+            /* Botões */
+            --color-button-one: {{ $themeData->color_button_one ? $themeData->color_button_one : "#FFF" }};
+            --color-button-two: {{ $themeData->color_button_two ? $themeData->color_button_two : '#000' }};
+            --text-button-one: {{ $themeData->text_button_one ? $themeData->text_button_one : 'Botão 1' }};
+            --bg-button-one: {{ $themeData->bg_button_one ? $themeData->bg_button_one : '#10513D' }};
+            --text-button-two: {{ $themeData->text_button_two ? $themeData->text_button_two : 'Botão 2' }};
+            --bg-button-two: {{ $themeData->bg_button_two ? $themeData->bg_button_two : '#FDC20C' }};
+            
+            /* Copyright */
+            --copyright-text: {{ $themeData->copyright ? $themeData->copyright  : '© 2024 Todos os direitos reservados' }};
         }
-        .whatsapp-float svg{
-            width: 40px;
-            height: 40px;
-            fill: #fff;
-            display: block;
+        /* ===== CORES (Text Colors) ===== */
+        .primary-color {
+            color: var(--primary-color);
         }
-        .whatsapp-float:hover{
-            transform: translateY(-30%) scale(1.05);
-            filter: brightness(1.05);
-            box-shadow: 0 14px 32px rgba(0,0,0,.2);
+
+        .secondary-color {
+            color: var(--secondary-color);
         }
-        /* Ajuste em telas menores */
-        @media (max-width: 768px){
-            .whatsapp-float{
-            right: 12px;
-            width: 52px;
-            height: 52px;
-            }
-            .whatsapp-float svg{ width: 35px; height: 35px; }
+
+        .accent-color {
+            color: var(--accent-color);
         }
-        /* Não mostrar na impressão */
-        @media print{
-            .whatsapp-float{ display: none; }
+
+        .text-color {
+            color: var(--text-color);
         }
-        /* Respeita usuários com redução de movimento */
-        @media (prefers-reduced-motion: reduce){
-            .whatsapp-float{ transition: none; }
-            .whatsapp-float:hover{ transform: translateY(-50%); }
+
+        .text-color-header {
+            color: var(--text-color-header);
+        }
+        .color-button-one {
+            color: var(--color-button-one);
+        }
+        .color-button-two {
+            color: var(--color-button-two);
+        }
+
+        /* ===== BACKGROUNDS ===== */
+        .bg-primary-color {
+            background: var(--primary-color);
+        }
+
+        .bg-secondary-color {
+            background: var(--secondary-color);
+        }
+
+        .bg-accent-color {
+            background: var(--accent-color);
+        }
+
+        .bg-text-color {
+            background: var(--text-color);
+        }
+
+        .bg-text-color-header {
+            background: var(--text-color-header);
+        }
+
+        .bg-header {
+            background: var(--bg-header);
+        }
+
+        .bg-scroll {
+            background: var(--bg-scroll);
+        }
+
+        .bg-button-one {
+            background: var(--bg-button-one);
+        }
+
+        .bg-button-two {
+            background: var(--bg-button-two);
         }
     </style>
 
-    <header class="shadow-sm bg-white">
+    <header class="shadow-sm bg-header">
         <nav class="navbar navbar-expand-lg navbar-light container py-3 px-3 px-lg-0">            
             <!-- Logo -->
             <a class="navbar-brand d-flex align-items-center" href="{{route('index')}}">
-                <img src="{{asset('build/client/images/logo.svg')}}" alt="Girollato" height="40">
+                <img src="{{asset('storage/' .$themeData->path_image_logo_header)}}" alt="{{ config('app.name') }}" height="40">
             </a>
 
             <!-- Toggle mobile -->
@@ -225,33 +267,33 @@
             <div class="collapse navbar-collapse" id="mainNavbar">
                 <ul class="navbar-nav mx-auto m-auto me-4 mb-2 mb-lg-0 gap-lg-3">
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header active" href="{{route('index')}}">Home</a>
+                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header active" href="{{route('index')}}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header" href="{{route('about')}}">Sobre Nós</a>
+                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{route('about')}}">Sobre Nós</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header" href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}">Depoimentos</a>
+                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}">Depoimentos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header" href="{{ request()->routeIs('about') ? '#team-section' : route('about') . '#team-section' }}">Representantes</a>
+                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{ request()->routeIs('about') ? '#team-section' : route('about') . '#team-section' }}">Representantes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header" href="{{route('products')}}">Produtos</a>
+                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{route('products')}}">Produtos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header" href="{{route('contact')}}">Contato</a>
+                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{route('contact')}}">Contato</a>
                     </li>
                 </ul>
 
                 <!-- Botão -->
-                <div class="d-flex justify-content-center gap-2 align-items-center btn-header btn bg-yellow rounded-pill px-4">
+                <div class="d-flex justify-content-center gap-2 align-items-center btn-header bg-button-one rounded-pill py-2 px-4 hover-zoom">
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M11.6741 10.0755C11.5016 9.96226 11.3291 9.90566 11.1565 10.1321L10.4665 11.0377C10.2939 11.1509 10.1789 11.2075 9.94888 11.0943C9.08626 10.6415 7.87859 10.1321 6.84345 8.43396C6.78594 8.20755 6.90096 8.09434 7.01597 7.98113L7.53355 7.18868C7.64856 7.07547 7.59105 6.96226 7.53355 6.84906L6.84345 5.20755C6.67093 4.75472 6.4984 4.81132 6.32588 4.81132H5.86581C5.7508 4.81132 5.52077 4.86792 5.29073 5.09434C4.02556 6.33962 4.54313 8.09434 5.46326 9.22642C5.63578 9.45283 6.78594 11.4906 9.25879 12.566C11.099 13.3585 11.5016 13.2453 12.0192 13.1321C12.6518 13.0755 13.2843 12.566 13.5719 12.0566C13.6294 11.8868 13.9169 11.1509 13.6869 11.0377M9.14377 16.3585C6.78594 16.3585 5.00319 15.1132 5.00319 15.1132L2.1853 15.8491L2.8754 13.1321C2.8754 13.1321 1.72524 11.3774 1.72524 9.16981C1.72524 5.09434 5.11821 1.69811 9.31629 1.69811C13.2268 1.69811 16.5623 4.69811 16.5623 8.88679C16.5623 12.9623 13.2268 16.3019 9.14377 16.3585ZM0 18L4.77316 16.6981C6.15555 17.3947 7.69626 17.7309 9.24823 17.6747C10.8002 17.6184 12.3116 17.1715 13.6382 16.3768C14.9648 15.582 16.0622 14.4658 16.8259 13.1347C17.5895 11.8037 17.9937 10.3022 18 8.77359C18 3.90566 14.0895 0 9.14377 0C7.55639 0.00399723 5.99777 0.417245 4.62313 1.19859C3.24848 1.97993 2.10579 3.10211 1.30885 4.45336C0.511907 5.80461 0.0885224 7.33778 0.0808596 8.9002C0.0731969 10.4626 0.481524 11.9997 1.26518 13.3585" fill="#10513D"/>
+                    <path d="M11.6741 10.0755C11.5016 9.96226 11.3291 9.90566 11.1565 10.1321L10.4665 11.0377C10.2939 11.1509 10.1789 11.2075 9.94888 11.0943C9.08626 10.6415 7.87859 10.1321 6.84345 8.43396C6.78594 8.20755 6.90096 8.09434 7.01597 7.98113L7.53355 7.18868C7.64856 7.07547 7.59105 6.96226 7.53355 6.84906L6.84345 5.20755C6.67093 4.75472 6.4984 4.81132 6.32588 4.81132H5.86581C5.7508 4.81132 5.52077 4.86792 5.29073 5.09434C4.02556 6.33962 4.54313 8.09434 5.46326 9.22642C5.63578 9.45283 6.78594 11.4906 9.25879 12.566C11.099 13.3585 11.5016 13.2453 12.0192 13.1321C12.6518 13.0755 13.2843 12.566 13.5719 12.0566C13.6294 11.8868 13.9169 11.1509 13.6869 11.0377M9.14377 16.3585C6.78594 16.3585 5.00319 15.1132 5.00319 15.1132L2.1853 15.8491L2.8754 13.1321C2.8754 13.1321 1.72524 11.3774 1.72524 9.16981C1.72524 5.09434 5.11821 1.69811 9.31629 1.69811C13.2268 1.69811 16.5623 4.69811 16.5623 8.88679C16.5623 12.9623 13.2268 16.3019 9.14377 16.3585ZM0 18L4.77316 16.6981C6.15555 17.3947 7.69626 17.7309 9.24823 17.6747C10.8002 17.6184 12.3116 17.1715 13.6382 16.3768C14.9648 15.582 16.0622 14.4658 16.8259 13.1347C17.5895 11.8037 17.9937 10.3022 18 8.77359C18 3.90566 14.0895 0 9.14377 0C7.55639 0.00399723 5.99777 0.417245 4.62313 1.19859C3.24848 1.97993 2.10579 3.10211 1.30885 4.45336C0.511907 5.80461 0.0885224 7.33778 0.0808596 8.9002C0.0731969 10.4626 0.481524 11.9997 1.26518 13.3585" fill="var(--color-button-one)"/>
                     </svg>
 
-                    <a href="#" class="font-changa color-green font-16 font-medium text-decoration-none">
-                        Solicitar Atendimento
+                    <a class="font-changa font-15 font-medium text-decoration-none color-button-one">
+                        {{ $themeData->text_button_one ?? 'Botão 1' }}
                     </a>
                 </div>
             </div>
@@ -260,7 +302,7 @@
 
     <div class="modal fade" id="modalDownloadFicha" tabindex="-1">
         <div class="modal-dialog">
-            <div class="modal-content bg-green">
+            <div class="modal-content">
 
                 <form id="formDownloadFicha">
                     @csrf
@@ -269,7 +311,7 @@
                         <div class="d-flex justify-content-end col-12">
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                         </div>
-                        <img src="{{asset('build/client/images/girollato-footer.svg')}}" alt="Girollato" height="40">
+                        <img src="{{asset('build/client/images/girollato-footer.svg')}}" alt="{{ config('app.name') }}" height="40">
                         <h5 class="modal-title text-white font-changa font-20 font-medium mt-3">Preencha o formulário para baixar o arquivo</h5>
                     </div>
 
@@ -416,7 +458,7 @@
         @yield('content') 
     </main>
 
-    <footer class="bg-green text-white pt-5 pb-3">
+    <footer class="bg-header text-white pt-5 pb-3">
         <div class="container">
 
             <!-- Linha principal -->
@@ -424,10 +466,10 @@
 
                 <!-- Logo + botão -->
                 <div class="col-lg-4 mb-4 mb-lg-0">
-                    <img src="{{asset('build/client/images/girollato-footer.svg')}}" alt="Girollato" height="40">
+                    <img src="{{asset('storage/' .$themeData->path_image_logo_footer)}}" alt="{{ config('app.name') }}" height="40">
 
                     <div class="mt-5">
-                        <a href="{{ request()->routeIs('about') ? '#team-section' : route('about') . '#team-section' }}" class="border-btn-footer btn bg-yellow px-4 py-2 rounded-pill font-changa color-green font-16 font-medium text-decoration-none">
+                        <a href="{{ request()->routeIs('about') ? '#team-section' : route('about') . '#team-section' }}" class="bg-button-two color-button-two px-4 py-2 rounded-pill font-changa font-16 font-medium text-decoration-none hover-zoom">
                             Encontrar Representantes
                             <i class="bi bi-arrow-right"></i>
                         </a>
@@ -436,7 +478,7 @@
 
                 <!-- Mapa do site -->
                 <div class="col-lg-6 mb-4 mb-lg-0">
-                    <h6 class="font-changa font-16 font-bold mb-3 position-relative d-inline-block font-changa font-16 font-medium">
+                    <h6 class="font-changa text-color-header font-16 font-bold mb-3 position-relative d-inline-block font-changa font-16 font-medium">
                         Mapa do Site
                         <span class="d-block bg-yellow mt-1" style="height:3px; width:40px;"></span>
                     </h6>
@@ -444,19 +486,19 @@
                     <div class="row">
                         <div class="col-6">
                             <ul class="list-unstyled">
-                                <li><a href="{{route('index')}}" class="font-changa font-16 font-regular text-white text-decoration-none d-block mb-2">Início</a></li>
-                                <li><a href="{{route('about')}}" class="font-changa font-16 font-regular text-white text-decoration-none d-block mb-2">Quem Somos</a></li>
-                                <li><a href="{{ request()->routeIs('index') ? '#stats-section' : route('index') . '#stats-section' }}" class="font-changa font-16 font-regular text-white text-decoration-none d-block mb-2">Diferenciais</a></li>
-                                <li><a href="{{route('blogAll')}}" class="font-changa font-16 font-regular text-white text-decoration-none d-block mb-2">Blog</a></li>
-                                <li><a href="{{route('products')}}" class="font-changa font-16 font-regular text-white text-decoration-none d-block mb-2">Produtos</a></li>
+                                <li><a href="{{route('index')}}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Início</a></li>
+                                <li><a href="{{route('about')}}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Quem Somos</a></li>
+                                <li><a href="{{ request()->routeIs('index') ? '#stats-section' : route('index') . '#stats-section' }}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Diferenciais</a></li>
+                                <li><a href="{{route('blogAll')}}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Blog</a></li>
+                                <li><a href="{{route('products')}}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Produtos</a></li>
                             </ul>
                         </div>
 
                         <div class="col-6">
                             <ul class="list-unstyled">
-                                <li><a href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}" class="font-changa font-16 font-regular text-white text-decoration-none d-block mb-2">Depoimentos</a></li>
-                                <li><a href="{{ request()->routeIs('index') ? '#faq' : route('index') . '#faq' }}" class="font-changa font-16 font-regular text-white text-decoration-none d-block mb-2">FAQ</a></li>
-                                <li><a href="{{route('contact')}}" class="font-changa font-16 font-regular text-white text-decoration-none d-block mb-2">Contato</a></li>
+                                <li><a href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Depoimentos</a></li>
+                                <li><a href="{{ request()->routeIs('index') ? '#faq' : route('index') . '#faq' }}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">FAQ</a></li>
+                                <li><a href="{{route('contact')}}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Contato</a></li>
                             </ul>
                         </div>
                     </div>
@@ -471,17 +513,17 @@
                     <div class="col-lg-2 text-lg-end">
                         <div class="d-flex gap-3 justify-content-lg-end">
                             @if ($contact->link_insta <> null)                            
-                                <a href="{{$contact->link_insta}}" target="_blank" rel="noopener noreferrer" class="text-white fs-5">
+                                <a href="{{$contact->link_insta}}" target="_blank" rel="noopener noreferrer" class="text-color-header fs-5">
                                     <i class="bi bi-instagram"></i>
                                 </a>
                             @endif
                             @if ($contact->link_face <> null)                            
-                                <a href="{{$contact->link_face}}" target="_blank" rel="noopener noreferrer" class="text-white fs-5">
+                                <a href="{{$contact->link_face}}" target="_blank" rel="noopener noreferrer" class="text-color-header fs-5">
                                     <i class="bi bi-facebook"></i>
                                 </a>
                             @endif
                             @if ($contact->link_tik_tok <> null)                            
-                                <a href="{{$contact->link_tik_tok}}" target="_blank" rel="noopener noreferrer" class="text-white fs-5">
+                                <a href="{{$contact->link_tik_tok}}" target="_blank" rel="noopener noreferrer" class="text-color-header fs-5">
                                     <i class="bi bi-linkedin"></i>
                                 </a>
                             @endif
@@ -498,19 +540,19 @@
 
                 <div class="col-md-10 small">
                     <div class="d-flex flex-wrap col-12 font-changa font-16 font-regular text-center text-lg-end justify-content-center justify-content-lg-end">
-                        <p id="footer-text"></p>                        
+                        <p id="footer-text" class="text-color-header"></p>                        
                     </div>
 
                     <script defer>
                         const currentYeaar = (new Date).getFullYear();
-                        document.getElementById("footer-text").innerHTML = `© ${currentYeaar} <span> Transportes e Atacadista de Rações LTDA.
-                    Todos os direitos reservados.</span> <a href="https://policies.google.com/privacy?hl=pt-BR" target="_blank" class="text-white font-semibold">| Política de Privacidade</a>`
+                        document.getElementById("footer-text").innerHTML = `© ${currentYeaar} <span> {{$themeData->copyright}}
+                    Todos os direitos reservados.</span> <a href="https://policies.google.com/privacy?hl=pt-BR" target="_blank" class="text-color-header font-semibold">| Política de Privacidade</a>`
                     </script>
                 </div>
 
                 <div class="col-12 col-md-2 text-center text-md-end mt-3 mt-md-0">
                     <a href="http://www.whi.dev.br" target="_blank" rel="noopener noreferrer">
-                        <img src="{{asset('build/client/images/whi.svg')}}" alt="Agência WHI" style="height:35px;">
+                        <img src="{{asset('build/client/themes/petshop/tp-01/images/whi.svg')}}" alt="Agência WHI" style="height:35px;">
                     </a>
                 </div>
 
@@ -518,7 +560,7 @@
 
         </div>
     </footer>
-    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <a href="#" id="scroll-top" class="scroll-top bg-scroll d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
     
     <script src="https://cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>
@@ -528,7 +570,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('build/client/bootstrap/js/bootstrap.bundle.js') }}"></script>
     <script src="{{ asset('build/client/lgpd/script.js') }}"></script>
-    <script src="{{ asset('build/client/themes/petshop/tp-01/default.js') }}"></script>
+    <script src="{{ asset('build/client/themes/petshop/tp-01/js/default.js') }}"></script>
 
     {{-- Modais alert --}}
     <script>

@@ -150,7 +150,7 @@
         <div class="col-12 mb-3">
             <div class="mt-3">
                 <label for="path_image" class="form-label">Imagem de capa</label>
-                <input type="file" name="path_image" data-plugins="dropify" data-default-file="{{isset($product)?$product->path_image<>''?url('storage/'.$product->path_image):'':''}}"  />
+                <input type="file" name="path_image" accept=".jpg,.jpeg,.png" data-plugins="dropify" data-default-file="{{isset($product)?$product->path_image<>''?url('storage/'.$product->path_image):'':''}}"  />
                 <p class="text-muted text-center mt-2 mb-0">{{__('dashboard.text_img_size')}} <b class="text-danger">2 MB</b>.</p>
             </div>
         </div>
@@ -158,7 +158,7 @@
         <div class="col-12">
             <div class="mt-3">
                 <label for="path_file" class="form-label">Ficha Técnica</label>
-                <input type="file" name="path_file" data-plugins="dropify" data-default-file="{{isset($product)?$product->path_file<>''?url('storage/'.$product->path_file):'':''}}"  />
+                <input type="file" name="path_file" accept="application/pdf" data-plugins="dropify" data-default-file="{{isset($product)?$product->path_file<>''?url('storage/'.$product->path_file):'':''}}"  />
                 <p class="text-muted text-center mt-2 mb-0">{{__('dashboard.text_img_size')}} <b class="text-danger">3 MB</b>.</p>
             </div>
         </div>
