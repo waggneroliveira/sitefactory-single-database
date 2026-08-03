@@ -250,7 +250,7 @@
             <div class="row g-4">
                 @foreach ($productCategorieHighlights as $productCategory)
                     <div class="col-12 col-md-4 mb-3 mb-lg-0">
-                        <div class="card p-4 d-flex flex-row justify-content-center align-items-center border-0 rounded-4 bg-yellow">
+                        <div class="card p-4 d-flex flex-row justify-content-center align-items-center border-0 rounded-4 bg-secondary-color">
                             @if ($productCategory->path_image <> null)                                
                                 <img src="{{asset('storage/' . $productCategory->path_image)}}"
                                     class="card-img-top rounded"

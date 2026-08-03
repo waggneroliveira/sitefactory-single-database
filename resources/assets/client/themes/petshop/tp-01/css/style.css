@@ -1,12 +1,3 @@
-
-
-.bg-yellow{
-    background: var(--secondary-color);
-}
-.color-yellow{
-    color: var(--secondary-color);
-}
-
 .bg-grey-light{
     background: var(--text-color-light);
 }
