@@ -16,6 +16,6 @@ class AboutPageController
     {
         $data = $this->service->getPageData($theme);
 
-        return view($theme->view('index'), $data);
+        return view($theme->view('about'), $data);
     }
 }
