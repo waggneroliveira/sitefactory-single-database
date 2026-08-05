@@ -12,11 +12,15 @@ use App\Models\ServiceLocation;
 use App\Models\Statute;
 use App\Models\Topic;
 use App\Models\Video;
+use App\Services\ThemeManager;
 
 class AboutPageService
 {
-    public function getPageData(): array
+    public function getPageData(ThemeManager $themeManager): array
     {
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+
         return [
             'about' => About::active()->first(),
             'topics' => Topic::active()->sorting()->get(),
@@ -28,6 +32,8 @@ class AboutPageService
             'video' => Video::active()->first(),
             'reports' => Report::active()->get(),
             'serviceLocation' => ServiceLocation::active()->first(),
+            'theme' => $theme,
+            'themeData' => $themeData,
         ];
     }
 }
