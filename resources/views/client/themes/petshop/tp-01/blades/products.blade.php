@@ -1,4 +1,4 @@
-@extends('client.core.client')
+@extends($theme->core('client'))
 
 @section('content')
 <div class="banner-inner blog container-fluid d-flex justify-content-center align-items-center flex-column position-relative" style="--banner-bg: url('../images/banner-product.png');">
@@ -13,7 +13,7 @@
 
             <aside class="filter-aside">
                 <!-- Categorias -->
-                @if ($productCategories->count())                    
+                @if (isset($productCategories) && $productCategories->count())                    
                     <div class="filter-box mb-4 bg-grey-light rounded-4 overflow-hidden">
                         <div class="filter-title filter-toggle bg-grey-medium d-flex justify-content-center align-items-center py-1">
                             <i class="bi bi-list"></i>
@@ -30,7 +30,7 @@
                 @endif
 
                 <!-- Marcas -->
-                @if ($brands->count())                    
+                @if (isset($brands) && $brands->count())                    
                     <div class="filter-box mb-4 bg-grey-light rounded-4 overflow-hidden">
                         <div class="filter-title filter-toggle bg-grey-medium d-flex justify-content-center align-items-center py-1">
                             <i class="bi bi-list"></i>
@@ -57,34 +57,36 @@
             </script>
 
         </div>
-        <div class="col-12 col-lg-9 {{ !$brands->count() && !$productCategories->count() ? 'w-100' : '' }}">
-            <div class="row justify-content-between">
-                <div class="col-12 col-lg-8">
-                    <h2 id="products-title" class="about-title font-changa font-28 font-bold color-green">{{$title}}</h2>
-                </div>
-                <div class="col-12 col-lg-4">
-                    <div class="search-wrapper w-100 justify-content-end">
-                        <form action="">
-                            <input 
-                                type="text" 
-                                name="search"
-                                value="{{ request('search') }}"
-                                class="form-control search-input font-changa font-16 font-medium color-grey search-field"
-                                placeholder="Pesquisar..."
-                            >
-                        </form>
-                        <div class="bg-green px-2 py-1 rounded-3">
-                            <i class="bi bi-search search-icon text-white font-20"></i>
+        @if (isset($brands) && isset($productCategories))
+            <div class="col-12 col-lg-9 {{ !$brands->count() && !$productCategories->count() ? 'w-100' : '' }}">
+                <div class="row justify-content-between">
+                    <div class="col-12 col-lg-8">
+                        <h2 id="products-title" class="about-title font-changa font-28 font-bold color-green">{{$title}}</h2>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="search-wrapper w-100 justify-content-end">
+                            <form action="">
+                                <input 
+                                    type="text" 
+                                    name="search"
+                                    value="{{ request('search') }}"
+                                    class="form-control search-input font-changa font-16 font-medium color-grey search-field"
+                                    placeholder="Pesquisar..."
+                                >
+                            </form>
+                            <div class="bg-button-two color-button-two px-2 py-1 rounded-3">
+                                <i class="bi bi-search search-icon text-white font-20"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Produtos -->
-            <div id="products-container" class="row g-4 products mt-4">
-                @include('client.includes.products')
+                <!-- Produtos -->
+                <div id="products-container" class="row g-4 products mt-4">
+                    @include('client.themes.petshop.tp-01.includes.products')
+                </div>
             </div>
-        </div>
+        @endif
     </div>
 </div>
 

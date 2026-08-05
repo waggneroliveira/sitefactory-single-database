@@ -37,6 +37,10 @@ class ThemeManager
     {
         return "client.themes.{$this->current()}.{$this->variation()}.blades.{$view}";
     }
+    public function includes(string $view): string
+    {
+        return "client.themes.{$this->current()}.{$this->variation()}.includes.{$view}";
+    }
 
     public function asset(string $path): string
     {

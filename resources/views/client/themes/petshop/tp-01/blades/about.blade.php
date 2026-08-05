@@ -7,7 +7,7 @@
         <p class="font-changa font-15 font-regular text-white position-relative z-3">Conheça um pouco sobre a gente aqui!</p>
     </div>
 
-    @if ($topics->count() > 0)
+    @if (isset($topics) && $topics->count())
         <section id="topic" class="topics py-5">
             <div class="container">
                 <div class="row g-4 justify-content-center">
@@ -78,7 +78,7 @@
             </div>
         </section>
     @endif
-    @if ($benefitTopics->count())
+    @if (isset($benefitTopics) && $benefitTopics->count())
         <section id="stats-section" class="stats-section py-5 position-relative container-fluid overflow-hidden">
             <img src="{{asset('build/client/themes/petshop/tp-01/images/firula-count.svg')}}" alt="Firula" class="position-absolute top-0 left-0 firula-count">
 
@@ -96,7 +96,7 @@
             </div>
         </section>
     @endif
-    @if ($reports->count())
+    @if (isset($reports) && $reports->count())
         <section class="mvw-section d-flex justify-content-center align-items-end" id="mvwSection">
             <div class="mvw-overlay"></div>
             <div class="container">
@@ -118,11 +118,11 @@
             </div>
         </section>
     @endif
-    @if ($directions->count())
+    @if (isset($directions) && $directions->count())
         <section id="team-section" class="team-section py-5 position-relative">
-            <img src="{{asset('build/client/images/firula-blog.svg')}}" alt="Firula blog" class="firula-blog position-absolute top-0 left-0">
+            <img src="{{asset('build/client/themes/petshop/tp-01/images/firula-blog.svg')}}" alt="Firula blog" class="firula-blog position-absolute top-0 left-0">
             <div class="container z-3 position-relative">
-                <span class="blog-subtitle color-yellow font-changa font-16 font-bold d-block mb-2 m-auto me-0">
+                <span class="about-subtitle font-changa font-16 font-bold d-block mb-2 m-auto me-0 w-50">
                     Equipe
                 </span>
 
@@ -144,12 +144,12 @@
                                         @if ($representative->email <> null || $representative->whatsapp <> null)                                        
                                             <span class="color-green font-changa font-16 font-medium w-100 mb-2">Enviar mensagem</span>
                                             @if ($representative->email <> null)
-                                                <a href="mailto:{{$representative->email}}" target="_blank" rel="noopener noreferrer" class="me-1 btn btn-team bg-green text-white font-changa font-15 font-regular rounded-pill d-flex justify-content-center align-items-center" style="width: 35px; height:35px">
+                                                <a href="mailto:{{$representative->email}}" target="_blank" rel="noopener noreferrer" class="me-1 btn btn-team bg-secondary-color text-white font-changa font-15 font-regular rounded-pill d-flex justify-content-center align-items-center" style="width: 35px; height:35px">
                                                     <i class="bi bi-envelope"></i>
                                                 </a>
                                             @endif
                                             @if ($representative->whatsapp <> null)                                        
-                                                <a href="tel:{{$representative->whatsapp}}" target="_blank" rel="noopener noreferrer" class="btn btn-team bg-green text-white font-changa font-15 font-regular rounded-pill d-flex justify-content-center align-items-center" style="width: 35px; height:35px">
+                                                <a href="tel:{{$representative->whatsapp}}" target="_blank" rel="noopener noreferrer" class="btn btn-team bg-secondary-color text-white font-changa font-15 font-regular rounded-pill d-flex justify-content-center align-items-center" style="width: 35px; height:35px">
                                                     <i class="bi bi-whatsapp"></i>
                                                 </a>
                                             @endif
@@ -212,91 +212,87 @@
                     </div>
                 </div>
             </div>
-            <img src="{{asset('build/client/images/firula-about.svg')}}" alt="Firula" class="position-absolute bottom-0 start-0">
+            <img src="{{asset('build/client/themes/petshop/tp-01/images/firula-about.svg')}}" alt="Firula" class="position-absolute bottom-0 start-0">
         </section>
     @endif
+    
+    <style>
+        .stat-number{
+            color: var(--secondary-color);
+        }
+        .btn-team:hover {
+            background: var(--bg-button-one);
+        }
+    </style>
+
     <script>
-        // Normaliza URL
+        // ===========================
+        // Helpers
+        // ===========================
+
         function norm(url) {
             if (!url) return "";
             return url.startsWith("//") ? window.location.protocol + url : url;
         }
 
-        // Converte para embed (YouTube / Vimeo)
         function toEmbed(rawUrl) {
             const urlStr = norm(rawUrl);
             if (!urlStr) return "";
 
             let u;
-            try { u = new URL(urlStr); } catch { return urlStr; }
+            try {
+                u = new URL(urlStr);
+            } catch {
+                return urlStr;
+            }
 
             const host = u.hostname.replace(/^www\./, "");
 
             // YouTube
             if (host.includes("youtube.com") || host.includes("youtu.be")) {
 
-                if (u.pathname.startsWith("/embed/")) return u.toString();
+                if (u.pathname.startsWith("/embed/")) {
+                    return u.toString();
+                }
 
-                if (host === "youtu.be" && u.pathname.length > 1) {
+                if (host === "youtu.be") {
                     const id = u.pathname.split("/")[1];
-                    return `https://www.youtube.com/embed/${id}?autoplay=1`;
+                    return `https://www.youtube.com/embed/${id}`;
                 }
 
                 if (u.pathname.startsWith("/shorts/")) {
-                    const id = u.pathname.split("/")[2] || u.pathname.split("/")[1];
-                    return `https://www.youtube.com/embed/${id}?autoplay=1`;
+                    const id = u.pathname.split("/")[2];
+                    return `https://www.youtube.com/embed/${id}`;
                 }
 
                 const v = u.searchParams.get("v");
-                if (v) return `https://www.youtube.com/embed/${v}?autoplay=1`;
 
-                const parts = u.pathname.split("/").filter(Boolean);
-                if (parts.length >= 1) {
-                    const id = parts.pop();
-                    return `https://www.youtube.com/embed/${id}?autoplay=1`;
+                if (v) {
+                    return `https://www.youtube.com/embed/${v}`;
                 }
             }
 
             // Vimeo
             if (host.includes("vimeo.com")) {
 
-                if (host === "player.vimeo.com") return u.toString();
+                if (host === "player.vimeo.com") {
+                    return u.toString();
+                }
 
-                const parts = u.pathname.split("/").filter(Boolean);
-                const last = parts[parts.length - 1];
-                if (/^\d+$/.test(last)) {
-                    return `https://player.vimeo.com/video/${last}?autoplay=1`;
+                const id = u.pathname.split("/").filter(Boolean).pop();
+
+                if (/^\d+$/.test(id)) {
+                    return `https://player.vimeo.com/video/${id}`;
                 }
             }
 
             return urlStr;
         }
 
-        // Video youtube
-        const playBtn = document.querySelector('.video-play-btn');
+        function getYouTubeId(url) {
 
-        if (playBtn) {
-            playBtn.addEventListener('click', function () {
-
-                const container = this.closest('.video-container');
-                const rawUrl = container.getAttribute('data-video');
-                const embedUrl = toEmbed(rawUrl);
-
-                container.innerHTML = `
-                    <iframe
-                        src="${embedUrl}?autoplay=1"
-                        frameborder="0"
-                        allow="autoplay; encrypted-media"
-                        allowfullscreen
-                        style="width:100%; height:100%;">
-                    </iframe>
-                `;
-            });
-        }
-
-
-            function getYouTubeId(url) {
             try {
+
                 const u = new URL(url);
                 const host = u.hostname.replace(/^www\./, "");
 
@@ -305,68 +301,116 @@
                 }
 
                 if (u.pathname.startsWith("/shorts/")) {
-                    return u.pathname.split("/")[2] || u.pathname.split("/")[1];
+                    return u.pathname.split("/")[2];
                 }
 
-                const v = u.searchParams.get("v");
-                if (v) return v;
+                return u.searchParams.get("v");
 
-                const parts = u.pathname.split("/").filter(Boolean);
-                return parts.pop();
             } catch {
                 return null;
             }
         }
 
+        // ===========================
+        // DOM Ready
+        // ===========================
+
         document.addEventListener("DOMContentLoaded", function () {
 
-            const container = document.querySelector(".video-container");
+            // ===========================
+            // Vídeo
+            // ===========================
 
-            // evita erro se não existir
-            if (!container) return;
+            const playBtn = document.querySelector(".video-play-btn");
 
-            const img = container.querySelector(".video-thumb");
+            if (playBtn) {
 
-            // verifica se a imagem existe também
-            if (!img) return;
+                playBtn.addEventListener("click", function () {
 
-            const rawUrl = container.getAttribute("data-video");
+                    const container = this.closest(".video-container");
 
-            if (!rawUrl) return;
+                    if (!container) return;
 
-            const videoId = getYouTubeId(rawUrl);
+                    const embedUrl = toEmbed(container.dataset.video);
 
-            if (videoId) {
-                img.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+                    container.innerHTML = `
+                        <iframe
+                            src="${embedUrl}?autoplay=1"
+                            frameborder="0"
+                            allow="autoplay; encrypted-media"
+                            allowfullscreen
+                            style="width:100%;height:100%;">
+                        </iframe>
+                    `;
+                });
             }
 
-        });
+            const videoContainer = document.querySelector(".video-container");
 
-        const section = document.getElementById("mvwSection");
-        const cards = document.querySelectorAll(".mvw-card");
+            if (videoContainer) {
 
-        function changeBackground(card) {
-            const bg = card.getAttribute("data-bg");
-            section.style.backgroundImage = `url(${bg})`;
+                const img = videoContainer.querySelector(".video-thumb");
 
-            cards.forEach(c => c.classList.remove("active"));
-            card.classList.add("active");
-        }
+                if (img) {
 
-        cards.forEach(card => {
-            card.addEventListener("mouseenter", () => {
-                if (window.innerWidth > 768) {
-                    changeBackground(card);
+                    const id = getYouTubeId(videoContainer.dataset.video);
+
+                    if (id) {
+                        img.src = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+                    }
                 }
-            });
-        });
+            }
 
-        cards.forEach(card => {
-            card.addEventListener("click", () => {
-                if (window.innerWidth <= 768) {
-                    changeBackground(card);
-                }
+            // ===========================
+            // MVW
+            // ===========================
+
+            const section = document.getElementById("mvwSection");
+
+            if (!section) return;
+
+            const cards = section.querySelectorAll(".mvw-card");
+
+            if (!cards.length) return;
+
+            function changeBackground(card) {
+
+                const bg = card.dataset.bg;
+
+                if (!bg) return;
+
+                section.style.backgroundImage = `url("${bg}")`;
+
+                cards.forEach(c => c.classList.remove("active"));
+
+                card.classList.add("active");
+            }
+
+            // imagem inicial
+            changeBackground(cards[0]);
+
+            cards.forEach(card => {
+
+                // Desktop
+                card.addEventListener("mouseenter", function () {
+
+                    if (window.innerWidth > 768) {
+                        changeBackground(this);
+                    }
+
+                });
+
+                // Mobile
+                card.addEventListener("click", function () {
+
+                    if (window.innerWidth <= 768) {
+                        changeBackground(this);
+                    }
+
+                });
+
             });
+
         });
     </script>
 @endsection

@@ -5,11 +5,12 @@ namespace App\Modules\Client\Business;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
 
 class ProductPageService
 {
-    public function getProductListData(Request $request): array
+    public function getProductListData(Request $request, ThemeManager $themeManager): array
     {
         $category = $request->get('category');
         $brand = $request->get('brand');
@@ -44,9 +45,9 @@ class ProductPageService
         $brands = Brand::whereHas('products', function ($query) {
             $query->active()->whereHas('category', fn ($q) => $q->active());
         })
-            ->active()
-            ->sorting()
-            ->get();
+        ->active()
+        ->sorting()
+        ->get();
 
         $title = 'Todos os Produtos';
 
@@ -77,16 +78,18 @@ class ProductPageService
                 $title = 'Nenhum produto encontrado';
             }
         }
-
-        return compact('products', 'productCategories', 'brands', 'title');
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        
+        return compact('products', 'productCategories', 'brands', 'title', 'theme', 'themeData');
     }
 
-    public function getProductViewData($category = null, $slug = null): array
+    public function getProductViewData($category = null, $slug = null, ThemeManager $themeManager): array
     {
         if (!$category || !$slug) {
             return ['view' => 'client.errors.404'];
         }
-
+        
         $product = Product::with(['category', 'brand', 'galleries' => fn ($q) => $q->active()->sorting()])
             ->whereHas('category', fn ($q) => $q->active())
             ->whereHas('brand', fn ($q) => $q->active())
@@ -94,10 +97,17 @@ class ProductPageService
             ->active()
             ->first();
 
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+
         if ($product === null) {
             return ['view' => 'client.errors.404'];
         }
 
-        return ['product' => $product];
+        return [
+            'product' => $product,
+            'theme' => $theme,
+            'themeData' => $themeData,
+        ];
     }
 }

@@ -1,8 +1,8 @@
-@extends('client.core.client')
+@extends($theme->core('client'))
 @section('content')
     <div class="banner-inner blog container-fluid d-flex justify-content-center align-items-center flex-column position-relative" style="--banner-bg: url('../images/banner-blog.png');">
-        <span class="color-yellow font-changa font-16 font-bold position-relative z-3 text-center">Blog </span>
-        <h1 class="font-mobi font-changa font-40 font-bold text-white position-relative z-3 mt-2">Artigo Animal</h1>
+        <span class="color-yellow font-changa font-16 font-bold position-relative z-3 text-center">Contato </span>
+        <h1 class="font-mobi font-changa font-40 font-bold text-white position-relative z-3 mt-2">Fale Conosco</h1>
         <p class="font-changa font-15 font-regular text-white position-relative z-3">Conheça um pouco sobre a gente aqui!</p>
     </div>
 
@@ -21,7 +21,7 @@
                         <ul class="list-unstyled">
                             <li class="d-flex mb-3">
                                 <div class="me-3 text-success fs-4">
-                                    <i class="bi bi-geo-alt-fill color-green"></i>
+                                    <i class="bi bi-geo-alt-fill primary-color"></i>
                                 </div>
                                 <div>
                                     <span class="color-green font-changa font-16 font-semibold">Endereço</span>
@@ -33,7 +33,7 @@
         
                             <li class="d-flex mb-3">
                                 <div class="me-3 text-success fs-4">
-                                    <i class="bi bi-telephone-fill color-green"></i>
+                                    <i class="bi bi-telephone-fill primary-color"></i>
                                 </div>
                                 <div>
                                     <span class="color-green font-changa font-16 font-semibold">Telefone</span>
@@ -43,7 +43,7 @@
         
                             <li class="d-flex">
                                 <div class="me-3 text-success fs-4">
-                                    <i class="bi bi-envelope-fill color-green"></i>
+                                    <i class="bi bi-envelope-fill primary-color"></i>
                                 </div>
                                 <div>
                                     <span class="color-green font-changa font-16 font-semibold">E-mail</span>
@@ -83,7 +83,7 @@
                                                 Aceito os termos descritos na Política de Privacidade
                                             </label>
                                         </div>
-                                        <button type="submit" class="bt-hover border font-changa font-15 btn bg-green text-white rounded-3 ms-auto px-4">Enviar</button>
+                                        <button type="submit" class="bt-hover border font-changa font-15 bg-button-two color-button-two rounded-3 ms-auto py-2 px-4 hover-zoom">Enviar</button>
                                     </div>
                                 </div>
                             </form>

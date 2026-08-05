@@ -311,7 +311,7 @@
                         <div class="d-flex justify-content-end col-12">
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                         </div>
-                        <img src="{{asset('build/client/images/girollato-footer.svg')}}" alt="{{ config('app.name') }}" height="40">
+                        <img src="{{asset('build/client/themes/petshop/tp-01/images/girollato-footer.svg')}}" alt="{{ config('app.name') }}" height="40">
                         <h5 class="modal-title text-white font-changa font-20 font-medium mt-3">Preencha o formulário para baixar o arquivo</h5>
                     </div>
 

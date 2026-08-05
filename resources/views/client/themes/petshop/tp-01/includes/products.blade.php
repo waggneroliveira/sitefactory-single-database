@@ -18,17 +18,17 @@
 @else
     @foreach ($products as $product)
         <div class="col-6 col-sm-6 col-lg-4">
-            <div class="product-card">
-                <div class="image border rounded-3 position-relative mb-3">
-                    <a href="{{ route('client.product', ['category' => $product->category->slug, 'slug' => $product->slug]) }}">
-                        <span class="btn btn-view font-changa font-16 font-medium opacity-0 col-10 col-lg-5">
-                            Ver Produto
-                        </span>
-                        <img src="{{asset('storage/' . $product->path_image)}}" alt="{{$product->title}}">
-                    </a>
+            <div class="product-card bg-white shadow-sm rounded-3">
+                <div class="image position-relative mb-0">
+                    <img src="{{asset('storage/' . $product->path_image)}}" alt="{{$product->title}}">
                 </div>
-                <h6 class="font-changa font-18 font-semibold color-green">{{$product->title}}</h6>
-                <p class="color-grey font-changa font-18 font-medium">{{$product->description}}</p>
+                <div class="py-3">
+                    <h6 class="font-changa font-18 font-semibold primary-color">{{$product->title}}</h6>
+                    <p class="color-grey font-changa font-16 font-regular mb-0">{{$product->description}}</p>
+                </div>
+                <a href="{{ route('client.product', ['category' => $product->category->slug, 'slug' => $product->slug]) }}" class="col-12">
+                    <span class="bg-button-two color-button-two btn-view font-changa font-16 font-medium col-10 col-lg-5 hover-zoom">Ver Produto</span>
+                </a>
             </div>
         </div>
     @endforeach
