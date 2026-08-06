@@ -3,22 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Statute;
+use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use RealRashid\SweetAlert\Facades\Alert;
-use App\Repositories\SettingThemeRepository;
-use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\ImageManager;
+use RealRashid\SweetAlert\Facades\Alert;
 
 
 class StatuteController extends Controller
 {
 
     protected $pathUpload = 'admin/uploads/images/statute/';
-    public function index()
+    public function index(ThemeManager $theme)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -28,9 +29,9 @@ class StatuteController extends Controller
             return $check; // retorna view 403
         }
 
-       $statute = Statute::first();
-
-        return view('admin.blades.statute.index', compact('statute'));
+        $statute = Statute::first();
+        $themeData = $theme->theme();
+        return view('admin.blades.statute.index', compact('statute', 'themeData'));
     }
 
     public function store(Request $request)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Faq;
 use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -14,11 +15,9 @@ use RealRashid\SweetAlert\Facades\Alert;
 class FaqController extends Controller
 {
 
-    public function index()
+    public function index(ThemeManager $theme)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
-
-         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
         // Verifica permissão para visualizar slides
         $check = checkPermission('perguntas e respostas.visualizar', $settingTheme);
@@ -27,8 +26,8 @@ class FaqController extends Controller
         }
 
         $faqs = Faq::sorting()->get();
-
-        return view('admin.blades.faq.index', compact('faqs'));
+        $themeData = $theme->theme();
+        return view('admin.blades.faq.index', compact('faqs', 'themeData'));
     }
 
     public function store(Request $request)

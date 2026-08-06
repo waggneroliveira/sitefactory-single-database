@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Log;
+use App\Http\Controllers\Helpers\HelperArchive;
 use App\Models\Slide;
+use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Response;
-use RealRashid\SweetAlert\Facades\Alert;
-use App\Repositories\SettingThemeRepository;
-use App\Http\Controllers\Helpers\HelperArchive;
-use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\ImageManager;
+use Log;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SlideController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/slide/';
-    public function index()
+    public function index(ThemeManager $theme)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -31,7 +32,9 @@ class SlideController extends Controller
 
         $slides = Slide::sorting()->get();
 
-        return view('admin.blades.slide.index', compact('slides', 'settingTheme'));
+        $themeData = $theme->theme();
+
+        return view('admin.blades.slide.index', compact('slides', 'settingTheme', 'themeData'));
         
     }
 

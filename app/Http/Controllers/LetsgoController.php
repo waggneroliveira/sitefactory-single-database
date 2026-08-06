@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Letsgo;
 use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,9 +17,9 @@ use RealRashid\SweetAlert\Facades\Alert;
 class LetsgoController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/lets-go/';
-    public function index()
+    public function index(ThemeManager $theme)
     {
-         $settingTheme = (new SettingThemeRepository())->settingTheme();
+        $settingTheme = (new SettingThemeRepository())->settingTheme();
 
         // Verifica permissão para visualizar slides
         $check = checkPermission('sesssao lets go.visualizar', $settingTheme);
@@ -27,8 +28,9 @@ class LetsgoController extends Controller
         }
 
         $letsgo = Letsgo::first();
+        $themeData = $theme->theme();
 
-       return view('admin.blades.letsgo.index', compact('letsgo'));
+        return view('admin.blades.letsgo.index', compact('letsgo', 'themeData'));
     }
 
     public function store(Request $request)

@@ -53,7 +53,9 @@
                                                             <div class="modal-body p-4">
                                                                 <form action="{{route('admin.dashboard.topic.store')}}" method="POST" enctype="multipart/form-data">
                                                                     @csrf
-                                                                    @include('admin.blades.topic.form')  
+
+                                                                    @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.topics.form", ['topics', 'themeData'])
+                                                                    
                                                                     <div class="d-flex justify-content-end gap-2">
                                                                         <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">{{__('dashboard.btn_cancel')}}</button>
                                                                         <button type="submit" class="btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_create')}}</button>
@@ -113,7 +115,9 @@
                                                                             <form action="{{ route('admin.dashboard.topic.update', ['topic' => $topic->id]) }}" method="POST" enctype="multipart/form-data">
                                                                                 @csrf
                                                                                 @method('PUT')
-                                                                                @include('admin.blades.topic.form')    
+
+                                                                                @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.topics.form", ['topics', 'themeData'])
+
                                                                                 <div class="d-flex justify-content-end gap-2">
                                                                                     <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">{{__('dashboard.btn_cancel')}}</button>
                                                                                     <button type="submit" class="btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_save')}}</button>

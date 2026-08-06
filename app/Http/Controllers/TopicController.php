@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Log;
 use App\Models\Topic;
+use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Response;
-use RealRashid\SweetAlert\Facades\Alert;
-use App\Repositories\SettingThemeRepository;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\ImageManager;
+use Log;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class TopicController extends Controller
 {
     protected $pathUpload = 'admin/uploads/project/image/';
-    public function index()
+    public function index(ThemeManager $theme)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -36,8 +37,8 @@ class TopicController extends Controller
             'sorting',
             'path_image',
         )->sorting()->get();
-
-        return view('admin.blades.topic.index', compact('topics'));
+        $themeData = $theme->theme();
+        return view('admin.blades.topic.index', compact('topics', 'themeData'));
     }
 
     public function store(Request $request)
