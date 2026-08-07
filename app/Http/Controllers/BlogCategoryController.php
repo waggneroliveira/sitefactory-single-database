@@ -2,25 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Str;
+use App\Http\Requests\BlogCategoryRequest;
+use App\Http\Requests\BlogCategoryRequestUpdate;
 use App\Models\BlogCategory;
+use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Response;
-use RealRashid\SweetAlert\Facades\Alert;
-use App\Http\Requests\BlogCategoryRequest;
-use App\Repositories\SettingThemeRepository;
-use App\Http\Requests\BlogCategoryRequestUpdate;
+use Illuminate\Support\Str;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\ImageManager;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class BlogCategoryController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/blogCategory/';
-    public function index()
+    public function index(ThemeManager $theme)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -31,8 +32,8 @@ class BlogCategoryController extends Controller
         }
 
         $blogCategories = BlogCategory::sorting()->get();
-
-        return view('admin.blades.blogCategory.index', compact('blogCategories'));
+        $themeData = $theme->theme();
+        return view('admin.blades.blogCategory.index', compact('blogCategories', 'themeData'));
     }
 
     public function store(BlogCategoryRequest $request){
