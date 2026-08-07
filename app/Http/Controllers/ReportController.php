@@ -3,20 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Report;
+use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use RealRashid\SweetAlert\Facades\Alert;
-use App\Repositories\SettingThemeRepository;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\ImageManager;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ReportController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/report/';
-    public function index()
+    public function index(ThemeManager $theme)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -26,8 +27,8 @@ class ReportController extends Controller
             return $check; // retorna view 403
         }
         $reports = Report::get();
-  
-        return view('admin.blades.report.index', compact('reports'));
+        $themeData = $theme->theme();
+        return view('admin.blades.report.index', compact('reports', 'themeData'));
     }
 
    

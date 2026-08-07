@@ -53,7 +53,9 @@
                                                             <div class="modal-body p-4">
                                                                 <form action="{{route('admin.dashboard.benefitTopic.store')}}" method="POST" enctype="multipart/form-data">
                                                                     @csrf
-                                                                    @include('admin.blades.benefitTopic.form')  
+
+                                                                    @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.benefitTopic.form", ['benefitTopic', 'themeData'])
+                                                                    
                                                                     <div class="d-flex justify-content-end gap-2">
                                                                         <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">{{__('dashboard.btn_cancel')}}</button>
                                                                         <button type="submit" class="btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_create')}}</button>
@@ -112,8 +114,10 @@
                                                                         <div class="modal-body p-4">
                                                                             <form action="{{ route('admin.dashboard.benefitTopic.update', ['benefitTopic' => $benefitTopic->id]) }}" method="POST" enctype="multipart/form-data">
                                                                                 @csrf
-                                                                                @method('PUT')
-                                                                                @include('admin.blades.benefitTopic.form')    
+                                                                                @method('PUT')  
+
+                                                                                @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.benefitTopic.form", ['benefitTopic', 'themeData'])
+ 
                                                                                 <div class="d-flex justify-content-end gap-2">
                                                                                     <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">{{__('dashboard.btn_cancel')}}</button>
                                                                                     <button type="submit" class="btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_save')}}</button>
