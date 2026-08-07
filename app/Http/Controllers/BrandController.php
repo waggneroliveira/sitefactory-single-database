@@ -3,19 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Response;
-use RealRashid\SweetAlert\Facades\Alert;
 use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class BrandController extends Controller
 {
 
-    public function index()
+    public function index(ThemeManager $theme)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -26,8 +27,8 @@ class BrandController extends Controller
         }
 
         $brands = Brand::sorting()->get();
-
-        return view('admin.blades.brand.index', compact('brands'));
+        $themeData = $theme->theme();
+        return view('admin.blades.brand.index', compact('brands', 'themeData'));
     }
 
     public function store(Request $request)

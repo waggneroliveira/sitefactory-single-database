@@ -8,6 +8,7 @@ use App\Models\Brand;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -49,7 +50,7 @@ class ProductService
         return compact('products', 'categories', 'productCategory', 'settingTheme');
     }
 
-    public function getCreateData(): array
+    public function getCreateData(ThemeManager $themeManager): array
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
         /** @var \App\Models\User $user */
@@ -69,11 +70,12 @@ class ProductService
         foreach ($brands as $brand) {
             $productBrand[$brand->id] = $brand->title;
         }
-
-        return compact('categories', 'productCategory', 'productBrand');
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return compact('categories', 'productCategory', 'productBrand', 'theme', 'themeData',);
     }
 
-    public function getEditData(Product $product): array
+    public function getEditData(Product $product, ThemeManager $themeManager): array
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
         /** @var \App\Models\User $user */
@@ -97,8 +99,9 @@ class ProductService
         foreach ($brands as $brand) {
             $productBrand[$brand->id] = $brand->title;
         }
-
-        return compact('product', 'categories', 'productCategory', 'productBrand');
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return compact('product', 'categories', 'productCategory', 'productBrand',  'theme', 'themeData',);
     }
 
     public function store(ProductStoreRequest $request): Product

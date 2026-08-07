@@ -3,23 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Models\ProductCategory;
-use Illuminate\Support\Facades\DB;
+use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Response;
-use RealRashid\SweetAlert\Facades\Alert;
-use App\Repositories\SettingThemeRepository;
+use Illuminate\Support\Str;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\ImageManager;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProductCategoryController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/productCategory/';
-    public function index(Request $request)
+    public function index(Request $request, ThemeManager $theme)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -30,8 +31,8 @@ class ProductCategoryController extends Controller
         }
 
         $blogCategories = productCategory::sorting()->get();
-
-        return view('admin.blades.productCategory.index', compact('blogCategories'));
+        $themeData = $theme->theme();
+        return view('admin.blades.productCategory.index', compact('blogCategories', 'themeData'));
     }
 
     public function store(Request $request)

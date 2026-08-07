@@ -3,18 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Video;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Response;
-use RealRashid\SweetAlert\Facades\Alert;
 use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Session;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class VideoController extends Controller
 {
 
-    public function index()
+    public function index(ThemeManager $theme)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -25,8 +26,8 @@ class VideoController extends Controller
         }
 
         $video = Video::first();
-
-        return view('admin.blades.video.index', compact('video'));
+        $themeData = $theme->theme();
+        return view('admin.blades.video.index', compact('video', 'themeData'));
     }
 
     public function store(Request $request)

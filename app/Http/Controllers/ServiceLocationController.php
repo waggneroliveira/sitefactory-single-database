@@ -4,19 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\ServiceLocation;
 use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use RealRashid\SweetAlert\Facades\Alert;
-use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\ImageManager;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ServiceLocationController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/service-location/';
-    public function index()
+    public function index(ThemeManager $theme)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -27,13 +28,13 @@ class ServiceLocationController extends Controller
         }
 
         $serviceLocation = serviceLocation::first();
-
-       return view('admin.blades.serviceLocation.index', compact('serviceLocation'));
+        $themeData = $theme->theme();
+        return view('admin.blades.serviceLocation.index', compact('serviceLocation', 'themeData'));
     }
 
     public function store(Request $request)
     {
-         $data = $request->except(['path_image', 'path_file']);
+        $data = $request->except(['path_image', 'path_file']);
         $manager = new ImageManager(GdDriver::class);
 
         $request->validate([

@@ -3,21 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Direction;
+use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Response;
-use RealRashid\SweetAlert\Facades\Alert;
-use App\Repositories\SettingThemeRepository;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\ImageManager;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DirectionController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/direction/';
-    public function index()
+    public function index(ThemeManager $theme)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -28,8 +29,8 @@ class DirectionController extends Controller
         }
 
         $directions = Direction::sorting()->get();
-
-        return view('admin.blades.direction.index', compact('directions'));
+        $themeData = $theme->theme();
+        return view('admin.blades.direction.index', compact('directions','themeData'));
     }
 
     public function store(Request $request)

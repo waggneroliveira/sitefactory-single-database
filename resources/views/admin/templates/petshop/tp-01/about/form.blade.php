@@ -48,105 +48,105 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
 
-    const uploadUrl = "{{ route('admin.dashboard.about.uploadImageCkeditorAbout') }}";
-    const csrfToken = "{{ csrf_token() }}";
+        const uploadUrl = "{{ route('admin.dashboard.about.uploadImageCkeditorAbout') }}";
+        const csrfToken = "{{ csrf_token() }}";
 
-    function getEditorConfig(readOnly = false) {
-        return {
-            allowedContent: true,
-            readOnly: readOnly,
+        function getEditorConfig(readOnly = false) {
+            return {
+                allowedContent: true,
+                readOnly: readOnly,
 
-            toolbar: [
-                {
-                    name: 'basicstyles',
-                    items: [
-                        'Bold',
-                        'Italic',
-                        'Underline',
-                        'Strike',
-                        'Subscript',
-                        'Superscript'
-                    ]
-                },
-                {
-                    name: 'paragraph',
-                    items: [
-                        'NumberedList',
-                        'BulletedList',
-                        '-',
-                        'Outdent',
-                        'Indent',
-                        '-',
-                        'Blockquote',
-                        '-',
-                        'JustifyLeft',
-                        'JustifyCenter',
-                        'JustifyRight',
-                        'JustifyBlock'
-                    ]
-                },
-                {
-                    name: 'links',
-                    items: ['Link', 'Unlink']
-                },
-                {
-                    name: 'insert',
-                    items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar']
-                },
-                {
-                    name: 'styles',
-                    items: ['Styles', 'Format', 'Font', 'FontSize']
-                },
-                {
-                    name: 'colors',
-                    items: ['TextColor', 'BGColor']
-                },
-                {
-                    name: 'tools',
-                    items: ['Maximize']
+                toolbar: [
+                    {
+                        name: 'basicstyles',
+                        items: [
+                            'Bold',
+                            'Italic',
+                            'Underline',
+                            'Strike',
+                            'Subscript',
+                            'Superscript'
+                        ]
+                    },
+                    {
+                        name: 'paragraph',
+                        items: [
+                            'NumberedList',
+                            'BulletedList',
+                            '-',
+                            'Outdent',
+                            'Indent',
+                            '-',
+                            'Blockquote',
+                            '-',
+                            'JustifyLeft',
+                            'JustifyCenter',
+                            'JustifyRight',
+                            'JustifyBlock'
+                        ]
+                    },
+                    {
+                        name: 'links',
+                        items: ['Link', 'Unlink']
+                    },
+                    {
+                        name: 'insert',
+                        items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar']
+                    },
+                    {
+                        name: 'styles',
+                        items: ['Styles', 'Format', 'Font', 'FontSize']
+                    },
+                    {
+                        name: 'colors',
+                        items: ['TextColor', 'BGColor']
+                    },
+                    {
+                        name: 'tools',
+                        items: ['Maximize']
+                    }
+                ],
+
+                filebrowserUploadUrl: uploadUrl,
+
+                // Mantive exatamente como funcionava no seu Edit
+                fileTools_requestHeaders: {
+                    'X-CSRF-TOKEN': csrfToken
                 }
-            ],
+            };
+        }
 
-            filebrowserUploadUrl: uploadUrl,
+        // Editores de Create/Edit
+        document.querySelectorAll('.ck-editor').forEach(function (element) {
 
-            // Mantive exatamente como funcionava no seu Edit
-            fileTools_requestHeaders: {
-                'X-CSRF-TOKEN': csrfToken
+            if (!element.id) {
+                console.error('Textarea CKEditor sem ID:', element);
+                return;
             }
-        };
-    }
 
-    // Editores de Create/Edit
-    document.querySelectorAll('.ck-editor').forEach(function (element) {
+            if (CKEDITOR.instances[element.id]) {
+                CKEDITOR.instances[element.id].destroy(true);
+            }
 
-        if (!element.id) {
-            console.error('Textarea CKEditor sem ID:', element);
-            return;
-        }
+            CKEDITOR.replace(element.id, getEditorConfig(false));
+        });
 
-        if (CKEDITOR.instances[element.id]) {
-            CKEDITOR.instances[element.id].destroy(true);
-        }
+        // Editores somente leitura (Index)
+        document.querySelectorAll('.ck-readonly').forEach(function (element) {
 
-        CKEDITOR.replace(element.id, getEditorConfig(false));
+            if (!element.id) {
+                console.error('Textarea CKEditor sem ID:', element);
+                return;
+            }
+
+            if (CKEDITOR.instances[element.id]) {
+                CKEDITOR.instances[element.id].destroy(true);
+            }
+
+            CKEDITOR.replace(element.id, getEditorConfig(true));
+        });
+
     });
-
-    // Editores somente leitura (Index)
-    document.querySelectorAll('.ck-readonly').forEach(function (element) {
-
-        if (!element.id) {
-            console.error('Textarea CKEditor sem ID:', element);
-            return;
-        }
-
-        if (CKEDITOR.instances[element.id]) {
-            CKEDITOR.instances[element.id].destroy(true);
-        }
-
-        CKEDITOR.replace(element.id, getEditorConfig(true));
-    });
-
-});
 </script>

@@ -51,7 +51,9 @@
                                                             <div class="modal-body p-4">
                                                                 <form action="{{route('admin.dashboard.productCategory.store')}}" method="POST" enctype="multipart/form-data">
                                                                     @csrf
-                                                                    @include('admin.blades.productCategory.form')  
+
+                                                                    @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.productCategory.form", ['productCategory', 'themeData'])
+ 
                                                                     <div class="d-flex justify-content-end gap-2">
                                                                         <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">{{__('dashboard.btn_cancel')}}</button>
                                                                         <button type="submit" class="btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_create')}}</button>
@@ -111,7 +113,9 @@
                                                                             <form action="{{ route('admin.dashboard.productCategory.update', ['productCategory' => $productCategory->id]) }}" method="POST" enctype="multipart/form-data">
                                                                                 @csrf
                                                                                 @method('PUT')
-                                                                                @include('admin.blades.productCategory.form')    
+                                                                                
+                                                                                @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.productCategory.form", ['productCategory', 'themeData'])
+
                                                                                 <div class="d-flex justify-content-end gap-2">
                                                                                     <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">{{__('dashboard.btn_cancel')}}</button>
                                                                                     <button type="submit" class="btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_save')}}</button>

@@ -6,10 +6,11 @@ use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
 use App\Modules\Product\Business\ProductService;
-use Illuminate\Http\Request;
+use App\Services\ThemeManager;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
 class ProductController
 {
@@ -27,9 +28,9 @@ class ProductController
         return view('admin.blades.product.index', $data);
     }
 
-    public function create(): View|RedirectResponse
+    public function create(ThemeManager $theme): View|RedirectResponse
     {
-        $data = $this->service->getCreateData();
+        $data = $this->service->getCreateData($theme);
         if (isset($data['forbidden'])) {
             return $data['forbidden'];
         }
@@ -45,9 +46,9 @@ class ProductController
         return redirect()->route('admin.dashboard.product.index');
     }
 
-    public function edit(Product $product): View|RedirectResponse
+    public function edit(Product $product, ThemeManager $theme): View|RedirectResponse
     {
-        $data = $this->service->getEditData($product);
+        $data = $this->service->getEditData($product, $theme);
         if (isset($data['forbidden'])) {
             return $data['forbidden'];
         }
