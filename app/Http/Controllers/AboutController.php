@@ -3,17 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\About;
-use Illuminate\Support\Str;
+use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Response;
-use RealRashid\SweetAlert\Facades\Alert;
-use App\Repositories\SettingThemeRepository;
+use Illuminate\Support\Str;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\ImageManager;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AboutController extends Controller
 {
@@ -29,9 +30,9 @@ class AboutController extends Controller
             return $check; // retorna view 403
         }
 
-        $abouts = About::get();
+        $about = About::first();
 
-        return view('admin.blades.about.index', compact('abouts'));
+        return view('admin.blades.about.index', compact('about'));
     }
     public function store(Request $request)
     {
@@ -80,7 +81,7 @@ class AboutController extends Controller
         return redirect()->route('admin.dashboard.about.index');
     }
 
-    public function create(){
+    public function create(ThemeManager $theme){
         $settingTheme = (new SettingThemeRepository())->settingTheme();
         if(!Auth::user()->hasRole('Super') && 
           !Auth::user()->can('usuario.tornar usuario master') &&  
@@ -88,11 +89,11 @@ class AboutController extends Controller
           !Auth::user()->hasPermissionTo('sobre nos.criar')){
             return view('admin.error.403', compact('settingTheme'));
         }
-
-        return view('admin.blades.about.create');
+        $themeData = $theme->theme();
+        return view('admin.blades.about.create', compact('themeData'));
     }
 
-    public function edit(About $about){
+    public function edit(About $about, ThemeManager $theme){
         $settingTheme = (new SettingThemeRepository())->settingTheme();
         if(!Auth::user()->hasRole('Super') && 
           !Auth::user()->can('usuario.tornar usuario master') && 
@@ -100,8 +101,8 @@ class AboutController extends Controller
           !Auth::user()->hasPermissionTo('sobre nos.editar')){
             return view('admin.error.403', compact('settingTheme'));
         }
-
-        return view('admin.blades.about.edit', compact('about'));
+        $themeData = $theme->theme();
+        return view('admin.blades.about.edit', compact('about', 'themeData'));
     }
 
     public function uploadImageCkeditorAbout(Request $request)

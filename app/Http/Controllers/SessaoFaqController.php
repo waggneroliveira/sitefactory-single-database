@@ -3,20 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\SessaoFaq;
+use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use RealRashid\SweetAlert\Facades\Alert;
-use App\Repositories\SettingThemeRepository;
-use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\ImageManager;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SessaoFaqController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/sessao-faq/';
-    public function index()
+    public function index(ThemeManager $theme)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -27,8 +28,8 @@ class SessaoFaqController extends Controller
         }
 
         $sessaoFaq = SessaoFaq::first();
-
-        return view('admin.blades.sessaoFaq.index', compact('sessaoFaq'));
+        $themeData = $theme->theme();
+        return view('admin.blades.sessaoFaq.index', compact('sessaoFaq', 'themeData'));
     }
 
     public function store(Request $request)

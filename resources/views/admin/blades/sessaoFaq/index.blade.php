@@ -45,7 +45,9 @@
                                                             <div class="modal-body p-2 px-3 px-md-4">
                                                                 <form action="{{ route('admin.dashboard.sessaoFaq.store') }}" method="POST" enctype="multipart/form-data">
                                                                     @csrf
-                                                                    @include('admin.blades.sessaoFaq.form', ['textareaId' => 'textarea-create'])  
+
+                                                                    @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.sessaoFaq.form", ['textareaId' => 'textarea-create', 'sessaoFaq', 'themeData'])
+
                                                                     <div class="d-flex justify-content-end gap-2">
                                                                         <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">{{__('dashboard.btn_cancel')}}</button>
                                                                         <button type="submit" class="btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_create')}}</button>
@@ -114,7 +116,9 @@
                                                                             <form action="{{ route('admin.dashboard.sessaoFaq.update', ['sessaoFaq' => $sessaoFaq->id]) }}" method="POST" enctype="multipart/form-data">
                                                                                 @csrf
                                                                                 @method('PUT')
-                                                                                @include('admin.blades.sessaoFaq.form')    
+                                                                                
+                                                                                @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.sessaoFaq.form", ['sessaoFaq', 'themeData'])
+   
                                                                                 <div class="d-flex justify-content-end gap-2">
                                                                                     <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">{{__('dashboard.btn_cancel')}}</button>
                                                                                     <button type="submit" class="btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_save')}}</button>

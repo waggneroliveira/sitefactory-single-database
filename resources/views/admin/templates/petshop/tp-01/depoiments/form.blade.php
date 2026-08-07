@@ -46,9 +46,16 @@
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        if (document.getElementById("{{$textareaId}}")) {
-            CKEDITOR.replace("{{$textareaId}}");
+    document.addEventListener("DOMContentLoaded", function () {
+        const textareaId = "{{$textareaId}}";
+
+        if (document.getElementById(textareaId)) {
+            CKEDITOR.replace(textareaId, {
+                toolbar: [
+                    { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline'] },
+                ],
+                height: 200
+            });
         }
     });
 </script>

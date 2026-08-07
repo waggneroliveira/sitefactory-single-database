@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Depoiment;
 use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +18,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class DepoimentController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/depoiment/';
-    public function index()
+    public function index(ThemeManager $theme)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -28,8 +29,9 @@ class DepoimentController extends Controller
         }
 
         $depoiments = Depoiment::sorting()->get();
+        $themeData = $theme->theme();
 
-        return view('admin.blades.depoiment.index', compact('depoiments'));
+        return view('admin.blades.depoiment.index', compact('depoiments', 'themeData'));
     }
 
     public function store(Request $request)

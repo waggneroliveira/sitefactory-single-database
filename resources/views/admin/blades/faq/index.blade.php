@@ -133,7 +133,7 @@
                                                                             @csrf
                                                                             @method('PUT')
                                                                             
-                                                                            @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.faqs.form", ['textareaId' => 'textarea-create', 'faqs', 'themeData'])
+                                                                            @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.faqs.form", ['faqs', 'themeData'])
 
                                                                             <div class="d-flex justify-content-end gap-2">
                                                                                 <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">{{__('dashboard.btn_cancel')}}</button>

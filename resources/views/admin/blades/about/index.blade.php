@@ -39,7 +39,7 @@
                                             Auth::user()->hasPermissionTo('sobre nos.criar') ||
                                             Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
                                             Auth::user()->hasRole('Super'))
-                                                @if ($abouts->count() < 1)                                                    
+                                                @if (!$about)                                                    
                                                     <a href="{{route('admin.dashboard.about.create')}}" class="mdi mdi-plus-circle me-1 btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_create')}}</a>
                                                 @endif
                                             @endif
@@ -61,11 +61,11 @@
                                                 <th style="width: 85px;">Ações</th>
                                             </tr>
                                         </thead>
-    
-                                        <tbody data-route="{{route('admin.dashboard.about.sorting')}}">
-                                            @foreach ($abouts as $key => $about)
+                                        
+                                        @if (isset($about))                                            
+                                            <tbody data-route="{{route('admin.dashboard.about.sorting')}}">
                                                 @php
-                                                    if ($about->about_category_id) {
+                                                    if ( $about->about_category_id) {
                                                         $categoria = $aboutCategory[$about->about_category_id] ?? 'Nenhuma categoria';
                                                     } 
                                                     \Carbon\Carbon::setLocale('pt_BR');
@@ -75,7 +75,7 @@
                                                 <tr data-code="{{$about->id}}">
                                                     <td><span class="btnDrag mdi mdi-drag-horizontal font-22"></span></td>
                                                     <td class="bs-checkbox">
-                                                        <label><input data-index="{{$key}}" name="btnSelectItem" class="btnSelectItem" type="checkbox" value="{{$about->id}}"></label>
+                                                        <label><input data-index="{{$about->id}}" name="btnSelectItem" class="btnSelectItem" type="checkbox" value="{{$about->id}}"></label>
                                                     </td>
                                                     <td>{{substr(strip_tags($about->title), 0, 40)}}...</td>
                                                     <td class="table-user text-start">
@@ -109,8 +109,8 @@
                                                         @endif
                                                     </td>
                                                 </tr>
-                                            @endforeach
-                                        </tbody>
+                                            </tbody>
+                                        @endif
                                     </table>
                                 </div>
 
@@ -136,16 +136,4 @@
         }
     </style>
 
-    <script>
-        // Inicializa o CKEditor para todos os textareas de comentários
-        document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll(".ck-readonly").forEach(function(el) {
-                CKEDITOR.replace(el.id, {
-                    filebrowserUploadUrl: "{{ route('admin.dashboard.about.uploadImageCkeditorAbout', ['_token' => csrf_token() ]) }}",
-                    filebrowserUploadMethod: 'form',
-                    readOnly: true
-                });
-            });
-        });
-    </script>
 @endsection
