@@ -7,11 +7,12 @@ use App\Models\Blog;
 use App\Models\BlogCategory;
 use App\Models\Contact;
 use App\Models\PopUp;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
 
 class BlogPageService
 {
-    public function getIndexData(Request $request, $category = null): array
+    public function getIndexData(Request $request, $category = null, ThemeManager $themeManager): array
     {
         $search = $request->input('search');
         $blogCategories = BlogCategory::whereHas('blogs')->active()->sorting()->get();
@@ -44,11 +45,13 @@ class BlogPageService
             ->get();
 
         $popUp = PopUp::active()->first();
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
 
-        return compact('blogCategories', 'blogAll', 'blogSeeAlso', 'popUp');
+        return compact('blogCategories', 'blogAll', 'blogSeeAlso', 'popUp', 'theme', 'themeData');
     }
 
-    public function getInnerData($slug = null): array
+    public function getInnerData($slug = null, ThemeManager $themeManager): array
     {
         if (!$slug) {
             return ['view' => 'client.errors.404'];
@@ -111,7 +114,8 @@ class BlogPageService
             ->get();
 
         $contact = Contact::first();
-
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
         return compact(
             'contact',
             'viewMores',
@@ -120,7 +124,9 @@ class BlogPageService
             'blogInner',
             'slug',
             'blogCategories',
-            'blogRelacionados'
+            'blogRelacionados', 
+            'theme', 
+            'themeData'
         );
     }
 }

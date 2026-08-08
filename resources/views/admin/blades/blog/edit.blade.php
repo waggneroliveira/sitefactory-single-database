@@ -25,9 +25,11 @@
                 <form action="{{ route('admin.dashboard.blog.update', ['blog' => $blog->id]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
+
                     <div class="row">
-                        @include('admin.blades.blog.form')    
+                        @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.blog.form", ['blog', 'themeData'])       
                     </div>
+
                     <div class="d-flex justify-content-end gap-2">
                         <a href="{{route('admin.dashboard.blog.index')}}" class="btn btn-danger waves-effect waves-light">{{__('dashboard.btn_cancel')}}</a>
                         <button type="submit" class="btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_save')}}</button>
@@ -38,30 +40,4 @@
         </div> <!-- fecha container-fluid -->
     </div> <!-- fecha content -->
 </div> <!-- fecha content-page -->
-
-<script>
-    // Inicializa o CKEditor para o textarea de criação
-    CKEDITOR.replace('textarea-edit', {
-        allowedContent: true,
-        toolbar: [
-            { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript'] },
-            { name: 'paragraph', items: [
-                'NumberedList', 'BulletedList', '-', 
-                'Outdent', 'Indent', '-', 
-                'Blockquote', '-', 
-                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'
-            ] },
-            { name: 'links', items: ['Link', 'Unlink'] },
-            { name: 'insert', items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar'] },
-            { name: 'styles', items: ['Styles', 'Format', 'Font', 'FontSize'] },
-            { name: 'colors', items: ['TextColor', 'BGColor'] },
-            { name: 'tools', items: ['Maximize'] }
-        ],
-        filebrowserUploadUrl: "{{ route('admin.dashboard.blog.uploadImageCkeditor') }}",
-        fileTools_requestHeaders: {
-            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-        }
-    });
-
-</script>
 @endsection

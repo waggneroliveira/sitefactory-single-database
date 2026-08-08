@@ -191,17 +191,4 @@
             width: 100%;
         }
     </style>
-
-    <script>
-        // Inicializa o CKEditor para todos os textareas de comentários
-        document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll(".ck-readonly").forEach(function(el) {
-                CKEDITOR.replace(el.id, {
-                    filebrowserUploadUrl: "{{ route('admin.dashboard.blog.uploadImageCkeditor', ['_token' => csrf_token() ]) }}",
-                    filebrowserUploadMethod: 'form',
-                    readOnly: true
-                });
-            });
-        });
-    </script>
 @endsection

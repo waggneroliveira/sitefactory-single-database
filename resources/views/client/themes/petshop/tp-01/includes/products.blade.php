@@ -7,10 +7,10 @@
         </div>
 
         <div class="step-actions mt-3 d-flex justify-content-center">
-            <a href="{{ route('products') }}" class="rounded-pill px-4 btn font-changa bg-green text-white font-15 font-medium text-decoration-none" rel="noopener noreferrer">
+            <a href="{{ route('products') }}" class="hover-zoom rounded-pill px-4 py-2 font-changa bg-button-two color-button-two font-15 font-medium text-decoration-none" rel="noopener noreferrer">
                 Limpar filtros
                 <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="#0E523E"/>
+                <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-two)"/>
                 </svg>
             </a>
         </div>

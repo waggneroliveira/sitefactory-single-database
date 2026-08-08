@@ -2,12 +2,13 @@
 
 namespace App\Modules\Blog\Presentation\Controllers;
 
-use App\Models\Blog;
-use App\Modules\Blog\Business\BlogService;
 use App\Http\Requests\BlogRequestStore;
 use App\Http\Requests\BlogRequestUpdate;
-use Illuminate\Http\Request;
+use App\Models\Blog;
+use App\Modules\Blog\Business\BlogService;
+use App\Services\ThemeManager;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -23,13 +24,12 @@ class BlogController
         if (isset($data['forbidden'])) {
             return $data['forbidden'];
         }
-
         return view('admin.blades.blog.index', $data);
     }
 
-    public function create(): View|RedirectResponse
+    public function create(ThemeManager $theme): View|RedirectResponse
     {
-        $data = $this->service->getCreateData();
+        $data = $this->service->getCreateData($theme);
         if (isset($data['forbidden'])) {
             return $data['forbidden'];
         }
@@ -37,9 +37,10 @@ class BlogController
         return view('admin.blades.blog.create', $data);
     }
 
-    public function edit(Blog $blog): View|RedirectResponse
+
+    public function edit(Blog $blog, ThemeManager $theme): View|RedirectResponse
     {
-        $data = $this->service->getEditData($blog);
+        $data = $this->service->getEditData($blog, $theme);
         if (isset($data['forbidden'])) {
             return $data['forbidden'];
         }

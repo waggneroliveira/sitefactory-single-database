@@ -7,12 +7,13 @@ use App\Http\Requests\BlogRequestUpdate;
 use App\Models\Blog;
 use App\Models\BlogCategory;
 use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
 use Intervention\Image\ImageManager;
 
@@ -56,7 +57,7 @@ class BlogService
         return compact('blogs', 'categories', 'blogCategory', 'settingTheme', 'commentCount');
     }
 
-    public function getCreateData(): array
+    public function getCreateData(ThemeManager $themeManager): array
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
         /** @var \App\Models\User $user */
@@ -71,11 +72,12 @@ class BlogService
         foreach ($categories as $category) {
             $blogCategory[$category->id] = $category->title;
         }
-
-        return compact('categories', 'blogCategory');
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return compact('categories', 'blogCategory', 'theme', 'themeData');
     }
 
-    public function getEditData(Blog $blog): array
+    public function getEditData(Blog $blog, ThemeManager $themeManager): array
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
         /** @var \App\Models\User $user */
@@ -90,8 +92,9 @@ class BlogService
         foreach ($categories as $category) {
             $blogCategory[$category->id] = $category->title;
         }
-
-        return compact('blog', 'categories', 'blogCategory');
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return compact('blog', 'categories', 'blogCategory', 'theme', 'themeData');
     }
 
     public function store(BlogRequestStore $request): Blog

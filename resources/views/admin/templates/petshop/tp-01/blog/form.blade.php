@@ -28,12 +28,17 @@
     </div>
     
     <div class="mb-3 col-12 d-flex align-items-start flex-column">
-        <label for="textarea-edit" class="form-label">Texto </label>
-        <textarea name="text" class="form-control col-12" id="textarea-edit" rows="5">
-            {!!isset($blog)?$blog->text:''!!}
-        </textarea>
+        <label for="textarea-text" class="form-label">Texto</label>
+
+        <textarea
+            name="text"
+            class="form-control ck-editor"
+            id="textarea-text"
+            rows="5"
+        >{!! old('text', $about->text ?? '') !!}</textarea>
     </div>
-        <div class="mb-3">
+    
+    <div class="mb-3">
         <div class="form-check">
             <input name="active" {{ isset($blog->active) && $blog->active == 1 ? 'checked' : '' }} type="checkbox" class="form-check-input" id="invalidCheck{{isset($blog->id)?$blog->id:''}}" />
             <label class="form-check-label" for="invalidCheck">{{__('dashboard.active')}}?</label>
@@ -72,3 +77,106 @@
     </div>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const uploadUrl = "{{ route('admin.dashboard.blog.uploadImageCkeditor') }}";
+        const csrfToken = "{{ csrf_token() }}";
+
+        function getEditorConfig(readOnly = false) {
+            return {
+                allowedContent: true,
+                readOnly: readOnly,
+
+                toolbar: [
+                    {
+                        name: 'basicstyles',
+                        items: [
+                            'Bold',
+                            'Italic',
+                            'Underline',
+                            'Strike',
+                            'Subscript',
+                            'Superscript'
+                        ]
+                    },
+                    {
+                        name: 'paragraph',
+                        items: [
+                            'NumberedList',
+                            'BulletedList',
+                            '-',
+                            'Outdent',
+                            'Indent',
+                            '-',
+                            'Blockquote',
+                            '-',
+                            'JustifyLeft',
+                            'JustifyCenter',
+                            'JustifyRight',
+                            'JustifyBlock'
+                        ]
+                    },
+                    {
+                        name: 'links',
+                        items: ['Link', 'Unlink']
+                    },
+                    {
+                        name: 'insert',
+                        items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar']
+                    },
+                    {
+                        name: 'styles',
+                        items: ['Styles', 'Format', 'Font', 'FontSize']
+                    },
+                    {
+                        name: 'colors',
+                        items: ['TextColor', 'BGColor']
+                    },
+                    {
+                        name: 'tools',
+                        items: ['Maximize']
+                    }
+                ],
+
+                filebrowserUploadUrl: uploadUrl,
+
+                // Mantive exatamente como funcionava no seu Edit
+                fileTools_requestHeaders: {
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            };
+        }
+
+        // Editores de Create/Edit
+        document.querySelectorAll('.ck-editor').forEach(function (element) {
+
+            if (!element.id) {
+                console.error('Textarea CKEditor sem ID:', element);
+                return;
+            }
+
+            if (CKEDITOR.instances[element.id]) {
+                CKEDITOR.instances[element.id].destroy(true);
+            }
+
+            CKEDITOR.replace(element.id, getEditorConfig(false));
+        });
+
+        // Editores somente leitura (Index)
+        document.querySelectorAll('.ck-readonly').forEach(function (element) {
+
+            if (!element.id) {
+                console.error('Textarea CKEditor sem ID:', element);
+                return;
+            }
+
+            if (CKEDITOR.instances[element.id]) {
+                CKEDITOR.instances[element.id].destroy(true);
+            }
+
+            CKEDITOR.replace(element.id, getEditorConfig(true));
+        });
+
+    });
+</script>

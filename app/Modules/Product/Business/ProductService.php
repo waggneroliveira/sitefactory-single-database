@@ -72,7 +72,7 @@ class ProductService
         }
         $theme = $themeManager;
         $themeData = $themeManager->theme();
-        return compact('categories', 'productCategory', 'productBrand', 'theme', 'themeData',);
+        return compact('categories', 'productCategory', 'productBrand', 'theme', 'themeData');
     }
 
     public function getEditData(Product $product, ThemeManager $themeManager): array
@@ -101,7 +101,7 @@ class ProductService
         }
         $theme = $themeManager;
         $themeData = $themeManager->theme();
-        return compact('product', 'categories', 'productCategory', 'productBrand',  'theme', 'themeData',);
+        return compact('product', 'categories', 'productCategory', 'productBrand', 'theme', 'themeData');
     }
 
     public function store(ProductStoreRequest $request): Product
