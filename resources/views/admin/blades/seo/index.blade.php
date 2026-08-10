@@ -82,7 +82,7 @@
                                                         @if ($seoGoogle->social_image)
 
                                                             <img
-                                                                src="{{ $seoGoogle->social_image }}"
+                                                                src="{{ asset('storage/' . $seoGoogle->social_image) }}"
                                                                 alt="{{ $seoGoogle->title ?? 'Imagem SEO' }}"
                                                                 class="me-2 rounded"
                                                                 style="width: 45px; height: 45px; object-fit: cover;"

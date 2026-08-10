@@ -12,11 +12,11 @@
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
                                     <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Dashboard</a></li>
-                                    <li class="breadcrumb-item active"><a href="{{route('admin.dashboard.seoGoogle.index')}}">Sobre</a></li>
-                                    <li class="breadcrumb-item active">Editar Sobre</li>
+                                    <li class="breadcrumb-item active"><a href="{{route('admin.dashboard.seoGoogle.index')}}">Seo Google</a></li>
+                                    <li class="breadcrumb-item active">Editar Seo Google</li>
                                 </ol>
                             </div>
-                            <h4 class="page-title">Editar Sobre</h4>
+                            <h4 class="page-title">Editar Seo Google</h4>
                         </div>
                     </div>
                 </div>
