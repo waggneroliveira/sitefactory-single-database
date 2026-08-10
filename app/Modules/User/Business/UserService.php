@@ -2,14 +2,15 @@
 
 namespace App\Modules\User\Business;
 
+use App\Http\Controllers\Helpers\HelperArchive;
+use App\Http\Requests\RequestStoreUser;
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\SettingTheme;
 use App\Models\User;
 use App\Repositories\SettingThemeRepository;
 use App\Repositories\UserPermissionRepository;
 use App\Repositories\UserRoleRepository;
-use App\Http\Requests\RequestStoreUser;
-use App\Http\Requests\UserUpdateRequest;
-use App\Http\Controllers\Helpers\HelperArchive;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -24,7 +25,7 @@ class UserService
 {
     protected string $pathUpload = 'admin/uploads/images/usuario/';
 
-    public function getIndexData(UserPermissionRepository $userPermissionRepository): array
+    public function getIndexData(UserPermissionRepository $userPermissionRepository, ThemeManager $themeManager): array
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
         $query = User::query();
@@ -42,8 +43,9 @@ class UserService
             ->groupBy('permissions.name')
             ->select('permissions.name')
             ->get();
-
-        return compact('users', 'otherRoles', 'permissions', 'currentRoles');
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return compact('users', 'otherRoles', 'permissions', 'currentRoles', 'theme', 'themeData');
     }
 
     public function store(RequestStoreUser $request): User
@@ -91,7 +93,7 @@ class UserService
         return $user;
     }
 
-    public function getEditData(UserPermissionRepository $usersWithPermissionsForEdit, User $user): array
+    public function getEditData(UserPermissionRepository $usersWithPermissionsForEdit, User $user, ThemeManager $themeManager): array
     {
         $userHasPermission = $usersWithPermissionsForEdit->usersWithPermissionsForEdit($user);
         if ($userHasPermission === 'forbidden') {
@@ -100,8 +102,9 @@ class UserService
 
         $currentRoles = $user->roles;
         $otherRoles = Role::where('id', '!=', 1)->whereNotIn('id', $currentRoles->pluck('id'))->get();
-
-        return compact('user', 'currentRoles', 'otherRoles');
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return compact('user', 'currentRoles', 'otherRoles', 'theme', 'themeData');
     }
 
     public function update(UserUpdateRequest $request, User $user): User

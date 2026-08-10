@@ -7,21 +7,24 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use App\Modules\User\Business\UserService;
 use App\Repositories\UserPermissionRepository;
+use App\Services\ThemeManager;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
 class UserController
 {
-    public function __construct(protected UserService $service)
+    protected ThemeManager $theme;
+    public function __construct(protected UserService $service, ThemeManager $theme)
     {
+        $this->theme = $theme;
     }
 
     public function index(UserPermissionRepository $userPermissionRepository): View|RedirectResponse
     {
-        $data = $this->service->getIndexData($userPermissionRepository);
+        $data = $this->service->getIndexData($userPermissionRepository, $this->theme);
         if (isset($data['forbidden'])) {
             return $data['forbidden'];
         }
@@ -43,7 +46,7 @@ class UserController
 
     public function edit(UserPermissionRepository $usersWithPermissionsForEdit, User $user): View|RedirectResponse
     {
-        $data = $this->service->getEditData($usersWithPermissionsForEdit, $user);
+        $data = $this->service->getEditData($usersWithPermissionsForEdit, $user, $this->theme);
         if (isset($data['forbidden'])) {
             return $data['forbidden'];
         }
