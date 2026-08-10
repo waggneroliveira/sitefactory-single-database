@@ -687,6 +687,27 @@
 
     @endif
 
+    <div class="row">
+
+        <div class="col-12">
+
+            <div class="page-title-box">
+                <h4 class="page-title">
+                    <i class="mdi mdi-palette"></i>
+                    Seo Google
+                </h4>
+            </div>
+
+        </div>
+
+        @include('admin.components.dashboard-card', [
+            'route' => route('admin.dashboard.seoGoogle.index'),
+            'icon' => 'mdi-palette',
+            'title' => 'Seo Google'
+        ])
+
+    </div>
+
     {{-- ============================================================
         FOOTER
     ============================================================ --}}

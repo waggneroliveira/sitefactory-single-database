@@ -24,6 +24,7 @@ use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductGalleryController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SeoGoogleController;
 use App\Http\Controllers\ServiceLocationController;
 use App\Http\Controllers\SessaoFaqController;
 use App\Http\Controllers\SettingEmailController;
@@ -306,6 +307,10 @@ Route::prefix('painel/')->group(function () {
         ->name('admin.dashboard.user.destroySelected');
         Route::post('usuario/sorting', [UserController::class, 'sorting'])
         ->name('admin.dashboard.user.sorting');
+        //SEO GOOGLE
+        Route::resource('seo-google', SeoGoogleController::class)
+        ->parameters(['seo-google' => 'seoGoogle'])
+        ->names('admin.dashboard.seoGoogle');
         
         //DESATIVAR COMENTARIO
         Route::put('/desativa-comentario/{comment}', [CommentController::class, 'desactiveComment'])

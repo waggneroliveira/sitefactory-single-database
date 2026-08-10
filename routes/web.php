@@ -4,14 +4,6 @@ use App\Http\Controllers\Auth\AuthClientController;
 use App\Http\Controllers\Auth\PasswordEmailClientController;
 use App\Http\Controllers\Auth\ResetPasswordClientController;
 use App\Http\Controllers\CommentController;
-use App\Modules\Client\Presentation\Controllers\AboutPageController;
-use App\Modules\Client\Presentation\Controllers\BlogPageController;
-use App\Modules\Client\Presentation\Controllers\ContactPageController;
-use App\Modules\Client\Presentation\Controllers\DocumentationController;
-use App\Modules\Client\Presentation\Controllers\EventPageController;
-use App\Modules\Client\Presentation\Controllers\HomePageController;
-use App\Modules\Client\Presentation\Controllers\ProductPageController;
-use App\Modules\Client\Presentation\Controllers\ClientController;
 use App\Http\Controllers\DownloadFichaController;
 use App\Http\Controllers\FormIndexController;
 use App\Http\Controllers\NewsletterController;
@@ -23,6 +15,15 @@ use App\Models\BlogCategory;
 use App\Models\Contact;
 use App\Models\Direction;
 use App\Models\Report;
+use App\Models\SeoGoogle;
+use App\Modules\Client\Presentation\Controllers\AboutPageController;
+use App\Modules\Client\Presentation\Controllers\BlogPageController;
+use App\Modules\Client\Presentation\Controllers\ClientController;
+use App\Modules\Client\Presentation\Controllers\ContactPageController;
+use App\Modules\Client\Presentation\Controllers\DocumentationController;
+use App\Modules\Client\Presentation\Controllers\EventPageController;
+use App\Modules\Client\Presentation\Controllers\HomePageController;
+use App\Modules\Client\Presentation\Controllers\ProductPageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Spatie\Multitenancy\Http\Middleware\NeedsTenant;
@@ -198,7 +199,8 @@ View::composer('client.core.client', function ($view) {
     $report = Report::active()
         ->count();
 
-
+    $seoGoogle = SeoGoogle::first();
+    
     return $view->with([
         'blogCategories' => $blogCategories,
         'announcements' => $announcements,
@@ -207,6 +209,7 @@ View::composer('client.core.client', function ($view) {
         'benefitTopics' => $benefitTopics,
         'report' => $report,
         'abouts' => $abouts,
+        'seoGoogle' => $seoGoogle,
     ]);
 
 });

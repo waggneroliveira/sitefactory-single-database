@@ -1,137 +1,303 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="robots" content="index, follow">
-    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="theme-color" content="#0d0d0d">
-    <meta name="description" content="A Girollato é uma distribuidora especializada em rações, alimentos e artigos pet, oferecendo produtos de qualidade para cães, gatos e outros animais com variedade, cuidado e confiança.">
-    <meta name="keywords" content="Girollato, distribuidora de rações, artigos pet, produtos pet, ração para cães, ração para gatos, acessórios pet, pet shop, alimentos para animais, higiene pet, brinquedos para pets, areia para gatos, distribuidora pet, casa de ração, produtos para cães e gatos, pet store, ração premium, produtos pet em Lauro de Freitas, distribuidora de rações Bahia">    <meta name="google-site-verification" content="-bUd4PZJ-3xvnf7cOkcmNLV7jzTk5106hfB0mPtvhqE" />
-    <title>Girollato</title>
+    @php
+        // ============================================================
+        // SEO BÁSICO
+        // ============================================================
+        $seoTitle = $seoGoogle->title ?? '';
+        $seoDescription = $seoGoogle->description ?? '';
+        $seoKeywords = $seoGoogle->keywords ?? '';
+
+        // ============================================================
+        // IMAGENS
+        // ============================================================
+        $socialImage = !empty($seoGoogle->social_image) ? asset('storage/' . $seoGoogle->social_image) : null;
+        $organizationLogo = !empty($seoGoogle->organization_logo) ? asset('storage/' . $seoGoogle->organization_logo) : null;
+        $favicon = !empty($seoGoogle->favicon) ? asset('storage/' . $seoGoogle->favicon) : null;
+
+        // ============================================================
+        // SCHEMA.ORG
+        // ============================================================
+        $schema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Organization',
+            '@id' => '#organization',
+        ];
+
+        // Identidade
+        if (!empty($seoGoogle->organization_name)) {
+            $schema['name'] = $seoGoogle->organization_name;
+        }
+
+        if (!empty($seoGoogle->legal_name)) {
+            $schema['legalName'] = $seoGoogle->legal_name;
+        }
+
+        if (!empty($seoGoogle->organization_url)) {
+            $schema['url'] = $seoGoogle->organization_url;
+        }
+
+        if ($organizationLogo) {
+            $schema['logo'] = $organizationLogo;
+            $schema['image'] = $organizationLogo;
+        } elseif ($socialImage) {
+            $schema['logo'] = $socialImage;
+            $schema['image'] = $socialImage;
+        }
+
+        if (!empty($seoGoogle->organization_description)) {
+            $schema['description'] = $seoGoogle->organization_description;
+        }
+
+        if (!empty($seoGoogle->founding_date)) {
+            $schema['foundingDate'] = $seoGoogle->founding_date instanceof \Carbon\Carbon
+                ? $seoGoogle->founding_date->format('Y-m-d')
+                : $seoGoogle->founding_date;
+        }
+
+        // Contato
+        if (!empty($seoGoogle->email)) {
+            $schema['email'] = $seoGoogle->email;
+        }
+
+        if (!empty($seoGoogle->telephone)) {
+            $schema['telephone'] = $seoGoogle->telephone;
+        }
+
+        // Endereço
+        $address = [];
+
+        if (!empty($seoGoogle->street_address)) {
+            $address['streetAddress'] = $seoGoogle->street_address;
+        }
+
+        if (!empty($seoGoogle->address_locality)) {
+            $address['addressLocality'] = $seoGoogle->address_locality;
+        }
+
+        if (!empty($seoGoogle->address_region)) {
+            $address['addressRegion'] = $seoGoogle->address_region;
+        }
+
+        if (!empty($seoGoogle->postal_code)) {
+            $address['postalCode'] = $seoGoogle->postal_code;
+        }
+
+        if (!empty($seoGoogle->address_country)) {
+            $address['addressCountry'] = $seoGoogle->address_country;
+        }
+
+        if (!empty($address)) {
+            $schema['address'] = array_merge(['@type' => 'PostalAddress'], $address);
+        }
+
+        // Contact Point
+        $contactPoint = [];
+
+        if (!empty($seoGoogle->telephone)) {
+            $contactPoint['telephone'] = $seoGoogle->telephone;
+        }
+
+        if (!empty($seoGoogle->contact_type)) {
+            $contactPoint['contactType'] = $seoGoogle->contact_type;
+        }
+
+        if (!empty($seoGoogle->email)) {
+            $contactPoint['email'] = $seoGoogle->email;
+        }
+
+        if (!empty($seoGoogle->area_served)) {
+            $contactPoint['areaServed'] = $seoGoogle->area_served;
+        }
+
+        // Idiomas
+        if (!empty($seoGoogle->available_languages)) {
+            $languages = is_array($seoGoogle->available_languages)
+                ? $seoGoogle->available_languages
+                : array_map('trim', explode(',', $seoGoogle->available_languages));
+
+            $languages = array_values(array_filter($languages));
+
+            if (!empty($languages)) {
+                $contactPoint['availableLanguage'] = $languages;
+            }
+        }
+
+        if (!empty($contactPoint)) {
+            $schema['contactPoint'] = array_merge(['@type' => 'ContactPoint'], $contactPoint);
+        }
+
+        // Horário de funcionamento
+        if (!empty($seoGoogle->opening_hours)) {
+            $openingHours = $seoGoogle->opening_hours;
+
+            if (is_string($openingHours)) {
+                $decodedOpeningHours = json_decode($openingHours, true);
+
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    $openingHours = $decodedOpeningHours;
+                }
+            }
+
+            if (!empty($openingHours)) {
+                $schema['openingHoursSpecification'] = $openingHours;
+            }
+        }
+
+        // Institucional
+        if (!empty($seoGoogle->slogan)) {
+            $schema['slogan'] = $seoGoogle->slogan;
+        }
+
+        // Palavras-chave da organização
+        if (!empty($seoGoogle->organization_keywords)) {
+            $organizationKeywords = is_array($seoGoogle->organization_keywords)
+                ? $seoGoogle->organization_keywords
+                : array_map('trim', explode(',', $seoGoogle->organization_keywords));
+
+            $organizationKeywords = array_values(array_filter($organizationKeywords));
+
+            if (!empty($organizationKeywords)) {
+                $schema['keywords'] = $organizationKeywords;
+            }
+        }
+    @endphp
+
+
+    {{-- ============================================================
+    SEO
+    ============================================================ --}}
+
+    <title>{{ isset($blogInner) && !empty($blogInner->title) ? $blogInner->title : $seoTitle }}</title>
+    
     @if(isset($blogInner))
+
+        @php
+            $blogDescription = Str::limit(strip_tags($blogInner->text ?? $seoDescription), 150);
+            $blogImage = !empty($blogInner->path_image_thumbnail) ? asset('storage/' . $blogInner->path_image_thumbnail) : $socialImage;
+        @endphp
+
+        @if(!empty($blogDescription))
+            <meta name="description" content="{{ $blogDescription }}">
+        @endif
+
         <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:type" content="article">
-        <meta property="og:title" content="{{ $blogInner->title }}">
-        <meta property="og:description" content="{{ Str::limit(strip_tags($blogInner->text), 150) }}">
-        <meta property="og:image" content="{{ asset('storage/' . $blogInner->path_image_thumbnail) }}">
+        <meta property="og:title" content="{{ $blogInner->title ?? $seoTitle }}">
+        <meta property="og:description" content="{{ $blogDescription }}">
+
+        @if($blogImage)
+            <meta property="og:image" content="{{ $blogImage }}">
+        @endif
 
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:url" content="{{ url()->current() }}">
-        <meta name="twitter:title" content="{{ $blogInner->title }}">
-        <meta name="twitter:description" content="{{ Str::limit(strip_tags($blogInner->text), 150) }}">
-        <meta name="twitter:image" content="{{ asset('storage/' . $blogInner->path_image_thumbnail) }}">
+        <meta name="twitter:title" content="{{ $blogInner->title ?? $seoTitle }}">
+        <meta name="twitter:description" content="{{ $blogDescription }}">
+
+        @if($blogImage)
+            <meta name="twitter:image" content="{{ $blogImage }}">
+        @endif
+
     @else
+
+        @if(!empty($seoDescription))
+            <meta name="description" content="{{ $seoDescription }}">
+        @endif
+
+        @if(!empty($seoKeywords))
+            <meta name="keywords" content="{{ $seoKeywords }}">
+        @endif
+
         <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:type" content="website">
-        <meta property="og:title" content="Girollato">
-        <meta property="og:description" content="A Girollato é uma distribuidora especializada em rações, alimentos e artigos pet, oferecendo produtos de qualidade para cães, gatos e outros animais com variedade, cuidado e confiança.">
-        <meta property="og:image" content="https://girolato.com.br/build/client/images/logo.svg">
+        <meta property="og:title" content="{{ $seoTitle }}">
+        <meta property="og:description" content="{{ $seoDescription }}">
+
+        @if($socialImage)
+            <meta property="og:image" content="{{ $socialImage }}">
+        @elseif($organizationLogo)
+            <meta property="og:image" content="{{ $organizationLogo }}">
+        @endif
 
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:url" content="{{ url()->current() }}">
-        <meta name="twitter:title" content="Girollato">
-        <meta name="twitter:description" content="A Girollato é uma distribuidora especializada em rações, alimentos e artigos pet, oferecendo produtos de qualidade para cães, gatos e outros animais com variedade, cuidado e confiança.">
-        <meta name="twitter:image" content="https://girolato.com.br/build/client/images/logo.svg">
+        <meta name="twitter:title" content="{{ $seoTitle }}">
+        <meta name="twitter:description" content="{{ $seoDescription }}">
+
+        @if($socialImage)
+            <meta name="twitter:image" content="{{ $socialImage }}">
+        @elseif($organizationLogo)
+            <meta name="twitter:image" content="{{ $organizationLogo }}">
+        @endif
+
     @endif
 
-    
+
+    {{-- ============================================================
+    META GERAIS
+    ============================================================ --}}
+
     <link rel="canonical" href="{{ url()->current() }}">
     <meta name="copyright" content="Direitos reservados WHI">
     <meta name="author" content="WHI">
-    <link rel="shortcut icon" href="https://girolato.com.br/build/client/images/favicon.png">
+
+    @if($favicon)
+        <link rel="shortcut icon" href="{{ $favicon }}">
+    @endif
+
+
+    {{-- ============================================================
+    FONTES
+    ============================================================ --}}
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Changa:wght@200..800&display=swap" onload='this.onload=null,this.rel="stylesheet"'>
+
     <noscript>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Changa:wght@200..800&display=swap">
     </noscript>
 
+
+    {{-- ============================================================
+    BIBLIOTECAS CSS
+    ============================================================ --}}
+
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"></noscript>
+
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"></noscript>
+
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
-    <link href="{{ asset('build/client/lgpd/style.css') }}" rel="stylesheet" type="text/css" />
+
+    <link href="{{ asset('build/client/lgpd/style.css') }}" rel="stylesheet" type="text/css">
 
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <link href="{{ asset('build/client/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link rel="preload" href="{{ asset('build/client/bootstrap-icons/bootstrap-icons.css') }}" as="style" onload="this.rel='stylesheet'">
-    <link href="{{ asset('build/client/themes/petshop/tp-01/css/style.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('build/client/themes/petshop/tp-01/css/responsivo.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('build/client/css/default.css') }}" rel="stylesheet" type="text/css" />
 
-    <script type=application/ld+json>
-        {
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "@id": "#organization",
-            "name": "Girollato",
-            "legalName": "Girollato",
-            "url": "https://girolato.com.br/",
-            "logo": "https://girolato.com.br/build/client/images/logo.svg",
-            "image": "https://girolato.com.br/build/client/images/logo.svg",
-            "description": "A Girollato é uma distribuidora especializada em rações, alimentos e artigos pet, oferecendo produtos de qualidade para cães, gatos e outros animais com variedade, cuidado e confiança.",
-            "foundingDate": "2010",
-            "email": "contato@girollato.com.br",
-            "telephone": "+55 71 9 9623-8037",
-            "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "Alameda Maji, 144 - Quingoma",
-                "addressLocality": "Lauro de Freitas",
-                "addressRegion": "BA",
-                "postalCode": "42725-610",
-                "addressCountry": "BR"
-            },
-            "contactPoint": {
-                "@type": "ContactPoint",
-                "telephone": "+55 71 9 9623-8037",
-                "contactType": "customer service",
-                "email": "contato@girollato.com.br",
-                "areaServed": "BR",
-                "availableLanguage": ["pt", "en"]
-            },
-            "openingHoursSpecification": {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-                "opens": "08:00",
-                "closes": "17:00"
-            },
-            "slogan": "Girollato",
-            "keywords": [
-                "distribuidora de rações",
-                "ração para cães",
-                "ração para gatos",
-                "artigos pet",
-                "produtos pet",
-                "acessórios para pets",
-                "pet shop",
-                "distribuidora pet",
-                "alimentos para animais",
-                "ração premium",
-                "ração super premium",
-                "produtos para cães e gatos",
-                "brinquedos para pets",
-                "higiene pet",
-                "areia para gatos",
-                "pet store",
-                "distribuidor de produtos pet",
-                "ração em Lauro de Freitas",
-                "produtos pet em Lauro de Freitas",
-                "distribuidora de rações Bahia",
-                "produtos para animais domésticos",
-                "suplementos pet",
-                "petshop online",
-                "casa de ração",
-                "loja pet"
-            ]
-        }
+    <link href="{{ asset('build/client/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+
+    <link rel="preload" href="{{ asset('build/client/bootstrap-icons/bootstrap-icons.css') }}" as="style" onload="this.rel='stylesheet'">
+
+    <link href="{{ asset('build/client/themes/petshop/tp-01/css/style.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('build/client/themes/petshop/tp-01/css/responsivo.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('build/client/css/default.css') }}" rel="stylesheet" type="text/css">
+
+
+    {{-- ============================================================
+    SCHEMA.ORG
+    ============================================================ --}}
+
+    <script type="application/ld+json">
+    {!! json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
     </script>
 </head>
+
 <body>
     <div id="organization" hidden></div>
 
