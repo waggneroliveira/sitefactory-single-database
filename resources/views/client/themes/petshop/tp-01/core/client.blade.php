@@ -329,28 +329,28 @@
     <style>
         :root {
             /* Cores Gerais */
-            --primary-color: {{ $themeData->primary_color ? $themeData->primary_color : '#10513D' }};
-            --secondary-color: {{ $themeData->secondary_color ? $themeData->secondary_color : '#FDC20C' }};
-            --accent-color: {{ $themeData->accent_color ? $themeData->accent_color : 'rgba(16, 81, 61, 0.5)' }};
-            --text-color: {{ $themeData->text_color ? $themeData->text_color : '#565656' }};
+            --primary-color: {{ $tenantTheme->primary_color ? $tenantTheme->primary_color : '#10513D' }};
+            --secondary-color: {{ $tenantTheme->secondary_color ? $tenantTheme->secondary_color : '#FDC20C' }};
+            --accent-color: {{ $tenantTheme->accent_color ? $tenantTheme->accent_color : 'rgba(16, 81, 61, 0.5)' }};
+            --text-color: {{ $tenantTheme->text_color ? $tenantTheme->text_color : '#565656' }};
             
             /* Header */
-            --text-color-header: {{ $themeData->text_color_header ? $themeData->text_color_header : '#FFFFFF' }};
-            --bg-header: {{ $themeData->bg_header ? $themeData->bg_header : '#10513D' }};
+            --text-color-header: {{ $tenantTheme->text_color_header ? $tenantTheme->text_color_header : '#FFFFFF' }};
+            --bg-header: {{ $tenantTheme->bg_header ? $tenantTheme->bg_header : '#10513D' }};
             
             /* Footer */
-            --bg-scroll: {{ $themeData->bg_scroll ? $themeData->bg_scroll : '#F8F9FA' }};
+            --bg-scroll: {{ $tenantTheme->bg_scroll ? $tenantTheme->bg_scroll : '#F8F9FA' }};
             
             /* Botões */
-            --color-button-one: {{ $themeData->color_button_one ? $themeData->color_button_one : "#FFF" }};
-            --color-button-two: {{ $themeData->color_button_two ? $themeData->color_button_two : '#000' }};
-            --text-button-one: {{ $themeData->text_button_one ? $themeData->text_button_one : 'Botão 1' }};
-            --bg-button-one: {{ $themeData->bg_button_one ? $themeData->bg_button_one : '#10513D' }};
-            --text-button-two: {{ $themeData->text_button_two ? $themeData->text_button_two : 'Botão 2' }};
-            --bg-button-two: {{ $themeData->bg_button_two ? $themeData->bg_button_two : '#FDC20C' }};
+            --color-button-one: {{ $tenantTheme->color_button_one ? $tenantTheme->color_button_one : "#FFF" }};
+            --color-button-two: {{ $tenantTheme->color_button_two ? $tenantTheme->color_button_two : '#000' }};
+            --text-button-one: {{ $tenantTheme->text_button_one ? $tenantTheme->text_button_one : 'Botão 1' }};
+            --bg-button-one: {{ $tenantTheme->bg_button_one ? $tenantTheme->bg_button_one : '#10513D' }};
+            --text-button-two: {{ $tenantTheme->text_button_two ? $tenantTheme->text_button_two : 'Botão 2' }};
+            --bg-button-two: {{ $tenantTheme->bg_button_two ? $tenantTheme->bg_button_two : '#FDC20C' }};
             
             /* Copyright */
-            --copyright-text: {{ $themeData->copyright ? $themeData->copyright  : '© 2024 Todos os direitos reservados' }};
+            --copyright-text: {{ $tenantTheme->copyright ? $tenantTheme->copyright  : '© 2024 Todos os direitos reservados' }};
         }
         /* ===== CORES (Text Colors) ===== */
         .primary-color {
@@ -421,7 +421,7 @@
         <nav class="navbar navbar-expand-lg navbar-light container py-3 px-3 px-lg-0">            
             <!-- Logo -->
             <a class="navbar-brand d-flex align-items-center" href="{{route('index')}}">
-                <img src="{{asset('storage/' .$themeData->path_image_logo_header)}}" alt="{{ config('app.name') }}" height="40">
+                <img src="{{asset('storage/' .$tenantTheme->path_image_logo_header)}}" alt="{{ config('app.name') }}" height="40">
             </a>
 
             <!-- Toggle mobile -->
@@ -459,7 +459,7 @@
                     </svg>
 
                     <a class="font-changa font-15 font-medium text-decoration-none color-button-one">
-                        {{ $themeData->text_button_one ?? 'Botão 1' }}
+                        {{ $tenantTheme->text_button_one ?? 'Botão 1' }}
                     </a>
                 </div>
             </div>
@@ -632,7 +632,7 @@
 
                 <!-- Logo + botão -->
                 <div class="col-lg-4 mb-4 mb-lg-0">
-                    <img src="{{asset('storage/' .$themeData->path_image_logo_footer)}}" alt="{{ config('app.name') }}" height="40">
+                    <img src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ config('app.name') }}" height="40">
 
                     <div class="mt-5">
                         <a href="{{ request()->routeIs('about') ? '#team-section' : route('about') . '#team-section' }}" class="bg-button-two color-button-two px-4 py-2 rounded-pill font-changa font-16 font-medium text-decoration-none hover-zoom">
@@ -711,7 +711,7 @@
 
                     <script defer>
                         const currentYeaar = (new Date).getFullYear();
-                        document.getElementById("footer-text").innerHTML = `© ${currentYeaar} <span> {{$themeData->copyright}}
+                        document.getElementById("footer-text").innerHTML = `© ${currentYeaar} <span> {{$tenantTheme->copyright}}
                     Todos os direitos reservados.</span> <a href="https://policies.google.com/privacy?hl=pt-BR" target="_blank" class="text-color-header font-semibold">| Política de Privacidade</a>`
                     </script>
                 </div>

@@ -7,6 +7,7 @@ use App\Models\Blog;
 use App\Models\BlogCategory;
 use App\Models\Contact;
 use App\Models\PopUp;
+use App\Models\Tenant;
 use App\Services\ThemeManager;
 use Illuminate\Http\Request;
 
@@ -45,10 +46,11 @@ class BlogPageService
             ->get();
 
         $popUp = PopUp::active()->first();
+        $tenantTheme = Tenant::current();
         $theme = $themeManager;
         $themeData = $themeManager->theme();
 
-        return compact('blogCategories', 'blogAll', 'blogSeeAlso', 'popUp', 'theme', 'themeData');
+        return compact('blogCategories', 'blogAll', 'blogSeeAlso', 'popUp', 'tenantTheme','theme', 'themeData');
     }
 
     public function getInnerData($slug = null, ThemeManager $themeManager): array
@@ -114,6 +116,7 @@ class BlogPageService
             ->get();
 
         $contact = Contact::first();
+        $tenantTheme = Tenant::current();
         $theme = $themeManager;
         $themeData = $themeManager->theme();
         return compact(
@@ -126,7 +129,8 @@ class BlogPageService
             'blogCategories',
             'blogRelacionados', 
             'theme', 
-            'themeData'
+            'themeData',
+            'tenantTheme'
         );
     }
 }

@@ -5,6 +5,7 @@ namespace App\Modules\Client\Business;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\Tenant;
 use App\Services\ThemeManager;
 use Illuminate\Http\Request;
 
@@ -78,10 +79,11 @@ class ProductPageService
                 $title = 'Nenhum produto encontrado';
             }
         }
+        $tenantTheme = Tenant::current();
         $theme = $themeManager;
         $themeData = $themeManager->theme();
         
-        return compact('products', 'productCategories', 'brands', 'title', 'theme', 'themeData');
+        return compact('products', 'productCategories', 'brands', 'title', 'tenantTheme', 'theme', 'themeData');
     }
 
     public function getProductViewData($category = null, $slug = null, ThemeManager $themeManager): array
@@ -97,6 +99,7 @@ class ProductPageService
             ->active()
             ->first();
 
+        $tenantTheme = Tenant::current();
         $theme = $themeManager;
         $themeData = $themeManager->theme();
 
@@ -108,6 +111,7 @@ class ProductPageService
             'product' => $product,
             'theme' => $theme,
             'themeData' => $themeData,
+            'tenantTheme' => $tenantTheme,
         ];
     }
 }

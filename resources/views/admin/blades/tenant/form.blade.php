@@ -8,29 +8,29 @@
         <div class="col-lg-6">
             <div class="mb-3">
                 <label for="name" class="form-label">Template</label>
-                <input type="text" class="form-control" id="name" readonly value="{{isset($templateTheme)?$templateTheme->name:''}}" placeholder="Template">
+                <input type="text" class="form-control" id="name" readonly value="{{isset($tenant)?$tenant->name:''}}" placeholder="Template">
             </div>
         </div>
         
         <div class="col-lg-6">
             <div class="mb-3">
                 <label for="preview" class="form-label">Preview</label>
-                <input type="text" name="preview" class="form-control" id="preview{{isset($templateTheme->id)?$templateTheme->id:''}}" value="{{isset($templateTheme)?$templateTheme->preview:''}}" placeholder="preview">
+                <input type="text" name="preview" class="form-control" id="preview{{isset($tenant->id)?$tenant->id:''}}" value="{{isset($tenant)?$tenant->preview:''}}" placeholder="preview">
             </div>
         </div>
         
         <div class="col-lg-6">
             <div class="mb-3">
                 <label for="template_variation" class="form-label">Variação do Template</label>
-                <input type="text" class="form-control" id="template_variation" readonly value="{{isset($templateTheme)?$templateTheme->template_variation:''}}" placeholder="Ex: dark, light, modern">
+                <input type="text" class="form-control" id="template_variation" readonly value="{{isset($tenant)?$tenant->template_variation:''}}" placeholder="Ex: dark, light, modern">
             </div>
         </div>
         
         <div class="col-lg-6">
             <div class="mb-3">
                 <div class="form-check mt-4">
-                    <input name="active" {{ isset($templateTheme->active) && $templateTheme->active == 1 ? 'checked' : '' }} type="checkbox" class="form-check-input" id="invalidCheck{{isset($templateTheme->id)?$templateTheme->id:''}}" />
-                    <label class="form-check-label" for="invalidCheck{{isset($templateTheme->id)?$templateTheme->id:''}}">{{__('dashboard.active')}}?</label>
+                    <input name="active" {{ isset($tenant->active) && $tenant->active == 1 ? 'checked' : '' }} type="checkbox" class="form-check-input" id="invalidCheck{{isset($tenant->id)?$tenant->id:''}}" />
+                    <label class="form-check-label" for="invalidCheck{{isset($tenant->id)?$tenant->id:''}}">{{__('dashboard.active')}}?</label>
                     <div class="invalid-feedback">
                         You must agree before submitting.
                     </div>
@@ -48,14 +48,14 @@
         <div class="col-lg-6">
             <div class="mb-3">
                 <label class="form-label">Cor do texto no header</label>
-                <input type="text" name="text_color_header" class="form-control" id="colorpicker-text-header" value="{{isset($templateTheme)?$templateTheme->text_color_header:''}}">
+                <input type="text" name="text_color_header" class="form-control" id="colorpicker-text-header" value="{{isset($tenant)?$tenant->text_color_header:''}}">
             </div>
         </div>
         
         <div class="col-lg-6">
             <div class="mb-3">
                 <label class="form-label">Cor do header</label>
-                <input type="text" name="bg_header" class="form-control" id="colorpicker-bg-header" value="{{isset($templateTheme)?$templateTheme->bg_header:''}}">
+                <input type="text" name="bg_header" class="form-control" id="colorpicker-bg-header" value="{{isset($tenant)?$tenant->bg_header:''}}">
             </div>
         </div>
     </div>
@@ -69,14 +69,14 @@
         <div class="col-lg-6">
             <div class="mb-3">
                 <label for="copyright" class="form-label">Copyright</label>
-                <input type="text" name="copyright" class="form-control" id="copyright" value="{{isset($templateTheme)?$templateTheme->copyright:''}}" placeholder="Ex: © 2024 Minha Empresa">
+                <input type="text" name="copyright" class="form-control" id="copyright" value="{{isset($tenant)?$tenant->copyright:''}}" placeholder="Ex: © 2024 Minha Empresa">
             </div>
         </div>
         
         <div class="col-lg-6">
             <div class="mb-3">
                 <label class="form-label">Cor do scroll</label>
-                <input type="text" name="bg_scroll" class="form-control" id="colorpicker-bg-scroll" value="{{isset($templateTheme)?$templateTheme->bg_scroll:''}}">
+                <input type="text" name="bg_scroll" class="form-control" id="colorpicker-bg-scroll" value="{{isset($tenant)?$tenant->bg_scroll:''}}">
             </div>
         </div>
     </div>
@@ -90,28 +90,28 @@
         <div class="col-lg-6">
             <div class="mb-3">
                 <label class="form-label">Cor primária</label>
-                <input type="text" name="primary_color" class="form-control" id="colorpicker-default" value="{{isset($templateTheme)?$templateTheme->primary_color:''}}">
+                <input type="text" name="primary_color" class="form-control" id="colorpicker-default" value="{{isset($tenant)?$tenant->primary_color:''}}">
             </div>
         </div>
         
         <div class="col-lg-6">
             <div class="mb-3">
                 <label class="form-label">Cor secundária</label>
-                <input type="text" name="secondary_color" class="form-control" id="colorpicker-showalpha" value="{{isset($templateTheme)?$templateTheme->secondary_color:''}}">
+                <input type="text" name="secondary_color" class="form-control" id="colorpicker-showalpha" value="{{isset($tenant)?$tenant->secondary_color:''}}">
             </div>
         </div>
         
         <div class="col-lg-6">
             <div class="mb-3">
                 <label class="form-label">Cor de destaque (Accent)</label>
-                <input type="text" name="accent_color" class="form-control" id="colorpicker-showpaletteonly" value="{{isset($templateTheme)?$templateTheme->accent_color:''}}">
+                <input type="text" name="accent_color" class="form-control" id="colorpicker-showpaletteonly" value="{{isset($tenant)?$tenant->accent_color:''}}">
             </div>
         </div>
         
         <div class="col-lg-6">
             <div class="mb-3">
                 <label class="form-label">Cor do texto</label>
-                <input type="text" name="text_color" class="form-control" id="colorpicker-togglepaletteonly" value="{{isset($templateTheme)?$templateTheme->text_color:''}}">
+                <input type="text" name="text_color" class="form-control" id="colorpicker-togglepaletteonly" value="{{isset($tenant)?$tenant->text_color:''}}">
             </div>
         </div>
     </div>
@@ -125,28 +125,28 @@
         <div class="col-lg-6">
             <div class="mb-3">
                 <label for="color_button_one" class="form-label">Cor do Texto Botão 1</label>
-                <input type="text" name="color_button_one" class="form-control" id="colorpicker-color-button1" value="{{isset($templateTheme)?$templateTheme->color_button_one:''}}" placeholder="Ex: Comprar Agora">
+                <input type="text" name="color_button_one" class="form-control" id="colorpicker-color-button1" value="{{isset($tenant)?$tenant->color_button_one:''}}" placeholder="Ex: Comprar Agora">
             </div>
         </div>
         
         <div class="col-lg-6">
             <div class="mb-3">
                 <label class="form-label">Cor Fundo Botão 1</label>
-                <input type="text" name="bg_button_one" class="form-control" id="colorpicker-bg-button1" value="{{isset($templateTheme)?$templateTheme->bg_button_one:''}}">
+                <input type="text" name="bg_button_one" class="form-control" id="colorpicker-bg-button1" value="{{isset($tenant)?$tenant->bg_button_one:''}}">
             </div>
         </div>
         
         <div class="col-lg-6">
             <div class="mb-3">
                 <label for="color_button_two" class="form-label">Cor do Texto Botão 2</label>
-                <input type="text" name="color_button_two" class="form-control" id="colorpicker-color-button2" value="{{isset($templateTheme)?$templateTheme->color_button_two:''}}" placeholder="Ex: Saiba Mais">
+                <input type="text" name="color_button_two" class="form-control" id="colorpicker-color-button2" value="{{isset($tenant)?$tenant->color_button_two:''}}" placeholder="Ex: Saiba Mais">
             </div>
         </div>
         
         <div class="col-lg-6">
             <div class="mb-3">
                 <label class="form-label">Cor Fundo Botão 2</label>
-                <input type="text" name="bg_button_two" class="form-control" id="colorpicker-bg-button2" value="{{isset($templateTheme)?$templateTheme->bg_button_two:''}}">
+                <input type="text" name="bg_button_two" class="form-control" id="colorpicker-bg-button2" value="{{isset($tenant)?$tenant->bg_button_two:''}}">
             </div>
         </div>
     </div>
@@ -160,7 +160,7 @@
         <div class="col-lg-6">
             <div class="mb-3">
                 <label for="path_image_logo_header" class="form-label">Logo Header</label>
-                <input type="file" name="path_image_logo_header" data-plugins="dropify" data-default-file="{{isset($templateTheme)?$templateTheme->path_image_logo_header<>''?url('storage/'.$templateTheme->path_image_logo_header):'':''}}"  />
+                <input type="file" name="path_image_logo_header" data-plugins="dropify" data-default-file="{{isset($tenant)?$tenant->path_image_logo_header<>''?url('storage/'.$tenant->path_image_logo_header):'':''}}"  />
                 <p class="text-muted text-center mt-2 mb-0">{{__('dashboard.text_img_size')}} <b class="text-danger">2 MB</b>.</p>
             </div>
         </div>
@@ -168,7 +168,7 @@
         <div class="col-lg-6">
             <div class="mb-3">
                 <label for="path_image_logo_footer" class="form-label">Logo Footer</label>
-                <input type="file" name="path_image_logo_footer" data-plugins="dropify" data-default-file="{{isset($templateTheme)?$templateTheme->path_image_logo_footer<>''?url('storage/'.$templateTheme->path_image_logo_footer):'':''}}"  />
+                <input type="file" name="path_image_logo_footer" data-plugins="dropify" data-default-file="{{isset($tenant)?$tenant->path_image_logo_footer<>''?url('storage/'.$tenant->path_image_logo_footer):'':''}}"  />
                 <p class="text-muted text-center mt-2 mb-0">{{__('dashboard.text_img_size')}} <b class="text-danger">2 MB</b>.</p>
             </div>
         </div>

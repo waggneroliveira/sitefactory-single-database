@@ -21,6 +21,7 @@ use App\Models\Statute;
 use App\Models\Topic;
 use App\Models\Video;
 use App\Services\ThemeManager;
+use App\Models\Tenant;
 
 class HomePageService
 {
@@ -150,6 +151,7 @@ class HomePageService
 
         $popUp = PopUp::active()->first();
 
+        $tenantTheme = Tenant::current();
         $theme = $themeManager;
         $themeData = $themeManager->theme();
 
@@ -180,6 +182,7 @@ class HomePageService
             'products',
             'theme',
             'themeData',
+            'tenantTheme',
             'blogNoBairros'
         );
     }

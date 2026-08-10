@@ -678,7 +678,7 @@
             </div>
 
             @include('admin.components.dashboard-card', [
-                'route' => route('admin.dashboard.templateTheme.index'),
+                'route' => route('admin.dashboard.tenant.index'),
                 'icon' => 'mdi-palette',
                 'title' => 'Configuração do Tema'
             ])

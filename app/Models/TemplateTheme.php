@@ -16,22 +16,6 @@ class TemplateTheme extends Model
         'preview',
         'active',
         'template_variation',
-        'primary_color',
-        'secondary_color',
-        'accent_color',
-        'text_color',
-        'path_image_logo_header',
-        'path_image_logo_footer',
-        'text_button_one',
-        'color_button_one',
-        'bg_button_one',
-        'text_button_two',
-        'color_button_two',
-        'bg_button_two',
-        'text_color_header',
-        'bg_header',
-        'bg_scroll',
-        'copyright',
     ];
 
     protected $casts = [

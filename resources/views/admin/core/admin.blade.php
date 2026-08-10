@@ -842,7 +842,7 @@
                         )
                             <li class="menu-item">
                                 <a
-                                    href="{{ route('admin.dashboard.templateTheme.index') }}"
+                                    href="{{ route('admin.dashboard.tenant.index') }}"
                                     class="menu-link"
                                 >
                                     <span class="menu-icon">

@@ -10,6 +10,7 @@ use App\Models\Partner;
 use App\Models\Report;
 use App\Models\ServiceLocation;
 use App\Models\Statute;
+use App\Models\Tenant;
 use App\Models\Topic;
 use App\Models\Video;
 use App\Services\ThemeManager;
@@ -18,6 +19,7 @@ class AboutPageService
 {
     public function getPageData(ThemeManager $themeManager): array
     {
+        $tenantTheme = Tenant::current();
         $theme = $themeManager;
         $themeData = $themeManager->theme();
 
@@ -34,6 +36,7 @@ class AboutPageService
             'serviceLocation' => ServiceLocation::active()->first(),
             'theme' => $theme,
             'themeData' => $themeData,
+            'tenantTheme' => $tenantTheme,
         ];
     }
 }
