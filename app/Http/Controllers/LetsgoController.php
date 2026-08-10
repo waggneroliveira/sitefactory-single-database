@@ -17,7 +17,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class LetsgoController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/lets-go/';
-    public function index(ThemeManager $theme)
+    public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -28,9 +28,10 @@ class LetsgoController extends Controller
         }
 
         $letsgo = Letsgo::first();
-        $themeData = $theme->theme();
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
 
-        return view('admin.blades.letsgo.index', compact('letsgo', 'themeData'));
+        return view('admin.blades.letsgo.index', compact('letsgo', 'theme', 'themeData'));
     }
 
     public function store(Request $request)

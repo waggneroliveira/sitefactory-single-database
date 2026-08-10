@@ -22,7 +22,7 @@ class ProductService
 {
     protected string $pathUpload = 'admin/uploads/images/product/';
 
-    public function getIndexData(Request $request): array
+    public function getIndexData(Request $request, ThemeManager $themeManager): array
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
         $check = checkPermission('produtos.visualizar', $settingTheme);
@@ -46,8 +46,9 @@ class ProductService
         foreach ($categories as $category) {
             $productCategory[$category->id] = $category->title;
         }
-
-        return compact('products', 'categories', 'productCategory', 'settingTheme');
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return compact('products', 'categories', 'productCategory', 'theme', 'themeData', 'settingTheme');
     }
 
     public function getCreateData(ThemeManager $themeManager): array

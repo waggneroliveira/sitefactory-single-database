@@ -19,7 +19,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class TopicController extends Controller
 {
     protected $pathUpload = 'admin/uploads/project/image/';
-    public function index(ThemeManager $theme)
+    public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -37,8 +37,11 @@ class TopicController extends Controller
             'sorting',
             'path_image',
         )->sorting()->get();
-        $themeData = $theme->theme();
-        return view('admin.blades.topic.index', compact('topics', 'themeData'));
+        
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+
+        return view('admin.blades.topic.index', compact('topics', 'theme', 'themeData'));
     }
 
     public function store(Request $request)

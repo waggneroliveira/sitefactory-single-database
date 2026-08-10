@@ -17,7 +17,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class ServiceLocationController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/service-location/';
-    public function index(ThemeManager $theme)
+    public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -28,8 +28,9 @@ class ServiceLocationController extends Controller
         }
 
         $serviceLocation = serviceLocation::first();
-        $themeData = $theme->theme();
-        return view('admin.blades.serviceLocation.index', compact('serviceLocation', 'themeData'));
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return view('admin.blades.serviceLocation.index', compact('serviceLocation', 'theme', 'themeData'));
     }
 
     public function store(Request $request)

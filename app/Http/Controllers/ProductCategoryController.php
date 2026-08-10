@@ -20,7 +20,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class ProductCategoryController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/productCategory/';
-    public function index(Request $request, ThemeManager $theme)
+    public function index(Request $request, ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -29,10 +29,11 @@ class ProductCategoryController extends Controller
         if ($check !== true) {
             return $check; // retorna view 403
         }
-
+    
         $blogCategories = productCategory::sorting()->get();
-        $themeData = $theme->theme();
-        return view('admin.blades.productCategory.index', compact('blogCategories', 'themeData'));
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return view('admin.blades.productCategory.index', compact('blogCategories', 'theme', 'themeData'));
     }
 
     public function store(Request $request)

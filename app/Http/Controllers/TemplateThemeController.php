@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Helpers\HelperArchive;
 use App\Models\TemplateTheme;
 use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -17,7 +18,7 @@ class TemplateThemeController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/templateTheme/';
 
-    public function index()
+    public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -28,8 +29,9 @@ class TemplateThemeController extends Controller
         // }
 
         $templateTheme = TemplateTheme::where('active', 1)->first();
-        // dd($templateTheme);
-        return view('admin.blades.templateTheme.index', compact('templateTheme', 'settingTheme'));
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return view('admin.blades.templateTheme.index', compact('templateTheme', 'settingTheme', 'theme', 'themeData'));
     }
 
     public function store(Request $request)

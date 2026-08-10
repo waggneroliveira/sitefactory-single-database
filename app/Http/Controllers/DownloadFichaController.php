@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DownloadFicha;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -13,11 +14,12 @@ class DownloadFichaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(ThemeManager $themeManager)
     {
         $leadDonwloads = DownloadFicha::orderBy('created_at', 'desc')->get();
-
-        return view('admin.blades.leadFile.index', compact('leadDonwloads'));
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return view('admin.blades.leadFile.index', compact('leadDonwloads','theme', 'themeData'));
     }
 
     /**

@@ -18,7 +18,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class BenefitTopicController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/benefitTopic/';
-    public function index(ThemeManager $theme)
+    public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -29,8 +29,9 @@ class BenefitTopicController extends Controller
         }
 
         $benefitTopics = BenefitTopic::get();
-        $themeData = $theme->theme();
-        return view('admin.blades.benefitTopic.index', compact('benefitTopics', 'themeData'));
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return view('admin.blades.benefitTopic.index', compact('benefitTopics', 'theme', 'themeData'));
     }
 
 

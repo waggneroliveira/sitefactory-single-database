@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Inertia;
 use App\Models\FormIndex;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class FormIndexController extends Controller
 {
 
-    public function index()
+    public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
         if(!Auth::user()->hasRole('Super') && 
@@ -21,8 +22,9 @@ class FormIndexController extends Controller
             return view('admin.error.403', compact('settingTheme'));
         }
         $formIndexs = FormIndex::get();
-
-        return view('admin.blades.lead.index', compact('formIndexs'));
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return view('admin.blades.lead.index', compact('formIndexs', 'theme', 'themeData'));
     }
 
     public function store(Request $request)

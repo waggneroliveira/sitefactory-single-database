@@ -15,7 +15,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class FaqController extends Controller
 {
 
-    public function index(ThemeManager $theme)
+    public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -26,8 +26,9 @@ class FaqController extends Controller
         }
 
         $faqs = Faq::sorting()->get();
-        $themeData = $theme->theme();
-        return view('admin.blades.faq.index', compact('faqs', 'themeData'));
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return view('admin.blades.faq.index', compact('faqs', 'theme', 'themeData'));
     }
 
     public function store(Request $request)

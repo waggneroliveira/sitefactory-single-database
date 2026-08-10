@@ -46,4 +46,24 @@ class ThemeManager
     {
         return asset("themes/{$this->current()}/{$path}");
     }
+
+    public function hasModule(string $module): bool
+    {
+        $modules = config("template_modules.{$this->slug}", []);
+
+        return collect($modules)
+            ->flatten()
+            ->contains($module);
+    }
+    
+    public function hasAnyModule(array $modules): bool
+    {
+        foreach ($modules as $module) {
+            if ($this->hasModule($module)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

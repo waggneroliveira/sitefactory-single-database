@@ -17,7 +17,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class ReportController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/report/';
-    public function index(ThemeManager $theme)
+    public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -27,8 +27,9 @@ class ReportController extends Controller
             return $check; // retorna view 403
         }
         $reports = Report::get();
-        $themeData = $theme->theme();
-        return view('admin.blades.report.index', compact('reports', 'themeData'));
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return view('admin.blades.report.index', compact('reports', 'theme', 'themeData'));
     }
 
    

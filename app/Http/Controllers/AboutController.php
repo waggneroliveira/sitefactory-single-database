@@ -20,7 +20,7 @@ class AboutController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/about/';
 
-    public function index()
+    public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -31,8 +31,9 @@ class AboutController extends Controller
         }
 
         $about = About::first();
-
-        return view('admin.blades.about.index', compact('about'));
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return view('admin.blades.about.index', compact('about', 'theme', 'themeData'));
     }
     public function store(Request $request)
     {
@@ -81,7 +82,7 @@ class AboutController extends Controller
         return redirect()->route('admin.dashboard.about.index');
     }
 
-    public function create(ThemeManager $theme){
+    public function create(ThemeManager $themeManager){
         $settingTheme = (new SettingThemeRepository())->settingTheme();
         if(!Auth::user()->hasRole('Super') && 
           !Auth::user()->can('usuario.tornar usuario master') &&  
@@ -89,11 +90,12 @@ class AboutController extends Controller
           !Auth::user()->hasPermissionTo('sobre nos.criar')){
             return view('admin.error.403', compact('settingTheme'));
         }
-        $themeData = $theme->theme();
-        return view('admin.blades.about.create', compact('themeData'));
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return view('admin.blades.about.create', compact('theme', 'themeData'));
     }
 
-    public function edit(About $about, ThemeManager $theme){
+    public function edit(About $about, ThemeManager $themeManager){
         $settingTheme = (new SettingThemeRepository())->settingTheme();
         if(!Auth::user()->hasRole('Super') && 
           !Auth::user()->can('usuario.tornar usuario master') && 
@@ -101,8 +103,9 @@ class AboutController extends Controller
           !Auth::user()->hasPermissionTo('sobre nos.editar')){
             return view('admin.error.403', compact('settingTheme'));
         }
-        $themeData = $theme->theme();
-        return view('admin.blades.about.edit', compact('about', 'themeData'));
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return view('admin.blades.about.edit', compact('about', 'theme', 'themeData'));
     }
 
     public function uploadImageCkeditorAbout(Request $request)

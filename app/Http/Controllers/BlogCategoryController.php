@@ -21,7 +21,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class BlogCategoryController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/blogCategory/';
-    public function index(ThemeManager $theme)
+    public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -32,8 +32,9 @@ class BlogCategoryController extends Controller
         }
 
         $blogCategories = BlogCategory::sorting()->get();
-        $themeData = $theme->theme();
-        return view('admin.blades.blogCategory.index', compact('blogCategories', 'themeData'));
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return view('admin.blades.blogCategory.index', compact('blogCategories', 'theme', 'themeData'));
     }
 
     public function store(BlogCategoryRequest $request){

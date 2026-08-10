@@ -3,17 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use RealRashid\SweetAlert\Facades\Alert;
 use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ContactController extends Controller
 {
 
-    public function index()
+    public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -23,7 +24,9 @@ class ContactController extends Controller
             return $check; // retorna view 403
         }
         $contact = Contact::first();
-        return view('admin.blades.contact.index', compact('contact'));
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return view('admin.blades.contact.index', compact('contact', 'theme', 'themeData'));
     }
 
     public function store(Request $request)

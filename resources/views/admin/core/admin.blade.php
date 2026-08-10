@@ -93,290 +93,770 @@
                     <ul class="menu">
 
                         <li class="menu-title">Listagem</li>
-                        @if (Auth::user()->hasRole('Super') || 
-                        Auth::user()->hasPermissionTo('usuario.tornar usuario master') ||
-                        Auth::user()->hasPermissionTo('slide.visualizar') ||
-                        Auth::user()->hasPermissionTo('topico.visualizar') ||
-                        Auth::user()->hasPermissionTo('passo a passo.visualizar') ||
-                        Auth::user()->hasPermissionTo('sesssao lets go.visualizar') ||
-                        Auth::user()->hasPermissionTo('sesssao faq.visualizar') ||
-                        Auth::user()->hasPermissionTo('perguntas e respostas.visualizar') ||
-                        Auth::user()->hasPermissionTo('depoimento.visualizar'))
+
+
+                        {{-- ============================================================
+                            HOME
+                        ============================================================ --}}
+                        @if (
+                            $theme->hasAnyModule([
+                                'slides',
+                                'topics',
+                                'statute',
+                                'letsgo',
+                                'faq_session',
+                                'faq',
+                                'testimonials',
+                            ])
+                        )
+
                             <li class="menu-item">
-                                <a href="#menuDashboards" data-bs-toggle="collapse" class="menu-link">
-                                    <span class="menu-icon"><i class="mdi mdi-home"></i></span>
-                                    <span class="menu-text"> Home </span>
-                                    <span class="badge bg-success rounded-pill ms-auto">7</span>
+
+                                <a
+                                    href="#menuDashboards"
+                                    data-bs-toggle="collapse"
+                                    class="menu-link"
+                                >
+                                    <span class="menu-icon">
+                                        <i class="mdi mdi-home"></i>
+                                    </span>
+
+                                    <span class="menu-text">
+                                        Home
+                                    </span>
+
+                                    <span class="badge bg-success rounded-pill ms-auto">
+                                        {{
+                                            collect([
+                                                'slides',
+                                                'topics',
+                                                'statute',
+                                                'letsgo',
+                                                'faq_session',
+                                                'faq',
+                                                'testimonials',
+                                            ])->filter(fn ($module) => $theme->hasModule($module))->count()
+                                        }}
+                                    </span>
                                 </a>
+
+
                                 <div class="collapse" id="menuDashboards">
+
                                     <ul class="sub-menu">
-                                        @if (Auth::user()->hasRole('Super') || 
-                                        Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-                                        Auth::user()->hasPermissionTo('slide.visualizar'))
+
+                                        {{-- Slides --}}
+                                        @if (
+                                            $theme->hasModule('slides') &&
+                                            (
+                                                Auth::user()->hasRole('Super') ||
+                                                Auth::user()->can('usuario.tornar usuario master') ||
+                                                Auth::user()->can('slide.visualizar')
+                                            )
+                                        )
                                             <li class="menu-item">
-                                                <a href="{{route('admin.dashboard.slide.index')}}" class="menu-link">
+                                                <a
+                                                    href="{{ route('admin.dashboard.slide.index') }}"
+                                                    class="menu-link"
+                                                >
                                                     <span class="menu-text">Slides</span>
                                                 </a>
                                             </li>
                                         @endif
-                                        @if (Auth::user()->hasRole('Super') || 
-                                        Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-                                        Auth::user()->hasPermissionTo('topico.visualizar'))
+
+
+                                        {{-- Tópicos --}}
+                                        @if (
+                                            $theme->hasModule('topics') &&
+                                            (
+                                                Auth::user()->hasRole('Super') ||
+                                                Auth::user()->can('usuario.tornar usuario master') ||
+                                                Auth::user()->can('topico.visualizar')
+                                            )
+                                        )
                                             <li class="menu-item">
-                                                <a href="{{route('admin.dashboard.topic.index')}}" class="menu-link">
+                                                <a
+                                                    href="{{ route('admin.dashboard.topic.index') }}"
+                                                    class="menu-link"
+                                                >
                                                     <span class="menu-text">Tópicos</span>
                                                 </a>
                                             </li>
                                         @endif
-                                        @if (Auth::user()->hasRole('Super') || 
-                                        Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-                                        Auth::user()->hasPermissionTo('passo a passo.visualizar'))
+
+
+                                        {{-- Passo a passo --}}
+                                        @if (
+                                            $theme->hasModule('statute') &&
+                                            (
+                                                Auth::user()->hasRole('Super') ||
+                                                Auth::user()->can('usuario.tornar usuario master') ||
+                                                Auth::user()->can('passo a passo.visualizar')
+                                            )
+                                        )
                                             <li class="menu-item">
-                                                <a href="{{route('admin.dashboard.statute.index')}}" class="menu-link">
+                                                <a
+                                                    href="{{ route('admin.dashboard.statute.index') }}"
+                                                    class="menu-link"
+                                                >
                                                     <span class="menu-text">Passo a passo</span>
                                                 </a>
                                             </li>
                                         @endif
-                                        @if (Auth::user()->hasRole('Super') || 
-                                        Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-                                        Auth::user()->hasPermissionTo('sesssao lets go.visualizar'))
+
+
+                                        {{-- Sessão Lets Go --}}
+                                        @if (
+                                            $theme->hasModule('letsgo') &&
+                                            (
+                                                Auth::user()->hasRole('Super') ||
+                                                Auth::user()->can('usuario.tornar usuario master') ||
+                                                Auth::user()->can('sesssao lets go.visualizar')
+                                            )
+                                        )
                                             <li class="menu-item">
-                                                <a href="{{route('admin.dashboard.letsgo.index')}}" class="menu-link">
+                                                <a
+                                                    href="{{ route('admin.dashboard.letsgo.index') }}"
+                                                    class="menu-link"
+                                                >
                                                     <span class="menu-text">Sessão Lets Go</span>
                                                 </a>
                                             </li>
                                         @endif
-                                        @if (Auth::user()->hasRole('Super') || 
-                                        Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-                                        Auth::user()->hasPermissionTo('sesssao faq.visualizar'))
+
+
+                                        {{-- Sessão FAQ --}}
+                                        @if (
+                                            $theme->hasModule('faq_session') &&
+                                            (
+                                                Auth::user()->hasRole('Super') ||
+                                                Auth::user()->can('usuario.tornar usuario master') ||
+                                                Auth::user()->can('sesssao faq.visualizar')
+                                            )
+                                        )
                                             <li class="menu-item">
-                                                <a href="{{route('admin.dashboard.sessaoFaq.index')}}" class="menu-link">
-                                                    <span class="menu-text">Sessão Faq</span>
+                                                <a
+                                                    href="{{ route('admin.dashboard.sessaoFaq.index') }}"
+                                                    class="menu-link"
+                                                >
+                                                    <span class="menu-text">Sessão FAQ</span>
                                                 </a>
                                             </li>
                                         @endif
-                                        @if (Auth::user()->hasRole('Super') || 
-                                        Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-                                        Auth::user()->hasPermissionTo('perguntas e respostas.visualizar'))
+
+
+                                        {{-- Perguntas / Respostas --}}
+                                        @if (
+                                            $theme->hasModule('faq') &&
+                                            (
+                                                Auth::user()->hasRole('Super') ||
+                                                Auth::user()->can('usuario.tornar usuario master') ||
+                                                Auth::user()->can('perguntas e respostas.visualizar')
+                                            )
+                                        )
                                             <li class="menu-item">
-                                                <a href="{{route('admin.dashboard.faq.index')}}" class="menu-link">
+                                                <a
+                                                    href="{{ route('admin.dashboard.faq.index') }}"
+                                                    class="menu-link"
+                                                >
                                                     <span class="menu-text">Perguntas/Respostas</span>
                                                 </a>
                                             </li>
                                         @endif
-                                        @if (Auth::user()->hasRole('Super') || 
-                                        Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-                                        Auth::user()->hasPermissionTo('depoimento.visualizar'))
+
+
+                                        {{-- Depoimentos --}}
+                                        @if (
+                                            $theme->hasModule('testimonials') &&
+                                            (
+                                                Auth::user()->hasRole('Super') ||
+                                                Auth::user()->can('usuario.tornar usuario master') ||
+                                                Auth::user()->can('depoimento.visualizar')
+                                            )
+                                        )
                                             <li class="menu-item">
-                                                <a href="{{route('admin.dashboard.depoiment.index')}}" class="menu-link">
+                                                <a
+                                                    href="{{ route('admin.dashboard.depoiment.index') }}"
+                                                    class="menu-link"
+                                                >
                                                     <span class="menu-text">Depoimentos</span>
                                                 </a>
                                             </li>
                                         @endif
+
                                     </ul>
+
                                 </div>
+
                             </li>
+
                         @endif
-                        @if (Auth::user()->hasRole('Super') || 
-                        Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-                        Auth::user()->hasPermissionTo('sobre nos.visualizar') || 
-                        Auth::user()->hasPermissionTo('parametro.visualizar') || 
-                        Auth::user()->hasPermissionTo('missao visao e valores.visualizar') || 
-                        Auth::user()->hasPermissionTo('representantes.visualizar') || 
-                        Auth::user()->hasPermissionTo('video.visualizar') || 
-                        Auth::user()->hasPermissionTo('onde atendemos.visualizar'))
+
+
+                        {{-- ============================================================
+                            SOBRE NÓS
+                        ============================================================ --}}
+                        @if (
+                            $theme->hasAnyModule([
+                                'about',
+                                'benefits',
+                                'mission',
+                                'representatives',
+                                'videos',
+                                'service_locations',
+                            ])
+                        )
+
                             <li class="menu-item">
-                                <a href="#about" data-bs-toggle="collapse" class="menu-link">
-                                    <span class="menu-icon"><i class="mdi mdi-help-circle"></i></span>
-                                    <span class="menu-text"> Sobre Nós </span>
-                                    <span class="badge bg-success rounded-pill ms-auto">6</span>
+
+                                <a
+                                    href="#about"
+                                    data-bs-toggle="collapse"
+                                    class="menu-link"
+                                >
+                                    <span class="menu-icon">
+                                        <i class="mdi mdi-help-circle"></i>
+                                    </span>
+
+                                    <span class="menu-text">
+                                        Sobre Nós
+                                    </span>
+
+                                    <span class="badge bg-success rounded-pill ms-auto">
+                                        {{
+                                            collect([
+                                                'about',
+                                                'benefits',
+                                                'mission',
+                                                'representatives',
+                                                'videos',
+                                                'service_locations',
+                                            ])->filter(fn ($module) => $theme->hasModule($module))->count()
+                                        }}
+                                    </span>
                                 </a>
+
+
                                 <div class="collapse" id="about">
+
                                     <ul class="sub-menu">
-                                        @if (Auth::user()->hasRole('Super') || 
-                                        Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-                                        Auth::user()->hasPermissionTo('sobre nos.visualizar'))
+
+                                        {{-- Sobre Nós --}}
+                                        @if (
+                                            $theme->hasModule('about') &&
+                                            (
+                                                Auth::user()->hasRole('Super') ||
+                                                Auth::user()->can('usuario.tornar usuario master') ||
+                                                Auth::user()->can('sobre nos.visualizar')
+                                            )
+                                        )
                                             <li class="menu-item">
-                                                <a href="{{route('admin.dashboard.about.index')}}" class="menu-link">
+                                                <a
+                                                    href="{{ route('admin.dashboard.about.index') }}"
+                                                    class="menu-link"
+                                                >
                                                     <span class="menu-text">Sobre Nós</span>
                                                 </a>
                                             </li>
                                         @endif
-                                        @if (Auth::user()->hasRole('Super') || 
-                                        Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-                                        Auth::user()->hasPermissionTo('parametro.visualizar'))
+
+
+                                        {{-- Parâmetros --}}
+                                        @if (
+                                            $theme->hasModule('benefits') &&
+                                            (
+                                                Auth::user()->hasRole('Super') ||
+                                                Auth::user()->can('usuario.tornar usuario master') ||
+                                                Auth::user()->can('parametro.visualizar')
+                                            )
+                                        )
                                             <li class="menu-item">
-                                                <a href="{{route('admin.dashboard.benefitTopic.index')}}" class="menu-link">
-                                                    <span class="menu-text">Parametro</span>
+                                                <a
+                                                    href="{{ route('admin.dashboard.benefitTopic.index') }}"
+                                                    class="menu-link"
+                                                >
+                                                    <span class="menu-text">Parâmetros</span>
                                                 </a>
                                             </li>
                                         @endif
-                                        @if (Auth::user()->hasRole('Super') || 
-                                        Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-                                        Auth::user()->hasPermissionTo('missao visao e valores.visualizar'))
+
+
+                                        {{-- Missão, Visão e Valores --}}
+                                        @if (
+                                            $theme->hasModule('mission') &&
+                                            (
+                                                Auth::user()->hasRole('Super') ||
+                                                Auth::user()->can('usuario.tornar usuario master') ||
+                                                Auth::user()->can('missao visao e valores.visualizar')
+                                            )
+                                        )
                                             <li class="menu-item">
-                                                <a href="{{route('admin.dashboard.report.index')}}" class="menu-link">
-                                                    <span class="menu-text">Missão Visão e Valores</span>
+                                                <a
+                                                    href="{{ route('admin.dashboard.report.index') }}"
+                                                    class="menu-link"
+                                                >
+                                                    <span class="menu-text">
+                                                        Missão Visão e Valores
+                                                    </span>
                                                 </a>
                                             </li>
                                         @endif
-                                        @if (Auth::user()->hasRole('Super') || 
-                                        Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-                                        Auth::user()->hasPermissionTo('representantes.visualizar'))
+
+
+                                        {{-- Representantes --}}
+                                        @if (
+                                            $theme->hasModule('representatives') &&
+                                            (
+                                                Auth::user()->hasRole('Super') ||
+                                                Auth::user()->can('usuario.tornar usuario master') ||
+                                                Auth::user()->can('representantes.visualizar')
+                                            )
+                                        )
                                             <li class="menu-item">
-                                                <a href="{{route('admin.dashboard.direction.index')}}" class="menu-link">
+                                                <a
+                                                    href="{{ route('admin.dashboard.direction.index') }}"
+                                                    class="menu-link"
+                                                >
                                                     <span class="menu-text">Representantes</span>
                                                 </a>
                                             </li>
                                         @endif
-                                        @if (Auth::user()->hasRole('Super') || 
-                                        Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-                                        Auth::user()->hasPermissionTo('video.visualizar'))
+
+
+                                        {{-- Vídeos --}}
+                                        @if (
+                                            $theme->hasModule('videos') &&
+                                            (
+                                                Auth::user()->hasRole('Super') ||
+                                                Auth::user()->can('usuario.tornar usuario master') ||
+                                                Auth::user()->can('video.visualizar')
+                                            )
+                                        )
                                             <li class="menu-item">
-                                                <a href="{{route('admin.dashboard.video.index')}}" class="menu-link">
-                                                    <span class="menu-text">Vídeo</span>
+                                                <a
+                                                    href="{{ route('admin.dashboard.video.index') }}"
+                                                    class="menu-link"
+                                                >
+                                                    <span class="menu-text">Vídeos</span>
                                                 </a>
                                             </li>
                                         @endif
-                                        @if (Auth::user()->hasRole('Super') || 
-                                        Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-                                        Auth::user()->hasPermissionTo('onde atendemos.visualizar'))
+
+
+                                        {{-- Onde Atendemos --}}
+                                        @if (
+                                            $theme->hasModule('service_locations') &&
+                                            (
+                                                Auth::user()->hasRole('Super') ||
+                                                Auth::user()->can('usuario.tornar usuario master') ||
+                                                Auth::user()->can('onde atendemos.visualizar')
+                                            )
+                                        )
                                             <li class="menu-item">
-                                                <a href="{{route('admin.dashboard.serviceLocation.index')}}" class="menu-link">
-                                                    <span class="menu-text">Sessão onde atendemos</span>
+                                                <a
+                                                    href="{{ route('admin.dashboard.serviceLocation.index') }}"
+                                                    class="menu-link"
+                                                >
+                                                    <span class="menu-text">
+                                                        Sessão Onde Atendemos
+                                                    </span>
                                                 </a>
                                             </li>
                                         @endif
-                                       
+
                                     </ul>
+
                                 </div>
+
                             </li>
+
                         @endif
-                        @if (Auth::user()->hasRole('Super') || 
-                        Auth::user()->hasPermissionTo('usuario.tornar usuario master') ||
-                        Auth::user()->hasPermissionTo('produtos.visualizar') ||
-                        Auth::user()->hasPermissionTo('marcas.visualizar') ||
-                        Auth::user()->hasPermissionTo('categorias de produtos.visualizar'))
+
+
+                        {{-- ============================================================
+                            PRODUTOS
+                        ============================================================ --}}
+                        @if (
+                            $theme->hasAnyModule([
+                                'brands',
+                                'product_categories',
+                                'products',
+                            ])
+                        )
+
                             <li class="menu-item">
-                                <a href="#menuDashboardsP" data-bs-toggle="collapse" class="menu-link">
-                                    <span class="menu-icon"><i class="mdi mdi-toolbox"></i></span>
-                                    <span class="menu-text"> Produtos </span>
-                                    <span class="badge bg-success rounded-pill ms-auto">3</span>
+
+                                <a
+                                    href="#menuDashboardsP"
+                                    data-bs-toggle="collapse"
+                                    class="menu-link"
+                                >
+                                    <span class="menu-icon">
+                                        <i class="mdi mdi-toolbox"></i>
+                                    </span>
+
+                                    <span class="menu-text">
+                                        Produtos
+                                    </span>
+
+                                    <span class="badge bg-success rounded-pill ms-auto">
+                                        {{
+                                            collect([
+                                                'brands',
+                                                'product_categories',
+                                                'products',
+                                            ])->filter(fn ($module) => $theme->hasModule($module))->count()
+                                        }}
+                                    </span>
                                 </a>
+
+
                                 <div class="collapse" id="menuDashboardsP">
+
                                     <ul class="sub-menu">
-                                        @if (Auth::user()->hasRole('Super') || 
-                                        Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-                                        Auth::user()->hasPermissionTo('marcas.visualizar'))
+
+                                        {{-- Marcas --}}
+                                        @if (
+                                            $theme->hasModule('brands') &&
+                                            (
+                                                Auth::user()->hasRole('Super') ||
+                                                Auth::user()->can('usuario.tornar usuario master') ||
+                                                Auth::user()->can('marcas.visualizar')
+                                            )
+                                        )
                                             <li class="menu-item">
-                                                <a href="{{route('admin.dashboard.brand.index')}}" class="menu-link">
+                                                <a
+                                                    href="{{ route('admin.dashboard.brand.index') }}"
+                                                    class="menu-link"
+                                                >
                                                     <span class="menu-text">Marcas</span>
                                                 </a>
                                             </li>
                                         @endif
-                                        @if (Auth::user()->hasRole('Super') || 
-                                        Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-                                        Auth::user()->hasPermissionTo('categorias de produtos.visualizar'))
+
+
+                                        {{-- Categorias --}}
+                                        @if (
+                                            $theme->hasModule('product_categories') &&
+                                            (
+                                                Auth::user()->hasRole('Super') ||
+                                                Auth::user()->can('usuario.tornar usuario master') ||
+                                                Auth::user()->can('categorias de produtos.visualizar')
+                                            )
+                                        )
                                             <li class="menu-item">
-                                                <a href="{{route('admin.dashboard.productCategory.index')}}" class="menu-link">
-                                                    <span class="menu-text">Categorias dos produtos</span>
+                                                <a
+                                                    href="{{ route('admin.dashboard.productCategory.index') }}"
+                                                    class="menu-link"
+                                                >
+                                                    <span class="menu-text">
+                                                        Categorias dos produtos
+                                                    </span>
                                                 </a>
                                             </li>
                                         @endif
-                                        @if (Auth::user()->hasRole('Super') || 
-                                        Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-                                        Auth::user()->hasPermissionTo('produtos.visualizar'))
+
+
+                                        {{-- Produtos --}}
+                                        @if (
+                                            $theme->hasModule('products') &&
+                                            (
+                                                Auth::user()->hasRole('Super') ||
+                                                Auth::user()->can('usuario.tornar usuario master') ||
+                                                Auth::user()->can('produtos.visualizar')
+                                            )
+                                        )
                                             <li class="menu-item">
-                                                <a href="{{route('admin.dashboard.product.index')}}" class="menu-link">
+                                                <a
+                                                    href="{{ route('admin.dashboard.product.index') }}"
+                                                    class="menu-link"
+                                                >
                                                     <span class="menu-text">Produtos</span>
                                                 </a>
                                             </li>
                                         @endif
+
                                     </ul>
+
                                 </div>
+
                             </li>
+
                         @endif
-                        @if (Auth::user()->hasRole('Super') || 
-                        Auth::user()->can('usuario.tornar usuario master') || 
-                        Auth::user()->can('categorias de noticias.visualizar'))
+
+
+                        {{-- ============================================================
+                            BLOG / NOTÍCIAS
+                        ============================================================ --}}
+
+                        {{-- Categorias --}}
+                        @if (
+                            $theme->hasModule('blog_categories') &&
+                            (
+                                Auth::user()->hasRole('Super') ||
+                                Auth::user()->can('usuario.tornar usuario master') ||
+                                Auth::user()->can('categorias de noticias.visualizar')
+                            )
+                        )
                             <li class="menu-item">
-                                <a href="{{route('admin.dashboard.blogCategory.index')}}" class="menu-link">
-                                    <span class="menu-icon"><i class="mdi mdi-tag-multiple "></i></span>
-                                    <span class="menu-text"> Categoria de notícias </span>
+                                <a
+                                    href="{{ route('admin.dashboard.blogCategory.index') }}"
+                                    class="menu-link"
+                                >
+                                    <span class="menu-icon">
+                                        <i class="mdi mdi-tag-multiple"></i>
+                                    </span>
+
+                                    <span class="menu-text">
+                                        Categoria de notícias
+                                    </span>
                                 </a>
                             </li>
                         @endif
-                        @if (Auth::user()->hasRole('Super') || 
-                        Auth::user()->can('usuario.tornar usuario master') || 
-                        Auth::user()->can('noticias.visualizar'))
+
+
+                        {{-- Notícias --}}
+                        @if (
+                            $theme->hasModule('blog') &&
+                            (
+                                Auth::user()->hasRole('Super') ||
+                                Auth::user()->can('usuario.tornar usuario master') ||
+                                Auth::user()->can('noticias.visualizar')
+                            )
+                        )
                             <li class="menu-item">
-                                <a href="{{route('admin.dashboard.blog.index')}}" class="menu-link">
-                                    <span class="menu-icon"><i class="mdi mdi-newspaper-variant"></i></span>
-                                    <span class="menu-text"> Notícias </span>
+                                <a
+                                    href="{{ route('admin.dashboard.blog.index') }}"
+                                    class="menu-link"
+                                >
+                                    <span class="menu-icon">
+                                        <i class="mdi mdi-newspaper-variant"></i>
+                                    </span>
+
+                                    <span class="menu-text">
+                                        Notícias
+                                    </span>
                                 </a>
                             </li>
                         @endif
-                        @if (Auth::user()->hasRole('Super') || 
-                        Auth::user()->can('usuario.tornar usuario master') || 
-                        Auth::user()->can('lead contato.visualizar'))
+
+
+                        {{-- ============================================================
+                            CONTATO
+                        ============================================================ --}}
+
+                        {{-- Lead Contato --}}
+                        @if (
+                            $theme->hasModule('contact_leads') &&
+                            (
+                                Auth::user()->hasRole('Super') ||
+                                Auth::user()->can('usuario.tornar usuario master') ||
+                                Auth::user()->can('lead contato.visualizar')
+                            )
+                        )
                             <li class="menu-item">
-                                <a href="{{route('admin.dashboard.formIndex.index')}}" class="menu-link">
-                                    <span class="menu-icon"><i class="mdi mdi-account-box-outline"></i></span>
-                                    <span class="menu-text"> Lead Contato </span>
+                                <a
+                                    href="{{ route('admin.dashboard.formIndex.index') }}"
+                                    class="menu-link"
+                                >
+                                    <span class="menu-icon">
+                                        <i class="mdi mdi-account-box-outline"></i>
+                                    </span>
+
+                                    <span class="menu-text">
+                                        Lead Contato
+                                    </span>
                                 </a>
                             </li>
                         @endif
-                        @if (Auth::user()->hasRole('Super') || 
-                        Auth::user()->can('usuario.tornar usuario master') || 
-                        Auth::user()->can('contato.visualizar'))
+
+
+                        {{-- Lead Download --}}
+                        @if (
+                            $theme->hasModule('download_leads') &&
+                            (
+                                Auth::user()->hasRole('Super') ||
+                                Auth::user()->can('usuario.tornar usuario master')
+                            )
+                        )
                             <li class="menu-item">
-                                <a href="{{route('admin.dashboard.contact.index')}}" class="menu-link">
-                                    <span class="menu-icon"><i class="mdi mdi-card-account-mail-outline"></i></span>
-                                    <span class="menu-text"> Contato </span>
+                                <a
+                                    href="{{ route('admin.dashboard.leadDownload.index') }}"
+                                    class="menu-link"
+                                >
+                                    <span class="menu-icon">
+                                        <i class="mdi mdi-download"></i>
+                                    </span>
+
+                                    <span class="menu-text">
+                                        Lead Download
+                                    </span>
                                 </a>
                             </li>
                         @endif
-                        @if (Auth::user()->hasRole('Super') || 
-                        Auth::user()->can('usuario.tornar usuario master') || 
-                        Auth::user()->can('auditoria.visualizar'))
+
+
+                        {{-- Contato --}}
+                        @if (
+                            $theme->hasModule('contact') &&
+                            (
+                                Auth::user()->hasRole('Super') ||
+                                Auth::user()->can('usuario.tornar usuario master') ||
+                                Auth::user()->can('contato.visualizar')
+                            )
+                        )
                             <li class="menu-item">
-                                <a href="{{route('admin.dashboard.audit.index')}}" class="menu-link">
-                                    <span class="menu-icon"><i class="mdi mdi-clipboard-text"></i></span>
-                                    <span class="menu-text"> {{__('dashboard.audit')}} </span>
+                                <a
+                                    href="{{ route('admin.dashboard.contact.index') }}"
+                                    class="menu-link"
+                                >
+                                    <span class="menu-icon">
+                                        <i class="mdi mdi-card-account-mail-outline"></i>
+                                    </span>
+
+                                    <span class="menu-text">
+                                        Contato
+                                    </span>
                                 </a>
                             </li>
                         @endif
-                        @if (Auth::user()->hasRole('Super') || 
-                        Auth::user()->can('usuario.tornar usuario master') || 
-                        Auth::user()->can('email.visualizar'))                            
+
+                        {{-- ============================================================
+                            AUDITORIA
+                        ============================================================ --}}
+                        @if (
+                            $theme->hasModule('audit') &&
+                            (
+                                Auth::user()->hasRole('Super') ||
+                                Auth::user()->can('usuario.tornar usuario master') ||
+                                Auth::user()->can('auditoria.visualizar')
+                            )
+                        )
                             <li class="menu-item">
-                                <a href="{{route('admin.dashboard.settingEmail.index')}}" class="menu-link">
-                                    <span class="menu-icon"><i class="mdi mdi-email"></i></span>
-                                    <span class="menu-text"> {{__('dashboard.setting_smtp')}} </span>
+                                <a
+                                    href="{{ route('admin.dashboard.audit.index') }}"
+                                    class="menu-link"
+                                >
+                                    <span class="menu-icon">
+                                        <i class="mdi mdi-clipboard-text"></i>
+                                    </span>
+
+                                    <span class="menu-text">
+                                        {{ __('dashboard.audit') }}
+                                    </span>
                                 </a>
                             </li>
                         @endif
-                        @if (Auth::user()->hasRole('Super') || 
-                        Auth::user()->can('usuario.tornar usuario master') || 
-                        Auth::user()->can('grupo.visualizar'))                            
+
+
+                        {{-- ============================================================
+                            SMTP
+                        ============================================================ --}}
+                        @if (
+                            $theme->hasModule('config_smtp') &&
+                            (
+                                Auth::user()->hasRole('Super') ||
+                                Auth::user()->can('usuario.tornar usuario master') ||
+                                Auth::user()->can('email.visualizar')
+                            )
+                        )
                             <li class="menu-item">
-                                <a href="{{route('admin.dashboard.group.index')}}" class="menu-link">
-                                    <span class="menu-icon"><i class="mdi mdi-account-group"></i></span>
-                                    <span class="menu-text"> {{__('dashboard.group_and_permission')}}</span>
+                                <a
+                                    href="{{ route('admin.dashboard.settingEmail.index') }}"
+                                    class="menu-link"
+                                >
+                                    <span class="menu-icon">
+                                        <i class="mdi mdi-email"></i>
+                                    </span>
+
+                                    <span class="menu-text">
+                                        {{ __('dashboard.setting_smtp') }}
+                                    </span>
                                 </a>
                             </li>
                         @endif
-                        @if (Auth::user()->hasRole('Super') || 
-                        Auth::user()->can('usuario.tornar usuario master') || 
-                        Auth::user()->can('usuario.visualizar'))                            
+
+
+                        {{-- ============================================================
+                            GRUPOS / PERMISSÕES
+                        ============================================================ --}}
+                        @if (
+                            $theme->hasModule('permissions') &&
+                            (
+                                Auth::user()->hasRole('Super') ||
+                                Auth::user()->can('usuario.tornar usuario master') ||
+                                Auth::user()->can('grupo.visualizar')
+                            )
+                        )
                             <li class="menu-item">
-                                <a href="{{route('admin.dashboard.user.index')}}" class="menu-link">
-                                    <span class="menu-icon"><i class="mdi mdi-account-multiple"></i></span>
-                                    <span class="menu-text"> {{__('dashboard.users')}} </span>
+                                <a
+                                    href="{{ route('admin.dashboard.group.index') }}"
+                                    class="menu-link"
+                                >
+                                    <span class="menu-icon">
+                                        <i class="mdi mdi-account-group"></i>
+                                    </span>
+
+                                    <span class="menu-text">
+                                        {{ __('dashboard.group_and_permission') }}
+                                    </span>
+                                </a>
+                            </li>
+                        @endif
+
+
+                        {{-- ============================================================
+                            USUÁRIOS
+                        ============================================================ --}}
+                        @if (
+                            $theme->hasModule('users') &&
+                            (
+                                Auth::user()->hasRole('Super') ||
+                                Auth::user()->can('usuario.tornar usuario master') ||
+                                Auth::user()->can('usuario.visualizar')
+                            )
+                        )
+                            <li class="menu-item">
+                                <a
+                                    href="{{ route('admin.dashboard.user.index') }}"
+                                    class="menu-link"
+                                >
+                                    <span class="menu-icon">
+                                        <i class="mdi mdi-account-multiple"></i>
+                                    </span>
+
+                                    <span class="menu-text">
+                                        {{ __('dashboard.users') }}
+                                    </span>
+                                </a>
+                            </li>
+                        @endif
+
+
+                        {{-- ============================================================
+                            CONFIGURAÇÃO DO TEMA
+                        ============================================================ --}}
+                        @if (
+                            Auth::user()->hasRole('Super') ||
+                            Auth::user()->can('usuario.tornar usuario master')
+                        )
+                            <li class="menu-item">
+                                <a
+                                    href="{{ route('admin.dashboard.templateTheme.index') }}"
+                                    class="menu-link"
+                                >
+                                    <span class="menu-icon">
+                                        <i class="mdi mdi-palette"></i>
+                                    </span>
+
+                                    <span class="menu-text">
+                                        Configuração do Tema
+                                    </span>
                                 </a>
                             </li>
                         @endif
                     </ul>
+
                     <!--- End Menu -->
                     <div class="clearfix"></div>
                 </div>

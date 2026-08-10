@@ -18,7 +18,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class DepoimentController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/depoiment/';
-    public function index(ThemeManager $theme)
+    public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -29,9 +29,10 @@ class DepoimentController extends Controller
         }
 
         $depoiments = Depoiment::sorting()->get();
-        $themeData = $theme->theme();
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
 
-        return view('admin.blades.depoiment.index', compact('depoiments', 'themeData'));
+        return view('admin.blades.depoiment.index', compact('depoiments', 'theme', 'themeData'));
     }
 
     public function store(Request $request)

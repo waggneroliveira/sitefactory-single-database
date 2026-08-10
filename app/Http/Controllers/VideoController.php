@@ -15,7 +15,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class VideoController extends Controller
 {
 
-    public function index(ThemeManager $theme)
+    public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -26,8 +26,9 @@ class VideoController extends Controller
         }
 
         $video = Video::first();
-        $themeData = $theme->theme();
-        return view('admin.blades.video.index', compact('video', 'themeData'));
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return view('admin.blades.video.index', compact('video', 'theme', 'themeData'));
     }
 
     public function store(Request $request)

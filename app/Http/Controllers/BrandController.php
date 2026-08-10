@@ -16,7 +16,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class BrandController extends Controller
 {
 
-    public function index(ThemeManager $theme)
+    public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -27,8 +27,9 @@ class BrandController extends Controller
         }
 
         $brands = Brand::sorting()->get();
-        $themeData = $theme->theme();
-        return view('admin.blades.brand.index', compact('brands', 'themeData'));
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return view('admin.blades.brand.index', compact('brands', 'theme', 'themeData'));
     }
 
     public function store(Request $request)

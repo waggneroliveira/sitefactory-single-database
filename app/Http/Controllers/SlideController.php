@@ -20,7 +20,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class SlideController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/slide/';
-    public function index(ThemeManager $theme)
+    public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -32,9 +32,10 @@ class SlideController extends Controller
 
         $slides = Slide::sorting()->get();
 
-        $themeData = $theme->theme();
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
 
-        return view('admin.blades.slide.index', compact('slides', 'settingTheme', 'themeData'));
+        return view('admin.blades.slide.index', compact('slides', 'settingTheme', 'theme', 'themeData'));
         
     }
 

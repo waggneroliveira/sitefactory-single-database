@@ -21,7 +21,7 @@ class BlogService
 {
     protected string $pathUpload = 'admin/uploads/images/blog/';
 
-    public function getIndexData(Request $request): array
+    public function getIndexData(Request $request, ThemeManager $themeManager): array
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
         $check = checkPermission('noticias.visualizar', $settingTheme);
@@ -53,8 +53,9 @@ class BlogService
         foreach ($categories as $category) {
             $blogCategory[$category->id] = $category->title;
         }
-
-        return compact('blogs', 'categories', 'blogCategory', 'settingTheme', 'commentCount');
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return compact('blogs', 'categories', 'blogCategory', 'settingTheme', 'theme', 'themeData', 'commentCount');
     }
 
     public function getCreateData(ThemeManager $themeManager): array

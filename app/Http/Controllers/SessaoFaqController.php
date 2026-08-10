@@ -17,7 +17,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class SessaoFaqController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/sessao-faq/';
-    public function index(ThemeManager $theme)
+    public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -28,8 +28,9 @@ class SessaoFaqController extends Controller
         }
 
         $sessaoFaq = SessaoFaq::first();
-        $themeData = $theme->theme();
-        return view('admin.blades.sessaoFaq.index', compact('sessaoFaq', 'themeData'));
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return view('admin.blades.sessaoFaq.index', compact('sessaoFaq', 'theme', 'themeData'));
     }
 
     public function store(Request $request)

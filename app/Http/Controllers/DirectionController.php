@@ -18,7 +18,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class DirectionController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/direction/';
-    public function index(ThemeManager $theme)
+    public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -29,8 +29,9 @@ class DirectionController extends Controller
         }
 
         $directions = Direction::sorting()->get();
-        $themeData = $theme->theme();
-        return view('admin.blades.direction.index', compact('directions','themeData'));
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        return view('admin.blades.direction.index', compact('directions', 'theme', 'themeData'));
     }
 
     public function store(Request $request)

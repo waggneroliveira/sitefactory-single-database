@@ -18,13 +18,13 @@ class ProductController
     {
     }
 
-    public function index(Request $request): View|RedirectResponse
+    public function index(Request $request, ThemeManager $theme): View|RedirectResponse
     {
-        $data = $this->service->getIndexData($request);
+        $data = $this->service->getIndexData($request, $theme);
         if (isset($data['forbidden'])) {
             return $data['forbidden'];
         }
-
+        
         return view('admin.blades.product.index', $data);
     }
 

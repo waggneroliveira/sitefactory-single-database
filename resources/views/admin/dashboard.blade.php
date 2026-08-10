@@ -1,40 +1,65 @@
 @extends('admin.core.admin')
+
 @section('content')
-    <!-- start page title -->
+
+    {{-- ============================================================
+        PAGE TITLE
+    ============================================================ --}}
     <div class="row">
         <div class="col-12">
             <div class="page-title-box">
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item active">{{__('dashboard.title_dashboard')}}</li>
+                        <li class="breadcrumb-item active">
+                            {{ __('dashboard.title_dashboard') }}
+                        </li>
                     </ol>
                 </div>
-                <h4 class="page-title">{{__('dashboard.title_dashboard')}}</h4>
+
+                <h4 class="page-title">
+                    {{ __('dashboard.title_dashboard') }}
+                </h4>
             </div>
         </div>
     </div>
 
-    @if (Auth::user()->hasRole('Super') || 
-    Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-    Auth::user()->hasPermissionTo('slide.visualizar') || 
-    Auth::user()->hasPermissionTo('topico.visualizar') || 
-    Auth::user()->hasPermissionTo('passo a passo.visualizar') || 
-    Auth::user()->hasPermissionTo('sesssao lets go.visualizar') ||  
-    Auth::user()->hasPermissionTo('sesssao faq.visualizar') ||  
-    Auth::user()->hasPermissionTo('perguntas e respostas.visualizar') ||  
-    Auth::user()->hasPermissionTo('depoimento.visualizar'))
+
+    {{-- ============================================================
+        HOME
+    ============================================================ --}}
+    @if (
+        $theme->hasAnyModule([
+            'slides',
+            'topics',
+            'statute',
+            'letsgo',
+            'faq_session',
+            'faq',
+            'testimonials',
+        ])
+    )
+
         <div class="row">
+
             <div class="col-12">
                 <div class="page-title-box">
                     <h4 class="page-title">
-                        <i class="mdi mdi-home"></i> Home
+                        <i class="mdi mdi-home"></i>
+                        Home
                     </h4>
                 </div>
             </div>
-            {{-- Slide --}}
-            @if (Auth::user()->hasRole('Super') || 
-            Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-            Auth::user()->hasPermissionTo('slide.visualizar'))
+
+
+            {{-- Slides --}}
+            @if (
+                $theme->hasModule('slides') &&
+                (
+                    Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('usuario.tornar usuario master') ||
+                    Auth::user()->can('slide.visualizar')
+                )
+            )
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.slide.index'),
                     'icon' => 'mdi-image-size-select-actual',
@@ -42,10 +67,16 @@
                 ])
             @endif
 
+
             {{-- Tópicos --}}
-            @if (Auth::user()->hasRole('Super') || 
-            Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-            Auth::user()->hasPermissionTo('topico.visualizar'))
+            @if (
+                $theme->hasModule('topics') &&
+                (
+                    Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('usuario.tornar usuario master') ||
+                    Auth::user()->can('topico.visualizar')
+                )
+            )
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.topic.index'),
                     'icon' => 'mdi-format-list-bulleted',
@@ -53,10 +84,16 @@
                 ])
             @endif
 
-            @if (Auth::user()->hasRole('Super') || 
-            Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-            Auth::user()->hasPermissionTo('passo a passo.visualizar'))
-                {{-- Passo a passo --}}
+
+            {{-- Passo a passo --}}
+            @if (
+                $theme->hasModule('statute') &&
+                (
+                    Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('usuario.tornar usuario master') ||
+                    Auth::user()->can('passo a passo.visualizar')
+                )
+            )
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.statute.index'),
                     'icon' => 'mdi-file-document',
@@ -64,9 +101,16 @@
                 ])
             @endif
 
-            @if (Auth::user()->hasRole('Super') || 
-            Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-            Auth::user()->hasPermissionTo('sesssao lets go.visualizar'))
+
+            {{-- Sessão Lets Go --}}
+            @if (
+                $theme->hasModule('letsgo') &&
+                (
+                    Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('usuario.tornar usuario master') ||
+                    Auth::user()->can('sesssao lets go.visualizar')
+                )
+            )
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.letsgo.index'),
                     'icon' => 'mdi-alert-circle',
@@ -74,186 +118,320 @@
                 ])
             @endif
 
-            @if (Auth::user()->hasRole('Super') || 
-            Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-            Auth::user()->hasPermissionTo('sesssao faq.visualizar'))
+
+            {{-- Sessão FAQ --}}
+            @if (
+                $theme->hasModule('faq_session') &&
+                (
+                    Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('usuario.tornar usuario master') ||
+                    Auth::user()->can('sesssao faq.visualizar')
+                )
+            )
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.sessaoFaq.index'),
-                    'icon' => 'mdi-alert-circle',
-                    'title' => 'Sessão Faq'
+                    'icon' => 'mdi-help-circle',
+                    'title' => 'Sessão FAQ'
                 ])
             @endif
 
-            @if (Auth::user()->hasRole('Super') || 
-            Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-            Auth::user()->hasPermissionTo('perguntas e respostas.visualizar'))
+
+            {{-- Perguntas / Respostas --}}
+            @if (
+                $theme->hasModule('faq') &&
+                (
+                    Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('usuario.tornar usuario master') ||
+                    Auth::user()->can('perguntas e respostas.visualizar')
+                )
+            )
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.faq.index'),
-                    'icon' => 'mdi-alert-circle',
+                    'icon' => 'mdi-comment-question',
                     'title' => 'Perguntas/Respostas'
                 ])
             @endif
 
-            @if (Auth::user()->hasRole('Super') || 
-            Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-            Auth::user()->hasPermissionTo('depoimento.visualizar'))
+
+            {{-- Depoimentos --}}
+            @if (
+                $theme->hasModule('testimonials') &&
+                (
+                    Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('usuario.tornar usuario master') ||
+                    Auth::user()->can('depoimento.visualizar')
+                )
+            )
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.depoiment.index'),
-                    'icon' => 'mdi-alert-circle',
+                    'icon' => 'mdi-account-voice',
                     'title' => 'Depoimentos'
                 ])
             @endif
 
         </div>
+
     @endif
 
-    @if (Auth::user()->hasRole('Super') || 
-    Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-    Auth::user()->hasPermissionTo('sobre nos.visualizar') || 
-    Auth::user()->hasPermissionTo('parametro.visualizar') || 
-    Auth::user()->hasPermissionTo('missao visao e valores.visualizar') || 
-    Auth::user()->hasPermissionTo('video.visualizar') ||  
-    Auth::user()->hasPermissionTo('onde atendemos.visualizar'))
-        {{-- SOBRE --}}
+
+    {{-- ============================================================
+        SOBRE NÓS
+    ============================================================ --}}
+    @if (
+        $theme->hasAnyModule([
+            'about',
+            'benefits',
+            'mission',
+            'representatives',
+            'videos',
+            'service_locations',
+        ])
+    )
+
         <div class="row">
 
             <div class="col-12">
                 <div class="page-title-box">
-                    <h4 class="page-title"><i class="mdi mdi-help-circle"></i> Sobre Nós</h4>
+                    <h4 class="page-title">
+                        <i class="mdi mdi-help-circle"></i>
+                        Sobre Nós
+                    </h4>
                 </div>
             </div>
 
-            @if (Auth::user()->hasPermissionTo('sobre nos.visualizar') ||
-            Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-            Auth::user()->hasRole('Super'))
+
+            {{-- Sobre Nós --}}
+            @if (
+                $theme->hasModule('about') &&
+                (
+                    Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('usuario.tornar usuario master') ||
+                    Auth::user()->can('sobre nos.visualizar')
+                )
+            )
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.about.index'),
                     'icon' => 'mdi-help-circle',
                     'title' => 'Sobre Nós'
                 ])
             @endif
-            @if (Auth::user()->hasPermissionTo('parametro.visualizar') ||
-            Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-            Auth::user()->hasRole('Super'))
-                {{-- Parametros --}}
+
+
+            {{-- Parâmetros --}}
+            @if (
+                $theme->hasModule('benefits') &&
+                (
+                    Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('usuario.tornar usuario master') ||
+                    Auth::user()->can('parametro.visualizar')
+                )
+            )
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.benefitTopic.index'),
                     'icon' => 'mdi-star',
-                    'title' => 'Parametros'
+                    'title' => 'Parâmetros'
                 ])
             @endif
-            @if (Auth::user()->hasPermissionTo('missao visao e valores.visualizar') ||
-            Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-            Auth::user()->hasRole('Super'))
+
+
+            {{-- Missão, Visão e Valores --}}
+            @if (
+                $theme->hasModule('mission') &&
+                (
+                    Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('usuario.tornar usuario master') ||
+                    Auth::user()->can('missao visao e valores.visualizar')
+                )
+            )
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.report.index'),
-                    'icon' => 'mdi-alert-circle',
-                    'title' => 'Missão Visão e Valores'
+                    'icon' => 'mdi-target',
+                    'title' => 'Missão, Visão e Valores'
                 ])
             @endif
-            @if (Auth::user()->hasPermissionTo('representantes.visualizar') ||
-            Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-            Auth::user()->hasRole('Super'))
+
+
+            {{-- Representantes --}}
+            @if (
+                $theme->hasModule('representatives') &&
+                (
+                    Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('usuario.tornar usuario master') ||
+                    Auth::user()->can('representantes.visualizar')
+                )
+            )
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.direction.index'),
                     'icon' => 'mdi-account-group',
                     'title' => 'Representantes'
                 ])
             @endif
-            @if (Auth::user()->hasPermissionTo('video.visualizar') ||
-            Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-            Auth::user()->hasRole('Super'))
-                {{-- VIDEOS --}}
+
+
+            {{-- Vídeos --}}
+            @if (
+                $theme->hasModule('videos') &&
+                (
+                    Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('usuario.tornar usuario master') ||
+                    Auth::user()->can('video.visualizar')
+                )
+            )
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.video.index'),
                     'icon' => 'mdi-play-circle',
                     'title' => 'Vídeos'
                 ])
             @endif
-            @if (Auth::user()->hasPermissionTo('onde atendemos.visualizar') ||
-            Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-            Auth::user()->hasRole('Super'))
-            @include('admin.components.dashboard-card', [
-                'route' => route('admin.dashboard.serviceLocation.index'),
-                'icon' => 'mdi-alert-circle',
-                'title' => 'Sessão Onde atendemos'
-            ])
+
+
+            {{-- Onde atendemos --}}
+            @if (
+                $theme->hasModule('service_locations') &&
+                (
+                    Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('usuario.tornar usuario master') ||
+                    Auth::user()->can('onde atendemos.visualizar')
+                )
+            )
+                @include('admin.components.dashboard-card', [
+                    'route' => route('admin.dashboard.serviceLocation.index'),
+                    'icon' => 'mdi-map-marker',
+                    'title' => 'Sessão Onde Atendemos'
+                ])
             @endif
+
         </div>
 
     @endif
 
-    @if (Auth::user()->hasRole('Super') || 
-    Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-    Auth::user()->hasPermissionTo('marcas.visualizar') || 
-    Auth::user()->hasPermissionTo('categorias de produtos.visualizar') || 
-    Auth::user()->hasPermissionTo('produtos.visualizar') || 
-    Auth::user()->hasPermissionTo('video.visualizar'))
+
+    {{-- ============================================================
+        PRODUTOS
+    ============================================================ --}}
+    @if (
+        $theme->hasAnyModule([
+            'brands',
+            'product_categories',
+            'products',
+        ])
+    )
+
         <div class="row">
 
             <div class="col-12">
                 <div class="page-title-box">
-                    <h4 class="page-title"><i class="mdi mdi-toolbox"></i> Produtos</h4>
+                    <h4 class="page-title">
+                        <i class="mdi mdi-toolbox"></i>
+                        Produtos
+                    </h4>
                 </div>
             </div>
-            @if (Auth::user()->hasPermissionTo('marcas.visualizar') ||
-            Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-            Auth::user()->hasRole('Super'))
-                {{-- Marcas --}}
+
+
+            {{-- Marcas --}}
+            @if (
+                $theme->hasModule('brands') &&
+                (
+                    Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('usuario.tornar usuario master') ||
+                    Auth::user()->can('marcas.visualizar')
+                )
+            )
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.brand.index'),
                     'icon' => 'mdi-tag-multiple',
                     'title' => 'Marcas'
                 ])
             @endif
-            @if (Auth::user()->hasPermissionTo('categorias de produtos.visualizar') ||
-            Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-            Auth::user()->hasRole('Super'))
-                {{-- Categorias --}}
+
+
+            {{-- Categorias --}}
+            @if (
+                $theme->hasModule('product_categories') &&
+                (
+                    Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('usuario.tornar usuario master') ||
+                    Auth::user()->can('categorias de produtos.visualizar')
+                )
+            )
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.productCategory.index'),
                     'icon' => 'mdi-tag-multiple',
                     'title' => 'Categorias dos produtos'
                 ])
             @endif
-            @if (Auth::user()->hasPermissionTo('produtos.visualizar') ||
-                Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-                Auth::user()->hasRole('Super'))
-                {{-- Produtos --}}
+
+
+            {{-- Produtos --}}
+            @if (
+                $theme->hasModule('products') &&
+                (
+                    Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('usuario.tornar usuario master') ||
+                    Auth::user()->can('produtos.visualizar')
+                )
+            )
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.product.index'),
-                    'icon' => 'mdi-tag-multiple',
+                    'icon' => 'mdi-package-variant',
                     'title' => 'Produtos'
                 ])
             @endif
+
         </div>
+
     @endif
 
-    @if (Auth::user()->hasRole('Super') || 
-    Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-    Auth::user()->hasPermissionTo('categorias de noticias.visualizar') || 
-    Auth::user()->hasPermissionTo('noticias.visualizar'))
-        {{-- NOTICIAS --}}
+
+    {{-- ============================================================
+        NOTÍCIAS
+    ============================================================ --}}
+    @if (
+        $theme->hasAnyModule([
+            'blog_categories',
+            'blog',
+        ])
+    )
+
         <div class="row">
 
             <div class="col-12">
                 <div class="page-title-box">
-                    <h4 class="page-title"><i class="mdi mdi-newspaper-variant"></i> Notícias</h4>
+                    <h4 class="page-title">
+                        <i class="mdi mdi-newspaper-variant"></i>
+                        Notícias
+                    </h4>
                 </div>
             </div>
 
-            @if (Auth::user()->hasPermissionTo('categorias de noticias.visualizar') ||
-            Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-            Auth::user()->hasRole('Super'))
+
+            {{-- Categorias das Notícias --}}
+            @if (
+                $theme->hasModule('blog_categories') &&
+                (
+                    Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('usuario.tornar usuario master') ||
+                    Auth::user()->can('categorias de noticias.visualizar')
+                )
+            )
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.blogCategory.index'),
                     'icon' => 'mdi-tag-multiple',
                     'title' => 'Categorias das Notícias'
                 ])
             @endif
-            @if (Auth::user()->hasPermissionTo('noticias.visualizar') ||
-            Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-            Auth::user()->hasRole('Super'))
+
+
+            {{-- Notícias --}}
+            @if (
+                $theme->hasModule('blog') &&
+                (
+                    Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('usuario.tornar usuario master') ||
+                    Auth::user()->can('noticias.visualizar')
+                )
+            )
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.blog.index'),
                     'icon' => 'mdi-newspaper-variant',
@@ -262,26 +440,42 @@
             @endif
 
         </div>
+
     @endif
 
-    {{-- CONTATO --}}
-    @if (Auth::user()->hasRole('Super') || 
-    Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-    Auth::user()->hasPermissionTo('contato.visualizar') || 
-    Auth::user()->hasPermissionTo('lead contato.visualizar'))
+
+    {{-- ============================================================
+        CONTATO
+    ============================================================ --}}
+    @if (
+        $theme->hasAnyModule([
+            'contact',
+            'contact_leads',
+            'download_leads',
+        ])
+    )
+
         <div class="row">
+
             <div class="col-12">
                 <div class="page-title-box">
                     <h4 class="page-title">
-                        <i class="mdi mdi-card-account-mail-outline"></i> Contato
+                        <i class="mdi mdi-card-account-mail-outline"></i>
+                        Contato
                     </h4>
                 </div>
             </div>
 
+
             {{-- Contato --}}
-            @if (Auth::user()->hasRole('Super') || 
-            Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-            Auth::user()->hasPermissionTo('contato.visualizar'))
+            @if (
+                $theme->hasModule('contact') &&
+                (
+                    Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('usuario.tornar usuario master') ||
+                    Auth::user()->can('contato.visualizar')
+                )
+            )
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.contact.index'),
                     'icon' => 'mdi-card-account-mail-outline',
@@ -289,34 +483,62 @@
                 ])
             @endif
 
+
             {{-- Lead Contato --}}
-            @if (Auth::user()->hasRole('Super') || 
-            Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
-            Auth::user()->hasPermissionTo('lead contato.visualizar'))
+            @if (
+                $theme->hasModule('contact_leads') &&
+                (
+                    Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('usuario.tornar usuario master') ||
+                    Auth::user()->can('lead contato.visualizar')
+                )
+            )
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.formIndex.index'),
                     'icon' => 'mdi-account-box-outline',
                     'title' => 'Lead Contato'
                 ])
             @endif
-            @include('admin.components.dashboard-card', [
-                'route' => route('admin.dashboard.leadDownload.index'),
-                'icon' => 'mdi-account-box-outline',
-                'title' => 'Lead Download'
-            ])
+
+
+            {{-- Lead Download --}}
+            @if (
+                $theme->hasModule('download_leads') &&
+                (
+                    Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('usuario.tornar usuario master')
+                )
+            )
+                @include('admin.components.dashboard-card', [
+                    'route' => route('admin.dashboard.leadDownload.index'),
+                    'icon' => 'mdi-download',
+                    'title' => 'Lead Download'
+                ])
+            @endif
 
         </div>
+
     @endif
 
-    {{-- SMTP --}}
-    @if (Auth::user()->hasRole('Super') || 
-    Auth::user()->can('usuario.tornar usuario master') || 
-    Auth::user()->can('email.visualizar'))
+    {{-- ============================================================
+        SMTP
+    ============================================================ --}}
+    @if (
+        $theme->hasModule('config_smtp') &&
+        (
+            Auth::user()->hasRole('Super') ||
+            Auth::user()->can('usuario.tornar usuario master') ||
+            Auth::user()->can('email.visualizar')
+        )
+    )
+
         <div class="row">
+
             <div class="col-12">
                 <div class="page-title-box">
                     <h4 class="page-title">
-                        <i class="mdi mdi-email-edit"></i> {{__('dashboard.setting_smtp')}}
+                        <i class="mdi mdi-email-edit"></i>
+                        {{ __('dashboard.setting_smtp') }}
                     </h4>
                 </div>
             </div>
@@ -328,81 +550,190 @@
             ])
 
         </div>
+
     @endif
 
-    {{-- SEGURANÇA --}}
-    @if (Auth::user()->hasRole('Super') || 
-    Auth::user()->can('usuario.tornar usuario master') || 
-    Auth::user()->can('auditoria.visualizar') || 
-    Auth::user()->can('usuario.visualizar') || 
-    Auth::user()->can('grupo.visualizar'))
+    {{-- ============================================================
+        SEGURANÇA
+    ============================================================ --}}
+    @if (
+        $theme->hasAnyModule([
+            'audit',
+            'permissions',
+            'users',
+        ])
+    )
 
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
-                    <h4 class="page-title">
-                        <i class="mdi mdi-security"></i> {{__('dashboard.security_and_access_control')}}
-                    </h4>
+        @if (
+            Auth::user()->hasRole('Super') ||
+            Auth::user()->can('usuario.tornar usuario master') ||
+            Auth::user()->can('auditoria.visualizar') ||
+            Auth::user()->can('usuario.visualizar') ||
+            Auth::user()->can('grupo.visualizar')
+        )
+
+            <div class="row">
+
+                <div class="col-12">
+
+                    <div class="page-title-box">
+                        <h4 class="page-title">
+                            <i class="mdi mdi-security"></i>
+                            {{ __('dashboard.security_and_access_control') }}
+                        </h4>
+                    </div>
+
                 </div>
+
+
+                {{-- ====================================================
+                    AUDITORIA
+                ==================================================== --}}
+                @if (
+                    $theme->hasModule('audit') &&
+                    (
+                        Auth::user()->hasRole('Super') ||
+                        Auth::user()->can('usuario.tornar usuario master') ||
+                        Auth::user()->can('auditoria.visualizar')
+                    )
+                )
+
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.audit.index'),
+                        'icon' => 'mdi-clipboard-text',
+                        'title' => __('dashboard.audit')
+                    ])
+
+                @endif
+
+
+                {{-- ====================================================
+                    GRUPOS / PERMISSÕES
+                ==================================================== --}}
+                @if (
+                    $theme->hasModule('permissions') &&
+                    (
+                        Auth::user()->hasRole('Super') ||
+                        Auth::user()->can('usuario.tornar usuario master') ||
+                        Auth::user()->can('grupo.visualizar')
+                    )
+                )
+
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.group.index'),
+                        'icon' => 'mdi-account-group',
+                        'title' => __('dashboard.group_and_permission')
+                    ])
+
+                @endif
+
+
+                {{-- ====================================================
+                    USUÁRIOS
+                ==================================================== --}}
+                @if (
+                    $theme->hasModule('users') &&
+                    (
+                        Auth::user()->hasRole('Super') ||
+                        Auth::user()->can('usuario.tornar usuario master') ||
+                        Auth::user()->can('usuario.visualizar')
+                    )
+                )
+
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.user.index'),
+                        'icon' => 'mdi-account-multiple',
+                        'title' => __('dashboard.users')
+                    ])
+
+                @endif
+
             </div>
 
-            {{-- Auditoria --}}
-            @if (Auth::user()->hasRole('Super') || 
-            Auth::user()->can('usuario.tornar usuario master') || 
-            Auth::user()->can('auditoria.visualizar'))
-                @include('admin.components.dashboard-card', [
-                    'route' => route('admin.dashboard.audit.index'),
-                    'icon' => 'mdi-clipboard-text',
-                    'title' => __('dashboard.audit')
-                ])
-            @endif
+        @endif
 
-            {{-- Grupos --}}
-            @if (Auth::user()->hasRole('Super') || 
-            Auth::user()->can('usuario.tornar usuario master') || 
-            Auth::user()->can('grupo.visualizar'))
-                @include('admin.components.dashboard-card', [
-                    'route' => route('admin.dashboard.group.index'),
-                    'icon' => 'mdi-account-group',
-                    'title' => __('dashboard.group_and_permission')
-                ])
-            @endif
+    @endif
 
-            {{-- Usuários --}}
-            @if (Auth::user()->hasRole('Super') || 
-            Auth::user()->can('usuario.tornar usuario master') || 
-            Auth::user()->can('usuario.visualizar'))
-                @include('admin.components.dashboard-card', [
-                    'route' => route('admin.dashboard.user.index'),
-                    'icon' => 'mdi-account-multiple',
-                    'title' => __('dashboard.users')
-                ])
-            @endif
+
+    {{-- ============================================================
+        CONFIGURAÇÃO DO TEMA
+        NÃO DEPENDE DO TEMPLATE
+    ============================================================ --}}
+    @if (
+        Auth::user()->hasRole('Super') ||
+        Auth::user()->can('usuario.tornar usuario master')
+    )
+
+        <div class="row">
+
+            <div class="col-12">
+
+                <div class="page-title-box">
+                    <h4 class="page-title">
+                        <i class="mdi mdi-palette"></i>
+                        Configuração do Tema
+                    </h4>
+                </div>
+
+            </div>
 
             @include('admin.components.dashboard-card', [
                 'route' => route('admin.dashboard.templateTheme.index'),
-                'icon' => 'mdi-account-multiple',
-                'title' => 'Configuração de temna'
+                'icon' => 'mdi-palette',
+                'title' => 'Configuração do Tema'
             ])
 
         </div>
+
     @endif
-    <!-- Footer Start -->
+
+    {{-- ============================================================
+        FOOTER
+    ============================================================ --}}
     <footer class="footer">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6">
-                    <div><a href="https://www.whi.dev.br/" target="_blank" style="color:#94a0ad;"><script>document.write(new Date().getFullYear())</script> © WHI - Web de Alta Inspiração</a></div>
+                    <div>
+                        <a
+                            href="https://www.whi.dev.br/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style="color:#94a0ad;"
+                        >
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script>
+                            © WHI - Web de Alta Inspiração
+                        </a>
+                    </div>
                 </div>
+
+
                 <div class="col-md-6">
-                    <div class="d-none d-md-flex gap-4 align-item-center justify-content-md-end footer-links">
-                        <a href="https://www.whi.dev.br/" target="_blank" rel="noopener noreferrer">Sobre a WHI</a>
-                        <a href="https://wa.me/5571992768360" target="_blank" rel="noopener noreferrer">Fale conosco</a>
+                    <div class="d-none d-md-flex gap-4 align-items-center justify-content-md-end footer-links">
+                        <a
+                            href="https://www.whi.dev.br/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Sobre a WHI
+                        </a>
+
+                        <a
+                            href="https://wa.me/5571992768360"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Fale conosco
+                        </a>
+
                     </div>
                 </div>
             </div>
         </div>
     </footer>
+
     @include('admin.loadPage.loading')
-    <!-- end Footer -->
+
 @endsection

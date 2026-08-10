@@ -19,7 +19,7 @@ class StatuteController extends Controller
 {
 
     protected $pathUpload = 'admin/uploads/images/statute/';
-    public function index(ThemeManager $theme)
+    public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
@@ -30,8 +30,10 @@ class StatuteController extends Controller
         }
 
         $statute = Statute::first();
-        $themeData = $theme->theme();
-        return view('admin.blades.statute.index', compact('statute', 'themeData'));
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+
+        return view('admin.blades.statute.index', compact('statute', 'theme', 'themeData'));
     }
 
     public function store(Request $request)
