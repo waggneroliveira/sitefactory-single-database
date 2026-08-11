@@ -38,7 +38,7 @@
                                     </div>
                                     <div class="col-6 d-flex justify-content-end">
                                         @if (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can(['slide.visualizar', 'slide.criar']))
-                                        @if (isset($slides) && $slides->count() < $theme->getLimit('slides')) 
+                                        @if (isset($slides) && $slides->count() < $theme->getLimit('slides', 0)) 
                                             <button type="button" class="btn btn-primary text-black waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#slide-create"><i class="mdi mdi-plus-circle me-1"></i> {{__('dashboard.btn_create')}}</button>
                                         @endif    
                                             <!-- Modal -->

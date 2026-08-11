@@ -19,6 +19,7 @@ use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FormIndexController;
 use App\Http\Controllers\LetsgoController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\PlansController;
 use App\Http\Controllers\PopUpController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductGalleryController;
@@ -311,7 +312,14 @@ Route::prefix('painel/')->group(function () {
         Route::resource('seo-google', SeoGoogleController::class)
         ->parameters(['seo-google' => 'seoGoogle'])
         ->names('admin.dashboard.seoGoogle');
-        
+       // PLANS
+        Route::resource('planos', PlansController::class)
+        ->parameters(['planos' => 'plan'])
+        ->names('admin.dashboard.plans');
+
+        Route::patch('planos/{plans}/toggle-active', [PlansController::class, 'toggleActive']
+        )->name('admin.dashboard.plans.toggleActive');
+
         //DESATIVAR COMENTARIO
         Route::put('/desativa-comentario/{comment}', [CommentController::class, 'desactiveComment'])
         ->name('comment.desactive.update');

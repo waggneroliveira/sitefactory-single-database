@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\TenantModuleLimit;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Multitenancy\Models\Tenant as BaseTenant;
 
 class Tenant extends BaseTenant
@@ -44,5 +47,15 @@ class Tenant extends BaseTenant
     public function templateTheme()
     {
         return $this->belongsTo(TemplateTheme::class);
+    }
+
+    public function moduleLimits(): HasMany
+    {
+        return $this->hasMany(TenantModuleLimit::class);
+    }
+
+    public function plan(): BelongsTo
+    {
+        return $this->belongsTo(Plan::class);
     }
 }

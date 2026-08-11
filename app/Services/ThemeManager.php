@@ -5,6 +5,7 @@ namespace App\Services;
 // use Spatie\Multitenancy\Models\Tenant;
 use App\Models\TemplateTheme;
 use App\Models\Tenant;
+use App\Models\TenantModuleLimit;
 
 class ThemeManager
 {
@@ -67,12 +68,63 @@ class ThemeManager
         return false;
     }
 
-    public function getLimit(string $module, ?int $default = 6): ?int
-    {
-        $slug = $this->theme()->slug;
+    // public function getLimit(string $module, ?int $default = 6): ?int
+    // {
+    //     $slug = $this->theme()->slug;
         
+    //     return config(
+    //         "template_modules.{$slug}.limits.{$module}",
+    //         $default
+    //     );
+    // }
+
+    public function getLimit(string $module, ?int $default = null): ?int {
+
+        $tenant = Tenant::current();
+
+        /*
+        |--------------------------------------------------------------------------
+        | 1. Exceção personalizada do cliente
+        |--------------------------------------------------------------------------
+        */
+
+        $customLimit = TenantModuleLimit::query()
+            ->where('tenant_id', $tenant->id)
+            ->where('module', $module)
+            ->value('limit');
+
+        if ($customLimit !== null) {
+            return (int) $customLimit;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | 2. Limite do plano
+        |--------------------------------------------------------------------------
+        */
+
+        if ($tenant->plan_id) {
+
+            $planLimit = $tenant->plan
+                ->moduleLimits()
+                ->where('module', $module)
+                ->value('limit');
+
+            if ($planLimit !== null) {
+                return (int) $planLimit;
+            }
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | 3. Limite padrão do template
+        |--------------------------------------------------------------------------
+        */
+
+        $templateSlug = $this->theme()->slug;
+
         return config(
-            "template_modules.{$slug}.limits.{$module}",
+            "template_modules.{$templateSlug}.limits.{$module}",
             $default
         );
     }

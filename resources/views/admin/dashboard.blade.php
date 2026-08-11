@@ -707,6 +707,26 @@
         ])
 
     </div>
+        <div class="row">
+
+            <div class="col-12">
+
+                <div class="page-title-box">
+                    <h4 class="page-title">
+                        <i class="mdi mdi-palette"></i>
+                        Plano contratado
+                    </h4>
+                </div>
+
+            </div>
+
+            @include('admin.components.dashboard-card', [
+                'route' => route('admin.dashboard.plans.index'),
+                'icon' => 'mdi-palette',
+                'title' => 'Plano contratado'
+            ])
+
+        </div>
 
     {{-- ============================================================
         FOOTER

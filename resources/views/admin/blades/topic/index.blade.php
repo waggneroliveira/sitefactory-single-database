@@ -41,7 +41,7 @@
                                             Auth::user()->hasRole('Super'))
                                                 @if (
                                                     isset($topics) &&
-                                                    $topics->count() < $theme->getLimit('topics')
+                                                    $topics->count() < $theme->getLimit('topics', 0)
                                                 )                                                
                                                     <button
                                                         type="button"

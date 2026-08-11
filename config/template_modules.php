@@ -45,11 +45,11 @@ return [
             'contact_leads',
             'download_leads',
         ],
-        
+
         'smtp' => [
             'config_smtp',
         ],
-        
+
         'security_and_access_control' => [
             'audit',
             'permissions',
@@ -57,11 +57,13 @@ return [
         ],
 
         'limits' => [
-            'topics' => 6,
             'slides' => 3,
+            'topics' => 6,
+            'testimonials' => 6,
+            'faq' => 10,
         ],
-
     ],
+
 
     'cartorio' => [
 
@@ -79,21 +81,21 @@ return [
             'contact_leads',
             'download_leads',
         ],
-        
+
         'smtp' => [
             'config_smtp',
         ],
-        
+
         'security_and_access_control' => [
             'audit',
             'permissions',
             'users',
         ],
-        'limits' => [
-            'topics' => 3,
-            'slides' => 1,
-        ],
 
+        'limits' => [
+            'slides' => 1,
+            'topics' => 3,
+        ],
     ],
 
 ];

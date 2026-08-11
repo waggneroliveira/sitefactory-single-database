@@ -48,7 +48,7 @@ class TopicController extends Controller
         return view('admin.blades.topic.index', compact('topics', 'theme', 'themeData'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, ThemeManager $themeManager)
     {
         $data = $request->except(['path_image', 'path_image_mobile']);
         $manager = new ImageManager(GdDriver::class);
@@ -57,6 +57,18 @@ class TopicController extends Controller
         $request->validate([
             'path_image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif']
         ]);
+        
+        $theme = $themeManager;
+        $limit = $theme->getLimit('topics', 0);
+
+        $currentCount = Topic::count();
+
+        if ($currentCount >= $limit) {
+            return back()->with(
+                'error',
+                'O limite de tópicos deste cliente foi atingido.'
+            );
+        }
 
         if ($request->hasFile('path_image')) {
             $file = $request->file('path_image');
