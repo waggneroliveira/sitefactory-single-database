@@ -83,8 +83,7 @@
 
                                 @csrf
 
-                                @include(
-                                    'admin.blades.plans.form',
+                                @include('admin.blades.plans.form',
                                     [
                                         'plan' => null,
                                         'isEdit' => false

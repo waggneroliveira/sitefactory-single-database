@@ -726,6 +726,12 @@
                 'title' => 'Plano contratado'
             ])
 
+            @include('admin.components.dashboard-card', [
+                'route' => route('admin.dashboard.tenants.index'),
+                'icon' => 'mdi-palette',
+                'title' => 'Cliente/Tenant'
+            ])
+
         </div>
 
     {{-- ============================================================

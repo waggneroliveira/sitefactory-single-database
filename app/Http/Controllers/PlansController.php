@@ -34,7 +34,9 @@ class PlansController extends Controller
     {
         $theme = $themeManager;
         $themeData = $themeManager->theme();
-        return view('admin.blades.plans.create', compact('theme', 'themeData'));
+        $availableModules = $themeManager->availableModules();
+
+        return view('admin.blades.plans.create', compact('theme', 'themeData', 'availableModules'));
     }
 
 
@@ -120,11 +122,13 @@ class PlansController extends Controller
     /**
      * Exibe um plano.
      */
-    public function show(Plan $plan)
+    public function show(Plan $plan, ThemeManager $themeManager)
     {
         $plan->load('moduleLimits');
-
-        return view('admin.blades.plans.show', compact('plan'));
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        $availableModules = $themeManager->availableModules();
+        return view('admin.blades.plans.show', compact('plan', 'availableModules', 'theme', 'themeData'));
     }
 
 
@@ -136,7 +140,8 @@ class PlansController extends Controller
         $plan->load('moduleLimits');
         $theme = $themeManager;
         $themeData = $themeManager->theme();
-        return view('admin.blades.plans.edit', compact('plan', 'theme', 'themeData'));
+        $availableModules = $themeManager->availableModules();
+        return view('admin.blades.plans.edit', compact('plan', 'availableModules', 'theme', 'themeData'));
     }
 
 

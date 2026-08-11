@@ -68,25 +68,9 @@ class ThemeManager
         return false;
     }
 
-    // public function getLimit(string $module, ?int $default = 6): ?int
-    // {
-    //     $slug = $this->theme()->slug;
-        
-    //     return config(
-    //         "template_modules.{$slug}.limits.{$module}",
-    //         $default
-    //     );
-    // }
-
-    public function getLimit(string $module, ?int $default = null): ?int {
-
+    public function getLimit(string $module, ?int $default = null): ?int
+    {
         $tenant = Tenant::current();
-
-        /*
-        |--------------------------------------------------------------------------
-        | 1. Exceção personalizada do cliente
-        |--------------------------------------------------------------------------
-        */
 
         $customLimit = TenantModuleLimit::query()
             ->where('tenant_id', $tenant->id)
@@ -97,14 +81,7 @@ class ThemeManager
             return (int) $customLimit;
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | 2. Limite do plano
-        |--------------------------------------------------------------------------
-        */
-
         if ($tenant->plan_id) {
-
             $planLimit = $tenant->plan
                 ->moduleLimits()
                 ->where('module', $module)
@@ -115,12 +92,6 @@ class ThemeManager
             }
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | 3. Limite padrão do template
-        |--------------------------------------------------------------------------
-        */
-
         $templateSlug = $this->theme()->slug;
 
         return config(
@@ -128,4 +99,21 @@ class ThemeManager
             $default
         );
     }
+
+    public function availableModules(): array
+    {
+        $modules = config("template_modules.{$this->slug}", []);
+        // dd($modules);
+        return collect($modules)
+            ->flatten()
+            ->filter(fn ($module) => is_string($module))
+            ->unique()
+            ->sort()
+            ->mapWithKeys(fn ($module) => [
+                $module => \Illuminate\Support\Str::headline($module),
+            ])
+            ->toArray();
+    }
+
+
 }

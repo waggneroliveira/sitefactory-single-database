@@ -32,6 +32,7 @@ use App\Http\Controllers\SettingEmailController;
 use App\Http\Controllers\SettingThemeController;
 use App\Http\Controllers\SlideController;
 use App\Http\Controllers\StatuteController;
+use App\Http\Controllers\SystemClientController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\VideoController;
@@ -316,6 +317,10 @@ Route::prefix('painel/')->group(function () {
         Route::resource('planos', PlansController::class)
         ->parameters(['planos' => 'plan'])
         ->names('admin.dashboard.plans');
+       // CLIENTES/TENANT
+        Route::resource('cliente', SystemClientController::class)
+        ->parameters(['cliente' => 'tenant'])
+        ->names('admin.dashboard.tenants');
 
         Route::patch('planos/{plans}/toggle-active', [PlansController::class, 'toggleActive']
         )->name('admin.dashboard.plans.toggleActive');
