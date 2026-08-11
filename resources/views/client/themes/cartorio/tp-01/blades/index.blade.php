@@ -50,34 +50,22 @@
     </section>
 
     <!-- TRÊS BOXES SOBREPOSTOS -->
-    <div class="container overlap-cards">
+    <section class="container overlap-cards">
         <div class="row g-4">
-            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="quick-card text-center">
-                    <div class="quick-icon mb-3"><i class="bi bi-calendar-check"></i></div>
-                    <h5 class="fw-bold">Agendamento Online</h5>
-                    <p class="text-secondary small">Evite filas, agende seus serviços de forma rápida e prática.</p>
-                    <a href="#" class="text-decoration-none fw-semibold" style="color:#b8860b">Agendar agora <i class="bi bi-arrow-right-short"></i></a>
+            @foreach ($topics as $topic) 
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="{{ ($loop->index + 1) * 100 }}">
+                    <div class="quick-card text-center">
+                        <div class="quick-icon mb-3"><i class="bi bi-calendar-check"></i></div>
+                        <h5 class="fw-bold">{{$topic->title}}</h5>
+                        <p class="text-secondary small">{{$topic->description}}</p>
+                        @if (isset($topic) && $topic->link <> null)
+                            <a href="{{$topic->link}}" class="text-decoration-none fw-semibold secondary-color">{{$topic->btn_title}} <i class="bi bi-arrow-right-short"></i></a>
+                        @endif
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
-                <div class="quick-card text-center">
-                    <div class="quick-icon mb-3"><i class="bi bi-file-earmark-text"></i></div>
-                    <h5 class="fw-bold">2ª Via de Certidões</h5>
-                    <p class="text-secondary small">Solicite certidões de nascimento, casamento, óbito com entrega digital.</p>
-                    <a href="#" class="text-decoration-none fw-semibold" style="color:#b8860b">Solicitar <i class="bi bi-arrow-right-short"></i></a>
-                </div>
-            </div>
-            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
-                <div class="quick-card text-center">
-                    <div class="quick-icon mb-3"><i class="bi bi-chat-dots"></i></div>
-                    <h5 class="fw-bold">Atendimento Prioritário</h5>
-                    <p class="text-secondary small">Idosos, PCD e gestantes têm atendimento especial.</p>
-                    <a href="#contato" class="text-decoration-none fw-semibold" style="color:#b8860b">Saiba mais <i class="bi bi-arrow-right-short"></i></a>
-                </div>
-            </div>
+            @endforeach
         </div>
-    </div>
+    </section>
 
     <!-- Quem Somos -->
     <section id="quem-somos" class="about py-5 py-md-6" style="padding-top: 3rem;">
@@ -90,7 +78,7 @@
                     <div class="mt-3">
                         {!! $about->text !!}
                     </div>
-
+                    
                     <a href="#contato" class="bg-button-two color-button-two rounded-pill px-4 py-2 d-table mt-3 fw-semibold hover-zoom">Fale com especialista <i class="bi bi-chat-dots"></i></a>
                 </div>
                 <div class="col-lg-6 order-lg-2 order-1 text-center" data-aos="fade-left">
@@ -297,6 +285,9 @@
     <style>
         .about li::before{
             color: var(--primary-color);
+        }
+        .quick-card{
+            border-bottom: 3px solid var(--secondary-color);
         }
     </style>
 @endsection

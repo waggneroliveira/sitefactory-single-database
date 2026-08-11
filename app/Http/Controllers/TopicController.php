@@ -31,8 +31,12 @@ class TopicController extends Controller
 
         $topics = Topic::select(
             'id',
+            'tenant_id',
             'title',
             'active',
+            'link',
+            'description',
+            'btn_title',
             'color',
             'sorting',
             'path_image',
@@ -40,7 +44,7 @@ class TopicController extends Controller
         
         $theme = $themeManager;
         $themeData = $themeManager->theme();
-
+        
         return view('admin.blades.topic.index', compact('topics', 'theme', 'themeData'));
     }
 

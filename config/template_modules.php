@@ -56,6 +56,11 @@ return [
             'users',
         ],
 
+        'limits' => [
+            'topics' => 6,
+            'slides' => 3,
+        ],
+
     ],
 
     'cartorio' => [
@@ -83,6 +88,10 @@ return [
             'audit',
             'permissions',
             'users',
+        ],
+        'limits' => [
+            'topics' => 3,
+            'slides' => 1,
         ],
 
     ],

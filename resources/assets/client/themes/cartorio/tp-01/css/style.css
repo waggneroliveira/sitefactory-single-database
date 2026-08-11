@@ -160,7 +160,6 @@ footer {
     padding: 1.5rem;
     box-shadow: 0 20px 35px -12px rgba(0,0,0,0.15);
     transition: all 0.3s ease;
-    border-bottom: 3px solid #d4af37;
     height: 100%;
 }
 .quick-card:hover {

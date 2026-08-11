@@ -20,7 +20,9 @@ class Topic extends Model
         'active',
         'path_image',
         'link',
-        'color'
+        'color',
+        'description',
+        'btn_title',
     ];
 
     public function scopeActive($query){

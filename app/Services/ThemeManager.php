@@ -66,4 +66,14 @@ class ThemeManager
 
         return false;
     }
+
+    public function getLimit(string $module, ?int $default = 6): ?int
+    {
+        $slug = $this->theme()->slug;
+        
+        return config(
+            "template_modules.{$slug}.limits.{$module}",
+            $default
+        );
+    }
 }

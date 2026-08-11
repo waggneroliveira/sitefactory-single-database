@@ -1,8 +1,19 @@
 <div class="mb-3">
-    <label for="link" class="form-label">Link</label>
-    <input type="text" name="link" class="form-control" id="link{{isset($topic->id)?$topic->id:''}}" value="{{isset($topic)?$topic->link:''}}" placeholder="Informe o link">
+    <label for="title" class="form-label">Título</label>
+    <input type="text" name="title" class="form-control" id="title{{isset($topic->id)?$topic->id:''}}" value="{{isset($topic)?$topic->title:''}}" placeholder="Título">
 </div>
-
+<div class="mb-3">
+    <label for="description" class="form-label">Descrição breve</label>
+    <input type="text" name="description" class="form-control" id="description{{isset($topic->id)?$topic->id:''}}" value="{{isset($topic)?$topic->description:''}}" placeholder="Descrição">
+</div>
+<div class="mb-3">
+    <label for="link" class="form-label">Link</label>
+    <input type="text" name="link" class="form-control" id="link{{isset($topic->id)?$topic->id:''}}" value="{{isset($topic)?$topic->link:''}}" placeholder="Link">
+</div>
+<div class="mb-3">
+    <label for="btn_title" class="form-label">Título do botão</label>
+    <input type="text" name="btn_title" class="form-control" id="btn_title{{isset($topic->id)?$topic->id:''}}" value="{{isset($topic)?$topic->btn_title:''}}" placeholder="Título do botão">
+</div>
 <div class="col-lg-12">
     <div class="mb-3">
         <label for="title" class="form-label">Imagem desktop </label>
