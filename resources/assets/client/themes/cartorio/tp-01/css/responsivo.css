@@ -1,0 +1,10 @@
+@media (max-width: 768px) {
+    .btn-gold {
+        padding: 12px 28px;
+        font-size: 1rem;
+    }
+    .hero { background-attachment: scroll; min-height: 70vh; }
+    .whatsapp-float { bottom: 20px; right: 20px; width: 56px; height: 56px; font-size: 1.8rem; }
+    .overlap-cards { margin-top: -40px; }
+    .wedding-highlight-img { height: 250px; }
+}

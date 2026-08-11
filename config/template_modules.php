@@ -58,4 +58,33 @@ return [
 
     ],
 
+    'cartorio' => [
+
+        'home' => [
+            'slides',
+            'topics',
+        ],
+
+        'about' => [
+            'about',
+        ],
+
+        'contact' => [
+            'contact',
+            'contact_leads',
+            'download_leads',
+        ],
+        
+        'smtp' => [
+            'config_smtp',
+        ],
+        
+        'security_and_access_control' => [
+            'audit',
+            'permissions',
+            'users',
+        ],
+
+    ],
+
 ];

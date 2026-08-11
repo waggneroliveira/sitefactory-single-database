@@ -40,10 +40,6 @@ class AboutController extends Controller
         $data = $request->except('path_image');
         $manager = new ImageManager(GdDriver::class);
 
-        $request->validate([
-            'path_image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif']
-        ]);
-
         // about desktop
         if ($request->hasFile('path_image')) {
             $file = $request->file('path_image');
@@ -157,10 +153,6 @@ class AboutController extends Controller
     {
         $data = $request->except('path_image');
         $manager = new ImageManager(GdDriver::class);
-
-        $request->validate([
-            'path_image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif']
-        ]);
 
         // about desktop
         if ($request->hasFile('path_image')) {
