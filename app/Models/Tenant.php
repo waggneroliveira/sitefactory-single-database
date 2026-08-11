@@ -14,6 +14,7 @@ class Tenant extends BaseTenant
         'domain',
         'database',
         'template_theme_id',
+        'plan_id',
 
         // Cores
         'primary_color',

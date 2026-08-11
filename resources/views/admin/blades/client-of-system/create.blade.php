@@ -99,8 +99,7 @@
                                 FORMULÁRIO
                                 ==================================================== --}}
 
-                                @include(
-                                    'admin.blades.tenants.form',
+                                @include('admin.blades.tenant.form',
                                     [
                                         'tenant' => null,
                                         'plans' => $plans,

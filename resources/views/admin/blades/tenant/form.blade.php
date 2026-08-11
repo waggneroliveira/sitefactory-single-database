@@ -1,301 +1,560 @@
-<div class="d-flex flex-column">
-    <!-- INFORMAÇÕES DO TEMPLATE -->
-    <div class="row mb-3 col-lg-12">
-        <div class="col-lg-12">
-            <h5 class="mb-3 border-bottom pb-2">Informações do Template</h5>
+{{-- ============================================================
+DADOS DO CLIENTE
+============================================================ --}}
+
+<div class="row g-3">
+    <div class="col-12">
+        <h5 class="mb-3 border-bottom pb-2">Dados do Cliente</h5>
+    </div>
+
+    {{-- NOME --}}
+    <div class="col-12 col-lg-6">
+        <div class="mb-3">
+            <label for="name{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-label">Nome</label>
+            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name{{ isset($tenant->id) ? $tenant->id : '' }}" value="{{ old('name', $tenant->name ?? '') }}" placeholder="Nome do cliente" required>
+            @error('name')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
-        
-        <div class="col-lg-6">
+    </div>
+
+    {{-- DOMÍNIO --}}
+    <div class="col-12 col-lg-6">
+        <div class="mb-3">
+            <label for="domain{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-label">Domínio</label>
+            <input type="text" name="domain" class="form-control @error('domain') is-invalid @enderror" id="domain{{ isset($tenant->id) ? $tenant->id : '' }}" value="{{ old('domain', $tenant->domain ?? '') }}" placeholder="exemplo.com.br" required>
+            @error('domain')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+    </div>
+
+    {{-- BANCO --}}
+    @if(isset($tenant))
+        <div class="col-12 col-lg-6">
             <div class="mb-3">
-                <label for="name" class="form-label">Template</label>
-                <input type="text" class="form-control" id="name" readonly value="{{isset($tenant)?$tenant->name:''}}" placeholder="Template">
+                <label class="form-label">Banco de dados</label>
+                <input type="text" class="form-control" value="{{ $tenant->database ?? '' }}" readonly>
+                <small class="text-muted">Campo gerenciado pelo sistema.</small>
             </div>
         </div>
-        
-        <div class="col-lg-6">
+    @endif
+
+    {{-- TEMPLATE --}}
+    <div class="col-12 col-lg-6">
+        <div class="mb-3">
+            <label for="template_theme_id{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-label">Template</label>
+            <select name="template_theme_id" id="template_theme_id{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-select @error('template_theme_id') is-invalid @enderror">
+                <option value="">Selecione um template</option>
+                {{-- @foreach($templateThemes ?? [] as $templateTheme)
+                    <option value="{{ $templateTheme->id }}" {{ old('template_theme_id', $tenant->template_theme_id ?? '') == $templateTheme->id ? 'selected' : '' }}>
+                        {{ $templateTheme->name }}
+                    </option>
+                @endforeach --}}
+                 <option value="3">TP-01</option>
+            </select>
+            @error('template_theme_id')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+    </div>
+
+    {{-- PLANO --}}
+    <div class="col-12 col-lg-6">
+        <div class="mb-3">
+            <label for="plan_id{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-label">Plano</label>
+            <select name="plan_id" id="plan_id{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-select @error('plan_id') is-invalid @enderror">
+                <option value="">Selecione um plano</option>
+                @foreach($plans as $planOption)
+                    <option value="{{ $planOption->id }}" {{ old('plan_id', $tenant->plan_id ?? '') == $planOption->id ? 'selected' : '' }}>
+                        {{ $planOption->name }}
+                    </option>
+                @endforeach
+            </select>
+            @error('plan_id')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+    </div>
+</div>
+
+{{-- ============================================================
+INFORMAÇÕES DO TEMPLATE
+============================================================ --}}
+
+<div class="row g-3 mt-2">
+    <div class="col-12">
+        <h5 class="mb-3 border-bottom pb-2">Informações do Template</h5>
+    </div>
+
+    {{-- NOME --}}
+    <div class="col-12 col-lg-6">
+        <div class="mb-3">
+            <label class="form-label">Nome do Template</label>
+            <input type="text" class="form-control" value="{{ $tenant->templateTheme->name ?? '' }}" readonly>
+        </div>
+    </div>
+
+    {{-- PREVIEW --}}
+    @if(isset($tenant->templateTheme->preview))
+        <div class="col-12 col-lg-6">
             <div class="mb-3">
-                <label for="preview" class="form-label">Preview</label>
-                <input type="text" name="preview" class="form-control" id="preview{{isset($tenant->id)?$tenant->id:''}}" value="{{isset($tenant)?$tenant->preview:''}}" placeholder="preview">
+                <label class="form-label">Preview</label>
+                <input type="text" class="form-control" value="{{ $tenant->templateTheme->preview }}" readonly>
             </div>
         </div>
-        
-        <div class="col-lg-6">
-            <div class="mb-3">
-                <label for="template_variation" class="form-label">Variação do Template</label>
-                <input type="text" class="form-control" id="template_variation" readonly value="{{isset($tenant)?$tenant->template_variation:''}}" placeholder="Ex: dark, light, modern">
-            </div>
+    @endif
+
+    {{-- VARIAÇÃO --}}
+    <div class="col-12 col-lg-6">
+        <div class="mb-3">
+            <label for="template_variation" class="form-label">Variação do Template</label>
+            <input type="text" class="form-control" id="template_variation" value="{{ $tenant->templateTheme->template_variation ?? '' }}" readonly>
+            <small class="text-muted">Definida pelo template selecionado.</small>
         </div>
-        
-        <div class="col-lg-6">
-            <div class="mb-3">
-                <div class="form-check mt-4">
-                    <input name="active" {{ isset($tenant->active) && $tenant->active == 1 ? 'checked' : '' }} type="checkbox" class="form-check-input" id="invalidCheck{{isset($tenant->id)?$tenant->id:''}}" />
-                    <label class="form-check-label" for="invalidCheck{{isset($tenant->id)?$tenant->id:''}}">{{__('dashboard.active')}}?</label>
-                    <div class="invalid-feedback">
-                        You must agree before submitting.
-                    </div>
+    </div>
+</div>
+
+{{-- ============================================================
+CORES GERAIS
+============================================================ --}}
+
+<div class="row g-3 mt-2">
+    <div class="col-12">
+        <h5 class="mb-3 border-bottom pb-2">Cores Gerais</h5>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <div class="mb-3">
+            <label class="form-label">Cor primária</label>
+            <input type="text" name="primary_color" class="form-control" id="colorpicker-default" value="{{ old('primary_color', $tenant->primary_color ?? '') }}">
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <div class="mb-3">
+            <label class="form-label">Cor secundária</label>
+            <input type="text" name="secondary_color" class="form-control" id="colorpicker-showalpha" value="{{ old('secondary_color', $tenant->secondary_color ?? '') }}">
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <div class="mb-3">
+            <label class="form-label">Cor de destaque (Accent)</label>
+            <input type="text" name="accent_color" class="form-control" id="colorpicker-showpaletteonly" value="{{ old('accent_color', $tenant->accent_color ?? '') }}">
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <div class="mb-3">
+            <label class="form-label">Cor do texto</label>
+            <input type="text" name="text_color" class="form-control" id="colorpicker-togglepaletteonly" value="{{ old('text_color', $tenant->text_color ?? '') }}">
+        </div>
+    </div>
+</div>
+
+{{-- ============================================================
+HEADER
+============================================================ --}}
+
+<div class="row g-3 mt-2">
+    <div class="col-12">
+        <h5 class="mb-3 border-bottom pb-2">Configurações do Header</h5>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <div class="mb-3">
+            <label class="form-label">Cor do texto no Header</label>
+            <input type="text" name="text_color_header" class="form-control" id="colorpicker-text-header" value="{{ old('text_color_header', $tenant->text_color_header ?? '') }}">
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <div class="mb-3">
+            <label class="form-label">Cor do Header</label>
+            <input type="text" name="bg_header" class="form-control" id="colorpicker-bg-header" value="{{ old('bg_header', $tenant->bg_header ?? '') }}">
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <div class="mb-3">
+            <label class="form-label">Cor do Scroll</label>
+            <input type="text" name="bg_scroll" class="form-control" id="colorpicker-bg-scroll" value="{{ old('bg_scroll', $tenant->bg_scroll ?? '') }}">
+        </div>
+    </div>
+</div>
+
+{{-- ============================================================
+BOTÃO 1
+============================================================ --}}
+
+<div class="row g-3 mt-2">
+    <div class="col-12">
+        <h5 class="mb-3 border-bottom pb-2">Configurações do Botão 1</h5>
+    </div>
+
+    <div class="col-12 col-lg-4">
+        <div class="mb-3">
+            <label class="form-label">Texto do Botão 1</label>
+            <input type="text" name="text_button_one" class="form-control" value="{{ old('text_button_one', $tenant->text_button_one ?? '') }}">
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-4">
+        <div class="mb-3">
+            <label class="form-label">Cor do Texto</label>
+            <input type="text" name="color_button_one" class="form-control" id="colorpicker-color-button1" value="{{ old('color_button_one', $tenant->color_button_one ?? '') }}">
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-4">
+        <div class="mb-3">
+            <label class="form-label">Cor de Fundo</label>
+            <input type="text" name="bg_button_one" class="form-control" id="colorpicker-bg-button1" value="{{ old('bg_button_one', $tenant->bg_button_one ?? '') }}">
+        </div>
+    </div>
+</div>
+
+{{-- ============================================================
+BOTÃO 2
+============================================================ --}}
+
+<div class="row g-3 mt-2">
+    <div class="col-12">
+        <h5 class="mb-3 border-bottom pb-2">Configurações do Botão 2</h5>
+    </div>
+
+    <div class="col-12 col-lg-4">
+        <div class="mb-3">
+            <label class="form-label">Texto do Botão 2</label>
+            <input type="text" name="text_button_two" class="form-control" value="{{ old('text_button_two', $tenant->text_button_two ?? '') }}">
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-4">
+        <div class="mb-3">
+            <label class="form-label">Cor do Texto</label>
+            <input type="text" name="color_button_two" class="form-control" id="colorpicker-color-button2" value="{{ old('color_button_two', $tenant->color_button_two ?? '') }}">
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-4">
+        <div class="mb-3">
+            <label class="form-label">Cor de Fundo</label>
+            <input type="text" name="bg_button_two" class="form-control" id="colorpicker-bg-button2" value="{{ old('bg_button_two', $tenant->bg_button_two ?? '') }}">
+        </div>
+    </div>
+</div>
+
+{{-- ============================================================
+LOGOS
+============================================================ --}}
+
+<div class="row g-3 mt-2">
+    <div class="col-12">
+        <h5 class="mb-3 border-bottom pb-2">Logos</h5>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <div class="mb-3">
+            <label for="path_image_logo_header" class="form-label">Logo Header</label>
+            <input type="file" name="path_image_logo_header" id="path_image_logo_header" data-plugins="dropify" data-default-file="{{ !empty($tenant->path_image_logo_header) ? url('storage/' . $tenant->path_image_logo_header) : '' }}">
+            <p class="text-muted text-center mt-2 mb-0">
+                {{ __('dashboard.text_img_size') }} <b class="text-danger">2 MB</b>.
+            </p>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <div class="mb-3">
+            <label for="path_image_logo_footer" class="form-label">Logo Footer</label>
+            <input type="file" name="path_image_logo_footer" id="path_image_logo_footer" data-plugins="dropify" data-default-file="{{ !empty($tenant->path_image_logo_footer) ? url('storage/' . $tenant->path_image_logo_footer) : '' }}">
+            <p class="text-muted text-center mt-2 mb-0">
+                {{ __('dashboard.text_img_size') }} <b class="text-danger">2 MB</b>.
+            </p>
+        </div>
+    </div>
+</div>
+
+{{-- ============================================================
+RODAPÉ
+============================================================ --}}
+
+<div class="row g-3 mt-2">
+    <div class="col-12">
+        <h5 class="mb-3 border-bottom pb-2">Rodapé</h5>
+    </div>
+
+    <div class="col-12">
+        <div class="mb-3">
+            <label for="copyright" class="form-label">Copyright</label>
+            <input type="text" name="copyright" class="form-control" id="copyright" value="{{ old('copyright', $tenant->copyright ?? '') }}" placeholder="Ex.: © 2026 Minha Empresa">
+        </div>
+    </div>
+</div>
+
+{{-- ============================================================
+LIMITES PERSONALIZADOS
+============================================================ --}}
+
+<div class="row mt-4">
+    <div class="col-12">
+        <hr>
+        <h5 class="mb-1">Limites Personalizados</h5>
+        <p class="text-muted mb-3">
+            Estes valores sobrescrevem os limites definidos no plano.
+            Deixe vazio para utilizar o limite do plano ou do template.
+        </p>
+    </div>
+
+    @foreach ($availableModules as $module => $moduleName)
+        <div class="mb-3 col-12 col-md-4 col-lg-3">
+            <label for="limit_{{ $module }}" class="form-label">{{ $moduleName }}</label>
+
+            <input type="number"
+                   name="limits[{{ $module }}]"
+                   class="form-control @error('limits.' . $module) is-invalid @enderror"
+                   id="limit_{{ $module }}"
+                   value="{{ old('limits.' . $module, $tenantModuleLimits[$module]->limit ?? '') }}"
+                   min="0"
+                   placeholder="Ex.: 10">
+
+            <small class="text-muted">{{ $module }}</small>
+
+            @error('limits.' . $module)
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+    @endforeach
+</div>
+
+{{-- ============================================================
+INFORMAÇÃO SOBRE HERANÇA
+============================================================ --}}
+
+<div class="row mt-2">
+    <div class="col-12">
+        <div class="alert alert-info mb-0">
+            <div class="d-flex align-items-start">
+                <i class="mdi mdi-information-outline font-20 me-2"></i>
+
+                <div>
+                    <strong>Como funcionam os limites?</strong>
+
+                    <p class="mb-0 mt-1">
+                        O sistema utiliza primeiro o limite personalizado
+                        do cliente.
+
+                        Caso não exista, utiliza o limite definido pelo plano.
+
+                        Se o plano também não possuir um limite para o módulo,
+                        será utilizado o limite padrão definido no template.
+                    </p>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CONFIGURAÇÕES DO HEADER -->
-    <div class="row mb-3 col-lg-12">
-        <div class="col-lg-12">
-            <h5 class="mb-3 border-bottom pb-2">Configurações do Header</h5>
-        </div>
-        
-        <div class="col-lg-6">
-            <div class="mb-3">
-                <label class="form-label">Cor do texto no header</label>
-                <input type="text" name="text_color_header" class="form-control" id="colorpicker-text-header" value="{{isset($tenant)?$tenant->text_color_header:''}}">
-            </div>
-        </div>
-        
-        <div class="col-lg-6">
-            <div class="mb-3">
-                <label class="form-label">Cor do header</label>
-                <input type="text" name="bg_header" class="form-control" id="colorpicker-bg-header" value="{{isset($tenant)?$tenant->bg_header:''}}">
-            </div>
-        </div>
-    </div>
-
-    <!-- CONFIGURAÇÕES DO FOOTER -->
-    <div class="row mb-3 col-lg-12">
-        <div class="col-lg-12">
-            <h5 class="mb-3 border-bottom pb-2">Configurações do Footer</h5>
-        </div>
-        
-        <div class="col-lg-6">
-            <div class="mb-3">
-                <label for="copyright" class="form-label">Copyright</label>
-                <input type="text" name="copyright" class="form-control" id="copyright" value="{{isset($tenant)?$tenant->copyright:''}}" placeholder="Ex: © 2024 Minha Empresa">
-            </div>
-        </div>
-        
-        <div class="col-lg-6">
-            <div class="mb-3">
-                <label class="form-label">Cor do scroll</label>
-                <input type="text" name="bg_scroll" class="form-control" id="colorpicker-bg-scroll" value="{{isset($tenant)?$tenant->bg_scroll:''}}">
-            </div>
-        </div>
-    </div>
-
-    <!-- CORES GERAIS -->
-    <div class="row mb-3 col-lg-12">
-        <div class="col-lg-12">
-            <h5 class="mb-3 border-bottom pb-2">Cores Gerais</h5>
-        </div>
-        
-        <div class="col-lg-6">
-            <div class="mb-3">
-                <label class="form-label">Cor primária</label>
-                <input type="text" name="primary_color" class="form-control" id="colorpicker-default" value="{{isset($tenant)?$tenant->primary_color:''}}">
-            </div>
-        </div>
-        
-        <div class="col-lg-6">
-            <div class="mb-3">
-                <label class="form-label">Cor secundária</label>
-                <input type="text" name="secondary_color" class="form-control" id="colorpicker-showalpha" value="{{isset($tenant)?$tenant->secondary_color:''}}">
-            </div>
-        </div>
-        
-        <div class="col-lg-6">
-            <div class="mb-3">
-                <label class="form-label">Cor de destaque (Accent)</label>
-                <input type="text" name="accent_color" class="form-control" id="colorpicker-showpaletteonly" value="{{isset($tenant)?$tenant->accent_color:''}}">
-            </div>
-        </div>
-        
-        <div class="col-lg-6">
-            <div class="mb-3">
-                <label class="form-label">Cor do texto</label>
-                <input type="text" name="text_color" class="form-control" id="colorpicker-togglepaletteonly" value="{{isset($tenant)?$tenant->text_color:''}}">
-            </div>
-        </div>
-    </div>
-
-    <!-- BOTÕES -->
-    <div class="row mb-3 col-lg-12">
-        <div class="col-lg-12">
-            <h5 class="mb-3 border-bottom pb-2">Configurações dos Botões</h5>
-        </div>
-        
-        <div class="col-lg-6">
-            <div class="mb-3">
-                <label for="color_button_one" class="form-label">Cor do Texto Botão 1</label>
-                <input type="text" name="color_button_one" class="form-control" id="colorpicker-color-button1" value="{{isset($tenant)?$tenant->color_button_one:''}}" placeholder="Ex: Comprar Agora">
-            </div>
-        </div>
-        
-        <div class="col-lg-6">
-            <div class="mb-3">
-                <label class="form-label">Cor Fundo Botão 1</label>
-                <input type="text" name="bg_button_one" class="form-control" id="colorpicker-bg-button1" value="{{isset($tenant)?$tenant->bg_button_one:''}}">
-            </div>
-        </div>
-        
-        <div class="col-lg-6">
-            <div class="mb-3">
-                <label for="color_button_two" class="form-label">Cor do Texto Botão 2</label>
-                <input type="text" name="color_button_two" class="form-control" id="colorpicker-color-button2" value="{{isset($tenant)?$tenant->color_button_two:''}}" placeholder="Ex: Saiba Mais">
-            </div>
-        </div>
-        
-        <div class="col-lg-6">
-            <div class="mb-3">
-                <label class="form-label">Cor Fundo Botão 2</label>
-                <input type="text" name="bg_button_two" class="form-control" id="colorpicker-bg-button2" value="{{isset($tenant)?$tenant->bg_button_two:''}}">
-            </div>
-        </div>
-    </div>
-
-    <!-- IMAGENS -->
-    <div class="row col-lg-12">
-        <div class="col-lg-12">
-            <h5 class="mb-3 border-bottom pb-2">Imagens</h5>
-        </div>
-        
-        <div class="col-lg-6">
-            <div class="mb-3">
-                <label for="path_image_logo_header" class="form-label">Logo Header</label>
-                <input type="file" name="path_image_logo_header" data-plugins="dropify" data-default-file="{{isset($tenant)?$tenant->path_image_logo_header<>''?url('storage/'.$tenant->path_image_logo_header):'':''}}"  />
-                <p class="text-muted text-center mt-2 mb-0">{{__('dashboard.text_img_size')}} <b class="text-danger">2 MB</b>.</p>
-            </div>
-        </div>
-        
-        <div class="col-lg-6">
-            <div class="mb-3">
-                <label for="path_image_logo_footer" class="form-label">Logo Footer</label>
-                <input type="file" name="path_image_logo_footer" data-plugins="dropify" data-default-file="{{isset($tenant)?$tenant->path_image_logo_footer<>''?url('storage/'.$tenant->path_image_logo_footer):'':''}}"  />
-                <p class="text-muted text-center mt-2 mb-0">{{__('dashboard.text_img_size')}} <b class="text-danger">2 MB</b>.</p>
             </div>
         </div>
     </div>
 </div>
 
+{{-- ============================================================
+SCRIPT DOS COLORPICKERS
+============================================================ --}}
+
 <script>
-    $(document).ready(function() {
-    // Função para destruir todos os colorpickers
+$(document).ready(function () {
+
     function destroyColorpickers() {
         try {
-            $('.sp-container').remove();
-            $('.sp-replacer').remove();
-            // Remove qualquer instância do Spectrum
-            $.each($('[id^="colorpicker-"]'), function() {
-                if ($(this).data('spectrum')) {
-                    $(this).spectrum('destroy');
+            $('[id^="colorpicker-"]').each(function () {
+                const $this = $(this);
+
+                if ($this.data('spectrum')) {
+                    $this.spectrum('destroy');
                 }
             });
-        } catch(e) {
+
+            $('.sp-container').remove();
+            $('.sp-replacer').remove();
+
+        } catch (e) {
             console.log('Erro ao destruir colorpickers:', e);
         }
     }
-    
+
     function initColorpickers() {
+
         destroyColorpickers();
-        
-        // Configurações para todos os colorpickers
+
         const colorpickerConfigs = {
+
             'colorpicker-default': {
                 color: '#3498db',
                 showAlpha: false,
                 showPaletteOnly: false
             },
+
             'colorpicker-showalpha': {
                 color: '#2c3e50',
                 showAlpha: true,
                 showPaletteOnly: false
             },
+
             'colorpicker-showpaletteonly': {
                 color: '#f1c40f',
                 showAlpha: false,
                 showPaletteOnly: true,
                 palette: [
-                    ['#f1c40f', '#e67e22', '#1abc9c', '#3498db'],
-                    ['#2ecc71', '#e74c3c', '#9b59b6', '#34495e'],
-                    ['#95a5a6', '#27ae60', '#c0392b', '#8e44ad']
+                    [
+                        '#f1c40f',
+                        '#e67e22',
+                        '#1abc9c',
+                        '#3498db'
+                    ],
+                    [
+                        '#2ecc71',
+                        '#e74c3c',
+                        '#9b59b6',
+                        '#34495e'
+                    ],
+                    [
+                        '#95a5a6',
+                        '#27ae60',
+                        '#c0392b',
+                        '#8e44ad'
+                    ]
                 ]
             },
+
             'colorpicker-togglepaletteonly': {
                 color: '#333333',
                 showAlpha: false,
                 showPaletteOnly: false,
                 palette: [
-                    ['#ffffff', '#f8f9fa', '#e9ecef', '#dee2e6'],
-                    ['#333333', '#495057', '#6c757d', '#adb5bd'],
-                    ['#000000', '#212529', '#343a40', '#000000']
+                    [
+                        '#ffffff',
+                        '#f8f9fa',
+                        '#e9ecef',
+                        '#dee2e6'
+                    ],
+                    [
+                        '#333333',
+                        '#495057',
+                        '#6c757d',
+                        '#adb5bd'
+                    ],
+                    [
+                        '#000000',
+                        '#212529',
+                        '#343a40',
+                        '#000000'
+                    ]
                 ]
             },
+
             'colorpicker-text-header': {
                 color: '#ffffff',
                 showAlpha: false,
                 showPaletteOnly: false
             },
+
             'colorpicker-bg-header': {
                 color: '#2c3e50',
                 showAlpha: false,
                 showPaletteOnly: false
             },
+
             'colorpicker-bg-scroll': {
                 color: '#f8f9fa',
                 showAlpha: false,
                 showPaletteOnly: false
             },
+
+            'colorpicker-color-button1': {
+                color: '#ffffff',
+                showAlpha: false,
+                showPaletteOnly: false
+            },
+
             'colorpicker-bg-button1': {
                 color: '#3498db',
                 showAlpha: false,
                 showPaletteOnly: false
             },
+
+            'colorpicker-color-button2': {
+                color: '#ffffff',
+                showAlpha: false,
+                showPaletteOnly: false
+            },
+
             'colorpicker-bg-button2': {
                 color: '#2ecc71',
                 showAlpha: false,
                 showPaletteOnly: false
             }
         };
-        
-        // Inicializa cada colorpicker
-        $('[id^="colorpicker-"]').each(function() {
+
+        $('[id^="colorpicker-"]').each(function () {
+
             const $this = $(this);
             const id = $this.attr('id');
             const config = colorpickerConfigs[id] || {};
-            const defaultColor = $this.val() || config.color || '#3498db';
-            
-            let options = {
+            const currentValue = $this.val();
+
+            const defaultColor =
+                currentValue ||
+                config.color ||
+                '#3498db';
+
+            const options = {
                 color: defaultColor,
                 showInput: true,
                 showInitial: true,
-                preferredFormat: "hex",
-                change: function(color) {
-                    $this.val(color.toHexString());
+                preferredFormat: 'hex',
+
+                change: function (color) {
+                    if (color) {
+                        $this.val(color.toHexString());
+                    }
                 },
-                move: function(color) {
-                    $this.val(color.toHexString());
+
+                move: function (color) {
+                    if (color) {
+                        $this.val(color.toHexString());
+                    }
                 }
             };
-            
-            // Mescla com configurações específicas
-            if (config.showAlpha !== undefined) options.showAlpha = config.showAlpha;
-            if (config.showPaletteOnly !== undefined) options.showPaletteOnly = config.showPaletteOnly;
-            if (config.palette) options.palette = config.palette;
-            if (config.showPalette !== undefined) options.showPalette = config.showPalette;
-            
+
+            if (config.showAlpha !== undefined) {
+                options.showAlpha = config.showAlpha;
+            }
+
+            if (config.showPaletteOnly !== undefined) {
+                options.showPaletteOnly = config.showPaletteOnly;
+            }
+
+            if (config.palette) {
+                options.palette = config.palette;
+            }
+
+            if (config.showPalette !== undefined) {
+                options.showPalette = config.showPalette;
+            }
+
             $this.spectrum(options);
         });
     }
-    
-    // Inicializa no document ready
+
     setTimeout(initColorpickers, 100);
-    
-    // Reinicializa quando modal é aberto
-    $(document).on('shown.bs.modal', function() {
+
+    $(document).on('shown.bs.modal', function () {
         setTimeout(initColorpickers, 200);
     });
-    
-    // Para Bootstrap 5
-    document.addEventListener('shown.bs.modal', function() {
+
+    document.addEventListener('shown.bs.modal', function () {
         setTimeout(initColorpickers, 200);
     });
+
 });
 </script>
+

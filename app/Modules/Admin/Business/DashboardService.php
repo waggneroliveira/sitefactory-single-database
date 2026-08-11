@@ -16,7 +16,7 @@ class DashboardService
         $settingTheme = (new SettingThemeRepository())->settingTheme();
         $theme = $themeManager;
         $themeData = $themeManager->theme();
-        
+
         return compact('user', 'settingTheme', 'theme', 'themeData');
     }
 }
