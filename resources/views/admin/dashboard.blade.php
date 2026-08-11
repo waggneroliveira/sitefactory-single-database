@@ -2,6 +2,25 @@
 
 @section('content')
 
+{{-- @php
+    dd([
+        'theme_class' => get_class($theme),
+        'theme_slug' => $theme->slug,
+        'current' => $theme->current(),
+
+        'slides' => $theme->hasModule('slides'),
+        'topics' => $theme->hasModule('topics'),
+        'statute' => $theme->hasModule('statute'),
+        'letsgo' => $theme->hasModule('letsgo'),
+        'faq_session' => $theme->hasModule('faq_session'),
+        'faq' => $theme->hasModule('faq'),
+        'testimonials' => $theme->hasModule('testimonials'),
+
+        'available_modules' => $theme->availableModules(),
+
+        'config' => config("template_modules.{$theme->slug}"),
+    ]);
+@endphp --}}
     {{-- ============================================================
         PAGE TITLE
     ============================================================ --}}

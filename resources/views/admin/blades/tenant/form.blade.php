@@ -52,6 +52,7 @@ DADOS DO CLIENTE
                     </option>
                 @endforeach --}}
                  <option value="3">TP-01</option>
+                 <option value="1">TP-001</option>
             </select>
             @error('template_theme_id')
                 <div class="invalid-feedback">{{ $message }}</div>
