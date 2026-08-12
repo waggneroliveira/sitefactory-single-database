@@ -33,7 +33,7 @@ class ThemeManager
      * Retorna o slug do tema atual.
      */
     public function current(): string
-    {
+    {  
         return $this->theme()?->slug ?? 'default';
     }
 
@@ -42,7 +42,7 @@ class ThemeManager
      */
     public function variation(): ?string
     {
-        return $this->theme()?->template_variation;
+        return $this->theme()?->template_variation ?? 'error';
     }
 
     /**

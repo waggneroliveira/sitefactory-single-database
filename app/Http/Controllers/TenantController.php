@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Plan;
 use App\Models\Tenant;
 use App\Services\ThemeManager;
 use Illuminate\Http\Request;
@@ -21,8 +22,14 @@ class TenantController extends Controller
         $tenant = Tenant::current();
         $theme = $themeManager;
         $themeData = $themeManager->theme();
+        $plans = Plan::with(['moduleLimits', 'tenants'])
+        ->withCount('tenants')
+        ->orderBy('id', 'desc')
+        ->get();
+        $availableModules = $themeManager->availableModules();
+        
         // dd($tenant, $themeData);
-        return view('admin.blades.tenant.index', compact('tenant', 'theme', 'themeData'));
+        return view('admin.blades.tenant.index', compact('tenant', 'theme', 'themeData', 'plans', 'availableModules'));
     }
 
     public function store(Request $request)
