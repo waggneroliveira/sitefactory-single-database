@@ -1,5 +1,5 @@
 <div class="row g-3">
-    <div class="mb-3 col-12 col-md-8">
+    <div class="mb-3 col-12 col-lg-4">
         <label for="name{{ isset($plan->id) ? $plan->id : '' }}" class="form-label">
             Nome do plano
         </label>
@@ -21,7 +21,33 @@
         @enderror
     </div>
 
-    <div class="mb-3 col-12 col-md-4">
+    <div class="mb-3 col-12 col-lg-4">
+        <label for="slug{{ isset($plan->id) ? $plan->id : '' }}" class="form-label">
+            Slug
+        </label>
+
+        <input
+            type="text"
+            name="slug"
+            readonly
+            class="form-control @error('slug') is-invalid @enderror"
+            id="slug{{ isset($plan->id) ? $plan->id : '' }}"
+            value="{{ old('slug', isset($plan) ? $plan->slug : '') }}"
+            placeholder="Ex.: plano-profissional"
+        >
+
+        <small class="text-muted">
+            Identificador interno do plano.
+        </small>
+
+        @error('slug')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
+
+    <div class="mb-3 col-12 col-lg-4">
         <label for="price{{ isset($plan->id) ? $plan->id : '' }}" class="form-label">
             Preço mensal
         </label>
@@ -48,30 +74,6 @@
         @enderror
     </div>
 
-    <div class="mb-3 col-12">
-        <label for="slug{{ isset($plan->id) ? $plan->id : '' }}" class="form-label">
-            Slug
-        </label>
-
-        <input
-            type="text"
-            name="slug"
-            class="form-control @error('slug') is-invalid @enderror"
-            id="slug{{ isset($plan->id) ? $plan->id : '' }}"
-            value="{{ old('slug', isset($plan) ? $plan->slug : '') }}"
-            placeholder="Ex.: plano-profissional"
-        >
-
-        <small class="text-muted">
-            Identificador interno do plano.
-        </small>
-
-        @error('slug')
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
-        @enderror
-    </div>
 </div>
 
 <div class="mb-3 col-12">

@@ -35,6 +35,7 @@
             'faq_session',
             'faq',
             'testimonials',
+            'services',
         ])
     )
 
@@ -165,6 +166,22 @@
                     'route' => route('admin.dashboard.depoiment.index'),
                     'icon' => 'mdi-account-voice',
                     'title' => 'Depoimentos'
+                ])
+            @endif
+
+            {{-- Servicos --}}
+            @if (
+                $theme->hasModule('services') &&
+                (
+                    Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('usuario.tornar usuario master') ||
+                    Auth::user()->can('depoimento.visualizar')
+                )
+            )
+                @include('admin.components.dashboard-card', [
+                    'route' => route('admin.dashboard.serviceItem.index'),
+                    'icon' => 'mdi-account-voice',
+                    'title' => 'Serviços'
                 ])
             @endif
 

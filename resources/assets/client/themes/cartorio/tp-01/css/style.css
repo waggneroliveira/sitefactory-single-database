@@ -105,6 +105,9 @@ body {
     font-size: 3rem;
     color: #b8860b;
 }
+.service-icon img{
+    width: 40px;
+}
 .contact-info {
     background: #faf8f4;
     border-radius: 40px;

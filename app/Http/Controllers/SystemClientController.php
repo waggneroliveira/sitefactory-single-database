@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Plan;
 use App\Models\PlanModuleLimit;
+use App\Models\TemplateTheme;
 use App\Models\Tenant;
 use App\Models\TenantModuleLimit;
 use App\Services\ThemeManager;
@@ -16,7 +17,7 @@ class SystemClientController extends Controller
     {
         $clients = Tenant::query()
             ->with('plan')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('name', 'asc')
             ->paginate(20);
 
         $theme = $themeManager;
@@ -36,12 +37,13 @@ class SystemClientController extends Controller
 
         $theme = $themeManager;
         $themeData = $themeManager->theme();
-
+        $templateThemes = TemplateTheme::orderBy('name', 'ASC')->get();
         return view('admin.blades.client-of-system.create', compact(
             'plans',
             'availableModules',
             'theme',
-            'themeData'
+            'themeData',
+            'templateThemes',
         ));
     }
 
@@ -128,11 +130,12 @@ class SystemClientController extends Controller
 
         $theme = $themeManager;
         $themeData = $themeManager->theme();
-
+        $templateThemes = TemplateTheme::orderBy('name', 'ASC')->first();
         return view('admin.blades.client-of-system.show', compact(
             'tenant',
             'theme',
-            'themeData'
+            'themeData',
+            'templateThemes',
         ));
     }
 
@@ -148,6 +151,7 @@ class SystemClientController extends Controller
 
         $theme = $themeManager;
         $themeData = $themeManager->theme();
+        $templateThemes = TemplateTheme::orderBy('name', 'ASC')->get();
 
         return view('admin.blades.client-of-system.edit', compact(
             'tenant',
@@ -155,7 +159,8 @@ class SystemClientController extends Controller
             'availableModules',
             'tenantModuleLimits',
             'theme',
-            'themeData'
+            'themeData',
+            'templateThemes'
         ));
     }
 

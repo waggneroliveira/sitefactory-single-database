@@ -15,13 +15,14 @@ use App\Models\Letsgo;
 use App\Models\PopUp;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\ServiceItem;
 use App\Models\SessaoFaq;
 use App\Models\Slide;
 use App\Models\Statute;
+use App\Models\Tenant;
 use App\Models\Topic;
 use App\Models\Video;
 use App\Services\ThemeManager;
-use App\Models\Tenant;
 
 class HomePageService
 {
@@ -59,6 +60,7 @@ class HomePageService
         $statute = Statute::active()->first();
         $faqs = Faq::active()->sorting()->get();
         $sessaoFaq = SessaoFaq::active()->first();
+        $services = ServiceItem::active()->get();
 
         $productCategorieHighlights = ProductCategory::whereHas('products', function ($query) {
             $query->active()->whereHas('brand', fn ($q) => $q->active());
@@ -183,6 +185,7 @@ class HomePageService
             'theme',
             'themeData',
             'tenantTheme',
+            'services',
             'blogNoBairros'
         );
     }

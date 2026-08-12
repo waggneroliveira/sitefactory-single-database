@@ -52,13 +52,6 @@ class PlansController extends Controller
                 'max:255',
             ],
 
-            'slug' => [
-                'nullable',
-                'string',
-                'max:255',
-                'unique:plans,slug',
-            ],
-
             'price' => [
                 'nullable',
                 'numeric',
@@ -88,8 +81,7 @@ class PlansController extends Controller
             $plan = Plan::create([
                 'name' => $validated['name'],
 
-                'slug' => $validated['slug']
-                    ?? Str::slug($validated['name']),
+                'slug' => Str::slug($validated['name']),
 
                 'price' => $validated['price'] ?? 0,
 
@@ -156,13 +148,6 @@ class PlansController extends Controller
                 'max:255',
             ],
 
-            'slug' => [
-                'required',
-                'string',
-                'max:255',
-                'unique:plans,slug,' . $plan->id,
-            ],
-
             'price' => [
                 'nullable',
                 'numeric',
@@ -196,7 +181,7 @@ class PlansController extends Controller
             $plan->update([
                 'name' => $validated['name'],
 
-                'slug' => $validated['slug'],
+                'slug' => Str::slug($validated['name']),
 
                 'price' => $validated['price'] ?? 0,
 

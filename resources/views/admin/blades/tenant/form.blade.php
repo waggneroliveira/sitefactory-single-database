@@ -8,7 +8,7 @@ DADOS DO CLIENTE
     </div>
 
     {{-- NOME --}}
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-3">
         <div class="mb-3">
             <label for="name{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-label">Nome</label>
             <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name{{ isset($tenant->id) ? $tenant->id : '' }}" value="{{ old('name', $tenant->name ?? '') }}" placeholder="Nome do cliente" required>
@@ -19,7 +19,7 @@ DADOS DO CLIENTE
     </div>
 
     {{-- DOMÍNIO --}}
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-3">
         <div class="mb-3">
             <label for="domain{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-label">Domínio</label>
             <input type="text" name="domain" class="form-control @error('domain') is-invalid @enderror" id="domain{{ isset($tenant->id) ? $tenant->id : '' }}" value="{{ old('domain', $tenant->domain ?? '') }}" placeholder="exemplo.com.br" required>
@@ -29,30 +29,17 @@ DADOS DO CLIENTE
         </div>
     </div>
 
-    {{-- BANCO --}}
-    @if(isset($tenant))
-        <div class="col-12 col-lg-6">
-            <div class="mb-3">
-                <label class="form-label">Banco de dados</label>
-                <input type="text" class="form-control" value="{{ $tenant->database ?? '' }}" readonly>
-                <small class="text-muted">Campo gerenciado pelo sistema.</small>
-            </div>
-        </div>
-    @endif
-
     {{-- TEMPLATE --}}
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-3">
         <div class="mb-3">
             <label for="template_theme_id{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-label">Template</label>
             <select name="template_theme_id" id="template_theme_id{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-select @error('template_theme_id') is-invalid @enderror">
                 <option value="">Selecione um template</option>
-                {{-- @foreach($templateThemes ?? [] as $templateTheme)
+                @foreach($templateThemes ?? [] as $templateTheme)
                     <option value="{{ $templateTheme->id }}" {{ old('template_theme_id', $tenant->template_theme_id ?? '') == $templateTheme->id ? 'selected' : '' }}>
-                        {{ $templateTheme->name }}
+                        {{ $templateTheme->name . ' - ' . ucwords($templateTheme->layout_type) . ' - ' . ucwords($templateTheme->template_variation)}}
                     </option>
-                @endforeach --}}
-                 <option value="3">TP-01</option>
-                 <option value="1">TP-001</option>
+                @endforeach
             </select>
             @error('template_theme_id')
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -61,9 +48,9 @@ DADOS DO CLIENTE
     </div>
 
     {{-- PLANO --}}
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-3">
         <div class="mb-3">
-            <label for="plan_id{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-label">Plano</label>
+            <label for="plan_id{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-label">Plano contratado</label>
             <select name="plan_id" id="plan_id{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-select @error('plan_id') is-invalid @enderror">
                 <option value="">Selecione um plano</option>
                 @foreach($plans as $planOption)
@@ -89,31 +76,42 @@ INFORMAÇÕES DO TEMPLATE
     </div>
 
     {{-- NOME --}}
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-3">
         <div class="mb-3">
             <label class="form-label">Nome do Template</label>
             <input type="text" class="form-control" value="{{ $tenant->templateTheme->name ?? '' }}" readonly>
         </div>
     </div>
 
-    {{-- PREVIEW --}}
-    @if(isset($tenant->templateTheme->preview))
-        <div class="col-12 col-lg-6">
+    {{-- LAYOUT TYPE --}}
+    @if(isset($tenant->templateTheme->layout_type))
+        <div class="col-12 col-lg-3">
             <div class="mb-3">
-                <label class="form-label">Preview</label>
-                <input type="text" class="form-control" value="{{ $tenant->templateTheme->preview }}" readonly>
+                <label class="form-label">Tipo de layout</label>
+                <input type="text" class="form-control" value="{{ $tenant->templateTheme->layout_type }}" readonly>
             </div>
         </div>
     @endif
 
     {{-- VARIAÇÃO --}}
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-3">
         <div class="mb-3">
             <label for="template_variation" class="form-label">Variação do Template</label>
             <input type="text" class="form-control" id="template_variation" value="{{ $tenant->templateTheme->template_variation ?? '' }}" readonly>
             <small class="text-muted">Definida pelo template selecionado.</small>
         </div>
     </div>
+    
+    {{-- BANCO --}}
+    @if(isset($tenant))
+        <div class="col-12 col-lg-3">
+            <div class="mb-3">
+                <label class="form-label">Banco de dados</label>
+                <input type="text" class="form-control" value="{{ $tenant->database ?? '' }}" readonly>
+                <small class="text-muted">Campo gerenciado pelo sistema.</small>
+            </div>
+        </div>
+    @endif
 </div>
 
 {{-- ============================================================
@@ -125,28 +123,28 @@ CORES GERAIS
         <h5 class="mb-3 border-bottom pb-2">Cores Gerais</h5>
     </div>
 
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-3">
         <div class="mb-3">
             <label class="form-label">Cor primária</label>
             <input type="text" name="primary_color" class="form-control" id="colorpicker-default" value="{{ old('primary_color', $tenant->primary_color ?? '') }}">
         </div>
     </div>
 
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-3">
         <div class="mb-3">
             <label class="form-label">Cor secundária</label>
             <input type="text" name="secondary_color" class="form-control" id="colorpicker-showalpha" value="{{ old('secondary_color', $tenant->secondary_color ?? '') }}">
         </div>
     </div>
 
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-3">
         <div class="mb-3">
             <label class="form-label">Cor de destaque (Accent)</label>
             <input type="text" name="accent_color" class="form-control" id="colorpicker-showpaletteonly" value="{{ old('accent_color', $tenant->accent_color ?? '') }}">
         </div>
     </div>
 
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-3">
         <div class="mb-3">
             <label class="form-label">Cor do texto</label>
             <input type="text" name="text_color" class="form-control" id="colorpicker-togglepaletteonly" value="{{ old('text_color', $tenant->text_color ?? '') }}">
@@ -163,21 +161,21 @@ HEADER
         <h5 class="mb-3 border-bottom pb-2">Configurações do Header</h5>
     </div>
 
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-4">
         <div class="mb-3">
             <label class="form-label">Cor do texto no Header</label>
             <input type="text" name="text_color_header" class="form-control" id="colorpicker-text-header" value="{{ old('text_color_header', $tenant->text_color_header ?? '') }}">
         </div>
     </div>
 
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-4">
         <div class="mb-3">
             <label class="form-label">Cor do Header</label>
             <input type="text" name="bg_header" class="form-control" id="colorpicker-bg-header" value="{{ old('bg_header', $tenant->bg_header ?? '') }}">
         </div>
     </div>
 
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-4">
         <div class="mb-3">
             <label class="form-label">Cor do Scroll</label>
             <input type="text" name="bg_scroll" class="form-control" id="colorpicker-bg-scroll" value="{{ old('bg_scroll', $tenant->bg_scroll ?? '') }}">

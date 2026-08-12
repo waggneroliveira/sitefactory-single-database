@@ -26,6 +26,7 @@ use App\Http\Controllers\ProductGalleryController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SeoGoogleController;
+use App\Http\Controllers\ServiceItemController;
 use App\Http\Controllers\ServiceLocationController;
 use App\Http\Controllers\SessaoFaqController;
 use App\Http\Controllers\SettingEmailController;
@@ -317,6 +318,14 @@ Route::prefix('painel/')->group(function () {
         Route::resource('planos', PlansController::class)
         ->parameters(['planos' => 'plan'])
         ->names('admin.dashboard.plans');
+       // SERVICES
+        Route::resource('servicos', ServiceItemController::class)
+        ->parameters(['servicos' => 'serviceItem'])
+        ->names('admin.dashboard.serviceItem');
+        Route::post('servicos/delete', [ServiceItemController::class, 'destroySelected'])
+        ->name('admin.dashboard.serviceItem.destroySelected');
+        Route::post('servicos/sorting', [ServiceItemController::class, 'sorting'])
+        ->name('admin.dashboard.serviceItem.sorting');
        // CLIENTES/TENANT
         Route::resource('cliente', SystemClientController::class)
         ->parameters(['cliente' => 'tenant'])

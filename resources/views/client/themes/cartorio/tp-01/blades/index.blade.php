@@ -96,76 +96,190 @@
                 <h2 class="display-6 fw-bold mt-3">Serviços com <span class="text-warning">excelência</span></h2>
                 <p class="lead text-secondary mx-auto" style="max-width: 680px;">Clique em cada serviço e veja informações detalhadas.</p>
             </div>
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="card service-card h-100 p-4" data-bs-toggle="modal" data-bs-target="#modalServico" data-servico-titulo="Registro Civil" data-servico-desc="O Registro Civil é o serviço mais essencial do cartório, onde são registrados nascimentos, casamentos, óbitos, interdições e emancipações. Todos os atos possuem fé pública e garantem validade nacional. Emitimos certidões atualizadas com segurança e agilidade, também em formato digital com selo de autenticidade.">
-                        <div class="service-icon mb-3"><i class="bi bi-file-person-fill"></i></div>
-                        <h5 class="fw-bold">Registro Civil</h5>
-                        <p class="text-secondary">Nascimentos, casamentos, óbitos, certidões.</p>
-                        <hr class="my-2"><small class="text-muted"><i class="bi bi-info-circle"></i> Clique para detalhes</small>
-                    </div>
+            @if (isset($services) && $services->count())
+                <div class="row g-4">
+                    @foreach ($services as $service)
+                        <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="100">
+                            <div
+                                class="card service-card h-100 p-4"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalServico"
+                                data-servico-titulo="{{ $service->title }}"
+                                data-servico-desc="{{ $service->text ?? '' }}"
+                                data-servico-link="{{ $service->link ?? '' }}"
+                                data-servico-scroll="{{ $service->scroll_section ?? '' }}"
+                            >
+
+                                @if ($service->path_icon != null)
+                                    <div class="service-icon mb-3">
+                                        <img
+                                            src="{{ asset('storage/' . $service->path_icon) }}"
+                                            alt="{{ $service->title }}"
+                                        >
+                                    </div>
+                                @endif
+
+                                <h5 class="fw-bold">{{ $service->title }}</h5>
+
+                                <p class="text-secondary">
+                                    {{ $service->description }}
+                                </p>
+
+                                <hr class="my-2">
+
+                                <small class="text-muted">
+                                    <i class="bi bi-info-circle"></i>
+                                    Clique para detalhes
+                                </small>
+
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
-                <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="card service-card h-100 p-4" data-bs-toggle="modal" data-bs-target="#modalServico" data-servico-titulo="Tabelionato de Notas" data-servico-desc="No Tabelionato de Notas realizamos escrituras públicas, procurações, testamentos, atas notariais, reconhecimento de firmas e autenticação de documentos. Atos que garantem segurança jurídica e evitam litígios. Também oferecemos serviços de abertura de empresas e contratos com validade de fé pública.">
-                        <div class="service-icon mb-3"><i class="bi bi-file-text-fill"></i></div>
-                        <h5 class="fw-bold">Tabelionato de Notas</h5>
-                        <p class="text-secondary">Escrituras, procurações, testamentos.</p>
-                        <hr class="my-2"><small class="text-muted"><i class="bi bi-info-circle"></i> Clique para detalhes</small>
-                    </div>
+                
+                <div class="text-center mt-5" data-aos="fade-up">
+                    <a href="#contato" class="btn btn-outline-warning rounded-pill px-5 fw-semibold">Solicitar atendimento</a>
                 </div>
-                <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="300">
-                    <div class="card service-card h-100 p-4" data-bs-toggle="modal" data-bs-target="#modalServico" data-servico-titulo="Protesto de Títulos" data-servico-desc="Protestamos duplicatas, cheques, notas promissórias e outros títulos de crédito, proporcionando recuperação extrajudicial de crédito. Nosso sistema ágil garante rapidez na formalização e envio de comunicados aos devedores.">
-                        <div class="service-icon mb-3"><i class="bi bi-cash-stack"></i></div>
-                        <h5 class="fw-bold">Protesto de Títulos</h5>
-                        <p class="text-secondary">Cobrança extrajudicial, duplicatas.</p>
-                        <hr class="my-2"><small class="text-muted"><i class="bi bi-info-circle"></i> Clique para detalhes</small>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="150">
-                    <div class="card service-card h-100 p-4" data-bs-toggle="modal" data-bs-target="#modalServico" data-servico-titulo="Registro de Imóveis" data-servico-desc="Registro de compra e venda, hipotecas, averbações, certidões de ônus reais e matrículas atualizadas. Garantimos segurança ao seu patrimônio com base na Lei 8.935/94. Atendimento célere para incorporadoras e pessoas físicas.">
-                        <div class="service-icon mb-3"><i class="bi bi-house-heart-fill"></i></div>
-                        <h5 class="fw-bold">Registro de Imóveis</h5>
-                        <p class="text-secondary">Compra, venda, hipotecas e certidões.</p>
-                        <hr class="my-2"><small class="text-muted"><i class="bi bi-info-circle"></i> Clique para detalhes</small>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="250">
-                    <div class="card service-card h-100 p-4" data-bs-toggle="modal" data-bs-target="#modalServico" data-servico-titulo="Registro de Títulos e Documentos" data-servico-desc="Registro de contratos empresariais, documentos de associações, fundações, entidades esportivas, além de atas e convenções. Ideal para garantir publicidade e oponibilidade a terceiros.">
-                        <div class="service-icon mb-3"><i class="bi bi-people-fill"></i></div>
-                        <h5 class="fw-bold">Registro de Títulos e Documentos</h5>
-                        <p class="text-secondary">Contratos empresariais, associações.</p>
-                        <hr class="my-2"><small class="text-muted"><i class="bi bi-info-circle"></i> Clique para detalhes</small>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="350">
-                    <div class="card service-card h-100 p-4" data-bs-toggle="modal" data-bs-target="#modalServico" data-servico-titulo="Certidões Online" data-servico-desc="Emissão de certidões 24/7 com validade jurídica e selo digital. Sem sair de casa, solicite certidões de nascimento, casamento, óbito, protesto, imóveis e registro civil. Entregamos por e-mail ou central do cidadão.">
-                        <div class="service-icon mb-3"><i class="bi bi-envelope-paper-fill"></i></div>
-                        <h5 class="fw-bold">Certidões Online</h5>
-                        <p class="text-secondary">Emissão digital com autenticidade.</p>
-                        <hr class="my-2"><small class="text-muted"><i class="bi bi-info-circle"></i> Clique para detalhes</small>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center mt-5" data-aos="fade-up">
-                <a href="#contato" class="btn btn-outline-warning rounded-pill px-5 fw-semibold">Solicitar atendimento</a>
-            </div>
+            @endif
         </div>
     </section>
 
     <!-- Modal Serviço -->
-    <div class="modal fade" id="modalServico" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="modalServico" tabindex="-1" aria-labelledby="modalServicoLabel">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content rounded-4 border-0 shadow">
+
                 <div class="modal-header bg-warning bg-opacity-10 border-0">
-                    <h5 class="modal-title fw-bold" id="modalServicoLabel"><i class="bi bi-star-fill text-warning me-2"></i> <span id="modalTitulo">Serviço</span></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title fw-bold" id="modalServicoLabel">
+                        <i class="bi bi-star-fill text-warning me-2"></i>
+                        <span id="modalTitulo">Serviço</span>
+                    </h5>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Fechar">
+                    </button>
                 </div>
-                <div class="modal-body"><p id="modalDescricao" class="fs-6 text-secondary"></p></div>
-                <div class="modal-footer bg-light"><a href="#contato" class="btn btn-warning rounded-pill px-4">Solicitar serviço</a><button type="button" class="btn btn-outline-secondary rounded-pill" data-bs-dismiss="modal">Fechar</button></div>
+
+                <div class="modal-body">
+                    <div id="modalDescricao" class="fs-6 text-secondary"></div>
+                </div>
+
+                <div class="modal-footer bg-light">
+                    <a
+                        href="#"
+                        id="modalSolicitar"
+                        class="btn btn-warning rounded-pill px-4 d-none"
+                    >
+                        Solicitar serviço
+                    </a>
+
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary rounded-pill"
+                        data-bs-dismiss="modal">
+                        Fechar
+                    </button>
+                </div>
+
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
 
+            const modalServico = document.getElementById('modalServico');
+
+            if (!modalServico) {
+                return;
+            }
+
+            modalServico.addEventListener('show.bs.modal', function (event) {
+
+                const serviceCard = event.relatedTarget;
+
+                if (!serviceCard) {
+                    return;
+                }
+
+                const titulo = serviceCard.dataset.servicoTitulo || 'Serviço';
+                const descricao = serviceCard.dataset.servicoDesc || '';
+                const link = serviceCard.dataset.servicoLink || '';
+                const scroll = serviceCard.dataset.servicoScroll || '';
+
+                const modalTitulo = modalServico.querySelector('#modalTitulo');
+                const modalDescricao = modalServico.querySelector('#modalDescricao');
+                const modalSolicitar = modalServico.querySelector('#modalSolicitar');
+
+                modalTitulo.textContent = titulo;
+                modalDescricao.innerHTML = descricao;
+
+                // Esconde o botão inicialmente
+                modalSolicitar.classList.add('d-none');
+
+                /*
+                * LINK
+                */
+                if (link) {
+
+                    modalSolicitar.href = link;
+                    modalSolicitar.target = '_blank';
+                    modalSolicitar.rel = 'noopener noreferrer';
+
+                    modalSolicitar.classList.remove('d-none');
+
+                /*
+                * SCROLL
+                */
+                } else if (scroll) {
+
+                    modalSolicitar.href = '#' + scroll;
+                    modalSolicitar.removeAttribute('target');
+                    modalSolicitar.removeAttribute('rel');
+
+                    modalSolicitar.classList.remove('d-none');
+
+                    modalSolicitar.addEventListener('click', function () {
+
+                        const modalInstance = bootstrap.Modal.getInstance(modalServico);
+
+                        if (modalInstance) {
+                            modalInstance.hide();
+                        }
+
+                    }, { once: true });
+
+                /*
+                * NENHUMA AÇÃO
+                */
+                } else {
+
+                    modalSolicitar.href = '#';
+                    modalSolicitar.removeAttribute('target');
+                    modalSolicitar.removeAttribute('rel');
+
+                    modalSolicitar.classList.add('d-none');
+                }
+
+            });
+
+            modalServico.addEventListener('hidden.bs.modal', function () {
+
+                document.activeElement?.blur();
+
+                const modalSolicitar = modalServico.querySelector('#modalSolicitar');
+
+                modalSolicitar.href = '#';
+                modalSolicitar.removeAttribute('target');
+                modalSolicitar.removeAttribute('rel');
+                modalSolicitar.classList.add('d-none');
+
+            });
+
+        });
+    </script>
     <!-- SEÇÃO CASAMENTO ELEGANTE COM FANCYBOX -->
     <section id="galeria-casamento" class="py-5 wedding-section">
         <div class="container py-5">
