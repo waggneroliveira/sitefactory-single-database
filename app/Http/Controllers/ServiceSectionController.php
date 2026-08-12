@@ -7,41 +7,11 @@ use App\Repositories\SettingThemeRepository;
 use App\Services\ThemeManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ServiceSectionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(ThemeManager $themeManager)
-    {
-
-    $settingTheme = (new SettingThemeRepository())->settingTheme();
-
-        // Verifica permissão para visualizar slides
-        // $check = checkPermission('sesssao faq.visualizar', $settingTheme);
-        // if ($check !== true) {
-        //     return $check; 
-        // }
-        $theme = $themeManager;
-        $themeData = $themeManager->theme();
-        $serviceSection = ServiceSection::active()->first();
-
-        return view('admin.blades.sessaoFaq.index',compact('serviceSection', 'theme', 'themeData'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $data = $request->all();
@@ -65,7 +35,7 @@ class ServiceSectionController extends Controller
     {
         $data = $request->all();
         $data['active'] = $request->active ? 1 : 0;
-
+        // dd($data);
         try {
             DB::beginTransaction();
             $serviceSection->fill($data)->save();

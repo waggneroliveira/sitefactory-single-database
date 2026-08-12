@@ -185,6 +185,21 @@
                 ])
             @endif
 
+            @if (
+                $theme->hasModule('gallery') &&
+                (
+                    Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('usuario.tornar usuario master') ||
+                    Auth::user()->can('depoimento.visualizar')
+                )
+            )
+                @include('admin.components.dashboard-card', [
+                    'route' => route('admin.dashboard.gallery.index'),
+                    'icon' => 'mdi-account-voice',
+                    'title' => 'Galeria'
+                ])
+            @endif
+
         </div>
 
     @endif

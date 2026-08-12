@@ -18,7 +18,7 @@ return [
             'faq_session',
             'faq',
             'testimonials',
-            'services',
+            'services',            
         ],
 
         'about' => [
@@ -72,6 +72,7 @@ return [
             'slides',
             'topics',
             'services',
+            'gallery',
         ],
 
         'about' => [
@@ -98,6 +99,7 @@ return [
             'slides' => 1,
             'topics' => 3,
             'services' => 6,
+            'gallery' => 3,
         ],
     ],
 

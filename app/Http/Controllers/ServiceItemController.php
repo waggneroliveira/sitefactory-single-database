@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Helpers\HelperArchive;
 use App\Models\ServiceItem;
+use App\Models\ServiceSection;
 use App\Repositories\SettingThemeRepository;
 use App\Services\ThemeManager;
 use Illuminate\Http\Request;
@@ -32,8 +33,11 @@ class ServiceItemController extends Controller
         $themeData = $themeManager->theme();
         $serviceItems = ServiceItem::get();
         $serviceItemLimit = $themeManager->getLimit('services', 0);
-
-        return view('admin.blades.serviceItems.index',compact('serviceItems', 'serviceItemLimit', 'theme', 'themeData'));
+        $serviceSection = ServiceSection::whereIn('section', ['service', 'gallery'])
+        ->get()
+        ->keyBy('section');
+        // dd($serviceSection['service']);
+        return view('admin.blades.serviceItems.index',compact('serviceItems','serviceSection', 'serviceItemLimit', 'theme', 'themeData'));
     }
 
     public function store(Request $request, ThemeManager $themeManager)

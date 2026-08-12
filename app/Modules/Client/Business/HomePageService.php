@@ -15,7 +15,9 @@ use App\Models\Letsgo;
 use App\Models\PopUp;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\ProductGallery;
 use App\Models\ServiceItem;
+use App\Models\ServiceSection;
 use App\Models\SessaoFaq;
 use App\Models\Slide;
 use App\Models\Statute;
@@ -61,6 +63,11 @@ class HomePageService
         $faqs = Faq::active()->sorting()->get();
         $sessaoFaq = SessaoFaq::active()->first();
         $services = ServiceItem::active()->get();
+        $sections = ServiceSection::active()
+        ->whereIn('section', ['service', 'gallery'])
+        ->get()
+        ->keyBy('section');
+        $galleries = ProductGallery::get();
 
         $productCategorieHighlights = ProductCategory::whereHas('products', function ($query) {
             $query->active()->whereHas('brand', fn ($q) => $q->active());
@@ -186,6 +193,8 @@ class HomePageService
             'themeData',
             'tenantTheme',
             'services',
+            'sections',
+            'galleries',
             'blogNoBairros'
         );
     }

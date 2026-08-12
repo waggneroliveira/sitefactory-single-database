@@ -18,6 +18,8 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->string('title')->nullable();
             $table->string('subtitle')->nullable();
+            $table->string('tag')->nullable();
+            $table->enum('section', ['service', 'gallery'])->nullable();
             $table->string('description')->nullable();
             $table->boolean('active')->default(0);
             $table->timestamps();

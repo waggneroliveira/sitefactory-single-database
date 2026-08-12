@@ -91,11 +91,13 @@
     <!-- Serviços com MODAL -->
     <section id="servicos" class="py-5 bg-light">
         <div class="container py-4">
-            <div class="text-center mb-5" data-aos="fade-up">
-                <span class="badge-feature bg-dark text-warning px-3 py-2">Nossas especialidades</span>
-                <h2 class="display-6 fw-bold mt-3">Serviços com <span class="text-warning">excelência</span></h2>
-                <p class="lead text-secondary mx-auto" style="max-width: 680px;">Clique em cada serviço e veja informações detalhadas.</p>
-            </div>
+            @if (isset($sections['service']) && $sections <> null)                
+                <div class="text-center mb-5" data-aos="fade-up">
+                    <span class="badge-feature bg-dark text-warning px-3 py-2">{{$sections['service']->tag}}</span>
+                    <h2 class="display-6 fw-bold mt-3">{{$sections['service']->title}} <span class="primary-color">{{$sections['service']->subtitle}}</span></h2>
+                    <p class="lead text-secondary mx-auto" style="max-width: 680px;">Clique em cada serviço e veja informações detalhadas.</p>
+                </div>
+            @endif
             @if (isset($services) && $services->count())
                 <div class="row g-4">
                     @foreach ($services as $service)
@@ -187,7 +189,122 @@
             </div>
         </div>
     </div>
-    <script>
+
+    <!-- SEÇÃO CASAMENTO ELEGANTE COM FANCYBOX -->
+    <section id="galeria-casamento" class="py-5 wedding-section">
+        <div class="container py-5">
+            @if (isset($sections['gallery']) && $sections <> null) 
+                <div class="text-center mb-5" data-aos="fade-up">
+                    <span class="badge-feature bg-dark text-warning px-3 py-2">{{$sections['gallery']->tag}}</span>
+                    <h2 class="display-6 fw-bold mt-3">{{$sections['gallery']->title}} <span class="primary-color">{{$sections['gallery']->subtitle}}</span></h2>
+                    <p class="lead text-secondary mx-auto" style="max-width: 680px;">Clique em cada serviço e veja informações detalhadas.</p>
+                </div>
+            @endif
+
+            @if ($galleries->count())
+                @php
+                    $featuredGallery = $galleries->first();
+                    $remainingGalleries = $galleries->skip(1);
+                @endphp
+
+                <div class="row justify-content-center mb-5" data-aos="fade-up">
+                    <div class="col-lg-10">
+                        <div class="wedding-card">
+                            <a href="{{ asset('storage/' . $featuredGallery->file) }}" data-fancybox="wedding-gallery" data-caption="Galeria de imagens">
+                                <img src="{{ asset('storage/' . $featuredGallery->file) }}" class="wedding-highlight-img" alt="Imagem principal da galeria">
+                            </a>
+                            <div class="p-4 text-center bg-white">
+                                <h4 class="fw-semibold">Cerimônia especial e documentação completa</h4>
+                                <p class="text-muted mb-0">Habilitação de casamento, certidão e todo o suporte necessário com agilidade e respeito.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @if ($remainingGalleries->count())
+                    <div class="row g-4" data-aos="fade-up" data-aos-delay="100">
+                        @foreach ($remainingGalleries as $gallery)
+                            <div class="col-md-3 col-6">
+                                <div class="gallery-grid-item">
+                                    <a href="{{ asset('storage/' . $gallery->file) }}" data-fancybox="wedding-gallery" data-caption="Imagem da galeria">
+                                        <img src="{{ asset('storage/' . $gallery->file) }}" alt="Imagem da galeria" loading="lazy">
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+            @endif
+            
+            <div class="text-center mt-5 pt-3" data-aos="fade-up">
+                <p class="fs-5 fw-light">Oferecemos todo suporte com carinho: desde a documentação até a cerimônia assistida.</p>
+                <a href="#contato" class="btn btn-gold rounded-pill px-5 py-3 mt-2">Quero realizar meu sonho <i class="bi bi-heart-fill ms-2"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato -->
+    <section id="contato" class="py-5 bg-light">
+        <div class="container py-4">
+            <div class="row g-5">
+                <div class="col-lg-5" data-aos="fade-right">
+                    <div class="contact-info h-100 d-flex flex-column justify-content-center">
+                        <div class="icon d-flex justify-content-start align-item-center gap-3">
+                            <i class="bi bi-geo-alt-fill fs-1 text-warning mb-3"></i>
+                            <div class="col-10">
+                                <h3 class="fw-bold">Entre em contato</h3>
+                                <p class="lead fs-6">Estamos localizados no centro, com fácil acesso e estrutura completa.</p>
+                            </div>
+                        </div>
+                        <div class="mt-3 mb-3">
+                            <div class="d-flex gap-3 mb-3 align-items-center"><i class="bi bi-pin-map-fill fs-4 text-secondary"></i><span>Rua XV de Novembro, 345 - Centro, São Paulo/SP - CEP 01010-000</span></div>
+                            <div class="d-flex gap-3 mb-3 align-items-center"><i class="bi bi-telephone-fill fs-4 text-secondary"></i><span>(11) 3456-7890 / (11) 98765-4321</span></div>
+                            <div class="d-flex gap-3 mb-3 align-items-center"><i class="bi bi-envelope-fill fs-4 text-secondary"></i><span>contato@cartoriooficial.com.br</span></div>
+                            <div class="d-flex gap-3 align-items-center"><i class="bi bi-clock-fill fs-4 text-secondary"></i><span>Segunda a Sexta: 9h às 17h | Sábado: 9h às 12h</span></div>
+                        </div>
+                        
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.1223703424525!2d-38.41343729179306!3d-12.899852065284609!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7161174b4f6de4f%3A0xf23a2bae7c4813aa!2s6%C2%BA%20Of%C3%ADcio%20de%20Registro%20Civil%20de%20Salvador%20(Subdistrito%20de%20Val%C3%A9ria%20e%20S%C3%A3o%20Crist%C3%B3v%C3%A3o)!5e0!3m2!1spt-BR!2sbr!4v1779822888942!5m2!1spt-BR!2sbr" 
+                        width="100%" 
+                        height="250" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+
+                </div>
+                <div class="col-lg-7" data-aos="fade-left">
+                    <div class="bg-white shadow-sm rounded-4 p-4 p-md-5">
+                        <h4 class="fw-semibold">Envie sua mensagem</h4>
+                        <p class="text-muted mb-4">Respondemos em até 2 horas úteis.</p>
+                        <form id="formContato">
+                            <div class="row g-3">
+                                <div class="col-md-6"><label class="form-label">Nome completo</label><input type="text" class="form-control" required></div>
+                                <div class="col-md-6"><label class="form-label">E-mail</label><input type="email" class="form-control" required></div>
+                                <div class="col-12"><label class="form-label">Telefone</label><input type="tel" class="form-control"></div>
+                                <div class="col-12"><label class="form-label">Assunto</label><select class="form-select"><option>Registro Civil</option><option>Tabelionato</option><option>Casamento</option><option>Certidões</option></select></div>
+                                <div class="col-12"><label class="form-label">Mensagem</label><textarea class="form-control" rows="4"></textarea></div>
+                                <div class="col-12"><button type="submit" class="btn btn-warning fw-semibold px-5 rounded-pill">Enviar mensagem <i class="bi bi-send"></i></button></div>
+                            </div>
+                        </form>
+                        <div class="alert alert-success mt-4 d-none" id="msgAlert">Mensagem enviada! Em breve entraremos em contato.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .about li::before{
+            color: var(--primary-color);
+        }
+        .quick-card{
+            border-bottom: 3px solid var(--secondary-color);
+        }
+    </style>
+
+        <script>
         document.addEventListener('DOMContentLoaded', function () {
 
             const modalServico = document.getElementById('modalServico');
@@ -280,128 +397,4 @@
 
         });
     </script>
-    <!-- SEÇÃO CASAMENTO ELEGANTE COM FANCYBOX -->
-    <section id="galeria-casamento" class="py-5 wedding-section">
-        <div class="container py-5">
-            <div class="text-center mb-5" data-aos="fade-up">
-                <span class="badge-feature bg-dark text-warning px-3 py-2">União que transforma</span>
-                <h2 class="display-5 fw-bold mt-3">Faça seu <span class="text-warning">Casamento</span></h2>
-                <div class="gold-divider mx-auto" style="margin: 1rem auto;"></div>
-                <p class="lead text-secondary mx-auto" style="max-width: 700px;">Celebre o amor com segurança jurídica. Do planejamento à cerimônia, oferecemos todo suporte cartorário para o seu grande dia.</p>
-            </div>
-
-            <!-- Imagem principal destaque com Fancybox -->
-            <div class="row justify-content-center mb-5" data-aos="fade-up">
-                <div class="col-lg-10">
-                    <div class="wedding-card">
-                        <a href="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format" data-fancybox="wedding-gallery" data-caption="Cerimônia Civil - Um momento único no cartório">
-                            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format" class="wedding-highlight-img" alt="Casamento principal">
-                        </a>
-                        <div class="p-4 text-center bg-white">
-                            <h4 class="fw-semibold">Cerimônia especial e documentação completa</h4>
-                            <p class="text-muted">Habilitação de casamento, certidão e todo o suporte necessário com agilidade e respeito.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Galeria com miniaturas elegantes (Fancybox) -->
-            <div class="row g-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="col-md-3 col-6">
-                    <div class="gallery-grid-item">
-                        <a href="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1974&auto=format" data-fancybox="wedding-gallery" data-caption="Momentos de alegria e celebração">
-                            <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1974&auto=format" alt="Casamento ao ar livre">
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="gallery-grid-item">
-                        <a href="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2070&auto=format" data-fancybox="wedding-gallery" data-caption="Alianças e buquê - símbolos do amor eterno">
-                            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2070&auto=format" alt="Detalhes do casamento">
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="gallery-grid-item">
-                        <a href="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=2070&auto=format" data-fancybox="wedding-gallery" data-caption="Salão do cartório decorado para ocasiões especiais">
-                            <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=2070&auto=format" alt="Espaço casamento">
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="gallery-grid-item">
-                        <a href="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2070&auto=format" data-fancybox="wedding-gallery" data-caption="Felicidade e união - um novo começo">
-                            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2070&auto=format" alt="Felicidade casal">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="text-center mt-5 pt-3" data-aos="fade-up">
-                <p class="fs-5 fw-light">Oferecemos todo suporte com carinho: desde a documentação até a cerimônia assistida.</p>
-                <a href="#contato" class="btn btn-gold rounded-pill px-5 py-3 mt-2">Quero realizar meu sonho <i class="bi bi-heart-fill ms-2"></i></a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contato -->
-    <section id="contato" class="py-5 bg-light">
-        <div class="container py-4">
-            <div class="row g-5">
-                <div class="col-lg-5" data-aos="fade-right">
-                    <div class="contact-info h-100 d-flex flex-column justify-content-center">
-                        <div class="icon d-flex justify-content-start align-item-center gap-3">
-                            <i class="bi bi-geo-alt-fill fs-1 text-warning mb-3"></i>
-                            <div class="col-10">
-                                <h3 class="fw-bold">Entre em contato</h3>
-                                <p class="lead fs-6">Estamos localizados no centro, com fácil acesso e estrutura completa.</p>
-                            </div>
-                        </div>
-                        <div class="mt-3 mb-3">
-                            <div class="d-flex gap-3 mb-3 align-items-center"><i class="bi bi-pin-map-fill fs-4 text-secondary"></i><span>Rua XV de Novembro, 345 - Centro, São Paulo/SP - CEP 01010-000</span></div>
-                            <div class="d-flex gap-3 mb-3 align-items-center"><i class="bi bi-telephone-fill fs-4 text-secondary"></i><span>(11) 3456-7890 / (11) 98765-4321</span></div>
-                            <div class="d-flex gap-3 mb-3 align-items-center"><i class="bi bi-envelope-fill fs-4 text-secondary"></i><span>contato@cartoriooficial.com.br</span></div>
-                            <div class="d-flex gap-3 align-items-center"><i class="bi bi-clock-fill fs-4 text-secondary"></i><span>Segunda a Sexta: 9h às 17h | Sábado: 9h às 12h</span></div>
-                        </div>
-                        
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.1223703424525!2d-38.41343729179306!3d-12.899852065284609!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7161174b4f6de4f%3A0xf23a2bae7c4813aa!2s6%C2%BA%20Of%C3%ADcio%20de%20Registro%20Civil%20de%20Salvador%20(Subdistrito%20de%20Val%C3%A9ria%20e%20S%C3%A3o%20Crist%C3%B3v%C3%A3o)!5e0!3m2!1spt-BR!2sbr!4v1779822888942!5m2!1spt-BR!2sbr" 
-                        width="100%" 
-                        height="250" 
-                        style="border:0;" 
-                        allowfullscreen="" 
-                        loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
-                    </div>
-
-                </div>
-                <div class="col-lg-7" data-aos="fade-left">
-                    <div class="bg-white shadow-sm rounded-4 p-4 p-md-5">
-                        <h4 class="fw-semibold">Envie sua mensagem</h4>
-                        <p class="text-muted mb-4">Respondemos em até 2 horas úteis.</p>
-                        <form id="formContato">
-                            <div class="row g-3">
-                                <div class="col-md-6"><label class="form-label">Nome completo</label><input type="text" class="form-control" required></div>
-                                <div class="col-md-6"><label class="form-label">E-mail</label><input type="email" class="form-control" required></div>
-                                <div class="col-12"><label class="form-label">Telefone</label><input type="tel" class="form-control"></div>
-                                <div class="col-12"><label class="form-label">Assunto</label><select class="form-select"><option>Registro Civil</option><option>Tabelionato</option><option>Casamento</option><option>Certidões</option></select></div>
-                                <div class="col-12"><label class="form-label">Mensagem</label><textarea class="form-control" rows="4"></textarea></div>
-                                <div class="col-12"><button type="submit" class="btn btn-warning fw-semibold px-5 rounded-pill">Enviar mensagem <i class="bi bi-send"></i></button></div>
-                            </div>
-                        </form>
-                        <div class="alert alert-success mt-4 d-none" id="msgAlert">Mensagem enviada! Em breve entraremos em contato.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <style>
-        .about li::before{
-            color: var(--primary-color);
-        }
-        .quick-card{
-            border-bottom: 3px solid var(--secondary-color);
-        }
-    </style>
 @endsection

@@ -17,6 +17,7 @@ use App\Http\Controllers\DownloadFichaController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FormIndexController;
+use App\Http\Controllers\GalleryImageController;
 use App\Http\Controllers\LetsgoController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PlansController;
@@ -28,6 +29,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SeoGoogleController;
 use App\Http\Controllers\ServiceItemController;
 use App\Http\Controllers\ServiceLocationController;
+use App\Http\Controllers\ServiceSectionController;
 use App\Http\Controllers\SessaoFaqController;
 use App\Http\Controllers\SettingEmailController;
 use App\Http\Controllers\SettingThemeController;
@@ -319,6 +321,10 @@ Route::prefix('painel/')->group(function () {
         ->parameters(['planos' => 'plan'])
         ->names('admin.dashboard.plans');
        // SERVICES
+        Route::resource('sessao-servicos', ServiceSectionController::class)
+        ->parameters(['sessao-servicos' => 'serviceSection'])
+        ->names('admin.dashboard.serviceSection');
+       // SERVICES
         Route::resource('servicos', ServiceItemController::class)
         ->parameters(['servicos' => 'serviceItem'])
         ->names('admin.dashboard.serviceItem');
@@ -330,6 +336,14 @@ Route::prefix('painel/')->group(function () {
         Route::resource('cliente', SystemClientController::class)
         ->parameters(['cliente' => 'tenant'])
         ->names('admin.dashboard.tenants');
+        //GALLERY
+        Route::resource('galeria-de-imagens', GalleryImageController::class)
+        ->names('admin.dashboard.gallery')
+        ->parameters(['galeria-de-imagens' => 'productGallery']);
+        Route::post('galeria-de-imagens/sorting', [GalleryImageController::class, 'sorting'])
+        ->name('admin.dashboard.gallery.sorting');
+        Route::post('galeria-de-imagens/delete', [GalleryImageController::class, 'destroySelected'])
+        ->name('admin.dashboard.gallery.destroySelected');
 
         Route::patch('planos/{plans}/toggle-active', [PlansController::class, 'toggleActive']
         )->name('admin.dashboard.plans.toggleActive');

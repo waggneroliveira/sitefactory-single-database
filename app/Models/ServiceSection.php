@@ -17,6 +17,8 @@ class ServiceSection extends Model
     protected $fillable = [
         'title',
         'subtitle',
+        'tag',
+        'section',
         'description',
         'active',
     ];
