@@ -433,9 +433,11 @@
                         <li class="nav-item"><a class="nav-link text-color-header" href="#galeria-casamento">Casamento</a></li>
                         <li class="nav-item"><a class="nav-link text-color-header" href="#contato">Contato</a></li>
                     </ul>
-                    <a href="https://sistemacliente.cartoriooficial.com.br/login" target="_blank" class="bg-button-one color-button-one ms-lg-3 px-4 py-2 rounded-pill hover-zoom">
-                        <i class="bi bi-box-arrow-in-right"></i> Área do Cliente
-                    </a>
+                    @if (isset($tenantTheme->link_header) && $tenantTheme->link_header <> null)                        
+                        <a href="{{$tenantTheme->link_header}}" target="_blank" class="bg-button-one color-button-one ms-lg-3 px-4 py-2 rounded-pill hover-zoom">
+                            <i class="bi bi-box-arrow-in-right"></i> {{$tenantTheme->btn_title_header}}
+                        </a>
+                    @endif
                 </div>
             </div>
         </nav>

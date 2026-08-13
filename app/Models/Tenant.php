@@ -40,6 +40,8 @@ class Tenant extends BaseTenant
         'text_color_header',
         'bg_header',
         'bg_scroll',
+        'btn_title_header',
+        'link_header',
 
         // Rodapé
         'btn_title',

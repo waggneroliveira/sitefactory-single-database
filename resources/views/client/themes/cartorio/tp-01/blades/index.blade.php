@@ -30,7 +30,7 @@
 
                             <div class="d-flex flex-wrap gap-3">
                                 <a href="#servicos"
-                                class="bg-button-one color-button-one rounded-pill px-lg-5 px-3 py-lg-3 py-2 font-16 fw-semibold hover-zoom text-uppercase">
+                                class="bg-button-one color-button-one rounded-pill px-lg-5 px-3 py-lg-3 py-1 font-16 fw-semibold hover-zoom text-uppercase">
                                     Nossos serviços
                                     <i class="bi bi-arrow-right-circle ms-1"></i>
                                 </a>
@@ -140,7 +140,7 @@
                 </div>
                 
                 <div class="text-center mt-5" data-aos="fade-up">
-                    <a href="#contato" class="btn btn-outline-warning rounded-pill px-5 fw-semibold">Solicitar atendimento</a>
+                    <a href="#contato" class="btn btn-warning bg-button-two color-button-two rounded-pill px-5 fw-semibold">Solicitar atendimento</a>
                 </div>
             @endif
         </div>
@@ -173,7 +173,7 @@
                     <a
                         href="#"
                         id="modalSolicitar"
-                        class="btn btn-warning rounded-pill px-4 d-none"
+                        class="btn btn-warning bg-button-two color-button-two rounded-pill px-4 d-none"
                     >
                         Solicitar serviço
                     </a>
@@ -319,7 +319,7 @@
                                             Aceito os termos descritos na Política de Privacidade
                                         </label>
                                     </div>
-                                    <button type="submit" class="btn btn-warning fw-semibold px-5 rounded-pill">Enviar mensagem <i class="bi bi-send"></i></button>
+                                    <button type="submit" class="btn btn-warning bg-button-two color-button-two fw-semibold px-5 rounded-pill">Enviar mensagem <i class="bi bi-send"></i></button>
                                 </div>
                             </div>
                         </form>

@@ -161,17 +161,31 @@ HEADER
         <h5 class="mb-3 border-bottom pb-2">Configurações do Header</h5>
     </div>
 
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-2">
         <div class="mb-3">
             <label class="form-label">Cor do texto no Header</label>
             <input type="text" name="text_color_header" class="form-control" id="colorpicker-text-header" value="{{ old('text_color_header', $tenant->text_color_header ?? '') }}">
         </div>
     </div>
 
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-2">
         <div class="mb-3">
             <label class="form-label">Cor do Header</label>
             <input type="text" name="bg_header" class="form-control" id="colorpicker-bg-header" value="{{ old('bg_header', $tenant->bg_header ?? '') }}">
+        </div>
+    </div>
+
+        <div class="col-12 col-lg-3">
+        <div class="mb-3">
+            <label class="form-label">Título Botão</label>
+            <input type="text" name="btn_title_header" class="form-control" value="{{ old('btn_title_header', $tenant->btn_title_header ?? '') }}">
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-5">
+        <div class="mb-3">
+            <label class="form-label">Link Botão</label>
+            <input type="text" name="link_header" class="form-control" value="{{ old('link_header', $tenant->link_header ?? '') }}">
         </div>
     </div>
 </div>
