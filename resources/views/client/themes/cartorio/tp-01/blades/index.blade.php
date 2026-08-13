@@ -283,7 +283,7 @@
                 <div class="col-lg-7" data-aos="fade-left">
                     <div class="bg-white shadow-sm rounded-4 p-4 p-md-5">
                         <h4 class="fw-semibold">Envie sua mensagem</h4>
-                        <form id="formContato">
+                        <form id="formContato" class="mt-4">
                             @csrf
                             <div class="row g-3">
                                 <div class="col-md-6">

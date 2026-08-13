@@ -504,9 +504,13 @@
                     </div>
 
                     <div class="col-12 col-lg-3 text-center small text-color-footer">
-                        <a href="#" class="text-color-footer text-decoration-none" data-bs-toggle="modal" data-bs-target="#privacyModal">Política de Privacidade</a>
+                        @if ($tenantTheme->privacy_policy <> null)                            
+                            <a href="#" class="text-color-footer text-decoration-none" data-bs-toggle="modal" data-bs-target="#privacyModal">Política de Privacidade</a>
+                        @endif
                         <span class="mx-1">|</span>
-                        <a href="#" class="text-color-footer text-decoration-none" data-bs-toggle="modal" data-bs-target="#termsModal">Termos de Uso</a>
+                        @if ($tenantTheme->terms_of_use <> null)                            
+                            <a href="#" class="text-color-footer text-decoration-none" data-bs-toggle="modal" data-bs-target="#termsModal">Termos de Uso</a>
+                        @endif
                     </div>
 
                     <!-- Modal Política de Privacidade -->
