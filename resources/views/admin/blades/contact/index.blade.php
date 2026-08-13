@@ -41,7 +41,7 @@
                                             @endif
                                             <!-- Modal -->
                                             <div class="modal fade" id="contact-create" tabindex="-1" role="dialog" aria-hidden="true">
-                                                <div class="contact modal-dialog modal-dialog-centered" style="max-width: 100%;">
+                                                <div class="contact modal-dialog modal-dialog-centered" style="max-width: 1360px;">
                                                     <div class="modal-content">
                                                         <div class="modal-header bg-light">
                                                             <h4 class="modal-title" id="myCenterModalLabel">{{__('dashboard.btn_create')}}</h4>
@@ -50,7 +50,9 @@
                                                         <div class="modal-body p-2 px-3 px-md-4">
                                                             <form action="{{route('admin.dashboard.contact.store')}}" method="POST" enctype="multipart/form-data">
                                                                 @csrf
-                                                                @include('admin.blades.contact.form', ['textareaId' => 'textarea-create'])  
+                                                                {{-- @include('admin.blades.contact.form', ['textareaId' => 'textarea-create'])   --}}
+                                                                @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.contact.form", ['textareaId' => 'textarea-create', 'contact', 'themeData'])
+
                                                                 <div class="d-flex justify-content-end gap-2">
                                                                     <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">{{__('dashboard.btn_cancel')}}</button>
                                                                     <button type="submit" class="btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_create')}}</button>
@@ -108,7 +110,7 @@
                                                     Auth::user()->can('contato.editar')) 
                                                         <button data-bs-toggle="modal" data-bs-target="#contact-edit-{{$contact->id}}" class="tabledit-edit-button btn btn-primary text-black" style="padding: 2px 8px;width: 30px"><span class="mdi mdi-pencil"></span></button>
                                                         <div class="modal fade" id="contact-edit-{{$contact->id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                                            <div class="contact modal-dialog modal-dialog-centered" style="max-width: 100%;">
+                                                            <div class="contact modal-dialog modal-dialog-centered" style="max-width: 1360px;">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header bg-light">
                                                                         <h4 class="modal-title" id="myCenterModalLabel">{{__('dashboard.btn_edit')}}</h4>
@@ -119,7 +121,9 @@
                                                                             @csrf
                                                                             @method('PUT')
                                                                             
-                                                                            @include('admin.blades.contact.form', ['textareaId' => 'textarea-edit'])                                                                      
+                                                                            {{-- @include('admin.blades.contact.form', ['textareaId' => 'textarea-edit'])   --}}
+                                                                            
+                                                                            @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.contact.form", ['contact', 'themeData'])
   
                                                                             <div class="d-flex justify-content-end gap-2">
                                                                                 <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">{{__('dashboard.btn_cancel')}}</button>

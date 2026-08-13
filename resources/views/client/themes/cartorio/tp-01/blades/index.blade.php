@@ -262,7 +262,7 @@
                                 <div class="d-flex gap-3 mb-3 align-items-center"><i class="bi bi-pin-map-fill fs-4 text-secondary"></i><span>{{$contact->address_one}}</span></div>
                                 <div class="d-flex gap-3 mb-3 align-items-center"><i class="bi bi-telephone-fill fs-4 text-secondary"></i><span>{{$contact->phone_one}}</span></div>
                                 <div class="d-flex gap-3 mb-3 align-items-center"><i class="bi bi-envelope-fill fs-4 text-secondary"></i><span>{{$contact->name_one}}</span></div>
-                                <div class="d-flex gap-3 align-items-center"><i class="bi bi-clock-fill fs-4 text-secondary"></i><span>Segunda a Sexta: 9h às 17h | Sábado: 9h às 12h</span></div>
+                                <div class="d-flex gap-3 align-items-center"><i class="bi bi-clock-fill fs-4 text-secondary"></i><span>{{$contact->opening_hours_two}}</span></div>
                             </div>
                         @endif
                         @if (isset($contact->maps) && $contact->maps != null) 

@@ -346,6 +346,10 @@
             /* Header */
             --text-color-header: {{ $tenantTheme->text_color_header ? $tenantTheme->text_color_header : '#FFFFFF' }};
             --bg-header: {{ $tenantTheme->bg_header ? $tenantTheme->bg_header : '#10513D' }};
+
+            /* Footer */
+            --text-color-footer: {{ $tenantTheme->text_color_footer ? $tenantTheme->text_color_footer : '#FFFFFF' }};
+            --bg-footer: {{ $tenantTheme->bg_footer ? $tenantTheme->bg_footer : '#10513D' }};
             
             /* Footer */
             --bg-scroll: {{ $tenantTheme->bg_scroll ? $tenantTheme->bg_scroll : '#F8F9FA' }};
@@ -411,6 +415,13 @@
 
         .bg-header {
             background: var(--bg-header);
+        }
+        .bg-text-color-footer {
+            background: var(--text-color-footer);
+        }
+
+        .bg-footer {
+            background: var(--bg-footer);
         }
 
         .bg-scroll {
@@ -608,14 +619,13 @@
     </footer> --}}
 
     <!-- FOOTER MAIS PROFISSIONAL -->
-    <footer class="pt-5 pb-4 mt-2">
+    <footer class="pt-5 pb-4 mt-2 bg-footer">
         <div class="container">
             <div class="row gy-5">
                 <div class="col-lg-4 col-md-6">
-                    <div class="d-flex align-items-center gap-2 mb-3">
-                        <i class="bi bi-building fs-2 text-warning"></i>
-                        <span class="fw-bold fs-4 text-white">Cartório Oficial</span>
-                    </div>
+                    @if ($tenantTheme->path_image_logo_footer)                        
+                        <img src="{{asset('storage/' . $tenantTheme->path_image_logo_footer)}}" alt="{{ config('app.name') }}" height="40">
+                    @endif
                     <p class="text-white-50 small">Compromisso com a fé pública, segurança jurídica e atendimento humanizado. Mais de três décadas de tradição.</p>
                     <div class="mt-3">
                         <span class="badge bg-warning text-dark px-3 py-2">Registro Civil e Tabelionato</span>

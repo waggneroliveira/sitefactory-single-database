@@ -42,6 +42,11 @@ class Tenant extends BaseTenant
         'bg_scroll',
 
         // Rodapé
+        'btn_title',
+        'link',
+        'bg_footer',
+        'text_color_footer',
+        'cnpj',
         'copyright',
     ];
 

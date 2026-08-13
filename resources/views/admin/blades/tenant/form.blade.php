@@ -161,24 +161,17 @@ HEADER
         <h5 class="mb-3 border-bottom pb-2">Configurações do Header</h5>
     </div>
 
-    <div class="col-12 col-lg-4">
+    <div class="col-12 col-lg-6">
         <div class="mb-3">
             <label class="form-label">Cor do texto no Header</label>
             <input type="text" name="text_color_header" class="form-control" id="colorpicker-text-header" value="{{ old('text_color_header', $tenant->text_color_header ?? '') }}">
         </div>
     </div>
 
-    <div class="col-12 col-lg-4">
+    <div class="col-12 col-lg-6">
         <div class="mb-3">
             <label class="form-label">Cor do Header</label>
             <input type="text" name="bg_header" class="form-control" id="colorpicker-bg-header" value="{{ old('bg_header', $tenant->bg_header ?? '') }}">
-        </div>
-    </div>
-
-    <div class="col-12 col-lg-4">
-        <div class="mb-3">
-            <label class="form-label">Cor do Scroll</label>
-            <input type="text" name="bg_scroll" class="form-control" id="colorpicker-bg-scroll" value="{{ old('bg_scroll', $tenant->bg_scroll ?? '') }}">
         </div>
     </div>
 </div>
@@ -189,12 +182,12 @@ BOTÃO 1
 
 <div class="row g-3 mt-2">
     <div class="col-12">
-        <h5 class="mb-3 border-bottom pb-2">Configurações do Botão 1</h5>
+        <h5 class="mb-3 border-bottom pb-2">Configurações do Botão Primário</h5>
     </div>
 
     <div class="col-12 col-lg-4">
         <div class="mb-3">
-            <label class="form-label">Texto do Botão 1</label>
+            <label class="form-label">Texto do Botão Primário</label>
             <input type="text" name="text_button_one" class="form-control" value="{{ old('text_button_one', $tenant->text_button_one ?? '') }}">
         </div>
     </div>
@@ -220,12 +213,12 @@ BOTÃO 2
 
 <div class="row g-3 mt-2">
     <div class="col-12">
-        <h5 class="mb-3 border-bottom pb-2">Configurações do Botão 2</h5>
+        <h5 class="mb-3 border-bottom pb-2">Configurações do Botão Secundário</h5>
     </div>
 
     <div class="col-12 col-lg-4">
         <div class="mb-3">
-            <label class="form-label">Texto do Botão 2</label>
+            <label class="form-label">Texto do Botão Secundário</label>
             <input type="text" name="text_button_two" class="form-control" value="{{ old('text_button_two', $tenant->text_button_two ?? '') }}">
         </div>
     </div>
@@ -243,6 +236,67 @@ BOTÃO 2
             <input type="text" name="bg_button_two" class="form-control" id="colorpicker-bg-button2" value="{{ old('bg_button_two', $tenant->bg_button_two ?? '') }}">
         </div>
     </div>
+</div>
+
+
+{{-- ============================================================
+RODAPÉ
+============================================================ --}}
+
+<div class="row g-3 mt-2">
+    <div class="col-12">
+        <h5 class="mb-3 border-bottom pb-2">Rodapé</h5>
+    </div>
+
+        <div class="col-12 col-lg-4">
+        <div class="mb-3">
+            <label class="form-label">Cor do texto no Footer</label>
+            <input type="text" name="text_color_footer" class="form-control" id="colorpicker-text-footer" value="{{ old('text_color_footer', $tenant->text_color_footer ?? '') }}">
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-4">
+        <div class="mb-3">
+            <label class="form-label">Cor do Footer</label>
+            <input type="text" name="bg_footer" class="form-control" id="colorpicker-bg-footer" value="{{ old('bg_footer', $tenant->bg_footer ?? '') }}">
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-4">
+        <div class="mb-3">
+            <label class="form-label">Cor do Scroll</label>
+            <input type="text" name="bg_scroll" class="form-control" id="colorpicker-bg-scroll" value="{{ old('bg_scroll', $tenant->bg_scroll ?? '') }}">
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-4">
+        <div class="mb-3">
+            <label class="form-label">Título Botão</label>
+            <input type="text" name="btn_title" class="form-control" value="{{ old('btn_title', $tenant->btn_title ?? '') }}">
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-8">
+        <div class="mb-3">
+            <label class="form-label">Link Botão</label>
+            <input type="text" name="link" class="form-control" value="{{ old('link', $tenant->link ?? '') }}">
+        </div>
+    </div>
+
+    <div class="col-8">
+        <div class="mb-3">
+            <label for="copyright" class="form-label">Copyright</label>
+            <input type="text" name="copyright" class="form-control" id="copyright" value="{{ old('copyright', $tenant->copyright ?? '') }}" placeholder="Ex.: © 2026 Minha Empresa">
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-4">
+        <div class="mb-3">
+            <label class="form-label">CNPJ</label>
+            <input type="text" name="cnpj" class="form-control" value="{{ old('cnpj', $tenant->cnpj ?? '') }}">
+        </div>
+    </div>
+
 </div>
 
 {{-- ============================================================
@@ -271,23 +325,6 @@ LOGOS
             <p class="text-muted text-center mt-2 mb-0">
                 {{ __('dashboard.text_img_size') }} <b class="text-danger">2 MB</b>.
             </p>
-        </div>
-    </div>
-</div>
-
-{{-- ============================================================
-RODAPÉ
-============================================================ --}}
-
-<div class="row g-3 mt-2">
-    <div class="col-12">
-        <h5 class="mb-3 border-bottom pb-2">Rodapé</h5>
-    </div>
-
-    <div class="col-12">
-        <div class="mb-3">
-            <label for="copyright" class="form-label">Copyright</label>
-            <input type="text" name="copyright" class="form-control" id="copyright" value="{{ old('copyright', $tenant->copyright ?? '') }}" placeholder="Ex.: © 2026 Minha Empresa">
         </div>
     </div>
 </div>
@@ -331,16 +368,16 @@ LIMITES PERSONALIZADOS
 INFORMAÇÃO SOBRE HERANÇA
 ============================================================ --}}
 
-<div class="row mt-2">
+<div class="row mt-2 mb-3">
     <div class="col-12">
         <div class="alert alert-info mb-0">
             <div class="d-flex align-items-start">
                 <i class="mdi mdi-information-outline font-20 me-2"></i>
 
-                <div>
+                <div class="col">
                     <strong>Como funcionam os limites?</strong>
 
-                    <p class="mb-0 mt-1">
+                    <p class="mb-0 mt-1" style="white-space: normal;">
                         O sistema utiliza primeiro o limite personalizado
                         do cliente.
 

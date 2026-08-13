@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row">
         {{-- Sessão --}}
-        <div class="col-12 mb-4">
+        <div class="col-12">
             <h4 class="page-title">Informações da sessão</h4>
             <div class="card card-body">
                 <div class="row g-3">
@@ -38,7 +38,7 @@
         </div>
 
         {{-- Redes sociais --}}
-        <div class="col-12 mb-4">
+        <div class="col-12">
             <h4 class="page-title">Informações das redes sociais</h4>
             <div class="card card-body">
                 <div class="row g-3">
@@ -80,16 +80,16 @@
         </div>
 
         {{-- Filiais --}}
-        <div class="col-12 mb-4">
+        <div class="col-12">
             <h4 class="page-title">Informações de contato</h4>
 
             <div class="row">
-                <div class="mb-3 col-lg-6 col-12">
+                <div class="mb-3 col-lg-4">
                     <label for="name_one" class="form-label">E-mail</label>
                     <input type="text" name="name_one" class="form-control" id="name_one"
                         value="{{ isset($contact)?$contact->name_one:'' }}" placeholder="E-mail">
                 </div>
-                <div class="mb-3 col-lg-6 col-12">
+                <div class="mb-3 col-lg-4">
                     <label for="phone_one" class="form-label">Telefone</label>
                     <input type="text" name="phone_one" class="form-control" id="phone_one"
                         value="{{ isset($contact)?$contact->phone_one:'' }}" placeholder="Telefone">
