@@ -43,6 +43,7 @@ class Tenant extends BaseTenant
 
         // Rodapé
         'btn_title',
+        'description',
         'link',
         'bg_footer',
         'text_color_footer',

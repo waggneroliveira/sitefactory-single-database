@@ -626,9 +626,11 @@
                     @if ($tenantTheme->path_image_logo_footer)                        
                         <img src="{{asset('storage/' . $tenantTheme->path_image_logo_footer)}}" alt="{{ config('app.name') }}" height="40">
                     @endif
-                    <p class="text-white-50 small">Compromisso com a fé pública, segurança jurídica e atendimento humanizado. Mais de três décadas de tradição.</p>
+                    <p class="text-white-50 small">{{$tenantTheme->description}}</p>
                     <div class="mt-3">
-                        <span class="badge bg-warning text-dark px-3 py-2">Registro Civil e Tabelionato</span>
+                        <a href="{{$tenantTheme->link}}" target="_blank" rel="noopener noreferrer">
+                            <span class="badge bg-warning text-dark px-3 py-2">{{$tenantTheme->btn_title}}</span>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-6">

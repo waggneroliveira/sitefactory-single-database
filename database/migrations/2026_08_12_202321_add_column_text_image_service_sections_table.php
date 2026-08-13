@@ -11,12 +11,29 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('service_sections', function (Blueprint $table) {
-            $table->string('btn_title')->nullable();
-            $table->string('link')->nullable();
-            $table->string('title_first_image')->nullable();
-            $table->text('description_first_image')->nullable();
-        });
+        if (!Schema::hasColumn('service_sections', 'btn_title')) {
+            Schema::table('service_sections', function (Blueprint $table) {
+                $table->string('btn_title')->nullable();
+            });
+        }
+
+        if (!Schema::hasColumn('service_sections', 'link')) {
+            Schema::table('service_sections', function (Blueprint $table) {
+                $table->string('link')->nullable();
+            });
+        }
+
+        if (!Schema::hasColumn('service_sections', 'title_first_image')) {
+            Schema::table('service_sections', function (Blueprint $table) {
+                $table->string('title_first_image')->nullable();
+            });
+        }
+
+        if (!Schema::hasColumn('service_sections', 'description_first_image')) {
+            Schema::table('service_sections', function (Blueprint $table) {
+                $table->text('description_first_image')->nullable();
+            });
+        }
     }
 
     /**
@@ -25,7 +42,12 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('service_sections', function (Blueprint $table) {
-            //
+            $table->dropColumn([
+                'btn_title',
+                'link',
+                'title_first_image',
+                'description_first_image',
+            ]);
         });
     }
 };

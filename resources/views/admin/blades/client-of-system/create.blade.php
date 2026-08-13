@@ -68,7 +68,7 @@
 
                             <form
                                 action="{{ route('admin.dashboard.tenants.store') }}"
-                                method="POST"
+                                method="POST" enctype="multipart/form-data"
                             >
 
                                 @csrf

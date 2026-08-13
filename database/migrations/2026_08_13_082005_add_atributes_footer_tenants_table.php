@@ -11,13 +11,41 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('tenants', function (Blueprint $table) {
-            $table->string('text_color_footer')->default('#FFF');
-            $table->string('bg_footer')->default('#000');
-            $table->string('btn_title')->nullable();
-            $table->string('link')->nullable();
-            $table->char('cnpj', 14)->nullable();
-        });
+        if (!Schema::hasColumn('tenants', 'text_color_footer')) {
+            Schema::table('tenants', function (Blueprint $table) {
+                $table->string('text_color_footer')->default('#FFF');
+            });
+        }
+
+        if (!Schema::hasColumn('tenants', 'bg_footer')) {
+            Schema::table('tenants', function (Blueprint $table) {
+                $table->string('bg_footer')->default('#000');
+            });
+        }
+
+        if (!Schema::hasColumn('tenants', 'btn_title')) {
+            Schema::table('tenants', function (Blueprint $table) {
+                $table->string('btn_title')->nullable();
+            });
+        }
+
+        if (!Schema::hasColumn('tenants', 'description')) {
+            Schema::table('tenants', function (Blueprint $table) {
+                $table->string('description')->nullable();
+            });
+        }
+
+        if (!Schema::hasColumn('tenants', 'link')) {
+            Schema::table('tenants', function (Blueprint $table) {
+                $table->string('link')->nullable();
+            });
+        }
+
+        if (!Schema::hasColumn('tenants', 'cnpj')) {
+            Schema::table('tenants', function (Blueprint $table) {
+                $table->char('cnpj', 14)->nullable();
+            });
+        }
     }
 
     /**
@@ -26,7 +54,14 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('tenants', function (Blueprint $table) {
-            //
+            $table->dropColumn([
+                'text_color_footer',
+                'bg_footer',
+                'btn_title',
+                'description',
+                'link',
+                'cnpj',
+            ]);
         });
     }
 };

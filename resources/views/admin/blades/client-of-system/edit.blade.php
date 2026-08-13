@@ -68,7 +68,7 @@
 
                             <form
                                 action="{{ route('admin.dashboard.tenants.update', ['tenant' => $tenant->id]) }}"
-                                method="POST"
+                                method="POST" enctype="multipart/form-data"
                             >
 
                                 @csrf
