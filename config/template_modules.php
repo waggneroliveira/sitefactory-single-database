@@ -82,7 +82,6 @@ return [
         'contact' => [
             'contact',
             'contact_leads',
-            'download_leads',
         ],
 
         'smtp' => [

@@ -93,7 +93,7 @@
         <div class="container py-4">
             @if (isset($sections['service']) && $sections <> null)                
                 <div class="text-center mb-5" data-aos="fade-up">
-                    <span class="badge-feature bg-dark text-warning px-3 py-2">{{$sections['service']->tag}}</span>
+                    <span class="badge-feature bg-button-two color-button-two px-3 py-2">{{$sections['service']->tag}}</span>
                     <h2 class="display-6 fw-bold mt-3">{{$sections['service']->title}} <span class="primary-color">{{$sections['service']->subtitle}}</span></h2>
                     <p class="lead text-secondary mx-auto" style="max-width: 680px;">Clique em cada serviço e veja informações detalhadas.</p>
                 </div>
@@ -195,7 +195,7 @@
         <div class="container py-5">
             @if (isset($sections['gallery']) && $sections <> null) 
                 <div class="text-center mb-5" data-aos="fade-up">
-                    <span class="badge-feature bg-dark text-warning px-3 py-2">{{$sections['gallery']->tag}}</span>
+                    <span class="badge-feature bg-button-two color-button-two px-3 py-2">{{$sections['gallery']->tag}}</span>
                     <h2 class="display-6 fw-bold mt-3">{{$sections['gallery']->title}} <span class="primary-color">{{$sections['gallery']->subtitle}}</span></h2>
                     <p class="lead text-secondary mx-auto" style="max-width: 680px;">Clique em cada serviço e veja informações detalhadas.</p>
                 </div>
@@ -214,8 +214,8 @@
                                 <img src="{{ asset('storage/' . $featuredGallery->file) }}" class="wedding-highlight-img" alt="Imagem principal da galeria">
                             </a>
                             <div class="p-4 text-center bg-white">
-                                <h4 class="fw-semibold">Cerimônia especial e documentação completa</h4>
-                                <p class="text-muted mb-0">Habilitação de casamento, certidão e todo o suporte necessário com agilidade e respeito.</p>
+                                <h4 class="fw-semibold">{{$sections['gallery']->title_first_image}}</h4>
+                                <p class="text-muted mb-0">{{$sections['gallery']->description_first_image}}</p>
                             </div>
                         </div>
                     </div>
@@ -236,61 +236,96 @@
                 @endif
             @endif
             
-            <div class="text-center mt-5 pt-3" data-aos="fade-up">
-                <p class="fs-5 fw-light">Oferecemos todo suporte com carinho: desde a documentação até a cerimônia assistida.</p>
-                <a href="#contato" class="btn btn-gold rounded-pill px-5 py-3 mt-2">Quero realizar meu sonho <i class="bi bi-heart-fill ms-2"></i></a>
-            </div>
+            @if ($sections['gallery']->link)                
+                <div class="text-center mt-5 pt-3" data-aos="fade-up">
+                    <a href="{{$sections['gallery']->link}}" class="bg-button-two color-button-two rounded-pill px-5 py-3 mt-2 hover-zoom">{{$sections['gallery']->btn_title}} <i class="bi bi-heart-fill ms-2"></i></a>
+                </div>
+            @endif
         </div>
     </section>
 
     <!-- Contato -->
     <section id="contato" class="py-5 bg-light">
         <div class="container py-4">
-            <div class="row g-5">
+            <div class="row g-5">                
                 <div class="col-lg-5" data-aos="fade-right">
                     <div class="contact-info h-100 d-flex flex-column justify-content-center">
-                        <div class="icon d-flex justify-content-start align-item-center gap-3">
-                            <i class="bi bi-geo-alt-fill fs-1 text-warning mb-3"></i>
-                            <div class="col-10">
-                                <h3 class="fw-bold">Entre em contato</h3>
-                                <p class="lead fs-6">Estamos localizados no centro, com fácil acesso e estrutura completa.</p>
+                        @if (isset($contact))
+                            <div class="icon d-flex justify-content-start align-item-center gap-3">
+                                <i class="bi bi-geo-alt-fill fs-1 text-warning mb-3"></i>
+                                <div class="col-10">
+                                    <h3 class="fw-bold">{{$contact->name_section}}</h3>
+                                    <p class="lead fs-6">{{$contact->text}}</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mt-3 mb-3">
-                            <div class="d-flex gap-3 mb-3 align-items-center"><i class="bi bi-pin-map-fill fs-4 text-secondary"></i><span>Rua XV de Novembro, 345 - Centro, São Paulo/SP - CEP 01010-000</span></div>
-                            <div class="d-flex gap-3 mb-3 align-items-center"><i class="bi bi-telephone-fill fs-4 text-secondary"></i><span>(11) 3456-7890 / (11) 98765-4321</span></div>
-                            <div class="d-flex gap-3 mb-3 align-items-center"><i class="bi bi-envelope-fill fs-4 text-secondary"></i><span>contato@cartoriooficial.com.br</span></div>
-                            <div class="d-flex gap-3 align-items-center"><i class="bi bi-clock-fill fs-4 text-secondary"></i><span>Segunda a Sexta: 9h às 17h | Sábado: 9h às 12h</span></div>
-                        </div>
-                        
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.1223703424525!2d-38.41343729179306!3d-12.899852065284609!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7161174b4f6de4f%3A0xf23a2bae7c4813aa!2s6%C2%BA%20Of%C3%ADcio%20de%20Registro%20Civil%20de%20Salvador%20(Subdistrito%20de%20Val%C3%A9ria%20e%20S%C3%A3o%20Crist%C3%B3v%C3%A3o)!5e0!3m2!1spt-BR!2sbr!4v1779822888942!5m2!1spt-BR!2sbr" 
-                        width="100%" 
-                        height="250" 
-                        style="border:0;" 
-                        allowfullscreen="" 
-                        loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
+                            <div class="mt-3 mb-3">
+                                <div class="d-flex gap-3 mb-3 align-items-center"><i class="bi bi-pin-map-fill fs-4 text-secondary"></i><span>{{$contact->address_one}}</span></div>
+                                <div class="d-flex gap-3 mb-3 align-items-center"><i class="bi bi-telephone-fill fs-4 text-secondary"></i><span>{{$contact->phone_one}}</span></div>
+                                <div class="d-flex gap-3 mb-3 align-items-center"><i class="bi bi-envelope-fill fs-4 text-secondary"></i><span>{{$contact->name_one}}</span></div>
+                                <div class="d-flex gap-3 align-items-center"><i class="bi bi-clock-fill fs-4 text-secondary"></i><span>Segunda a Sexta: 9h às 17h | Sábado: 9h às 12h</span></div>
+                            </div>
+                        @endif
+                        @if (isset($contact->maps) && $contact->maps != null) 
+                            <iframe
+                            src="{{$contact->maps}}"    
+                            width="100%" 
+                            height="250" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        @endif
                     </div>
 
-                </div>
+                </div>                
+
                 <div class="col-lg-7" data-aos="fade-left">
                     <div class="bg-white shadow-sm rounded-4 p-4 p-md-5">
                         <h4 class="fw-semibold">Envie sua mensagem</h4>
                         <p class="text-muted mb-4">Respondemos em até 2 horas úteis.</p>
                         <form id="formContato">
+                            @csrf
                             <div class="row g-3">
-                                <div class="col-md-6"><label class="form-label">Nome completo</label><input type="text" class="form-control" required></div>
-                                <div class="col-md-6"><label class="form-label">E-mail</label><input type="email" class="form-control" required></div>
-                                <div class="col-12"><label class="form-label">Telefone</label><input type="tel" class="form-control"></div>
-                                <div class="col-12"><label class="form-label">Assunto</label><select class="form-select"><option>Registro Civil</option><option>Tabelionato</option><option>Casamento</option><option>Certidões</option></select></div>
-                                <div class="col-12"><label class="form-label">Mensagem</label><textarea class="form-control" rows="4"></textarea></div>
-                                <div class="col-12"><button type="submit" class="btn btn-warning fw-semibold px-5 rounded-pill">Enviar mensagem <i class="bi bi-send"></i></button></div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Nome completo</label>
+                                    <input type="text" id="name" name="name" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">E-mail</label>
+                                    <input id="email" name="email" type="email" class="form-control" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Telefone</label>
+                                    <input id="phone" name="phone" type="text" class="form-control">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Assunto</label>
+                                    <select id="subject" name="subject" class="form-select">
+                                        <option value="Registro Civil">Registro Civil</option>
+                                        <option value="Tabelionato">Tabelionato</option>
+                                        <option value="Casamento">Casamento</option>
+                                        <option value="Certidões">Certidões</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Mensagem</label>
+                                    <textarea id="text" name="text" class="form-control" rows="4"></textarea>
+                                </div>
+                                <div class="col-12 d-flex align-items-center flex-wrap">
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" required id="term_privacy" name="term_privacy" type="checkbox" value="1">
+                                        <label class="form-check-label small poppins-regular font-14 text-color" for="privacyCheck">
+                                            Aceito os termos descritos na Política de Privacidade
+                                        </label>
+                                    </div>
+                                    <button type="submit" class="btn btn-warning fw-semibold px-5 rounded-pill">Enviar mensagem <i class="bi bi-send"></i></button>
+                                </div>
                             </div>
                         </form>
-                        <div class="alert alert-success mt-4 d-none" id="msgAlert">Mensagem enviada! Em breve entraremos em contato.</div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -304,7 +339,7 @@
         }
     </style>
 
-        <script>
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
 
             const modalServico = document.getElementById('modalServico');
@@ -395,6 +430,103 @@
 
             });
 
+            //Mascara telefone
+            const phoneInput = document.querySelector("#phone");
+
+            if (phoneInput && !phoneInput.dataset.masked) {
+                phoneInput.addEventListener("input", function (e) {
+                    let t = e.target.value.replace(/\D/g, "");
+
+                    // Permite apagar completamente o campo
+                    if (!t) {
+                        e.target.value = "";
+                        return;
+                    }
+
+                    // Força o DDD 71
+                    if (!t.startsWith("71")) {
+                        t = "71" + t;
+                    }
+
+                    // Limita a 11 dígitos
+                    t = t.slice(0, 11);
+
+                    // Máscara: (71) 9 9999-9999
+                    let formatado = "(" + t.slice(0, 2) + ")";
+
+                    if (t.length > 2) {
+                        formatado += " " + t.slice(2, 3);
+                    }
+
+                    if (t.length > 3) {
+                        formatado += " " + t.slice(3, 7);
+                    }
+
+                    if (t.length > 7) {
+                        formatado += "-" + t.slice(7);
+                    }
+
+                    e.target.value = formatado;
+                });
+
+                phoneInput.dataset.masked = "true";
+            }
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#formContato').on('submit', function(e) {
+                e.preventDefault();
+
+                const formData = $(this).serialize();
+
+                $.ajax({
+                    url: '{{ route("send-contact") }}',
+                    type: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        if (typeof Swal !== 'undefined') {
+                            Swal.fire({
+                                title: 'Sucesso!',
+                                text: response.message,
+                                icon: 'success',
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+                        }
+                        $('#formContato')[0].reset();
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 422) {
+                            const errors = xhr.responseJSON.errors;
+                            let errorMessages = '';
+                            for (let field in errors) {
+                                errorMessages += errors[field][0] + '\n';
+                            }
+
+                            if (typeof Swal !== 'undefined') {
+                                Swal.fire({
+                                    title: 'Erro',
+                                    text: errorMessages,
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                        } else {
+                            if (typeof Swal !== 'undefined') {
+                                Swal.fire({
+                                    title: 'Erro',
+                                    text: 'Ocorreu um erro ao enviar a mensagem. Por favor, tente novamente.',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                        }
+                    }
+                });
+            });
         });
     </script>
 @endsection

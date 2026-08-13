@@ -19,6 +19,10 @@ class ServiceSection extends Model
         'subtitle',
         'tag',
         'section',
+        'link',
+        'description_first_image',
+        'title_first_image',
+        'btn_title',
         'description',
         'active',
     ];
