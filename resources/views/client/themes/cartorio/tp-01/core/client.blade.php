@@ -447,109 +447,6 @@
         @yield('content') 
     </main>
 
-    {{-- <footer class="bg-header text-white pt-5 pb-3">
-        <div class="container">
-
-            <!-- Linha principal -->
-            <div class="row align-items-start">
-
-                <!-- Logo + botão -->
-                <div class="col-lg-4 mb-4 mb-lg-0">
-                    <img src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ config('app.name') }}" height="40">
-
-                    <div class="mt-5">
-                        <a href="{{ request()->routeIs('about') ? '#team-section' : route('about') . '#team-section' }}" class="bg-button-two color-button-two px-4 py-2 rounded-pill font-changa font-16 font-medium text-decoration-none hover-zoom">
-                            Encontrar Representantes
-                            <i class="bi bi-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Mapa do site -->
-                <div class="col-lg-6 mb-4 mb-lg-0">
-                    <h6 class="font-changa text-color-header font-16 font-bold mb-3 position-relative d-inline-block font-changa font-16 font-medium">
-                        Mapa do Site
-                        <span class="d-block bg-yellow mt-1" style="height:3px; width:40px;"></span>
-                    </h6>
-
-                    <div class="row">
-                        <div class="col-6">
-                            <ul class="list-unstyled">
-                                <li><a href="{{route('index')}}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Início</a></li>
-                                <li><a href="{{route('about')}}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Quem Somos</a></li>
-                                <li><a href="{{ request()->routeIs('index') ? '#stats-section' : route('index') . '#stats-section' }}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Diferenciais</a></li>
-                                <li><a href="{{route('blogAll')}}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Blog</a></li>
-                                <li><a href="{{route('products')}}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Produtos</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="col-6">
-                            <ul class="list-unstyled">
-                                <li><a href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Depoimentos</a></li>
-                                <li><a href="{{ request()->routeIs('index') ? '#faq' : route('index') . '#faq' }}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">FAQ</a></li>
-                                <li><a href="{{route('contact')}}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Contato</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Redes sociais -->
-                @if (isset($contact) && (
-                $contact->link_insta ||
-                $contact->link_face ||
-                $contact->link_tik_tok
-                ))                    
-                    <div class="col-lg-2 text-lg-end">
-                        <div class="d-flex gap-3 justify-content-lg-end">
-                            @if ($contact->link_insta <> null)                            
-                                <a href="{{$contact->link_insta}}" target="_blank" rel="noopener noreferrer" class="text-color-header fs-5">
-                                    <i class="bi bi-instagram"></i>
-                                </a>
-                            @endif
-                            @if ($contact->link_face <> null)                            
-                                <a href="{{$contact->link_face}}" target="_blank" rel="noopener noreferrer" class="text-color-header fs-5">
-                                    <i class="bi bi-facebook"></i>
-                                </a>
-                            @endif
-                            @if ($contact->link_tik_tok <> null)                            
-                                <a href="{{$contact->link_tik_tok}}" target="_blank" rel="noopener noreferrer" class="text-color-header fs-5">
-                                    <i class="bi bi-linkedin"></i>
-                                </a>
-                            @endif
-                        </div>
-                    </div>
-                @endif
-
-            </div>
-
-            <!-- Linha inferior -->
-            <hr class="border-light opacity-25 my-4">
-
-            <div class="row align-items-center">
-
-                <div class="col-md-10 small">
-                    <div class="d-flex flex-wrap col-12 font-changa font-16 font-regular text-center text-lg-end justify-content-center justify-content-lg-end">
-                        <p id="footer-text" class="text-color-header"></p>                        
-                    </div>
-
-                    <script defer>
-                        const currentYeaar = (new Date).getFullYear();
-                        document.getElementById("footer-text").innerHTML = `© ${currentYeaar} <span> {{$tenantTheme->copyright}}
-                    Todos os direitos reservados.</span> <a href="https://policies.google.com/privacy?hl=pt-BR" target="_blank" class="text-color-header font-semibold">| Política de Privacidade</a>`
-                    </script>
-                </div>
-
-                <div class="col-12 col-md-2 text-center text-md-end mt-3 mt-md-0">
-                    <a href="http://www.whi.dev.br" target="_blank" rel="noopener noreferrer">
-                        <img src="{{asset('build/client/themes/petshop/tp-01/images/whi.svg')}}" alt="Agência WHI" style="height:35px;">
-                    </a>
-                </div>
-
-            </div>
-
-        </div>
-    </footer> --}}
-
     <!-- FOOTER MAIS PROFISSIONAL -->
     <footer class="pt-5 pb-4 mt-2 bg-footer">
         <div class="container">
@@ -607,9 +504,45 @@
                     </div>
 
                     <div class="col-12 col-lg-3 text-center small text-color-footer">
-                        <a href="#" rel="noopener noreferrer" class="text-color-footer text-decoration-none">Política de Privacidade</a>
+                        <a href="#" class="text-color-footer text-decoration-none" data-bs-toggle="modal" data-bs-target="#privacyModal">Política de Privacidade</a>
                         <span class="mx-1">|</span>
-                        <a href="#" rel="noopener noreferrer" class="text-color-footer text-decoration-none">Termos de Uso</a>
+                        <a href="#" class="text-color-footer text-decoration-none" data-bs-toggle="modal" data-bs-target="#termsModal">Termos de Uso</a>
+                    </div>
+
+                    <!-- Modal Política de Privacidade -->
+                    <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="privacyModalLabel">Política de Privacidade</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {!! $tenantTheme->privacy_policy !!}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Termos de Uso -->
+                    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="termsModalLabel">Termos de Uso</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {!! $tenantTheme->terms_of_use !!}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-12 col-lg-4">
@@ -621,7 +554,7 @@
 
                             <span class="text-color-footer opacity-50">|</span>
 
-                            <a href="https://whiweb.com.br" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
+                            <a href="#" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
                                 <span class="font-13">Desenvolvido por</span>
                                 <img src="https://www.whi.dev.br/build/client/images/logo.png" alt="WHI" style="height: 24px; width: auto;">
                             </a>

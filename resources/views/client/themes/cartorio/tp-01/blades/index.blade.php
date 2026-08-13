@@ -283,7 +283,6 @@
                 <div class="col-lg-7" data-aos="fade-left">
                     <div class="bg-white shadow-sm rounded-4 p-4 p-md-5">
                         <h4 class="fw-semibold">Envie sua mensagem</h4>
-                        <p class="text-muted mb-4">Respondemos em até 2 horas úteis.</p>
                         <form id="formContato">
                             @csrf
                             <div class="row g-3">
@@ -302,10 +301,9 @@
                                 <div class="col-12">
                                     <label class="form-label">Assunto</label>
                                     <select id="subject" name="subject" class="form-select">
-                                        <option value="Registro Civil">Registro Civil</option>
-                                        <option value="Tabelionato">Tabelionato</option>
-                                        <option value="Casamento">Casamento</option>
-                                        <option value="Certidões">Certidões</option>
+                                        @foreach ($services as $subjectForm)
+                                            <option value="{{$subjectForm->title}}">{{$subjectForm->title}}</option>  
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-12">

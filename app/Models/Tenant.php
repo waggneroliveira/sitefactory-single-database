@@ -44,6 +44,8 @@ class Tenant extends BaseTenant
         'link_header',
 
         // Rodapé
+        'privacy_policy',
+        'terms_of_use',
         'btn_title',
         'description',
         'link',

@@ -254,6 +254,49 @@ BOTÃO 2
 
 
 {{-- ============================================================
+POLITICA DE PRIVACIDADE
+============================================================ --}}
+
+<div class="row g-3 mt-2">  
+    <div class="col-12">
+        <h5 class="mb-3 border-bottom pb-2">Política de Privacidade e Termos de Uso</h5>
+    </div>
+
+    <div class="row">
+        <div class="mb-3 col-lg-6">
+            <label for="privacy_policy" class="form-label text-white">Política de Privacidade</label>
+            <textarea name="privacy_policy" id="privacy_policy" placeholder="Digite a Política de Privacidade" class="form-control" rows="10">{!! $tenant->privacy_policy ?? '' !!}</textarea>
+        </div>
+
+        <div class="mb-3 col-lg-6">
+            <label for="terms_of_use" class="form-label text-white">Termos de Uso</label>
+            <textarea name="terms_of_use" id="terms_of_use" placeholder="Digite os Termos de Uso" class="form-control" rows="10">{!! $tenant->terms_of_use ?? '' !!}</textarea>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const textareas = [
+                "privacy_policy",
+                "terms_of_use"
+            ];
+
+            textareas.forEach(function (textareaId) {
+                if (document.getElementById(textareaId)) {
+                    CKEDITOR.replace(textareaId, {
+                        toolbar: [
+                            { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline'] },
+                            { name: 'paragraph', items: ['NumberedList', 'BulletedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
+                        ],
+                        height: 300
+                    });
+                }
+            });
+        });
+    </script>
+</div>
+
+{{-- ============================================================
 RODAPÉ
 ============================================================ --}}
 
