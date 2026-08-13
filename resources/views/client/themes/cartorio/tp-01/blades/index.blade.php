@@ -30,13 +30,13 @@
 
                             <div class="d-flex flex-wrap gap-3">
                                 <a href="#servicos"
-                                class="bg-button-one color-button-one rounded-pill px-5 py-3 font-16 fw-semibold hover-zoom text-uppercase">
+                                class="bg-button-one color-button-one rounded-pill px-lg-5 px-3 py-lg-3 py-2 font-16 fw-semibold hover-zoom text-uppercase">
                                     Nossos serviços
                                     <i class="bi bi-arrow-right-circle ms-1"></i>
                                 </a>
 
                                 <a href="#contato"
-                                class="btn btn-outline-light rounded-pill px-5 py-3 hover-zoom">
+                                class="btn btn-outline-light rounded-pill px-lg-5 px-3 py-lg-3 py-2 hover-zoom">
                                     Solicite contato
                                 </a>
                             </div>
