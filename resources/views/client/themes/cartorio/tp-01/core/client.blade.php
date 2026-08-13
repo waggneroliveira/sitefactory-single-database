@@ -385,6 +385,9 @@
         .text-color-header {
             color: var(--text-color-header);
         }
+        .text-color-footer {
+            color: var(--text-color-footer);
+        }
         .color-button-one {
             color: var(--color-button-one);
         }
@@ -405,19 +408,8 @@
             background: var(--accent-color);
         }
 
-        .bg-text-color {
-            background: var(--text-color);
-        }
-
-        .bg-text-color-header {
-            background: var(--text-color-header);
-        }
-
         .bg-header {
             background: var(--bg-header);
-        }
-        .bg-text-color-footer {
-            background: var(--text-color-footer);
         }
 
         .bg-footer {
@@ -436,55 +428,6 @@
             background: var(--bg-button-two);
         }
     </style>
-
-    {{-- <header class="shadow-sm bg-header">
-        <nav class="navbar navbar-expand-lg navbar-light container py-3 px-3 px-lg-0">            
-            <!-- Logo -->
-            <a class="navbar-brand d-flex align-items-center" href="{{route('index')}}">
-                <img src="{{asset('storage/' .$tenantTheme->path_image_logo_header)}}" alt="{{ config('app.name') }}" height="40">
-            </a>
-
-            <!-- Toggle mobile -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Menu -->
-            <div class="collapse navbar-collapse" id="mainNavbar">
-                <ul class="navbar-nav mx-auto m-auto me-4 mb-2 mb-lg-0 gap-lg-3">
-                    <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header active" href="{{route('index')}}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{route('about')}}">Sobre Nós</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}">Depoimentos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{ request()->routeIs('about') ? '#team-section' : route('about') . '#team-section' }}">Representantes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{route('products')}}">Produtos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{route('contact')}}">Contato</a>
-                    </li>
-                </ul>
-
-                <!-- Botão -->
-                <div class="d-flex justify-content-center gap-2 align-items-center btn-header bg-button-one rounded-pill py-2 px-4 hover-zoom">
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M11.6741 10.0755C11.5016 9.96226 11.3291 9.90566 11.1565 10.1321L10.4665 11.0377C10.2939 11.1509 10.1789 11.2075 9.94888 11.0943C9.08626 10.6415 7.87859 10.1321 6.84345 8.43396C6.78594 8.20755 6.90096 8.09434 7.01597 7.98113L7.53355 7.18868C7.64856 7.07547 7.59105 6.96226 7.53355 6.84906L6.84345 5.20755C6.67093 4.75472 6.4984 4.81132 6.32588 4.81132H5.86581C5.7508 4.81132 5.52077 4.86792 5.29073 5.09434C4.02556 6.33962 4.54313 8.09434 5.46326 9.22642C5.63578 9.45283 6.78594 11.4906 9.25879 12.566C11.099 13.3585 11.5016 13.2453 12.0192 13.1321C12.6518 13.0755 13.2843 12.566 13.5719 12.0566C13.6294 11.8868 13.9169 11.1509 13.6869 11.0377M9.14377 16.3585C6.78594 16.3585 5.00319 15.1132 5.00319 15.1132L2.1853 15.8491L2.8754 13.1321C2.8754 13.1321 1.72524 11.3774 1.72524 9.16981C1.72524 5.09434 5.11821 1.69811 9.31629 1.69811C13.2268 1.69811 16.5623 4.69811 16.5623 8.88679C16.5623 12.9623 13.2268 16.3019 9.14377 16.3585ZM0 18L4.77316 16.6981C6.15555 17.3947 7.69626 17.7309 9.24823 17.6747C10.8002 17.6184 12.3116 17.1715 13.6382 16.3768C14.9648 15.582 16.0622 14.4658 16.8259 13.1347C17.5895 11.8037 17.9937 10.3022 18 8.77359C18 3.90566 14.0895 0 9.14377 0C7.55639 0.00399723 5.99777 0.417245 4.62313 1.19859C3.24848 1.97993 2.10579 3.10211 1.30885 4.45336C0.511907 5.80461 0.0885224 7.33778 0.0808596 8.9002C0.0731969 10.4626 0.481524 11.9997 1.26518 13.3585" fill="var(--color-button-one)"/>
-                    </svg>
-
-                    <a class="font-changa font-15 font-medium text-decoration-none color-button-one">
-                        {{ $tenantTheme->text_button_one ?? 'Botão 1' }}
-                    </a>
-                </div>
-            </div>
-        </nav>
-    </header> --}}
 
     <header>
         <!-- Navbar -->
@@ -626,48 +569,87 @@
                     @if ($tenantTheme->path_image_logo_footer)                        
                         <img src="{{asset('storage/' . $tenantTheme->path_image_logo_footer)}}" alt="{{ config('app.name') }}" height="40">
                     @endif
-                    <p class="text-white-50 small">{{$tenantTheme->description}}</p>
+                    <p class="text-color-footer small">{{$tenantTheme->description}}</p>
                     <div class="mt-3">
                         <a href="{{$tenantTheme->link}}" target="_blank" rel="noopener noreferrer">
-                            <span class="badge bg-warning text-dark px-3 py-2">{{$tenantTheme->btn_title}}</span>
+                            <span class="bg-button-two color-button-two rounded font-12 font-bold  px-3 py-2">{{$tenantTheme->btn_title}}</span>
                         </a>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-6">
-                    <h6 class="text-warning mb-3 fw-semibold">Navegação</h6>
+                    <h6 class="primary-color mb-3 fw-semibold">Navegação</h6>
                     <ul class="list-unstyled small">
-                        <li class="mb-2"><a href="#inicio" class="text-white-50 text-decoration-none">Início</a></li>
-                        <li class="mb-2"><a href="#quem-somos" class="text-white-50 text-decoration-none">Quem Somos</a></li>
-                        <li class="mb-2"><a href="#servicos" class="text-white-50 text-decoration-none">Serviços</a></li>
-                        <li class="mb-2"><a href="#galeria-casamento" class="text-white-50 text-decoration-none">Casamento</a></li>
-                        <li><a href="#contato" class="text-white-50 text-decoration-none">Contato</a></li>
+                        <li class="mb-2"><a href="#inicio" class="text-color-footer text-decoration-none">Início</a></li>
+                        <li class="mb-2"><a href="#quem-somos" class="text-color-footer text-decoration-none">Quem Somos</a></li>
+                        <li class="mb-2"><a href="#servicos" class="text-color-footer text-decoration-none">Serviços</a></li>
+                        <li class="mb-2"><a href="#galeria-casamento" class="text-color-footer text-decoration-none">Casamento</a></li>
+                        <li><a href="#contato" class="text-color-footer text-decoration-none">Contato</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <h6 class="text-warning mb-3 fw-semibold">Serviços Rápidos</h6>
+                    <h6 class="primary-color mb-3 fw-semibold">Serviços Rápidos</h6>
                     <ul class="list-unstyled small">
-                        <li class="mb-2"><i class="bi bi-check2-circle text-warning me-1"></i> Certidões Online</li>
-                        <li class="mb-2"><i class="bi bi-check2-circle text-warning me-1"></i> Habilitação de Casamento</li>
-                        <li class="mb-2"><i class="bi bi-check2-circle text-warning me-1"></i> Escrituras e Procurações</li>
-                        <li><i class="bi bi-check2-circle text-warning me-1"></i> Protesto de Títulos</li>
+                        @foreach($services as $serviceNow)                            
+                            <li class="mb-2 text-color-footer"><i class="bi bi-check2-circle primary-color me-1"></i> {{$serviceNow->title}}</li>
+                        @endforeach
                     </ul>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <h6 class="text-warning mb-3 fw-semibold">Contato & Horários</h6>
-                    <p class="small text-white-50 mb-1"><i class="bi bi-whatsapp text-success me-2"></i> (11) 98765-4321</p>
-                    <p class="small text-white-50 mb-1"><i class="bi bi-envelope me-2"></i> atendimento@cartoriooficial.com</p>
-                    <p class="small text-white-50"><i class="bi bi-clock me-2"></i> Seg-Sex 9h-17h | Sáb 9h-12h</p>
+                    <h6 class="primary-color mb-3 fw-semibold">Contato & Horários</h6>
+                    <p class="small text-color-footer mb-1"><i class="bi bi-whatsapp primary-color me-2"></i> {{$contact->whatsapp}}</p>
+                    <p class="small text-color-footer mb-1"><i class="bi bi-envelope primary-color me-2"></i> {{$contact->name_one}}</p>
+                    <p class="small text-color-footer"><i class="bi bi-clock primary-color me-2"></i> {{$contact->opening_hours_two}}</p>
                     <div class="mt-3 d-flex gap-3">
-                        <a href="#" class="text-white-50 fs-5"><i class="bi bi-instagram"></i></a>
-                        <a href="#" class="text-white-50 fs-5"><i class="bi bi-facebook"></i></a>
-                        <a href="#" class="text-white-50 fs-5"><i class="bi bi-linkedin"></i></a>
+                        @if($contact?->link_insta)<a href="{{ $contact->link_insta }}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5"><i class="bi bi-instagram"></i></a>@endif
+                        @if($contact?->link_face)<a href="{{ $contact->link_face }}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5"><i class="bi bi-facebook"></i></a>@endif
+                        @if($contact?->link_tik_tok)<a href="{{ $contact->link_tik_tok }}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5"><i class="bi bi-linkedin"></i></a>@endif
                     </div>
                 </div>
             </div>
             <hr class="bg-secondary mt-5">
             <div class="row align-items-center">
-                <div class="col-md-6 text-center text-md-start small text-white-50">© 2025 Cartório Oficial – Todos os direitos reservados. | CNPJ 12.345.678/0001-90</div>
-                <div class="col-md-6 text-center text-md-end small text-white-50">Política de Privacidade | Termos de Uso</div>
+                @php
+                    $cnpj = !empty($tenantTheme->cnpj) ? preg_replace('/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/', '$1.$2.$3/$4-$5', preg_replace('/\D/', '', $tenantTheme->cnpj)) : '';
+                @endphp
+
+                <div class="row align-items-center g-4">
+                    <div class="col-12 col-lg-5 text-center text-lg-start small text-color-footer">
+                        <p id="footer-text" class="mb-0 text-color-footer"></p>
+                    </div>
+
+                    <div class="col-12 col-lg-3 text-center small text-color-footer">
+                        <a href="#" rel="noopener noreferrer" class="text-color-footer text-decoration-none">Política de Privacidade</a>
+                        <span class="mx-1">|</span>
+                        <a href="#" rel="noopener noreferrer" class="text-color-footer text-decoration-none">Termos de Uso</a>
+                    </div>
+
+                    <div class="col-12 col-lg-4">
+                        <div class="d-flex justify-content-center justify-content-lg-end align-items-center gap-3">
+                            <a href="#" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
+                                <span class="font-13">Sistema</span>
+                                <img src="{{asset('storage/' . $tenantTheme->path_image_logo_footer)}}" alt="WHI Web" style="filter: brightness(0) invert(1);opacity: 0.5;height: 24px; width: auto;">
+                            </a>
+
+                            <span class="text-color-footer opacity-50">|</span>
+
+                            <a href="https://whiweb.com.br" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
+                                <span class="font-13">Desenvolvido por</span>
+                                <img src="https://www.whi.dev.br/build/client/images/logo.png" alt="WHI" style="height: 24px; width: auto;">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const currentYear = new Date().getFullYear();
+                        const footerText = document.getElementById('footer-text');
+
+                        if (footerText) {
+                            footerText.innerHTML = `© ${currentYear} <span>{{ $tenantTheme->copyright }} - Todos os direitos reservados{{ $cnpj ? ' | ' . $cnpj : '' }}.</span>`;
+                        }
+                    });
+                </script>
             </div>
         </div>
     </footer>
