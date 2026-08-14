@@ -11,6 +11,7 @@ class Tenant extends BaseTenant
 {
     protected $fillable = [
         'name',
+        'slug',
         'domain',
         'database',
         'template_theme_id',

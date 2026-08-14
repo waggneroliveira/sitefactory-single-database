@@ -12,9 +12,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
 use Intervention\Image\ImageManager;
 use RealRashid\SweetAlert\Facades\Alert;
+
 class SystemClientController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/tenant/';
@@ -61,7 +63,14 @@ class SystemClientController extends Controller
 
         $manager = new ImageManager(GdDriver::class);
         $data['cnpj'] = !empty($data['cnpj']) ? preg_replace('/\D/', '', $data['cnpj']) : null;
-       
+        $data['slug'] = Str::slug($request->name);
+        if ($data['text_button_one'] == null) {
+            $data['text_button_one'] = 'Saiba mais';
+        }
+        if ($data['text_button_two'] == null) {
+            $data['text_button_two'] = 'Saiba mais';
+        }
+        
         DB::beginTransaction();
 
         try {
@@ -132,7 +141,7 @@ class SystemClientController extends Controller
             }
 
             $tenant = new Tenant();
-
+            
             $tenant->fill($data);
 
             $tenant->save();
@@ -160,6 +169,7 @@ class SystemClientController extends Controller
                 ->with('success', 'Cliente criado com sucesso.');
 
         } catch (\Exception $e) {
+            dd($e);
             DB::rollBack();
 
             Alert::error(
