@@ -50,14 +50,6 @@
                 >
             </div>
         </div>
-        <div class="row">    
-            <div class="mb-3 col-12">
-                <label for="{{$textareaId}}" class="form-label text-white">Descrição</label>
-                <textarea name="description" id="{{$textareaId}}" placeholder="Texto" class="col-12" rows="10">
-                    {!!isset($sessaoFaq->description)?$sessaoFaq->description: ''!!}
-                </textarea>
-            </div>
-        </div>
         <div class="mb-3 col-12">
             <div class="form-check">
                 <input 
@@ -94,18 +86,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const textareaId = "{{$textareaId}}";
-
-        if (document.getElementById(textareaId)) {
-            CKEDITOR.replace(textareaId, {
-                toolbar: [
-                    { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline'] },
-                ],
-                height: 200
-            });
-        }
-    });
-</script>

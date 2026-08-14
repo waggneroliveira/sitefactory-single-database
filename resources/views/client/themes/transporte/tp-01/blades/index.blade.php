@@ -443,25 +443,6 @@
         });
     </script>
 
-    @if ($benefitTopics->count())
-        <section id="stats-section" class="stats-section py-5 position-relative container-fluid">
-            <img src="{{asset('build/client/themes/petshop/tp-01/images/firula-count.svg')}}" alt="Firula" class="position-absolute top-0 left-0 firula-count">
-
-            <div class="container">
-                <div class="row text-center align-items-center g-4">
-                    @foreach ($benefitTopics as $parametro)                
-                        <div class="col-6 col-md-3">
-                            <div class="stat-item">
-                                <h3 class="stat-number font-changa font-bold font-44" data-target="{{$parametro->number}}">0</h3>
-                                <p class="font-changa font-bold font-16 primary-color">{{$parametro->title}}</p>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </section>
-    @endif
-
     @if (isset($statute))
         <section class="step-to-step">
             <div class="container-fluid px-0">
@@ -648,62 +629,6 @@
         </section>
     @endif
 
-    @if (isset($blogHighlights) && $blogHighlights->count())
-        <section class="blog position-relative">
-            <img src="{{asset('build/client/themes/petshop/tp-01/images/firula-blog.svg')}}" alt="Firula blog" class="firula-blog position-absolute top-0 left-0">
-            <div class="container z-3 position-relative">
-                <span class="blog-subtitle color-yellow font-changa font-16 font-bold d-block mb-2 m-auto me-0">
-                    Conheça aqui!
-                </span>
-
-                <h3 class="about-title font-changa font-50 font-bold primary-color mb-3 text-center">
-                    Novidades <span class="color-grey">e artigos</span>
-                </h3>
-
-                <div class="row g-4 mt-5">
-
-                    <div class="swiper blog-swiper">
-                        <div class="swiper-wrapper">
-                            @foreach ($blogHighlights as $blogHighlight)                        
-                                <div class="swiper-slide">
-                                    <article class="post-card">
-                                        <a href="{{route('blog-inner', ['slug' => $blogHighlight->slug])}}">
-                                            <img src="{{asset('storage/' . $blogHighlight->path_image_thumbnail)}}" alt="">
-                                            <div class="post-overlay">
-                                                <h5 class="font-changa font-18 font-bold text-white mb-3">
-                                                    {{$blogHighlight->title}}
-                                                </h5>
-                                                <p class="font-16 font-regular text-white mb-3">
-                                                    {{substr(strip_tags($blogHighlight->text), 0, 100)}}
-                                                </p>
-                                                <span class="date font-16 font-regular text-white">
-                                                    {{ $blogHighlight->date->translatedFormat('d M Y') }}
-                                                </span>
-                                            </div>
-                                        </a>
-                                    </article>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                    <!-- Dots -->
-                    <div class="swiper-pagination-blog mt-4 position-relative d-flex justify-content-center align-items-center"></div>
-
-                </div>
-
-                <!-- Botão -->
-                <div class="step-actions mt-4 d-flex justify-content-center justify-content-lg-end">
-                    <a href="{{route('blogAll')}}" class="rounded-pill px-4 btn font-changa  text-white font-18 font-medium text-decoration-none" rel="noopener noreferrer">
-                        Ver todos os artigos
-                        <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="#0E523E"></path>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </section>
-    @endif
-
     @if (isset($sessaoFaq) && $sessaoFaq <> null || isset($faqs) && $faqs->count())
         <section id="faq" class="faq-section pt-5 bg-grey-light">
             <div class="container">
@@ -713,32 +638,24 @@
                         <div class="col-lg-5">
                             <!-- Header -->
                             <div class="mb-4">
-                                <span class="about-subtitle faq-eyebrow color-yellow font-changa font-16 font-bold d-block mb-2 text-end m-0 z-3 position-relative">
-                                    Conheça Aqui!
-                                </span>
-
-                                <h3 class="faq-title font-changa font-50 font-bold primary-color mb-3">
-                                    {{$sessaoFaq->title}} <span class="color-grey">{{$sessaoFaq->subtitle}}</span>
+                                <h3 class="faq-title font-changa font-50 font-bold color-grey mb-3">
+                                    {{$sessaoFaq->title}} <span class="primary-color">{{$sessaoFaq->subtitle}}</span>
                                 </h3>
-                            </div>
-
-                            <div class="faq-text color-grey font-changa font-16 font-regular text-center text-lg-start">
-                                {!!$sessaoFaq->description!!}
                             </div>
 
                             @if ($sessaoFaq->btn_title <> null && $sessaoFaq->btn_number <> null)                
                                 <div class="d-flex justify-content-center justify-content-lg-start align-items-center">
-                                    <a href="{{$sessaoFaq->btn_number}}" class="bg-button-two color-button-two btn-product rounded-pill py-2 px-4 text-white hover-zoom">
+                                    <a href="{{$sessaoFaq->btn_number}}" class="bg-button-two color-button-two btn-product py-2 px-4 hover-zoom">
                                         {{$sessaoFaq->btn_title}}
-                                        <svg class="ms-2" width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M12.4451 4.325e-05C9.23037 4.325e-05 6.01638 1.22269 3.56813 3.67104V3.6769C-0.397625 7.64665 -1.07437 13.7219 1.62183 18.5939L0.752675 23.3312H0.753652C0.705799 23.586 0.786854 23.8468 0.970449 24.0294C1.15307 24.213 1.4138 24.2931 1.66772 24.2462L6.40497 23.3771C11.277 26.0743 17.3572 25.3976 21.327 21.4307C26.2245 16.5343 26.2245 8.5675 21.327 3.67C18.8787 1.22272 15.6599 4.325e-05 12.4451 4.325e-05ZM12.4451 1.55669C15.2556 1.55669 18.0671 2.63482 20.2166 4.78319C24.5144 9.08019 24.5144 16.0214 20.2166 20.3194C16.6259 23.9064 11.0554 24.5744 6.72337 21.9298H6.7224C6.55834 21.8292 6.36205 21.7921 6.1726 21.8263L2.5016 22.4972L3.17445 18.8262C3.2096 18.6367 3.17445 18.4404 3.07484 18.2754C0.430339 13.9434 1.09144 8.37415 4.67934 4.78315C6.82779 2.6347 9.63534 1.55665 12.4458 1.55665L12.4451 1.55669ZM12.4451 5.11919C9.69512 5.11919 7.45288 7.37504 7.45288 10.1339H7.45385C7.45483 10.5646 7.80443 10.9132 8.2351 10.9152C8.44311 10.9162 8.64233 10.8341 8.79078 10.6877C8.93824 10.5412 9.02125 10.342 9.02222 10.134C9.02222 8.21793 10.5486 6.6877 12.445 6.6877C14.3413 6.6877 15.866 8.21798 15.866 10.134C15.866 11.7336 14.7898 13.0665 13.3405 13.463C12.4694 13.7012 11.6569 14.4376 11.6569 15.4903V17.0304H11.6578C11.6569 17.2393 11.7399 17.4395 11.8873 17.588C12.0348 17.7354 12.236 17.8184 12.445 17.8175C12.653 17.8165 12.8522 17.7335 12.9987 17.586C13.1452 17.4376 13.2272 17.2384 13.2262 17.0304V15.4903C13.2262 15.2979 13.4342 15.0626 13.7536 14.9757H13.7594C15.8825 14.3946 17.4304 12.4377 17.4304 10.1339C17.4304 7.37515 15.195 5.11919 12.4451 5.11919ZM12.4217 18.5019C11.9539 18.5137 11.5672 18.9062 11.5672 19.374C11.5672 19.8486 11.9676 20.2471 12.4451 20.2471C12.9226 20.2471 13.3172 19.8486 13.3172 19.374C13.3172 18.8994 12.9227 18.5019 12.4451 18.5019H12.4217Z" fill="var(--color-button-two)"/>
+                                        <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"/>
                                         </svg>
                                     </a>
                                 </div>
                             @endif
 
-                            <div class="faq-image mt-0">
-                                <img src="{{asset('build/client/themes/petshop/tp-01/images/faq.png')}}" alt="Entrega" class="img-fluid">
+                            <div class="faq-image mt-4">
+                                <img src="{{asset('storage/' . $sessaoFaq->path_file)}}" alt="Entrega" class="img-fluid">
                             </div>
                         </div>
                     @endif

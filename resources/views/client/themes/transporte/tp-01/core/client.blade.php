@@ -422,6 +422,9 @@
         .about li::after{
             color: var(--primary-color);
         }
+        .bg-grey-light{
+            background: #E9E9E9;
+        }
     </style>
 
     <header class="shadow-sm bg-header">
