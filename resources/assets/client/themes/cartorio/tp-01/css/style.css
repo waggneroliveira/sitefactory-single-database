@@ -111,12 +111,11 @@ body {
 .contact-info {
     background: #faf8f4;
     border-radius: 40px;
-    padding: 2rem;
 }
 .whatsapp-floatt {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    bottom: 75px;
+    right: 10px;
     background-color: #25D366;
     color: white;
     border-radius: 60px;

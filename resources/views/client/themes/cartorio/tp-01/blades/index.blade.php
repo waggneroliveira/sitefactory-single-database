@@ -30,13 +30,13 @@
 
                             <div class="d-flex flex-wrap gap-3">
                                 <a href="#servicos"
-                                class="bg-button-one color-button-one rounded-pill px-lg-5 px-3 py-lg-3 py-1 font-16 fw-semibold hover-zoom text-uppercase">
+                                class="h-100 bg-button-one color-button-one rounded-pill px-lg-5 px-3 py-lg-3 py-1 font-16 fw-semibold hover-zoom text-uppercase">
                                     Nossos serviços
                                     <i class="bi bi-arrow-right-circle ms-1"></i>
                                 </a>
 
                                 <a href="#contato"
-                                class="btn btn-outline-light rounded-pill px-lg-5 px-3 py-lg-3 py-2 hover-zoom">
+                                class="btn btn-outline-light rounded-pill px-lg-5 px-3 py-lg-3 py-1 hover-zoom">
                                     Solicite contato
                                 </a>
                             </div>
@@ -249,7 +249,7 @@
         <div class="container py-4">
             <div class="row g-5">                
                 <div class="col-lg-5" data-aos="fade-right">
-                    <div class="contact-info h-100 d-flex flex-column justify-content-center">
+                    <div class="contact-info h-100 d-flex flex-column justify-content-center p-lg-4 p-1">
                         @if (isset($contact))
                             <div class="icon d-flex justify-content-start align-item-center gap-3">
                                 <i class="bi bi-geo-alt-fill fs-1 text-warning mb-3"></i>
