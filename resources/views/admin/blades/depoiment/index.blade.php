@@ -37,6 +37,61 @@
                                         @endif
                                     </div>
                                     <div class="col-6 d-flex justify-content-end">
+                                        @if (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can(['serviceItem.visualizar', 'serviceItem.criar']))
+                                            @if (empty($serviceSection['testimonial']))
+                                            
+                                                <button type="button" class="me-2 btn btn-secondary text-black waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#serviceItem-section-create"><i class="mdi mdi-plus-circle me-1"></i> Informações da sessão</button>
+                                                                                                <!-- Modal -->
+                                                <div class="modal fade" id="serviceItem-section-create" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="serviceItem modal-dialog modal-dialog-centered" style="max-width: 1360px;">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header bg-light">
+                                                                <h4 class="modal-title" id="myCenterModalLabel">{{__('dashboard.btn_create')}}</h4>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                                                            </div>
+                                                            <div class="modal-body p-4">
+                                                                <form action="{{route('admin.dashboard.serviceSection.store')}}" method="POST" enctype="multipart/form-data">
+                                                                    @csrf
+                                                                    
+                                                                    @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.depoimentSection.form", ['serviceSection', 'serviceItem', 'themeData'])
+                                                                    
+                                                                    <div class="d-flex justify-content-end gap-2">
+                                                                        <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">{{__('dashboard.btn_cancel')}}</button>
+                                                                        <button type="submit" class="btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_create')}}</button>
+                                                                    </div>                                                 
+                                                                </form>
+                                                            </div>
+                                                        </div><!-- /.modal-content -->
+                                                    </div><!-- /.modal-dialog -->
+                                                </div><!-- /.modal -->
+                                                @else
+                                                <button type="button" class="me-2 btn btn-secondary text-black waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#serviceItem-section-edit"><i class="mdi mdi-plus-circle me-1"></i> Informações da sessão</button>
+                                                <!-- Modal Edit -->
+                                                <div class="modal fade" id="serviceItem-section-edit" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="serviceItem modal-dialog modal-dialog-centered" style="max-width: 1360px;">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header bg-light">
+                                                                <h4 class="modal-title" id="myCenterModalLabel">{{__('dashboard.btn_create')}}</h4>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                                                            </div>
+                                                            <div class="modal-body p-4">
+                                                                <form action="{{route('admin.dashboard.serviceSection.update', ['serviceSection' => $serviceSection['testimonial']['id']])}}" method="POST" enctype="multipart/form-data">
+                                                                    @csrf
+                                                                    @method('PUT')
+                                                                
+                                                                    @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.depoimentSection.form", ['serviceSection', 'serviceItem', 'themeData'])
+                                                                    
+                                                                    <div class="d-flex justify-content-end gap-2">
+                                                                        <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">{{__('dashboard.btn_cancel')}}</button>
+                                                                        <button type="submit" class="btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_create')}}</button>
+                                                                    </div>                                                 
+                                                                </form>
+                                                            </div>
+                                                        </div><!-- /.modal-content -->
+                                                    </div><!-- /.modal-dialog -->
+                                                </div><!-- /.modal -->
+                                            @endif                                             
+                                        @endif
                                         @if (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('depoimento.visualizar') && Auth::user()->can('depoimento.criar'))
                                             <button type="button" class="btn btn-primary text-black waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#depoiment-create"><i class="mdi mdi-plus-circle me-1"></i> {{__('dashboard.btn_create')}}</button>
                                             <!-- Modal -->

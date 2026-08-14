@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Depoiment;
+use App\Models\ServiceSection;
 use App\Repositories\SettingThemeRepository;
 use App\Services\ThemeManager;
 use Illuminate\Http\Request;
@@ -31,8 +32,10 @@ class DepoimentController extends Controller
         $depoiments = Depoiment::sorting()->get();
         $theme = $themeManager;
         $themeData = $themeManager->theme();
-
-        return view('admin.blades.depoiment.index', compact('depoiments', 'theme', 'themeData'));
+        $serviceSection = ServiceSection::whereIn('section', ['testimonial'])
+        ->get()
+        ->keyBy('section');
+        return view('admin.blades.depoiment.index', compact('serviceSection', 'depoiments', 'theme', 'themeData'));
     }
 
     public function store(Request $request)

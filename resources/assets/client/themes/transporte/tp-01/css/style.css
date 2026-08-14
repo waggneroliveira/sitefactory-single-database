@@ -648,8 +648,9 @@
     text-align: left;
     min-height: 320px;
 }
-.author{
-    border-top: 1px solid #E9E9E9;
+.firula-testimonial{
+    bottom: -36px;
+    right: 60px;
 }
 .testimonial-swiper .swiper-pagination-bullet{
     background: var(--primary-color);

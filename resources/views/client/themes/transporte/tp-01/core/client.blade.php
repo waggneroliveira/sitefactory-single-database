@@ -425,6 +425,9 @@
         .bg-grey-light{
             background: #E9E9E9;
         }
+        .testimonial-swiper .swiper-pagination-bullet{
+            background: var(--primary-color);
+        }
     </style>
 
     <header class="shadow-sm bg-header">

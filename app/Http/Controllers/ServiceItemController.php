@@ -36,7 +36,7 @@ class ServiceItemController extends Controller
         $serviceSection = ServiceSection::whereIn('section', ['service', 'gallery'])
         ->get()
         ->keyBy('section');
-        // dd($serviceSection['service']);
+        
         return view('admin.blades.serviceItems.index',compact('serviceItems','serviceSection', 'serviceItemLimit', 'theme', 'themeData'));
     }
 
