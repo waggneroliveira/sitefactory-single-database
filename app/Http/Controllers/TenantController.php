@@ -79,7 +79,7 @@ class TenantController extends Controller
                             $constraint->aspectRatio();
                             $constraint->upsize();
                         })
-                        ->toWebp(quality: 95)
+                        ->toWebp(quality: 85)
                         ->toString();
 
                     Storage::put(
@@ -120,7 +120,7 @@ class TenantController extends Controller
                             $constraint->aspectRatio();
                             $constraint->upsize();
                         })
-                        ->toWebp(quality: 95)
+                        ->toWebp(quality: 85)
                         ->toString();
 
                     Storage::put(
@@ -194,7 +194,7 @@ class TenantController extends Controller
                             $constraint->aspectRatio();
                             $constraint->upsize();
                         })
-                        ->toWebp(quality: 95)
+                        ->toWebp(quality: 85)
                         ->toString();
 
                     Storage::put(
@@ -257,7 +257,7 @@ class TenantController extends Controller
                             $constraint->aspectRatio();
                             $constraint->upsize();
                         })
-                        ->toWebp(quality: 95)
+                        ->toWebp(quality: 85)
                         ->toString();
 
                     Storage::put(

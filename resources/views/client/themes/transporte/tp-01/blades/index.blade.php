@@ -10,44 +10,44 @@
                     <div class="swiper-slide">
                         <div class="hero-slide">
 
-                        <!-- Imagem full -->
-                        <div class="hero-bg">
-                            <picture>
-                                <source srcset="{{ asset('storage/' . $slide->path_image_mobile) }}" media="(max-width: 530px)">
-                                <img src="{{ asset('storage/' . $slide->path_image) }}" alt="Distribuição PET" title="Distribuição PET">
-                            </picture>
-                        </div>
+                            <!-- Imagem full -->
+                            <div class="hero-bg">
+                                <picture>
+                                    <source srcset="{{ asset('storage/' . $slide->path_image_mobile) }}" media="(max-width: 530px)">
+                                    <img src="{{ asset('storage/' . $slide->path_image) }}" alt="Distribuição PET" title="Distribuição PET">
+                                </picture>
+                            </div>
 
-                        <!-- Conteúdo -->
-                        <div class="hero-content mt-5 mt-lg-0">
-                            <div class="container">
-                            <div class="row">
-                                <div class="col-lg-6">
+                            <!-- Conteúdo -->
+                            <div class="hero-content mt-5 mt-lg-0">
+                                <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-6">
 
-                                    <span class="hero-subtitle font-changa font-15 font-regular">
-                                        {!!$slide->description!!}
-                                    </span>
+                                        <span class="hero-subtitle font-changa font-15 font-regular">
+                                            {!!$slide->description!!}
+                                        </span>
 
-                                    <h1 class="hero-title font-changa font-40 font-bold">
-                                        {{$slide->title}}
-                                    </h1>
+                                        <h1 class="hero-title font-changa font-40 font-bold">
+                                            {{$slide->title}}
+                                        </h1>
 
-                                    <div class="hero-actions d-flex">
-                                        @if ($slide->link <> null)                                    
-                                            <a href="{{$slide->link}}" target="_blank" rel="noopener noreferrer" class="btn-one py-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
-                                                {{$slide->btn_title}}
-                                                <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"/>
-                                                </svg>
-                                            </a>
-                                        @endif
+                                        <div class="hero-actions d-flex">
+                                            @if ($slide->link <> null)                                    
+                                                <a href="{{$slide->link}}" target="_blank" rel="noopener noreferrer" class="btn-one py-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
+                                                    {{$slide->btn_title}}
+                                                    <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"/>
+                                                    </svg>
+                                                </a>
+                                            @endif
+                                        </div>
+
                                     </div>
-
+                                </div>
                                 </div>
                             </div>
-                            </div>
-                        </div>
-
+                            <div class="overlay"></div>
                         </div>
                     </div>
                 @endforeach
@@ -61,17 +61,17 @@
     @endif
     
     @if (isset($about) && $about <> null)
-        <section class="about bg-white">
+        <section class="about bg-light">
             <div class="container-fluid">
                 <div class="row align-items-center justify-content-center">
                 <!-- TEXTO (dentro do container) -->
                 <div class="col-12 col-lg-5 mt-4 mt-lg-0 z-3">
                     <div class="container position-relative">
-                        <span class="secondary-color font-changa font-16 font-bold d-block mb-2">
+                        <span class="rounded-2 col-5 col-lg-4 px-2 m-auto m-lg-0 py-1 py-lg-2 text-dark text-center font-changa font-16 font-bold d-block badge bg-white shadow-sm">
                             Quem Somos?
                         </span>
 
-                        <h3 class="about-title font-changa font-40 font-bold mb-3 text-black">
+                        <h3 class="about-title font-changa font-40 font-bold my-3 text-black text-start">
                             {{$about->title}} <span class="primary-color">{{$about->subtitle}}</span>
                         </h3>
 
@@ -111,219 +111,96 @@
 
     <section class="py-5" style="background-color: #174789;">
         <div class="container">
+            @if (isset($sections['service']) && $sections <> null) 
+                <!-- Cabeçalho -->
+                <div class="row align-items-end mb-4">
 
-            <!-- Cabeçalho -->
-            <div class="row align-items-end mb-4">
+                    <div class="col-lg-4">
+                        <span class="rounded-2 col-5 col-lg-4 px-2 m-auto m-lg-0 py-1 py-lg-2 text-dark text-center font-changa font-16 font-bold d-block badge bg-white shadow-sm">
+                            {{$sections['service']->tag}}
+                        </span>
 
-                <div class="col-lg-4">
-                    <span class="badge bg-white text-dark px-4 py-2 mb-3">
-                        Serviços
-                    </span>
-
-                    <h2 class="text-white fw-bold mb-0">
-                        Conheça os nossos<br>
-                        principais serviços
-                    </h2>
-                </div>
-
-                <div class="col-lg-5 mt-3 mt-lg-0">
-                    <p class="text-white small mb-0">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        Lorem Ipsum has been the industry's standard dummy text ever since 1965.
-                    </p>
-                </div>
-
-                <div class="col-lg-3 mt-3 mt-lg-0">
-                    <div class="d-flex justify-content-lg-end gap-2">
-                        <button class="btn btn-outline-light rounded-circle swiper-button-prev-custom"
-                                type="button">
-                            <i class="bi bi-chevron-left"></i>
-                        </button>
-
-                        <button class="btn btn-outline-light rounded-circle swiper-button-next-custom"
-                                type="button">
-                            <i class="bi bi-chevron-right"></i>
-                        </button>
+                        <h2 class="text-white fw-bold mt-3 font-changa">
+                            {{$sections['service']->title}}
+                        </h2>
                     </div>
-                </div>
 
-            </div>
+                    <div class="col-lg-5 mt-3 mt-lg-0">
+                        <p class="text-white small mb-0 font-changa">
+                            {{$sections['service']->description}}
+                        </p>
+                    </div>
+
+                    <div class="col-lg-3 mt-3 mt-lg-0">
+                        <div class="d-flex justify-content-lg-end gap-2">
+                            <button class="btn btn-outline-light rounded-circle swiper-button-prev-custom"
+                                    type="button">
+                                <i class="bi bi-chevron-left"></i>
+                            </button>
+
+                            <button class="btn btn-outline-light rounded-circle swiper-button-next-custom"
+                                    type="button">
+                                <i class="bi bi-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            @endif
 
             <!-- Swiper -->
             <div class="swiper servicesSwiper">
                 <div class="swiper-wrapper">
 
                     <!-- Serviço 1 -->
-                    <div class="swiper-slide">
-                        <div class="card h-100 border-0 rounded-4 overflow-hidden">
+                    @foreach ($services as $service)
+                        <div class="swiper-slide">
+                            <div class="card h-100 border-0 rounded-4 overflow-hidden">
 
-                            <div class="p-2">
-                                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1000&auto=format&fit=crop"
-                                    class="card-img-top rounded-4"
-                                    alt="Armazenamento seguro">
-                            </div>
+                                @if ($service->path_image <> null)                                    
+                                    <div class="p-2">
+                                        <img src="{{asset('storage/' . $service->path_image)}}"
+                                            class="card-img-top rounded-4"
+                                            alt="{{$service->title}}" height="200">
+                                    </div>
+                                @endif
 
-                            <div class="card-body d-flex flex-column pt-0">
+                                <div class="card-body d-flex flex-column pt-0">
+                                    @if ($service->path_icon <> null)                                        
+                                        <div class="mb-2">
+                                            <span class="d-inline-flex align-items-center justify-content-center bg-primary-color rounded-3 p-2">
+                                                <img src="{{asset('storage/' . $service->path_icon)}}"
+                                                class="card-img-top rounded-4"
+                                                alt="{{$service->title}}" height="30">
+                                            </span>
+                                        </div>
+                                    @endif
 
-                                <div class="mb-2">
-                                    <span class="d-inline-flex align-items-center justify-content-center bg-warning rounded-3 p-2">
-                                        <i class="bi bi-shield-check fs-5"></i>
-                                    </span>
+                                    <h5 class="fw-bold mb-2">
+                                        {{$service->title}}
+                                    </h5>
+
+                                    <p class="text-muted small flex-grow-1">
+                                        {{$service->description}}
+                                    </p>
+
+                                    <button type="button"
+                                            class="btn btn-outline-dark rounded-pill w-100 d-flex align-items-center justify-content-between service-modal-btn"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modalServico"
+                                            data-servico-titulo="{{ $service->title }}"
+                                            data-servico-desc="{{ $service->text ?? '' }}"
+                                            data-servico-link="{{ $service->link ?? '' }}"
+                                            data-servico-scroll="{{ $service->scroll_section ?? '' }}"
+                                            data-servico-icon="{{ $service->path_icon ? asset('storage/' . $service->path_icon) : '' }}">
+                                        <span>Explore Mais</span>
+                                        <i class="bi bi-chevron-right"></i>
+                                    </button>
+
                                 </div>
-
-                                <h5 class="fw-bold mb-2">
-                                    Armazenamento seguro de mercadorias
-                                </h5>
-
-                                <p class="text-muted small flex-grow-1">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting
-                                    industry. Lorem Ipsum has been the industry's standard dummy
-                                    text ever since 1966.
-                                </p>
-
-                                <button type="button"
-                                        class="btn btn-outline-dark rounded-pill w-100 d-flex align-items-center justify-content-between service-modal-btn"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#serviceModal"
-                                        data-title="Armazenamento seguro de mercadorias"
-                                        data-icon="bi-shield-check"
-                                        data-description="Oferecemos soluções completas para armazenamento seguro de mercadorias, garantindo organização, proteção e eficiência durante todo o período de armazenagem.">
-                                    <span>Explore Mais</span>
-                                    <i class="bi bi-chevron-right"></i>
-                                </button>
-
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Serviço 2 -->
-                    <div class="swiper-slide">
-                        <div class="card h-100 border-0 rounded-4 overflow-hidden">
-
-                            <div class="p-2">
-                                <img src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?q=80&w=1000&auto=format&fit=crop"
-                                    class="card-img-top rounded-4"
-                                    alt="Envio internacional">
-                            </div>
-
-                            <div class="card-body d-flex flex-column pt-0">
-
-                                <div class="mb-2">
-                                    <span class="d-inline-flex align-items-center justify-content-center bg-warning rounded-3 p-2">
-                                        <i class="bi bi-globe fs-5"></i>
-                                    </span>
-                                </div>
-
-                                <h5 class="fw-bold mb-2">
-                                    Envio internacional
-                                </h5>
-
-                                <p class="text-muted small flex-grow-1">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting
-                                    industry. Lorem Ipsum has been the industry's standard dummy
-                                    text ever since 1966.
-                                </p>
-
-                                <button type="button"
-                                        class="btn btn-outline-dark rounded-pill w-100 d-flex align-items-center justify-content-between service-modal-btn"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#serviceModal"
-                                        data-title="Envio internacional"
-                                        data-icon="bi-globe"
-                                        data-description="Realizamos envios internacionais com segurança e acompanhamento, oferecendo soluções logísticas para diferentes destinos e necessidades.">
-                                    <span>Explore Mais</span>
-                                    <i class="bi bi-chevron-right"></i>
-                                </button>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Serviço 3 -->
-                    <div class="swiper-slide">
-                        <div class="card h-100 border-0 rounded-4 overflow-hidden">
-
-                            <div class="p-2">
-                                <img src="https://images.unsplash.com/photo-1580674684081-7617fbf3d745?q=80&w=1000&auto=format&fit=crop"
-                                    class="card-img-top rounded-4"
-                                    alt="Manuseio profissional">
-                            </div>
-
-                            <div class="card-body d-flex flex-column pt-0">
-
-                                <div class="mb-2">
-                                    <span class="d-inline-flex align-items-center justify-content-center bg-warning rounded-3 p-2">
-                                        <i class="bi bi-box-seam fs-5"></i>
-                                    </span>
-                                </div>
-
-                                <h5 class="fw-bold mb-2">
-                                    Manuseio profissional
-                                </h5>
-
-                                <p class="text-muted small flex-grow-1">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting
-                                    industry. Lorem Ipsum has been the industry's standard dummy
-                                    text ever since 1966.
-                                </p>
-
-                                <button type="button"
-                                        class="btn btn-outline-dark rounded-pill w-100 d-flex align-items-center justify-content-between service-modal-btn"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#serviceModal"
-                                        data-title="Manuseio profissional"
-                                        data-icon="bi-box-seam"
-                                        data-description="Nossa equipe realiza o manuseio profissional das mercadorias, seguindo processos cuidadosamente planejados para garantir segurança e agilidade.">
-                                    <span>Explore Mais</span>
-                                    <i class="bi bi-chevron-right"></i>
-                                </button>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Serviço 4 -->
-                    <div class="swiper-slide">
-                        <div class="card h-100 border-0 rounded-4 overflow-hidden">
-
-                            <div class="p-2">
-                                <img src="https://images.unsplash.com/photo-1616432043562-3671ea2e5242?q=80&w=1000&auto=format&fit=crop"
-                                    class="card-img-top rounded-4"
-                                    alt="Entrega rápida de carga">
-                            </div>
-
-                            <div class="card-body d-flex flex-column pt-0">
-
-                                <div class="mb-2">
-                                    <span class="d-inline-flex align-items-center justify-content-center bg-warning rounded-3 p-2">
-                                        <i class="bi bi-truck fs-5"></i>
-                                    </span>
-                                </div>
-
-                                <h5 class="fw-bold mb-2">
-                                    Entrega rápida de carga
-                                </h5>
-
-                                <p class="text-muted small flex-grow-1">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting
-                                    industry. Lorem Ipsum has been the industry's standard dummy
-                                    text ever since 1966.
-                                </p>
-
-                                <button type="button"
-                                        class="btn btn-outline-dark rounded-pill w-100 d-flex align-items-center justify-content-between service-modal-btn"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#serviceModal"
-                                        data-title="Entrega rápida de carga"
-                                        data-icon="bi-truck"
-                                        data-description="Conte com nossa estrutura para realizar entregas rápidas de cargas, com eficiência, segurança e acompanhamento durante o processo logístico.">
-                                    <span>Explore Mais</span>
-                                    <i class="bi bi-chevron-right"></i>
-                                </button>
-
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
 
                 </div>
             </div>
@@ -331,29 +208,62 @@
         </div>
     </section>
 
-    <div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 rounded-4 overflow-hidden">
+    <!-- Modal Serviço -->
+    <div class="modal fade" id="modalServico" tabindex="-1" aria-labelledby="modalServicoLabel">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content rounded-4 border-0 shadow">
 
-                <div class="modal-header">
-                    <div class="d-flex align-items-center gap-3">
-                        <span class="d-inline-flex align-items-center justify-content-center bg-warning rounded-3 p-2">
-                            <i id="serviceModalIcon" class="bi fs-5"></i>
-                        </span>
+                <div class="modal-header bg-warning bg-opacity-10 border-0">
 
-                        <h5 class="modal-title fw-bold mb-0" id="serviceModalLabel">
-                            Serviço
+                    <div class="d-flex align-items-center">
+
+                        <img
+                            id="modalIcon"
+                            src=""
+                            alt=""
+                            class="me-2 d-none"
+                            height="30"
+                        >
+
+                        <h5 class="modal-title fw-bold" id="modalServicoLabel">
+                            <span id="modalTitulo">Serviço</span>
                         </h5>
+
                     </div>
 
-                    <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Fechar"></button>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Fechar">
+                    </button>
+
                 </div>
 
                 <div class="modal-body">
-                    <p id="serviceModalDescription" class="text-muted mb-0"></p>
+
+                    <div id="modalDescricao" class="fs-6 text-secondary"></div>
+
+                </div>
+
+                <div class="modal-footer bg-light">
+
+                    <a
+                        href="#"
+                        id="modalSolicitar"
+                        class="btn btn-warning bg-button-two color-button-two rounded-pill px-4 d-none"
+                    >
+                        Solicitar serviço
+                    </a>
+
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary rounded-pill"
+                        data-bs-dismiss="modal"
+                    >
+                        Fechar
+                    </button>
+
                 </div>
 
             </div>
@@ -370,7 +280,6 @@
         }
 
         .servicesSwiper .card-img-top {
-            height: 105px;
             object-fit: cover;
         }
 
@@ -389,59 +298,7 @@
             height: 42px;
         }
 
-        @media (max-width: 767.98px) {
-            .servicesSwiper .card-img-top {
-                height: 180px;
-            }
-        }
     </style>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-
-            const servicesSwiper = new Swiper('.servicesSwiper', {
-                slidesPerView: 1,
-                spaceBetween: 12,
-
-                navigation: {
-                    nextEl: '.swiper-button-next-custom',
-                    prevEl: '.swiper-button-prev-custom',
-                },
-
-                breakpoints: {
-                    576: {
-                        slidesPerView: 2,
-                        spaceBetween: 12
-                    },
-
-                    992: {
-                        slidesPerView: 4,
-                        spaceBetween: 12
-                    }
-                }
-            });
-
-            const serviceModal = document.getElementById('serviceModal');
-
-            serviceModal.addEventListener('show.bs.modal', function (event) {
-
-                const button = event.relatedTarget;
-
-                const title = button.dataset.title;
-                const icon = button.dataset.icon;
-                const description = button.dataset.description;
-
-                document.getElementById('serviceModalLabel').textContent = title;
-
-                document.getElementById('serviceModalDescription').textContent = description;
-
-                const modalIcon = document.getElementById('serviceModalIcon');
-
-                modalIcon.className = 'bi fs-5 ' + icon;
-            });
-
-        });
-    </script>
 
     @if (isset($sessaoFaq) && $sessaoFaq <> null || isset($faqs) && $faqs->count())
         <section id="faq" class="faq-section pt-5 bg-grey-light">
@@ -452,7 +309,7 @@
                         <div class="col-lg-5">
                             <!-- Header -->
                             <div class="mb-4">
-                                <h3 class="faq-title font-changa font-50 font-bold color-grey mb-3">
+                                <h3 class="faq-title font-changa font-40 font-bold color-grey mb-3 text-start">
                                     {{$sessaoFaq->title}} <span class="primary-color">{{$sessaoFaq->subtitle}}</span>
                                 </h3>
                             </div>
@@ -510,20 +367,20 @@
     @if (isset($depoiments) && $depoiments->count())
         <section id="depoiment" class="depoiment py-5 position-relative bg-secondary-color">
             <div class="container">
-                <div class="row justify-content-center justify-content-lg-between align-items-center">
+                <div class="row justify-content-center justify-content-lg-between align-items-start">
                     @if (isset($sections['testimonial']) && $sections <> null)    
-                        <div class="col-lg-4 d-table text-center text-lg-start">
-                            <span class="rounded-2 col-lg-4 px-3 py-1 bg-white text-dark text-center font-changa font-16 font-bold d-block mb-2">
+                        <div class="col-lg-4 d-table text-start">
+                            <span class="rounded-2 col-5 col-lg-4 px-3 py-1 bg-white text-dark text-center font-changa font-16 font-bold d-block mb-2">
                                 {{$sections['testimonial']->tag}}
                             </span>
         
-                            <h3 class="about-title font-changa font-50 font-bold text-white mb-3">
+                            <h3 class="font-changa font-40 font-bold text-white text-start mb-3">
                                 {{$sections['testimonial']->title}}
                             </h3>
                             <p class="font-regular text-white mb-0 font-changa font-18">{{$sections['testimonial']->description}}</p>
                         </div>
                     @endif
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 mt-lg-0 mt-5">
                         <div class="swiper testimonial-swiper">
                             <div class="swiper-wrapper">
         
@@ -567,28 +424,21 @@
     @endif
 
     @if (isset($serviceLocation))
-        <section id="coverage-section" class="coverage-section py-5 position-relative">
+        <section id="coverage-section" class="coverage-section py-5 position-relative bg-light">
             <div class="container">
-                <div class="row align-items-center gy-4">
+                <div class="row align-items-start gy-4">
                     <!-- MAPA -->
-                    <div class="col-12 col-lg-6 text-center">
-                        <div class="text-center text-lg-end mb-4 col-12 col-lg-11">
-                            <span class="about-subtitle color-yellow font-changa font-16 font-bold d-block mb-2 text-end m-0 z-3 position-relative w-100">
-                                Distribuição
+                    <div class="col-12 col-lg-6">
+                        <div class="mb-4 col-12 col-lg-11">
+                            <span class="rounded-2 col-5 col-lg-4 px-3 m-auto m-lg-0 py-1 bg-primary-color text-dark text-center font-changa font-16 font-bold d-block">
+                                Cobertura
                             </span>
 
-                            <h3 class="about-title font-changa font-50 font-bold color-green mb-3 position-relative">                            
+                            <h3 class="about-title text-center text-lg-start font-changa font-40 font-bold text-dark my-3 position-relative">                            
                                 {{$serviceLocation->title}}
                             </h3>
                         </div>
-                        <img 
-                            src="{{asset('storage/' .$serviceLocation->path_image)}}" 
-                            alt="Mapa de cobertura"
-                            class="img-fluid coverage-map"
-                            >
-                    </div>
-                    <!-- LISTAS -->
-                    <div class="col-12 col-lg-6 mt-0">
+                        
                         <!-- BAHIA -->
                         <div class="state-block mb-4">
                             <div class="row list-service col-11 col-lg-12 m-auto">
@@ -596,33 +446,147 @@
                             </div>
                         </div>
                     </div>
+                    <!-- LISTAS -->
+                    <div class="col-12 col-lg-6 mt-0 text-center">
+                        <!-- BAHIA -->
+                        <img 
+                            src="{{asset('storage/' .$serviceLocation->path_image)}}" 
+                            alt="Mapa de cobertura"
+                            class="img-fluid coverage-map"
+                            >
+                    </div>
                 </div>
             </div>
-            <img src="{{asset('build/client/themes/petshop/tp-01/images/firula-about.svg')}}" alt="Firula" class="position-absolute bottom-0 start-0">
         </section>
     @endif
     
-      <script>
+    <section id="contato" class="contact-section bg-light">
+        <!-- Título -->
+        <div class="container text-center py-3">
+            <span class="rounded-2 px-4 m-auto m-lg-0 py-1 py-lg-2 text-dark text-center font-changa font-16 font-bold badge bg-white shadow-sm">
+                Contato
+            </span>
+
+            <h2 class="font-changa font-40 font-bold my-3 text-black text-center">
+                Solicite sua cotação <span class="primary-color">agora</span>
+            </h2>
+        </div>
+
+        <!-- Informações de contato -->
+        <div class="container-fluid px-0">
+            <div class="bg-secondary-color border-bottom border-3 border-warning">
+                <div class="container">
+                    <div class="row align-items-center justify-content-center">
+
+                        <!-- Telefone -->
+                        <div class="col-md-4 py-3 px-4">
+                            <div class="d-flex align-items-center justify-content-center gap-3">
+                                <i class="bi bi-telephone fs-3 text-white"></i>
+
+                                <span class="text-white fw-semibold small font-changa">
+                                    (71) 99999-9999
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Endereço -->
+                        <div class="col-md-4 py-3 px-4 border-start border-end border-light border-opacity-50">
+                            <div class="d-flex align-items-center justify-content-center gap-3">
+                                <i class="bi bi-geo-alt fs-3 text-white"></i>
+
+                                <span class="text-white fw-semibold small font-changa">
+                                    Av. Tancredo Neves, 3133 -<br>
+                                    Caminho das Árvores,<br>
+                                    Salvador - BA, 41820-021
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- E-mail -->
+                        <div class="col-md-4 py-3 px-4">
+                            <div class="d-flex align-items-center justify-content-center gap-3">
+                                <i class="bi bi-envelope fs-3 text-white"></i>
+
+                                <span class="text-white fw-semibold small font-changa">
+                                    Contato@seudominio.com.br
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
-        new Swiper('.blog-swiper', {
-            spaceBetween: 24,
-            pagination: {
-            el: '.swiper-pagination-blog',
-            clickable: true,
-            },
-            breakpoints: {
-            0: {
-                slidesPerView: 1.3,
-            },
-            576: {
-                slidesPerView: 2,
-            },
-            992: {
-                slidesPerView: 4,
-                allowTouchMove: false,
-            }
-            }
+
+            const servicesSwiper = new Swiper('.servicesSwiper', {
+                slidesPerView: 1,
+                spaceBetween: 12,
+
+                navigation: {
+                    nextEl: '.swiper-button-next-custom',
+                    prevEl: '.swiper-button-prev-custom',
+                },
+
+                breakpoints: {
+                    576: {
+                        slidesPerView: 2,
+                        spaceBetween: 12
+                    },
+
+                    992: {
+                        slidesPerView: 4,
+                        spaceBetween: 12
+                    }
+                }
+            });
+
+            const serviceModal = document.getElementById('serviceModal');
+
+            serviceModal.addEventListener('show.bs.modal', function (event) {
+
+                const button = event.relatedTarget;
+
+                const title = button.dataset.title;
+                const icon = button.dataset.icon;
+                const description = button.dataset.description;
+
+                document.getElementById('serviceModalLabel').textContent = title;
+
+                document.getElementById('serviceModalDescription').textContent = description;
+
+                const modalIcon = document.getElementById('serviceModalIcon');
+
+                modalIcon.className = 'bi fs-5 ' + icon;
+            });
+
         });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            new Swiper('.blog-swiper', {
+                spaceBetween: 24,
+                pagination: {
+                el: '.swiper-pagination-blog',
+                clickable: true,
+                },
+                breakpoints: {
+                0: {
+                    slidesPerView: 1.3,
+                },
+                576: {
+                    slidesPerView: 2,
+                },
+                992: {
+                    slidesPerView: 4,
+                    allowTouchMove: false,
+                }
+                }
+            });
         });
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -645,4 +609,187 @@
         });
 
     </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const modalServico = document.getElementById('modalServico');
+
+        if (!modalServico) {
+            return;
+        }
+
+        modalServico.addEventListener('show.bs.modal', function (event) {
+
+            const serviceCard = event.relatedTarget;
+
+            if (!serviceCard) {
+                return;
+            }
+
+            const titulo = serviceCard.dataset.servicoTitulo || 'Serviço';
+            const descricao = serviceCard.dataset.servicoDesc || '';
+            const link = serviceCard.dataset.servicoLink || '';
+            const scroll = serviceCard.dataset.servicoScroll || '';
+            const icon = serviceCard.dataset.servicoIcon || '';
+
+            const modalTitulo = modalServico.querySelector('#modalTitulo');
+            const modalDescricao = modalServico.querySelector('#modalDescricao');
+            const modalSolicitar = modalServico.querySelector('#modalSolicitar');
+            const modalIcon = modalServico.querySelector('#modalIcon');
+
+            modalTitulo.textContent = titulo;
+            modalDescricao.innerHTML = descricao;
+
+            /*
+             * ÍCONE / IMAGEM
+             */
+            if (modalIcon) {
+
+                if (icon) {
+                    modalIcon.innerHTML = `
+                        <img
+                            src="${icon}"
+                            alt="${titulo}"
+                            class="me-2"
+                        >
+                    `;
+                } else {
+                    modalIcon.innerHTML = `
+                        <i class="bi bi-star-fill text-warning me-2"></i>
+                    `;
+                }
+            }
+
+            /*
+             * RESET DO BOTÃO
+             */
+            modalSolicitar.classList.add('d-none');
+            modalSolicitar.href = '#';
+            modalSolicitar.removeAttribute('target');
+            modalSolicitar.removeAttribute('rel');
+            modalSolicitar.onclick = null;
+
+            /*
+             * LINK
+             */
+            if (link) {
+
+                modalSolicitar.href = link;
+                modalSolicitar.target = '_blank';
+                modalSolicitar.rel = 'noopener noreferrer';
+
+                modalSolicitar.classList.remove('d-none');
+
+            /*
+             * SCROLL
+             */
+            } else if (scroll) {
+
+                modalSolicitar.href = '#' + scroll;
+
+                modalSolicitar.removeAttribute('target');
+                modalSolicitar.removeAttribute('rel');
+
+                modalSolicitar.classList.remove('d-none');
+
+                modalSolicitar.onclick = function () {
+
+                    const modalInstance = bootstrap.Modal.getInstance(modalServico);
+
+                    if (modalInstance) {
+                        modalInstance.hide();
+                    }
+
+                };
+
+            /*
+             * NENHUMA AÇÃO
+             */
+            } else {
+
+                modalSolicitar.href = '#';
+                modalSolicitar.removeAttribute('target');
+                modalSolicitar.removeAttribute('rel');
+
+                modalSolicitar.classList.add('d-none');
+            }
+
+        });
+
+        modalServico.addEventListener('hidden.bs.modal', function () {
+
+            document.activeElement?.blur();
+
+            const modalSolicitar = modalServico.querySelector('#modalSolicitar');
+            const modalIcon = modalServico.querySelector('#modalIcon');
+
+            modalSolicitar.href = '#';
+            modalSolicitar.removeAttribute('target');
+            modalSolicitar.removeAttribute('rel');
+            modalSolicitar.classList.add('d-none');
+            modalSolicitar.onclick = null;
+
+            if (modalIcon) {
+                modalIcon.innerHTML = '';
+            }
+
+        });
+
+        /*
+         * MÁSCARA TELEFONE
+         */
+        const phoneInput = document.querySelector("#phone");
+
+        if (phoneInput && !phoneInput.dataset.masked) {
+
+            phoneInput.addEventListener("input", function (e) {
+
+                let t = e.target.value.replace(/\D/g, "");
+
+                /*
+                 * Permite apagar completamente o campo
+                 */
+                if (!t) {
+                    e.target.value = "";
+                    return;
+                }
+
+                /*
+                 * Força o DDD 71
+                 */
+                if (!t.startsWith("71")) {
+                    t = "71" + t;
+                }
+
+                /*
+                 * Limita a 11 dígitos
+                 */
+                t = t.slice(0, 11);
+
+                /*
+                 * Máscara: (71) 9 9999-9999
+                 */
+                let formatado = "(" + t.slice(0, 2) + ")";
+
+                if (t.length > 2) {
+                    formatado += " " + t.slice(2, 3);
+                }
+
+                if (t.length > 3) {
+                    formatado += " " + t.slice(3, 7);
+                }
+
+                if (t.length > 7) {
+                    formatado += "-" + t.slice(7);
+                }
+
+                e.target.value = formatado;
+            });
+
+            phoneInput.dataset.masked = "true";
+        }
+
+    });
+</script>
 @endsection

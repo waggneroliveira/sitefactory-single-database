@@ -428,13 +428,22 @@
         .testimonial-swiper .swiper-pagination-bullet{
             background: var(--primary-color);
         }
+        #lgpd-banner button{
+            background: var(--primary-color);
+        }
+        .list-service ul li::before {
+            color: var(--primary-color);
+        }
+        .border-warning{
+            border-color: var(--primary-color) !important;
+        }
     </style>
 
     <header class="shadow-sm bg-header">
-        <nav class="navbar navbar-expand-lg navbar-light container py-3 px-3 px-lg-0">            
+        <nav class="navbar navbar-expand-lg navbar-light container py-2 px-3 px-lg-0">            
             <!-- Logo -->
-            <a class="navbar-brand d-flex align-items-center" href="{{route('index')}}">
-                <img src="{{asset('storage/' .$tenantTheme->path_image_logo_header)}}" alt="{{ config('app.name') }}" height="40">
+            <a class="navbar-brand d-flex align-items-center p-0" href="{{route('index')}}">
+                <img src="{{asset('storage/' .$tenantTheme->path_image_logo_header)}}" alt="{{ config('app.name') }}" height="65">
             </a>
 
             <!-- Toggle mobile -->
@@ -444,24 +453,24 @@
 
             <!-- Menu -->
             <div class="collapse navbar-collapse" id="mainNavbar">
-                <ul class="navbar-nav mx-auto m-auto me-4 mb-2 mb-lg-0 gap-lg-3">
+                <ul class="navbar-nav mx-auto m-auto me-4 mb-2 mb-lg-0 gap-lg-2">
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header active" href="{{route('index')}}">Home</a>
+                        <a class="nav-link font-changa font-16 font-semibold font-header text-color-header active" href="{{route('index')}}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{route('about')}}">Sobre Nós</a>
+                        <a class="nav-link font-changa font-16 font-semibold font-header text-color-header" href="{{route('about')}}">Sobre Nós</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}">Depoimentos</a>
+                        <a class="nav-link font-changa font-16 font-semibold font-header text-color-header" href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}">Depoimentos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{ request()->routeIs('about') ? '#team-section' : route('about') . '#team-section' }}">Representantes</a>
+                        <a class="nav-link font-changa font-16 font-semibold font-header text-color-header" href="{{ request()->routeIs('about') ? '#team-section' : route('about') . '#team-section' }}">Representantes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{route('products')}}">Produtos</a>
+                        <a class="nav-link font-changa font-16 font-semibold font-header text-color-header" href="{{route('products')}}">Produtos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{route('contact')}}">Contato</a>
+                        <a class="nav-link font-changa font-16 font-semibold font-header text-color-header" href="{{route('contact')}}">Contato</a>
                     </li>
                 </ul>
 
@@ -647,7 +656,7 @@
 
                 <!-- Logo + botão -->
                 <div class="col-lg-4 mb-4 mb-lg-0">
-                    <img src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ config('app.name') }}" height="40">
+                    <img src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ config('app.name') }}" height="65">
 
                     <div class="mt-5">
                         <a href="{{ request()->routeIs('about') ? '#team-section' : route('about') . '#team-section' }}" class="bg-button-two color-button-two px-4 py-2 rounded-pill font-changa font-16 font-medium text-decoration-none hover-zoom">
@@ -718,25 +727,88 @@
             <hr class="border-light opacity-25 my-4">
 
             <div class="row align-items-center">
+                @php
+                    $cnpj = !empty($tenantTheme->cnpj) ? preg_replace('/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/', '$1.$2.$3/$4-$5', preg_replace('/\D/', '', $tenantTheme->cnpj)) : '';
+                @endphp
 
-                <div class="col-md-10 small">
-                    <div class="d-flex flex-wrap col-12 font-changa font-16 font-regular text-center text-lg-end justify-content-center justify-content-lg-end">
-                        <p id="footer-text" class="text-color-header"></p>                        
+                <div class="row align-items-center g-4 m-0">
+                    <div class="col-12 col-lg-5 text-center text-lg-start small text-color-footer m-0">
+                        <p id="footer-text" class="mb-0 text-color-footer"></p>
                     </div>
 
-                    <script defer>
-                        const currentYeaar = (new Date).getFullYear();
-                        document.getElementById("footer-text").innerHTML = `© ${currentYeaar} <span> {{$tenantTheme->copyright}}
-                    Todos os direitos reservados.</span> <a href="https://policies.google.com/privacy?hl=pt-BR" target="_blank" class="text-color-header font-semibold">| Política de Privacidade</a>`
-                    </script>
+                    <div class="col-12 col-lg-3 text-center small text-color-footer">
+                        @if ($tenantTheme->privacy_policy <> null)                            
+                            <a href="#" class="text-color-footer text-decoration-none" data-bs-toggle="modal" data-bs-target="#privacyModal">Política de Privacidade</a>
+                            <span class="mx-1">|</span>
+                        @endif
+                        @if ($tenantTheme->terms_of_use <> null)                            
+                            <a href="#" class="text-color-footer text-decoration-none" data-bs-toggle="modal" data-bs-target="#termsModal">Termos de Uso</a>
+                        @endif
+                    </div>
+
+                    <!-- Modal Política de Privacidade -->
+                    <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="privacyModalLabel">Política de Privacidade</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {!! $tenantTheme->privacy_policy !!}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Termos de Uso -->
+                    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="termsModalLabel">Termos de Uso</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {!! $tenantTheme->terms_of_use !!}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-4 m-0">
+                        <div class="d-flex justify-content-center justify-content-lg-end align-items-center gap-3">
+                            <a href="#" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
+                                <span class="font-13">Sistema</span>
+                                <img src="{{asset('storage/' . $tenantTheme->path_image_logo_footer)}}" alt="WHI Web" style="filter: brightness(0) invert(1);opacity: 0.5;height: 24px; width: auto;">
+                            </a>
+
+                            <span class="text-color-footer opacity-50">|</span>
+
+                            <a href="#" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
+                                <span class="font-13">Desenvolvido por</span>
+                                <img src="https://www.whi.dev.br/build/client/images/logo.png" alt="WHI" style="height: 24px; width: auto;">
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="col-12 col-md-2 text-center text-md-end mt-3 mt-md-0">
-                    <a href="http://www.whi.dev.br" target="_blank" rel="noopener noreferrer">
-                        <img src="{{asset('build/client/themes/transporte/tp-01/images/whi.svg')}}" alt="Agência WHI" style="height:35px;">
-                    </a>
-                </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const currentYear = new Date().getFullYear();
+                        const footerText = document.getElementById('footer-text');
 
+                        if (footerText) {
+                            footerText.innerHTML = `© ${currentYear} <span>{{ $tenantTheme->copyright }} - Todos os direitos reservados{{ $cnpj ? ' | ' . $cnpj : '' }}.</span>`;
+                        }
+                    });
+                </script>
             </div>
 
         </div>

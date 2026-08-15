@@ -8,9 +8,12 @@
     color: var(--text-color);
 }
 
- .bt-hover:hover{
-    color:  var(--primary-color) !important;
- }
+.bt-hover:hover{
+color:  var(--primary-color) !important;
+}
+.font-changa {
+    font-family: "Montserrat", sans-serif !important;
+}
 /* =========================
    HEADER
 ========================= */
@@ -23,14 +26,15 @@
   position: relative;
   width: 100%;
 }
-.hero::after{
+.hero .overlay{
     content: '';
-    background: #000;
+    background: #0000004f;
     height: 100%;
     width: 100%;
     position: absolute;
     left: 0;
     top: 0;
+    z-index: 1;
 }
 .hero-slide {
   position: relative;
@@ -858,16 +862,30 @@
     color: var(--secondary-color);
 }
 .list-service ul{
-    column-count: 2;
+    column-count: 3;
     column-gap: 30px; 
     width: 96%;
-    margin: 0 auto;
+    padding: 0;
+    margin: 0;
 }
 .list-service ul li{
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 500;
-    font-size: 1.25rem;
-    color: var(--black-color)
+    font-size: 1.125rem;
+    color: var(--black-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #D9D9D9;
+    list-style: none;
+    position: relative;
+    margin-bottom: 15px;
+    padding: 8px 0 8px 0;
+}
+.list-service ul li::before {
+    content: "\f26a";
+    font-family: "bootstrap-icons";
+    margin-right: 10px;
 }

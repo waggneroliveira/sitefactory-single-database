@@ -155,7 +155,7 @@
 
                 <div class="modal-header bg-warning bg-opacity-10 border-0">
                     <h5 class="modal-title fw-bold" id="modalServicoLabel">
-                        <i class="bi bi-star-fill text-warning me-2"></i>
+                        <span id="modalIcon"></span>
                         <span id="modalTitulo">Serviço</span>
                     </h5>
 
@@ -168,10 +168,13 @@
                 </div>
 
                 <div class="modal-body">
+
                     <div id="modalDescricao" class="fs-6 text-secondary"></div>
+
                 </div>
 
                 <div class="modal-footer bg-light">
+
                     <a
                         href="#"
                         id="modalSolicitar"
@@ -186,6 +189,7 @@
                         data-bs-dismiss="modal">
                         Fechar
                     </button>
+
                 </div>
 
             </div>
@@ -362,13 +366,31 @@
                 const descricao = serviceCard.dataset.servicoDesc || '';
                 const link = serviceCard.dataset.servicoLink || '';
                 const scroll = serviceCard.dataset.servicoScroll || '';
+                const icon = serviceCard.dataset.servicoIcon || '';
 
                 const modalTitulo = modalServico.querySelector('#modalTitulo');
                 const modalDescricao = modalServico.querySelector('#modalDescricao');
                 const modalSolicitar = modalServico.querySelector('#modalSolicitar');
+                const modalIcon = modalServico.querySelector('#modalIcon');
 
                 modalTitulo.textContent = titulo;
                 modalDescricao.innerHTML = descricao;
+
+                if (modalIcon) {
+                    if (icon) {
+                        modalIcon.innerHTML = `
+                            <img
+                                src="${icon}"
+                                alt="${titulo}"
+                                class="me-2"
+                            >
+                        `;
+                    } else {
+                        modalIcon.innerHTML = `
+                            <i class="bi bi-star-fill text-warning me-2"></i>
+                        `;
+                    }
+                }
 
                 // Esconde o botão inicialmente
                 modalSolicitar.classList.add('d-none');
@@ -432,11 +454,13 @@
 
             });
 
-            //Mascara telefone
+            // Mascara telefone
             const phoneInput = document.querySelector("#phone");
 
             if (phoneInput && !phoneInput.dataset.masked) {
+
                 phoneInput.addEventListener("input", function (e) {
+
                     let t = e.target.value.replace(/\D/g, "");
 
                     // Permite apagar completamente o campo

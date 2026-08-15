@@ -155,6 +155,7 @@ return [
             'topics' => 6,
             'testimonials' => 6,
             'faq' => 10,
+            'services' => 6,
         ],
     ],
 
