@@ -3,7 +3,15 @@
 }
 body {
     background-color: #fefefe;
-    overflow-x: hidden;
+}
+html,
+body {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+}
+
+body.modal-open {
+    padding-right: 0 !important;
 }
 /* Hero com overlay e imagem background */
 .hero {

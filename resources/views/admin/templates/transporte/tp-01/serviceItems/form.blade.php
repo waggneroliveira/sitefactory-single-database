@@ -35,12 +35,12 @@
                         Link
                     </option>
 
-                    <option
+                    {{-- <option
                         value="scroll"
                         {{ isset($serviceItem) && $serviceItem->scroll_section === 'contato' ? 'selected' : '' }}
                     >
                         Rolar para Contato
-                    </option>
+                    </option> --}}
                 </select>
             </div>
 

@@ -460,7 +460,7 @@
         </section>
     @endif
     
-    <section id="contato" class="contact-section bg-light">
+    <section class="contact-section bg-light">
         <!-- Título -->
         <div class="container text-center py-3">
             <span class="rounded-2 px-4 m-auto m-lg-0 py-1 py-lg-2 text-dark text-center font-changa font-16 font-bold badge bg-white shadow-sm">
@@ -471,7 +471,7 @@
                 Solicite sua cotação <span class="primary-color">agora</span>
             </h2>
         </div>
-
+        <div id="contato"></div>
         <!-- Informações de contato -->
         <div class="container-fluid px-0">
             <div class="bg-secondary-color border-bottom border-3 border-warning">
@@ -619,6 +619,9 @@
             return;
         }
 
+        /*
+         * ABRIR MODAL
+         */
         modalServico.addEventListener('show.bs.modal', function (event) {
 
             const serviceCard = event.relatedTarget;
@@ -638,8 +641,16 @@
             const modalSolicitar = modalServico.querySelector('#modalSolicitar');
             const modalIcon = modalServico.querySelector('#modalIcon');
 
-            modalTitulo.textContent = titulo;
-            modalDescricao.innerHTML = descricao;
+            /*
+             * TÍTULO E DESCRIÇÃO
+             */
+            if (modalTitulo) {
+                modalTitulo.textContent = titulo;
+            }
+
+            if (modalDescricao) {
+                modalDescricao.innerHTML = descricao;
+            }
 
             /*
              * ÍCONE / IMAGEM
@@ -647,23 +658,27 @@
             if (modalIcon) {
 
                 if (icon) {
-                    modalIcon.innerHTML = `
-                        <img
-                            src="${icon}"
-                            alt="${titulo}"
-                            class="me-2"
-                        >
-                    `;
+
+                    modalIcon.src = icon;
+                    modalIcon.alt = titulo;
+                    modalIcon.classList.remove('d-none');
+
                 } else {
-                    modalIcon.innerHTML = `
-                        <i class="bi bi-star-fill text-warning me-2"></i>
-                    `;
+
+                    modalIcon.src = '';
+                    modalIcon.alt = '';
+                    modalIcon.classList.add('d-none');
+
                 }
             }
 
             /*
              * RESET DO BOTÃO
              */
+            if (!modalSolicitar) {
+                return;
+            }
+
             modalSolicitar.classList.add('d-none');
             modalSolicitar.href = '#';
             modalSolicitar.removeAttribute('target');
@@ -671,7 +686,7 @@
             modalSolicitar.onclick = null;
 
             /*
-             * LINK
+             * LINK EXTERNO
              */
             if (link) {
 
@@ -682,7 +697,7 @@
                 modalSolicitar.classList.remove('d-none');
 
             /*
-             * SCROLL
+             * SCROLL PARA SEÇÃO
              */
             } else if (scroll) {
 
@@ -693,12 +708,69 @@
 
                 modalSolicitar.classList.remove('d-none');
 
-                modalSolicitar.onclick = function () {
+                modalSolicitar.onclick = function (e) {
+
+                    e.preventDefault();
 
                     const modalInstance = bootstrap.Modal.getInstance(modalServico);
 
+                    /*
+                     * Fecha o modal primeiro
+                     */
                     if (modalInstance) {
+
+                        modalServico.addEventListener(
+                            'hidden.bs.modal',
+                            function () {
+
+                                /*
+                                 * Aguarda o Bootstrap finalizar
+                                 * completamente o fechamento do modal.
+                                 */
+                                setTimeout(function () {
+
+                                    const target =
+                                        document.getElementById(scroll);
+
+                                    if (target) {
+
+                                        target.scrollIntoView({
+                                            behavior: 'smooth',
+                                            block: 'start'
+                                        });
+
+                                    }
+
+                                }, 150);
+
+                            },
+                            { once: true }
+                        );
+
                         modalInstance.hide();
+
+                    } else {
+
+                        /*
+                         * Fallback caso a instância do modal
+                         * não esteja disponível.
+                         */
+                        setTimeout(function () {
+
+                            const target =
+                                document.getElementById(scroll);
+
+                            if (target) {
+
+                                target.scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'start'
+                                });
+
+                            }
+
+                        }, 150);
+
                     }
 
                 };
@@ -717,21 +789,44 @@
 
         });
 
+        /*
+         * MODAL FECHADO
+         */
         modalServico.addEventListener('hidden.bs.modal', function () {
 
+            /*
+             * Remove o foco do elemento ativo
+             */
             document.activeElement?.blur();
 
-            const modalSolicitar = modalServico.querySelector('#modalSolicitar');
-            const modalIcon = modalServico.querySelector('#modalIcon');
+            const modalSolicitar =
+                modalServico.querySelector('#modalSolicitar');
 
-            modalSolicitar.href = '#';
-            modalSolicitar.removeAttribute('target');
-            modalSolicitar.removeAttribute('rel');
-            modalSolicitar.classList.add('d-none');
-            modalSolicitar.onclick = null;
+            const modalIcon =
+                modalServico.querySelector('#modalIcon');
 
+            /*
+             * RESET DO BOTÃO
+             */
+            if (modalSolicitar) {
+
+                modalSolicitar.href = '#';
+                modalSolicitar.removeAttribute('target');
+                modalSolicitar.removeAttribute('rel');
+                modalSolicitar.classList.add('d-none');
+                modalSolicitar.onclick = null;
+
+            }
+
+            /*
+             * RESET DO ÍCONE
+             */
             if (modalIcon) {
-                modalIcon.innerHTML = '';
+
+                modalIcon.src = '';
+                modalIcon.alt = '';
+                modalIcon.classList.add('d-none');
+
             }
 
         });
@@ -751,7 +846,9 @@
                  * Permite apagar completamente o campo
                  */
                 if (!t) {
+
                     e.target.value = "";
+
                     return;
                 }
 
@@ -768,9 +865,11 @@
                 t = t.slice(0, 11);
 
                 /*
-                 * Máscara: (71) 9 9999-9999
+                 * Máscara:
+                 * (71) 9 9999-9999
                  */
-                let formatado = "(" + t.slice(0, 2) + ")";
+                let formatado =
+                    "(" + t.slice(0, 2) + ")";
 
                 if (t.length > 2) {
                     formatado += " " + t.slice(2, 3);
@@ -785,6 +884,7 @@
                 }
 
                 e.target.value = formatado;
+
             });
 
             phoneInput.dataset.masked = "true";

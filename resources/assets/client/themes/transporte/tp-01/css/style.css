@@ -788,7 +788,15 @@ color:  var(--primary-color) !important;
   height: 100%;
   object-fit: cover;
 }
+html,
+body {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+}
 
+body.modal-open {
+    padding-right: 0 !important;
+}
 .team-body {
     bottom: 25px;
     left: 50%;
