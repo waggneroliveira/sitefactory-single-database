@@ -19,22 +19,22 @@
                             </div>
 
                             <!-- Conteúdo -->
-                            <div class="hero-content mt-5 mt-lg-0">
+                            <div class="hero-content mt-0">
                                 <div class="container">
                                 <div class="row">
                                     <div class="col-lg-6">
 
-                                        <span class="hero-subtitle font-changa font-15 font-regular">
+                                        <span class="hero-subtitle font-changa font-15 font-regular" data-aos="fade-up" data-aos-delay="200">
                                             {!!$slide->description!!}
                                         </span>
 
-                                        <h1 class="hero-title font-changa font-40 font-bold">
+                                        <h1 class="hero-title font-changa font-40 font-bold" data-aos="fade-up" data-aos-delay="300">
                                             {{$slide->title}}
                                         </h1>
 
-                                        <div class="hero-actions d-flex">
+                                        <div class="hero-actions d-flex" data-aos="fade-up" data-aos-delay="400">
                                             @if ($slide->link <> null)                                    
-                                                <a href="{{$slide->link}}" target="_blank" rel="noopener noreferrer" class="btn-one py-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
+                                                <a href="{{$slide->link}}" target="_blank" rel="noopener noreferrer" class="btn-one py-1 py-lg-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
                                                     {{$slide->btn_title}}
                                                     <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"/>
@@ -59,19 +59,19 @@
         </div>
         </section>
     @endif
-    
+
     @if (isset($about) && $about <> null)
-        <section class="about bg-light">
+        <section id="about" class="about bg-light">
             <div class="container-fluid">
                 <div class="row align-items-center justify-content-center">
                 <!-- TEXTO (dentro do container) -->
-                <div class="col-12 col-lg-5 mt-4 mt-lg-0 z-3">
+                <div class="col-12 col-lg-5 mt-4 mt-lg-0 z-3 p-0" data-aos="fade-right" data-aos-delay="100">
                     <div class="container position-relative">
-                        <span class="rounded-2 col-5 col-lg-4 px-2 m-auto m-lg-0 py-1 py-lg-2 text-dark text-center font-changa font-16 font-bold d-block badge bg-white shadow-sm">
+                        <span class="rounded-2 col-5 col-lg-4 px-3 m-lg-0 py-2 text-dark text-center font-changa font-16 font-bold d-block badge bg-white shadow-sm">
                             Quem Somos?
                         </span>
 
-                        <h3 class="about-title font-changa font-40 font-bold my-3 text-black text-start">
+                        <h3 class="about-title font-changa font-40 font-bold mt-2 mt-lg-3 mb-3 text-black text-start">
                             {{$about->title}} <span class="primary-color">{{$about->subtitle}}</span>
                         </h3>
 
@@ -82,7 +82,7 @@
 
                         @if ($about->link <> null)                        
                             <div class="btn-about my-4 d-flex justify-content-center justify-content-lg-start">
-                                <a href="{{$about->link}}" class=" py-2 px-3 px-lg-5 font-changa bg-button-two color-button-two font-18 font-medium text-decoration-none hover-zoom" rel="noopener noreferrer">
+                                <a href="{{$about->link}}" class="py-1 py-lg-2 px-3 px-lg-5 font-changa bg-button-two color-button-two font-15 font-medium text-decoration-none hover-zoom" rel="noopener noreferrer">
                                     Conheça
                                     <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-two)"></path>
@@ -95,7 +95,7 @@
 
                 @if (isset($about->path_image) && $about->path_image <> null)                    
                     <!-- IMAGEM (fora do container) -->
-                    <div class="col-12 col-lg-6 p-0 about-image">
+                    <div class="col-12 col-lg-6 p-0 about-image" data-aos="fade-left" data-aos-delay="100">
                         <img
                         src="{{asset('storage/'.$about->path_image)}}"
                         alt="Sobre a Girollato"
@@ -109,14 +109,14 @@
         </section>
     @endif
 
-    <section class="py-5" style="background-color: #174789;">
+    <section id="services" class="py-5 bg-secondary-color">
         <div class="container">
             @if (isset($sections['service']) && $sections <> null) 
                 <!-- Cabeçalho -->
-                <div class="row align-items-end mb-4">
+                <div class="row align-items-end mb-4" data-aos="fade" data-aos-delay="200">
 
                     <div class="col-lg-4">
-                        <span class="rounded-2 col-5 col-lg-4 px-2 m-auto m-lg-0 py-1 py-lg-2 text-dark text-center font-changa font-16 font-bold d-block badge bg-white shadow-sm">
+                        <span class="rounded-2 col-5 col-lg-4 px-2 m-lg-0 py-2 text-dark text-center font-changa font-16 font-bold d-block badge bg-white shadow-sm">
                             {{$sections['service']->tag}}
                         </span>
 
@@ -153,9 +153,9 @@
                 <div class="swiper-wrapper">
 
                     <!-- Serviço 1 -->
-                    @foreach ($services as $service)
+                    @foreach ($services as $index => $service)
                         <div class="swiper-slide">
-                            <div class="card h-100 border-0 rounded-4 overflow-hidden">
+                            <div class="card h-100 border-0 rounded-4 overflow-hidden" data-aos="fade-left" data-aos-delay="{{ ($index + 1) * 100 }}">
 
                                 @if ($service->path_image <> null)                                    
                                     <div class="p-2">
@@ -270,43 +270,13 @@
         </div>
     </div>
 
-    <style>
-        .servicesSwiper .swiper-slide {
-            height: auto;
-        }
-
-        .servicesSwiper .card {
-            min-height: 100%;
-        }
-
-        .servicesSwiper .card-img-top {
-            object-fit: cover;
-        }
-
-        .servicesSwiper .card-body h5 {
-            font-size: 1rem;
-        }
-
-        .servicesSwiper .btn-outline-dark {
-            font-size: 0.8rem;
-            padding: 0.6rem 0.9rem;
-        }
-
-        .swiper-button-prev-custom,
-        .swiper-button-next-custom {
-            width: 42px;
-            height: 42px;
-        }
-
-    </style>
-
     @if (isset($sessaoFaq) && $sessaoFaq <> null || isset($faqs) && $faqs->count())
         <section id="faq" class="faq-section pt-5 bg-grey-light">
             <div class="container">
                 <div class="row align-items-start g-5">
                     @if (isset($sessaoFaq) && $sessaoFaq <> null)
                         <!-- COLUNA ESQUERDA -->
-                        <div class="col-lg-5">
+                        <div class="col-lg-5" data-aos="fade-right" data-aos-delay="100">
                             <!-- Header -->
                             <div class="mb-4">
                                 <h3 class="faq-title font-changa font-40 font-bold color-grey mb-3 text-start">
@@ -315,8 +285,8 @@
                             </div>
 
                             @if ($sessaoFaq->btn_title <> null && $sessaoFaq->btn_number <> null)                
-                                <div class="d-flex justify-content-center justify-content-lg-start align-items-center">
-                                    <a href="{{$sessaoFaq->btn_number}}" class="bg-button-two color-button-two btn-product py-2 px-4 hover-zoom">
+                                <div class="d-flex justify-content-lg-start align-items-center">
+                                    <a href="{{$sessaoFaq->btn_number}}" class="bg-button-two color-button-two btn-product py-1 py-lg-2 px-4 font-15 hover-zoom">
                                         {{$sessaoFaq->btn_title}}
                                         <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"/>
@@ -333,7 +303,7 @@
 
                     @if (isset($faqs) && $faqs->count())
                         <!-- COLUNA DIREITA -->
-                        <div class="col-lg-7">
+                        <div class="col-lg-7 mt-0 mt-lg-5" data-aos="fade-left" data-aos-delay="100">
                             <div class="accordion" id="faqAccordion">
 
                                 <!-- ITEM ATIVO -->
@@ -365,7 +335,7 @@
     @endif
 
     @if (isset($depoiments) && $depoiments->count())
-        <section id="depoiment" class="depoiment py-5 position-relative bg-secondary-color">
+        <section id="depoiment" class="depoiment py-5 position-relative bg-secondary-color" data-aos="fade-up" data-aos-delay="100">
             <div class="container">
                 <div class="row justify-content-center justify-content-lg-between align-items-start">
                     @if (isset($sections['testimonial']) && $sections <> null)    
@@ -374,7 +344,7 @@
                                 {{$sections['testimonial']->tag}}
                             </span>
         
-                            <h3 class="font-changa font-40 font-bold text-white text-start mb-3">
+                            <h3 class="font-changa font-40 title font-bold text-white text-start mb-3">
                                 {{$sections['testimonial']->title}}
                             </h3>
                             <p class="font-regular text-white mb-0 font-changa font-18">{{$sections['testimonial']->description}}</p>
@@ -397,7 +367,7 @@
                                             </div>
         
                                             <div class="author">
-                                                <h5 class="text-dark font-changa font-24 font-medium mb-0 mt-3">{{$depoiment->name}}</h5>
+                                                <h5 class="text-dark font-changa font-24 title font-medium mb-0 mt-3">{{$depoiment->name}}</h5>
                                                 <span class="text-dark font-changa font-16 font-regular">{{$depoiment->function}}</span>
                                             </div>
 
@@ -424,24 +394,24 @@
     @endif
 
     @if (isset($serviceLocation))
-        <section id="coverage-section" class="coverage-section py-5 position-relative bg-light">
+        <section id="coverage-section" class="coverage-section py-5 position-relative bg-light" data-aos="fade-down" data-aos-delay="100">
             <div class="container">
                 <div class="row align-items-start gy-4">
                     <!-- MAPA -->
                     <div class="col-12 col-lg-6">
                         <div class="mb-4 col-12 col-lg-11">
-                            <span class="rounded-2 col-5 col-lg-4 px-3 m-auto m-lg-0 py-1 bg-primary-color text-dark text-center font-changa font-16 font-bold d-block">
+                            <span class="rounded-2 col-5 col-lg-4 px-3 m-lg-0 py-2 bg-primary-color text-dark text-center font-changa font-16 font-bold d-block">
                                 Cobertura
                             </span>
 
-                            <h3 class="about-title text-center text-lg-start font-changa font-40 font-bold text-dark my-3 position-relative">                            
+                            <h3 class="about-title text-start font-changa font-40 font-bold text-dark my-3 position-relative">                            
                                 {{$serviceLocation->title}}
                             </h3>
                         </div>
                         
                         <!-- BAHIA -->
                         <div class="state-block mb-4">
-                            <div class="row list-service col-11 col-lg-12 m-auto">
+                            <div class="row list-service col-12 m-auto">
                                 {!! $serviceLocation->description !!}
                             </div>
                         </div>
@@ -460,10 +430,10 @@
         </section>
     @endif
     
-    <section class="contact-section bg-light">
+    <section class="contact-section bg-light" data-aos="fade" data-aos-delay="100">
         <!-- Título -->
         <div class="container text-center py-3">
-            <span class="rounded-2 px-4 m-auto m-lg-0 py-1 py-lg-2 text-dark text-center font-changa font-16 font-bold badge bg-white shadow-sm">
+            <span class="rounded-2 px-4 m-auto m-lg-0 py-2 text-dark text-center font-changa font-16 font-bold badge bg-white shadow-sm">
                 Contato
             </span>
 

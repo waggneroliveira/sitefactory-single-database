@@ -267,8 +267,8 @@
     BIBLIOTECAS CSS
     ============================================================ --}}
 
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"></noscript>
+    <link rel="preload" href="https://unpkg.com/aos@2.3.1/dist/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"></noscript>
 
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"></noscript>
@@ -443,7 +443,7 @@
         <nav class="navbar navbar-expand-lg navbar-light container py-2 px-3 px-lg-0">            
             <!-- Logo -->
             <a class="navbar-brand d-flex align-items-center p-0" href="{{route('index')}}">
-                <img src="{{asset('storage/' .$tenantTheme->path_image_logo_header)}}" alt="{{ config('app.name') }}" height="65">
+                <img src="{{asset('storage/' .$tenantTheme->path_image_logo_header)}}" class="logo-header" alt="{{ config('app.name') }}" height="65">
             </a>
 
             <!-- Toggle mobile -->
@@ -458,19 +458,19 @@
                         <a class="nav-link font-changa font-16 font-semibold font-header text-color-header active" href="{{route('index')}}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-16 font-semibold font-header text-color-header" href="{{route('about')}}">Sobre Nós</a>
+                        <a class="nav-link font-changa font-16 font-semibold font-header text-color-header" href="{{route('index')}}#about">Quem Somos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link font-changa font-16 font-semibold font-header text-color-header" href="{{route('index')}}#services">Serviços</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link font-changa font-16 font-semibold font-header text-color-header" href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}">Depoimentos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-16 font-semibold font-header text-color-header" href="{{ request()->routeIs('about') ? '#team-section' : route('about') . '#team-section' }}">Representantes</a>
+                        <a class="nav-link font-changa font-16 font-semibold font-header text-color-header" href="{{route('index')}}#faq">FAQ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-16 font-semibold font-header text-color-header" href="{{route('products')}}">Produtos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link font-changa font-16 font-semibold font-header text-color-header" href="{{route('contact')}}">Contato</a>
+                        <a class="nav-link font-changa font-16 font-semibold font-header text-color-header" href="{{route('index')}}#contato">Contato</a>
                     </li>
                 </ul>
 
@@ -494,7 +494,7 @@
         @yield('content') 
     </main>
 
-    <footer class="bg-header text-white pt-5 pb-3">
+    <footer class="bg-header text-white pt-3 pt-lg-5 pb-3">
         <div class="container">
 
             <!-- Linha principal -->
@@ -503,17 +503,18 @@
                 <!-- Logo + botão -->
                 <div class="col-lg-4 mb-4 mb-lg-0">
                     <img src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ config('app.name') }}" height="65">
-
-                    <div class="mt-5">
-                        <a href="{{ request()->routeIs('about') ? '#team-section' : route('about') . '#team-section' }}" class="bg-button-two color-button-two px-4 py-2 rounded-pill font-changa font-16 font-medium text-decoration-none hover-zoom">
-                            Encontrar Representantes
-                            <i class="bi bi-arrow-right"></i>
-                        </a>
-                    </div>
+                    @if ($tenantTheme->link <> null)                        
+                        <div class="mt-3 mt-lg-5">
+                            <a href="{{ $tenantTheme->link }}" target="_blank" rel="noopener noreferrer" class="bg-button-two color-button-two px-4 py-2 font-changa font-16 font-medium text-decoration-none hover-zoom">
+                                {{$tenantTheme->btn_title}}
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    @endif
                 </div>
 
                 <!-- Mapa do site -->
-                <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="col-lg-6 mb-4 mb-0">
                     <h6 class="font-changa text-color-header font-16 font-bold mb-3 position-relative d-inline-block font-changa font-16 font-medium">
                         Mapa do Site
                         <span class="d-block bg-yellow mt-1" style="height:3px; width:40px;"></span>
@@ -523,10 +524,8 @@
                         <div class="col-6">
                             <ul class="list-unstyled">
                                 <li><a href="{{route('index')}}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Início</a></li>
-                                <li><a href="{{route('about')}}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Quem Somos</a></li>
-                                <li><a href="{{ request()->routeIs('index') ? '#stats-section' : route('index') . '#stats-section' }}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Diferenciais</a></li>
-                                <li><a href="{{route('blogAll')}}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Blog</a></li>
-                                <li><a href="{{route('products')}}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Produtos</a></li>
+                                <li><a href="{{route('index')}}#about" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Quem Somos</a></li>
+                                <li><a href="{{route('index')}}#services" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Serviços</a></li>
                             </ul>
                         </div>
 
@@ -534,7 +533,7 @@
                             <ul class="list-unstyled">
                                 <li><a href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Depoimentos</a></li>
                                 <li><a href="{{ request()->routeIs('index') ? '#faq' : route('index') . '#faq' }}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">FAQ</a></li>
-                                <li><a href="{{route('contact')}}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Contato</a></li>
+                                <li><a href="{{route('index')}}#contato" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Contato</a></li>
                             </ul>
                         </div>
                     </div>
@@ -570,7 +569,7 @@
             </div>
 
             <!-- Linha inferior -->
-            <hr class="border-light opacity-25 my-4">
+            <hr class="border-light opacity-25 my-0 mb-3 mb-lg-0 my-lg-4">
 
             <div class="row align-items-center">
                 @php
@@ -663,7 +662,7 @@
 
     
     <script src="https://cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -674,6 +673,11 @@
     {{-- Modais alert --}}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 40
+            });
 
             let successMessage = @json(session('success'));
             let errorMessage = @json(session('error'));

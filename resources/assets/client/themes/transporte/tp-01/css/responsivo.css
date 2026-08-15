@@ -65,7 +65,7 @@
 }
 @media (max-width: 530px) {
     .list-service ul{
-        column-count: 1;
+        column-count: 2;
     }
     .blog-content .col-6.col-md-6.col-lg-4{
         height: 320px;
@@ -80,6 +80,11 @@
     .product-card img{
         height: 140px;
     }
+    .firula-testimonial svg{
+        width: 65px;
+        bottom: -45px;
+        right: 30px;
+    }
     .firula-about{
         left: 56px;
         top: -22px;
@@ -92,11 +97,14 @@
     .blog-subtitle{
         width: 73% !important;
     }
+    .about .description p, .about li, .modal-title, .list-service ul li{
+        font-size: 0.938em;
+    }
     .stat-number{
         font-size: 1.75rem;
     }
     .hero-content{
-        align-items: baseline;
+        align-items: center;
     }
     .hero-title, .about-title, .faq-title, .font-mobi{
         font-size: 1.75rem;
@@ -120,8 +128,14 @@
     .about-subtitle.span-product{
         width: 62%;
     }
+    .logo-header{
+        height: 40px;
+    }
 }
 @media (max-width: 441px) {
+    .font-24.title{
+        font-size: 1.125rem;
+    }
     .mvw-cards{
         gap: 50px;
         height: 70vh;
