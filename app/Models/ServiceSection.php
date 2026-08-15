@@ -23,6 +23,7 @@ class ServiceSection extends Model
         'description_first_image',
         'title_first_image',
         'btn_title',
+        'path_image',
         'description',
         'active',
     ];

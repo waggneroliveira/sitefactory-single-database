@@ -110,6 +110,7 @@
     @endif
 
     <section id="services" class="py-5 bg-secondary-color">
+        {{-- <img src="" alt=""> --}}
         <div class="container">
             @if (isset($sections['service']) && $sections <> null) 
                 <!-- Cabeçalho -->
