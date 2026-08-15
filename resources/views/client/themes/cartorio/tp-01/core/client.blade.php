@@ -480,17 +480,19 @@
                         @endforeach
                     </ul>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <h6 class="primary-color mb-3 fw-semibold">Contato & Horários</h6>
-                    <p class="small text-color-footer mb-1"><i class="bi bi-whatsapp primary-color me-2"></i> {{$contact->whatsapp}}</p>
-                    <p class="small text-color-footer mb-1"><i class="bi bi-envelope primary-color me-2"></i> {{$contact->name_one}}</p>
-                    <p class="small text-color-footer"><i class="bi bi-clock primary-color me-2"></i> {{$contact->opening_hours_two}}</p>
-                    <div class="mt-3 d-flex gap-3">
-                        @if($contact?->link_insta)<a href="{{ $contact->link_insta }}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5"><i class="bi bi-instagram"></i></a>@endif
-                        @if($contact?->link_face)<a href="{{ $contact->link_face }}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5"><i class="bi bi-facebook"></i></a>@endif
-                        @if($contact?->link_tik_tok)<a href="{{ $contact->link_tik_tok }}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5"><i class="bi bi-linkedin"></i></a>@endif
+                @if (isset($contact) && $contact <> null)                    
+                    <div class="col-lg-3 col-md-6">
+                        <h6 class="primary-color mb-3 fw-semibold">Contato & Horários</h6>
+                        <p class="small text-color-footer mb-1"><i class="bi bi-whatsapp primary-color me-2"></i> {{$contact->whatsapp}}</p>
+                        <p class="small text-color-footer mb-1"><i class="bi bi-envelope primary-color me-2"></i> {{$contact->name_one}}</p>
+                        <p class="small text-color-footer"><i class="bi bi-clock primary-color me-2"></i> {{$contact->opening_hours_two}}</p>
+                        <div class="mt-3 d-flex gap-3">
+                            @if($contact?->link_insta)<a href="{{ $contact->link_insta }}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5"><i class="bi bi-instagram"></i></a>@endif
+                            @if($contact?->link_face)<a href="{{ $contact->link_face }}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5"><i class="bi bi-facebook"></i></a>@endif
+                            @if($contact?->link_tik_tok)<a href="{{ $contact->link_tik_tok }}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5"><i class="bi bi-linkedin"></i></a>@endif
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
             <hr class="bg-secondary mt-5">
             <div class="row align-items-center">

@@ -68,25 +68,27 @@
     </section>
 
     <!-- Quem Somos -->
-    <section id="quem-somos" class="about py-5 py-md-6" style="padding-top: 3rem;">
-        <div class="container py-5">
-            <div class="row align-items-center g-5">
-                <div class="col-lg-6 order-lg-1 order-2" data-aos="fade-right">
-                    <h2 class="fw-bold mb-3">{{$about->title}} <span class="primary-color">{{$about->subtitle}}</span></h2>
-                    <div class="gold-divider"></div>
-                    <p class="lead fs-5 text-secondary">{{$about->link}}</p>
-                    <div class="mt-3">
-                        {!! $about->text !!}
+    @if (isset($about) && $about <> null)
+        <section id="quem-somos" class="about py-5 py-md-6" style="padding-top: 3rem;">
+            <div class="container py-5">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-6 order-lg-1 order-2" data-aos="fade-right">
+                        <h2 class="fw-bold mb-3">{{$about->title}} <span class="primary-color">{{$about->subtitle}}</span></h2>
+                        <div class="gold-divider"></div>
+                        <p class="lead fs-5 text-secondary">{{$about->link}}</p>
+                        <div class="mt-3">
+                            {!! $about->text !!}
+                        </div>
+                        
+                        <a href="#contato" class="bg-button-two color-button-two rounded-pill px-4 py-2 d-table mt-3 fw-semibold hover-zoom">Fale com especialista <i class="bi bi-chat-dots"></i></a>
                     </div>
-                    
-                    <a href="#contato" class="bg-button-two color-button-two rounded-pill px-4 py-2 d-table mt-3 fw-semibold hover-zoom">Fale com especialista <i class="bi bi-chat-dots"></i></a>
-                </div>
-                <div class="col-lg-6 order-lg-2 order-1 text-center" data-aos="fade-left">
-                    <img src="{{asset('storage/' . $about->path_image)}}" alt="Equipe do cartório" class="img-fluid rounded-4 shadow-lg quem-somos-img" style="max-height: 420px; width: 100%; object-fit: cover;">
+                    <div class="col-lg-6 order-lg-2 order-1 text-center" data-aos="fade-left">
+                        <img src="{{asset('storage/' . $about->path_image)}}" alt="Equipe do cartório" class="img-fluid rounded-4 shadow-lg quem-somos-img" style="max-height: 420px; width: 100%; object-fit: cover;">
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
     <!-- Serviços com MODAL -->
     <section id="servicos" class="py-5 bg-light">
@@ -236,7 +238,7 @@
                 @endif
             @endif
             
-            @if ($sections['gallery']->link)                
+            @if (isset($sections['gallery']) && $sections['gallery']->link)                
                 <div class="text-center mt-5 pt-3" data-aos="fade-up">
                     <a href="{{$sections['gallery']->link}}" class="bg-button-two color-button-two rounded-pill px-5 py-3 mt-2 hover-zoom">{{$sections['gallery']->btn_title}} <i class="bi bi-heart-fill ms-2"></i></a>
                 </div>
@@ -245,88 +247,90 @@
     </section>
 
     <!-- Contato -->
-    <section id="contato" class="py-5 bg-light">
-        <div class="container py-4">
-            <div class="row g-5">                
-                <div class="col-lg-5" data-aos="fade-right">
-                    <div class="contact-info h-100 d-flex flex-column justify-content-center p-lg-4 p-1">
-                        @if (isset($contact))
-                            <div class="icon d-flex justify-content-start align-item-center gap-3">
-                                <i class="bi bi-geo-alt-fill fs-1 text-warning mb-3"></i>
-                                <div class="col-10">
-                                    <h3 class="fw-bold">{{$contact->name_section}}</h3>
-                                    <p class="lead fs-6">{{$contact->text}}</p>
-                                </div>
-                            </div>
-                            <div class="mt-3 mb-3">
-                                <div class="d-flex gap-3 mb-3 align-items-center"><i class="bi bi-pin-map-fill fs-4 text-secondary"></i><span>{{$contact->address_one}}</span></div>
-                                <div class="d-flex gap-3 mb-3 align-items-center"><i class="bi bi-telephone-fill fs-4 text-secondary"></i><span>{{$contact->phone_one}}</span></div>
-                                <div class="d-flex gap-3 mb-3 align-items-center"><i class="bi bi-envelope-fill fs-4 text-secondary"></i><span>{{$contact->name_one}}</span></div>
-                                <div class="d-flex gap-3 align-items-center"><i class="bi bi-clock-fill fs-4 text-secondary"></i><span>{{$contact->opening_hours_two}}</span></div>
-                            </div>
-                        @endif
-                        @if (isset($contact->maps) && $contact->maps != null) 
-                            <iframe
-                            src="{{$contact->maps}}"    
-                            width="100%" 
-                            height="250" 
-                            style="border:0;" 
-                            allowfullscreen="" 
-                            loading="lazy" 
-                            referrerpolicy="no-referrer-when-downgrade">
-                            </iframe>
-                        @endif
-                    </div>
-
-                </div>                
-
-                <div class="col-lg-7" data-aos="fade-left">
-                    <div class="bg-white shadow-sm rounded-4 p-4 p-md-5">
-                        <h4 class="fw-semibold">Envie sua mensagem</h4>
-                        <form id="formContato" class="mt-4">
-                            @csrf
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">Nome completo</label>
-                                    <input type="text" id="name" name="name" class="form-control" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">E-mail</label>
-                                    <input id="email" name="email" type="email" class="form-control" required>
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label">Telefone</label>
-                                    <input id="phone" name="phone" type="text" class="form-control">
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label">Assunto</label>
-                                    <select id="subject" name="subject" class="form-select">
-                                        @foreach ($services as $subjectForm)
-                                            <option value="{{$subjectForm->title}}">{{$subjectForm->title}}</option>  
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label">Mensagem</label>
-                                    <textarea id="text" name="text" class="form-control" rows="4"></textarea>
-                                </div>
-                                <div class="col-12 d-flex align-items-center flex-wrap">
-                                    <div class="form-check me-3">
-                                        <input class="form-check-input" required id="term_privacy" name="term_privacy" type="checkbox" value="1">
-                                        <label class="form-check-label small poppins-regular font-14 text-color" for="privacyCheck">
-                                            Aceito os termos descritos na Política de Privacidade
-                                        </label>
+    @if (isset($contact))
+        <section id="contato" class="py-5 bg-light">
+            <div class="container py-4">
+                <div class="row g-5">                
+                    <div class="col-lg-5" data-aos="fade-right">
+                        <div class="contact-info h-100 d-flex flex-column justify-content-center p-lg-4 p-1">
+                            @if (isset($contact))
+                                <div class="icon d-flex justify-content-start align-item-center gap-3">
+                                    <i class="bi bi-geo-alt-fill fs-1 text-warning mb-3"></i>
+                                    <div class="col-10">
+                                        <h3 class="fw-bold">{{$contact->name_section}}</h3>
+                                        <p class="lead fs-6">{{$contact->text}}</p>
                                     </div>
-                                    <button type="submit" class="btn btn-warning bg-button-two color-button-two fw-semibold px-5 rounded-pill">Enviar mensagem <i class="bi bi-send"></i></button>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                                <div class="mt-3 mb-3">
+                                    <div class="d-flex gap-3 mb-3 align-items-center"><i class="bi bi-pin-map-fill fs-4 text-secondary"></i><span>{{$contact->address_one}}</span></div>
+                                    <div class="d-flex gap-3 mb-3 align-items-center"><i class="bi bi-telephone-fill fs-4 text-secondary"></i><span>{{$contact->phone_one}}</span></div>
+                                    <div class="d-flex gap-3 mb-3 align-items-center"><i class="bi bi-envelope-fill fs-4 text-secondary"></i><span>{{$contact->name_one}}</span></div>
+                                    <div class="d-flex gap-3 align-items-center"><i class="bi bi-clock-fill fs-4 text-secondary"></i><span>{{$contact->opening_hours_two}}</span></div>
+                                </div>
+                            @endif
+                            @if (isset($contact->maps) && $contact->maps != null) 
+                                <iframe
+                                src="{{$contact->maps}}"    
+                                width="100%" 
+                                height="250" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                                </iframe>
+                            @endif
+                        </div>
 
+                    </div>                
+
+                    <div class="col-lg-7" data-aos="fade-left">
+                        <div class="bg-white shadow-sm rounded-4 p-4 p-md-5">
+                            <h4 class="fw-semibold">Envie sua mensagem</h4>
+                            <form id="formContato" class="mt-4">
+                                @csrf
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Nome completo</label>
+                                        <input type="text" id="name" name="name" class="form-control" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">E-mail</label>
+                                        <input id="email" name="email" type="email" class="form-control" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Telefone</label>
+                                        <input id="phone" name="phone" type="text" class="form-control">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Assunto</label>
+                                        <select id="subject" name="subject" class="form-select">
+                                            @foreach ($services as $subjectForm)
+                                                <option value="{{$subjectForm->title}}">{{$subjectForm->title}}</option>  
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Mensagem</label>
+                                        <textarea id="text" name="text" class="form-control" rows="4"></textarea>
+                                    </div>
+                                    <div class="col-12 d-flex align-items-center flex-wrap">
+                                        <div class="form-check me-3">
+                                            <input class="form-check-input" required id="term_privacy" name="term_privacy" type="checkbox" value="1">
+                                            <label class="form-check-label small poppins-regular font-14 text-color" for="privacyCheck">
+                                                Aceito os termos descritos na Política de Privacidade
+                                            </label>
+                                        </div>
+                                        <button type="submit" class="btn btn-warning bg-button-two color-button-two fw-semibold px-5 rounded-pill">Enviar mensagem <i class="bi bi-send"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
     <style>
         .about li::before{

@@ -42,7 +42,6 @@ require __DIR__ . '/dashboard.php';
 
 Route::middleware([NeedsTenant::class])->group(function () {
 
-
     Route::get('/', [HomePageController::class, 'index'])
         ->name('index');
 

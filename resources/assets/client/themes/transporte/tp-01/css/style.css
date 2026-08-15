@@ -146,7 +146,7 @@
 }
 .about .description p, .about li{
     font-size: 1rem;
-    font-family: "Changa", sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 400;
@@ -228,7 +228,7 @@
 }
 .list-step p, .list-step li{
     font-size: 1rem;
-    font-family: "Changa", sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 400;
@@ -631,7 +631,7 @@
    DEPOIMENT
 ========================= */
 .text.color-grey.font-changa.font-16.font-regular.text-start{
-    font-family: "Changa", sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-size: 1rem;
@@ -849,7 +849,7 @@
 }
 
 .list-service strong{
-    font-family: "Changa", sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 500;
@@ -864,7 +864,7 @@
     margin: 0 auto;
 }
 .list-service ul li{
-    font-family: "Changa", sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 500;

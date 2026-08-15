@@ -566,7 +566,7 @@
         </section>
     @endif
 
-        @if (isset($serviceLocation))
+    @if (isset($serviceLocation))
         <section id="coverage-section" class="coverage-section py-5 position-relative">
             <div class="container">
                 <div class="row align-items-center gy-4">
@@ -602,4 +602,47 @@
         </section>
     @endif
     
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        new Swiper('.blog-swiper', {
+            spaceBetween: 24,
+            pagination: {
+            el: '.swiper-pagination-blog',
+            clickable: true,
+            },
+            breakpoints: {
+            0: {
+                slidesPerView: 1.3,
+            },
+            576: {
+                slidesPerView: 2,
+            },
+            992: {
+                slidesPerView: 4,
+                allowTouchMove: false,
+            }
+            }
+        });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            new Swiper('.testimonial-swiper', {
+                loop: true,
+                spaceBetween: 24,
+                pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+                },
+                breakpoints: {
+                0: {
+                    slidesPerView: 1,
+                },
+                768: {
+                    slidesPerView: 1,
+                }
+                }
+            });
+        });
+
+    </script>
 @endsection
