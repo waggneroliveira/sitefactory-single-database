@@ -449,6 +449,9 @@
             top: 0;
             background: color-mix(in srgb, var(--secondary-color) 80%, transparent);
         }
+        .main-swiper .swiper-pagination-bullet-active{
+            background: var(--primary-color);
+        }
     </style>
 
     <header class="shadow-sm bg-header">

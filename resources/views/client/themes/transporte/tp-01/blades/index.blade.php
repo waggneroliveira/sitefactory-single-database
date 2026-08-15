@@ -34,7 +34,7 @@
 
                                         <div class="hero-actions d-flex" data-aos="fade-up" data-aos-delay="400">
                                             @if ($slide->link <> null)                                    
-                                                <a href="{{$slide->link}}" target="_blank" rel="noopener noreferrer" class="btn-one py-1 py-lg-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
+                                                <a href="{{$slide->link}}" target="_blank" rel="noopener noreferrer" class="btn-one col-auto py-1 py-lg-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
                                                     {{$slide->btn_title}}
                                                     <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"/>
@@ -162,14 +162,14 @@
                             <div class="card h-100 border-0 rounded-4 overflow-hidden" data-aos="fade-left" data-aos-delay="{{ ($index + 1) * 100 }}">
 
                                 @if ($service->path_image <> null)                                    
-                                    <div class="p-2">
+                                    <div class="p-3">
                                         <img src="{{asset('storage/' . $service->path_image)}}"
                                             class="card-img-top rounded-4"
                                             alt="{{$service->title}}" height="200">
                                     </div>
                                 @endif
 
-                                <div class="card-body d-flex flex-column pt-0">
+                                <div class="card-body d-flex flex-column pt-0 px-4">
                                     @if ($service->path_icon <> null)                                        
                                         <div class="mb-2 position-relative">
                                             <span class="position-absolute icon-service d-inline-flex align-items-center justify-content-center bg-primary-color rounded-3 p-2">
@@ -180,12 +180,12 @@
                                         </div>
                                     @endif
 
-                                    <h5 class="fw-bold mb-2 {{ $service->path_icon != null ? 'mt-3' : 'mt-2' }}">
+                                    <h5 class="fw-bold mb-2 {{ $service->path_icon != null ? 'mt-3' : 'mt-1' }}">
                                         {{ $service->title }}
                                     </h5>
 
                                     <p class="text-muted small flex-grow-1">
-                                        {{$service->description}}
+                                        {{substr(strip_tags($service->description), 0, 100)}}...
                                     </p>
 
                                     <button type="button"
@@ -277,7 +277,7 @@
     </div>
 
     @if (isset($sessaoFaq) && $sessaoFaq <> null || isset($faqs) && $faqs->count())
-        <section id="faq" class="faq-section pt-5 bg-grey-light">
+        <section id="faq" class="faq-section pt-5 bg-grey-light pb-4 pb-lg-0">
             <div class="container">
                 <div class="row align-items-start g-5">
                     @if (isset($sessaoFaq) && $sessaoFaq <> null)

@@ -887,7 +887,7 @@ body.modal-open {
 }
 .icon-service{
     top: -30px;
-    left: 10px;
+    left: 0px;
 }
 .service-bg{
     background-position: center !important;
