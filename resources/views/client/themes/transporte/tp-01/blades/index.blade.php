@@ -109,12 +109,15 @@
         </section>
     @endif
 
-    <section id="services" class="py-5 bg-secondary-color">
-        {{-- <img src="" alt=""> --}}
+    <section id="services" class="py-5 service-bg position-relative {{ empty($sections['service']->path_image) ? 'bg-secondary-color' : '' }}"
+        @if (!empty($sections['service']->path_image))
+            style="background-image: url('{{ asset('storage/' . $sections['service']->path_image) }}');"
+        @endif>
+
         <div class="container">
             @if (isset($sections['service']) && $sections <> null) 
                 <!-- Cabeçalho -->
-                <div class="row align-items-end mb-4" data-aos="fade" data-aos-delay="200">
+                <div class="row align-items-end mb-4 position-relative z-index-10" data-aos="fade" data-aos-delay="200">
 
                     <div class="col-lg-4">
                         <span class="rounded-2 col-5 col-lg-4 px-2 m-lg-0 py-2 text-dark text-center font-changa font-16 font-bold d-block badge bg-white shadow-sm">
@@ -168,17 +171,17 @@
 
                                 <div class="card-body d-flex flex-column pt-0">
                                     @if ($service->path_icon <> null)                                        
-                                        <div class="mb-2">
-                                            <span class="d-inline-flex align-items-center justify-content-center bg-primary-color rounded-3 p-2">
+                                        <div class="mb-2 position-relative">
+                                            <span class="position-absolute icon-service d-inline-flex align-items-center justify-content-center bg-primary-color rounded-3 p-2">
                                                 <img src="{{asset('storage/' . $service->path_icon)}}"
                                                 class="card-img-top rounded-4"
-                                                alt="{{$service->title}}" height="30">
+                                                alt="{{$service->title}}" height="25">
                                             </span>
                                         </div>
                                     @endif
 
-                                    <h5 class="fw-bold mb-2">
-                                        {{$service->title}}
+                                    <h5 class="fw-bold mb-2 {{ $service->path_icon != null ? 'mt-3' : 'mt-2' }}">
+                                        {{ $service->title }}
                                     </h5>
 
                                     <p class="text-muted small flex-grow-1">
@@ -218,13 +221,15 @@
 
                     <div class="d-flex align-items-center">
 
-                        <img
-                            id="modalIcon"
-                            src=""
-                            alt=""
-                            class="me-2 d-none"
-                            height="30"
-                        >
+                        <span class="d-inline-flex align-items-center justify-content-center bg-primary-color rounded-3 p-2 me-2">
+                            <img
+                                id="modalIcon"
+                                src=""
+                                alt=""
+                                class="d-none"
+                                height="25"
+                            >
+                        </span>
 
                         <h5 class="modal-title fw-bold" id="modalServicoLabel">
                             <span id="modalTitulo">Serviço</span>
@@ -431,64 +436,70 @@
         </section>
     @endif
     
-    <section class="contact-section bg-light" data-aos="fade" data-aos-delay="100">
-        <!-- Título -->
-        <div class="container text-center py-3">
-            <span class="rounded-2 px-4 m-auto m-lg-0 py-2 text-dark text-center font-changa font-16 font-bold badge bg-white shadow-sm">
-                Contato
-            </span>
+    @if (isset($contact) && $contact <> null)
+        <section class="contact-section bg-light" data-aos="fade" data-aos-delay="100">
+            <!-- Título -->
+            <div class="container text-center py-3">
+                <span class="rounded-2 px-4 m-auto m-lg-0 py-2 text-dark text-center font-changa font-16 font-bold badge bg-white shadow-sm">
+                    Contato
+                </span>
 
-            <h2 class="font-changa font-40 font-bold my-3 text-black text-center">
-                Solicite sua cotação <span class="primary-color">agora</span>
-            </h2>
-        </div>
-        <div id="contato"></div>
-        <!-- Informações de contato -->
-        <div class="container-fluid px-0">
-            <div class="bg-secondary-color border-bottom border-3 border-warning">
-                <div class="container">
-                    <div class="row align-items-center justify-content-center">
+                <h2 class="font-changa font-40 font-bold my-3 text-black text-center">
+                    {{$contact->name_section}} <span class="primary-color">{{$contact->text}}</span>
+                </h2>
+            </div>
+            <div id="contato"></div>
+            <!-- Informações de contato -->
+            <div class="container-fluid px-0">
+                <div class="bg-secondary-color border-bottom border-3 border-warning">
+                    <div class="container">
+                        <div class="row align-items-center justify-content-center">
 
-                        <!-- Telefone -->
-                        <div class="col-md-4 py-3 px-4">
-                            <div class="d-flex align-items-center justify-content-center gap-3">
-                                <i class="bi bi-telephone fs-3 text-white"></i>
+                            <!-- Telefone -->
+                            @if ($contact->phone_one)                            
+                                <div class="col-md-4 py-3 px-4">
+                                    <div class="d-flex align-items-center justify-content-center gap-3">
+                                        <i class="bi bi-telephone fs-3 text-white"></i>
 
-                                <span class="text-white fw-semibold small font-changa">
-                                    (71) 99999-9999
-                                </span>
-                            </div>
+                                        <span class="text-white fw-semibold small font-changa">
+                                            {{$contact->phone_one}}
+                                        </span>
+                                    </div>
+                                </div>
+                            @endif
+
+                            <!-- Endereço -->
+                            @if ($contact->address_one)                            
+                                <div class="col-md-4 py-3 px-4 border-start border-end border-light border-opacity-50">
+                                    <div class="d-flex align-items-center justify-content-center gap-3">
+                                        <i class="bi bi-geo-alt fs-3 text-white"></i>
+
+                                        <span class="text-white fw-semibold small font-changa">
+                                            {{$contact->address_one}}
+                                        </span>
+                                    </div>
+                                </div>
+                            @endif
+
+                            <!-- E-mail -->
+                            @if ($contact->name_one)                            
+                                <div class="col-md-4 py-3 px-4">
+                                    <div class="d-flex align-items-center justify-content-center gap-3">
+                                        <i class="bi bi-envelope fs-3 text-white"></i>
+
+                                        <span class="text-white fw-semibold small font-changa">
+                                            {{$contact->name_one}}
+                                        </span>
+                                    </div>
+                                </div>
+                            @endif
+
                         </div>
-
-                        <!-- Endereço -->
-                        <div class="col-md-4 py-3 px-4 border-start border-end border-light border-opacity-50">
-                            <div class="d-flex align-items-center justify-content-center gap-3">
-                                <i class="bi bi-geo-alt fs-3 text-white"></i>
-
-                                <span class="text-white fw-semibold small font-changa">
-                                    Av. Tancredo Neves, 3133 -<br>
-                                    Caminho das Árvores,<br>
-                                    Salvador - BA, 41820-021
-                                </span>
-                            </div>
-                        </div>
-
-                        <!-- E-mail -->
-                        <div class="col-md-4 py-3 px-4">
-                            <div class="d-flex align-items-center justify-content-center gap-3">
-                                <i class="bi bi-envelope fs-3 text-white"></i>
-
-                                <span class="text-white fw-semibold small font-changa">
-                                    Contato@seudominio.com.br
-                                </span>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {

@@ -10,28 +10,14 @@
             <div class="card card-body">
                 <div class="row g-3">
                     <div class="col-12 col-md-4">
-                        <label for="name_section" class="form-label">Nome da sessão</label>
+                        <label for="name_section" class="form-label">Título da sessão</label>
                         <input type="text" name="name_section" class="form-control" id="name_section"
-                            value="{{ $contact->name_section ?? '' }}" placeholder="Nome da sessão">
+                            value="{{ $contact->name_section ?? '' }}" placeholder="Título da sessão">
                     </div>
                     <div class="col-12 col-md-8">
-                        <label for="text" class="form-label">Texto</label>
+                        <label for="text" class="form-label">Subtitulo</label>
                         <input type="text" name="text" class="form-control" id="text"
-                            value="{{ $contact->text ?? '' }}" placeholder="Texto">
-                    </div>
-                    <div class="col-12">
-                        <label for="maps" class="form-label">Link mapa</label>
-                        <input type="text" name="maps" class="form-control" id="maps"
-                        value="{{ $contact->maps ?? '' }}" placeholder="Mapa">
-                        <div class="instructions">
-                            <h5>Como usar:</h5>
-                            <ol>
-                                <li>Vá ao Google Maps e encontre o local desejado</li>
-                                <li>Clique no botão "Compartilhar" e depois em "Incorporar um mapa"</li>
-                                <li>Selecione e copie todo o código iframe</li>
-                                <li>Cole o código no campo acima - o link será extraído automaticamente</li>
-                            </ol>
-                        </div>
+                            value="{{ $contact->text ?? '' }}" placeholder="Subtitulo">
                     </div>
                 </div>
             </div>

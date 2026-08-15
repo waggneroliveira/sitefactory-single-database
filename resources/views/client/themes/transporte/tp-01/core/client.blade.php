@@ -304,10 +304,10 @@
 
     @include('client/themes/transporte/tp-01/includes/lgpd/lgpd')
 
-     @if (isset($contact) && $contact->phone_one <> null)
+     @if (isset($contact) && $contact->whatsapp <> null)
         @php
             // Remove caracteres não numéricos do telefone
-            $phone = preg_replace('/\D/', '', $contact->phone_one);
+            $phone = preg_replace('/\D/', '', $contact->whatsapp);
 
             // Monta mensagem com ícones e quebras de linha
             $mensagem = "Olá! Encontrei seu site e gostaria de conhecer mais sobre os planos disponíveis.%0A";
@@ -436,6 +436,18 @@
         }
         .border-warning{
             border-color: var(--primary-color) !important;
+        }
+        .z-index-10{
+            z-index: 4;
+        }
+        .service-bg::after{
+            content: '';
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: color-mix(in srgb, var(--secondary-color) 80%, transparent);
         }
     </style>
 
