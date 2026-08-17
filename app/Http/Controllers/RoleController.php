@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Log; 
 use App\Models\Permission;
+use App\Models\Role;
+use App\Services\ThemeManager;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log; 
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Session;
 
 class RoleController extends Controller
 {
-    public function index()
+    public function index(ThemeManager $themeManager)
     {
 
         if(!Auth::user()->hasRole('Super') && !Auth::user()->can('usuario.tornar usuario master') && !Auth::user()->can('grupo.visualizar')){
@@ -22,10 +23,14 @@ class RoleController extends Controller
 
         $roles = Role::get();
         $permissions = Permission::get(); 
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
 
         return view('admin.blades.group.index', [
             'roles'=>$roles,
-            'permissions'=>$permissions
+            'permissions'=>$permissions,
+            'theme' => $theme, 
+            'themeData' => $themeData
         ]);
     }
     public function store(Request $request)
