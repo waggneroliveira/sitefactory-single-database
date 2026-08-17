@@ -1,15 +1,10 @@
-.bg-grey-light{
-    background: var(--text-color-light);
+.footer-light .logo-system{
+    filter: inherit;
+    opacity: inherit;
 }
-.bg-grey-medium{
-    background: var(--text-color-medium);
-}
-.color-grey{
-    color: var(--text-color);
-}
-
-.bt-hover:hover{
-color:  var(--primary-color) !important;
+.footer-dark .logo-system{
+    filter: brightness(0) invert(1);
+    opacity: 0.7;
 }
 .font-changa {
     font-family: "Montserrat", sans-serif !important;
@@ -122,21 +117,6 @@ color:  var(--primary-color) !important;
 
 .main-swiper .swiper-pagination-bullet-active {
   background: var(--secondary-color);
-}
-
-/* =========================
-   TOPIC
-========================= */
-.topic-item img {
-  transition: transform .3s ease, box-shadow .3s ease;
-}
-.topic-item img{
-    width: 193px;
-    height: 113px;
-    object-fit: cover;
-} 
-.topic-item:hover img {
-  transform: translateY(-6px);
 }
 
 /* =========================
@@ -837,54 +817,6 @@ body.modal-open {
    FONT SIZES (UTILS)
 ========================= */
 
-.video-section {
-  width: 100%;
-  background: #000;
-}
-
-.video-container {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  height: 543px;
-}
-
-.video-thumb {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Botão Play */
-.video-play-btn {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255, 0, 0, 0.95);
-  cursor: pointer;
-  transition: transform .3s ease, box-shadow .3s ease;
-}
-
-.video-play-btn::before {
-  content: '';
-  position: absolute;
-  left: 36px;
-  top: 28px;
-  width: 0;
-  height: 0;
-  border-left: 28px solid #fff;
-  border-top: 18px solid transparent;
-  border-bottom: 18px solid transparent;
-}
-
-.video-play-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 0 12px rgba(255, 0, 0, 0.25);
-}
 .icon-service{
     top: -30px;
     left: 0px;

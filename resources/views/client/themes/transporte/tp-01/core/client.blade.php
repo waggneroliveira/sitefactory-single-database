@@ -452,6 +452,12 @@
         .main-swiper .swiper-pagination-bullet-active{
             background: var(--primary-color);
         }
+        .scroll-top:hover{
+            background: var(--secondary-color);
+        }
+        .border-color-footer{
+            border-color: var(--text-color-footer) !important;
+        }
     </style>
 
     <header class="shadow-sm bg-header">
@@ -509,7 +515,7 @@
         @yield('content') 
     </main>
 
-    <footer class="bg-header text-white pt-3 pt-lg-5 pb-3">
+    <footer class="bg-footer pt-3 pt-lg-5 pb-3">
         <div class="container">
 
             <!-- Linha principal -->
@@ -530,7 +536,7 @@
 
                 <!-- Mapa do site -->
                 <div class="col-lg-6 mb-4 mb-0">
-                    <h6 class="font-changa text-color-header font-16 font-bold mb-3 position-relative d-inline-block font-changa font-16 font-medium">
+                    <h6 class="font-changa text-color-footer font-16 font-bold mb-3 position-relative d-inline-block font-changa font-16 font-medium">
                         Mapa do Site
                         <span class="d-block bg-yellow mt-1" style="height:3px; width:40px;"></span>
                     </h6>
@@ -538,17 +544,17 @@
                     <div class="row">
                         <div class="col-6">
                             <ul class="list-unstyled">
-                                <li><a href="{{route('index')}}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Início</a></li>
-                                <li><a href="{{route('index')}}#about" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Quem Somos</a></li>
-                                <li><a href="{{route('index')}}#services" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Serviços</a></li>
+                                <li><a href="{{route('index')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Início</a></li>
+                                <li><a href="{{route('index')}}#about" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Quem Somos</a></li>
+                                <li><a href="{{route('index')}}#services" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Serviços</a></li>
                             </ul>
                         </div>
 
                         <div class="col-6">
                             <ul class="list-unstyled">
-                                <li><a href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Depoimentos</a></li>
-                                <li><a href="{{ request()->routeIs('index') ? '#faq' : route('index') . '#faq' }}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">FAQ</a></li>
-                                <li><a href="{{route('index')}}#contato" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Contato</a></li>
+                                <li><a href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Depoimentos</a></li>
+                                <li><a href="{{ request()->routeIs('index') ? '#faq' : route('index') . '#faq' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">FAQ</a></li>
+                                <li><a href="{{route('index')}}#contato" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Contato</a></li>
                             </ul>
                         </div>
                     </div>
@@ -563,17 +569,17 @@
                     <div class="col-lg-2 text-lg-end">
                         <div class="d-flex gap-3 justify-content-lg-end">
                             @if ($contact->link_insta <> null)                            
-                                <a href="{{$contact->link_insta}}" target="_blank" rel="noopener noreferrer" class="text-color-header fs-5">
+                                <a href="{{$contact->link_insta}}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5">
                                     <i class="bi bi-instagram"></i>
                                 </a>
                             @endif
                             @if ($contact->link_face <> null)                            
-                                <a href="{{$contact->link_face}}" target="_blank" rel="noopener noreferrer" class="text-color-header fs-5">
+                                <a href="{{$contact->link_face}}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5">
                                     <i class="bi bi-facebook"></i>
                                 </a>
                             @endif
                             @if ($contact->link_tik_tok <> null)                            
-                                <a href="{{$contact->link_tik_tok}}" target="_blank" rel="noopener noreferrer" class="text-color-header fs-5">
+                                <a href="{{$contact->link_tik_tok}}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5">
                                     <i class="bi bi-linkedin"></i>
                                 </a>
                             @endif
@@ -584,7 +590,7 @@
             </div>
 
             <!-- Linha inferior -->
-            <hr class="border-light opacity-25 my-0 mb-3 mb-lg-0 my-lg-4">
+            <hr class="border-light opacity-25 my-0 mb-3 my-lg-4 border-color-footer">
 
             <div class="row align-items-center">
                 @php
@@ -644,16 +650,16 @@
 
                     <div class="col-12 col-lg-4 m-0">
                         <div class="d-flex justify-content-center justify-content-lg-end align-items-center gap-3">
-                            <a href="#" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
+                            <a href="https://www.whi.dev.br/" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
                                 <span class="font-13">Sistema</span>
-                                <img src="{{asset('storage/' . $tenantTheme->path_image_logo_footer)}}" alt="WHI Web" style="filter: brightness(0) invert(1);opacity: 0.5;height: 24px; width: auto;">
+                                <img src="{{asset('build/client/themes/default/images/whi-web.png')}}" title="Whi Web" alt="WHI Web" height="50" class="logo-system">
                             </a>
 
                             <span class="text-color-footer opacity-50">|</span>
 
-                            <a href="#" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
+                            <a href="https://www.whi.dev.br/" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
                                 <span class="font-13">Desenvolvido por</span>
-                                <img src="https://www.whi.dev.br/build/client/images/logo.png" alt="WHI" style="height: 24px; width: auto;">
+                                <img src="{{asset('build/client/themes/default/images/whi.png')}}" title="Agência WHI" alt="WHI" height="25" class="logo-system">
                             </a>
                         </div>
                     </div>
@@ -673,6 +679,7 @@
 
         </div>
     </footer>
+
     <a href="#" id="scroll-top" class="scroll-top bg-scroll d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
     
@@ -735,6 +742,31 @@
 
             }
 
+        });
+    </script>
+
+    {{-- Identificar bg so footer e adicionar class foote-light ou footer-dark --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const footer = document.querySelector('.bg-footer');
+
+            if (!footer) return;
+
+            const bgColor = getComputedStyle(footer).backgroundColor;
+
+            const rgb = bgColor.match(/\d+/g);
+
+            if (!rgb || rgb.length < 3) return;
+
+            const [r, g, b] = rgb.map(Number);
+
+            const luminance = (0.299 * r) + (0.587 * g) + (0.114 * b);
+
+            if (luminance < 150) {
+                footer.classList.add('footer-dark');
+            } else {
+                footer.classList.add('footer-light');
+            }
         });
     </script>
 </body>
