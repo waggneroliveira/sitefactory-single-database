@@ -65,7 +65,7 @@
             <div class="container-fluid">
                 <div class="row align-items-center justify-content-center">
                 <!-- TEXTO (dentro do container) -->
-                <div class="col-12 col-lg-5 mt-4 mt-lg-0 z-3 p-0" data-aos="fade-right" data-aos-delay="100">
+                <div class="col-12 col-lg-5 mt-4 mt-md-4 z-3 p-0" data-aos="fade-right" data-aos-delay="100">
                     <div class="container position-relative">
                         <span class="rounded-2 col-5 col-lg-4 px-3 m-lg-0 py-2 text-dark text-center font-changa font-16 font-bold d-block badge bg-white shadow-sm">
                             Quem Somos?
@@ -345,7 +345,7 @@
             <div class="container">
                 <div class="row justify-content-center justify-content-lg-between align-items-start">
                     @if (isset($sections['testimonial']) && $sections <> null)    
-                        <div class="col-lg-4 d-table text-start">
+                        <div class="col-lg-5 d-table text-start">
                             <span class="rounded-2 col-5 col-lg-4 px-3 py-1 bg-white text-dark text-center font-changa font-16 font-bold d-block mb-2">
                                 {{$sections['testimonial']->tag}}
                             </span>
