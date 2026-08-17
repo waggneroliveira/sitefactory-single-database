@@ -1,3 +1,6 @@
+@php
+    $formPrefix = $formPrefix ?? 'default';
+@endphp
 {{-- ============================================================
 DADOS DO CLIENTE
 ============================================================ --}}
@@ -264,36 +267,39 @@ POLITICA DE PRIVACIDADE
 
     <div class="row">
         <div class="mb-3 col-lg-6">
-            <label for="privacy_policy" class="form-label text-white">Política de Privacidade</label>
-            <textarea name="privacy_policy" id="privacy_policy" placeholder="Digite a Política de Privacidade" class="form-control" rows="10">{!! $tenant->privacy_policy ?? '' !!}</textarea>
+            <label
+                for="{{ $formPrefix }}_privacy_policy"
+                class="form-label text-white"
+            >
+                Política de Privacidade
+            </label>
+
+            <textarea
+                name="privacy_policy"
+                id="{{ $formPrefix }}_privacy_policy"
+                placeholder="Digite a Política de Privacidade"
+                class="form-control js-ckeditor"
+                rows="10"
+            >{!! $tenant->privacy_policy ?? '' !!}</textarea>
         </div>
 
         <div class="mb-3 col-lg-6">
-            <label for="terms_of_use" class="form-label text-white">Termos de Uso</label>
-            <textarea name="terms_of_use" id="terms_of_use" placeholder="Digite os Termos de Uso" class="form-control" rows="10">{!! $tenant->terms_of_use ?? '' !!}</textarea>
+            <label
+                for="{{ $formPrefix }}_terms_of_use"
+                class="form-label text-white"
+            >
+                Termos de Uso
+            </label>
+
+            <textarea
+                name="terms_of_use"
+                id="{{ $formPrefix }}_terms_of_use"
+                placeholder="Digite os Termos de Uso"
+                class="form-control js-ckeditor"
+                rows="10"
+            >{!! $tenant->terms_of_use ?? '' !!}</textarea>
         </div>
     </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const textareas = [
-                "privacy_policy",
-                "terms_of_use"
-            ];
-
-            textareas.forEach(function (textareaId) {
-                if (document.getElementById(textareaId)) {
-                    CKEDITOR.replace(textareaId, {
-                        toolbar: [
-                            { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline'] },
-                            { name: 'paragraph', items: ['NumberedList', 'BulletedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
-                        ],
-                        height: 300
-                    });
-                }
-            });
-        });
-    </script>
 </div>
 
 {{-- ============================================================
@@ -394,275 +400,277 @@ LOGOS
 LIMITES PERSONALIZADOS
 ============================================================ --}}
 
-<div class="row mt-4">
-    <div class="col-12">
-        <hr>
-        <h5 class="mb-1">Limites Personalizados</h5>
-        <p class="text-muted mb-3">
-            Estes valores sobrescrevem os limites definidos no plano.
-            Deixe vazio para utilizar o limite do plano ou do template.
-        </p>
+@if (Auth::user()->hasRole('Super'))
+    <div class="row mt-4">
+        <div class="col-12">
+            <hr>
+            <h5 class="mb-1">Limites Personalizados</h5>
+            <p class="text-muted mb-3">
+                Estes valores sobrescrevem os limites definidos no plano.
+                Deixe vazio para utilizar o limite do plano ou do template.
+            </p>
+        </div>
+
+        @foreach ($availableModules as $module => $moduleName)
+            <div class="mb-3 col-12 col-md-4 col-lg-3">
+                <label for="limit_{{ $module }}" class="form-label">{{ $moduleName }}</label>
+
+                <input type="number"
+                    name="limits[{{ $module }}]"
+                    class="form-control @error('limits.' . $module) is-invalid @enderror"
+                    id="limit_{{ $module }}"
+                    value="{{ old('limits.' . $module, $tenantModuleLimits[$module]->limit ?? '') }}"
+                    min="0"
+                    placeholder="Ex.: 10">
+
+                <small class="text-muted">{{ $module }}</small>
+
+                @error('limits.' . $module)
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+        @endforeach
     </div>
 
-    @foreach ($availableModules as $module => $moduleName)
-        <div class="mb-3 col-12 col-md-4 col-lg-3">
-            <label for="limit_{{ $module }}" class="form-label">{{ $moduleName }}</label>
+    {{-- ============================================================
+    INFORMAÇÃO SOBRE HERANÇA
+    ============================================================ --}}
 
-            <input type="number"
-                   name="limits[{{ $module }}]"
-                   class="form-control @error('limits.' . $module) is-invalid @enderror"
-                   id="limit_{{ $module }}"
-                   value="{{ old('limits.' . $module, $tenantModuleLimits[$module]->limit ?? '') }}"
-                   min="0"
-                   placeholder="Ex.: 10">
+    <div class="row mt-2 mb-3">
+        <div class="col-12">
+            <div class="alert alert-info mb-0">
+                <div class="d-flex align-items-start">
+                    <i class="mdi mdi-information-outline font-20 me-2"></i>
 
-            <small class="text-muted">{{ $module }}</small>
+                    <div class="col">
+                        <strong>Como funcionam os limites?</strong>
 
-            @error('limits.' . $module)
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-    @endforeach
-</div>
+                        <p class="mb-0 mt-1" style="white-space: normal;">
+                            O sistema utiliza primeiro o limite personalizado
+                            do cliente.
 
-{{-- ============================================================
-INFORMAÇÃO SOBRE HERANÇA
-============================================================ --}}
+                            Caso não exista, utiliza o limite definido pelo plano.
 
-<div class="row mt-2 mb-3">
-    <div class="col-12">
-        <div class="alert alert-info mb-0">
-            <div class="d-flex align-items-start">
-                <i class="mdi mdi-information-outline font-20 me-2"></i>
-
-                <div class="col">
-                    <strong>Como funcionam os limites?</strong>
-
-                    <p class="mb-0 mt-1" style="white-space: normal;">
-                        O sistema utiliza primeiro o limite personalizado
-                        do cliente.
-
-                        Caso não exista, utiliza o limite definido pelo plano.
-
-                        Se o plano também não possuir um limite para o módulo,
-                        será utilizado o limite padrão definido no template.
-                    </p>
+                            Se o plano também não possuir um limite para o módulo,
+                            será utilizado o limite padrão definido no template.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+@endif
 
 {{-- ============================================================
 SCRIPT DOS COLORPICKERS
 ============================================================ --}}
 
 <script>
-$(document).ready(function () {
+    $(document).ready(function () {
 
-    function destroyColorpickers() {
-        try {
-            $('[id^="colorpicker-"]').each(function () {
-                const $this = $(this);
+        function destroyColorpickers() {
+            try {
+                $('[id^="colorpicker-"]').each(function () {
+                    const $this = $(this);
 
-                if ($this.data('spectrum')) {
-                    $this.spectrum('destroy');
-                }
-            });
-
-            $('.sp-container').remove();
-            $('.sp-replacer').remove();
-
-        } catch (e) {
-            console.log('Erro ao destruir colorpickers:', e);
-        }
-    }
-
-    function initColorpickers() {
-
-        destroyColorpickers();
-
-        const colorpickerConfigs = {
-
-            'colorpicker-default': {
-                color: '#3498db',
-                showAlpha: false,
-                showPaletteOnly: false
-            },
-
-            'colorpicker-showalpha': {
-                color: '#2c3e50',
-                showAlpha: true,
-                showPaletteOnly: false
-            },
-
-            'colorpicker-showpaletteonly': {
-                color: '#f1c40f',
-                showAlpha: false,
-                showPaletteOnly: true,
-                palette: [
-                    [
-                        '#f1c40f',
-                        '#e67e22',
-                        '#1abc9c',
-                        '#3498db'
-                    ],
-                    [
-                        '#2ecc71',
-                        '#e74c3c',
-                        '#9b59b6',
-                        '#34495e'
-                    ],
-                    [
-                        '#95a5a6',
-                        '#27ae60',
-                        '#c0392b',
-                        '#8e44ad'
-                    ]
-                ]
-            },
-
-            'colorpicker-togglepaletteonly': {
-                color: '#333333',
-                showAlpha: false,
-                showPaletteOnly: false,
-                palette: [
-                    [
-                        '#ffffff',
-                        '#f8f9fa',
-                        '#e9ecef',
-                        '#dee2e6'
-                    ],
-                    [
-                        '#333333',
-                        '#495057',
-                        '#6c757d',
-                        '#adb5bd'
-                    ],
-                    [
-                        '#000000',
-                        '#212529',
-                        '#343a40',
-                        '#000000'
-                    ]
-                ]
-            },
-
-            'colorpicker-text-header': {
-                color: '#ffffff',
-                showAlpha: false,
-                showPaletteOnly: false
-            },
-
-            'colorpicker-bg-header': {
-                color: '#2c3e50',
-                showAlpha: false,
-                showPaletteOnly: false
-            },
-
-            'colorpicker-bg-scroll': {
-                color: '#f8f9fa',
-                showAlpha: false,
-                showPaletteOnly: false
-            },
-
-            'colorpicker-color-button1': {
-                color: '#ffffff',
-                showAlpha: false,
-                showPaletteOnly: false
-            },
-
-            'colorpicker-bg-button1': {
-                color: '#3498db',
-                showAlpha: false,
-                showPaletteOnly: false
-            },
-
-            'colorpicker-color-button2': {
-                color: '#ffffff',
-                showAlpha: false,
-                showPaletteOnly: false
-            },
-
-            'colorpicker-bg-button2': {
-                color: '#2ecc71',
-                showAlpha: false,
-                showPaletteOnly: false
-            }
-        };
-
-        $('[id^="colorpicker-"]').each(function () {
-
-            const $this = $(this);
-            const id = $this.attr('id');
-            const config = colorpickerConfigs[id] || {};
-            const currentValue = $this.val();
-
-            const defaultColor =
-                currentValue ||
-                config.color ||
-                '#3498db';
-
-            const options = {
-                color: defaultColor,
-                showInput: true,
-                showInitial: true,
-                preferredFormat: 'hex',
-
-                change: function (color) {
-                    if (color) {
-                        $this.val(color.toHexString());
+                    if ($this.data('spectrum')) {
+                        $this.spectrum('destroy');
                     }
+                });
+
+                $('.sp-container').remove();
+                $('.sp-replacer').remove();
+
+            } catch (e) {
+                console.log('Erro ao destruir colorpickers:', e);
+            }
+        }
+
+        function initColorpickers() {
+
+            destroyColorpickers();
+
+            const colorpickerConfigs = {
+
+                'colorpicker-default': {
+                    color: '#3498db',
+                    showAlpha: false,
+                    showPaletteOnly: false
                 },
 
-                move: function (color) {
-                    if (color) {
-                        $this.val(color.toHexString());
-                    }
+                'colorpicker-showalpha': {
+                    color: '#2c3e50',
+                    showAlpha: true,
+                    showPaletteOnly: false
+                },
+
+                'colorpicker-showpaletteonly': {
+                    color: '#f1c40f',
+                    showAlpha: false,
+                    showPaletteOnly: true,
+                    palette: [
+                        [
+                            '#f1c40f',
+                            '#e67e22',
+                            '#1abc9c',
+                            '#3498db'
+                        ],
+                        [
+                            '#2ecc71',
+                            '#e74c3c',
+                            '#9b59b6',
+                            '#34495e'
+                        ],
+                        [
+                            '#95a5a6',
+                            '#27ae60',
+                            '#c0392b',
+                            '#8e44ad'
+                        ]
+                    ]
+                },
+
+                'colorpicker-togglepaletteonly': {
+                    color: '#333333',
+                    showAlpha: false,
+                    showPaletteOnly: false,
+                    palette: [
+                        [
+                            '#ffffff',
+                            '#f8f9fa',
+                            '#e9ecef',
+                            '#dee2e6'
+                        ],
+                        [
+                            '#333333',
+                            '#495057',
+                            '#6c757d',
+                            '#adb5bd'
+                        ],
+                        [
+                            '#000000',
+                            '#212529',
+                            '#343a40',
+                            '#000000'
+                        ]
+                    ]
+                },
+
+                'colorpicker-text-header': {
+                    color: '#ffffff',
+                    showAlpha: false,
+                    showPaletteOnly: false
+                },
+
+                'colorpicker-bg-header': {
+                    color: '#2c3e50',
+                    showAlpha: false,
+                    showPaletteOnly: false
+                },
+
+                'colorpicker-bg-scroll': {
+                    color: '#f8f9fa',
+                    showAlpha: false,
+                    showPaletteOnly: false
+                },
+
+                'colorpicker-color-button1': {
+                    color: '#ffffff',
+                    showAlpha: false,
+                    showPaletteOnly: false
+                },
+
+                'colorpicker-bg-button1': {
+                    color: '#3498db',
+                    showAlpha: false,
+                    showPaletteOnly: false
+                },
+
+                'colorpicker-color-button2': {
+                    color: '#ffffff',
+                    showAlpha: false,
+                    showPaletteOnly: false
+                },
+
+                'colorpicker-bg-button2': {
+                    color: '#2ecc71',
+                    showAlpha: false,
+                    showPaletteOnly: false
                 }
             };
 
-            if (config.showAlpha !== undefined) {
-                options.showAlpha = config.showAlpha;
-            }
+            $('[id^="colorpicker-"]').each(function () {
 
-            if (config.showPaletteOnly !== undefined) {
-                options.showPaletteOnly = config.showPaletteOnly;
-            }
+                const $this = $(this);
+                const id = $this.attr('id');
+                const config = colorpickerConfigs[id] || {};
+                const currentValue = $this.val();
 
-            if (config.palette) {
-                options.palette = config.palette;
-            }
+                const defaultColor =
+                    currentValue ||
+                    config.color ||
+                    '#3498db';
 
-            if (config.showPalette !== undefined) {
-                options.showPalette = config.showPalette;
-            }
+                const options = {
+                    color: defaultColor,
+                    showInput: true,
+                    showInitial: true,
+                    preferredFormat: 'hex',
 
-            $this.spectrum(options);
+                    change: function (color) {
+                        if (color) {
+                            $this.val(color.toHexString());
+                        }
+                    },
+
+                    move: function (color) {
+                        if (color) {
+                            $this.val(color.toHexString());
+                        }
+                    }
+                };
+
+                if (config.showAlpha !== undefined) {
+                    options.showAlpha = config.showAlpha;
+                }
+
+                if (config.showPaletteOnly !== undefined) {
+                    options.showPaletteOnly = config.showPaletteOnly;
+                }
+
+                if (config.palette) {
+                    options.palette = config.palette;
+                }
+
+                if (config.showPalette !== undefined) {
+                    options.showPalette = config.showPalette;
+                }
+
+                $this.spectrum(options);
+            });
+        }
+
+        setTimeout(initColorpickers, 100);
+
+        $(document).on('shown.bs.modal', function () {
+            setTimeout(initColorpickers, 200);
         });
-    }
 
-    setTimeout(initColorpickers, 100);
+        document.addEventListener('shown.bs.modal', function () {
+            setTimeout(initColorpickers, 200);
+        });
 
-    $(document).on('shown.bs.modal', function () {
-        setTimeout(initColorpickers, 200);
     });
+    // mascara cnpj
+    document.getElementById('cnpj').addEventListener('input', function (e) {
+        let value = e.target.value.replace(/\D/g, '').slice(0, 14);
 
-    document.addEventListener('shown.bs.modal', function () {
-        setTimeout(initColorpickers, 200);
+        value = value.replace(/^(\d{2})(\d)/, '$1.$2');
+        value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+        value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
+        value = value.replace(/(\d{4})(\d)/, '$1-$2');
+
+        e.target.value = value;
     });
-
-});
-// mascara cnpj
-document.getElementById('cnpj').addEventListener('input', function (e) {
-    let value = e.target.value.replace(/\D/g, '').slice(0, 14);
-
-    value = value.replace(/^(\d{2})(\d)/, '$1.$2');
-    value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
-    value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
-    value = value.replace(/(\d{4})(\d)/, '$1-$2');
-
-    e.target.value = value;
-});
 </script>
 

@@ -813,5 +813,4 @@
     </footer>
 
     @include('admin.loadPage.loading')
-
 @endsection

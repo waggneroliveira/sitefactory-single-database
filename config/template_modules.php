@@ -105,9 +105,6 @@ return [
 
        'home' => [
             'slides',
-            'topics',
-            'statute',
-            'letsgo',
             'faq_session',
             'faq',
             'testimonials',
@@ -115,29 +112,11 @@ return [
         ],
 
         'about' => [
-            'about',
-            'benefits',
-            'mission',
-            'representatives',
-            'videos',
-            'service_locations',
-        ],
-
-        'products' => [
-            'brands',
-            'product_categories',
-            'products',
-        ],
-
-        'blog' => [
-            'blog_categories',
-            'blog',
+            'about'
         ],
 
         'contact' => [
             'contact',
-            'contact_leads',
-            'download_leads',
         ],
 
         'smtp' => [
@@ -152,7 +131,6 @@ return [
 
         'limits' => [
             'slides' => 3,
-            'topics' => 6,
             'testimonials' => 6,
             'faq' => 10,
             'services' => 6,

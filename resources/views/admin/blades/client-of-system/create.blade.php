@@ -104,7 +104,8 @@
                                         'tenant' => null,
                                         'plans' => $plans,
                                         'availableModules' => $availableModules,
-                                        'tenantModuleLimits' => $tenantModuleLimits ?? []
+                                        'tenantModuleLimits' => $tenantModuleLimits ?? [],
+                                        'formPrefix' => 'create'
                                     ]
                                 )
 

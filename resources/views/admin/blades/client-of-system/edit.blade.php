@@ -106,7 +106,8 @@
                                         'tenant' => $tenant,
                                         'plans' => $plans,
                                         'availableModules' => $availableModules,
-                                        'tenantModuleLimits' => $tenantModuleLimits
+                                        'tenantModuleLimits' => $tenantModuleLimits,
+                                        'formPrefix' => 'edit'
                                     ]
                                 )
 

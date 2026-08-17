@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Plan;
+use App\Models\TemplateTheme;
 use App\Models\Tenant;
 use App\Services\ThemeManager;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ class TenantController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/tenant/';
 
+    
     public function index(ThemeManager $themeManager)
     {
         $tenant = Tenant::current();
@@ -27,12 +29,12 @@ class TenantController extends Controller
         ->orderBy('id', 'desc')
         ->get();
         $availableModules = $themeManager->availableModules();
+        $templateThemes = TemplateTheme::orderBy('name', 'ASC')->get();
         
-        // dd($tenant, $themeData);
-        return view('admin.blades.tenant.index', compact('tenant', 'theme', 'themeData', 'plans', 'availableModules'));
+        return view('admin.blades.tenant.index', compact('tenant', 'theme', 'themeData', 'plans', 'templateThemes', 'availableModules'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, ThemeManager $themeManager)
     {
         $tenant = Tenant::current();
 
@@ -154,8 +156,10 @@ class TenantController extends Controller
         return redirect()->back();
     }
 
-    public function update(Request $request, Tenant $tenant)
+    public function update(Request $request, Tenant $tenant, ThemeManager $themeManager)
     {
+        $tenant = Tenant::current();
+
         $data = $request->except([
             'path_image_logo_header',
             'path_image_logo_footer',
@@ -292,6 +296,7 @@ class TenantController extends Controller
                 $data['path_image_logo_footer'] = null;
             }
             $tenant->update($data);
+
             DB::commit();
 
             session()->flash(

@@ -284,6 +284,24 @@
                                             </li>
                                         @endif
 
+                                        @if (
+                                            $theme->hasModule('services') &&
+                                            (
+                                                Auth::user()->hasRole('Super') ||
+                                                Auth::user()->can('usuario.tornar usuario master') ||
+                                                Auth::user()->can('depoimento.visualizar')
+                                            )
+                                        )
+                                            <li class="menu-item">
+                                                <a
+                                                    href="{{ route('admin.dashboard.serviceItem.index') }}"
+                                                    class="menu-link"
+                                                >
+                                                    <span class="menu-text">Serviços</span>
+                                                </a>
+                                            </li>
+                                        @endif
+
                                     </ul>
 
                                 </div>
@@ -1420,6 +1438,85 @@
                 });
             </script>
         @endif
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+
+                if (typeof CKEDITOR === 'undefined') {
+                    console.warn('CKEditor não foi carregado.');
+                    return;
+                }
+
+                const config = {
+                    toolbar: [
+                        {
+                            name: 'basicstyles',
+                            items: ['Bold', 'Italic', 'Underline']
+                        },
+                        {
+                            name: 'paragraph',
+                            items: [
+                                'NumberedList',
+                                'BulletedList',
+                                'JustifyLeft',
+                                'JustifyCenter',
+                                'JustifyRight',
+                                'JustifyBlock'
+                            ]
+                        }
+                    ],
+                    height: 300
+                };
+
+
+                function initCKEditor(textarea) {
+
+                    if (!textarea || !textarea.id) {
+                        return;
+                    }
+
+                    // Já existe uma instância
+                    if (CKEDITOR.instances[textarea.id]) {
+                        return;
+                    }
+
+                    CKEDITOR.replace(textarea.id, config);
+                }
+
+
+                function initEditors(container = document) {
+
+                    container.querySelectorAll('.js-ckeditor').forEach(function (textarea) {
+
+                        initCKEditor(textarea);
+
+                    });
+                }
+
+
+                // =========================================================
+                // CAMPOS FORA DE MODAL
+                // =========================================================
+
+                initEditors();
+
+
+                // =========================================================
+                // CAMPOS DENTRO DE MODAIS
+                // =========================================================
+
+                document.querySelectorAll('.modal').forEach(function (modal) {
+
+                    modal.addEventListener('shown.bs.modal', function () {
+
+                        initEditors(modal);
+
+                    });
+
+                });
+
+            });
+        </script>
 
         <script>
             var userThemeSettings = {
