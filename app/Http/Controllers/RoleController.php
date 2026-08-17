@@ -16,22 +16,75 @@ class RoleController extends Controller
 {
     public function index(ThemeManager $themeManager)
     {
-
-        if(!Auth::user()->hasRole('Super') && !Auth::user()->can('usuario.tornar usuario master') && !Auth::user()->can('grupo.visualizar')){
-            return view('admin.error.403'); 
+        if (
+            !Auth::user()->hasRole('Super') &&
+            !Auth::user()->can('usuario.tornar usuario master') &&
+            !Auth::user()->can('grupo.visualizar')
+        ) {
+            return view('admin.error.403');
         }
 
         $roles = Role::get();
-        $permissions = Permission::get(); 
+
         $theme = $themeManager;
         $themeData = $themeManager->theme();
 
-        return view('admin.blades.group.index', [
-            'roles'=>$roles,
-            'permissions'=>$permissions,
-            'theme' => $theme, 
-            'themeData' => $themeData
-        ]);
+        $template = $themeData->slug;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Módulos disponíveis no template
+        |--------------------------------------------------------------------------
+        */
+        $templateModules = config("template_modules.{$template}", []);
+
+        $modules = collect($templateModules)
+            ->except('limits')
+            ->flatten()
+            ->unique()
+            ->values();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Categorias de permissões dos módulos
+        |--------------------------------------------------------------------------
+        */
+        $permissionCategories = $modules
+            ->map(function ($module) {
+                return config("module_permissions.{$module}.permission");
+            })
+            ->filter()
+            ->unique()
+            ->values();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Permissões disponíveis para este template
+        |--------------------------------------------------------------------------
+        */
+        $permissions = Permission::query()
+            ->where(function ($query) use ($permissionCategories) {
+
+                foreach ($permissionCategories as $category) {
+                    $query->orWhere(
+                        'name',
+                        'like',
+                        $category . '.%'
+                    );
+                }
+
+            })
+            ->get();
+
+        return view(
+            'admin.blades.group.index',
+            compact(
+                'roles',
+                'permissions',
+                'theme',
+                'themeData'
+            )
+        );
     }
     public function store(Request $request)
     {   
