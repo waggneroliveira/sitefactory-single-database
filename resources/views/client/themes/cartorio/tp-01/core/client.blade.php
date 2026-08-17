@@ -306,7 +306,7 @@
 
     {{-- @include('client/themes/petshop/tp-01/includes/lgpd/lgpd') --}}
 
-     @if (isset($contact) && $contact->phone_one <> null)
+    @if (isset($contact) && $contact->phone_one <> null)
         @php
             // Remove caracteres não numéricos do telefone
             $phone = preg_replace('/\D/', '', $contact->phone_one);

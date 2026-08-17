@@ -1,3 +1,33 @@
+.whatsapp-floatt {
+    position: fixed;
+    bottom: 135px;
+    right: 10px;
+    background-color: #25D366;
+    color: white;
+    border-radius: 60px;
+    padding: 14px 18px;
+    font-size: 2rem;
+    width: 64px;
+    height: 64px;
+    text-align: center;
+    line-height: 1;
+    box-shadow: 0 10px 25px -5px rgba(37, 211, 102, 0.4);
+    z-index: 1000;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+.whatsapp-floatt:hover {
+    background-color: #1ebe5d;
+    transform: scale(1.08);
+    color: white;
+    box-shadow: 0 18px 30px -8px #25d36680;
+}
+.scroll-top.active{
+   bottom: 60px !important; 
+}
 .footer-light .logo-system{
     filter: inherit;
     opacity: inherit;
@@ -122,34 +152,7 @@
 /* =========================
    ABOUT
 ========================= */
-.banner-inner{
-    background-image: var(--banner-bg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    object-fit: contain;
-    height: 221px;
-    width: 100%;
-}
-.banner-inner::after{
-    content: '';
-    background: rgb(0 0 0 / 66%);
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    z-index: 0;
-}
-.banner-inner span::after{
-    content: '';
-    height: 1px;
-    background: #FFF;
-    width: 50px;
-    display: block;
-    margin: 0 auto;
-    margin-top: 5px;
-}
+
 .about-image img {
     object-fit: cover;
     height: 100%;
@@ -190,11 +193,7 @@
 .about-subtitle{
     border-bottom: 1px solid var(--secondary-color);
 }
-.firula-count{
-    width: 175px;
-    top: -4px !important;
-    left: 0px;
-}
+
 .stat-number{
     color: rgb(16 81 61 / 50%);
 }
@@ -202,36 +201,6 @@
 /* =========================
    STEP-TO-STEP
 ========================= */
-.left-content .image{
-    margin-right: -110px;
-}
-.left-content .step-image{
-    max-width: 687px;
-    height: 100%;
-    object-fit: cover;
-}
-.left-content .icon-step{
-    bottom: 115px;
-    object-fit: cover;
-    max-width: 73px;
-    z-index: -1;
-    left: -7px;
-}
-.left-content p{
-    color: #F9F9F9;
-    line-height: 33.6px;
-}
-.list-step::after{
-    content: '';
-    position: absolute;
-    left: 19px;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 85%;
-    border-left: 2px dashed #CCCCCC;
-    z-index: -1;
-}
-
 .about-image img {
     object-fit: cover;
     height: 100%;
@@ -244,135 +213,11 @@
     font-weight: 400;
     color: #565656;
 }
-.list-step ul{
-    padding: 0 !important;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 13px;
-    flex-direction: column;
-}
-.list-step li{
-    font-weight: 600;
-    position: relative;
-    padding-left: 55px;
-    list-style: none;
-    margin-bottom: 15px;
-}
-.list-step li::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-
-    width: 40px;
-    height: 40px;
-
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-
-    background-image: url('../images/ok.svg');
-}
-/* =========================
-   PRODUCT
-========================= */
-
-.category-product .card img{
-    max-width: 160px;
-    object-fit: cover;
-}
-.category-product .card{
-    min-height: 195px;
-}
 
 /* =========================
    CATEGORY PRODUCT
 ========================= */
 
-.products-section {
-  background: #f9f9f9;
-}
-
-.btn-filter {
-  border-radius: 25px;
-  background: transparent;
-  color: var(--primary-color);
-}
-
-.btn-filter.active {
-    background: var(--primary-color);
-    color: #fff;
-}
-
-.product-card {
-    border-radius: 16px;
-    text-align: center;
-    height: 100%;
-    transition: .3s;
-}
-.product-card .image{
-    aspect-ratio: 1 / 1;
-    background-color: #cccccc52;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    -webkit-transition: all 0.5s ease;
-	-moz-transition: all 0.5s ease;
-	-ms-transition: all 0.5s ease;
-	-o-transition: all 0.5s ease;
-	transition: all 0.5s ease;
-}
-
-.product-card img {
-    width: 100%;
-    height: 237px;
-    object-fit: contain;
-}
-
-.product-card:hover {
-    transform: translateY(-5px);
-}
-
-.btn-view {
-    border-radius: 25px;
-    padding: 6px 16px;
-    margin-bottom: 15px;
-    display: inline-block;
-    -webkit-transition: all 0.5s ease;
-	-moz-transition: all 0.5s ease;
-	-ms-transition: all 0.5s ease;
-	-o-transition: all 0.5s ease;
-	transition: all 0.5s ease;
-}
-
-.thumbs-width {
-    height: 130px !important;
-}
-.gallery-top .swiper-slide{
-    height: 360px;
-}
-.gallery-top .swiper-slide img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.gallery-thumbs .swiper-slide img{
-    object-fit: contain;
-    aspect-ratio: 1/1;
-}
-.gallery-thumbs .swiper-slide {
-    opacity: 0.5;
-    cursor: pointer;
-}
-.gallery-thumbs .swiper-slide-thumb-active {
-    opacity: 1;
-    border: 2px solid var(--text-color-light);
-}
-.btn-prod a{
-    border: 1px solid var(--secondary-color) !important;
-}
 .navigation-swiper{
     position: absolute;
     left: 0;
@@ -392,84 +237,9 @@
     font-weight: bold;
 }
 
-.product-main img {
-    max-height: 380px;
-    margin: auto;
-    display: block;
-}
-
-.product-thumbs img {
-    width: 100%;
-    border-radius: 8px;
-    cursor: pointer;
-    border: 2px solid transparent;
-}
-
-.product-thumbs .swiper-slide-thumb-active img {
-    border-color: #10513D;
-}
-
-.product-description .description{
-    border: 1px solid #10513D;
-}
-.product-description .desc-title:before{
-    content: '';
-    width: 0;
-    height: 0;
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    border-top: 15px solid #10513D;
-    position: absolute;
-    bottom: 0px;
-    left: 50%;
-    transform: translate(-50%, 7px);
-}
-.product-main {
-    width: 100%;
-    height: 380px;
-}
-
-.product-main .swiper-slide {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.product-main img {
-    max-height: 100%;
-    object-fit: contain;
-}
-.product-thumbs {
-    height: 80px;
-}
-
-.product-thumbs .swiper-slide {
-    height: 100%;
-    opacity: 0.5;
-}
-
-.product-thumbs .swiper-slide-thumb-active {
-    opacity: 1;
-}
-
-.firula-products{
-    top: -50px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 0;
-    object-fit: cover;
-    width: 80px;
-}
-.about-subtitle.span-product{
-    width: 43%;
-}
 /* =========================
    BLOG 
 ========================= */
-#shareBtn {
-    width: 171px;
-}
-
 .socialLinks {
     max-height: 0;
     transition: max-height 0.4s ease, opacity 0.4s ease;
@@ -500,107 +270,6 @@
     transition: all 0.3s ease;
 }
 
-.filter-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.filter-list li {
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.filter-list li:hover {
-    background: var(--text-color-medium);
-}
-
-.filter-list li.active {
-    color: var(--primary-color);
-}
-
-.post-card {
-  position: relative;
-  height: 100%;
-  border-radius: 18px;
-  overflow: hidden;
-}
-
-.post-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    min-height: 420px;
-    -webkit-transition: all 0.5s ease;
-	-moz-transition: all 0.5s ease;
-	-ms-transition: all 0.5s ease;
-	-o-transition: all 0.5s ease;
-	transition: all 0.5s ease;
-}
-.post-card:hover img{
-    transform: scale(1.06);
-    -webkit-transition: all 0.5s ease;
-	-moz-transition: all 0.5s ease;
-	-ms-transition: all 0.5s ease;
-	-o-transition: all 0.5s ease;
-	transition: all 0.5s ease;
-}
-.post-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgb(33 31 31 / 66%);
-  z-index: 1;
-}
-
-.post-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  color: #fff;
-}
-.firula-blog{
-    width: 150px;
-}
-.relacionados .image{
-    width: 75px;
-    height: 75px;
-    overflow: hidden;
-}
-.relacionados img{
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-}
-
-.search-wrapper {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.search-icon {
-    cursor: pointer;
-}
-
-.search-input {
-    width: 0;
-    opacity: 0;
-    margin-left: 0;
-    transition: all 0.3s ease;
-    border-radius: 20px;
-}
-
-.search-wrapper.active .search-input {
-    width: 300px;
-    opacity: 1;
-    margin-left: 10px;
-}
 
 /* =========================
    FAQ
@@ -721,79 +390,6 @@
     border-radius: 50%;
 }
 
-/* =========================
-   MVW SECTION
-========================= */
-
-.mvw-section {
-  position: relative;
-  min-height: 680px;
-  display: flex;
-  background-image: url("../images/missao.png");
-  align-items: center;
-  background-size: cover;
-  background-position: center;
-  transition: background-image 0.4s ease-in-out;
-}
-.mvw-cards{
-    margin-bottom: 90px;
-}
-.mvw-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  z-index: 1;
-}
-
-.mvw-section .container {
-  position: relative;
-  z-index: 2;
-}
-
-.mvw-card {
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.mvw-card:hover,
-.mvw-card.active {
-  transform: translateY(-6px);
-}
-.mvw-card  .icon{
-    width: 67px;
-    height: 67px;
-}
-
-/* =========================
-   TEAM
-========================= */
-.team-section {
-  background: #fff;
-}
-
-.team-card {
-  border-radius: 22px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-  height: 416px;
-  transition: transform .3s ease, box-shadow .3s ease;
-}
-
-.team-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.18);
-}
-
-.team-image {
-  height: 100%;
-  overflow: hidden;
-}
-
-.team-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
 html,
 body {
     max-width: 100% !important;
@@ -802,15 +398,6 @@ body {
 
 body.modal-open {
     padding-right: 0 !important;
-}
-.team-body {
-    bottom: 25px;
-    left: 50%;
-    transform: translate(-50%, 0px);
-}
-
-.btn-team {
-  transition: background .3s ease;
 }
 
 /* =========================
