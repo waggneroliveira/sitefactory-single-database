@@ -25,12 +25,14 @@ class SlideController extends Controller
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
-        $check = checkPermission('slide.visualizar', $settingTheme);
+        $check = checkPermission('slides', 'slide.visualizar', $settingTheme);
+
         if ($check !== true) {
             return $check;
         }
 
         $slides = Slide::sorting()->get();
+
         $theme = $themeManager;
         $themeData = $themeManager->theme();
         $slideLimit = $themeManager->getLimit('slides', 0);

@@ -11,7 +11,7 @@ if (!function_exists('checkPermission')) {
      * @param mixed $settingTheme
      * @return bool|\Illuminate\View\View
      */
-    function checkPermission(string $permission, $settingTheme)
+    function checkPermission(string $module, string $permission, $settingTheme)
     {
         $user = Auth::user();
 
@@ -19,14 +19,67 @@ if (!function_exists('checkPermission')) {
             return view('admin.error.403', compact('settingTheme'));
         }
 
+        // Super continua tendo acesso total
         if (
-            !$user->hasRole('Super') &&
-            !$user->can('usuario.tornar usuario master') &&
-            !$user->hasPermissionTo($permission)
+            $user->hasRole('Super') ||
+            $user->can('usuario.tornar usuario master')
         ) {
+            return true;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Verifica se o módulo existe no template atual
+        |--------------------------------------------------------------------------
+        */
+
+        $themeManager = app(\App\Services\ThemeManager::class);
+        $themeData = $themeManager->theme();
+
+        $template = $themeData->slug;
+
+        $templateModules = config("template_modules.{$template}", []);
+
+        $modules = collect($templateModules)
+            ->except('limits')
+            ->flatten()
+            ->unique();
+
+        if (!$modules->contains($module)) {
             return view('admin.error.403', compact('settingTheme'));
         }
 
-        return true; // tem permissão
+        /*
+        |--------------------------------------------------------------------------
+        | Verifica se a permissão pertence ao módulo
+        |--------------------------------------------------------------------------
+        */
+
+        $permissionConfig = config("module_permissions.{$module}");
+
+        if (!$permissionConfig) {
+            return view('admin.error.403', compact('settingTheme'));
+        }
+
+        $permissionPrefix = $permissionConfig['permission'];
+
+        $permissionBelongsToModule =
+            str_starts_with($permission, $permissionPrefix . '.');
+
+        if (!$permissionBelongsToModule) {
+            return view('admin.error.403', compact('settingTheme'));
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Verifica a permissão do usuário
+        |--------------------------------------------------------------------------
+        */
+
+        if (!$user->hasPermissionTo($permission)) {
+            return view('admin.error.403', compact('settingTheme'));
+        }
+
+        return true;
     }
 }
