@@ -25,6 +25,8 @@ class SlideController extends Controller
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
+        // 'slides' → é o módulo definido no template_modules.php.
+        // 'slide.visualizar' → é a permissão definida no module_permissions.php.
         $check = checkPermission('slides', 'slide.visualizar', $settingTheme);
 
         if ($check !== true) {

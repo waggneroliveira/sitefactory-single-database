@@ -19,8 +19,10 @@ class FaqController extends Controller
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
-        // Verifica permissão para visualizar slides
-        $check = checkPermission('perguntas e respostas.visualizar', $settingTheme);
+        // 'slides' → é o módulo definido no template_modules.php.
+        // 'slide.visualizar' → é a permissão definida no module_permissions.php.
+        $check = checkPermission('faq', 'perguntas e respostas.visualizar', $settingTheme);
+
         if ($check !== true) {
             return $check; // retorna view 403
         }

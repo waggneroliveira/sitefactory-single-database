@@ -9,11 +9,7 @@ class ModulePermissionService
     /**
      * Verifica se o usuário pode acessar determinado módulo/permissão.
      */
-    public function checkPermission(
-        string $module,
-        string $permission,
-        $settingTheme
-    ) {
+    public function checkPermission( string $module, string $permission, $settingTheme) {
         $user = Auth::user();
 
         if (!$user) {
@@ -72,7 +68,7 @@ class ModulePermissionService
      */
     public function moduleExists(string $module): bool
     {
-        // Aqui precisamos pegar o template atual.
+        // Pegar o template atual.
         $themeManager = app(\App\Services\ThemeManager::class);
 
         $themeData = $themeManager->theme();
@@ -93,10 +89,7 @@ class ModulePermissionService
     /**
      * Verifica se a permissão pertence ao módulo.
      */
-    public function permissionBelongsToModule(
-        string $module,
-        string $permission
-    ): bool {
+    public function permissionBelongsToModule(string $module, string $permission): bool {
         $permissionConfig = config("module_permissions.{$module}");
 
         if (!$permissionConfig) {

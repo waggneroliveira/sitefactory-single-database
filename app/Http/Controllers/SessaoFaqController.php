@@ -21,8 +21,10 @@ class SessaoFaqController extends Controller
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
-        // Verifica permissão para visualizar slides
-        $check = checkPermission('sesssao faq.visualizar', $settingTheme);
+        // 'faq_session' → é o módulo definido no template_modules.php.
+        // 'sesssao faq.visualizar' → é a permissão definida no module_permissions.php.
+        $check = checkPermission('faq_session', 'sesssao faq.visualizar', $settingTheme);
+
         if ($check !== true) {
             return $check; // retorna view 403
         }
