@@ -45,6 +45,9 @@ Route::middleware([NeedsTenant::class])->group(function () {
     Route::get('/', [HomePageController::class, 'index'])
         ->name('index');
 
+    Route::get('/produto', function () {
+            return view('client.themes.ecommerce.tp-01.blades.product');
+        })->name('prod');
 
     Route::get('produto/{category}/{slug}', [ProductPageController::class, 'productView'])
         ->name('client.product');

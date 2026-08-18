@@ -34,7 +34,7 @@ class ProductPageController
         if (isset($data['view'])) {
             return view($data['view']);
         }
-
+        
         return view($theme->view('product'), $data);
     }
 }
