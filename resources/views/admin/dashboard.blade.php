@@ -444,6 +444,53 @@
             </div>
         </div>
     @endif
+    
+    {{-- ============================================================
+        FOOTER
+    ============================================================ --}}
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div>
+                        <a
+                            href="https://www.whi.dev.br/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style="color:#94a0ad;"
+                        >
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script>
+                            © WHI - Web de Alta Inspiração
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="d-none d-md-flex gap-4 align-items-center justify-content-md-end footer-links">
+                        <a
+                            href="https://www.whi.dev.br/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Sobre a WHI
+                        </a>
+
+                        <a
+                            href="https://wa.me/5571992768360"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Fale conosco
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     @include('admin.loadPage.loading')
 @endsection
