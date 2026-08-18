@@ -19,7 +19,7 @@
 
         <meta name="author" content="WHI - Web de Alta Inspiração">
         <meta name="description" content="Painel gerenciador de conteúdo WHI">
-        <meta name="copyright" content="© 2024 WHI - Web de Alta Inspiração." />
+        <meta name="copyright" content="© 2026 WHI - Web de Alta Inspiração." />
         <meta name="robots" content="none">
         <meta name="googlebot" content="noarchive">
         
@@ -126,7 +126,7 @@
                                             Home
                                         </span>
 
-                                        <span class="badge bg-success rounded-pill ms-auto">
+                                        <span class="badge btn-green-whi rounded-pill ms-auto text-dark">
                                             {{
                                                 collect([
                                                     'slides',
@@ -136,6 +136,7 @@
                                                     'faq_session',
                                                     'faq',
                                                     'testimonials',
+                                                    'services',
                                                 ])->filter(fn ($module) => $theme->hasModule($module))->count()
                                             }}
                                         </span>
@@ -341,7 +342,7 @@
                                             Sobre Nós
                                         </span>
 
-                                        <span class="badge bg-success rounded-pill ms-auto">
+                                        <span class="badge btn-green-whi rounded-pill ms-auto text-dark">
                                             {{
                                                 collect([
                                                     'about',

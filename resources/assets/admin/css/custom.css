@@ -1,1 +1,108 @@
-body.loaded {opacity: 1;}.cke_dialog {z-index: 99999 !important;}.cke_notifications_area{z-index: -1 !important;top: 0 !important;display: none !important;}.logo-box .logo-light img{filter: brightness(0) invert(1) !important;opacity: 0.7;}.logo-box .logo-lg{height: 70px !important;}.slide.modal-dialog.modal-dialog-centered{max-width: 1200px;}.bg-black-whi{background-color: #000F25;}.btn-green-whi{background: #CBFF4D;}.border-whi{border: 1px solid #9FA2B2 !important;}body.authentication-bg{background-color: #000F25 !important;}.hidden div span span[aria-current="page"] span {background: #CBFF4D !important;margin: 0 5px !important;padding: 5.8px 9px 5.8px 9px !important;font-family: "Ubuntu", sans-serif;font-size: 0.87rem !important;color: #FFF !important;}.hidden div {position: relative !important;display: flex !important;flex-direction: row !important;width: 100% !important;margin-top: 0px !important;align-items: center !important;justify-content: end !important;}.hidden div a {background: #f4f4f4 !important;margin: 0 5px !important;padding: 5px 5px 5px 8px !important;font-family: "Ubuntu", sans-serif;font-size: 0.87rem !important;color: #262626 !important;}.hidden div p{display: none;}.relative.inline-flex.items-center.px-2.py-2, .flex.justify-between.flex-1{display: none;}@media (max-width:476px){.content{padding: 0 !important;}.container-fluid{padding: 0 6px 0 6px !important;}.table-edit-button{padding: 0px !important;width: 24px !important;}.btSubmitDeleteItem{padding: 2px !important;width: 24px !important;}.d-flex.gap-lg-1.justify-center{padding-left: 2px !important;padding-right: 2px !important;justify-content: space-between !important;gap: 5px;}.modal-dialog, .swal2-show{width: 90% !important;margin: 0 auto !important;max-width: 90% !important;}}
+.hover-shadow {
+    transition: all 0.2s ease-in-out;
+    border: 1px solid transparent;
+}
+
+.hover-shadow:hover {
+    background-color: #fff !important;
+    border-color: #dee2e6;
+    transform: translateX(4px);
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.transition {
+    transition: all 0.2s ease-in-out;
+}
+body.loaded {
+    opacity: 1;
+}
+.cke_dialog {
+    z-index: 99999 !important;
+}
+.cke_notifications_area {
+    z-index: -1 !important;
+    top: 0 !important;
+    display: none !important;
+}
+.logo-box .logo-light img, .logo.logo-light .logo-lg img {
+    filter: brightness(0) invert(1) !important;
+    opacity: 0.7;
+}
+.logo-box .logo-lg {
+    height: 70px !important;
+}
+.slide.modal-dialog.modal-dialog-centered {
+    max-width: 1200px;
+}
+.bg-black-whi {
+    background-color: #000f25;
+}
+.btn-green-whi {
+    background: #cbff4d;
+}
+.border-whi {
+    border: 1px solid #9fa2b2 !important;
+}
+body.authentication-bg {
+    background-color: #000f25 !important;
+}
+.hidden div span span[aria-current="page"] span {
+    background: #cbff4d !important;
+    margin: 0 5px !important;
+    padding: 5.8px 9px 5.8px 9px !important;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 0.87rem !important;
+    color: #fff !important;
+}
+.hidden div {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: row !important;
+    width: 100% !important;
+    margin-top: 0px !important;
+    align-items: center !important;
+    justify-content: end !important;
+}
+.hidden div a {
+    background: #f4f4f4 !important;
+    margin: 0 5px !important;
+    padding: 5px 5px 5px 8px !important;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 0.87rem !important;
+    color: #262626 !important;
+}
+.hidden div p {
+    display: none;
+}
+.relative.inline-flex.items-center.px-2.py-2,
+.flex.justify-between.flex-1 {
+    display: none;
+}
+@media (max-width: 476px) {
+    .content {
+        padding: 0 !important;
+    }
+    .container-fluid {
+        padding: 0 6px 0 6px !important;
+    }
+    .table-edit-button {
+        padding: 0px !important;
+        width: 24px !important;
+    }
+    .btSubmitDeleteItem {
+        padding: 2px !important;
+        width: 24px !important;
+    }
+    .d-flex.gap-lg-1.justify-center {
+        padding-left: 2px !important;
+        padding-right: 2px !important;
+        justify-content: space-between !important;
+        gap: 5px;
+    }
+    .modal-dialog,
+    .swal2-show {
+        width: 90% !important;
+        margin: 0 auto !important;
+        max-width: 90% !important;
+    }
+}
