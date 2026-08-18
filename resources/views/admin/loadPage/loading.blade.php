@@ -13,6 +13,8 @@
     .loading-indicator .row img{
         width: 280px;
         margin-bottom: 15px;
+        filter: brightness(0) invert(1) !important;
+        opacity: 0.7;
     }
     .loading-indicator .row{
         display:flex;
@@ -43,7 +45,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: #10131C;
+    background: #7C3AED;
     display: flex;
     justify-content: center;
     align-items: center;" class="loading-indicator">

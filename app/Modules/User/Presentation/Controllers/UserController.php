@@ -6,6 +6,7 @@ use App\Http\Requests\RequestStoreUser;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use App\Modules\User\Business\UserService;
+use App\Repositories\SettingThemeRepository;
 use App\Repositories\UserPermissionRepository;
 use App\Services\ThemeManager;
 use Illuminate\Http\RedirectResponse;
@@ -22,12 +23,24 @@ class UserController
         $this->theme = $theme;
     }
 
-    public function index(UserPermissionRepository $userPermissionRepository): View|RedirectResponse
+    public function index(ThemeManager $themeManager): View|RedirectResponse
     {
-        $data = $this->service->getIndexData($userPermissionRepository, $this->theme);
-        if (isset($data['forbidden'])) {
-            return $data['forbidden'];
+        $settingTheme = (new SettingThemeRepository())->settingTheme();
+
+        $data = $this->service->getIndexData($this->theme);
+
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+
+        // 'users' → é o módulo definido no template_modules.php.
+        // 'usuario.visualizar' → é a permissão definida no module_permissions.php.
+        $check = checkPermission('users', 'usuario.visualizar', $settingTheme);
+
+        if ($check !== true) {
+            return $check;
         }
+        $data['theme'] = $theme;
+        $data['themeData'] = $themeData;
 
         return view('admin.blades.user.index', $data);
     }

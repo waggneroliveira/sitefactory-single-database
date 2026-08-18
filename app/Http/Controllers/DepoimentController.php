@@ -23,8 +23,9 @@ class DepoimentController extends Controller
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
-        // Verifica permissão para visualizar slides
-        $check = checkPermission('depoimento.visualizar', $settingTheme);
+        // 'slides' → é o módulo definido no template_modules.php.
+        // 'slide.visualizar' → é a permissão definida no module_permissions.php.
+        $check = checkPermission('testimonials', 'depoimento.visualizar', $settingTheme);
         if ($check !== true) {
             return $check; // retorna view 403
         }

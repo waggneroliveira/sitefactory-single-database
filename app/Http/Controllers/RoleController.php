@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Permission;
 use App\Models\Role;
+use App\Repositories\SettingThemeRepository;
 use App\Services\ThemeManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,14 +17,16 @@ class RoleController extends Controller
 {
     public function index(ThemeManager $themeManager)
     {
-        if (
-            !Auth::user()->hasRole('Super') &&
-            !Auth::user()->can('usuario.tornar usuario master') &&
-            !Auth::user()->can('grupo.visualizar')
-        ) {
-            return view('admin.error.403');
-        }
+        $settingTheme = (new SettingThemeRepository())->settingTheme();
 
+        // 'permissions' → é o módulo definido no template_modules.php.
+        // 'grupo.visualizar' → é a permissão definida no module_permissions.php.
+        $check = checkPermission('permissions', 'grupo.visualizar', $settingTheme);
+
+        if ($check !== true) {
+            return $check;
+        }
+        
         $roles = Role::get();
 
         $theme = $themeManager;
@@ -82,7 +85,8 @@ class RoleController extends Controller
                 'roles',
                 'permissions',
                 'theme',
-                'themeData'
+                'themeData',
+                'settingTheme',
             )
         );
     }

@@ -27,7 +27,7 @@ class TemplateThemeController extends Controller
         // if ($check !== true) {
         //     return $check; // retorna view 403
         // }
-
+        
         $templateTheme = TemplateTheme::where('active', 1)->first();
         $theme = $themeManager;
         $themeData = $themeManager->theme();

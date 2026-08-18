@@ -41,7 +41,7 @@
                                             @if (empty($serviceSection['testimonial']))
                                             
                                                 <button type="button" class="me-2 btn btn-secondary text-black waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#serviceItem-section-create"><i class="mdi mdi-plus-circle me-1"></i> Informações da sessão</button>
-                                                                                                <!-- Modal -->
+                                                <!-- Modal -->
                                                 <div class="modal fade" id="serviceItem-section-create" tabindex="-1" role="dialog" aria-hidden="true">
                                                     <div class="serviceItem modal-dialog modal-dialog-centered" style="max-width: 1360px;">
                                                         <div class="modal-content">
@@ -131,7 +131,6 @@
                                                 <label><input name="btnSelectAll" type="checkbox"></label>
                                             </th>
                                             <th>Título</th>
-                                            <th>Imagem </th>
                                             <th>{{__('dashboard.created_at')}}</th>
                                             <th>{{__('dashboard.status')}}</th>
                                             <th style="width: 85px;">{{__('dashboard.action')}}</th>
@@ -146,14 +145,7 @@
                                                 </td>
                                                 <td>
                                                    {!!isset($depoiment->name)?$depoiment->name:'-'!!}
-                                                </td>
-                                                <td class="table-depoiment text-center">
-                                                    @if ($depoiment->path_image)
-                                                        <img src="{{ asset('storage/'.$depoiment->path_image) }}" alt="table-depoiment" class="me-2 rounded-circle" style="width: 40px; height: 40px;">
-                                                        @else      
-                                                        <img src="{{asset('build/admin/images/depoiments/depoiment-3.jpg')}}" alt="table-depoiment" class="me-2 rounded-circle">
-                                                    @endif
-                                                </td>                                                
+                                                </td>                                               
                                                 <td>
                                                     @php
                                                         $locales = [

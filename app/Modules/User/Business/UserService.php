@@ -25,27 +25,94 @@ class UserService
 {
     protected string $pathUpload = 'admin/uploads/images/usuario/';
 
-    public function getIndexData(UserPermissionRepository $userPermissionRepository, ThemeManager $themeManager): array
+    public function getIndexData(): array
     {
-        $settingTheme = (new SettingThemeRepository())->settingTheme();
-        $query = User::query();
-        $filteredQuery = $userPermissionRepository->filterUsersByPermissions($query);
+        /*
+        |--------------------------------------------------------------------------
+        | Usuário autenticado
+        |--------------------------------------------------------------------------
+        */
 
-        if ($filteredQuery === 'forbidden') {
-            return ['forbidden' => view('admin.error.403', compact('settingTheme'))];
+        $user = auth()->user();
+
+        $users = User::query()
+            ->with('roles')
+            ->sorting();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Visualização de usuários
+        |--------------------------------------------------------------------------
+        |
+        | Super:
+        |   - Pode visualizar todos os usuários.
+        |
+        | Master:
+        |   - Pode visualizar todos, exceto o Super (ID 1).
+        |   - Não precisa possuir as demais permissões.
+        |
+        | Usuário comum:
+        |   - Visualiza somente a si mesmo.
+        |   - Pode visualizar outros usuários se possuir a permissão
+        |     "usuario.visualizar outros usuarios".
+        |
+        */
+
+        if ($user->id === 1) {
+
+            // Super pode visualizar todos.
+            $users->where('id', '<>', 1);
+
+        } elseif ($user->can('usuario.tornar usuario master')) {
+
+            // Master pode visualizar todos, exceto o Super.
+            $users->where('id', '<>', 1);
+
+        } elseif ($user->can('usuario.visualizar outros usuarios')) {
+
+            // Usuário com permissão pode visualizar outros usuários.
+            $users->where('id', '<>', 1);
+
+        } else {
+
+            // Usuário comum visualiza somente a si mesmo.
+            $users->where('id', $user->id);
         }
 
-        $users = $filteredQuery->with('roles')->sorting()->get();
+        $users = $users->get();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Roles
+        |--------------------------------------------------------------------------
+        */
+
         $roles = (new UserRoleRepository())->userRole($users);
+
         $otherRoles = $roles['otherRoles'] ?? collect();
         $currentRoles = $roles['currentRoles'] ?? collect();
-        $permissions = Permission::join('role_has_permissions', 'permissions.id', 'role_has_permissions.permission_id')
+
+        /*
+        |--------------------------------------------------------------------------
+        | Permissões disponíveis
+        |--------------------------------------------------------------------------
+        */
+
+        $permissions = Permission::join(
+                'role_has_permissions',
+                'permissions.id',
+                'role_has_permissions.permission_id'
+            )
             ->groupBy('permissions.name')
             ->select('permissions.name')
             ->get();
-        $theme = $themeManager;
-        $themeData = $themeManager->theme();
-        return compact('users', 'otherRoles', 'permissions', 'currentRoles', 'theme', 'themeData');
+
+        return compact(
+            'users',
+            'otherRoles',
+            'permissions',
+            'currentRoles'
+        );
     }
 
     public function store(RequestStoreUser $request): User

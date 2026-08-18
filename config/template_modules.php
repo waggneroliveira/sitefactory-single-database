@@ -128,6 +128,10 @@ return [
             'permissions',
             'users',
         ],
+        
+        'config_theme' => [
+            'config_theme',
+        ],
 
         'limits' => [
             'slides' => 3,

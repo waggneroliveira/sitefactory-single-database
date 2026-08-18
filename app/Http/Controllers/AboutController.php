@@ -24,8 +24,9 @@ class AboutController extends Controller
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
-        // Verifica permissão para visualizar slides
-        $check = checkPermission('sobre nos.visualizar', $settingTheme);
+        // 'slides' → é o módulo definido no template_modules.php.
+        // 'slide.visualizar' → é a permissão definida no module_permissions.php.
+        $check = checkPermission('about', 'sobre nos.visualizar', $settingTheme);
         if ($check !== true) {
             return $check; // retorna view 403
         }

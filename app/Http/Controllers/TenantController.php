@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Plan;
 use App\Models\TemplateTheme;
 use App\Models\Tenant;
+use App\Repositories\SettingThemeRepository;
 use App\Services\ThemeManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,13 +22,24 @@ class TenantController extends Controller
     
     public function index(ThemeManager $themeManager)
     {
+        $settingTheme = (new SettingThemeRepository())->settingTheme();
+
+        // 'config_theme' → é o módulo definido no template_modules.php.
+        // 'configuracao do tema.visualizar' → é a permissão definida no module_permissions.php.
+        $check = checkPermission('config_theme', 'configuracao do tema.visualizar', $settingTheme);
+
+        if ($check !== true) {
+            return $check;
+        }
+
+
         $tenant = Tenant::current();
         $theme = $themeManager;
         $themeData = $themeManager->theme();
         $plans = Plan::with(['moduleLimits', 'tenants'])
         ->withCount('tenants')
         ->orderBy('id', 'desc')
-        ->get();
+        ->get();        
         $availableModules = $themeManager->availableModules();
         $templateThemes = TemplateTheme::orderBy('name', 'ASC')->get();
         

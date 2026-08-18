@@ -24,11 +24,12 @@ class ServiceItemController extends Controller
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
-        // Verifica permissão para visualizar serviceItem
-        // $check = checkPermission('sesssao faq.visualizar', $settingTheme);
-        // if ($check !== true) {
-        //     return $check; 
-        // }
+        // 'slides' → é o módulo definido no template_modules.php.
+        // 'slide.visualizar' → é a permissão definida no module_permissions.php.
+        $check = checkPermission('services', 'servicos.visualizar', $settingTheme);
+        if ($check !== true) {
+            return $check; 
+        }
         $theme = $themeManager;
         $themeData = $themeManager->theme();
         $serviceItems = ServiceItem::get();

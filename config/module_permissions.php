@@ -244,6 +244,14 @@ return [
         ],
     ],
 
+    'config_theme' => [
+        'permission' => 'configuracao do tema',
+        'actions' => [
+            'editar',
+            'visualizar',
+        ],
+    ],
+
     'users' => [
         'permission' => 'usuario',
         'actions' => [

@@ -2,23 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
 use App\Models\SettingEmail;
+use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
+use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Session;
 
 class SettingEmailController extends Controller
 {
-    public function index()
+    public function index(ThemeManager $themeManager)
     {
-        if(!Auth::user()->hasRole('Super') && !Auth::user()->can('usuario.tornar usuario master') && !Auth::user()->can('email.visualizar')){
-            return view('admin.error.403'); 
+        $settingTheme = (new SettingThemeRepository())->settingTheme();
+        
+        // 'config_smtp' → é o módulo definido no template_modules.php.
+        // 'email.visualizar' → é a permissão definida no module_permissions.php.
+        $check = checkPermission('config_smtp', 'email.visualizar', $settingTheme);
+
+        if ($check !== true) {
+            return $check;
         }
 
         $settingEmail = SettingEmail::first();
@@ -30,7 +38,7 @@ class SettingEmailController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        // dd($data);
+        
         try {
             DB::beginTransaction();
                 $email =SettingEmail::create($data);

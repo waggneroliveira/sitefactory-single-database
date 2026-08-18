@@ -18,8 +18,10 @@ class ContactController extends Controller
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
-        // Verifica permissão para visualizar slides
-        $check = checkPermission('contato.visualizar', $settingTheme);
+        // 'contact' → é o módulo definido no template_modules.php.
+        // 'contato.visualizar' → é a permissão definida no module_permissions.php.
+        $check = checkPermission('contact', 'contato.visualizar', $settingTheme);
+
         if ($check !== true) {
             return $check; // retorna view 403
         }
