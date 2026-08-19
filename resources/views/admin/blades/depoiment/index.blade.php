@@ -43,7 +43,7 @@
                                                 <button type="button" class="me-2 btn btn-secondary text-black waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#serviceItem-section-create"><i class="mdi mdi-plus-circle me-1"></i> Informações da sessão</button>
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="serviceItem-section-create" tabindex="-1" role="dialog" aria-hidden="true">
-                                                    <div class="serviceItem modal-dialog modal-dialog-centered" style="max-width: 1360px;">
+                                                    <div class="serviceItem modal-dialog modal-dialog-centered" style="max-width: 1260px;">
                                                         <div class="modal-content">
                                                             <div class="modal-header bg-light">
                                                                 <h4 class="modal-title" id="myCenterModalLabel">{{__('dashboard.btn_create')}}</h4>
@@ -68,7 +68,7 @@
                                                 <button type="button" class="me-2 btn btn-secondary text-black waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#serviceItem-section-edit"><i class="mdi mdi-plus-circle me-1"></i> Informações da sessão</button>
                                                 <!-- Modal Edit -->
                                                 <div class="modal fade" id="serviceItem-section-edit" tabindex="-1" role="dialog" aria-hidden="true">
-                                                    <div class="serviceItem modal-dialog modal-dialog-centered" style="max-width: 1360px;">
+                                                    <div class="serviceItem modal-dialog modal-dialog-centered" style="max-width: 1260px;">
                                                         <div class="modal-content">
                                                             <div class="modal-header bg-light">
                                                                 <h4 class="modal-title" id="myCenterModalLabel">{{__('dashboard.btn_create')}}</h4>

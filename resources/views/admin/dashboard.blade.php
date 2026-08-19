@@ -474,6 +474,7 @@
                             href="https://www.whi.dev.br/"
                             target="_blank"
                             rel="noopener noreferrer"
+                            class="text-muted"
                         >
                             Sobre a WHI
                         </a>
@@ -482,6 +483,7 @@
                             href="https://wa.me/5571992768360"
                             target="_blank"
                             rel="noopener noreferrer"
+                            class="text-muted"
                         >
                             Fale conosco
                         </a>

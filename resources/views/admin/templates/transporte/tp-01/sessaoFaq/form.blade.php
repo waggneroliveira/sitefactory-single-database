@@ -2,10 +2,10 @@
     $textareaId = $textareaId ?? 'description' . (isset($sessaoFaq->id) ? $sessaoFaq->id : '');
 @endphp
 <div class="row">
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-7">
         <h5 class="modal-title mb-3">Conteúdo direito</h5>
         <div class="row">
-            <div class="mb-3 col-12">
+            <div class="mb-3 col-lg-6">
                 <label for="title" class="form-label">Título</label>
                 <input 
                     type="text" 
@@ -16,7 +16,7 @@
                     placeholder="Digite o título"
                 >
             </div>
-            <div class="mb-3 col-12">
+            <div class="mb-3 col-lg-6">
                 <label for="subtitle" class="form-label">Subtítulo</label>
                 <input 
                     type="text" 
@@ -27,7 +27,7 @@
                     placeholder="Digite o subtítulo"
                 >
             </div>
-            <div class="mb-3 col-12">
+            <div class="mb-3 col-lg-6">
                 <label for="btn_title" class="form-label">Título do botão</label>
                 <input 
                     type="text" 
@@ -38,7 +38,7 @@
                     placeholder="Digite um título para o botão"
                 >
             </div>
-            <div class="mb-3 col-12">
+            <div class="mb-3 col-lg-6">
                 <label for="btn_number" class="form-label">Link de direcionamento</label>
                 <input 
                     type="text" 
@@ -69,7 +69,7 @@
         </div>
     </div>
 
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-5">
 
         <div class="mb-3 col-12">
             <label for="path_file" class="form-label">Imagem</label>
