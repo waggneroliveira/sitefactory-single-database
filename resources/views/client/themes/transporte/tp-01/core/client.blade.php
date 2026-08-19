@@ -171,7 +171,9 @@
 
     <title>{{ isset($blogInner) && !empty($blogInner->title) ? $blogInner->title : $seoTitle }}</title>
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-    
+
+    @include('client/script-seo-google/script-head')
+
     @if(isset($blogInner))
 
         @php
@@ -301,6 +303,8 @@
 
 <body>
     <div id="organization" hidden></div>
+
+    @include('client/script-seo-google/script-body-nocript')
 
     @include('client/themes/transporte/tp-01/includes/lgpd/lgpd')
 

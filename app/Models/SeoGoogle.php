@@ -49,6 +49,11 @@ class SeoGoogle extends Model
 
         'slogan',
         'organization_keywords',
+
+        'search_console',
+        'google_tag_manager',
+        'google_ads',
+        'meta_pixel',
     ];
 
     protected $casts = [
