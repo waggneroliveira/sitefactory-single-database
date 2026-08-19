@@ -62,9 +62,13 @@ Route::prefix('painel/')->group(function () {
         return view('admin.auth.login');
     })->name('admin.dashboard.painel');
 
-    Route::get('/success-logout', function () {
-        return view('admin.success.success-logout');
-    })->name('success-logout');
+    // Route::get('success-logout', function () {
+    //     return redirect()->route('admin.dashboard.painel');
+    // });
+
+    // Route::get('/success-logout', function () {
+    //     return view('admin.success.success-logout');
+    // })->name('success-logout');
 
     Route::post('login.do', [AuthController::class, 'authenticate'])
     ->name('admin.user.authenticate');

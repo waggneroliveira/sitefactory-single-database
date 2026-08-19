@@ -96,7 +96,8 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        session()->flash('success', 'Logout realizado com sucesso!');
-        return redirect('/painel/success-logout');
+        return redirect()
+            ->route('admin.dashboard.painel')
+            ->with('success', 'Logout realizado com sucesso!');
     }
 }
