@@ -80,6 +80,11 @@ class SeoGoogleController extends Controller
 
             'slogan' => ['nullable', 'string', 'max:255'],
             'organization_keywords' => ['nullable', 'string'],
+
+            'search_console' => ['nullable', 'string', 'max:255'],
+            'google_tag_manager' => ['nullable', 'string', 'max:50'],
+            'google_ads' => ['nullable', 'string', 'max:50'],
+            'meta_pixel' => ['nullable', 'string', 'max:50'],
         ]);
 
         // Garante apenas um SEO por tenant
@@ -243,6 +248,11 @@ class SeoGoogleController extends Controller
 
             'slogan' => ['nullable', 'string', 'max:255'],
             'organization_keywords' => ['nullable', 'string'],
+
+            'search_console' => ['nullable', 'string', 'max:255'],
+            'google_tag_manager' => ['nullable', 'string', 'max:50'],
+            'google_ads' => ['nullable', 'string', 'max:50'],
+            'meta_pixel' => ['nullable', 'string', 'max:50'],
         ]);
 
         /*
