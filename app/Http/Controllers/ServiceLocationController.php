@@ -73,7 +73,7 @@ class ServiceLocationController extends Controller
             session()->flash('success', __('dashboard.response_item_create'));
         } catch (\Exception $e) {
             DB::rollback();
-            Alert::error('Erro', __('dashboard.response_item_error_create'));
+            session()->flash('error', __('dashboard.response_item_error_create'));
         }
 
         return redirect()->back();
@@ -126,7 +126,7 @@ class ServiceLocationController extends Controller
             session()->flash('success', __('dashboard.response_item_update'));
         } catch (\Exception $e) {
             DB::rollBack();
-            Alert::error('Erro', __('dashboard.response_item_error_update'));
+            session()->flash('error', __('dashboard.response_item_error_update'));
         }
 
         return redirect()->back();

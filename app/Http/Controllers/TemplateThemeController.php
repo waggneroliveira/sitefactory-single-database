@@ -117,14 +117,13 @@ class TemplateThemeController extends Controller
 
         try {
             DB::beginTransaction();
-            dd($data);
             TemplateTheme::create($data);
             DB::commit();
             session()->flash('success', __('dashboard.response_item_create'));
         } catch (\Exception $e) {
             dd($e);
             DB::rollback();
-            Alert::error('Erro', __('dashboard.response_item_error_create'));
+            session()->flash('error', __('dashboard.response_item_error_create'));
         }
 
         return redirect()->back();
@@ -205,7 +204,7 @@ class TemplateThemeController extends Controller
         } catch (\Exception $e) {
             dd($e);
             DB::rollBack();
-            Alert::error('Erro', __('dashboard.response_item_error_update'));
+            session()->flash('error', __('dashboard.response_item_error_update'));
         }
 
         return redirect()->back();

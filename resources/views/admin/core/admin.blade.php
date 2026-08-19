@@ -1374,51 +1374,375 @@
         <script src="{{ asset('build/admin/js/pages/dashboard-2.init.js') }}"></script>       
 
         {{-- Modais alert --}}
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                let successMessage = '{{ session('success') }}';
-                if (successMessage) {
-                    setTimeout(function() {
-                        if (typeof Swal !== 'undefined') {
-                            Swal.fire({
-                                title: responseSuccessName,
-                                text: successMessage,
-                                icon: 'success',
-                                confirmButtonText: 'OK',
-                                timer: 1800, // O alerta desaparecerá automaticamente após 1,5 segundos
-                                showConfirmButton: false // Oculta o botão para fechar automaticamente
-                            });
-                        }
-                    }, 1000); // Exibe o alert 1,3 segundos após a página carregar
-                }
-            });
-        </script>
+        @if (session('success'))
+            <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 9999;">
+                <div id="successToast" class="toast border-0 shadow-sm" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-body bg-success d-flex align-items-center gap-3 py-2 px-2 rounded-3">
 
-        @if(Session::has('error'))
-            <div id="errorMessage" class="alert alert-warning notification-message" >
-                <span class="mdi mdi-alert-circle"></span>
-                {{ Session::get('error') }}
+                        <div
+                            class="d-flex align-items-center justify-content-center flex-shrink-0"
+                            style="
+                                width: 36px;
+                                height: 36px;
+                                border-radius: 50%;
+                                background: #FFF;
+                                color: #1abc9c;"
+                        >
+                            <i class="ri-check-line fs-5"></i>
+                        </div>
+
+                        <div class="flex-grow-1">
+                            <div class="fw-semibold mb-1 text-white">
+                                {{ $responseSuccessName ?? 'Sucesso!' }}
+                            </div>
+
+                            <div class="small text-white">
+                                {{ session('success') }}
+                            </div>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="btn-close btn-close-white align-self-start"
+                            data-bs-dismiss="toast"
+                            aria-label="Fechar"
+                        ></button>
+
+                    </div>
+                </div>
             </div>
+
+            <style>
+                #successToast {
+                    opacity: 0;
+                    transform: translateX(110%);
+                }
+
+                #successToast.toast-enter {
+                    animation: toastEnter 0.4s ease forwards;
+                }
+
+                #successToast.toast-leave {
+                    animation: toastLeave 0.4s ease forwards;
+                }
+
+                @keyframes toastEnter {
+                    from {
+                        opacity: 0;
+                        transform: translateX(110%);
+                    }
+
+                    to {
+                        opacity: 1;
+                        transform: translateX(0);
+                    }
+                }
+
+                @keyframes toastLeave {
+                    from {
+                        opacity: 1;
+                        transform: translateX(0);
+                    }
+
+                    to {
+                        opacity: 1;
+                        transform: translateX(110%);
+                    }
+                }
+            </style>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+
+                    const toastElement = document.getElementById('successToast');
+
+                    if (!toastElement || typeof bootstrap === 'undefined') {
+                        return;
+                    }
+
+                    const toast = new bootstrap.Toast(toastElement, {
+                        animation: false,
+                        autohide: false
+                    });
+
+                    // Entrada
+                    toastElement.classList.add('toast-enter');
+
+                    setTimeout(function () {
+                        toast.show();
+                    }, 150);
+
+
+                    // Saída manual
+                    setTimeout(function () {
+
+                        toastElement.classList.remove('toast-enter');
+                        toastElement.classList.add('toast-leave');
+
+                        // Aguarda a animação terminar
+                        setTimeout(function () {
+                            toast.hide();
+                        }, 400);
+
+                    }, 3650);
+
+                });
+            </script>
         @endif
 
-        @if ($errors->any())
+        @if (Session::has('error'))
+            <div
+                class="toast-container position-fixed bottom-0 end-0 p-3"
+                style="z-index: 9999;"
+            >
+                <div
+                    id="errorToast"
+                    class="toast border-0 shadow-sm"
+                    role="alert"
+                    aria-live="assertive"
+                    aria-atomic="true"
+                >
+                    <div class="toast-body bg-danger d-flex align-items-center gap-3 py-2 px-2 rounded-3">
+
+                        <div
+                            class="d-flex align-items-center justify-content-center flex-shrink-0"
+                            style="
+                                width: 36px;
+                                height: 36px;
+                                border-radius: 50%;
+                                background: #FFF;
+                                color: #dc3545;
+                            "
+                        >
+                            <i class="ri-error-warning-line fs-5"></i>
+                        </div>
+
+                        <div class="flex-grow-1">
+
+                            <div class="fw-semibold mb-1 text-white">
+                                {{ $responseItemErrorName ?? 'Erro!' }}
+                            </div>
+
+                            <div class="small text-white">
+                                {{ Session::get('error') }}
+                            </div>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            class="btn-close btn-close-white align-self-start"
+                            data-bs-dismiss="toast"
+                            aria-label="Fechar"
+                        ></button>
+
+                    </div>
+                </div>
+            </div>
+
+            <style>
+                #errorToast {
+                    opacity: 0;
+                    transform: translateX(110%);
+                }
+
+                #errorToast.toast-enter {
+                    animation: errorToastEnter 0.4s ease forwards;
+                }
+
+                #errorToast.toast-leave {
+                    animation: errorToastLeave 0.4s ease forwards;
+                }
+
+                @keyframes errorToastEnter {
+                    from {
+                        opacity: 0;
+                        transform: translateX(110%);
+                    }
+
+                    to {
+                        opacity: 1;
+                        transform: translateX(0);
+                    }
+                }
+
+                @keyframes errorToastLeave {
+                    from {
+                        opacity: 1;
+                        transform: translateX(0);
+                    }
+
+                    to {
+                        opacity: 1;
+                        transform: translateX(110%);
+                    }
+                }
+            </style>
+
             <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    let errors = '';
-                    @foreach ($errors->all() as $error)
-                        errors += '{{ $error }}\n'; 
-                    @endforeach
-                    
-                    setTimeout(function() {
-                        Swal.fire({
-                            title: responseItemErrorName,
-                            text: errors,
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        });
-                    }, 1300);
+                document.addEventListener('DOMContentLoaded', function () {
+
+                    const toastElement = document.getElementById('errorToast');
+
+                    if (!toastElement || typeof bootstrap === 'undefined') {
+                        return;
+                    }
+
+                    const toast = new bootstrap.Toast(toastElement, {
+                        animation: false,
+                        autohide: false
+                    });
+
+                    // Entrada
+                    toastElement.classList.add('toast-enter');
+
+                    setTimeout(function () {
+                        toast.show();
+                    }, 150);
+
+                    // Saída
+                    setTimeout(function () {
+
+                        toastElement.classList.remove('toast-enter');
+                        toastElement.classList.add('toast-leave');
+
+                        setTimeout(function () {
+                            toast.hide();
+                        }, 400);
+
+                    }, 3650);
+
                 });
-            </script>        
+            </script>
+        @endif
+
+
+        @if ($errors->any())
+            <div
+                class="toast-container position-fixed bottom-0 end-0 p-3"
+                style="z-index: 9999;"
+            >
+                <div
+                    id="validationErrorToast"
+                    class="toast border-0 shadow-sm"
+                    role="alert"
+                    aria-live="assertive"
+                    aria-atomic="true"
+                >
+                    <div class="toast-body bg-danger d-flex align-items-center gap-3 py-2 px-2 rounded-3">
+
+                        <div
+                            class="d-flex align-items-center justify-content-center flex-shrink-0"
+                            style="
+                                width: 36px;
+                                height: 36px;
+                                border-radius: 50%;
+                                background: #FFF;
+                                color: #dc3545;
+                            "
+                        >
+                            <i class="ri-error-warning-line fs-5"></i>
+                        </div>
+
+                        <div class="flex-grow-1">
+
+                            <div class="fw-semibold mb-1 text-white">
+                                {{ $responseItemErrorName ?? 'Verifique os dados!' }}
+                            </div>
+
+                            <div class="small text-white">
+                                @foreach ($errors->all() as $error)
+                                    <div>{{ $error }}</div>
+                                @endforeach
+                            </div>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            class="btn-close btn-close-white align-self-start"
+                            data-bs-dismiss="toast"
+                            aria-label="Fechar"
+                        ></button>
+
+                    </div>
+                </div>
+            </div>
+
+            <style>
+                #validationErrorToast {
+                    opacity: 0;
+                    transform: translateX(110%);
+                }
+
+                #validationErrorToast.toast-enter {
+                    animation: validationErrorToastEnter 0.4s ease forwards;
+                }
+
+                #validationErrorToast.toast-leave {
+                    animation: validationErrorToastLeave 0.4s ease forwards;
+                }
+
+                @keyframes validationErrorToastEnter {
+                    from {
+                        opacity: 0;
+                        transform: translateX(110%);
+                    }
+
+                    to {
+                        opacity: 1;
+                        transform: translateX(0);
+                    }
+                }
+
+                @keyframes validationErrorToastLeave {
+                    from {
+                        opacity: 1;
+                        transform: translateX(0);
+                    }
+
+                    to {
+                        opacity: 1;
+                        transform: translateX(110%);
+                    }
+                }
+            </style>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+
+                    const toastElement = document.getElementById('validationErrorToast');
+
+                    if (!toastElement || typeof bootstrap === 'undefined') {
+                        return;
+                    }
+
+                    const toast = new bootstrap.Toast(toastElement, {
+                        animation: false,
+                        autohide: false
+                    });
+
+                    // Entrada
+                    toastElement.classList.add('toast-enter');
+
+                    setTimeout(function () {
+                        toast.show();
+                    }, 150);
+
+                    // Saída
+                    setTimeout(function () {
+
+                        toastElement.classList.remove('toast-enter');
+                        toastElement.classList.add('toast-leave');
+
+                        setTimeout(function () {
+                            toast.hide();
+                        }, 400);
+
+                    }, 3650);
+
+                });
+            </script>
         @endif
 
         @if (Session::has('reopenModal'))

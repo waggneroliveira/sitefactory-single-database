@@ -60,7 +60,7 @@ class StackController extends Controller
             return redirect()->back();
         } catch (\Exception $e) {
             DB::rollback();
-            Alert::success('error', __('dashboard.response_item_error_create'));
+            session()->flash('error', __('dashboard.response_item_error_create'));
             return redirect()->back();
         }
     }
@@ -110,7 +110,7 @@ class StackController extends Controller
             return redirect()->back();
         } catch (\Exception $e) {
             DB::rollBack();
-            Alert::error('Erro', __('dashboard.response_item_error_update'));
+            session()->flash('error', __('dashboard.response_item_error_update'));
             return redirect()->back();
         }
     }

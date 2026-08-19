@@ -118,7 +118,7 @@ class ServiceItemController extends Controller
         } catch (\Exception $e) {
             dd($e);
             DB::rollBack();
-            Alert::error('Erro', __('dashboard.response_item_error_create'));
+            session()->flash('error', __('dashboard.response_item_error_create'));
         }
 
         return redirect()->back();
@@ -188,7 +188,7 @@ class ServiceItemController extends Controller
             session()->flash('success', __('dashboard.response_item_update'));
         } catch (\Exception $e) {
             DB::rollBack();
-            Alert::error('Erro', __('dashboard.response_item_error_update'));
+            session()->flash('error', __('dashboard.response_item_error_update'));
         }
 
         return redirect()->back();

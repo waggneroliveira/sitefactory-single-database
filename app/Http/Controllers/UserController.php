@@ -102,7 +102,7 @@ class UserController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            Alert::success('error', __('dashboard.response_item_error_create'));
+            session()->flash('error', __('dashboard.response_item_error_create'));
             return redirect()->back();
         }
     }
@@ -176,7 +176,7 @@ class UserController extends Controller
             return redirect()->route('admin.dashboard.user.index');
         } catch (\Exception $exception) {
             DB::rollBack();
-            Alert::error('Erro', __('dashboard.response_item_error_update'));
+            session()->flash('error', __('dashboard.response_item_error_update'));
             return redirect()->back();
         }
     }
