@@ -7,8 +7,10 @@ use App\Models\PlanModuleLimit;
 use App\Models\TemplateTheme;
 use App\Models\Tenant;
 use App\Models\TenantModuleLimit;
+use App\Repositories\SettingThemeRepository;
 use App\Services\ThemeManager;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -22,6 +24,14 @@ class SystemClientController extends Controller
     protected $pathUpload = 'admin/uploads/images/tenant/';
     public function index(Request $request, ThemeManager $themeManager)
     {
+        $settingTheme = (new SettingThemeRepository())->settingTheme();
+
+        $user = Auth::user()->hasRole('Super');
+
+        if (!$user) {
+            return view('admin.error.403', compact('settingTheme'));
+        }
+
         $clients = Tenant::query()
             ->with('plan')
             ->orderBy('name', 'asc')
@@ -39,6 +49,14 @@ class SystemClientController extends Controller
 
     public function create(ThemeManager $themeManager)
     {
+        $settingTheme = (new SettingThemeRepository())->settingTheme();
+
+        $user = Auth::user()->hasRole('Super');
+
+        if (!$user) {
+            return view('admin.error.403', compact('settingTheme'));
+        }
+
         $plans = Plan::where('active', true)->get();
         $availableModules = $themeManager->availableModules();
 
@@ -183,6 +201,14 @@ class SystemClientController extends Controller
 
     public function show(Tenant $tenant, ThemeManager $themeManager)
     {
+        $settingTheme = (new SettingThemeRepository())->settingTheme();
+
+        $user = Auth::user()->hasRole('Super');
+
+        if (!$user) {
+            return view('admin.error.403', compact('settingTheme'));
+        }
+
         $tenant->load('plan');
 
         $theme = $themeManager;
@@ -198,6 +224,14 @@ class SystemClientController extends Controller
 
     public function edit(Tenant $tenant, ThemeManager $themeManager)
     {
+        $settingTheme = (new SettingThemeRepository())->settingTheme();
+
+        $user = Auth::user()->hasRole('Super');
+
+        if (!$user) {
+            return view('admin.error.403', compact('settingTheme'));
+        }
+
         $plans = Plan::where('active', true)->get();
 
         $availableModules = $themeManager->availableModules();
