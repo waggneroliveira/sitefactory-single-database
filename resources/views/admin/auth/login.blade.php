@@ -52,8 +52,14 @@
 
                                 <div class="mb-3 d-flex justify-content-between align-items-center">
                                     <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="checkbox-signin" checked>
-                                        <label class="form-check-label small" for="checkbox-signin">Manter conectado</label>
+                                        <input type="checkbox"
+                                            class="form-check-input"
+                                            id="checkbox-signin"
+                                            name="remember">
+
+                                        <label class="form-check-label small" for="checkbox-signin">
+                                            Manter conectado
+                                        </label>
                                     </div>
                                     <a href="{{route('password.request')}}" class="small text-decoration-none">Esqueceu a senha?</a>
                                 </div>
@@ -203,6 +209,21 @@
                     icon.className = 'mdi mdi-eye';
                 }
             });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const checkbox = document.getElementById('checkbox-signin');
+
+            if (!checkbox) return;
+
+            checkbox.checked = localStorage.getItem('remember_login') === 'true';
+
+            checkbox.addEventListener('change', function () {
+                localStorage.setItem('remember_login', this.checked);
+            });
+
         });
     </script>
 @endsection

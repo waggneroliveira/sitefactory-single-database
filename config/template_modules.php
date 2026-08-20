@@ -2,49 +2,109 @@
 
 /*
 |--------------------------------------------------------------------------
-| Petshop
+| Template Modules
 |--------------------------------------------------------------------------
+|
+| Estrutura:
+|
+| template
+| ├── onepage
+| │   └── home
+| │
+| ├── multipage
+| │   ├── home
+| │   ├── about
+| │   ├── products
+| │   ├── blog
+| │   └── contact
+| │
+| ├── smtp
+| ├── security_and_access_control
+| └── limits
+|
 */
 
 return [
 
+    /*
+    |--------------------------------------------------------------------------
+    | PETSHOP
+    |--------------------------------------------------------------------------
+    */
+
     'petshop' => [
+        'onepage' => [
 
-        'home' => [
-            'slides',
-            'topics',
-            'statute',
-            'letsgo',
-            'faq_session',
-            'faq',
-            'testimonials',
-            'services',            
+            'home' => [
+                'slides',
+                'topics',
+                'statute',
+                'letsgo',
+                'faq_session',
+                'faq',
+                'testimonials',
+                'services',
+
+                'about',
+                'benefits',
+                'mission',
+                'representatives',
+                'videos',
+                'service_locations',
+
+                'brands',
+                'product_categories',
+                'products',
+
+                'blog_categories',
+                'blog',
+
+                'contact',
+                'contact_leads',
+                'download_leads',
+            ],
+
         ],
 
-        'about' => [
-            'about',
-            'benefits',
-            'mission',
-            'representatives',
-            'videos',
-            'service_locations',
-        ],
+        'multipage' => [
 
-        'products' => [
-            'brands',
-            'product_categories',
-            'products',
-        ],
+            'home' => [
+                'slides',
+                'topics',
+                'statute',
+                'letsgo',
+                'faq_session',
+                'faq',
+                'testimonials',
+                'services',
+            ],
 
-        'blog' => [
-            'blog_categories',
-            'blog',
-        ],
+            'about' => [
+                'about',
+                'benefits',
+                'mission',
+                'representatives',
+                'videos',
+                'service_locations',
+            ],
 
-        'contact' => [
-            'contact',
-            'contact_leads',
-            'download_leads',
+            'products' => [
+                'brands',
+                'product_categories',
+                'products',
+            ],
+
+            'blog' => [
+                'blog_categories',
+                'blog',
+            ],
+
+            'contact' => [
+                'contact',
+                'contact_leads',
+                'download_leads',
+            ],
+
         ],
 
         'smtp' => [
@@ -55,6 +115,10 @@ return [
             'audit',
             'permissions',
             'users',
+        ],
+
+        'config_theme' => [
+            'config_theme',
         ],
 
         'limits' => [
@@ -62,25 +126,47 @@ return [
             'topics' => 6,
             'testimonials' => 6,
             'faq' => 10,
+            'services' => 6,
         ],
+
     ],
 
     'cartorio' => [
 
-        'home' => [
-            'slides',
-            'topics',
-            'services',
-            'gallery',
+        'onepage' => [
+
+            'home' => [
+                'slides',
+                'topics',
+                'services',
+                'gallery',
+
+                'about',
+
+                'contact',
+                'contact_leads',
+            ],
+
         ],
 
-        'about' => [
-            'about',
-        ],
+        'multipage' => [
 
-        'contact' => [
-            'contact',
-            'contact_leads',
+            'home' => [
+                'slides',
+                'topics',
+                'services',
+                'gallery',
+            ],
+
+            'about' => [
+                'about',
+            ],
+
+            'contact' => [
+                'contact',
+                'contact_leads',
+            ],
+
         ],
 
         'smtp' => [
@@ -91,6 +177,10 @@ return [
             'audit',
             'permissions',
             'users',
+        ],
+
+        'config_theme' => [
+            'config_theme',
         ],
 
         'limits' => [
@@ -99,24 +189,45 @@ return [
             'services' => 6,
             'gallery' => 3,
         ],
+
     ],
 
     'transporte' => [
 
-       'home' => [
-            'slides',
-            'faq_session',
-            'faq',
-            'testimonials',
-            'services',            
+        'onepage' => [
+
+            'home' => [
+                'slides',
+                'faq_session',
+                'faq',
+                'testimonials',
+                'services',
+
+                'about',
+
+                'contact',
+            ],
+
         ],
 
-        'about' => [
-            'about'
-        ],
+        'multipage' => [
 
-        'contact' => [
-            'contact',
+            'home' => [
+                'slides',
+                'faq_session',
+                'faq',
+                'testimonials',
+                'services',
+            ],
+
+            'about' => [
+                'about',
+            ],
+
+            'contact' => [
+                'contact',
+            ],
+
         ],
 
         'smtp' => [
@@ -128,7 +239,7 @@ return [
             'permissions',
             'users',
         ],
-        
+
         'config_theme' => [
             'config_theme',
         ],
@@ -139,6 +250,7 @@ return [
             'faq' => 10,
             'services' => 6,
         ],
+
     ],
 
 ];
