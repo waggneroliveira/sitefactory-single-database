@@ -2,88 +2,108 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
-use App\Models\Tenant;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Tenant;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Multitenancy\Actions\MakeTenantCurrentAction;
+use Spatie\Multitenancy\Models\Tenant as SpatieTenant;
 
 class AuthController extends Controller
 {
+
     public function authenticate(Request $request)
     {
-        $credentials = $request->only('email', 'password');
 
-        $credentials['active'] = 1;
+        $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
 
-        // Verifica se o usuário marcou "Manter conectado"
         $remember = $request->boolean('remember');
 
-        /*
-        |--------------------------------------------------------------------------
-        | Tentativa de login
-        |--------------------------------------------------------------------------
-        |
-        | O segundo parâmetro do Auth::attempt() é responsável pelo
-        | "remember me" do Laravel.
-        |
-        */
-        if (!Auth::attempt($credentials, $remember)) {
+        $tenant = Tenant::current();
 
-            $user = User::where('email', $request->email)
-                ->active()
-                ->first();
+        /*------------------ Busca o usuário ignorando os Global Scopes -------------------*/
+        $user = User::withoutGlobalScopes()
+            ->where('email', $request->email)
+            ->first();
 
-            if (!$user) {
-                return back()->withErrors([
-                    'email' => 'E-mail inválido ou usuário inativo.',
-                ])->withInput();
-            }
-
-            if (!Hash::check($request->password, $user->password)) {
-                return back()->withErrors([
-                    'password' => 'Senha inválida.',
-                ])->withInput();
-            }
+        if (!$user) {
+            return back()
+                ->withErrors([
+                    'email' => 'E-mail inválido.',
+                ])
+                ->withInput($request->only('email'));
         }
 
         /*
         |--------------------------------------------------------------------------
-        | Regenera a sessão após autenticação
+        | Validação de Tenant
         |--------------------------------------------------------------------------
+        |
+        | ID 1 = Super usuário global.
+        |
         */
+
+        if ((int) $user->id !== 1) {
+
+            if (!$tenant) {
+                return back()
+                    ->withErrors([
+                        'email' => 'Não foi possível identificar o site acessado.',
+                    ])
+                    ->withInput($request->only('email'));
+            }
+
+            if (
+                !$user->tenant_id ||
+                (int) $user->tenant_id !== (int) $tenant->id
+            ) {
+                return back()
+                    ->withErrors([
+                        'email' => 'Este usuário não possui acesso a este site.',
+                    ])
+                    ->withInput($request->only('email'));
+            }
+
+            if (!$user->active) {
+                return back()
+                    ->withErrors([
+                        'email' => 'Usuário inativo.',
+                    ])
+                    ->withInput($request->only('email'));
+            }
+        }
+
+        if (!Hash::check($request->password, $user->password)) {
+            return back()
+                ->withErrors([
+                    'password' => 'Senha inválida.',
+                ])
+                ->withInput($request->only('email'));
+        }
+
+        Auth::guard('web')->login($user, $remember);
+
         $request->session()->regenerate();
 
-        $userAuthenticate = Auth::user();
-
-        $user = User::find($userAuthenticate->id);
-
-        /*
-        |--------------------------------------------------------------------------
-        | Define o Tenant atual
-        |--------------------------------------------------------------------------
-        */
-        if ($user->tenant_id) {
-
-            $tenant = Tenant::find($user->tenant_id);
-
-            if ($tenant) {
-                app(MakeTenantCurrentAction::class)->execute($tenant);
-            }
+        if (!Auth::guard('web')->check()) {
+            return back()
+                ->withErrors([
+                    'email' => 'Não foi possível iniciar a sessão.',
+                ])
+                ->withInput($request->only('email'));
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Log de login
-        |--------------------------------------------------------------------------
-        */
-        if (!$user->hasRole('Super')) {
+        $userAuthenticate = Auth::guard('web')->user();
+
+        if (!$userAuthenticate->hasRole('Super')) {
 
             activity()
-                ->causedBy(Auth::user())
-                ->performedOn($user)
+                ->causedBy($userAuthenticate)
+                ->performedOn($userAuthenticate)
                 ->event('login')
                 ->withProperties([
                     'attributes' => [
@@ -96,55 +116,49 @@ class AuthController extends Controller
                         'email_verified_at' => $userAuthenticate->email_verified_at,
                         'remember' => $remember,
                         'event' => 'login',
-                    ]
+                    ],
                 ])
                 ->log('login');
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Mensagem de sucesso
-        |--------------------------------------------------------------------------
-        */
-        session()->flash('success', 'Login realizado com sucesso!');
+        session()->flash(
+            'success',
+            'Login realizado com sucesso!'
+        );
 
         return redirect()->intended('painel/dashboard');
-    }
+    } 
 
     public function logout(Request $request)
     {
         $userAuthenticate = Auth::user();
 
-        $user = User::select('id', 'name', 'email')
-            ->find($userAuthenticate->id);
+        if ($userAuthenticate) {
 
-        /*
-        |--------------------------------------------------------------------------
-        | Log de logout
-        |--------------------------------------------------------------------------
-        */
-        if (!$user->hasRole('Super')) {
+            $user = User::select(
+                'id',
+                'name',
+                'email'
+            )->find($userAuthenticate->id);
 
-            activity()
-                ->causedBy($userAuthenticate)
-                ->performedOn($user)
-                ->event('logout')
-                ->withProperties([
-                    'attributes' => [
-                        'id' => $userAuthenticate->id,
-                        'name' => $userAuthenticate->name,
-                        'email' => $userAuthenticate->email,
-                        'event' => 'logout',
-                    ]
-                ])
-                ->log('logout');
+            if ($user && !$user->hasRole('Super')) {
+
+                activity()
+                    ->causedBy($userAuthenticate)
+                    ->performedOn($user)
+                    ->event('logout')
+                    ->withProperties([
+                        'attributes' => [
+                            'id' => $userAuthenticate->id,
+                            'name' => $userAuthenticate->name,
+                            'email' => $userAuthenticate->email,
+                            'event' => 'logout',
+                        ],
+                    ])
+                    ->log('logout');
+            }
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Logout
-        |--------------------------------------------------------------------------
-        */
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
@@ -153,6 +167,9 @@ class AuthController extends Controller
 
         return redirect()
             ->route('admin.dashboard.painel')
-            ->with('success', 'Logout realizado com sucesso!');
+            ->with(
+                'success',
+                'Logout realizado com sucesso!'
+            );
     }
 }

@@ -62,8 +62,4 @@ class SeoGoogle extends Model
         'opening_hours' => 'array',
     ];
 
-    public function tenant(): BelongsTo
-    {
-        return $this->belongsTo(Tenant::class);
-    }
 }

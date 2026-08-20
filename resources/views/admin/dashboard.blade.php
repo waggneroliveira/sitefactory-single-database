@@ -703,7 +703,7 @@
 
                 <div class="d-flex align-items-center gap-2 mb-2">
 
-                    <span class="badge bg-success bg-opacity-10 text-success p-2">
+                    <span class="badge btn-green-whi bg-opacity-10 text-success p-2">
                         <i class="mdi mdi-newspaper-variant fs-5"></i>
                     </span>
 
@@ -823,9 +823,7 @@
     ============================================================ --}}
 
     @if ($theme->hasModule('config_smtp') &&
-        (Auth::user()->hasRole('Super') ||
-        Auth::user()->can('usuario.tornar usuario master') ||
-        Auth::user()->can('email.visualizar')))
+        (Auth::user()->hasRole('Super')))
 
         <div class="mb-2">
 
@@ -966,8 +964,7 @@
         SEO E PLANOS
     ============================================================ --}}
 
-    @if (Auth::user()->hasRole('Super') ||
-        Auth::user()->can('usuario.tornar usuario master'))
+    @if (Auth::user()->hasRole('Super'))
 
         <div class="mb-2">
 

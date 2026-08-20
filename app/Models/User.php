@@ -3,20 +3,21 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Contracts\Auth\CanResetPassword;
-use Spatie\Activitylog\LogOptions;
-use App\Services\ActivityLogService;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Builder;
-use Spatie\Activitylog\Traits\LogsActivity;
 use App\Notifications\CustomResetPasswordNotification;
+use App\Services\ActivityLogService;
+use App\Traits\BelongsToTenant;
+use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements CanResetPassword
 {
-    use Notifiable, HasFactory, HasRoles, LogsActivity;
+    use Notifiable, HasFactory, HasRoles, LogsActivity, BelongsToTenant;
     
     protected $fillable = [
         'name',

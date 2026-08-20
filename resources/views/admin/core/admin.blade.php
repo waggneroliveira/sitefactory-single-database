@@ -335,7 +335,7 @@
                             {{-- ============================================================
                                 SMTP
                             ============================================================ --}}
-                            @if ($theme->hasModule('config_smtp') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('email.visualizar')))
+                            @if ($theme->hasModule('config_smtp') && (Auth::user()->hasRole('Super')))
                                 <li class="menu-item">
                                     <a href="{{ route('admin.dashboard.settingEmail.index') }}" class="menu-link">
                                         <span class="menu-icon"><i class="mdi mdi-email"></i></span>
@@ -399,7 +399,7 @@
                             SEO E PLANOS 
                             ============================================================ --}}
                             
-                            @if (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master'))
+                            @if (Auth::user()->hasRole('Super'))
                                 <li class="menu-item">
                                     <a href="#menuSeoPlans" data-bs-toggle="collapse" class="menu-link">
                                         <span class="menu-icon"><i class="mdi mdi-google-analytics"></i></span>
@@ -928,7 +928,7 @@
         @if (session('success'))
             <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 9999;">
                 <div id="successToast" class="toast border-0 shadow-sm" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="toast-body btn-green-whi d-flex align-items-center gap-3 py-2 px-2 rounded-3">
+                    <div class="toast-body bg-success d-flex align-items-center gap-3 py-2 px-2 rounded-3">
 
                         <div
                             class="d-flex align-items-center justify-content-center flex-shrink-0"
