@@ -23,7 +23,7 @@ return [
     ],
 
     'statute' => [
-        'permission' => 'parametro',
+        'permission' => 'passo a passo',
         'actions' => [
             'criar',
             'editar',

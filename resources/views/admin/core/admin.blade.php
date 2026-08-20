@@ -519,7 +519,7 @@
                                             Produtos
                                         </span>
 
-                                        <span class="badge bg-success rounded-pill ms-auto">
+                                        <span class="badge btn-green-whi rounded-pill ms-auto text-dark">
                                             {{
                                                 collect([
                                                     'brands',

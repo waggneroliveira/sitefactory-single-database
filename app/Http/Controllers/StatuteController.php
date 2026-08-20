@@ -24,7 +24,7 @@ class StatuteController extends Controller
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
         // Verifica permissão para visualizar slides
-        $check = checkPermission('passo a passo.visualizar', $settingTheme);
+        $check = checkPermission('statute', 'passo a passo.visualizar', $settingTheme);
         if ($check !== true) {
             return $check; // retorna view 403
         }

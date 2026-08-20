@@ -172,6 +172,8 @@
     <title>{{ isset($blogInner) && !empty($blogInner->title) ? $blogInner->title : $seoTitle }}</title>
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     
+    @include('client/script-seo-google/script-head')
+
     @if(isset($blogInner))
 
         @php
@@ -302,6 +304,8 @@
 <body>
     <div id="organization" hidden></div>
 
+    @include('client/script-seo-google/script-body-nocript')
+
     @include('client/themes/petshop/tp-01/includes/lgpd/lgpd')
 
      @if (isset($contact) && $contact->phone_one <> null)
@@ -338,6 +342,10 @@
             /* Header */
             --text-color-header: {{ $tenantTheme->text_color_header ? $tenantTheme->text_color_header : '#FFFFFF' }};
             --bg-header: {{ $tenantTheme->bg_header ? $tenantTheme->bg_header : '#10513D' }};
+
+            /* Footer */
+            --text-color-footer: {{ $tenantTheme->text_color_footer ? $tenantTheme->text_color_footer : '#FFFFFF' }};
+            --bg-footer: {{ $tenantTheme->bg_footer ? $tenantTheme->bg_footer : '#10513D' }};
             
             /* Footer */
             --bg-scroll: {{ $tenantTheme->bg_scroll ? $tenantTheme->bg_scroll : '#F8F9FA' }};
@@ -373,6 +381,9 @@
         .text-color-header {
             color: var(--text-color-header);
         }
+        .text-color-footer {
+            color: var(--text-color-footer);
+        }
         .color-button-one {
             color: var(--color-button-one);
         }
@@ -393,16 +404,12 @@
             background: var(--accent-color);
         }
 
-        .bg-text-color {
-            background: var(--text-color);
-        }
-
-        .bg-text-color-header {
-            background: var(--text-color-header);
-        }
-
         .bg-header {
             background: var(--bg-header);
+        }
+
+        .bg-footer {
+            background: var(--bg-footer);
         }
 
         .bg-scroll {
@@ -415,6 +422,45 @@
 
         .bg-button-two {
             background: var(--bg-button-two);
+        }
+        .about li::after{
+            color: var(--primary-color);
+        }
+        .bg-grey-light{
+            background: #E9E9E9;
+        }
+        .testimonial-swiper .swiper-pagination-bullet{
+            background: var(--primary-color);
+        }
+        #lgpd-banner button{
+            background: var(--primary-color);
+        }
+        .list-service ul li::before {
+            color: var(--primary-color);
+        }
+        .border-warning{
+            border-color: var(--primary-color) !important;
+        }
+        .z-index-10{
+            z-index: 4;
+        }
+        .service-bg::after{
+            content: '';
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: color-mix(in srgb, var(--secondary-color) 80%, transparent);
+        }
+        .main-swiper .swiper-pagination-bullet-active{
+            background: var(--primary-color);
+        }
+        .scroll-top:hover{
+            background: var(--secondary-color);
+        }
+        .border-color-footer{
+            border-color: var(--text-color-footer) !important;
         }
     </style>
 
@@ -625,7 +671,7 @@
         @yield('content') 
     </main>
 
-    <footer class="bg-header text-white pt-5 pb-3">
+    <footer class="bg-footer text-white pt-5 pb-3">
         <div class="container">
 
             <!-- Linha principal -->
@@ -635,17 +681,19 @@
                 <div class="col-lg-4 mb-4 mb-lg-0">
                     <img src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ config('app.name') }}" height="40">
 
-                    <div class="mt-5">
-                        <a href="{{ request()->routeIs('about') ? '#team-section' : route('about') . '#team-section' }}" class="bg-button-two color-button-two px-4 py-2 rounded-pill font-changa font-16 font-medium text-decoration-none hover-zoom">
-                            Encontrar Representantes
-                            <i class="bi bi-arrow-right"></i>
-                        </a>
-                    </div>
+                    @if ($tenantTheme->link <> null)                        
+                        <div class="mt-3 mt-lg-5">
+                            <a href="{{ $tenantTheme->link }}" target="_blank" rel="noopener noreferrer" class="bg-button-one color-button-one px-4 py-2 font-changa font-16 font-medium text-decoration-none hover-zoom">
+                                {{$tenantTheme->btn_title}}
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    @endif
                 </div>
 
                 <!-- Mapa do site -->
                 <div class="col-lg-6 mb-4 mb-lg-0">
-                    <h6 class="font-changa text-color-header font-16 font-bold mb-3 position-relative d-inline-block font-changa font-16 font-medium">
+                    <h6 class="font-changa text-color-footer font-16 font-bold mb-3 position-relative d-inline-block font-changa font-16 font-medium">
                         Mapa do Site
                         <span class="d-block bg-yellow mt-1" style="height:3px; width:40px;"></span>
                     </h6>
@@ -653,19 +701,19 @@
                     <div class="row">
                         <div class="col-6">
                             <ul class="list-unstyled">
-                                <li><a href="{{route('index')}}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Início</a></li>
-                                <li><a href="{{route('about')}}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Quem Somos</a></li>
-                                <li><a href="{{ request()->routeIs('index') ? '#stats-section' : route('index') . '#stats-section' }}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Diferenciais</a></li>
-                                <li><a href="{{route('blogAll')}}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Blog</a></li>
-                                <li><a href="{{route('products')}}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Produtos</a></li>
+                                <li><a href="{{route('index')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Início</a></li>
+                                <li><a href="{{route('about')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Quem Somos</a></li>
+                                <li><a href="{{ request()->routeIs('index') ? '#stats-section' : route('index') . '#stats-section' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Diferenciais</a></li>
+                                <li><a href="{{route('blogAll')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Blog</a></li>
+                                <li><a href="{{route('products')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Produtos</a></li>
                             </ul>
                         </div>
 
                         <div class="col-6">
                             <ul class="list-unstyled">
-                                <li><a href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Depoimentos</a></li>
-                                <li><a href="{{ request()->routeIs('index') ? '#faq' : route('index') . '#faq' }}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">FAQ</a></li>
-                                <li><a href="{{route('contact')}}" class="text-color-header font-changa font-16 font-regular text-decoration-none d-block mb-2">Contato</a></li>
+                                <li><a href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Depoimentos</a></li>
+                                <li><a href="{{ request()->routeIs('index') ? '#faq' : route('index') . '#faq' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">FAQ</a></li>
+                                <li><a href="{{route('contact')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Contato</a></li>
                             </ul>
                         </div>
                     </div>
@@ -680,17 +728,17 @@
                     <div class="col-lg-2 text-lg-end">
                         <div class="d-flex gap-3 justify-content-lg-end">
                             @if ($contact->link_insta <> null)                            
-                                <a href="{{$contact->link_insta}}" target="_blank" rel="noopener noreferrer" class="text-color-header fs-5">
+                                <a href="{{$contact->link_insta}}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5">
                                     <i class="bi bi-instagram"></i>
                                 </a>
                             @endif
                             @if ($contact->link_face <> null)                            
-                                <a href="{{$contact->link_face}}" target="_blank" rel="noopener noreferrer" class="text-color-header fs-5">
+                                <a href="{{$contact->link_face}}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5">
                                     <i class="bi bi-facebook"></i>
                                 </a>
                             @endif
                             @if ($contact->link_tik_tok <> null)                            
-                                <a href="{{$contact->link_tik_tok}}" target="_blank" rel="noopener noreferrer" class="text-color-header fs-5">
+                                <a href="{{$contact->link_tik_tok}}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5">
                                     <i class="bi bi-linkedin"></i>
                                 </a>
                             @endif
@@ -707,13 +755,13 @@
 
                 <div class="col-md-10 small">
                     <div class="d-flex flex-wrap col-12 font-changa font-16 font-regular text-center text-lg-end justify-content-center justify-content-lg-end">
-                        <p id="footer-text" class="text-color-header"></p>                        
+                        <p id="footer-text" class="text-color-footer"></p>                        
                     </div>
 
                     <script defer>
                         const currentYeaar = (new Date).getFullYear();
                         document.getElementById("footer-text").innerHTML = `© ${currentYeaar} <span> {{$tenantTheme->copyright}}
-                    Todos os direitos reservados.</span> <a href="https://policies.google.com/privacy?hl=pt-BR" target="_blank" class="text-color-header font-semibold">| Política de Privacidade</a>`
+                    Todos os direitos reservados.</span> <a href="https://policies.google.com/privacy?hl=pt-BR" target="_blank" class="text-color-footer font-semibold">| Política de Privacidade</a>`
                     </script>
                 </div>
 
@@ -727,8 +775,8 @@
 
         </div>
     </footer>
-    <a href="#" id="scroll-top" class="scroll-top bg-scroll d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
+    <a href="#" id="scroll-top" class="scroll-top bg-scroll d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
     
     <script src="https://cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
