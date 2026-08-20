@@ -11,13 +11,28 @@
         </div>
 
         <div class="mb-3">
-            <label for="btn_title" class="form-label">Subtítulo </label>
-            <input type="text" name="btn_title" class="form-control" id="btn_title{{isset($slide->id)?$slide->id:''}}" value="{{isset($slide)?$slide->btn_title:''}}" placeholder="Subtítulo">
+            <label for="subtitle" class="form-label">Subtítulo </label>
+            <input type="text" name="subtitle" class="form-control" id="subtitle{{isset($slide->id)?$slide->id:''}}" value="{{isset($slide)?$slide->subtitle:''}}" placeholder="Subtítulo">
+        </div>
+
+        <div class="mb-3">
+            <label for="typed" class="form-label">Descrição breve </label>
+            <input type="text" name="typed" class="form-control" id="typed{{isset($slide->id)?$slide->id:''}}" value="{{isset($slide)?$slide->typed:''}}" placeholder="Descrição breve">
+        </div>
+
+        <div class="mb-3">
+            <label for="btn_title" class="form-label">Título botão </label>
+            <input type="text" name="btn_title" class="form-control" id="btn_title{{isset($slide->id)?$slide->id:''}}" value="{{isset($slide)?$slide->btn_title:''}}" placeholder="Título botão">
+        </div>
+
+        <div class="mb-3">
+            <label for="link" class="form-label">Link </label>
+            <input type="text" name="link" class="form-control" id="link{{isset($slide->id)?$slide->id:''}}" value="{{isset($slide)?$slide->link:''}}" placeholder="Link">
         </div>
         
         <div class="row">    
             <div class="mb-3 col-12">
-                <label for="{{$textareaId}}" class="form-label text-white">Descrição</label>
+                <label for="{{$textareaId}}" class="form-label text-muted">Descrição</label>
                 <textarea name="description" id="{{$textareaId}}" placeholder="Texto" class="col-12" rows="10">
                     {!!isset($slide->description)?$slide->description: ''!!}
                 </textarea>

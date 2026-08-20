@@ -2,52 +2,69 @@
 @section('content')
     <!-- Banner-Section-Start -->
     <section class="banner_section" id="home_sec">
+        @foreach ($slides as $slide)
+            <!-- hero bg -->
+            <div id="hero" class="hero_bg">
+                <img src="{{ asset('storage/' . $slide->path_image) }}" alt="image">
+            </div>
 
-        <!-- hero bg -->
-        <div id="hero" class="hero_bg">
-            <img src="images/hero_bg.webp" alt="image">
-        </div>
-
-        <!-- container start -->
-        <div class="container">
-            <!-- row start -->
-            <div class="row">
-            <div class="col-lg-7 col-md-12" data-aos="fade-up" data-aos-duration="1500">
-                <!-- banner text -->
-                <div class="banner_text">
-                    <!-- typed text -->
-                    <div class="type-wrap">
-                        <!-- add static words/sentences here (i.e. text that you don't want to be removed)-->
-                        <span id="typed" style="white-space:pre;" class="typed">
-                        </span>
+            <!-- container start -->
+            <div class="container">
+                <!-- row start -->
+                <div class="row">
+                <div class="col-lg-7 col-md-12" data-aos="fade-up" data-aos-duration="1500">
+                    <!-- banner text -->
+                    <div class="banner_text">
+                        <!-- typed text -->
+                        <div class="type-wrap">
+                            <!-- add static words/sentences here (i.e. text that you don't want to be removed)-->
+                            <span id="typed" style="white-space:pre;" class="typed">
+                            </span>
+                        </div>
+                        <!-- h1 -->
+                        <h1 class="hero-title font-changa font-40 font-bold text-white"> {{$slide->title}} <span class="secondary-color">{{$slide->subtitle}}</span></h1>
+                        <!-- p -->
+                        <div class="description text-white">
+                            {!! $slide->description !!}
+                        </div>
                     </div>
-                    <!-- h1 -->
-                    <h1> Seu delivery vendendo <span> todos os dias </span> direto pelo WhatsApp</h1>
-                    <!-- p -->
-                    <p>
-                    Organize seus pedidos, reduza erros e aumente suas vendas com um sistema simples e profissional. Sem complicação, sem mensalidades absurdas.
-                    </p>
+
+                    <div class="btn_block mt-3">
+                        @if ($slide->link <> null)                                    
+                            <a href="{{$slide->link}}" target="_blank" rel="noopener noreferrer" class="btn-one py-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
+                                {{$slide->btn_title}}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>  
+                            </a>
+                        @endif
+                    </div>
+
+                    <div class="hero-stats">
+                        <div class="hero-stats-item">
+                            <div class="number text-white-50">4.9</div>
+                            <div class="label">Avaliação média</div>
+                        </div>
+                        <div class="hero-stats-item">
+                            <div class="number text-white-50">+2k</div>
+                            <div class="label">Clientes ativos</div>
+                        </div>
+                        <div class="hero-stats-item">
+                            <div class="number text-white-50">99.9%</div>
+                            <div class="label">Uptime</div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="btn_block">
-                <a href="#plans" 
-                class="btn puprple_btn ml-0 keep-message">
-                Começar agora
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>  
-                </a>
+                <!-- banner image start -->
+                <div class="col-lg-5 col-md-12 mt-4 mt-lg-0">
+                    <div class="hero_img">
+                    <img src="{{ asset('storage/' . $slide->path_image_mobile) }}" alt="image">
+                    </div>
                 </div>
+                <!-- banner image end -->
+                <!-- row end -->
             </div>
-
-            <!-- banner image start -->
-            <div class="col-lg-5 col-md-12 mt-4 mt-lg-0">
-                <div class="hero_img">
-                <img src="images/hero_image.webp" alt="image">
-                </div>
-            </div>
-            <!-- banner image end -->
-            <!-- row end -->
-        </div>
-        <!-- container end -->
+            <!-- container end -->
+        @endforeach
     </section>
     <!-- Banner-Section-end -->
 

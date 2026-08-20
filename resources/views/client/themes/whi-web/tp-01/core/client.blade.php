@@ -221,7 +221,7 @@
             --bg-button-two: {{ $tenantTheme->bg_button_two ?: '#FDC20C' }};
             --copyright-text: {{ $tenantTheme->copyright ?: '© 2024 Todos os direitos reservados' }};
         }
-
+        body{ background: #021127 !important }
         .primary-color { color: var(--primary-color); }
         .secondary-color { color: var(--secondary-color); }
         .accent-color { color: var(--accent-color); }
@@ -244,7 +244,7 @@
     <header>
         <div class="container">
             <nav class="navbar navbar-expand-lg mt-0 justify-content-center justify-content-md-start">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand logo-header" href="#">
                     @if(!empty($tenantTheme->path_image_logo_header))
                         <img src="{{ asset('storage/' . $tenantTheme->path_image_logo_header) }}" alt="{{ $seoGoogle->organization_name ?? config('app.name') }}">
                     @else
@@ -253,7 +253,7 @@
                 </a>
 
                 @if(isset($tenantTheme->link_header) && $tenantTheme->link_header <> null)
-                    <a href="{{ $tenantTheme->link_header }}" target="_blank" rel="noopener noreferrer" class="bg-button-one color-button-one ms-auto px-4 py-2 rounded-pill">
+                    <a href="{{ $tenantTheme->link_header }}" target="_blank" rel="noopener noreferrer" class="bg-button-one color-button-one ms-auto px-4 py-2">
                         <i class="bi bi-box-arrow-in-right"></i> {{ $tenantTheme->btn_title_header }}
                     </a>
                 @endif
@@ -465,6 +465,10 @@
     <script src="{{ asset('build/client/bootstrap/js/bootstrap.bundle.js') }}"></script>
     <script src="{{ asset('build/client/lgpd/script.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script src="{{ asset('build/client/themes/whi-web/tp-01/js/jquery.js') }}"></script>
+    <script src="{{ asset('build/client/themes/whi-web/tp-01/js/typed.min.js') }}"></script>
+    <script src="{{ asset('build/client/themes/whi-web/tp-01/js/contador.js') }}"></script>
+    <script src="{{ asset('build/client/themes/whi-web/tp-01/js/main.js') }}"></script>
 
     <script>
         AOS.init({ duration:800, once:true, offset:40 });
@@ -528,6 +532,274 @@
                     }
                 }
             });
+        });
+    </script>
+
+    @php
+        $slide = $slides->first();
+    @endphp
+
+    @if ($slide)
+        <script>
+            const typedStrings = @json($slide->typed ?? '')
+                .split(',')
+                .map(item => item.trim())
+                .filter(item => item !== '');
+
+            $("#typed").typed({
+                strings: typedStrings,
+                typeSpeed: 100,
+                startDelay: 0,
+                backSpeed: 60,
+                backDelay: 2000,
+                loop: true,
+                cursorChar: "|",
+                contentType: 'html'
+            });
+        </script>
+    @endif
+
+    <script>        
+        // Fixed Discount Dish JS
+        $(document).ready(function() {
+            let cardBlock = document.querySelectorAll('.task_block');
+            let topStyle = 120;
+            cardBlock.forEach((card) => {
+                card.style.top = `${topStyle}px`;
+                topStyle += 30;
+            })
+        });
+        // Scroll Down Window 
+        $(document).ready(function() {
+            // Attach a click event handler to the button
+            $('#scrollButton').click(function() {
+                // Scroll down smoothly 200 pixels from the current position
+                $('html, body').animate({
+                    scrollTop: $(window).scrollTop() + 600
+                }, 800); // Adjust the speed (800ms) as needed
+            });
+        });
+        //Envio whatsapp dos planos
+        document.addEventListener('DOMContentLoaded', function() {
+            // Seleciona todos os botões com a classe específica
+            const whatsappButtons = document.querySelectorAll('.whatsapp-plan-btn');
+            // Adiciona evento de clique a cada botão
+            whatsappButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Encontra o elemento do plano (box-plan) mais próximo
+                    const planBox = this.closest('.box-plan');
+                    // Extrai informações do plano
+                    const planName = planBox.querySelector('h5').textContent.trim();
+                    // Encontra a descrição (primeiro p.mb-2 após o h5)
+                    const planDescription = planBox.querySelector('h5 + p.mb-2')?.textContent.trim() || planBox.querySelector('p.mb-2')?.textContent.trim() || '';
+                    // Encontra o preço (h6 dentro de .price)
+                    const priceElement = planBox.querySelector('.price h6');
+                    const planPrice = priceElement ? priceElement.textContent.trim() : '';
+                    // Extrai os benefícios do plano - limpa o texto
+                    const features = [];
+                    const listItems = planBox.querySelectorAll('ul.list li');
+                    listItems.forEach(item => {
+                        // Remove espaços extras e quebras de linha
+                        let text = item.textContent.replace(/\s+/g, ' ') // Substitui múltiplos espaços/linhas por um espaço
+                            .replace(/\n/g, ' ') // Remove quebras de linha
+                            .trim();
+                        // Remove o conteúdo do SVG (que é o ícone de check)
+                        // O SVG geralmente é o primeiro elemento filho
+                        if (item.firstElementChild && item.firstElementChild.tagName === 'svg') {
+                            text = text.replace(item.firstElementChild.textContent, '').trim();
+                        }
+                        if (text) {
+                            // Limpa espaços extras novamente
+                            text = text.replace(/\s+/g, ' ').trim();
+                            features.push(text);
+                        }
+                    });
+                    // Pega a URL base do WhatsApp
+                    const whatsappUrl = this.getAttribute('href');
+                    // Cria a mensagem personalizada
+                    let message = `Olá! Estou entrando em contato através do site do Delifast.\n\n`;
+                    message += `📋 *PLANO SELECIONADO*\n`;
+                    message += `*${planName}*\n`;
+                    message += `${planDescription}\n`;
+                    if (planPrice) {
+                        message += `*Preço:* ${planPrice}\n`;
+                    }
+                    if (features.length > 0) {
+                        message += `\n✅ *BENEFÍCIOS INCLUÍDOS:*\n`;
+                        features.forEach(feature => {
+                            message += `• ${feature}\n`;
+                        });
+                    }
+                    message += `\nGostaria de mais informações sobre este plano!`;
+                    // Substitui quebras de linha por %0A para URL do WhatsApp
+                    const whatsappMessage = message.replace(/\n/g, '%0A');
+                    // Cria a URL final com a mensagem
+                    const newUrl = `${whatsappUrl}?text=${whatsappMessage}`;
+                    // Redireciona para o WhatsApp
+                    window.open(newUrl, '_blank', 'noopener noreferrer');
+                });
+            });
+        });
+        // Envio whatsapp Servicos avulsos
+        document.addEventListener('DOMContentLoaded', function() {
+            // Primeiro, vamos remover os parâmetros ?text= dos links existentes
+            // MAS somente dos que NÃO têm a classe keep-message
+            const allWhatsAppLinks = document.querySelectorAll('a[href*="wa.me"]:not(.keep-message)');
+            allWhatsAppLinks.forEach(link => {
+                const baseUrl = link.getAttribute('href').split('?')[0];
+                link.setAttribute('href', baseUrl);
+                link.classList.add('whatsapp-plan-btn');
+            });
+            // Função para limpar texto
+            function cleanText(text) {
+                return text.replace(/\s+/g, ' ').replace(/\n/g, ' ').trim();
+            }
+            // Função para processar itens da lista
+            function processListItems(listElement) {
+                const features = [];
+                if (!listElement) return features;
+                const listItems = listElement.querySelectorAll('li');
+                listItems.forEach(item => {
+                    // Clona para não modificar o DOM original
+                    const clone = item.cloneNode(true);
+                    // Remove SVGs (ícones)
+                    const svgs = clone.querySelectorAll('svg');
+                    svgs.forEach(svg => svg.remove());
+                    // Processa texto em negrito
+                    const boldElements = clone.querySelectorAll('b');
+                    boldElements.forEach(bold => {
+                        const boldText = bold.textContent;
+                        bold.parentNode.replaceChild(document.createTextNode(`*${boldText}*`), bold);
+                    });
+                    let text = clone.textContent;
+                    text = cleanText(text);
+                    if (text) {
+                        features.push(text);
+                    }
+                });
+                return features;
+            }
+            // Função para criar mensagem do WhatsApp
+            function createWhatsAppMessage(type, data) {
+                let message = '';
+                if (type === 'plan') {
+                    message = `Olá! Estou entrando em contato através do site do Delifast.%0A%0A`;
+                    message += `📋 *PLANO SELECIONADO*%0A`;
+                    message += `*${data.name}*%0A`;
+                    message += `${data.description}%0A`;
+                    if (data.price) {
+                        message += `*Preço:* ${data.price}%0A`;
+                    }
+                    if (data.features.length > 0) {
+                        message += `%0A✅ *BENEFÍCIOS INCLUÍDOS:*%0A`;
+                        data.features.forEach(feature => {
+                            message += `• ${feature}%0A`;
+                        });
+                    }
+                    message += `%0AGostaria de mais informações sobre este plano!`;
+                } else if (type === 'service') {
+                    message = `Olá! Estou entrando em contato através do site do Delifast.%0A%0A`;
+                    message += `🛠️ *SERVIÇO SELECIONADO*%0A`;
+                    message += `*${data.name}*%0A`;
+                    if (data.price) {
+                        message += `*Valor:* ${data.price}%0A`;
+                    }
+                    if (data.tag) {
+                        message += `🏷️ *${data.tag}*%0A`;
+                    }
+                    if (data.features.length > 0) {
+                        message += `%0A✅ *O QUE ESTÁ INCLUÍDO:*%0A`;
+                        data.features.forEach(feature => {
+                            message += `• ${feature}%0A`;
+                        });
+                    }
+                    message += `%0AGostaria de mais informações sobre este serviço!`;
+                }
+                return message;
+            }
+            // Configurar botões de PLANOS (apenas os que NÃO têm keep-message)
+            const planButtons = document.querySelectorAll('.box-plan .btn.puprple_btn:not(.keep-message)');
+            planButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const planBox = this.closest('.box-plan');
+                    // Obter nome do plano
+                    const planName = planBox.querySelector('h5').textContent.trim();
+                    // Obter descrição do plano
+                    let planDescription = '';
+                    const descriptionEl = planBox.querySelector('h5 + p.mb-2') || planBox.querySelector('.price p.mb-2');
+                    if (descriptionEl) {
+                        planDescription = descriptionEl.textContent.trim();
+                    }
+                    // Obter preço
+                    const priceEl = planBox.querySelector('.price h6');
+                    const planPrice = priceEl ? priceEl.textContent.trim() : '';
+                    // Obter benefícios
+                    const planFeatures = processListItems(planBox.querySelector('ul.list'));
+                    // Criar dados do plano
+                    const planData = {
+                        name: planName,
+                        description: planDescription,
+                        price: planPrice,
+                        features: planFeatures
+                    };
+                    // Criar mensagem
+                    const message = createWhatsAppMessage('plan', planData);
+                    // Construir URL do WhatsApp
+                    const whatsappUrl = `https://wa.me/5571992768360?text=${message}`;
+                    // Abrir WhatsApp
+                    window.open(whatsappUrl, '_blank', 'noopener noreferrer');
+                });
+            });
+            // Configurar botões de SERVIÇOS (apenas os que NÃO têm keep-message)
+            const serviceButtons = document.querySelectorAll('.box-service .btn.puprple_btn:not(.keep-message)');
+            serviceButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const serviceBox = this.closest('.box-service');
+                    // Obter nome do serviço
+                    const serviceName = serviceBox.querySelector('h5').textContent.trim();
+                    // Obter tag (se houver)
+                    let serviceTag = '';
+                    const tagEl = serviceBox.querySelector('.tag p');
+                    if (tagEl) {
+                        const tagText = tagEl.textContent.trim();
+                        if (tagText !== 'Popular') {
+                            serviceTag = tagText;
+                        }
+                    }
+                    // Obter preço
+                    const priceEl = serviceBox.querySelector('.price h6');
+                    let servicePrice = '';
+                    if (priceEl) {
+                        const priceText = priceEl.textContent.trim();
+                        const span = priceEl.querySelector('span');
+                        if (span) {
+                            servicePrice = priceText.replace(span.textContent, '').trim();
+                            servicePrice += ` ${span.textContent.trim()}`;
+                        } else {
+                            servicePrice = priceText;
+                        }
+                    }
+                    // Obter características
+                    const serviceFeatures = processListItems(serviceBox.querySelector('ul.list'));
+                    // Criar dados do serviço
+                    const serviceData = {
+                        name: serviceName,
+                        tag: serviceTag,
+                        price: servicePrice,
+                        features: serviceFeatures
+                    };
+                    // Criar mensagem
+                    const message = createWhatsAppMessage('service', serviceData);
+                    // Construir URL do WhatsApp
+                    const whatsappUrl = `https://wa.me/5571992768360?text=${message}`;
+                    // Abrir WhatsApp
+                    window.open(whatsappUrl, '_blank', 'noopener noreferrer');
+                });
+            });
+            console.log('WhatsApp script carregado com sucesso! Botões com .keep-message serão ignorados.');
         });
     </script>
 </body>

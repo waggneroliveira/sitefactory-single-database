@@ -86,7 +86,28 @@
 }
 
 /* ------Common-Css------------- */
- 
+.logo-header img{
+    filter: brightness(0) invert(1);
+    opacity: 0.8;
+}
+.hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2rem;
+}
+.hero-stats-item {
+    text-align: center;
+}
+.hero-stats-item .number {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+}
+.hero-stats-item .label {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 500;
+}
 html {
     scroll-behavior: smooth
 }
@@ -99,7 +120,7 @@ body {
     line-height: 1.7;
     font-family: "Manrope", sans-serif;
     color: var(--body-text);
-    background: var(--secondary);
+    background: var(--secondary) !important;
     font-variant-ligatures: none;
 }
 
@@ -119,11 +140,6 @@ a {
     transition: .4s all;
 }
 
-a:hover {
-    text-decoration: none;
-    color: var(--primery);
-}
-
 ul,
 li {
     padding: 0;
@@ -137,47 +153,6 @@ button:focus,
     outline: none;
     box-shadow: none;
 }
-
-
-/* heading common css */
-h5, h6 {
-    color: var(--black);
-    font-weight: 700;
-    line-height: 1.4;
-}
-
-h1, h2, h3, h4 {
-    font-family: "Lexend", sans-serif;
-    letter-spacing: normal;
-    font-weight: 600;
-}
-
-
-h1 {
-    font-size: 65px;
-}
-
-h2 {
-    font-size: 3.75rem;
-    line-height: normal !important;
-}
-
-h3 {
-    font-size: 40px;
-}
-
-h4 {
-    font-size: 30px;
-}
-
-h5 {
-    font-size: 20px;
-}
-
-h6 {
-    font-size: 18px;
-}
-
 
 .white_text p,
 .white_text .section_title h2,
@@ -774,19 +749,6 @@ header.fixed .navbar {
 /* hero slider text */
 .banner_section .banner_text {
     padding-right: 10px;
-}
-
-/* hero slider heading h1 */
-.banner_section .banner_text h1 {
-    font-size: 4.5rem;
-    color: var(--black);
-    margin-bottom: 10px;
-    line-height: 1;
-}
-
-.banner_section .banner_text h1 span, .advance_feature_section .section_title h2 span,
-.service_section .service_text .design_block li h6 span, .trhee-step span {
-    color: var(--primery);
 }
 
 .banner_section .banner_text .type-wrap {

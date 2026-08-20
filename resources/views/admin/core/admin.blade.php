@@ -352,7 +352,7 @@
                                 <li class="menu-item">
                                     <a href="#menuSecurity" data-bs-toggle="collapse" class="menu-link">
                                         <span class="menu-icon"><i class="mdi mdi-shield-account"></i></span>
-                                        <span class="menu-text">Segurança e Controle <br> de Acesso</span>
+                                        <span class="menu-text">Segurança e <br> Controle de Acesso</span>
                                         <span class="badge btn-green-whi rounded-pill ms-auto text-dark">{{ collect(['audit', 'permissions', 'users'])->filter(fn ($module) => $theme->hasModule($module))->count() }}</span>
                                     </a>
                                     <div class="collapse" id="menuSecurity">

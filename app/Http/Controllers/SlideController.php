@@ -51,8 +51,8 @@ class SlideController extends Controller
     public function store(Request $request, ThemeManager $themeManager)
     {
         $request->validate([
-            'path_image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif'],
-            'path_image_mobile' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif'],
+            'path_image' => ['nullable', 'file', 'image', 'max:2048'],
+            'path_image_mobile' => ['nullable', 'file', 'image', 'max:2048'],
         ]);
 
         $limit = $themeManager->getLimit('slides', 0);

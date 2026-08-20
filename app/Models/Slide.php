@@ -24,6 +24,8 @@ class Slide extends Model
         'sorting',
         'path_image_mobile',
         'path_image',
+        'subtitle',
+        'typed'
     ];
 
     public function scopeActive($query)
