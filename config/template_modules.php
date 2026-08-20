@@ -253,4 +253,65 @@ return [
 
     ],
 
+    'whi-web' => [
+
+        'onepage' => [
+
+            'home' => [
+                'slides',
+                'topics',
+                'services',
+                'gallery',
+
+                'about',
+
+                'contact',
+                'contact_leads',
+            ],
+
+        ],
+
+        'multipage' => [
+
+            'home' => [
+                'slides',
+                'topics',
+                'services',
+                'gallery',
+            ],
+
+            'about' => [
+                'about',
+            ],
+
+            'contact' => [
+                'contact',
+                'contact_leads',
+            ],
+
+        ],
+
+        'smtp' => [
+            'config_smtp',
+        ],
+
+        'security_and_access_control' => [
+            'audit',
+            'permissions',
+            'users',
+        ],
+
+        'config_theme' => [
+            'config_theme',
+        ],
+
+        'limits' => [
+            'slides' => 1,
+            'topics' => 3,
+            'services' => 6,
+            'gallery' => 3,
+        ],
+
+    ],
+
 ];

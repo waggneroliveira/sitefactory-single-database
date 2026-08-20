@@ -2,6 +2,7 @@
 
 namespace App\Models\Scopes;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
@@ -13,9 +14,25 @@ class TenantScope implements Scope
     {
         $tenant = Tenant::current();
 
-        if ($tenant) {
+        if (!$tenant) {
+            return;
+        }
 
-            $table = $model->getTable();
+        $table = $model->getTable();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Usuários
+        |--------------------------------------------------------------------------
+        |
+        | O usuário ID 1 é o Super usuário global.
+        |
+        | Ele não possui tenant_id e pode ser recuperado
+        | independentemente do tenant atual.
+        |
+        */
+
+        if ($model instanceof User) {
 
             $builder->where(function (Builder $query) use ($table, $tenant) {
 
@@ -24,18 +41,28 @@ class TenantScope implements Scope
                     $tenant->id
                 );
 
-                /*
-                 * Super usuário global
-                 *
-                 * O ID 1 não pertence a nenhum tenant,
-                 * mas deve ser encontrado independentemente
-                 * do tenant atual.
-                 */
                 $query->orWhere(
                     $table . '.id',
                     1
                 );
             });
+
+            return;
         }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Demais Models
+        |--------------------------------------------------------------------------
+        |
+        | Todos os demais registros pertencem obrigatoriamente
+        | ao tenant atual.
+        |
+        */
+
+        $builder->where(
+            $table . '.tenant_id',
+            $tenant->id
+        );
     }
 }
