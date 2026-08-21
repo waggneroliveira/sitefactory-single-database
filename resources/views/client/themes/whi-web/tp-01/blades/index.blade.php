@@ -136,14 +136,59 @@
 
         <!-- device image -->
         <div class="device">
-            <img src="images/device.webp" alt="image">
+            <img src="{{asset('build/client/images/themes/whi-web/device.png')}}" alt="image" height="250">
         </div>
 
     </section>
     <!-- How it Works Section End -->
 
+    @if (!empty($videos) && $videos->count() > 0)
+      <section class="video">
+          <div class="container-fluid p-0">
+              <div class="content-video d-flex justify-content-center align-items-center bg-black">
+                  <!-- Lista -->
+                  <div class="left col-5 dark-background h-100 d-flex justify-content-center align-items-end flex-column position-relative">
+                      <div class="swiper mySwiper position-relative">
+                          <div class="swiper-wrapper py-4 flex-column align-items-start justify-content-start m-auto position-relative">
+                              @foreach($videos as $video)
+                                  <div class="swiper-slide align-items-center mb-3 justify-content-start"
+                                      data-video="{{ $video->link }}">
+                                      <svg xmlns="http://www.w3.org/2000/svg" class="external-icon" viewBox="0 0 28.57 20" focusable="false" style="pointer-events: none; display: block; width: 35px; height: auto;">
+                                          <svg viewBox="0 0 28.57 20" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                                              <g>
+                                                  <path d="M27.9727 3.12324C27.6435 1.89323 26.6768 0.926623 25.4468 0.597366C23.2197 2.24288e-07 14.285 0 14.285 0C14.285 0 5.35042 2.24288e-07 3.12323 0.597366C1.89323 0.926623 0.926623 1.89323 0.597366 3.12324C2.24288e-07 5.35042 0 10 0 10C0 10 2.24288e-07 14.6496 0.597366 16.8768C0.926623 18.1068 1.89323 19.0734 3.12323 19.4026C5.35042 20 14.285 20 14.285 20C14.285 20 23.2197 20 25.4468 19.4026C26.6768 19.0734 27.6435 18.1068 27.9727 16.8768C28.5701 14.6496 28.5701 10 28.5701 10C28.5701 10 28.5677 5.35042 27.9727 3.12324Z" fill="#FF0000"></path>
+                                                  <path d="M11.4253 14.2854L18.8477 10.0004L11.4253 5.71533V14.2854Z" fill="white"></path>
+                                              </g>
+                                          </svg>
+                                      </svg>
+                                      <h3 class="title montserrat-medium font-16 mb-0 col-10">
+                                          {{ $video->title ?? 'Vídeo' }}
+                                      </h3>
+                                  </div>
+                              @endforeach
+                          </div>
+                      </div>
+                      <div class="nav-video position-absolute d-flex flex-column align-items-end me-5">
+                          <div class="swiper-button-up">▲</div>
+                          <div class="swiper-button-down">▼</div>
+                      </div>
+                  </div>
+
+                  <!-- Player -->
+                  <div class="right col-7 bg-black d-flex justify-content-center align-items-center">
+                      <iframe id="videoPlayer" class="w-100 h-100"
+                              src=""
+                              title="Vídeo"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowfullscreen></iframe>
+                  </div>
+              </div>
+          </div>
+      </section>
+  @endif
+
     <!-- why us new section start -->
-    <section class="why_new_section" id="why_sec">
+    <section class="why_new_section bg-white position-relative" id="why_sec">
         <!-- inner section start -->
         <div class="why_new_section_inner">
         <!-- container start -->
@@ -153,9 +198,8 @@
 
             <!-- section title -->
             <div class="section_title" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
-              <span class="title_badge">A solução</span>
-              <!-- h2 -->
-              <h2 class="trhee-step">Funciona em <br><span>3 passos</span> simples</h2>
+                <span class="title_badge">Personalize do seu jeito</span>
+                <h2 class="trhee-step">Seu site com<br><span>a sua identidade</span></h2>
             </div>
 
             <div class="dtat_box">
@@ -166,8 +210,8 @@
                   <!-- block 1 -->
                   <div class="why_data_block " data-aos="fade-right" data-aos-duration="1500">
                     <!-- icon -->
-                    <div class="icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fb6c04" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2 size-7 text-primary-foreground"><path d="M9 17H7A5 5 0 0 1 7 7h2"></path><path d="M15 7h2a5 5 0 1 1 0 10h-2"></path><line x1="8" x2="16" y1="12" y2="12"></line></svg>
+                    <div class="number text-white">
+                    01                    
                     </div>
                     <!-- text -->
                     <div class="text col-12 col-md-10">
@@ -178,9 +222,9 @@
 
                   <!-- block 2 -->
                   <div class="why_data_block " data-aos="fade-right" data-aos-duration="1500">
-                    <!-- icon -->
-                    <div class="icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fb6c04" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart size-7 text-primary-foreground"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+                    <!-- number -->
+                    <div class="number text-white">
+                      02
                     </div>
                     <!-- text -->
                     <div class="text col-12 col-md-10">
@@ -191,9 +235,9 @@
 
                   <!-- block 3 -->
                   <div class="why_data_block " data-aos="fade-right" data-aos-duration="1500">
-                    <!-- icon -->
-                    <div class="icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fb6c04" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell size-7 text-primary-foreground"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+                    <!-- number -->
+                    <div class="number text-white">
+                      03
                     </div>
                     <!-- text -->
                     <div class="text col-12 col-md-10">
@@ -205,10 +249,18 @@
                 </div>
               </div>
 
-              <div class="col-lg-6 col-md-12">
+              <div class="col-lg-6 col-md-12 position-relative">
+                <img src="{{asset('build/client/images/themes/whi-web/tablet.png')}}" class="position-absolute" alt="image" style="height: 250px;
+    bottom: 15px;
+    right: 11px;
+    z-index: 1;">
+                <img src="{{asset('build/client/images/themes/whi-web/phone-login.png')}}" class="position-absolute" alt="image" style="    height: 220px;
+    bottom: 15px;
+    left: -34px;
+    z-index: 1;">
                 <!-- why us new image -->
-                <div class="why_us_new_img" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
-                  <img src="images/features_frame.webp" alt="image" >
+                <div class="why_us_new_img position-relative" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+                  <img src="{{asset('build/client/images/themes/whi-web/gif-paine-one.gif')}}" alt="image">
                 </div>
               </div>
             </div>

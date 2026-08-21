@@ -20,6 +20,10 @@ export default defineConfig({
                     dest: 'client'
                 },
                 {
+                    src: 'resources/assets/client/images',
+                    dest: 'client'
+                },
+                {
                     src: 'resources/assets/client/bootstrap',
                     dest: 'client'
                 },

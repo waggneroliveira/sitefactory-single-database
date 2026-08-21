@@ -222,6 +222,9 @@
             --copyright-text: {{ $tenantTheme->copyright ?: '© 2024 Todos os direitos reservados' }};
         }
         body{ background: #021127 !important }
+        .why_new_section .why_new_section_inner .why_new_left_data .why_data_block .number{background: var(--primary-color);}
+        .why_new_section .why_new_section_inner .why_new_left_data .why_data_block{background: color-mix(in srgb, var(--secondary-color) 10%, transparent);;border: solid 1px var(--secondary-color);}
+        .title_badge{color: var(--secondary-color); border:1px solid var(--secondary-color)}
         .primary-color { color: var(--primary-color); }
         .secondary-color { color: var(--secondary-color); }
         .accent-color { color: var(--accent-color); }
