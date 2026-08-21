@@ -262,7 +262,7 @@ return [
                 'topics',
                 'services',
                 'gallery',
-
+                'videos',
                 'about',
 
                 'contact',

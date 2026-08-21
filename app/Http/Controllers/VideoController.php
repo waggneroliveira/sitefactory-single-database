@@ -20,15 +20,15 @@ class VideoController extends Controller
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
         // Verifica permissão para visualizar slides
-        $check = checkPermission('video.visualizar', $settingTheme);
+        $check = checkPermission('videos', 'video.visualizar', $settingTheme);
         if ($check !== true) {
             return $check; // retorna view 403
         }
 
-        $video = Video::first();
+        $videos = Video::get();
         $theme = $themeManager;
         $themeData = $themeManager->theme();
-        return view('admin.blades.video.index', compact('video', 'theme', 'themeData'));
+        return view('admin.blades.video.index', compact('videos', 'theme', 'themeData'));
     }
 
     public function store(Request $request)

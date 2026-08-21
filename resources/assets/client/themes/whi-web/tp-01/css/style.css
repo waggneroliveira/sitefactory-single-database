@@ -970,6 +970,116 @@ header.fixed .navbar {
 
 
 /* how it works video model   */
+
+/*video*/
+.mySwiper .swiper-wrapper::before {
+content: '';
+width: 2px;
+background: #ffffff8a;
+height: 100%;
+position: absolute;
+top: 0;
+left: 28px;
+}
+
+.mySwiper .swiper-wrapper {
+width: 70% !important; 
+overflow-y: auto;
+scrollbar-width: none;
+height: auto;
+}
+
+.mySwiper .swiper-wrapper::-webkit-scrollbar {
+display: none; /* Chrome/Safari */
+}
+
+.mySwiper .swiper-slide {
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 15px 10px;
+cursor: pointer;
+border-radius: 6px;
+transition: all 0.4s ease;
+}
+
+.mySwiper .swiper-slide.active,
+.mySwiper .swiper-slide:hover {
+background: #fff;
+color: #000;
+font-weight: bold;
+transform: scale(1.06);
+}
+
+.mySwiper .swiper-slide svg {
+transition: all 0.4s ease;
+}
+
+.mySwiper .swiper-slide.active svg,
+.mySwiper .swiper-slide:hover svg {
+width: 45px !important;
+}
+
+.mySwiper .swiper-slide img {
+width: 30px;
+height: 30px;
+}
+
+.mySwiper .swiper-button-up,
+.mySwiper .swiper-button-down {
+color: white;
+font-size: 20px;
+margin: 5px 0;
+cursor: pointer;
+}
+
+.swiper-button-lock {
+display: block !important;
+}
+
+/* Scrollbar customizada */
+.mySwiper.swiper {
+height: 460px;
+overflow-y: auto;
+scrollbar-width: thin; /* Firefox */
+scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+/* Chrome, Edge, Safari */
+.mySwiper.swiper::-webkit-scrollbar {
+width: 6px; /* fininha */
+}
+
+.mySwiper.swiper::-webkit-scrollbar-track {
+background: transparent; /* fundo transparente */
+}
+
+.mySwiper.swiper::-webkit-scrollbar-thumb {
+background: rgba(255, 255, 255, 0.3); /* quase transparente */
+border-radius: 10px;
+transition: background 0.3s;
+}
+
+.mySwiper.swiper::-webkit-scrollbar-thumb:hover {
+background: rgba(255, 255, 255, 0.5); /* mais visÃ­vel ao passar o mouse */
+}
+
+.content-video,
+.right,
+.right iframe {
+height: 460px;
+}
+
+.nav-video {
+bottom: 50px;
+z-index: 9;
+cursor: pointer;
+}
+
+.right iframe {
+border: none;
+}
+/*video*/
 .modal {
     z-index: 999999;
 }
@@ -1271,22 +1381,9 @@ iframe#youtubevideo {
 }
 
 .service_section .service_text .design_block li {
-    padding-left: 40px;
     position: relative;
     margin-bottom: 10px;
-}
-
-.service_section .service_text .design_block li::before, .topic-download li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 2px;
-    background-image: url(../images/right_icon.webp);
-    width: 18px;
-    height: 18px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
+    color: #FFF;
 }
 
 .service_section .service_text .design_block li h6 {

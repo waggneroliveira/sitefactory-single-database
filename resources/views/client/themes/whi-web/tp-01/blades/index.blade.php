@@ -142,6 +142,267 @@
     </section>
     <!-- How it Works Section End -->
 
+    <!-- why us new section start -->
+    <section class="why_new_section bg-white position-relative" id="why_sec">
+        <!-- inner section start -->
+        <div class="why_new_section_inner">
+        <!-- container start -->
+        <div class="container">
+          <!-- row start -->
+          <div class="row justify-content-center">
+
+            <!-- section title -->
+            <div class="section_title" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+                <span class="title_badge">Personalize do seu jeito</span>
+                <h2 class="trhee-step">Seu site com<br><span>a sua identidade</span></h2>
+            </div>
+
+            <div class="dtat_box">
+              <div class="col-lg-6 col-md-12">
+                <!-- why us new box left -->
+                <div class="why_new_left_data">
+
+                  <!-- block 1 -->
+                  <div class="why_data_block " data-aos="fade-right" data-aos-duration="1500">
+                    <!-- icon -->
+                    <div class="number text-white">
+                    01                    
+                    </div>
+                    <!-- text -->
+                    <div class="text col-12 col-md-10">
+                        <h6>Escolha seu template</h6>
+                        <p>Escolha o modelo que mais combina com o seu negócio e comece a personalizar seu site.</p>
+                    </div>
+                  </div>
+
+                  <!-- block 2 -->
+                  <div class="why_data_block " data-aos="fade-right" data-aos-duration="1500">
+                    <!-- icon -->
+                    <div class="number text-white">
+                    02                    
+                    </div>
+                    <!-- text -->
+                    <div class="text col-12 col-md-10">
+                      <h6>Acesse seu painel</h6>
+                      <p>Entre na sua conta e tenha acesso a todas as opções de personalização do seu site.</p>
+                    </div>
+                  </div>
+
+                  <!-- block 3 -->
+                  <div class="why_data_block " data-aos="fade-right" data-aos-duration="1500">
+                    <!-- number -->
+                    <div class="number text-white">
+                      03
+                    </div>
+                    <!-- text -->
+                    <div class="text col-12 col-md-10">
+                      <h6>Personalize seu tema</h6>
+                      <p>Altere cores, textos, imagens e outros elementos para deixar o site com a identidade da sua marca.</p>
+                    </div>
+                  </div>
+
+                  <!-- block 4 -->
+                  <div class="why_data_block " data-aos="fade-right" data-aos-duration="1500">
+                    <!-- number -->
+                    <div class="number text-white">
+                      04
+                    </div>
+                    <!-- text -->
+                    <div class="text col-12 col-md-10">
+                      <h6>Salve e veja a mudança</h6>
+                      <p>Salve suas alterações e confira seu site personalizado em poucos instantes.</p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-12 position-relative" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+                <img src="{{asset('build/client/images/themes/whi-web/tablet.png')}}" class="position-absolute" alt="image" style="height: 250px; bottom: 15px; right: 11px;z-index: 1;">
+                <img src="{{asset('build/client/images/themes/whi-web/phone-login.png')}}" class="position-absolute" alt="image" style="    height: 220px; bottom: 15px; left: -34px; z-index: 1;">
+                <!-- why us new image -->
+                <div class="why_us_new_img position-relative">
+                  <img src="{{asset('build/client/images/themes/whi-web/gif-paine-one.gif')}}" alt="image">
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- row end -->
+        </div>
+        <!-- container end -->
+      </div>
+      
+    </section>
+    <!-- why us new section end -->
+
+    <!-- Service Section Start -->
+    <section class="row_am service_section" id="feature_sec">
+
+        <div class="container">
+            <!-- section title -->
+            <div class="section_title" data-aos="fade-up" data-aos-duration="1500">
+                <span class="title_badge text-white">VANTAGENS</span>
+                <h2 class="trhee-step text-white">O que você ganha com<br> a <span>WHI Web</span></h2>
+            </div>
+
+            <div class="row service_blocks flex-row-reverse">
+                <!-- background blure shapes -->
+                <div class="blure_shape bg-secondary-color bs_1"> </div>
+                <div class="blure_shape bg-secondary-color bs_2"> </div>
+                <div class="col-md-6">
+                    <div class="service_text right_side" data-aos="fade-up" data-aos-duration="1500">
+
+                        <span class="title_badge">Para você</span>
+                        <h3 class="text-white">Design profissional para o seu negócio</h3>
+                        <p class="text-white">Tenha acesso a layouts pensados para diferentes tipos de negócios, com uma estrutura moderna e pronta para apresentar sua empresa.</p>
+
+                        <ul class="design_block">
+                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                                <i class="bi bi-check-circle"></i>
+                                <h6><span>Layouts</span> criados para diferentes segmentos</h6>
+                            </li>
+                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                                <i class="bi bi-check-circle"></i>
+                                <h6><span>Design</span> moderno e profissional</h6>
+                            </li>
+                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                                <i class="bi bi-check-circle"></i>
+                                <h6><span>Estrutura</span> pensada para destacar seu negócio</h6>
+                            </li>
+                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                                <i class="bi bi-check-circle"></i>
+                                <h6><span>Experiência</span> otimizada para seus visitantes</h6>
+                            </li>
+                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                                <i class="bi bi-check-circle"></i>
+                                <h6><span>Responsividade</span> em celulares, tablets e computadores</h6>
+                            </li>
+                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                                <i class="bi bi-check-circle"></i>
+                                <h6><span>Atualizações</span> contínuas nos modelos disponíveis</h6>
+                            </li>
+                        </ul>
+                        <div class="btn_block">
+                            <a href="#plans" 
+                            class="btn puprple_btn ml-0">Começar agora
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="inner_block dark_bg rotate_right" data-aos="fade-up" data-aos-duration="1500">
+                        <div class="img">
+                            <img src="{{asset('build/client/images/themes/whi-web/benefit-1.png')}}" alt="image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row service_blocks no_bottom_padding">
+                <div class="col-md-6">
+                  <div class="service_text" data-aos="fade-up" data-aos-duration="1500">
+                    <span class="title_badge">Para seu cliente</span>
+                    <h3 class="text-white">Uma experiência melhor para quem visita</h3>
+                    <p class="text-white">Ofereça um site organizado, rápido e adaptado para facilitar a navegação e apresentar sua empresa com clareza.</p>
+
+                    <ul class="design_block">
+                        <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                            <i class="bi bi-check-circle"></i>
+                            <h6><span>Navega</span> por uma estrutura clara e intuitiva</h6>
+                        </li>
+                        <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                            <i class="bi bi-check-circle"></i>
+                            <h6><span>Encontra</span> informações importantes com facilidade</h6>
+                        </li>
+                        <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                            <i class="bi bi-check-circle"></i>
+                            <h6><span>Acessa</span> o site de qualquer dispositivo</h6>
+                        </li>
+                        <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                            <i class="bi bi-check-circle"></i>
+                            <h6><span>Conhece</span> melhor seus produtos e serviços</h6>
+                        </li>
+                        <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                            <i class="bi bi-check-circle"></i>
+                            <h6><span>Entra</span> em contato de forma rápida</h6>
+                        </li>
+                        <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                            <i class="bi bi-check-circle"></i>
+                            <h6><span>Percebe</span> mais profissionalismo na sua presença online</h6>
+                        </li>
+                    </ul>
+
+                    <a href="#plans" 
+                    class="btn puprple_btn ml-0">Começar agora
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="inner_block" data-aos="fade-up" data-aos-duration="1500">
+                        <div class="img">
+                            <img src="{{asset('build/client/images/themes/whi-web/benefit-2.png')}}" alt="image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row service_blocks flex-row-reverse">
+                <div class="col-md-6">
+                    <div class="service_text right_side" data-aos="fade-up" data-aos-duration="1500">
+
+                        <span class="title_badge">Para seu negócio</span>
+                        <h3 class="text-white">Tenha autonomia para cuidar do seu site</h3>
+                        <p class="text-white">Gerencie o conteúdo da sua presença digital em um só lugar, sem depender de alterações feitas por terceiros.</p>
+
+                        <ul class="design_block">
+                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                                <i class="bi bi-check-circle"></i>
+                                <h6><span>Gerencie</span> todo o conteúdo pelo seu painel</h6>
+                            </li>
+                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                                <i class="bi bi-check-circle"></i>
+                                <h6><span>Atualize</span> informações sempre que necessário</h6>
+                            </li>
+                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                                <i class="bi bi-check-circle"></i>
+                                <h6><span>Controle</span> imagens, textos e informações da empresa</h6>
+                            </li>
+                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                                <i class="bi bi-check-circle"></i>
+                                <h6><span>Economize</span> tempo com uma gestão mais simples</h6>
+                            </li>
+                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                                <i class="bi bi-check-circle"></i>
+                                <h6><span>Mantenha</span> seu site sempre atualizado</h6>
+                            </li>
+                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                                <i class="bi bi-check-circle"></i>
+                                <h6><span>Tenha</span> mais autonomia sobre sua presença digital</h6>
+                            </li>
+                        </ul>
+                        <div class="btn_block">
+                            <a href="#plans" 
+                            class="btn puprple_btn ml-0">Começar agora
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="inner_block dark_bg rotate_right" data-aos="fade-up" data-aos-duration="1500">
+                        <div class="img">
+                            <img src="{{asset('build/client/images/themes/whi-web/benefit-3.png')}}" alt="image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Service Section End -->
+    
     @if (!empty($videos) && $videos->count() > 0)
       <section class="video">
           <div class="container-fluid p-0">
@@ -185,197 +446,8 @@
               </div>
           </div>
       </section>
-  @endif
+    @endif
 
-    <!-- why us new section start -->
-    <section class="why_new_section bg-white position-relative" id="why_sec">
-        <!-- inner section start -->
-        <div class="why_new_section_inner">
-        <!-- container start -->
-        <div class="container">
-          <!-- row start -->
-          <div class="row justify-content-center">
-
-            <!-- section title -->
-            <div class="section_title" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
-                <span class="title_badge">Personalize do seu jeito</span>
-                <h2 class="trhee-step">Seu site com<br><span>a sua identidade</span></h2>
-            </div>
-
-            <div class="dtat_box">
-              <div class="col-lg-6 col-md-12">
-                <!-- why us new box left -->
-                <div class="why_new_left_data">
-
-                  <!-- block 1 -->
-                  <div class="why_data_block " data-aos="fade-right" data-aos-duration="1500">
-                    <!-- icon -->
-                    <div class="number text-white">
-                    01                    
-                    </div>
-                    <!-- text -->
-                    <div class="text col-12 col-md-10">
-                      <h6>Cliente acessa seu link</h6>
-                      <p>Você compartilha um link único do seu cardápio digital. Sem download, sem cadastro chato.</p>
-                    </div>
-                  </div>
-
-                  <!-- block 2 -->
-                  <div class="why_data_block " data-aos="fade-right" data-aos-duration="1500">
-                    <!-- number -->
-                    <div class="number text-white">
-                      02
-                    </div>
-                    <!-- text -->
-                    <div class="text col-12 col-md-10">
-                      <h6>Faz o pedido sozinho</h6>
-                      <p>Escolhe os itens, personaliza, paga e envia. Tudo direto do celular dele.</p>
-                    </div>
-                  </div>
-
-                  <!-- block 3 -->
-                  <div class="why_data_block " data-aos="fade-right" data-aos-duration="1500">
-                    <!-- number -->
-                    <div class="number text-white">
-                      03
-                    </div>
-                    <!-- text -->
-                    <div class="text col-12 col-md-10">
-                      <h6>Pedido chega organizado</h6>
-                      <p>Você recebe tudo certinho no painel: endereço, itens, observações e pagamento confirmado.</p>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-              <div class="col-lg-6 col-md-12 position-relative">
-                <img src="{{asset('build/client/images/themes/whi-web/tablet.png')}}" class="position-absolute" alt="image" style="height: 250px;
-    bottom: 15px;
-    right: 11px;
-    z-index: 1;">
-                <img src="{{asset('build/client/images/themes/whi-web/phone-login.png')}}" class="position-absolute" alt="image" style="    height: 220px;
-    bottom: 15px;
-    left: -34px;
-    z-index: 1;">
-                <!-- why us new image -->
-                <div class="why_us_new_img position-relative" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
-                  <img src="{{asset('build/client/images/themes/whi-web/gif-paine-one.gif')}}" alt="image">
-                </div>
-              </div>
-            </div>
-
-          </div>
-          <!-- row end -->
-        </div>
-        <!-- container end -->
-      </div>
-      
-    </section>
-    <!-- why us new section end -->
-
-        <!-- Service Section Start -->
-    <section class="row_am service_section" id="feature_sec">
-
-        <div class="container">
-            <!-- section title -->
-            <div class="section_title" data-aos="fade-up" data-aos-duration="1500">
-                <span class="title_badge">VANTAGENS</span>
-                <h2 class="trhee-step">O que você ganha <br>com o <span>Delifast</span></h2>
-            </div>
-
-            <div class="row service_blocks flex-row-reverse">
-                <div class="col-md-6">
-                    <div class="service_text right_side" data-aos="fade-up" data-aos-duration="1500">
-
-                        <span class="title_badge">Para você</span>
-                        <h3>Gestão de conteúdo e pedidos descomplicada </h3>
-                        <p>Tenha acesso ao nosso dashboard onde será possível ter autonomia para mudança de todas as informações do seu sistema, inclusive a gestão de pedidos</p>
-                        <ul class="design_block">
-                            <li data-aos="fade-up" data-aos-duration="1500">
-                                <h6><span>Cadastra</span> produtos com fotos e descrições</h6>
-                            </li>
-                            <li data-aos="fade-up" data-aos-duration="1500">
-                                <h6><span>Define</span> preços e categorias</h6>
-                            </li>
-                            <li data-aos="fade-up" data-aos-duration="1500">
-                                <h6><span>Gerencia</span> pedidos e seus status pelo dashboard</h6>
-                            </li>
-                            <li data-aos="fade-up" data-aos-duration="1500">
-                                <h6><span>Analisa</span> relatórios de desempenho</h6>
-                            </li>
-                            <li data-aos="fade-up" data-aos-duration="1500">
-                                <h6><span>Redução</span> de 80% no tempo de gestão</h6>
-                            </li>
-                            <li data-aos="fade-up" data-aos-duration="1500">
-                                <h6><span>Atualiza</span> o cardápio instataneamente</h6>
-                            </li>
-
-                        </ul>
-                        <div class="btn_block">
-                            <a href="#plans" 
-                            class="btn puprple_btn ml-0">Começar agora
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="inner_block dark_bg rotate_right" data-aos="fade-up" data-aos-duration="1500">
-                        <div class="img">
-                            <img src="images/for_restaurant.webp" alt="image">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row service_blocks no_bottom_padding">
-                <div class="col-md-6">
-                    <div class="service_text" data-aos="fade-up" data-aos-duration="1500">
-                        <span class="title_badge">Para seu cliente</span>
-                        <h3>Processo de pedido simples e rápido</h3>
-                        <p>Ofereça uma experiência fluida do primeiro clique à entrega, fazendo com que seu cliente volte a comprar pela facilidade.</p>
-                        
-                        <ul class="design_block">
-                            <li data-aos="fade-up" data-aos-duration="1500">
-                                <h6><span>Acessa</span> seu cardápio digital (link ou QR Code)</h6>
-                            </li>
-                            <li data-aos="fade-up" data-aos-duration="1500">
-                                <h6><span>Escolhe</span> produtos e adiciona ao carrinho de forma mais rápida</h6>
-                            </li>
-                            <li data-aos="fade-up" data-aos-duration="1500">
-                                <h6><span>Finaliza</span> pedido com endereço e forma de pagamento</h6>
-                            </li>
-                            <li data-aos="fade-up" data-aos-duration="1500">
-                                <h6><span>Recebe</span> confirmação e acompanha status do pedido</h6>
-                            </li>
-                            <li data-aos="fade-up" data-aos-duration="1500">
-                                <h6><span>Volta</span> a comprar pela facilidade</h6>
-                            </li>
-                            <li data-aos="fade-up" data-aos-duration="1500">
-                                <h6><span>Acompanha</span> o Status e Processamento de Pedidos em Tempo Real</h6>
-                            </li>
-                        </ul>
-                        <div class="btn_block">
-                          <a href="#plans" 
-                          class="btn puprple_btn ml-0">Começar agora
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-                          </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="inner_block" data-aos="fade-up" data-aos-duration="1500">
-                        <div class="img">
-                            <img src="images/for_customer.webp" alt="image">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Service Section End -->
-    
     <!-- App-Download-New-Section-Start -->
     <section class="row_am download_app_new" id="download_sec">
       <!-- Task Block start -->
@@ -1281,4 +1353,120 @@
           </div>
         </div>
       </section>   
+
+<script>
+    const section = document.querySelector('section.video');
+    if (section) {
+        const wrapper = section.querySelector('.mySwiper .swiper-wrapper');
+        const slides  = Array.from(section.querySelectorAll(".mySwiper .swiper-slide"));
+        const player  = section.querySelector("#videoPlayer");
+
+        let currentIndex = 0;
+        let firstLoad = true;
+
+        // Normaliza URL (adiciona protocolo se vier //)
+        function norm(url) {
+            if (!url) return "";
+            return url.startsWith("//") ? window.location.protocol + url : url;
+        }
+
+        // Converte para URL de embed (YouTube / Vimeo)
+        function toEmbed(rawUrl) {
+            const urlStr = norm(rawUrl);
+            if (!urlStr) return "";
+
+            let u;
+            try { u = new URL(urlStr); } catch { return urlStr; }
+
+            const host = u.hostname.replace(/^www\./, "");
+
+            // YouTube
+            if (host.includes("youtube.com") || host.includes("youtu.be")) {
+                // Se já for /embed/ mantém
+                if (u.pathname.startsWith("/embed/")) return u.toString();
+
+                // youtu.be/<id>
+                if (host === "youtu.be" && u.pathname.length > 1) {
+                    const id = u.pathname.split("/")[1];
+                    return `https://www.youtube.com/embed/${id}`;
+                }
+
+                // shorts -> converte para embed
+                if (u.pathname.startsWith("/shorts/")) {
+                    const id = u.pathname.split("/")[2] || u.pathname.split("/")[1];
+                    return `https://www.youtube.com/embed/${id}`;
+                }
+
+                // watch?v=<id>
+                const v = u.searchParams.get("v");
+                if (v) return `https://www.youtube.com/embed/${v}`;
+
+                // /live/<id> ou /v/<id> etc.
+                const parts = u.pathname.split("/").filter(Boolean);
+                if (parts.length >= 2) {
+                    const id = parts.pop();
+                    return `https://www.youtube.com/embed/${id}`;
+                }
+            }
+
+            // Vimeo
+            if (host.includes("vimeo.com")) {
+                // Se já for player.vimeo.com
+                if (host === "player.vimeo.com") return u.toString();
+
+                // Extrai o último segmento numérico como ID
+                const parts = u.pathname.split("/").filter(Boolean);
+                const last = parts[parts.length - 1];
+                if (/^\d+$/.test(last)) {
+                    return `https://player.vimeo.com/video/${last}`;
+                }
+            }
+
+            // Desconhecido: retorna original
+            return urlStr;
+        }
+
+        function setActiveByIndex(index, userTriggered = false) {
+            if (index < 0 || index >= slides.length) return;
+
+            slides.forEach(s => s.classList.remove("active"));
+            const slide = slides[index];
+            slide.classList.add("active");
+
+            const raw = slide.getAttribute("data-video");
+            const embedUrl = toEmbed(raw);
+            if (embedUrl) player.src = embedUrl;
+
+            currentIndex = index;
+
+            if (!firstLoad || userTriggered) {
+                slide.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }
+        }
+
+        // Clique em um item
+        slides.forEach((slide, idx) => {
+            slide.addEventListener("click", () => setActiveByIndex(idx, true));
+        });
+
+        // Inicia no primeiro (sem rolagem)
+        if (slides.length > 0) setActiveByIndex(0);
+
+        // Libera rolagem depois do load
+        window.addEventListener("load", () => {
+            setTimeout(() => { firstLoad = false; }, 500);
+        });
+
+        // Navegação ↑ ↓
+        const btnUp = section.querySelector(".swiper-button-up");
+        const btnDown = section.querySelector(".swiper-button-down");
+
+        btnUp && btnUp.addEventListener("click", () => {
+            if (currentIndex > 0) setActiveByIndex(currentIndex - 1, true);
+        });
+        btnDown && btnDown.addEventListener("click", () => {
+            if (currentIndex < slides.length - 1) setActiveByIndex(currentIndex + 1, true);
+        });
+    }
+</script>
 @endsection

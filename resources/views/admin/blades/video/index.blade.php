@@ -39,9 +39,9 @@
                                             Auth::user()->can('video.criar') ||
                                             Auth::user()->can('usuario.tornar usuario master') || 
                                             Auth::user()->hasRole('Super'))
-                                                @if (!$video)                                                    
-                                                    <button type="button" class="btn btn-primary text-black waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#video-create"><i class="mdi mdi-plus-circle me-1"></i> {{__('dashboard.btn_create')}}</button>
-                                                @endif
+                                                {{-- @if (!$video)                                                    
+                                                @endif --}}
+                                                <button type="button" class="btn btn-primary text-black waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#video-create"><i class="mdi mdi-plus-circle me-1"></i> {{__('dashboard.btn_create')}}</button>
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="video-create" tabindex="-1" role="dialog" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered">
@@ -83,7 +83,7 @@
                                             </tr>
                                         </thead>
                                         
-                                        @if (isset($video))                                            
+                                        @foreach($videos as $key => $video)                                            
                                             <tbody data-route="{{route('admin.dashboard.video.sorting')}}">
                                                 <tr data-code="{{$video->id}}">
                                                     <td><span class="btnDrag mdi mdi-drag-horizontal font-22"></span></td>
@@ -141,7 +141,8 @@
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                        @endif
+                                        @endforeach                                           
+                                        
                                     </table>
                                 </div>
 
