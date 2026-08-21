@@ -286,22 +286,6 @@
         display: none; 
     }
 
-
-    /* download app new */
-
-    .download_app_new .app_btn li a img {
-        height: 30px;
-    }
-
-    .download_app_new .dap_block .dap_image.left {
-        transform: translate(-45%, -50%) rotate(-15deg);
-    }
-
-    .download_app_new .section_title p {
-        padding: 0 30px;
-    }
-
-
     /* ===== About us page Css Start======== */ 
 
     .about_us_section .section_title p {
@@ -841,60 +825,6 @@
     .faq_section .card .card-header button {
         font-size: 16px;
     }
-
-
-
-    /* download app new */
-
-    .download_app_new .dap_block {
-        padding: 100px 0 0 0;
-    }
-
-    .download_app_new .dap_block .dap_text {
-        padding: 0 50px;
-    }
-
-    .download_app_new .app_btn {
-        align-items: flex-start;
-        gap: 15px;
-        margin-bottom: 60px;
-    }
-
-    .download_app_new .app_btn li:last-child {
-        margin-left: 0;
-    }
-
-    .download_app_new .dap_block .dap_desktop_img {
-        display: none;
-    }
-
-    .download_app_new .dap_block .dap_mobile_img {
-        display: block;
-    }
-
-    .download_app_new .dap_block .dap_image.left {
-        transform: inherit;
-        position: relative;
-    }
-
-    .download_app_new .dap_block .dap_image.left img {
-        max-width: 100%;
-    }
-
-    .download_app_new .dap_block .dap_image.right img {
-        max-width: 100%;
-    }
-
-    .download_app_new .dap_block .dap_image.right {
-        transform: inherit;
-        position: relative;
-    }
-
-    .download_app_new .blure_shape.bs_1 {
-        top: -450px;
-    }
-
-
 
     /* contact page */
     .contact_page_section {

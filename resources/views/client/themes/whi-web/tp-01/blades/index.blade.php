@@ -237,19 +237,18 @@
     <!-- why us new section end -->
 
     <!-- Service Section Start -->
-    <section class="row_am service_section" id="feature_sec">
+    <section class="row_am service_section position-relative overflow-hidden" id="feature_sec">
+        <!-- background blure shapes -->       
+        <div class="blure_shape bg-secondary-color bs_2"> </div>
 
-        <div class="container">
+        <div class="container position-relative">
             <!-- section title -->
             <div class="section_title" data-aos="fade-up" data-aos-duration="1500">
                 <span class="title_badge text-white">VANTAGENS</span>
                 <h2 class="trhee-step text-white">O que você ganha com<br> a <span>WHI Web</span></h2>
-            </div>
+            </div>     
 
-            <div class="row service_blocks flex-row-reverse">
-                <!-- background blure shapes -->
-                <div class="blure_shape bg-secondary-color bs_1"> </div>
-                <div class="blure_shape bg-secondary-color bs_2"> </div>
+            <div class="row service_blocks flex-row-reverse">                
                 <div class="col-md-6">
                     <div class="service_text right_side" data-aos="fade-up" data-aos-duration="1500">
 
@@ -290,7 +289,8 @@
                             </a>
                         </div>
                     </div>
-                </div>
+                </div>                
+
                 <div class="col-md-6">
                     <div class="inner_block dark_bg rotate_right" data-aos="fade-up" data-aos-duration="1500">
                         <div class="img">
@@ -400,19 +400,487 @@
                 </div>
             </div>
         </div>
+
+        <div class="blure_shape bg-secondary-color bs_1"> </div> 
     </section>
     <!-- Service Section End -->
-    
+
+    <style>
+      /* RESET LOCAL & ISOLAMENTO DE ESCOPO (.tpl-modal-sec) */
+      .tpl-modal-sec, .tpl-modal-sec * {
+        box-sizing: border-box !important;
+        margin: 0;
+        padding: 0;
+      }
+      .tpl-modal-sec, .content-video, .video{
+        background-color: #08090a !important;
+      }
+      .tpl-modal-sec {        
+        padding: 90px 0 !important;
+        color: #f3f4f6 !important;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        width: 100% !important;
+        position: relative !important;
+        clear: both !important;
+        line-height: 1.5 !important;
+        display: block !important;
+      }
+
+      .tpl-modal-sec .tpl-container {
+        max-width: 1280px !important;
+        margin: 0 auto !important;
+        padding: 0 24px !important;
+        width: 100% !important;
+        display: block !important;
+      }
+
+      /* BLOCO DE TOPO (SUBSTITUTO DO HEADER PARA EVITAR CONFLITO GLOBAL) */
+      .tpl-modal-sec .tpl-header-block {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: flex-end !important;
+        margin-bottom: 40px !important;
+        gap: 32px !important;
+        flex-wrap: wrap !important;
+        position: relative !important;
+        width: 100% !important;
+        height: auto !important;
+        top: auto !important;
+        left: auto !important;
+      }
+
+      .tpl-modal-sec .tpl-header-left {
+        max-width: 580px !important;
+        flex: 1 1 300px !important;
+      }
+
+      .tpl-modal-sec .tpl-badge {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        background: rgba(59, 130, 246, 0.12) !important;
+        border: 1px solid rgba(59, 130, 246, 0.3) !important;
+        color: #3b82f6 !important;
+        padding: 6px 14px !important;
+        border-radius: 100px !important;
+        font-size: 0.8rem !important;
+        font-weight: 600 !important;
+        margin-bottom: 16px !important;
+        width: fit-content !important;
+      }
+
+      .tpl-modal-sec .tpl-header-block h2 {
+        font-size: 2.5rem !important;
+        font-weight: 700 !important;
+        line-height: 1.2 !important;
+        color: #ffffff !important;
+        letter-spacing: -0.02em !important;
+        text-transform: none !important;
+      }
+
+      .tpl-modal-sec .tpl-header-block h2 span {
+        color: #9ca3af !important;
+        display: inline !important;
+      }
+
+      .tpl-modal-sec .tpl-header-right {
+        max-width: 400px !important;
+        flex: 1 1 280px !important;
+      }
+
+      .tpl-modal-sec .tpl-header-block p {
+        color: #9ca3af !important;
+        font-size: 0.98rem !important;
+        line-height: 1.6 !important;
+        margin-bottom: 12px !important;
+      }
+
+      .tpl-modal-sec .tpl-scroll-hint {
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        font-size: 0.85rem !important;
+        color: #3b82f6 !important;
+        font-weight: 600 !important;
+      }
+
+      /* TRILHO DE SCROLL HORIZONTAL */
+      .tpl-modal-sec .tpl-scroll-track {
+        display: flex !important;
+        gap: 24px !important;
+        overflow-x: auto !important;
+        scroll-snap-type: x mandatory !important;
+        padding: 12px 0 28px 0 !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: thin !important;
+        scrollbar-color: rgba(255, 255, 255, 0.2) transparent !important;
+        width: 100% !important;
+      }
+
+      .tpl-modal-sec .tpl-scroll-track::-webkit-scrollbar {
+        height: 6px !important;
+      }
+
+      .tpl-modal-sec .tpl-scroll-track::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2) !important;
+        border-radius: 10px !important;
+      }
+
+      /* CARD DO TEMPLATE */
+      .tpl-modal-sec .tpl-card {
+        flex: 0 0 340px !important;
+        min-width: 340px !important;
+        max-width: 340px !important;
+        scroll-snap-align: start !important;
+        background: #121417 !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-radius: 18px !important;
+        overflow: hidden !important;
+        display: flex !important;
+        flex-direction: column !important;
+        position: relative !important;
+        transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+      }
+
+      .tpl-modal-sec .tpl-card:hover {
+        transform: translateY(-6px) !important;
+        border-color: rgba(59, 130, 246, 0.5) !important;
+        box-shadow: 0 20px 35px -10px rgba(0,0,0,0.8), 0 0 25px rgba(59, 130, 246, 0.2) !important;
+      }
+
+      /* NAVEGADOR FICTÍCIO */
+      .tpl-modal-sec .tpl-card-topbar {
+        background: rgba(255, 255, 255, 0.04) !important;
+        padding: 10px 16px !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        height: 38px !important;
+      }
+
+      .tpl-modal-sec .tpl-dots {
+        display: flex !important;
+        gap: 6px !important;
+      }
+
+      .tpl-modal-sec .tpl-dots span {
+        width: 8px !important;
+        height: 8px !important;
+        border-radius: 50% !important;
+        background: rgba(255, 255, 255, 0.25) !important;
+        display: inline-block !important;
+      }
+
+      .tpl-modal-sec .tpl-tag {
+        font-size: 0.7rem !important;
+        font-weight: 600 !important;
+        color: #10b981 !important;
+        background: rgba(16, 185, 129, 0.12) !important;
+        padding: 2px 8px !important;
+        border-radius: 4px !important;
+        line-height: 1.2 !important;
+      }
+
+      /* AUTO-SCROLL DA IMAGEM NO HOVER */
+      .tpl-modal-sec .tpl-preview {
+        position: relative !important;
+        height: 260px !important;
+        overflow: hidden !important;
+        background: #000000 !important;
+        width: 100% !important;
+      }
+
+      .tpl-modal-sec .tpl-preview img {
+        width: 100% !important;
+        height: auto !important;
+        display: block !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        border: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        transition: transform 3.8s cubic-bezier(0.25, 1, 0.5, 1) !important;
+      }
+
+      .tpl-modal-sec .tpl-card:hover .tpl-preview img {
+        transform: translateY(calc(-100% + 260px)) !important;
+      }
+
+      /* OVERLAY */
+      .tpl-modal-sec .tpl-overlay {
+        position: absolute !important;
+        inset: 0 !important;
+        background: rgba(8, 9, 10, 0.65) !important;
+        backdrop-filter: blur(3px) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        opacity: 0 !important;
+        transition: opacity 0.3s ease !important;
+        z-index: 5 !important;
+      }
+
+      .tpl-modal-sec .tpl-card:hover .tpl-overlay {
+        opacity: 1 !important;
+      }
+
+      .tpl-modal-sec .tpl-btn-preview {
+        background: #3b82f6 !important;
+        color: #ffffff !important;
+        padding: 10px 20px !important;
+        border-radius: 100px !important;
+        text-decoration: none !important;
+        font-weight: 600 !important;
+        font-size: 0.85rem !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        border: none !important;
+        cursor: pointer !important;
+      }
+
+      /* RODAPÉ DO CARD */
+      .tpl-modal-sec .tpl-card-body {
+        padding: 18px 20px !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        background: rgba(255, 255, 255, 0.01) !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+      }
+
+      .tpl-modal-sec .tpl-category {
+        font-size: 0.75rem !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        color: #3b82f6 !important;
+        letter-spacing: 0.05em !important;
+        display: block !important;
+        margin-bottom: 2px !important;
+      }
+
+      .tpl-modal-sec .tpl-title {
+        font-size: 1.05rem !important;
+        font-weight: 600 !important;
+        color: #ffffff !important;
+      }
+
+      .tpl-modal-sec .tpl-arrow {
+        width: 34px !important;
+        height: 34px !important;
+        border-radius: 50% !important;
+        background: rgba(255, 255, 255, 0.06) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: #9ca3af !important;
+        transition: all 0.3s ease !important;
+      }
+
+      .tpl-modal-sec .tpl-card:hover .tpl-arrow {
+        background: #3b82f6 !important;
+        color: #ffffff !important;
+        transform: rotate(45deg) !important;
+      }
+
+      /* BANNER INFERIOR */
+      .tpl-modal-sec .tpl-cta {
+        margin-top: 36px !important;
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(18, 20, 23, 0.9) 100%) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-radius: 20px !important;
+        padding: 28px 36px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 20px !important;
+        flex-wrap: wrap !important;
+      }
+
+      .tpl-modal-sec .tpl-cta-text h4 {
+        color: #ffffff !important;
+        font-size: 1.2rem !important;
+        font-weight: 600 !important;
+        margin-bottom: 4px !important;
+      }
+
+      .tpl-modal-sec .tpl-cta-text p {
+        color: #9ca3af !important;
+        font-size: 0.92rem !important;
+      }
+
+      .tpl-modal-sec .tpl-cta-btn {
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding: 12px 26px !important;
+        border-radius: 100px !important;
+        text-decoration: none !important;
+        font-weight: 600 !important;
+        font-size: 0.88rem !important;
+        white-space: nowrap !important;
+        transition: all 0.3s ease !important;
+      }
+
+      .tpl-modal-sec .tpl-cta-btn:hover {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.3) !important;
+        transform: scale(1.02) !important;
+      }
+
+      /* RESPONSIVIDADE */
+      @media (max-width: 768px) {
+        .tpl-modal-sec .tpl-card {
+          flex: 0 0 280px !important;
+          min-width: 280px !important;
+          max-width: 280px !important;
+        }
+
+        .tpl-modal-sec .tpl-header-block h2 {
+          font-size: 1.8rem !important;
+        }
+
+        .tpl-modal-sec .tpl-cta {
+          flex-direction: column !important;
+          text-align: center !important;
+          padding: 24px !important;
+        }
+
+        .tpl-modal-sec .tpl-cta-btn {
+          width: 100% !important;
+        }
+      }
+    </style>
+
+    <section class="tpl-modal-sec overflow-hidden">
+      <div class="tpl-container">
+        <!-- Div de topo (Sem tag header para não colidir) -->
+        <div class="tpl-header-block">
+          <div class="tpl-header-left">
+            <div class="tpl-badge">
+              <i class="bi bi-intersect"></i> Modelos Prontos
+            </div>
+            <h2>Um template para começar.<br><span>Uma identidade única.</span></h2>
+          </div>
+
+          <div class="tpl-header-right">
+            <p>Escolha uma estrutura profissional e passe o mouse sobre os cards para navegar no modelo completo.</p>
+            <div class="tpl-scroll-hint">
+              Deslize para ver mais <i class="bi bi-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trilho de Rolagem -->
+        <div class="tpl-scroll-track">
+
+          <!-- Item 1 -->
+          <article class="tpl-card">
+            <div class="tpl-card-topbar">
+              <div class="tpl-dots"><span></span><span></span><span></span></div>
+              <span class="tpl-tag">Popular</span>
+            </div>
+            <div class="tpl-preview">
+              <img src="https://halothemes.net/cdn/shop/files/petcity-theme.jpg" onerror="this.src='https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=800&q=80'" alt="Petshop">
+              <div class="tpl-overlay">
+                <a href="#" class="tpl-btn-preview">Ver Demo <i class="bi bi-arrow-up-right"></i></a>
+              </div>
+            </div>
+            <div class="tpl-card-body">
+              <div>
+                <span class="tpl-category">Petshop</span>
+                <h3 class="tpl-title">Moderno e Acolhedor</h3>
+              </div>
+              <div class="tpl-arrow"><i class="bi bi-arrow-up-right"></i></div>
+            </div>
+          </article>
+
+          <!-- Item 2 -->
+          <article class="tpl-card">
+            <div class="tpl-card-topbar">
+              <div class="tpl-dots"><span></span><span></span><span></span></div>
+              <span class="tpl-tag">Destaque</span>
+            </div>
+            <div class="tpl-preview">
+              <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/7b3e7c176553645.64c7c4c7e7a6f9.png" onerror="this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80'" alt="Restaurante">
+              <div class="tpl-overlay">
+                <a href="#" class="tpl-btn-preview">Ver Demo <i class="bi bi-arrow-up-right"></i></a>
+              </div>
+            </div>
+            <div class="tpl-card-body">
+              <div>
+                <span class="tpl-category">Restaurante</span>
+                <h3 class="tpl-title">Elegante e Convidativo</h3>
+              </div>
+              <div class="tpl-arrow"><i class="bi bi-arrow-up-right"></i></div>
+            </div>
+          </article>
+
+          <!-- Item 3 -->
+          <article class="tpl-card">
+            <div class="tpl-card-topbar">
+              <div class="tpl-dots"><span></span><span></span><span></span></div>
+            </div>
+            <div class="tpl-preview">
+              <img src="https://y4pdgnepgswqffpt.public.blob.vercel-storage.com/templates/52439/servexa-UBoXqFa1RHZGFrlhyXS8hvp8hA4fKN" alt="Serviços">
+              <div class="tpl-overlay">
+                <a href="#" class="tpl-btn-preview">Ver Demo <i class="bi bi-arrow-up-right"></i></a>
+              </div>
+            </div>
+            <div class="tpl-card-body">
+              <div>
+                <span class="tpl-category">Serviços</span>
+                <h3 class="tpl-title">Clean e Profissional</h3>
+              </div>
+              <div class="tpl-arrow"><i class="bi bi-arrow-up-right"></i></div>
+            </div>
+          </article>
+
+          <!-- Item 4 -->
+          <article class="tpl-card">
+            <div class="tpl-card-topbar">
+              <div class="tpl-dots"><span></span><span></span><span></span></div>
+              <span class="tpl-tag">Novo</span>
+            </div>
+            <div class="tpl-preview">
+              <img src="https://www.yola.com/ws/media-library/0a36e7e121e846f3a45f539f5f88a90e/27c5bb58f4394abeb3d85fc6c41574db.jpeg" alt="Empresas">
+              <div class="tpl-overlay">
+                <a href="#" class="tpl-btn-preview">Ver Demo <i class="bi bi-arrow-up-right"></i></a>
+              </div>
+            </div>
+            <div class="tpl-card-body">
+              <div>
+                <span class="tpl-category">Empresas</span>
+                <h3 class="tpl-title">Sofisticado e Objetivo</h3>
+              </div>
+              <div class="tpl-arrow"><i class="bi bi-arrow-up-right"></i></div>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Banner Inferior -->
+        <div class="tpl-cta">
+          <div class="tpl-cta-text">
+            <h4>Quer algo 100% exclusivo?</h4>
+            <p>Criamos um design personalizado do zero para atender às necessidades específicas do seu negócio.</p>
+          </div>
+          <a href="#" class="tpl-cta-btn">Solicitar Projeto Exclusivo</a>
+        </div>
+
+      </div>
+    </section>
+
     @if (!empty($videos) && $videos->count() > 0)
-      <section class="video">
-          <div class="container-fluid p-0">
-              <div class="content-video d-flex justify-content-center align-items-center bg-black">
+      <section class="video container-fluid">
+          <div class="container p-0">
+              <div class="content-video d-flex justify-content-center align-items-center">
                   <!-- Lista -->
                   <div class="left col-5 dark-background h-100 d-flex justify-content-center align-items-end flex-column position-relative">
                       <div class="swiper mySwiper position-relative">
                           <div class="swiper-wrapper py-4 flex-column align-items-start justify-content-start m-auto position-relative">
                               @foreach($videos as $video)
-                                  <div class="swiper-slide align-items-center mb-3 justify-content-start"
+                                  <div class="swiper-slide align-items-center mb-3 justify-content-center"
                                       data-video="{{ $video->link }}">
                                       <svg xmlns="http://www.w3.org/2000/svg" class="external-icon" viewBox="0 0 28.57 20" focusable="false" style="pointer-events: none; display: block; width: 35px; height: auto;">
                                           <svg viewBox="0 0 28.57 20" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
@@ -448,84 +916,7 @@
       </section>
     @endif
 
-    <!-- App-Download-New-Section-Start -->
-    <section class="row_am download_app_new" id="download_sec">
-      <!-- Task Block start -->
-      <div class="dap_block" data-aos="fade-up" data-aos-duration="1500">
-
-        <!-- background blure shapes -->
-        <div class="blure_shape bg-secondary-color bs_1"> </div>
-
-        <!-- row start -->
-        <div class="row">
-
-          <!-- left images -->
-          <div class="col-lg-3 col-md-12 order-2 order-lg-1">
-            <div class="dap_image left">
-              <img class="dap_desktop_img" src="images/download_food1.webp" alt="image">
-              <img class="dap_mobile_img" src="images/download_food3.webp" alt="image">
-            </div>
-          </div>
-
-          <!-- text -->
-          <div class="col-lg-6 col-md-12 order-1 order-lg-2">
-            <!-- text -->
-            <div class="dap_text">
-
-              <!-- section title -->
-              <div class="section_title white_text" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
-                <span class="title_badge">Entre em contato</span>
-                <h2>Fale conosco agora e adquira <span>instalação e treinamento GRÁTIS!</span></h2>
-                <p>
-                  <b>Comece a receber pedidos hoje!</b> Em poucos dias você terá um sistema de delivery profissional, sem pagar comissões absurdas e com controle total do seu negócio.
-                </p>
-              </div>
-              <ul class="topic-download d-flex justify-content-center align-items-center" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
-                <li class="position-relative"><h6>Treinamento Especializado</h6></li>
-                <li class="position-relative"><h6>Pronto para uso</h6></li>
-                <li class="position-relative"><h6>Instalação grátis</h6></li>
-              </ul>
-              <!-- Contador -->
-              <div class="w-100" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
-                  <div class="contador">
-                      <div class="unidade">
-                          <span class="numero" id="days"></span>
-                          <span class="label">Dias</span>
-                      </div>
-                      <div class="unidade">
-                          <span class="numero" id="hours"></span>
-                          <span class="label">Horas</span>
-                      </div>
-                      <div class="unidade">
-                          <span class="numero" id="mins"></span>
-                          <span class="label">Minutos</span>
-                      </div>
-                      <div class="unidade">
-                          <span class="numero" id="secs"></span>
-                          <span class="label">Segundos</span>
-                      </div>
-                  </div>
-              </div>
-              <!-- Contador -->
-               <a href="http://" target="_blank" rel="noopener noreferrer" class="bt bg-white text-dark mb-4 mb-lg-0" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">Adiquirir promoção!</a>
-            </div>
-          </div>
-
-          <!-- left images -->
-          <div class="col-lg-3 col-md-12 order-3 order-lg-3 d-none d-lg-block">
-            <div class="dap_image right">
-              <img src="images/download_food2.webp" alt="image">
-            </div>
-          </div>
-
-        </div>
-        <!-- row end -->
-      </div>
-      <!-- app Block end -->
-    </section>
-    <!-- App-Download-New-Section-end -->
-
-        <!-- success stories Section Start -->
+    <!-- success stories Section Start -->
     <section class="key_feature_section row_am" id="review_sec">
 
     		<!-- side element left  -->
