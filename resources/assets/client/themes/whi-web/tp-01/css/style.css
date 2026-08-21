@@ -182,7 +182,6 @@ button:focus,
     color: var(--white);
 }
 .bg-icon{
-    background: #fb6c042e;
     border-radius: 8px;
     width: 48px;
     height: 48px;
@@ -280,12 +279,6 @@ button:focus,
 .white_btn .puprple_btn:hover {
     color: var(--white);
     border: solid 1px var(--white);
-}
-
-
-.btn_block {
-    position: relative;
-    display: inline-block;
 }
 
 .btn_bottom {
@@ -755,11 +748,6 @@ header.fixed .navbar {
     padding: 0 0 10px 5px;
 }
 
-.banner_section .banner_text .type-wrap span {
-    font-weight: 700;
-    color: var(--primery);
-}
-
 .banner_section .banner_text p {
     font-size: 18px;
     padding: 0;
@@ -771,6 +759,16 @@ header.fixed .navbar {
     padding:0 0 10px 0;
     display: block;
     margin-top: 20px;
+}
+.hero-badge {
+    display: inline-block;
+    background: rgba(59, 130, 246, 0.1);
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.4rem 1.2rem;
+    border-radius: 100px;
+    letter-spacing: 0.3px;
+    border: 1px solid rgba(59, 130, 246, 0.15);
 }
 
 /* hero slider users */
@@ -955,7 +953,6 @@ header.fixed .navbar {
 }
 
 .blure_shape {
-    background: var(--primery);
     width: 350px;
     height: 350px;
     border-radius: 100%;
@@ -1312,26 +1309,20 @@ iframe#youtubevideo {
 }
 
 /* --------- Advanced key features Section Css Start---------- */
-.advance_feature_section .af_innner .section_title {
-    z-index: 10;
-    position: relative;
-}
 
 .advance_feature_section .title_badge {
     color: var(--primery);
 }
 
 .advance_feature_section .af_innner, .plans {
-    background: var(--black);
     margin: 0 auto;
     padding: 100px 0 150px 0;
     position: relative;
-    overflow: hidden;
+}
+.advance_feature_section .af_innner{
+    padding: 0px 0 150px 0;
 }
 
-.advance_feature_section .af_listing {
-    padding: 20px 0 0 0;
-}
 
 .advance_feature_section .af_listing .row {
     align-items: flex-start;

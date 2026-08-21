@@ -15,10 +15,13 @@
                 <div class="col-lg-7 col-md-12" data-aos="fade-up" data-aos-duration="1500">
                     <!-- banner text -->
                     <div class="banner_text">
+                        <span class="hero-badge mb-3 d-inline-block secondary-color">
+                            <i class="bi bi-rocket-takeoff me-1"></i> Lançamento 2026
+                        </span>
                         <!-- typed text -->
                         <div class="type-wrap">
                             <!-- add static words/sentences here (i.e. text that you don't want to be removed)-->
-                            <span id="typed" style="white-space:pre;" class="typed">
+                            <span id="typed" style="white-space:pre;" class="typed secondary-color">
                             </span>
                         </div>
                         <!-- h1 -->
@@ -29,27 +32,30 @@
                         </div>
                     </div>
 
-                    <div class="btn_block mt-3">
+                    <div class="mt-3 d-flex justify-conten-center flex-wrap gap-3">
                         @if ($slide->link <> null)                                    
-                            <a href="{{$slide->link}}" target="_blank" rel="noopener noreferrer" class="btn-one py-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
+                            <a href="{{$slide->link}}" target="_blank" rel="noopener noreferrer" class="rounded-1 d-flex align-items-center btn-one py-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
                                 {{$slide->btn_title}}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>  
                             </a>
                         @endif
+                        <a href="#services" class="btn d-flex align-items-center btn-outline-light px-lg-5 px-3 py-lg-3 py-1 font-15 font-medium hover-zoom">
+                            Serviços avulso
+                        </a>
                     </div>
 
                     <div class="hero-stats">
                         <div class="hero-stats-item">
-                            <div class="number text-white-50">4.9</div>
-                            <div class="label">Avaliação média</div>
+                            <div class="number text-white-50">100%</div>
+                            <div class="label">Personalizável</div>
                         </div>
                         <div class="hero-stats-item">
-                            <div class="number text-white-50">+2k</div>
-                            <div class="label">Clientes ativos</div>
+                            <div class="number text-white-50">24/7</div>
+                            <div class="label">Seu site online</div>
                         </div>
                         <div class="hero-stats-item">
-                            <div class="number text-white-50">99.9%</div>
-                            <div class="label">Uptime</div>
+                            <div class="number text-white-50">1</div>
+                            <div class="label">Plataforma completa</div>
                         </div>
                     </div>
                 </div>
@@ -73,88 +79,59 @@
         <div class="af_innner">
 
             <!-- background blure shapes -->
-            <div class="blure_shape bs_1"> </div>
-            <div class="blure_shape bs_2"> </div>
+            <div class="blure_shape bg-secondary-color bs_1"> </div>
+            <div class="blure_shape bg-secondary-color bs_2"> </div>
 
-            <!-- container -->
-            <div class="container">
-
-                <!-- section title -->
-                <div class="section_title">
-                    <h2>
-                      Quantos pedidos <br>você <span>já perdeu hoje?</span>
-                    </h2>
-                </div>
-
-                <!-- listing -->
-                <div class="af_listing">
-                    <!-- row -->
-                    <div class="row">
-                        <!-- collom -->
-                        <div class="col-md-12">
-                            <!-- inner section -->
-                            <div class="row listing_inner align-items-center">
-                                <!-- blok -->
-                                <div class="af_block col-lg-3 col-md-6 col-sm-6 p-1" data-aos="fade-up" data-aos-duration="1500">
-                                    <div class="text" style="min-height: 223px;">
-                                        <div class="d-flex justify-content-between align-items-start flex-column mb-2">
-                                          <div class="bg-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fb6c04" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square-x size-6"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="m14.5 7.5-5 5"></path><path d="m9.5 7.5 5 5"></path></svg>
-                                          </div>
-                                          <h5>Pedidos perdidos no WhatsApp</h5>
-                                        </div>
-                                        <p>Mensagens se misturam, somem, e clientes ficam sem resposta.r</p>
-                                    </div>
-                                </div>
-
-                                <!-- blok -->
-                                <div class="af_block col-lg-3 col-md-6 col-sm-6 p-1" data-aos="fade-up" data-aos-duration="1500">
-                                    <div class="text" style="min-height: 223px;">
-                                        <div class="d-flex justify-content-between align-items-start flex-column mb-2">
-                                            <div class="bg-icon">
-                                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fb6c04" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-triangle-alert size-6"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>
+            @if ($topics->count() > 0)
+                <!-- container -->
+                <div class="container">
+                    <!-- listing -->
+                    <div class="af_listing">
+                        <!-- row -->
+                        <div class="row">
+                            <!-- collom -->
+                            <div class="col-md-12">
+                                <!-- inner section -->
+                                <div class="row listing_inner align-items-center">
+                                    <!-- blok -->
+                                    @foreach ($topics as $topic)
+                                        <div class="af_block col-lg-3 col-md-6 col-sm-6 p-1" data-aos="fade-up" data-aos-duration="{{ ($loop->index + 1) * 500 }}">
+                                            <div class="text d-flex justify-content-center gap-3 align-items-start flex-column" style="min-height: 223px;">
+                                                <div class="d-flex justify-content-between align-items-start flex-column mb-2">
+                                                    @if ($topic->link <> null)
+                                                        <a href="{{$topic->link}}" class="topic-item d-block" rel="noopener noreferrer">
+                                                            @if ($topic->path_image <> null)                                                        
+                                                                <div class="bg-icon bg-secondary-color">
+                                                                    <img src="{{asset('storage/'.$topic->path_image)}}" height="30" alt="Tópico 1" class="img-fluid d-block m-auto" loading="lazy">
+                                                                </div>
+                                                            @endif
+                                                        </a>
+                                                        @else
+                                                        <a class="topic-item d-block">
+                                                            @if ($topic->path_image <> null)                                                        
+                                                                <div class="bg-icon bg-secondary-color">
+                                                                    <img src="{{asset('storage/'.$topic->path_image)}}" height="30" alt="Tópico 1" class="img-fluid d-block m-auto" loading="lazy">
+                                                                </div>
+                                                            @endif
+                                                        </a>
+                                                    @endif
+                                                    
+                                                    <h5>{{$topic->title}}</h5>
+                                                </div>
+                                                <p>{{$topic->description}}</p>
                                             </div>
-                                            <h5>Erros no atendimento</h5>
                                         </div>
-                                        <p>Anota errado, esquece o sem cebola, manda pro endereço errado.</p>
-                                    </div>
+                                    @endforeach
                                 </div>
 
-                                <!-- blok -->
-                                <div class="af_block col-lg-3 col-md-6 col-sm-6 p-1" data-aos="fade-up" data-aos-duration="1500">
-                                    <div class="text" style="min-height: 223px;">
-                                        <div class="d-flex justify-content-between align-items-start flex-column mb-2">
-                                            <div class="bg-icon">
-                                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fb6c04" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-bag size-6"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                                            </div>
-                                            <h5>Bagunça nos pedidos</h5>
-                                        </div>
-
-                                        <p>Caderno, papel, print do WhatsApp... ninguém entende mais nada.</p>
-                                    </div>
-                                </div>
-
-                                <!-- blok -->
-                                <div class="af_block col-lg-3 col-md-6 col-sm-6 p-1" data-aos="fade-up" data-aos-duration="1500">
-                                    <div class="text" style="min-height: 223px;">
-                                        <div class="d-flex justify-content-between align-items-start flex-column mb-2">
-                                            <div class="bg-icon">
-                                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fb6c04" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock size-6"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                                            </div>
-                                            <h5>Tempo desperdiçado</h5>
-                                        </div>
-                                        <p> Você passa o dia respondendo igual a um robô e não sobra tempo pra cozinhar.</p>
-                                    </div>
-                                </div>
                             </div>
-
                         </div>
+                        <!-- row -->
                     </div>
-                    <!-- row -->
-                </div>
-                <!-- listing -->
+                    <!-- listing -->
 
-            </div>
+                </div>
+            @endif
         </div>
 
         <!-- device image -->
@@ -353,7 +330,7 @@
       <div class="dap_block" data-aos="fade-up" data-aos-duration="1500">
 
         <!-- background blure shapes -->
-        <div class="blure_shape bs_1"> </div>
+        <div class="blure_shape bg-secondary-color bs_1"> </div>
 
         <!-- row start -->
         <div class="row">
@@ -583,8 +560,8 @@
 
     <section id="plans" class="plans">
       <div class="af_innner">
-        <div class="blure_shape bs_1"> </div>
-        <div class="blure_shape bs_2"> </div>
+        <div class="blure_shape bg-secondary-color bs_1"> </div>
+        <div class="blure_shape bg-secondary-color bs_2"> </div>
         <div class="container">
           <div class="section_title">
             <span class="title_badge">Planos</span>

@@ -307,7 +307,7 @@ return [
 
         'limits' => [
             'slides' => 1,
-            'topics' => 3,
+            'topics' => 4,
             'services' => 6,
             'gallery' => 3,
         ],
