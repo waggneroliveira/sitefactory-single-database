@@ -256,7 +256,7 @@
                         <h3 class="text-white">Design profissional para o seu negócio</h3>
                         <p class="text-white">Tenha acesso a layouts pensados para diferentes tipos de negócios, com uma estrutura moderna e pronta para apresentar sua empresa.</p>
 
-                        <ul class="design_block">
+                        <ul class="design_block py-3">
                             <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
                                 <i class="bi bi-check-circle"></i>
                                 <h6><span>Layouts</span> criados para diferentes segmentos</h6>
@@ -284,8 +284,11 @@
                         </ul>
                         <div class="btn_block">
                             <a href="#plans" 
-                            class="btn puprple_btn ml-0">Começar agora
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                            class="bg-button-two color-button-two px-3 py-2 rounded-3">
+                              <span>
+                                Começar agora
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                              </span> 
                             </a>
                         </div>
                     </div>
@@ -307,7 +310,7 @@
                     <h3 class="text-white">Uma experiência melhor para quem visita</h3>
                     <p class="text-white">Ofereça um site organizado, rápido e adaptado para facilitar a navegação e apresentar sua empresa com clareza.</p>
 
-                    <ul class="design_block">
+                    <ul class="design_block py-3">
                         <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
                             <i class="bi bi-check-circle"></i>
                             <h6><span>Navega</span> por uma estrutura clara e intuitiva</h6>
@@ -335,8 +338,11 @@
                     </ul>
 
                     <a href="#plans" 
-                    class="btn puprple_btn ml-0">Começar agora
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                    class="bg-button-two color-button-two px-3 py-2 rounded-3">
+                    <span>
+                      Começar agora
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                    </span> 
                     </a>
                   </div>
                 </div>
@@ -357,7 +363,7 @@
                         <h3 class="text-white">Tenha autonomia para cuidar do seu site</h3>
                         <p class="text-white">Gerencie o conteúdo da sua presença digital em um só lugar, sem depender de alterações feitas por terceiros.</p>
 
-                        <ul class="design_block">
+                        <ul class="design_block py-3">
                             <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
                                 <i class="bi bi-check-circle"></i>
                                 <h6><span>Gerencie</span> todo o conteúdo pelo seu painel</h6>
@@ -385,8 +391,11 @@
                         </ul>
                         <div class="btn_block">
                             <a href="#plans" 
-                            class="btn puprple_btn ml-0">Começar agora
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                            class="bg-button-two color-button-two px-3 py-2 rounded-3">
+                            <span>
+                              Começar agora
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                            </span>
                             </a>
                         </div>
                     </div>
@@ -1062,8 +1071,11 @@
             <div class="ctr_cta">
     	        <div class="btn_block">
               <a href="#plans" 
-              class="btn puprple_btn ml-0">Começar agora
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              class="bg-button-two color-button-two px-3 py-2 rounded-3">
+              <span>
+                Começar agora
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </span>
               </a>
     	        </div>
   			    </div>
@@ -1174,7 +1186,12 @@
                 <a href="https://wa.me/5571992768360" 
                 target=_blank rel="noopener noreferrer" 
                 data-plan="essencial"
-                class="btn puprple_btn ml-0 whatsapp-plan-btn w-100 text-uppercase">Começar com Basic</a>
+                class="bg-button-two color-button-two px-3 py-2 rounded-3 whatsapp-plan-btn w-100 text-uppercase">
+                  <span>
+                    Começar com Basic
+                  </span>
+                  
+                </a>
                 </div>
               </div>
             </div>
@@ -1307,7 +1324,11 @@
                 <a href="https://wa.me/5571992768360" 
                 target=_blank rel="noopener noreferrer" 
                 data-plan="premium"
-                class="btn puprple_btn ml-0 whatsapp-plan-btn disabled w-100" style="opacity:0.5; cursor:not-allowed; pointer-events:none;">EM BREVE</a>
+                class="bg-button-two color-button-two px-3 py-2 rounded-3 whatsapp-plan-btn disabled w-100" style="opacity:0.5; cursor:not-allowed; pointer-events:none;">
+                  <span>
+                    EM BREVE
+                  </span>
+                </a>
                 </div>
               </div>
             </div>
@@ -1438,7 +1459,11 @@
                 <a href="https://wa.me/5571992768360" 
                 target=_blank rel="noopener noreferrer" 
                 data-plan="premium"
-                class="btn puprple_btn ml-0 whatsapp-plan-btn disabled w-100" style="opacity:0.5; cursor:not-allowed; pointer-events:none;">EM BREVE</a>
+                class="bg-button-two color-button-two px-3 py-2 rounded-3 whatsapp-plan-btn disabled w-100" style="opacity:0.5; cursor:not-allowed; pointer-events:none;">
+                  <span>
+                    EM BREVE
+                  </span>
+                </a>
                 </div>
               </div>
             </div>
@@ -1487,7 +1512,11 @@
                   <!-- button  -->
                   <div class="ctr_cta mt-4 d-flex justify-content-between">
                     <div class="btn_block">
-                      <a href="https://wa.me/5571992768360" class="btn puprple_btn ml-0 whatsapp-btn">SABER MAIS</a>
+                      <a href="https://wa.me/5571992768360" class="bg-button-two color-button-two px-3 py-2 rounded-3 whatsapp-btn">
+                        <span>
+                          SABER MAIS
+                        </span>
+                      </a>
                     </div>
                     <div class="payment d-flex flex-column justify-content-center align-items-center">
                         <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1532,7 +1561,11 @@
                   <!-- button  -->
                   <div class="ctr_cta mt-4 d-flex justify-content-between">
                     <div class="btn_block">
-                      <a href="https://wa.me/5571992768360" class="btn puprple_btn ml-0 whatsapp-btn">SABER MAIS</a>
+                      <a href="https://wa.me/5571992768360" class="bg-button-two color-button-two px-3 py-2 rounded-3 whatsapp-btn">
+                        <span>
+                          SABER MAIS
+                        </span>
+                      </a>
                     </div>
                     <div class="payment d-flex flex-column justify-content-center align-items-center">
                         <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1577,7 +1610,11 @@
                   <!-- button  -->
                   <div class="ctr_cta mt-4 d-flex justify-content-between">
                     <div class="btn_block">
-                      <a href="https://wa.me/5571992768360" class="btn puprple_btn ml-0 whatsapp-btn">SABER MAIS</a>
+                      <a href="https://wa.me/5571992768360" class="bg-button-two color-button-two px-3 py-2 rounded-3 whatsapp-btn">
+                        <span>
+                          SABER MAIS
+                        </span>
+                      </a>
                     </div>
                     <div class="payment d-flex flex-column justify-content-center align-items-center">
                         <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1736,8 +1773,11 @@
             <div class="row mt-5">
               <div class="btn_block m-auto">
                   <a href="#plans" 
-                  class="btn puprple_btn ml-0 keep-message">Começar agora
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                  class="bg-button-two color-button-two px-3 py-2 rounded-3 keep-message">
+                  <span>
+                    Começar agora
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                  </span>
                   </a>
               </div>
             </div>

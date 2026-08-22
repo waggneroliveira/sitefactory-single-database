@@ -115,7 +115,7 @@
 
                         @if ($about->link <> null)                        
                             <div class="btn-about my-4 d-flex justify-content-center justify-content-lg-start">
-                                <a href="{{$about->link}}" class="rounded-pill py-2 px-3 px-lg-5 font-changa bg-button-two color-button-two text-white font-18 font-medium text-decoration-none hover-zoom" rel="noopener noreferrer">
+                                <a href="{{$about->link}}" class="rounded-pill py-2 px-3 px-lg-5 font-changa bg-button-two color-button-two font-18 font-medium text-decoration-none hover-zoom" rel="noopener noreferrer">
                                     Saiba mais
                                     <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-two)"/>

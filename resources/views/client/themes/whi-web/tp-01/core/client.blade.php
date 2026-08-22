@@ -222,6 +222,40 @@
             --copyright-text: {{ $tenantTheme->copyright ?: '© 2024 Todos os direitos reservados' }};
         }
         body{ background: #021127 !important }
+.bg-button-two.color-button-two.px-3.py-2.rounded-3 {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    font-weight: 600;
+    font-size: 16px;
+    isolation: isolate;
+}
+
+.bg-button-two.color-button-two.px-3.py-2.rounded-3::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 0;
+    height: 100%;
+    background: var(--bg-button-one);
+    border-radius: 6px;
+    transition: width .6s ease;
+    z-index: 0;
+}
+
+.bg-button-two.color-button-two.px-3.py-2.rounded-3:hover::before {
+    width: 100%;
+}
+
+.bg-button-two.color-button-two.px-3.py-2.rounded-3:hover {
+    color: var(--color-button-one);
+}
+.bg-button-two.color-button-two.px-3.py-2.rounded-3 span {
+    position: relative;
+    z-index: 1;
+}
+
+
         .why_new_section .why_new_section_inner .why_new_left_data .why_data_block .number{background: var(--primary-color);}
         .why_new_section .why_new_section_inner .why_new_left_data .why_data_block{background: color-mix(in srgb, var(--secondary-color) 10%, transparent);;border: solid 1px var(--secondary-color);}
         .title_badge{color: var(--secondary-color); border:1px solid var(--secondary-color)}

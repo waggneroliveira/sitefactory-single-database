@@ -207,77 +207,8 @@ button:focus,
     font-weight: 700;
 }
 
-.puprple_btn {
-    background: var(--primery-gradient);
-    color: var(--white);
-    border-radius: 8px;
-    padding: 12px 30px;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-    font-weight: 600;
-    font-size: 16px;
-
-}
-
-.puprple_btn::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 0%;
-    height: 100%;
-    background: var(--white);
-    border-radius: 6px;
-    transition: .6s all;
-    z-index: -1;
-}
-
-.puprple_btn:hover::before {
-    width: 100%;
-}
-
-.puprple_btn:hover {
-    color: var(--dark);
-}
-
 
 /* light button */
-.white_btn .puprple_btn {
-    background: var(--white);
-    border: solid 1px var(--primery);
-    color: var(--primery);
-    border-radius: 100px;
-    padding: 12px 30px;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-    font-weight: 600;
-    font-size: 16px;
-}
-
-.white_btn .puprple_btn::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 0%;
-    height: 100%;
-    background: var(--primery);
-    border-radius: 6px;
-    transition: .6s all;
-    z-index: -1;
-    color: var(--white);
-}
-
-.white_btn .puprple_btn:hover::before {
-    width: 100%;
-}
-
-.white_btn .puprple_btn:hover {
-    color: var(--white);
-    border: solid 1px var(--white);
-}
 
 .btn_bottom {
     z-index: 1;
@@ -1376,9 +1307,6 @@ iframe#youtubevideo {
 }
 
 /* service section ui list */
-.service_section .service_text .design_block {
-    padding-top: 15px;
-}
 
 .service_section .service_text .design_block li {
     position: relative;
@@ -1393,10 +1321,6 @@ iframe#youtubevideo {
 
 .service_section .service_text .design_block li p {
     margin-bottom: 0;
-}
-
-.service_section .service_text .btn_block {
-    margin-top: 20px;
 }
 
 .service_section .service_text .btn {
@@ -3141,12 +3065,6 @@ footer .bottom_footer .developer_text a {
     min-height: 135px;
 }
 
-.comment_form_section form .puprple_btn {
-    padding: 9px 50px;
-}
-
-
-
 /* ==============Contact Us page Css Start==================== */
 
 .contact_page_section .contact_inner {
@@ -3604,7 +3522,6 @@ footer .bottom_footer .developer_text a {
     border-color: var(--primery);
 }
 
-.signup_section .form_block .form_side .puprple_btn,
 .signup_section .form_block .form_side .btn_block {
     width: 100%;
 }
