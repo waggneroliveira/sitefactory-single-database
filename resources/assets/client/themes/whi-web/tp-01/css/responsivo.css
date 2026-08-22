@@ -198,16 +198,6 @@
         padding-right: 0;
     }
 
-
-     /*  key features  */
-    .key_innner .owl-nav button.owl-next {
-        right: -15px;
-    }
-
-    .key_innner .owl-nav button.owl-prev {
-        left: -15px;
-    }
-
     /*  advance feature  */
     .advance_feature_section .device img {
         max-width: 80%;
@@ -802,19 +792,6 @@
         width: 80px;
     }
 
-    .testimonial_box .testi_text p {
-        font-size: 20px;
-    }
-
-    .testimonial_box .testi_img {
-        width: 175px;
-    }
-
-    .testimonial_box .testi_text {
-        width: calc(100% - 235px);
-    }
-
-
 
     /* =========== Faq Css Start================ */
 
@@ -935,9 +912,36 @@
 
 }
 
+@media (max-width: 991px) {
+  .video-card-container {
+    flex-direction: column-reverse;
+  }
+  .video-sidebar, .video-player-wrapper {
+    height: 380px;
+  }
+}
 
 @media screen and (max-width:767px) {
 
+     .tpl-modal-sec .tpl-card {
+          flex: 0 0 280px !important;
+          min-width: 280px !important;
+          max-width: 280px !important;
+        }
+
+        .tpl-modal-sec .tpl-header-block h2 {
+          font-size: 1.8rem !important;
+        }
+
+        .tpl-modal-sec .tpl-cta {
+          flex-direction: column !important;
+          text-align: center !important;
+          padding: 24px !important;
+        }
+
+        .tpl-modal-sec .tpl-cta-btn {
+          width: 100% !important;
+        }
     /*  common css  */
 
     body {
@@ -1204,16 +1208,6 @@
         margin-bottom: 30px;
     }
 
-
-
-    /*  key seaction  */
-
-    .key_innner {
-        padding: 10px 0;
-    }
-
-
-
     /* Bread-Crumb */
     .bred_crumb {
         min-height: 250px;
@@ -1331,42 +1325,6 @@
 
     .why_choose .why_choose_inner .company_statistics ul li:nth-child(2n + 1) {
         margin-left: 20px;
-    }
-
-    .testimonial_section {
-        margin: 40px 0;
-    }
-
-    .testimonial_box {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .testimonial_box .testi_text {
-        width: 100%;
-        text-align: center;
-    }
-
-    .testimonial_box .testi_text .star,
-    .testimonial_box .user_info {
-        justify-content: center;
-    }
-
-    .testimonial_section .testimonial_inner .client_logo_slider {
-        margin-top: 40px;
-    }
-
-    .testimonial_section .testimonial_inner {
-        padding: 60px 0;
-    }
-
-    .testimonial_box .testi_text p {
-        font-size: 16px;
-    }
-
-    .testimonial_section .testimonial_side_element {
-        right: 15px;
-        top: 15px;
     }
 
     .review_section .review_side.innerpage_block .review_block {
@@ -1833,12 +1791,6 @@
 
     .advance_feature_section .device {
         margin-top: -30px;
-    }
-
-
-    /* testimonial section */
-    .testimonial_section .testimonial_side_element {
-        display: none;
     }
 
     .review_section .coustomer_info .avtar .text span, .news_letter label {

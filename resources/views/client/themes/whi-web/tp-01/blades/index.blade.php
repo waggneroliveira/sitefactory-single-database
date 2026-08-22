@@ -414,355 +414,8 @@
     </section>
     <!-- Service Section End -->
 
-    <style>
-      /* RESET LOCAL & ISOLAMENTO DE ESCOPO (.tpl-modal-sec) */
-      .tpl-modal-sec, .tpl-modal-sec * {
-        box-sizing: border-box !important;
-        margin: 0;
-        padding: 0;
-      }
-      .tpl-modal-sec, .content-video, .video{
-        background-color: #08090a !important;
-      }
-      .tpl-modal-sec {        
-        padding: 90px 0 !important;
-        color: #f3f4f6 !important;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-        width: 100% !important;
-        position: relative !important;
-        clear: both !important;
-        line-height: 1.5 !important;
-        display: block !important;
-      }
-
-      .tpl-modal-sec .tpl-container {
-        max-width: 1280px !important;
-        margin: 0 auto !important;
-        padding: 0 24px !important;
-        width: 100% !important;
-        display: block !important;
-      }
-
-      /* BLOCO DE TOPO (SUBSTITUTO DO HEADER PARA EVITAR CONFLITO GLOBAL) */
-      .tpl-modal-sec .tpl-header-block {
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: flex-end !important;
-        margin-bottom: 40px !important;
-        gap: 32px !important;
-        flex-wrap: wrap !important;
-        position: relative !important;
-        width: 100% !important;
-        height: auto !important;
-        top: auto !important;
-        left: auto !important;
-      }
-
-      .tpl-modal-sec .tpl-header-left {
-        max-width: 580px !important;
-        flex: 1 1 300px !important;
-      }
-
-      .tpl-modal-sec .tpl-badge {
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 6px !important;
-        background: rgba(59, 130, 246, 0.12) !important;
-        border: 1px solid rgba(59, 130, 246, 0.3) !important;
-        color: #3b82f6 !important;
-        padding: 6px 14px !important;
-        border-radius: 100px !important;
-        font-size: 0.8rem !important;
-        font-weight: 600 !important;
-        margin-bottom: 16px !important;
-        width: fit-content !important;
-      }
-
-      .tpl-modal-sec .tpl-header-block h2 {
-        font-size: 2.5rem !important;
-        font-weight: 700 !important;
-        line-height: 1.2 !important;
-        color: #ffffff !important;
-        letter-spacing: -0.02em !important;
-        text-transform: none !important;
-      }
-
-      .tpl-modal-sec .tpl-header-block h2 span {
-        color: #9ca3af !important;
-        display: inline !important;
-      }
-
-      .tpl-modal-sec .tpl-header-right {
-        max-width: 400px !important;
-        flex: 1 1 280px !important;
-      }
-
-      .tpl-modal-sec .tpl-header-block p {
-        color: #9ca3af !important;
-        font-size: 0.98rem !important;
-        line-height: 1.6 !important;
-        margin-bottom: 12px !important;
-      }
-
-      .tpl-modal-sec .tpl-scroll-hint {
-        display: flex !important;
-        align-items: center !important;
-        gap: 8px !important;
-        font-size: 0.85rem !important;
-        color: #3b82f6 !important;
-        font-weight: 600 !important;
-      }
-
-      /* TRILHO DE SCROLL HORIZONTAL */
-      .tpl-modal-sec .tpl-scroll-track {
-        display: flex !important;
-        gap: 24px !important;
-        overflow-x: auto !important;
-        scroll-snap-type: x mandatory !important;
-        padding: 12px 0 28px 0 !important;
-        -webkit-overflow-scrolling: touch !important;
-        scrollbar-width: thin !important;
-        scrollbar-color: rgba(255, 255, 255, 0.2) transparent !important;
-        width: 100% !important;
-      }
-
-      .tpl-modal-sec .tpl-scroll-track::-webkit-scrollbar {
-        height: 6px !important;
-      }
-
-      .tpl-modal-sec .tpl-scroll-track::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.2) !important;
-        border-radius: 10px !important;
-      }
-
-      /* CARD DO TEMPLATE */
-      .tpl-modal-sec .tpl-card {
-        flex: 0 0 340px !important;
-        min-width: 340px !important;
-        max-width: 340px !important;
-        scroll-snap-align: start !important;
-        background: #121417 !important;
-        border: 1px solid rgba(255, 255, 255, 0.08) !important;
-        border-radius: 18px !important;
-        overflow: hidden !important;
-        display: flex !important;
-        flex-direction: column !important;
-        position: relative !important;
-        transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
-      }
-
-      .tpl-modal-sec .tpl-card:hover {
-        transform: translateY(-6px) !important;
-        border-color: rgba(59, 130, 246, 0.5) !important;
-        box-shadow: 0 20px 35px -10px rgba(0,0,0,0.8), 0 0 25px rgba(59, 130, 246, 0.2) !important;
-      }
-
-      /* NAVEGADOR FICTÍCIO */
-      .tpl-modal-sec .tpl-card-topbar {
-        background: rgba(255, 255, 255, 0.04) !important;
-        padding: 10px 16px !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        height: 38px !important;
-      }
-
-      .tpl-modal-sec .tpl-dots {
-        display: flex !important;
-        gap: 6px !important;
-      }
-
-      .tpl-modal-sec .tpl-dots span {
-        width: 8px !important;
-        height: 8px !important;
-        border-radius: 50% !important;
-        background: rgba(255, 255, 255, 0.25) !important;
-        display: inline-block !important;
-      }
-
-      .tpl-modal-sec .tpl-tag {
-        font-size: 0.7rem !important;
-        font-weight: 600 !important;
-        color: #10b981 !important;
-        background: rgba(16, 185, 129, 0.12) !important;
-        padding: 2px 8px !important;
-        border-radius: 4px !important;
-        line-height: 1.2 !important;
-      }
-
-      /* AUTO-SCROLL DA IMAGEM NO HOVER */
-      .tpl-modal-sec .tpl-preview {
-        position: relative !important;
-        height: 260px !important;
-        overflow: hidden !important;
-        background: #000000 !important;
-        width: 100% !important;
-      }
-
-      .tpl-modal-sec .tpl-preview img {
-        width: 100% !important;
-        height: auto !important;
-        display: block !important;
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        border: none !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        transition: transform 3.8s cubic-bezier(0.25, 1, 0.5, 1) !important;
-      }
-
-      .tpl-modal-sec .tpl-card:hover .tpl-preview img {
-        transform: translateY(calc(-100% + 260px)) !important;
-      }
-
-      /* OVERLAY */
-      .tpl-modal-sec .tpl-overlay {
-        position: absolute !important;
-        inset: 0 !important;
-        background: rgba(8, 9, 10, 0.65) !important;
-        backdrop-filter: blur(3px) !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        opacity: 0 !important;
-        transition: opacity 0.3s ease !important;
-        z-index: 5 !important;
-      }
-
-      .tpl-modal-sec .tpl-card:hover .tpl-overlay {
-        opacity: 1 !important;
-      }
-
-      .tpl-modal-sec .tpl-btn-preview {
-        background: #3b82f6 !important;
-        color: #ffffff !important;
-        padding: 10px 20px !important;
-        border-radius: 100px !important;
-        text-decoration: none !important;
-        font-weight: 600 !important;
-        font-size: 0.85rem !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 8px !important;
-        border: none !important;
-        cursor: pointer !important;
-      }
-
-      /* RODAPÉ DO CARD */
-      .tpl-modal-sec .tpl-card-body {
-        padding: 18px 20px !important;
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        background: rgba(255, 255, 255, 0.01) !important;
-        border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
-      }
-
-      .tpl-modal-sec .tpl-category {
-        font-size: 0.75rem !important;
-        font-weight: 600 !important;
-        text-transform: uppercase !important;
-        color: #3b82f6 !important;
-        letter-spacing: 0.05em !important;
-        display: block !important;
-        margin-bottom: 2px !important;
-      }
-
-      .tpl-modal-sec .tpl-title {
-        font-size: 1.05rem !important;
-        font-weight: 600 !important;
-        color: #ffffff !important;
-      }
-
-      .tpl-modal-sec .tpl-arrow {
-        width: 34px !important;
-        height: 34px !important;
-        border-radius: 50% !important;
-        background: rgba(255, 255, 255, 0.06) !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        color: #9ca3af !important;
-        transition: all 0.3s ease !important;
-      }
-
-      .tpl-modal-sec .tpl-card:hover .tpl-arrow {
-        background: #3b82f6 !important;
-        color: #ffffff !important;
-        transform: rotate(45deg) !important;
-      }
-
-      /* BANNER INFERIOR */
-      .tpl-modal-sec .tpl-cta {
-        margin-top: 36px !important;
-        background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(18, 20, 23, 0.9) 100%) !important;
-        border: 1px solid rgba(255, 255, 255, 0.08) !important;
-        border-radius: 20px !important;
-        padding: 28px 36px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        gap: 20px !important;
-        flex-wrap: wrap !important;
-      }
-
-      .tpl-modal-sec .tpl-cta-text h4 {
-        color: #ffffff !important;
-        font-size: 1.2rem !important;
-        font-weight: 600 !important;
-        margin-bottom: 4px !important;
-      }
-
-      .tpl-modal-sec .tpl-cta-text p {
-        color: #9ca3af !important;
-        font-size: 0.92rem !important;
-      }
-
-      .tpl-modal-sec .tpl-cta-btn {
-        background: #ffffff !important;
-        color: #000000 !important;
-        padding: 12px 26px !important;
-        border-radius: 100px !important;
-        text-decoration: none !important;
-        font-weight: 600 !important;
-        font-size: 0.88rem !important;
-        white-space: nowrap !important;
-        transition: all 0.3s ease !important;
-      }
-
-      .tpl-modal-sec .tpl-cta-btn:hover {
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.3) !important;
-        transform: scale(1.02) !important;
-      }
-
-      /* RESPONSIVIDADE */
-      @media (max-width: 768px) {
-        .tpl-modal-sec .tpl-card {
-          flex: 0 0 280px !important;
-          min-width: 280px !important;
-          max-width: 280px !important;
-        }
-
-        .tpl-modal-sec .tpl-header-block h2 {
-          font-size: 1.8rem !important;
-        }
-
-        .tpl-modal-sec .tpl-cta {
-          flex-direction: column !important;
-          text-align: center !important;
-          padding: 24px !important;
-        }
-
-        .tpl-modal-sec .tpl-cta-btn {
-          width: 100% !important;
-        }
-      }
-    </style>
-
     <section class="tpl-modal-sec overflow-hidden">
-      <div class="tpl-container">
+      <div class="container">
         <!-- Div de topo (Sem tag header para não colidir) -->
         <div class="tpl-header-block">
           <div class="tpl-header-left">
@@ -879,211 +532,364 @@
 
       </div>
     </section>
-
+      
     @if (!empty($videos) && $videos->count() > 0)
-      <section class="video container-fluid">
-          <div class="container p-0">
-              <div class="content-video d-flex justify-content-center align-items-center">
-                  <!-- Lista -->
-                  <div class="left col-5 dark-background h-100 d-flex justify-content-center align-items-end flex-column position-relative">
-                      <div class="swiper mySwiper position-relative">
-                          <div class="swiper-wrapper py-4 flex-column align-items-start justify-content-start m-auto position-relative">
-                              @foreach($videos as $video)
-                                  <div class="swiper-slide align-items-center mb-3 justify-content-center"
-                                      data-video="{{ $video->link }}">
-                                      <svg xmlns="http://www.w3.org/2000/svg" class="external-icon" viewBox="0 0 28.57 20" focusable="false" style="pointer-events: none; display: block; width: 35px; height: auto;">
-                                          <svg viewBox="0 0 28.57 20" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-                                              <g>
-                                                  <path d="M27.9727 3.12324C27.6435 1.89323 26.6768 0.926623 25.4468 0.597366C23.2197 2.24288e-07 14.285 0 14.285 0C14.285 0 5.35042 2.24288e-07 3.12323 0.597366C1.89323 0.926623 0.926623 1.89323 0.597366 3.12324C2.24288e-07 5.35042 0 10 0 10C0 10 2.24288e-07 14.6496 0.597366 16.8768C0.926623 18.1068 1.89323 19.0734 3.12323 19.4026C5.35042 20 14.285 20 14.285 20C14.285 20 23.2197 20 25.4468 19.4026C26.6768 19.0734 27.6435 18.1068 27.9727 16.8768C28.5701 14.6496 28.5701 10 28.5701 10C28.5701 10 28.5677 5.35042 27.9727 3.12324Z" fill="#FF0000"></path>
-                                                  <path d="M11.4253 14.2854L18.8477 10.0004L11.4253 5.71533V14.2854Z" fill="white"></path>
-                                              </g>
-                                          </svg>
-                                      </svg>
-                                      <h3 class="title montserrat-medium font-16 mb-0 col-10">
-                                          {{ $video->title ?? 'Vídeo' }}
-                                      </h3>
-                                  </div>
-                              @endforeach
-                          </div>
-                      </div>
-                      <div class="nav-video position-absolute d-flex flex-column align-items-end me-5">
-                          <div class="swiper-button-up">▲</div>
-                          <div class="swiper-button-down">▼</div>
-                      </div>
-                  </div>
-
-                  <!-- Player -->
-                  <div class="right col-7 bg-black d-flex justify-content-center align-items-center">
-                      <iframe id="videoPlayer" class="w-100 h-100"
-                              src=""
-                              title="Vídeo"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowfullscreen></iframe>
-                  </div>
+      <section class="video-section">
+        <div class="container">
+          <div class="row video-card-container g-0">
+            
+            <!-- Lista Lateral (Esquerda) -->
+            <div class="col-lg-5 video-sidebar">
+              <div class="video-sidebar-header">
+                <h2 class="video-sidebar-title">Playlist de Vídeos</h2>
+                <span class="video-count-badge">{{ $videos->count() }} vídeos</span>
               </div>
-          </div>
-      </section>
-    @endif
 
-    <!-- success stories Section Start -->
-    <section class="key_feature_section row_am" id="review_sec">
-
-    		<!-- side element left  -->
-      	<div class="kf_side_element left_side"> <img src="images/thumbup.webp" alt="image"> </div>
-      	<!-- side element right  -->
-      	<div class="kf_side_element right_side"> <img src="images/like.webp" alt="image"> </div>
-      	
-        <div class="key_innner">
-
-          <!-- container  -->
-          <div class="container">
-
-            <!-- section title  -->
-            <div class="section_title" >
-              <span class="title_badge">Depoimentos</span>
-              <h2>Experiência de quem vive</h2>
+              <div class="video-list">
+                @foreach($videos as $video)
+                  <div class="video-item" data-video="{{ $video->link }}">
+                    <div class="video-thumb-wrapper">
+                      <!-- Thumbnail dinâmica gerada via JS -->
+                      <img class="video-thumb-img" src="" alt="Thumbnail">
+                      <div class="play-icon-overlay">
+                        <svg viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z"/>
+                        </svg>
+                      </div>
+                    </div>
+                    <h3 class="video-title">
+                      {{ $video->title ?? 'Vídeo ' . ($loop->iteration) }}
+                    </h3>
+                  </div>
+                @endforeach
+              </div>
             </div>
 
-            <!-- slider  -->
-            <div id="feature_slider" class="owl-carousel owl-theme" data-aos="fade-up" data-aos-duration="1500">
-
-              <!-- testimonial 1  -->
-              <div class="item">
-                <div class="feature_box">
-                  <!-- image -->
-                	<div class="img">
-                    <img src="images/story1.webp" alt="image">
-                  </div>
-
-                  <div class="txt_blk">
-  	                <h6>Olivia Sam</h6>
-                    <!-- star -->
-                    <div class="rating">
-                      <span><i class="icofont-star"></i></span>
-                      <span><i class="icofont-star"></i></span>
-                      <span><i class="icofont-star"></i></span>
-                      <span><i class="icofont-star"></i></span>
-                      <span><i class="icofont-star"></i></span>
-                    </div>
-                    <!-- story text -->
-  	                <p> <span class="story_bold"> “Delivery on time every order!” </span> Lorem Ipsum is simply dummy text of the printing the industrys standard dummytextever since.</p>
-              	</div>
-                <!-- image -->
-                <div class="quote_img">
-                  <img src="images/quote.webp" alt="image">
-                </div>
-
-                </div>
-              </div>
-
-              <!-- testimonial 2  -->
-              <div class="item">
-                <div class="feature_box">
-                  <!-- image -->
-                	<div class="img">
-                    <img src="images/story2.webp" alt="image">
-                  </div>
-
-                  <div class="txt_blk">
-  	                <h6>Sandra Luna</h6>
-                    <!-- star -->
-                    <div class="rating">
-                      <span><i class="icofont-star"></i></span>
-                      <span><i class="icofont-star"></i></span>
-                      <span><i class="icofont-star"></i></span>
-                      <span><i class="icofont-star"></i></span>
-                      <span><i class="icofont-star"></i></span>
-                    </div>
-                    <!-- story text -->
-  	                <p> <span class="story_bold"> “Quality and Healthy Food" </span> Simply dummy text of the printing and typesetting indus try lorem Ipsum has been the industrys standard.</p>
-              	</div>
-                <!-- image -->
-                <div class="quote_img">
-                  <img src="images/quote.webp" alt="image">
-                </div>
-
-                </div>
-              </div>
-
-              <!-- testimonial 3  -->
-              <div class="item">
-                <div class="feature_box">
-                  <!-- image -->
-                	<div class="img">
-                    <img src="images/story3.webp" alt="image">
-                  </div>
-
-                  <div class="txt_blk">
-  	                <h6>Amelia Elisa</h6>
-                    <!-- star -->
-                    <div class="rating">
-                      <span><i class="icofont-star"></i></span>
-                      <span><i class="icofont-star"></i></span>
-                      <span><i class="icofont-star"></i></span>
-                      <span><i class="icofont-star"></i></span>
-                      <span><i class="icofont-star"></i></span>
-                    </div>
-                    <!-- story text -->
-  	                <p> <span class="story_bold"> "Easy to use App, Much Helpfull” </span> Indus try lorem Ipsum has been the industrys standard dummytextever Print  and tysetting.</p>
-
-              	</div>
-                <!-- image -->
-                <div class="quote_img">
-                  <img src="images/quote.webp" alt="image">
-                </div>
-
-                </div>
-              </div>
-
-              <!-- testimonial 4  -->
-              <div class="item">
-                <div class="feature_box">
-                  <!-- image -->
-                	<div class="img">
-                    <img src="images/story4.webp" alt="image">
-                  </div>
-
-                  <div class="txt_blk">
-  	                <h6>Maria Sim</h6>
-                    <!-- star -->
-                    <div class="rating">
-                      <span><i class="icofont-star"></i></span>
-                      <span><i class="icofont-star"></i></span>
-                      <span><i class="icofont-star"></i></span>
-                      <span><i class="icofont-star"></i></span>
-                      <span><i class="icofont-star"></i></span>
-                    </div>
-                    <!-- story text -->
-  	                <p> <span class="story_bold"> "Supportive staff!” </span> Lorem Ipsum is simply dummy text of the printing and dummy text typesetting industry lorem Ipsum has been.</p>
-
-              	</div>
-                <!-- image -->
-                <div class="quote_img">
-                  <img src="images/quote.webp" alt="image">
-                </div>
-                
-                </div>
-              </div>
-
+            <!-- Player de Vídeo (Direita) -->
+            <div class="col-lg-7 video-player-wrapper">
+              <iframe id="videoPlayer" class="video-player-iframe"
+                      src=""
+                      title="Player de Vídeo"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen></iframe>
             </div>
-
-            <!-- button  -->
-            <div class="ctr_cta">
-    	        <div class="btn_block">
-              <a href="#plans" 
-              class="bg-button-two color-button-two px-3 py-2 rounded-3">
-              <span>
-                Começar agora
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-              </span>
-              </a>
-    	        </div>
-  			    </div>
 
           </div>
         </div>
-    </section>
-    <!-- success stories Section End -->
+      </section>
+    @endif
+
+
+      <style>
+        /* ==========================================================
+   SEÇÃO DE DEPOIMENTOS - ULTRA MODERNA (DARK GLASS)
+   ========================================================== */
+.testimonials-section {
+  background: #080a0f;
+  position: relative;
+  padding: 100px 0;
+  overflow: hidden;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Esferas de luz com brilho de fundo (Glow Effects) */
+.testimonials-section::before,
+.testimonials-section::after {
+  content: '';
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  opacity: 0.25;
+}
+.testimonials-section::before {
+  background: #ff0055;
+  top: 10%;
+  left: -5%;
+}
+.testimonials-section::after {
+  background: #7000ff;
+  bottom: 10%;
+  right: -5%;
+}
+
+/* Badge e Cabeçalho */
+.testimonials-badge {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ff0055;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.testimonials-title {
+  color: #ffffff;
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+/* Banner de Métricas / Métricas de Sucesso */
+.metrics-banner {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 24px;
+}
+
+.metric-number {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff 0%, #a0a5b5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.metric-label {
+  color: #8a8f9d;
+  font-size: 13px;
+  margin: 0;
+}
+
+/* Cards de Depoimento */
+.testimonial-card {
+  background: rgba(18, 22, 31, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  border-radius: 24px;
+  padding: 32px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255, 0, 85, 0.4);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.testimonial-quote-icon {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  opacity: 0.1;
+  width: 40px;
+  height: 40px;
+  fill: #ffffff;
+}
+
+.rating-stars {
+  color: #ffb800;
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.testimonial-text {
+  color: #c5c9d3;
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.testimonial-text strong {
+  color: #ffffff;
+}
+
+/* Autor */
+.author-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.author-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ff0055;
+}
+
+.author-name {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.author-role {
+  color: #727785;
+  font-size: 12px;
+  margin: 0;
+}
+
+/* Botão de Ação CTA */
+.cta-button-glow {
+  background: linear-gradient(135deg, #ff0055 0%, #ff5000 100%);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 14px 32px;
+  border-radius: 50px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  box-shadow: 0 10px 25px rgba(255, 0, 85, 0.3);
+  transition: all 0.3s ease;
+}
+
+.cta-button-glow:hover {
+  color: #ffffff;
+  transform: scale(1.05);
+  box-shadow: 0 15px 35px rgba(255, 0, 85, 0.5);
+}
+      </style>
+
+      <section class="testimonials-section" id="review_sec">
+  <div class="container position-relative z-1">
+    
+    <!-- Cabeçalho -->
+    <div class="row justify-content-center text-center mb-5">
+      <div class="col-lg-8" data-aos="fade-up">
+        <span class="testimonials-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Depoimentos Reais
+        </span>
+        <h2 class="testimonials-title">Transformando a rotina de quem confia no nosso trabalho</h2>
+      </div>
+    </div>
+
+    <!-- Estatísticas de Impacto (Novidade Visual) -->
+    <div class="row metrics-banner align-items-center text-center mb-5" data-aos="fade-up" data-aos-delay="100">
+      <div class="col-6 col-md-3 mb-3 mb-md-0">
+        <div class="metric-number">4.9/5</div>
+        <p class="metric-label">Nota Média dos Clientes</p>
+      </div>
+      <div class="col-6 col-md-3 mb-3 mb-md-0">
+        <div class="metric-number">+10k</div>
+        <p class="metric-label">Entregas Realizadas</p>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="metric-number">99%</div>
+        <p class="metric-label">Satisfação Garantida</p>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="metric-number">24/7</div>
+        <p class="metric-label">Suporte Dedicado</p>
+      </div>
+    </div>
+
+    <!-- Slider de Depoimentos (Swiper) -->
+    <div class="swiper testimonialSwiper mb-5" data-aos="fade-up" data-aos-delay="200">
+      <div class="swiper-wrapper py-3">
+
+        <!-- Card 1 -->
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <svg class="testimonial-quote-icon" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+            <div class="rating-stars">★★★★★</div>
+            <p class="testimonial-text">
+              <strong>"Agilidade sem igual!"</strong> O serviço superou minhas expectativas. A entrega chegou muito antes do prazo e o atendimento tirou todas as minhas dúvidas instantaneamente.
+            </p>
+            <div class="author-wrapper">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="author-avatar">
+              <div>
+                <h3 class="author-name">Beatriz Rossi</h3>
+                <p class="author-role">Empresária</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <svg class="testimonial-quote-icon" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+            <div class="rating-stars">★★★★★</div>
+            <p class="testimonial-text">
+              <strong>"Qualidade Impecável!"</strong> Desde o primeiro contato percebi o profissionalismo. O produto chegou muito bem embalado e a experiência de uso é nota 10.
+            </p>
+            <div class="author-wrapper">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="author-avatar">
+              <div>
+                <h3 class="author-name">Ricardo Mendes</h3>
+                <p class="author-role">Designer Lead</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <svg class="testimonial-quote-icon" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+            <div class="rating-stars">★★★★★</div>
+            <p class="testimonial-text">
+              <strong>"Facilidade e Segurança"</strong> A plataforma é super intuitiva. Resolver as minhas demandas diárias ficou muito mais rápido depois que comecei a usar.
+            </p>
+            <div class="author-wrapper">
+              <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="author-avatar">
+              <div>
+                <h3 class="author-name">Camila Fernandes</h3>
+                <p class="author-role">Gerente de Projetos</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Chamada para Ação CTA -->
+    <div class="text-center" data-aos="fade-up" data-aos-delay="300">
+      <a href="#plans" class="cta-button-glow">
+        Começar agora
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+  new Swiper(".testimonialSwiper", {
+    slidesPerView: 1,
+    spaceBetween: 24,
+    loop: true,
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: false,
+    },
+    breakpoints: {
+      768: {
+        slidesPerView: 2,
+      },
+      1024: {
+        slidesPerView: 3,
+      },
+    },
+  });
+});
+</script>
+
 
     <section id="plans" class="plans">
       <div class="af_innner">
@@ -1783,121 +1589,104 @@
             </div>
           </div>
         </div>
-      </section>   
+      </section>  
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const section = document.querySelector('.video-section');
+        if (!section) return;
 
-<script>
-    const section = document.querySelector('section.video');
-    if (section) {
-        const wrapper = section.querySelector('.mySwiper .swiper-wrapper');
-        const slides  = Array.from(section.querySelectorAll(".mySwiper .swiper-slide"));
-        const player  = section.querySelector("#videoPlayer");
+        const items = Array.from(section.querySelectorAll('.video-item'));
+        const player = section.querySelector('#videoPlayer');
 
-        let currentIndex = 0;
-        let firstLoad = true;
-
-        // Normaliza URL (adiciona protocolo se vier //)
+        // Normalização de URL
         function norm(url) {
-            if (!url) return "";
-            return url.startsWith("//") ? window.location.protocol + url : url;
+          if (!url) return "";
+          return url.startsWith("//") ? window.location.protocol + url : url;
         }
 
-        // Converte para URL de embed (YouTube / Vimeo)
-        function toEmbed(rawUrl) {
-            const urlStr = norm(rawUrl);
-            if (!urlStr) return "";
-
-            let u;
-            try { u = new URL(urlStr); } catch { return urlStr; }
-
+        // Extrai ID do YouTube
+        function getYouTubeId(urlStr) {
+          try {
+            const u = new URL(urlStr);
             const host = u.hostname.replace(/^www\./, "");
 
-            // YouTube
-            if (host.includes("youtube.com") || host.includes("youtu.be")) {
-                // Se já for /embed/ mantém
-                if (u.pathname.startsWith("/embed/")) return u.toString();
-
-                // youtu.be/<id>
-                if (host === "youtu.be" && u.pathname.length > 1) {
-                    const id = u.pathname.split("/")[1];
-                    return `https://www.youtube.com/embed/${id}`;
-                }
-
-                // shorts -> converte para embed
-                if (u.pathname.startsWith("/shorts/")) {
-                    const id = u.pathname.split("/")[2] || u.pathname.split("/")[1];
-                    return `https://www.youtube.com/embed/${id}`;
-                }
-
-                // watch?v=<id>
-                const v = u.searchParams.get("v");
-                if (v) return `https://www.youtube.com/embed/${v}`;
-
-                // /live/<id> ou /v/<id> etc.
-                const parts = u.pathname.split("/").filter(Boolean);
-                if (parts.length >= 2) {
-                    const id = parts.pop();
-                    return `https://www.youtube.com/embed/${id}`;
-                }
-            }
-
-            // Vimeo
-            if (host.includes("vimeo.com")) {
-                // Se já for player.vimeo.com
-                if (host === "player.vimeo.com") return u.toString();
-
-                // Extrai o último segmento numérico como ID
-                const parts = u.pathname.split("/").filter(Boolean);
-                const last = parts[parts.length - 1];
-                if (/^\d+$/.test(last)) {
-                    return `https://player.vimeo.com/video/${last}`;
-                }
-            }
-
-            // Desconhecido: retorna original
-            return urlStr;
+            if (host === "youtu.be") return u.pathname.split("/")[1];
+            if (u.pathname.startsWith("/embed/") || u.pathname.startsWith("/shorts/")) return u.pathname.split("/")[2] || u.pathname.split("/")[1];
+            return u.searchParams.get("v");
+          } catch {
+            return null;
+          }
         }
 
-        function setActiveByIndex(index, userTriggered = false) {
-            if (index < 0 || index >= slides.length) return;
+        // Gera a URL de Embed do Vídeo
+        function toEmbed(rawUrl) {
+          const urlStr = norm(rawUrl);
+          if (!urlStr) return "";
 
-            slides.forEach(s => s.classList.remove("active"));
-            const slide = slides[index];
-            slide.classList.add("active");
+          const ytId = getYouTubeId(urlStr);
+          if (ytId) return `https://www.youtube.com/embed/${ytId}?autoplay=1`;
 
-            const raw = slide.getAttribute("data-video");
-            const embedUrl = toEmbed(raw);
-            if (embedUrl) player.src = embedUrl;
+          // Vimeo
+          if (urlStr.includes("vimeo.com")) {
+            const parts = urlStr.split("/").filter(Boolean);
+            const last = parts[parts.length - 1];
+            if (/^\d+$/.test(last)) return `https://player.vimeo.com/video/${last}?autoplay=1`;
+          }
 
-            currentIndex = index;
-
-            if (!firstLoad || userTriggered) {
-                slide.scrollIntoView({ behavior: "smooth", block: "nearest" });
-            }
+          return urlStr;
         }
 
-        // Clique em um item
-        slides.forEach((slide, idx) => {
-            slide.addEventListener("click", () => setActiveByIndex(idx, true));
+        // Obtém imagem de Capa (Thumbnail)
+        function getThumbnail(rawUrl) {
+          const urlStr = norm(rawUrl);
+          const ytId = getYouTubeId(urlStr);
+          
+          if (ytId) {
+            return `https://img.youtube.com/vi/${ytId}/mqdefault.jpg`;
+          }
+          
+          // Imagem fallback caso não seja YouTube
+          return "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150&q=80";
+        }
+
+        // Define o item ativo
+        function setActive(index, isUserClick = false) {
+          if (index < 0 || index >= items.length) return;
+
+          items.forEach(item => item.classList.remove('active'));
+          const selectedItem = items[index];
+          selectedItem.classList.add('active');
+
+          const rawUrl = selectedItem.getAttribute('data-video');
+          const embedUrl = toEmbed(rawUrl);
+
+          // Evita autoplay automático no primeiro carregamento do site se não for clique
+          if (!isUserClick) {
+            player.src = embedUrl.replace('?autoplay=1', '');
+          } else {
+            player.src = embedUrl;
+          }
+
+          selectedItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Inicializa thumbnails e eventos
+        items.forEach((item, index) => {
+          const rawUrl = item.getAttribute('data-video');
+          const imgTag = item.querySelector('.video-thumb-img');
+          
+          if (imgTag) {
+            imgTag.src = getThumbnail(rawUrl);
+          }
+
+          item.addEventListener('click', () => setActive(index, true));
         });
 
-        // Inicia no primeiro (sem rolagem)
-        if (slides.length > 0) setActiveByIndex(0);
-
-        // Libera rolagem depois do load
-        window.addEventListener("load", () => {
-            setTimeout(() => { firstLoad = false; }, 500);
-        });
-
-        // Navegação ↑ ↓
-        const btnUp = section.querySelector(".swiper-button-up");
-        const btnDown = section.querySelector(".swiper-button-down");
-
-        btnUp && btnUp.addEventListener("click", () => {
-            if (currentIndex > 0) setActiveByIndex(currentIndex - 1, true);
-        });
-        btnDown && btnDown.addEventListener("click", () => {
-            if (currentIndex < slides.length - 1) setActiveByIndex(currentIndex + 1, true);
-        });
-    }
-</script>
+        // Ativa o primeiro item da lista ao carregar
+        if (items.length > 0) {
+          setActive(0, false);
+        }
+      });
+    </script>
 @endsection
