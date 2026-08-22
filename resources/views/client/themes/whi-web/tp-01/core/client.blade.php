@@ -315,62 +315,251 @@
         @yield('content')
     </main>
 
+    <style>
+        /* ==========================================================
+   SEÇÃO REDES SOCIAIS - LIGHT ELEGANT PREMIUM (#573FD0)
+   ========================================================== */
+.social-section-light {
+  background-color: #ffffff;
+  padding: 60px 0;
+  font-family: 'Montserrat', 'Inter', sans-serif;
+  position: relative;
+}
+
+/* Card Container com Sombra Suave */
+.social-wrapper-card {
+  background: #ffffff;
+  border: 1px solid rgba(87, 63, 208, 0.12);
+  border-radius: 24px;
+  padding: 32px 40px;
+  box-shadow: 0 15px 35px rgba(87, 63, 208, 0.05);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.social-wrapper-card:hover {
+  box-shadow: 0 20px 45px rgba(87, 63, 208, 0.08);
+  border-color: rgba(87, 63, 208, 0.25);
+}
+
+/* Badge Decorativo */
+.social-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #573fd0;
+  background: rgba(87, 63, 208, 0.08);
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+}
+
+.social-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+/* Botões de Redes Sociais Elegantes */
+.social-links-container {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.social-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 22px;
+  border-radius: 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.social-pill-btn i {
+  font-size: 18px;
+  transition: transform 0.3s ease;
+}
+
+/* Efeito Hover Genérico */
+.social-pill-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+}
+
+.social-pill-btn:hover i {
+  transform: scale(1.15) rotate(-5deg);
+}
+
+/* Temas Dinâmicos por Rede Social */
+/* Instagram */
+.social-pill-btn.insta:hover {
+  background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 10px 25px rgba(253, 29, 29, 0.3);
+}
+
+/* Facebook */
+.social-pill-btn.face:hover {
+  background: #1877f2;
+  color: #ffffff;
+  border-color: #1877f2;
+  box-shadow: 0 10px 25px rgba(24, 119, 242, 0.3);
+}
+
+/* TikTok / LinkedIn */
+.social-pill-btn.tiktok:hover {
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* Responsividade */
+@media (max-width: 991px) {
+  .social-wrapper-card {
+    padding: 28px 20px;
+    text-align: center;
+  }
+  
+  .social-links-container {
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .social-title {
+    font-size: 1.3rem;
+  }
+}
+    </style>
+
+    @if (isset($contact) && ($contact->link_insta || $contact->link_face || $contact->link_tik_tok))
+  <section class="social-section-light">
+    <div class="container">
+      <div class="social-wrapper-card shadow-sm">
+        <div class="row align-items-center">
+          
+          <!-- Lado Esquerdo: Chamada Institucional -->
+          <div class="col-lg-5 mb-3 mb-lg-0">
+            <span class="social-badge">
+              <i class="bi bi-share-fill"></i> Conecte-se Conosco
+            </span>
+            <h3 class="social-title">Siga a WHI nas redes sociais</h3>
+          </div>
+
+          <!-- Lado Direito: Botoes Interativos de Redes Sociais -->
+          <div class="col-lg-7">
+            <div class="social-links-container justify-content-lg-end">
+              
+              <!-- Instagram -->
+              @if ($contact->link_insta != null)
+                <a href="{{ $contact->link_insta }}" target="_blank" rel="noopener noreferrer" class="social-pill-btn insta">
+                  <i class="bi bi-instagram"></i>
+                  <span>Instagram</span>
+                </a>
+              @endif
+
+              <!-- Facebook -->
+              @if ($contact->link_face != null)
+                <a href="{{ $contact->link_face }}" target="_blank" rel="noopener noreferrer" class="social-pill-btn face">
+                  <i class="bi bi-facebook"></i>
+                  <span>Facebook</span>
+                </a>
+              @endif
+
+              <!-- TikTok / LinkedIn -->
+              @if ($contact->link_tik_tok != null)
+                <a href="{{ $contact->link_tik_tok }}" target="_blank" rel="noopener noreferrer" class="social-pill-btn tiktok">
+                  <i class="bi bi-tiktok"></i>
+                  <span>TikTok</span>
+                </a>
+              @endif
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+@endif
+
     {{-- Footer --}}
-    <footer class="pt-5 pb-4 mt-2 bg-footer">
+    <footer class="bg-footer border-top pt-3 pt-lg-5 pb-3">
         <div class="container">
-            <div class="row gy-5">
-                <div class="col-lg-4 col-md-6">
-                    @if($tenantTheme->path_image_logo_footer)
-                        <img src="{{ asset('storage/' . $tenantTheme->path_image_logo_footer) }}" alt="{{ config('app.name') }}" height="40">
+
+            <!-- Linha principal -->
+            <div class="row align-items-start justify-content-between">
+
+                <!-- Logo + botão -->
+                <div class="col-lg-3 mb-4 mb-lg-0">
+                    <img src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ config('app.name') }}" height="65">
+                    @if ($tenantTheme->link <> null)                        
+                        <div class="mt-3 mt-lg-5">
+                            <a href="{{ $tenantTheme->link }}" target="_blank" rel="noopener noreferrer" class="bg-button-two color-button-two px-4 py-2 font-changa font-16 font-medium text-decoration-none hover-zoom">
+                                {{$tenantTheme->btn_title}}
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
                     @endif
+                </div>
 
-                    <p class="text-color-footer small">{{ $tenantTheme->description }}</p>
+                <!-- Mapa do site -->
+                <div class="col-lg-4 mb-4 mb-0">
+                    <h6 class="font-changa text-color-footer font-16 font-bold mb-3 position-relative d-inline-block font-changa font-16 font-medium">
+                        Mapa do Site
+                        <span class="d-block bg-yellow mt-1" style="height:3px; width:40px;"></span>
+                    </h6>
 
-                    <div class="mt-3">
-                        <a href="{{ $tenantTheme->link ?? '#' }}" target="_blank" rel="noopener noreferrer">
-                            <span class="bg-button-two color-button-two rounded font-12 font-bold px-3 py-2">{{ $tenantTheme->btn_title ?? 'Saiba mais' }}</span>
-                        </a>
+                    <div class="row">
+                        <div class="col-6">
+                            <ul class="list-unstyled">
+                                <li><a href="{{route('index')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Início</a></li>
+                                <li><a href="{{route('index')}}#about" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Quem Somos</a></li>
+                                <li><a href="{{route('index')}}#services" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Serviços</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-6">
+                            <ul class="list-unstyled">
+                                <li><a href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Depoimentos</a></li>
+                                <li><a href="{{ request()->routeIs('index') ? '#faq' : route('index') . '#faq' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">FAQ</a></li>
+                                <li><a href="{{route('index')}}#contato" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Contato</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-
-                <div class="col-lg-2 col-md-6">
-                    <h6 class="primary-color mb-3 fw-semibold">Navegação</h6>
-
-                    <ul class="list-unstyled small">
-                        <li class="mb-2"><a href="#inicio" class="text-color-footer text-decoration-none">Início</a></li>
-                        <li class="mb-2"><a href="#quem-somos" class="text-color-footer text-decoration-none">Quem Somos</a></li>
-                        <li class="mb-2"><a href="#servicos" class="text-color-footer text-decoration-none">Serviços</a></li>
-                        <li class="mb-2"><a href="#galeria-casamento" class="text-color-footer text-decoration-none">Casamento</a></li>
-                        <li><a href="#contato" class="text-color-footer text-decoration-none">Contato</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <h6 class="primary-color mb-3 fw-semibold">Serviços Rápidos</h6>
-
-                    <ul class="list-unstyled small">
-                        @foreach($services as $serviceNow)
-                            <li class="mb-2 text-color-footer">
-                                <i class="bi bi-check2-circle primary-color me-1"></i> {{ $serviceNow->title }}
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-
+                
                 <div class="col-lg-3 col-md-6 col-12">
 
-                    <h5>Newsletter</h5>
+                    <h5 class="text-color-footer">Newsletter</h5>
                     <div class="news_letter">
-                        <p>Inscreva-se e seja o primeiro a receber promoções incríveis</p>
+                        <p class="text-color-footer">Inscreva-se e seja o primeiro a receber promoções incríveis</p>
                         <form id="newsletter-form">
                             <div class="form-group">
                                 <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required="">
                                 <button type="submit" class="btn" aria-label="subscribe">
-                                    <i class="icofont-paper-plane"></i>
+                                    <i class="bi bi-send-fill"></i>
                                 </button>
                             </div>
                             
-                            <label class="text-white">
+                            <label class="text-color-footer">
                                 <input type="checkbox" id="privacy-policy" required=""> 
                                 Concordo com a Política de Privacidade da Delifast.
                             </label>
@@ -383,47 +572,94 @@
                 </div>
             </div>
 
-            <hr class="bg-secondary mt-5">
+            <!-- Linha inferior -->
+            <hr class="border-light opacity-25 my-0 mb-3 my-lg-4 border-color-footer">
 
-            @php
-                $cnpj = !empty($tenantTheme->cnpj) ? preg_replace('/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/', '$1.$2.$3/$4-$5', preg_replace('/\D/', '', $tenantTheme->cnpj)) : '';
-            @endphp
+            <div class="row align-items-center">
+                @php
+                    $cnpj = !empty($tenantTheme->cnpj) ? preg_replace('/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/', '$1.$2.$3/$4-$5', preg_replace('/\D/', '', $tenantTheme->cnpj)) : '';
+                @endphp
 
-            <div class="row align-items-center g-4">
-                <div class="col-12 col-lg-5 text-center text-lg-start small text-color-footer">
-                    <p id="footer-text" class="mb-0 text-color-footer"></p>
-                </div>
+                <div class="row align-items-center g-4 m-0">
+                    <div class="col-12 col-lg-5 text-center text-lg-start small text-color-footer m-0 p-0">
+                        <p id="footer-text" class="mb-0 text-color-footer"></p>
+                    </div>
 
-                <div class="col-12 col-lg-3 text-center small text-color-footer">
-                    @if($tenantTheme->privacy_policy <> null)
-                        <a href="#" class="text-color-footer text-decoration-none" data-bs-toggle="modal" data-bs-target="#privacyModal">Política de Privacidade</a>
-                    @endif
+                    <div class="col-12 col-lg-3 text-center small text-color-footer mt-0">
+                        @if ($tenantTheme->privacy_policy <> null)                            
+                            <a href="#" class="text-color-footer text-decoration-none" data-bs-toggle="modal" data-bs-target="#privacyModal">Política de Privacidade</a>
+                            <span class="mx-1">|</span>
+                        @endif
+                        @if ($tenantTheme->terms_of_use <> null)                            
+                            <a href="#" class="text-color-footer text-decoration-none" data-bs-toggle="modal" data-bs-target="#termsModal">Termos de Uso</a>
+                        @endif
+                    </div>
 
-                    <span class="mx-1">|</span>
+                    <!-- Modal Política de Privacidade -->
+                    <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="privacyModalLabel">Política de Privacidade</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {!! $tenantTheme->privacy_policy !!}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                    @if($tenantTheme->terms_of_use <> null)
-                        <a href="#" class="text-color-footer text-decoration-none" data-bs-toggle="modal" data-bs-target="#termsModal">Termos de Uso</a>
-                    @endif
-                </div>
+                    <!-- Modal Termos de Uso -->
+                    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="termsModalLabel">Termos de Uso</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {!! $tenantTheme->terms_of_use !!}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="col-12 col-lg-4">
-                    <div class="d-flex justify-content-center justify-content-lg-end align-items-center gap-3">
-                        <a href="#" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
-                            <span class="font-13">Sistema</span>
-                            @if($tenantTheme->path_image_logo_footer)
-                                <img src="{{ asset('storage/' . $tenantTheme->path_image_logo_footer) }}" alt="WHI Web" style="filter:brightness(0) invert(1);opacity:.5;height:24px;width:auto;">
-                            @endif
-                        </a>
+                    <div class="col-12 col-lg-4 m-0 p-0">
+                        <div class="d-flex justify-content-center justify-content-lg-end align-items-center gap-3">
+                            <a href="https://www.whi.dev.br/" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
+                                <span class="font-13">Sistema</span>
+                                <img src="{{asset('build/client/themes/default/images/whi-web.png')}}" title="Whi Web" alt="WHI Web" height="50" class="logo-system">
+                            </a>
 
-                        <span class="text-color-footer opacity-50">|</span>
+                            <span class="text-color-footer opacity-50">|</span>
 
-                        <a href="#" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
-                            <span class="font-13">Desenvolvido por</span>
-                            <img src="https://www.whi.dev.br/build/client/images/logo.png" alt="WHI" style="height:24px;width:auto;">
-                        </a>
+                            <a href="https://www.whi.dev.br/" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
+                                <span class="font-13">Desenvolvido por</span>
+                                <img src="{{asset('build/client/themes/default/images/whi.png')}}" title="Agência WHI" alt="WHI" height="25" class="logo-system">
+                            </a>
+                        </div>
                     </div>
                 </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const currentYear = new Date().getFullYear();
+                        const footerText = document.getElementById('footer-text');
+
+                        if (footerText) {
+                            footerText.innerHTML = `© ${currentYear} <span>{{ $tenantTheme->copyright }} - Todos os direitos reservados{{ $cnpj ? ' | ' . $cnpj : '' }}.</span>`;
+                        }
+                    });
+                </script>
             </div>
+
         </div>
     </footer>
 
@@ -437,24 +673,6 @@
                 </div>
                 <div class="modal-body">
                     {!! $tenantTheme->privacy_policy !!}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {{-- Modal Termos de Uso --}}
-    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="termsModalLabel">Termos de Uso</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                </div>
-                <div class="modal-body">
-                    {!! $tenantTheme->terms_of_use !!}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>

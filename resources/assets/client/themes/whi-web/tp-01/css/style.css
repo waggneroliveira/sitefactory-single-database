@@ -1970,7 +1970,7 @@ footer .news_letter form .form-group {
 footer .news_letter form .form-group .form-control {
     width: 100%;
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    border: 1px solid #573fd0;
     border-radius: 10px;
     min-height: 60px;
     color: var(--white);
@@ -1978,14 +1978,14 @@ footer .news_letter form .form-group .form-control {
 }
 
 footer .news_letter form .form-group .form-control::placeholder {
-    color: rgba(255, 255, 255, 0.4);
+    color: #573fd0;
 }
 
 footer .news_letter form .form-group button {
     position: absolute;
     right: 5px;
     top: 5px;
-    background: var(--primery);
+    background: #573fd0;
     color: var(--white);
     width: 50px;
     height: 50px;
@@ -1996,31 +1996,19 @@ footer .news_letter form .form-group button {
 
 footer .news_letter form .form-group button:hover {
     background: var(--white);
-    color: var(--primery);
+    color: #573fd0;
 }
 
 footer .news_letter form .note {
     font-size: 14px;
 }
 
-/* footer heading and text colors variable */
-footer h2,
-footer h5,
-footer p,
-footer a {
-    color: var(--white);
-}
-
-footer a:hover {
-    color: var(--white);
-}
 
 /* footer heading h3 */
 footer h5 {
     position: relative;
     font-size: 20px;
     font-weight: 600;
-    margin-bottom: 55px;
     padding-left: 10px;
     line-height: .8;
 }
@@ -2029,7 +2017,7 @@ footer h5::before {
     content: "";
     width: 3px;
     height: 18px;
-    background: var(--white);
+    background: #573fd0;
     position: absolute;
     margin-left: -10px;
 }
