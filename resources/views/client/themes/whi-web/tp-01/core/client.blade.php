@@ -222,40 +222,53 @@
             --copyright-text: {{ $tenantTheme->copyright ?: '© 2024 Todos os direitos reservados' }};
         }
         body{ background: #021127 !important }
-.bg-button-two.color-button-two.px-3.py-2.rounded-3 {
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-    font-weight: 600;
-    font-size: 16px;
-    isolation: isolate;
-}
+        .tpl-modal-sec .tpl-badge{
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--secondary-color) !important;
+        }
+        .tpl-modal-sec .tpl-scroll-hint, .tpl-modal-sec .tpl-category{
+            color: var(--secondary-color)
+        }
+        .bg-button-two.color-button-two.px-3.py-2.rounded-3 {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            font-weight: 600;
+            font-size: 16px;
+            isolation: isolate;
+        }
 
-.bg-button-two.color-button-two.px-3.py-2.rounded-3::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    width: 0;
-    height: 100%;
-    background: var(--bg-button-one);
-    border-radius: 6px;
-    transition: width .6s ease;
-    z-index: 0;
-}
+        .bg-button-two.color-button-two.px-3.py-2.rounded-3::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            width: 0;
+            height: 100%;
+            background: var(--bg-button-one);
+            border-radius: 6px;
+            transition: width .6s ease;
+            z-index: 0;
+        }
 
-.bg-button-two.color-button-two.px-3.py-2.rounded-3:hover::before {
-    width: 100%;
-}
+        .bg-button-two.color-button-two.px-3.py-2.rounded-3:hover::before {
+            width: 100%;
+        }
 
-.bg-button-two.color-button-two.px-3.py-2.rounded-3:hover {
-    color: var(--color-button-one);
-}
-.bg-button-two.color-button-two.px-3.py-2.rounded-3 span {
-    position: relative;
-    z-index: 1;
-}
-
-
+        .bg-button-two.color-button-two.px-3.py-2.rounded-3:hover {
+            color: var(--color-button-one);
+        }
+        .bg-button-two.color-button-two.px-3.py-2.rounded-3 span {
+            position: relative;
+            z-index: 1;
+        }
+        .testimonial-card:hover{
+            border-color: color-mix(in srgb, var(--secondary-color) 40%, transparent);
+        }
+        .author-avatar{
+            border: 2px solid var(--secondary-color);
+        }
+        .tpl-modal-sec .tpl-card:hover .tpl-arrow, .tpl-modal-sec .tpl-btn-preview, .tpl-modal-sec .tpl-card:hover .tpl-arrow{background: var(--secondary-color) !important;}
         .why_new_section .why_new_section_inner .why_new_left_data .why_data_block .number{background: var(--primary-color);}
         .why_new_section .why_new_section_inner .why_new_left_data .why_data_block{background: color-mix(in srgb, var(--secondary-color) 10%, transparent);;border: solid 1px var(--secondary-color);}
         .title_badge{color: var(--secondary-color); border:1px solid var(--secondary-color)}
@@ -301,41 +314,6 @@
     <main>
         @yield('content')
     </main>
-
-    <!-- call to action -->
-    <section class="cta_section new white_text" id="contact_sec">
-        <!-- container start -->
-        <div class="container">
-            <div class="cta_box"> 
-                <div class="element">
-                    <span class="element1"> <img src="images/element_white_3.webp" alt="image"> </span>
-                    <span class="element2"> <img src="images/element_white_4.webp" alt="image"> </span>
-                </div>         	
-                <div class="left">
-
-                <!-- section title -->
-                <div class="section_title" data-aos="fade-in" data-aos-duration="1500" data-aos-delay="100">
-                    <img src="images/customer-icon.webp" class="customer_icon" alt="image">
-                    <!-- h2 -->
-                    <h3 class="text-dark">Ainda com dúvidas?</h3>
-                    <!-- p -->
-                    <p class="text-dark" >Fale conosco agora e esclareça imediatamente!</p>
-                </div>
-
-                </div>	
-                <!-- cta buttons -->
-                <div class="right">     		
-                    <div class="btn_block ">
-                        <a href="tel:5571992768360" class="btn puprple_btn aos-init aos-animate call_btn" ><i class="icofont-ui-call"></i> Ligue-nos</a>
-                        <a href="mailto:atendimento@whi.dev.br" class="btn aos-init aos-animate email_btn" ><i class="icofont-envelope-open"></i> Enviar e-mail</a>
-                    </div>	
-                </div>	          	
-            </div>
-        </div>
-        <!-- container end -->
-    </section>
-    <!-- call to action -->   
-
 
     {{-- Footer --}}
     <footer class="pt-5 pb-4 mt-2 bg-footer">
