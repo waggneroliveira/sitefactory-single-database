@@ -913,6 +913,19 @@
 }
 
 @media (max-width: 991px) {
+  .social-wrapper-card {
+    padding: 28px 20px;
+    text-align: center;
+  }
+  
+  .social-links-container {
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .social-title {
+    font-size: 1.3rem;
+  }
   .video-card-container {
     flex-direction: column-reverse;
   }

@@ -169,11 +169,9 @@
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
-    <link href="{{ asset('build/client/lgpd/style.css') }}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link href="{{ asset('build/client/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link rel="preload" href="{{ asset('build/client/bootstrap-icons/bootstrap-icons.css') }}" as="style" onload="this.rel='stylesheet'">
+    <link href="{{ asset('build/client/lgpd/style.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('build/client/themes/whi-web/tp-01/css/style.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('build/client/themes/whi-web/tp-01/css/responsivo.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('build/client/css/default.css') }}" rel="stylesheet" type="text/css">
@@ -315,190 +313,56 @@
         @yield('content')
     </main>
 
-    <style>
-        /* ==========================================================
-   SEÇÃO REDES SOCIAIS - LIGHT ELEGANT PREMIUM (#573FD0)
-   ========================================================== */
-.social-section-light {
-  background-color: #ffffff;
-  padding: 60px 0;
-  font-family: 'Montserrat', 'Inter', sans-serif;
-  position: relative;
-}
-
-/* Card Container com Sombra Suave */
-.social-wrapper-card {
-  background: #ffffff;
-  border: 1px solid rgba(87, 63, 208, 0.12);
-  border-radius: 24px;
-  padding: 32px 40px;
-  box-shadow: 0 15px 35px rgba(87, 63, 208, 0.05);
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.social-wrapper-card:hover {
-  box-shadow: 0 20px 45px rgba(87, 63, 208, 0.08);
-  border-color: rgba(87, 63, 208, 0.25);
-}
-
-/* Badge Decorativo */
-.social-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-  color: #573fd0;
-  background: rgba(87, 63, 208, 0.08);
-  padding: 6px 14px;
-  border-radius: 20px;
-  margin-bottom: 8px;
-}
-
-.social-title {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #0f172a;
-  margin: 0;
-  letter-spacing: -0.3px;
-}
-
-/* Botões de Redes Sociais Elegantes */
-.social-links-container {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.social-pill-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 22px;
-  border-radius: 16px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  color: #475569;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 700;
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.social-pill-btn i {
-  font-size: 18px;
-  transition: transform 0.3s ease;
-}
-
-/* Efeito Hover Genérico */
-.social-pill-btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
-}
-
-.social-pill-btn:hover i {
-  transform: scale(1.15) rotate(-5deg);
-}
-
-/* Temas Dinâmicos por Rede Social */
-/* Instagram */
-.social-pill-btn.insta:hover {
-  background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
-  color: #ffffff;
-  border-color: transparent;
-  box-shadow: 0 10px 25px rgba(253, 29, 29, 0.3);
-}
-
-/* Facebook */
-.social-pill-btn.face:hover {
-  background: #1877f2;
-  color: #ffffff;
-  border-color: #1877f2;
-  box-shadow: 0 10px 25px rgba(24, 119, 242, 0.3);
-}
-
-/* TikTok / LinkedIn */
-.social-pill-btn.tiktok:hover {
-  background: #000000;
-  color: #ffffff;
-  border-color: #000000;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-}
-
-/* Responsividade */
-@media (max-width: 991px) {
-  .social-wrapper-card {
-    padding: 28px 20px;
-    text-align: center;
-  }
-  
-  .social-links-container {
-    justify-content: center;
-    margin-top: 20px;
-  }
-
-  .social-title {
-    font-size: 1.3rem;
-  }
-}
-    </style>
-
     @if (isset($contact) && ($contact->link_insta || $contact->link_face || $contact->link_tik_tok))
-  <section class="social-section-light">
-    <div class="container">
-      <div class="social-wrapper-card shadow-sm">
-        <div class="row align-items-center">
-          
-          <!-- Lado Esquerdo: Chamada Institucional -->
-          <div class="col-lg-5 mb-3 mb-lg-0">
-            <span class="social-badge">
-              <i class="bi bi-share-fill"></i> Conecte-se Conosco
-            </span>
-            <h3 class="social-title">Siga a WHI nas redes sociais</h3>
-          </div>
+        <section class="social-section-light">
+            <div class="container">
+            <div class="social-wrapper-card shadow-sm">
+                <div class="row align-items-center">
+                
+                <!-- Lado Esquerdo: Chamada Institucional -->
+                <div class="col-lg-5 mb-3 mb-lg-0">
+                    <span class="social-badge">
+                    <i class="bi bi-share-fill"></i> Conecte-se Conosco
+                    </span>
+                    <h3 class="social-title">Siga a WHI nas redes sociais</h3>
+                </div>
 
-          <!-- Lado Direito: Botoes Interativos de Redes Sociais -->
-          <div class="col-lg-7">
-            <div class="social-links-container justify-content-lg-end">
-              
-              <!-- Instagram -->
-              @if ($contact->link_insta != null)
-                <a href="{{ $contact->link_insta }}" target="_blank" rel="noopener noreferrer" class="social-pill-btn insta">
-                  <i class="bi bi-instagram"></i>
-                  <span>Instagram</span>
-                </a>
-              @endif
+                <!-- Lado Direito: Botoes Interativos de Redes Sociais -->
+                <div class="col-lg-7">
+                    <div class="social-links-container justify-content-lg-end">
+                    
+                    <!-- Instagram -->
+                    @if ($contact->link_insta != null)
+                        <a href="{{ $contact->link_insta }}" target="_blank" rel="noopener noreferrer" class="social-pill-btn insta">
+                        <i class="bi bi-instagram"></i>
+                        <span>Instagram</span>
+                        </a>
+                    @endif
 
-              <!-- Facebook -->
-              @if ($contact->link_face != null)
-                <a href="{{ $contact->link_face }}" target="_blank" rel="noopener noreferrer" class="social-pill-btn face">
-                  <i class="bi bi-facebook"></i>
-                  <span>Facebook</span>
-                </a>
-              @endif
+                    <!-- Facebook -->
+                    @if ($contact->link_face != null)
+                        <a href="{{ $contact->link_face }}" target="_blank" rel="noopener noreferrer" class="social-pill-btn face">
+                        <i class="bi bi-facebook"></i>
+                        <span>Facebook</span>
+                        </a>
+                    @endif
 
-              <!-- TikTok / LinkedIn -->
-              @if ($contact->link_tik_tok != null)
-                <a href="{{ $contact->link_tik_tok }}" target="_blank" rel="noopener noreferrer" class="social-pill-btn tiktok">
-                  <i class="bi bi-tiktok"></i>
-                  <span>TikTok</span>
-                </a>
-              @endif
+                    <!-- TikTok / LinkedIn -->
+                    @if ($contact->link_tik_tok != null)
+                        <a href="{{ $contact->link_tik_tok }}" target="_blank" rel="noopener noreferrer" class="social-pill-btn tiktok">
+                        <i class="bi bi-tiktok"></i>
+                        <span>TikTok</span>
+                        </a>
+                    @endif
 
+                    </div>
+                </div>
+
+                </div>
             </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </section>
-@endif
+            </div>
+        </section>
+    @endif
 
     {{-- Footer --}}
     <footer class="bg-footer border-top pt-3 pt-lg-5 pb-3">
@@ -694,13 +558,15 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="{{ asset('build/client/bootstrap/js/bootstrap.bundle.js') }}"></script>
     <script src="{{ asset('build/client/lgpd/script.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
     <script src="{{ asset('build/client/themes/whi-web/tp-01/js/jquery.js') }}"></script>
     <script src="{{ asset('build/client/themes/whi-web/tp-01/js/typed.min.js') }}"></script>
     <script src="{{ asset('build/client/themes/whi-web/tp-01/js/contador.js') }}"></script>
+    <script src="{{ asset('build/client/themes/whi-web/tp-01/js/functions-site.js') }}"></script>
+    <script src="{{ asset('build/client/themes/whi-web/tp-01/js/gsap-efect.js') }}"></script>
     <script src="{{ asset('build/client/themes/whi-web/tp-01/js/main.js') }}"></script>
 
     <script>
@@ -709,62 +575,6 @@
         Fancybox.bind('[data-fancybox="wedding-gallery"]', {
             Thumbs:{ type:"modern" },
             Toolbar:{ display:{ left:["infobar"], right:["thumbs","close"] } }
-        });
-
-        const modalElem = document.getElementById('modalServico');
-
-        if(modalElem) {
-            modalElem.addEventListener('show.bs.modal', function(event) {
-                const card = event.relatedTarget;
-
-                if(card) {
-                    const titulo = card.getAttribute('data-servico-titulo');
-                    const desc = card.getAttribute('data-servico-desc');
-
-                    const modalTitulo = document.getElementById('modalTitulo');
-                    const modalDescricao = document.getElementById('modalDescricao');
-
-                    if(modalTitulo) modalTitulo.innerText = titulo;
-                    if(modalDescricao) modalDescricao.innerHTML = desc;
-                }
-            });
-        }
-
-        const form = document.getElementById('formContato');
-        const alertDiv = document.getElementById('msgAlert');
-
-        if(form) {
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-
-                if(alertDiv) {
-                    alertDiv.classList.remove('d-none');
-                    setTimeout(() => alertDiv.classList.add('d-none'), 4000);
-                }
-
-                form.reset();
-            });
-        }
-
-        document.querySelectorAll('.navbar-nav .nav-link, a[href^="#"]:not(.whatsapp-floatt)').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const targetId = this.getAttribute('href');
-
-                if(targetId && targetId !== "#" && targetId.startsWith("#")) {
-                    const targetElem = document.querySelector(targetId);
-
-                    if(targetElem) {
-                        e.preventDefault();
-                        targetElem.scrollIntoView({ behavior:'smooth', block:'start' });
-                    }
-
-                    const navbarCollapse = document.querySelector('.navbar-collapse');
-
-                    if(navbarCollapse?.classList.contains('show')) {
-                        new bootstrap.Collapse(navbarCollapse).toggle();
-                    }
-                }
-            });
         });
     </script>
 
@@ -791,249 +601,5 @@
             });
         </script>
     @endif
-
-    <script>        
-        // Fixed Discount Dish JS
-        $(document).ready(function() {
-            let cardBlock = document.querySelectorAll('.task_block');
-            let topStyle = 120;
-            cardBlock.forEach((card) => {
-                card.style.top = `${topStyle}px`;
-                topStyle += 30;
-            })
-        });
-        // Scroll Down Window 
-        $(document).ready(function() {
-            // Attach a click event handler to the button
-            $('#scrollButton').click(function() {
-                // Scroll down smoothly 200 pixels from the current position
-                $('html, body').animate({
-                    scrollTop: $(window).scrollTop() + 600
-                }, 800); // Adjust the speed (800ms) as needed
-            });
-        });
-        //Envio whatsapp dos planos
-        document.addEventListener('DOMContentLoaded', function() {
-            // Seleciona todos os botões com a classe específica
-            const whatsappButtons = document.querySelectorAll('.whatsapp-plan-btn');
-            // Adiciona evento de clique a cada botão
-            whatsappButtons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    // Encontra o elemento do plano (box-plan) mais próximo
-                    const planBox = this.closest('.box-plan');
-                    // Extrai informações do plano
-                    const planName = planBox.querySelector('h5').textContent.trim();
-                    // Encontra a descrição (primeiro p.mb-2 após o h5)
-                    const planDescription = planBox.querySelector('h5 + p.mb-2')?.textContent.trim() || planBox.querySelector('p.mb-2')?.textContent.trim() || '';
-                    // Encontra o preço (h6 dentro de .price)
-                    const priceElement = planBox.querySelector('.price h6');
-                    const planPrice = priceElement ? priceElement.textContent.trim() : '';
-                    // Extrai os benefícios do plano - limpa o texto
-                    const features = [];
-                    const listItems = planBox.querySelectorAll('ul.list li');
-                    listItems.forEach(item => {
-                        // Remove espaços extras e quebras de linha
-                        let text = item.textContent.replace(/\s+/g, ' ') // Substitui múltiplos espaços/linhas por um espaço
-                            .replace(/\n/g, ' ') // Remove quebras de linha
-                            .trim();
-                        // Remove o conteúdo do SVG (que é o ícone de check)
-                        // O SVG geralmente é o primeiro elemento filho
-                        if (item.firstElementChild && item.firstElementChild.tagName === 'svg') {
-                            text = text.replace(item.firstElementChild.textContent, '').trim();
-                        }
-                        if (text) {
-                            // Limpa espaços extras novamente
-                            text = text.replace(/\s+/g, ' ').trim();
-                            features.push(text);
-                        }
-                    });
-                    // Pega a URL base do WhatsApp
-                    const whatsappUrl = this.getAttribute('href');
-                    // Cria a mensagem personalizada
-                    let message = `Olá! Estou entrando em contato através do site do Delifast.\n\n`;
-                    message += `📋 *PLANO SELECIONADO*\n`;
-                    message += `*${planName}*\n`;
-                    message += `${planDescription}\n`;
-                    if (planPrice) {
-                        message += `*Preço:* ${planPrice}\n`;
-                    }
-                    if (features.length > 0) {
-                        message += `\n✅ *BENEFÍCIOS INCLUÍDOS:*\n`;
-                        features.forEach(feature => {
-                            message += `• ${feature}\n`;
-                        });
-                    }
-                    message += `\nGostaria de mais informações sobre este plano!`;
-                    // Substitui quebras de linha por %0A para URL do WhatsApp
-                    const whatsappMessage = message.replace(/\n/g, '%0A');
-                    // Cria a URL final com a mensagem
-                    const newUrl = `${whatsappUrl}?text=${whatsappMessage}`;
-                    // Redireciona para o WhatsApp
-                    window.open(newUrl, '_blank', 'noopener noreferrer');
-                });
-            });
-        });
-        // Envio whatsapp Servicos avulsos
-        document.addEventListener('DOMContentLoaded', function() {
-            // Primeiro, vamos remover os parâmetros ?text= dos links existentes
-            // MAS somente dos que NÃO têm a classe keep-message
-            const allWhatsAppLinks = document.querySelectorAll('a[href*="wa.me"]:not(.keep-message)');
-            allWhatsAppLinks.forEach(link => {
-                const baseUrl = link.getAttribute('href').split('?')[0];
-                link.setAttribute('href', baseUrl);
-                link.classList.add('whatsapp-plan-btn');
-            });
-            // Função para limpar texto
-            function cleanText(text) {
-                return text.replace(/\s+/g, ' ').replace(/\n/g, ' ').trim();
-            }
-            // Função para processar itens da lista
-            function processListItems(listElement) {
-                const features = [];
-                if (!listElement) return features;
-                const listItems = listElement.querySelectorAll('li');
-                listItems.forEach(item => {
-                    // Clona para não modificar o DOM original
-                    const clone = item.cloneNode(true);
-                    // Remove SVGs (ícones)
-                    const svgs = clone.querySelectorAll('svg');
-                    svgs.forEach(svg => svg.remove());
-                    // Processa texto em negrito
-                    const boldElements = clone.querySelectorAll('b');
-                    boldElements.forEach(bold => {
-                        const boldText = bold.textContent;
-                        bold.parentNode.replaceChild(document.createTextNode(`*${boldText}*`), bold);
-                    });
-                    let text = clone.textContent;
-                    text = cleanText(text);
-                    if (text) {
-                        features.push(text);
-                    }
-                });
-                return features;
-            }
-            // Função para criar mensagem do WhatsApp
-            function createWhatsAppMessage(type, data) {
-                let message = '';
-                if (type === 'plan') {
-                    message = `Olá! Estou entrando em contato através do site do Delifast.%0A%0A`;
-                    message += `📋 *PLANO SELECIONADO*%0A`;
-                    message += `*${data.name}*%0A`;
-                    message += `${data.description}%0A`;
-                    if (data.price) {
-                        message += `*Preço:* ${data.price}%0A`;
-                    }
-                    if (data.features.length > 0) {
-                        message += `%0A✅ *BENEFÍCIOS INCLUÍDOS:*%0A`;
-                        data.features.forEach(feature => {
-                            message += `• ${feature}%0A`;
-                        });
-                    }
-                    message += `%0AGostaria de mais informações sobre este plano!`;
-                } else if (type === 'service') {
-                    message = `Olá! Estou entrando em contato através do site do Delifast.%0A%0A`;
-                    message += `🛠️ *SERVIÇO SELECIONADO*%0A`;
-                    message += `*${data.name}*%0A`;
-                    if (data.price) {
-                        message += `*Valor:* ${data.price}%0A`;
-                    }
-                    if (data.tag) {
-                        message += `🏷️ *${data.tag}*%0A`;
-                    }
-                    if (data.features.length > 0) {
-                        message += `%0A✅ *O QUE ESTÁ INCLUÍDO:*%0A`;
-                        data.features.forEach(feature => {
-                            message += `• ${feature}%0A`;
-                        });
-                    }
-                    message += `%0AGostaria de mais informações sobre este serviço!`;
-                }
-                return message;
-            }
-            // Configurar botões de PLANOS (apenas os que NÃO têm keep-message)
-            const planButtons = document.querySelectorAll('.box-plan .btn.puprple_btn:not(.keep-message)');
-            planButtons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const planBox = this.closest('.box-plan');
-                    // Obter nome do plano
-                    const planName = planBox.querySelector('h5').textContent.trim();
-                    // Obter descrição do plano
-                    let planDescription = '';
-                    const descriptionEl = planBox.querySelector('h5 + p.mb-2') || planBox.querySelector('.price p.mb-2');
-                    if (descriptionEl) {
-                        planDescription = descriptionEl.textContent.trim();
-                    }
-                    // Obter preço
-                    const priceEl = planBox.querySelector('.price h6');
-                    const planPrice = priceEl ? priceEl.textContent.trim() : '';
-                    // Obter benefícios
-                    const planFeatures = processListItems(planBox.querySelector('ul.list'));
-                    // Criar dados do plano
-                    const planData = {
-                        name: planName,
-                        description: planDescription,
-                        price: planPrice,
-                        features: planFeatures
-                    };
-                    // Criar mensagem
-                    const message = createWhatsAppMessage('plan', planData);
-                    // Construir URL do WhatsApp
-                    const whatsappUrl = `https://wa.me/5571992768360?text=${message}`;
-                    // Abrir WhatsApp
-                    window.open(whatsappUrl, '_blank', 'noopener noreferrer');
-                });
-            });
-            // Configurar botões de SERVIÇOS (apenas os que NÃO têm keep-message)
-            const serviceButtons = document.querySelectorAll('.box-service .btn.puprple_btn:not(.keep-message)');
-            serviceButtons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const serviceBox = this.closest('.box-service');
-                    // Obter nome do serviço
-                    const serviceName = serviceBox.querySelector('h5').textContent.trim();
-                    // Obter tag (se houver)
-                    let serviceTag = '';
-                    const tagEl = serviceBox.querySelector('.tag p');
-                    if (tagEl) {
-                        const tagText = tagEl.textContent.trim();
-                        if (tagText !== 'Popular') {
-                            serviceTag = tagText;
-                        }
-                    }
-                    // Obter preço
-                    const priceEl = serviceBox.querySelector('.price h6');
-                    let servicePrice = '';
-                    if (priceEl) {
-                        const priceText = priceEl.textContent.trim();
-                        const span = priceEl.querySelector('span');
-                        if (span) {
-                            servicePrice = priceText.replace(span.textContent, '').trim();
-                            servicePrice += ` ${span.textContent.trim()}`;
-                        } else {
-                            servicePrice = priceText;
-                        }
-                    }
-                    // Obter características
-                    const serviceFeatures = processListItems(serviceBox.querySelector('ul.list'));
-                    // Criar dados do serviço
-                    const serviceData = {
-                        name: serviceName,
-                        tag: serviceTag,
-                        price: servicePrice,
-                        features: serviceFeatures
-                    };
-                    // Criar mensagem
-                    const message = createWhatsAppMessage('service', serviceData);
-                    // Construir URL do WhatsApp
-                    const whatsappUrl = `https://wa.me/5571992768360?text=${message}`;
-                    // Abrir WhatsApp
-                    window.open(whatsappUrl, '_blank', 'noopener noreferrer');
-                });
-            });
-            console.log('WhatsApp script carregado com sucesso! Botões com .keep-message serão ignorados.');
-        });
-    </script>
 </body>
 </html>

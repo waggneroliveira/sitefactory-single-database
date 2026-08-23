@@ -1,4 +1,5 @@
 @extends($theme->core('client'))
+
 @section('content')
     <!-- Banner-Section-Start -->
     <section class="banner_section" id="home_sec">
@@ -12,7 +13,7 @@
             <div class="container">
                 <!-- row start -->
                 <div class="row">
-                <div class="col-lg-7 col-md-12" data-aos="fade-up" data-aos-duration="1500">
+                <div class="col-lg-7 col-md-12">
                     <!-- banner text -->
                     <div class="banner_text">
                         <span class="hero-badge mb-3 d-inline-block secondary-color">
@@ -34,12 +35,12 @@
 
                     <div class="mt-3 d-flex justify-conten-center flex-wrap gap-3">
                         @if ($slide->link <> null)                                    
-                            <a href="{{$slide->link}}" target="_blank" rel="noopener noreferrer" class="rounded-1 d-flex align-items-center btn-one py-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
+                            <a href="{{$slide->link}}" target="_blank" rel="noopener noreferrer" class="rounded-1 d-flex align-items-center btn-one py-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none">
                                 {{$slide->btn_title}}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>  
                             </a>
                         @endif
-                        <a href="#services" class="btn d-flex align-items-center btn-outline-light px-lg-5 px-3 py-lg-3 py-1 font-15 font-medium hover-zoom">
+                        <a href="#services" class="btn d-flex align-items-center btn-outline-light px-lg-5 px-3 py-lg-3 py-1 font-15 font-medium">
                             Serviços avulso
                         </a>
                     </div>
@@ -95,30 +96,21 @@
                                 <div class="row listing_inner align-items-center">
                                     <!-- blok -->
                                     @foreach ($topics as $topic)
-                                        <div class="af_block col-lg-3 col-md-6 col-sm-6 p-1" data-aos="fade-up" data-aos-duration="{{ ($loop->index + 1) * 500 }}">
+                                        <div class="af_block col-lg-3 col-md-6 col-sm-6 p-1">
                                             <div class="text d-flex justify-content-center gap-3 align-items-start flex-column" style="min-height: 223px;">
                                                 <div class="d-flex justify-content-between align-items-start flex-column mb-2">
-                                                    @if ($topic->link <> null)
-                                                        <a href="{{$topic->link}}" class="topic-item d-block" rel="noopener noreferrer">
-                                                            @if ($topic->path_image <> null)                                                        
-                                                                <div class="bg-icon bg-secondary-color">
-                                                                    <img src="{{asset('storage/'.$topic->path_image)}}" height="30" alt="Tópico 1" class="img-fluid d-block m-auto" loading="lazy">
-                                                                </div>
-                                                            @endif
-                                                        </a>
-                                                        @else
-                                                        <a class="topic-item d-block">
-                                                            @if ($topic->path_image <> null)                                                        
-                                                                <div class="bg-icon bg-secondary-color">
-                                                                    <img src="{{asset('storage/'.$topic->path_image)}}" height="30" alt="Tópico 1" class="img-fluid d-block m-auto" loading="lazy">
-                                                                </div>
-                                                            @endif
-                                                        </a>
-                                                    @endif
                                                     
-                                                    <h5>{{$topic->title}}</h5>
+                                                    <a @if($topic->link) href="{{ $topic->link }}" target="_blank" rel="noopener noreferrer" @endif class="topic-item d-block">
+                                                        @if ($topic->path_image)
+                                                            <div class="bg-icon bg-secondary-color">
+                                                                <img src="{{ asset('storage/' . $topic->path_image) }}" height="30" alt="{{ $topic->title }}" class="img-fluid d-block m-auto" loading="lazy">
+                                                            </div>
+                                                        @endif
+                                                    </a>
+
+                                                    <h5 class="mt-2">{{ $topic->title }}</h5>
                                                 </div>
-                                                <p>{{$topic->description}}</p>
+                                                <p>{{ $topic->description }}</p>
                                             </div>
                                         </div>
                                     @endforeach
@@ -152,7 +144,7 @@
           <div class="row justify-content-center">
 
             <!-- section title -->
-            <div class="section_title" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+            <div class="section_title">
                 <span class="title_badge">Personalize do seu jeito</span>
                 <h2 class="trhee-step">Seu site com<br><span>a sua identidade</span></h2>
             </div>
@@ -163,7 +155,7 @@
                 <div class="why_new_left_data">
 
                   <!-- block 1 -->
-                  <div class="why_data_block " data-aos="fade-right" data-aos-duration="1500">
+                  <div class="why_data_block">
                     <!-- icon -->
                     <div class="number text-white">
                     01                    
@@ -176,7 +168,7 @@
                   </div>
 
                   <!-- block 2 -->
-                  <div class="why_data_block " data-aos="fade-right" data-aos-duration="1500">
+                  <div class="why_data_block">
                     <!-- icon -->
                     <div class="number text-white">
                     02                    
@@ -189,7 +181,7 @@
                   </div>
 
                   <!-- block 3 -->
-                  <div class="why_data_block " data-aos="fade-right" data-aos-duration="1500">
+                  <div class="why_data_block">
                     <!-- number -->
                     <div class="number text-white">
                       03
@@ -202,7 +194,7 @@
                   </div>
 
                   <!-- block 4 -->
-                  <div class="why_data_block " data-aos="fade-right" data-aos-duration="1500">
+                  <div class="why_data_block">
                     <!-- number -->
                     <div class="number text-white">
                       04
@@ -217,7 +209,7 @@
                 </div>
               </div>
 
-              <div class="col-lg-6 col-md-12 position-relative" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+              <div class="col-lg-6 col-md-12 position-relative">
                 <img src="{{asset('build/client/images/themes/whi-web/tablet.png')}}" class="position-absolute" alt="image" style="height: 250px; bottom: 15px; right: 11px;z-index: 1;">
                 <img src="{{asset('build/client/images/themes/whi-web/phone-login.png')}}" class="position-absolute" alt="image" style="    height: 220px; bottom: 15px; left: -34px; z-index: 1;">
                 <!-- why us new image -->
@@ -687,28 +679,6 @@
       </div>
     </section>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-      new Swiper(".testimonialSwiper", {
-        slidesPerView: 1,
-        spaceBetween: 24,
-        loop: true,
-        autoplay: {
-          delay: 4000,
-          disableOnInteraction: false,
-        },
-        breakpoints: {
-          768: {
-            slidesPerView: 2,
-          },
-          1024: {
-            slidesPerView: 3,
-          },
-        },
-      });
-    });
-    </script>
-
     <section class="pricing-section" id="plans">
       <div class="container">
         
@@ -864,61 +834,6 @@
       </div>
     </section>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const toggle = document.getElementById("pricingToggle");
-        const amounts = document.querySelectorAll(".amount");
-        const labelMonthly = document.getElementById("label-monthly");
-        const labelYearly = document.getElementById("label-yearly");
-
-        if (!toggle) return;
-
-        toggle.addEventListener("change", function () {
-          const isYearly = this.checked;
-
-          // Atualiza a opacidade/cor do texto indicador
-          if (isYearly) {
-            labelYearly.classList.add("active");
-            labelMonthly.classList.remove("active");
-          } else {
-            labelMonthly.classList.add("active");
-            labelYearly.classList.remove("active");
-          }
-
-          // Animação e troca dos valores
-          amounts.forEach((amount) => {
-            amount.style.opacity = "0";
-            amount.style.transform = "translateY(-10px)";
-
-            setTimeout(() => {
-              const newValue = isYearly
-                ? amount.getAttribute("data-yearly")
-                : amount.getAttribute("data-monthly");
-
-              amount.textContent = newValue;
-              amount.style.opacity = "1";
-              amount.style.transform = "translateY(0)";
-            }, 200);
-          });
-        });
-
-        // Torna os labels clicáveis para mudar a chave
-        labelMonthly.addEventListener("click", () => {
-          if (toggle.checked) {
-            toggle.checked = false;
-            toggle.dispatchEvent(new Event("change"));
-          }
-        });
-
-        labelYearly.addEventListener("click", () => {
-          if (!toggle.checked) {
-            toggle.checked = true;
-            toggle.dispatchEvent(new Event("change"));
-          }
-        });
-      });
-    </script>
-
     <section class="faq-section" id="faq">
       <div class="container">
         
@@ -1041,262 +956,92 @@
       </div>
     </section>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const faqCards = document.querySelectorAll(".faq-card");
-
-        faqCards.forEach((card) => {
-          const header = card.querySelector(".faq-header");
-          const body = card.querySelector(".faq-body");
-
-          header.addEventListener("click", () => {
-            const isActive = card.classList.contains("active");
-
-            // Fecha todos os outros itens
-            faqCards.forEach((otherCard) => {
-              otherCard.classList.remove("active");
-              const otherBody = otherCard.querySelector(".faq-body");
-              if (otherBody) {
-                otherBody.style.display = "none";
-              }
-            });
-
-            // Se não estava ativo, abre o item atual
-            if (!isActive) {
-              card.classList.add("active");
-              body.style.display = "block";
-            }
-          });
-        });
-      });
-    </script>
-
     <section class="cta-pro-section" id="contact_sec">
-  <!-- Glows de Iluminação em Camadas -->
-  <div class="cta-glow-1"></div>
-  <div class="cta-glow-2"></div>
+    <!-- Glows de Iluminação em Camadas -->
+    <div class="cta-glow-1"></div>
+    <div class="cta-glow-2"></div>
 
-  <div class="container">
-    <div class="cta-glass-card">
-      <div class="row align-items-center">
-        
-        <!-- Conteúdo Principal -->
-        <div class="col-lg-6 mb-4 mb-lg-0">
-          <div class="cta-status-badge">
-            <span class="status-dot"></span>
-            Equipe Online Agora
-          </div>
-          <h2 class="cta-title">Vamos impulsionar o seu projeto?</h2>
-          <p class="cta-subtitle">Escolha o canal de sua preferência ou selecione o assunto abaixo para iniciarmos seu atendimento imediato.</p>
-
-          <!-- Seletor de Assuntos (Interativo) -->
-          <div class="cta-topics-label">Sobre o que deseja falar?</div>
-          <div class="cta-topics-group">
-            <span class="topic-chip active" data-subject="Orçamento & Prazos">Orçamento</span>
-            <span class="topic-chip" data-subject="Dúvidas Técnicas">Dúvidas Técnicas</span>
-            <span class="topic-chip" data-subject="Contratar Plano">Contratar Plano</span>
-            <span class="topic-chip" data-subject="Suporte">Suporte</span>
-          </div>
-        </div>
-
-        <!-- Canais Rápidos de Contato -->
-        <div class="col-lg-6">
-          <div class="d-flex flex-column gap-3">
-
-            <!-- Canal 1: WhatsApp Direto -->
-            <div class="contact-channel-card">
-              <div class="channel-info">
-                <div class="channel-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                </div>
-                <div class="channel-details">
-                  <h4>Atendimento Telefônico / WhatsApp</h4>
-                  <p>(71) 99276-8360</p>
-                </div>
-              </div>
-              <div class="d-flex gap-2 w-100-mobile">
-                <button class="btn-channel-action" onclick="copyToClipboard('(71) 99276-8360', 'Telefone copiado!')" title="Copiar Número">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-                </button>
-                <a href="https://wa.me/5571992768360?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20Orçamento%20%26%20Prazos" id="whatsapp-btn" target="_blank" class="btn-channel-action btn-channel-primary">
-                  Conversar
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                </a>
-              </div>
+    <div class="container">
+      <div class="cta-glass-card">
+        <div class="row align-items-center">
+          
+          <!-- Conteúdo Principal -->
+          <div class="col-lg-6 mb-4 mb-lg-0">
+            <div class="cta-status-badge">
+              <span class="status-dot"></span>
+              Equipe Online Agora
             </div>
+            <h2 class="cta-title">Vamos impulsionar o seu projeto?</h2>
+            <p class="cta-subtitle">Escolha o canal de sua preferência ou selecione o assunto abaixo para iniciarmos seu atendimento imediato.</p>
 
-            <!-- Canal 2: E-mail -->
-            <div class="contact-channel-card">
-              <div class="channel-info">
-                <div class="channel-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                </div>
-                <div class="channel-details">
-                  <h4>Envie uma mensagem por e-mail</h4>
-                  <p>atendimento@whi.dev.br</p>
-                </div>
-              </div>
-              <div class="d-flex gap-2 w-100-mobile">
-                <button class="btn-channel-action" onclick="copyToClipboard('atendimento@whi.dev.br', 'E-mail copiado!')" title="Copiar E-mail">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-                </button>
-                <a href="mailto:atendimento@whi.dev.br" class="btn-channel-action">
-                  Escrever
-                </a>
-              </div>
+            <!-- Seletor de Assuntos (Interativo) -->
+            <div class="cta-topics-label">Sobre o que deseja falar?</div>
+            <div class="cta-topics-group">
+              <span class="topic-chip active" data-subject="Orçamento & Prazos">Orçamento</span>
+              <span class="topic-chip" data-subject="Dúvidas Técnicas">Dúvidas Técnicas</span>
+              <span class="topic-chip" data-subject="Contratar Plano">Contratar Plano</span>
+              <span class="topic-chip" data-subject="Suporte">Suporte</span>
             </div>
-
           </div>
-        </div>
 
+          <!-- Canais Rápidos de Contato -->
+          <div class="col-lg-6">
+            <div class="d-flex flex-column gap-3">
+
+              <!-- Canal 1: WhatsApp Direto -->
+              <div class="contact-channel-card">
+                <div class="channel-info">
+                  <div class="channel-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  </div>
+                  <div class="channel-details">
+                    <h4>Atendimento Telefônico / WhatsApp</h4>
+                    <p>(71) 99276-8360</p>
+                  </div>
+                </div>
+                <div class="d-flex gap-2 w-100-mobile">
+                  <button class="btn-channel-action" onclick="copyToClipboard('(71) 99276-8360', 'Telefone copiado!')" title="Copiar Número">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                  </button>
+                  <a href="https://wa.me/5571992768360?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20Orçamento%20%26%20Prazos" id="whatsapp-btn" target="_blank" class="btn-channel-action btn-channel-primary">
+                    Conversar
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Canal 2: E-mail -->
+              <div class="contact-channel-card">
+                <div class="channel-info">
+                  <div class="channel-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                  </div>
+                  <div class="channel-details">
+                    <h4>Envie uma mensagem por e-mail</h4>
+                    <p>atendimento@whi.dev.br</p>
+                  </div>
+                </div>
+                <div class="d-flex gap-2 w-100-mobile">
+                  <button class="btn-channel-action" onclick="copyToClipboard('atendimento@whi.dev.br', 'E-mail copiado!')" title="Copiar E-mail">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                  </button>
+                  <a href="mailto:atendimento@whi.dev.br" class="btn-channel-action">
+                    Escrever
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
-  </div>
-</section>
+    </section>
 
-<!-- Toast de Notificação -->
-<div id="cta-toast" class="cta-toast">
-  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-  <span id="toast-message">Copiado com sucesso!</span>
-</div>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-  const topicChips = document.querySelectorAll(".topic-chip");
-  const whatsappBtn = document.getElementById("whatsapp-btn");
-  const phoneBase = "5571992768360";
-
-  // Alterna o assunto selecionado e atualiza o link do WhatsApp
-  topicChips.forEach((chip) => {
-    chip.addEventListener("click", function () {
-      topicChips.forEach((c) => c.classList.remove("active"));
-      this.classList.add("active");
-
-      const subject = this.getAttribute("data-subject");
-      const message = encodeURIComponent(
-        `Olá, gostaria de saber mais sobre: ${subject}`
-      );
-
-      whatsappBtn.setAttribute(
-        "href",
-        `https://wa.me/${phoneBase}?text=${message}`
-      );
-    });
-  });
-});
-
-// Função para copiar dados com Toast Notifier
-function copyToClipboard(text, successMessage) {
-  navigator.clipboard.writeText(text).then(() => {
-    const toast = document.getElementById("cta-toast");
-    const toastMsg = document.getElementById("toast-message");
-
-    toastMsg.textContent = successMessage;
-    toast.classList.add("show");
-
-    setTimeout(() => {
-      toast.classList.remove("show");
-    }, 2500);
-  });
-}
-</script>
-  
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const section = document.querySelector('.video-section');
-        if (!section) return;
-
-        const items = Array.from(section.querySelectorAll('.video-item'));
-        const player = section.querySelector('#videoPlayer');
-
-        // Normalização de URL
-        function norm(url) {
-          if (!url) return "";
-          return url.startsWith("//") ? window.location.protocol + url : url;
-        }
-
-        // Extrai ID do YouTube
-        function getYouTubeId(urlStr) {
-          try {
-            const u = new URL(urlStr);
-            const host = u.hostname.replace(/^www\./, "");
-
-            if (host === "youtu.be") return u.pathname.split("/")[1];
-            if (u.pathname.startsWith("/embed/") || u.pathname.startsWith("/shorts/")) return u.pathname.split("/")[2] || u.pathname.split("/")[1];
-            return u.searchParams.get("v");
-          } catch {
-            return null;
-          }
-        }
-
-        // Gera a URL de Embed do Vídeo
-        function toEmbed(rawUrl) {
-          const urlStr = norm(rawUrl);
-          if (!urlStr) return "";
-
-          const ytId = getYouTubeId(urlStr);
-          if (ytId) return `https://www.youtube.com/embed/${ytId}?autoplay=1`;
-
-          // Vimeo
-          if (urlStr.includes("vimeo.com")) {
-            const parts = urlStr.split("/").filter(Boolean);
-            const last = parts[parts.length - 1];
-            if (/^\d+$/.test(last)) return `https://player.vimeo.com/video/${last}?autoplay=1`;
-          }
-
-          return urlStr;
-        }
-
-        // Obtém imagem de Capa (Thumbnail)
-        function getThumbnail(rawUrl) {
-          const urlStr = norm(rawUrl);
-          const ytId = getYouTubeId(urlStr);
-          
-          if (ytId) {
-            return `https://img.youtube.com/vi/${ytId}/mqdefault.jpg`;
-          }
-          
-          // Imagem fallback caso não seja YouTube
-          return "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150&q=80";
-        }
-
-        // Define o item ativo
-        function setActive(index, isUserClick = false) {
-          if (index < 0 || index >= items.length) return;
-
-          items.forEach(item => item.classList.remove('active'));
-          const selectedItem = items[index];
-          selectedItem.classList.add('active');
-
-          const rawUrl = selectedItem.getAttribute('data-video');
-          const embedUrl = toEmbed(rawUrl);
-
-          // Evita autoplay automático no primeiro carregamento do site se não for clique
-          if (!isUserClick) {
-            player.src = embedUrl.replace('?autoplay=1', '');
-          } else {
-            player.src = embedUrl;
-          }
-
-          selectedItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-
-        // Inicializa thumbnails e eventos
-        items.forEach((item, index) => {
-          const rawUrl = item.getAttribute('data-video');
-          const imgTag = item.querySelector('.video-thumb-img');
-          
-          if (imgTag) {
-            imgTag.src = getThumbnail(rawUrl);
-          }
-
-          item.addEventListener('click', () => setActive(index, true));
-        });
-
-        // Ativa o primeiro item da lista ao carregar
-        if (items.length > 0) {
-          setActive(0, false);
-        }
-      });
-    </script>
+    <!-- Toast de Notificação -->
+    <div id="cta-toast" class="cta-toast">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      <span id="toast-message">Copiado com sucesso!</span>
+    </div>
 @endsection

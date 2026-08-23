@@ -4318,3 +4318,152 @@ footer .bottom_footer .developer_text a {
   font-size: 12px;
   margin: 0;
 }
+        /* ==========================================================
+   SEÇÃO REDES SOCIAIS - LIGHT ELEGANT PREMIUM (#573FD0)
+   ========================================================== */
+.social-section-light {
+  background-color: #ffffff;
+  padding: 60px 0;
+  font-family: 'Montserrat', 'Inter', sans-serif;
+  position: relative;
+}
+
+/* Card Container com Sombra Suave */
+.social-wrapper-card {
+  background: #ffffff;
+  border: 1px solid rgba(87, 63, 208, 0.12);
+  border-radius: 24px;
+  padding: 32px 40px;
+  box-shadow: 0 15px 35px rgba(87, 63, 208, 0.05);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.social-wrapper-card:hover {
+  box-shadow: 0 20px 45px rgba(87, 63, 208, 0.08);
+  border-color: rgba(87, 63, 208, 0.25);
+}
+
+/* Badge Decorativo */
+.social-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #573fd0;
+  background: rgba(87, 63, 208, 0.08);
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+}
+
+.social-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+/* Botões de Redes Sociais Elegantes */
+.social-links-container {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.social-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 22px;
+  border-radius: 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.social-pill-btn i {
+  font-size: 18px;
+  transition: transform 0.3s ease;
+}
+
+/* Efeito Hover Genérico */
+.social-pill-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+}
+
+.social-pill-btn:hover i {
+  transform: scale(1.15) rotate(-5deg);
+}
+
+/* Temas Dinâmicos por Rede Social */
+/* Instagram */
+.social-pill-btn.insta:hover {
+  background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 10px 25px rgba(253, 29, 29, 0.3);
+}
+
+/* Facebook */
+.social-pill-btn.face:hover {
+  background: #1877f2;
+  color: #ffffff;
+  border-color: #1877f2;
+  box-shadow: 0 10px 25px rgba(24, 119, 242, 0.3);
+}
+
+/* TikTok / LinkedIn */
+.social-pill-btn.tiktok:hover {
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* gsap */
+.hero_bg,
+.hero-badge,
+.type-wrap,
+.hero-title,
+.description,
+.hero_img,
+.hero-stats-item {
+    will-change: transform, opacity;
+}
+/* Previne piscadas de tela antes da animação iniciar */
+#how_sec .af_block,
+#how_sec .device img,
+#how_sec .blure_shape {
+    will-change: transform, opacity;
+}
+
+/* Transição suave ao passar o mouse sobre os cards */
+#how_sec .af_block .text {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#how_sec .af_block:hover .text {
+    transform: translateY(-6px);
+}
+/* Otimização de renderização e prevenção de piscadas */
+#why_sec .why_data_block,
+#why_sec .why_us_new_img,
+#why_sec .section_title,
+#why_sec img[src*='tablet.png'],
+#why_sec img[src*='phone-login.png'] {
+  will-change: transform, opacity;
+}
+/* gsap */
