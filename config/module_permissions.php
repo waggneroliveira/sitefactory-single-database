@@ -112,6 +112,16 @@ return [
         ],
     ],
 
+    'planNetworkCategory' => [
+        'permission' => 'categorias do plano',
+        'actions' => [
+            'criar',
+            'editar',
+            'visualizar',
+            'remover',
+        ],
+    ],
+
     'planNetwork' => [
         'permission' => 'plano',
         'actions' => [

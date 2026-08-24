@@ -13,6 +13,8 @@ use App\Models\Event;
 use App\Models\Faq;
 use App\Models\Letsgo;
 use App\Models\Partner;
+use App\Models\PlanNetwork;
+use App\Models\PlanNetworkCategory;
 use App\Models\PopUp;
 use App\Models\Product;
 use App\Models\ProductCategory;
@@ -45,10 +47,12 @@ class HomePageService
         $faqs = Faq::active()->sorting()->get();
         $sessaoFaq = SessaoFaq::active()->first();
         $services = ServiceItem::active()->get();
-        $sections = ServiceSection::active()->whereIn('section', ['testimonial', 'service', 'gallery'])->get()->keyBy('section');
+        $sections = ServiceSection::active()->whereIn('section', ['testimonial', 'service', 'gallery', 'planNetwork'])->get()->keyBy('section');
         $galleries = ProductGallery::get();
         $serviceLocation = ServiceLocation::active()->first();
         $benefitTopics = BenefitTopic::active()->sorting()->get();
+        $planCategories = PlanNetworkCategory::with('plans')->whereHas('plans')->sorting()->active()->get();
+        $plans = PlanNetwork::sorting()->active()->get();
 
         $popUp = PopUp::active()->first();
 
@@ -77,6 +81,8 @@ class HomePageService
             'services',
             'sections',
             'galleries',
+            'planCategories',
+            'plans',
         );
     }
 

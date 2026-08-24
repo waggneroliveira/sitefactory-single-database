@@ -324,6 +324,7 @@ return [
                 'letsgo',
                 'testimonials',
                 'partner',
+                'planNetworkCategory',
                 'planNetwork',
 
                 'about',
@@ -349,6 +350,7 @@ return [
                 'letsgo',
                 'faq_session',
                 'faq',
+                'planNetworkCategory',
                 'planNetwork',
                 'testimonials',
                 'services',
@@ -399,6 +401,7 @@ return [
         'limits' => [
             'slides' => 3,
             'about' => 1,
+            'planNetworkCategory' => 20,
             'planNetwork' => 20,
             'topics' => 3,
             'testimonials' => 6,

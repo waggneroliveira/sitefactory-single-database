@@ -89,16 +89,15 @@
     </section>
 @endif
 
-@if ((!empty($planSection) && ($planSection->title || $planSection->subtitle || $planSection->text)) ||
-    (!empty($planCategories) && count($planCategories) > 0) ||
+@if ((!empty($planCategories) && count($planCategories) > 0) ||
     (!empty($plans) && count($plans) > 0))
     <section id="plans" class="background-plan py-5 plan">
         <div class="content m-auto me-0 justify-content-end d-flex flex-wrap flex-column flex-md-row">
             <aside class="col-11 col-md-4 animate-on-scroll" data-animation="animate__fadeInLeft">
-                @if (isset($planSection->title) || isset($planSection->subtitle))
+                @if (isset($sections['planNetwork']->title) || isset($sections['planNetwork']->subtitle))
                     <div class="w-100">
-                        <h2 class="montserrat-medium font-25 text-white">{{ $planSection->title }}</h2>
-                        <h3 class="text-uppercase montserrat-ExtraBold font-35 text-white">{{ $planSection->subtitle }}</h3>
+                        <h2 class="montserrat-medium font-25 text-white">{{ $sections['planNetwork']->title }}</h2>
+                        <h3 class="text-uppercase montserrat-ExtraBold font-35 text-white">{{ $sections['planNetwork']->subtitle }}</h3>
                     </div>
                 @endif
                 @if (!empty($planCategories))                
@@ -117,10 +116,10 @@
                         @endforeach
                     </ul>
                 @endif
-                @if (!empty($planSection))                
+                @if (!empty($sections['planNetwork']))                
                     <div class="obs mt-4 col-12 col-md-8">
                         <div class="description">
-                            {!! $planSection->text !!}
+                            {!! $sections['planNetwork']->description !!}
                         </div>
                     </div>
                 @endif

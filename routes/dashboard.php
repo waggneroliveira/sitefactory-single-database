@@ -21,6 +21,7 @@ use App\Http\Controllers\GalleryImageController;
 use App\Http\Controllers\LetsgoController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\PlanNetworkCategoryController;
 use App\Http\Controllers\PlanNetworkController;
 use App\Http\Controllers\PlansController;
 use App\Http\Controllers\PopUpController;
@@ -337,6 +338,14 @@ Route::prefix('painel/')->group(function () {
         ->name('admin.dashboard.planNetwork.destroySelected');
         Route::post('plano-de-internet/sorting', [PlanNetworkController::class, 'sorting'])
         ->name('admin.dashboard.planNetwork.sorting');   
+        //PLAN CATEGORY
+        Route::resource('categoria-de-plano', PlanNetworkCategoryController::class)
+        ->names('admin.dashboard.planNetworkCategory')
+        ->parameters(['categoria-de-plano'=>'planNetworkCategory']);
+        Route::post('categoria-de-plano/delete', [PlanNetworkCategoryController::class, 'destroySelected'])
+        ->name('admin.dashboard.planNetworkCategory.destroySelected');
+        Route::post('categoria-de-plano/sorting', [PlanNetworkCategoryController::class, 'sorting'])
+        ->name('admin.dashboard.planNetworkCategory.sorting');
 
        // SERVICES
         Route::resource('sessao-servicos', ServiceSectionController::class)

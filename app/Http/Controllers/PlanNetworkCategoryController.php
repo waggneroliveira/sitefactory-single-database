@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\PlanNetworkCategory;
+use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -10,22 +12,35 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\ImageManager;
 
 class PlanNetworkCategoryController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/plan-network-category/';
-    public function index()
+    public function index(ThemeManager $themeManager)
     {
-        $planNetworkCategories = PlanNetworkCategory::sorting()->get();
+        $settingTheme = (new SettingThemeRepository())->settingTheme();
+
+        // 'planNetwork' → é o módulo definido no template_modules.php.
+        // 'plano.visualizar' → é a permissão definida no module_permissions.php.
+        $check = checkPermission('planNetworkCategory', 'categorias do plano.visualizar', $settingTheme);
         
-        return view('admin.blades.planNetworkCategory.index', compact('planNetworkCategories'));
+        if ($check !== true) {
+            return $check;
+        }
+        
+        $planNetworkCategories = PlanNetworkCategory::sorting()->get();
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        $planNetworkCategoryLimit = $themeManager->getLimit('planNetworkCategory', 0);
+        
+        return view('admin.blades.planNetworkCategory.index', compact('theme', 'themeData', 'planNetworkCategoryLimit', 'planNetworkCategories'));
     }
 
     public function store(Request $request)
     {
-                $data = $request->except(['path_image']);
+        $data = $request->except(['path_image']);
         $manager = new ImageManager(GdDriver::class);
 
         $request->validate([

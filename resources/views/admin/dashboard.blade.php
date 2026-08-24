@@ -156,6 +156,7 @@
         'about',
         'benefits',
         'mission',
+        'planNetworkCategory',
         'planNetwork',
         'representatives',
         'videos',
@@ -364,6 +365,18 @@
 
                     @endif
 
+                    @if ($hasModule('planNetworkCategory') &&
+                        (Auth::user()->hasRole('Super') ||
+                        Auth::user()->can('categorias do plano.visualizar')))
+
+                        @include('admin.components.dashboard-card', [
+                            'route' => route('admin.dashboard.planNetworkCategory.index'),
+                            'icon' => 'mdi-target',
+                            'title' => 'Categorias do Plano'
+                        ])
+
+                    @endif
+
                     @if ($hasModule('planNetwork') &&
                         (Auth::user()->hasRole('Super') ||
                         Auth::user()->can('plano.visualizar')))
@@ -540,6 +553,7 @@
         @if ($hasAnyModule([
             'about',
             'benefits',
+            'planNetworkCategory',
             'planNetwork',
             'mission',
             'representatives',
@@ -601,6 +615,18 @@
 
                     @endif
                     
+                    @if ($hasModule('planNetworkCategory') &&
+                        (Auth::user()->hasRole('Super') ||
+                        Auth::user()->can('categorias do plano.visualizar')))
+
+                        @include('admin.components.dashboard-card', [
+                            'route' => route('admin.dashboard.planNetworkCategory.index'),
+                            'icon' => 'mdi-target',
+                            'title' => 'Categorias do Plano'
+                        ])
+
+                    @endif
+
                     @if ($hasModule('planNetwork') &&
                         (Auth::user()->hasRole('Super') ||
                         Auth::user()->can('plano.visualizar')))
@@ -611,9 +637,7 @@
                             'title' => 'Planos de Internet'
                         ])
 
-                    @endif
-
-                    
+                    @endif                    
 
                     @if ($hasModule('representatives') &&
                         (Auth::user()->hasRole('Super') ||

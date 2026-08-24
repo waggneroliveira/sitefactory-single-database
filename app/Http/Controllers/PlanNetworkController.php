@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PlanNetwork;
 use App\Models\PlanNetworkCategory;
+use App\Models\ServiceSection;
 use App\Repositories\SettingThemeRepository;
 use App\Services\ThemeManager;
 use Illuminate\Http\Request;
@@ -32,6 +33,10 @@ class PlanNetworkController extends Controller
         $categories = PlanNetworkCategory::with('plans')->active()->sorting()->get();
         $plans = PlanNetwork::sorting()->get();
 
+        $serviceSection = ServiceSection::whereIn('section', ['planNetwork'])
+        ->get()
+        ->keyBy('section');
+
         $planNetworkCategory = [];
 
         $theme = $themeManager;
@@ -42,7 +47,7 @@ class PlanNetworkController extends Controller
             $planNetworkCategory[$category->id] = $category->title;
         }
         
-        return view('admin.blades.planNetwork.index', compact('theme', 'themeData', 'planLimit', 'plans', 'categories', 'planNetworkCategory'));
+        return view('admin.blades.planNetwork.index', compact('serviceSection', 'theme', 'themeData', 'planLimit', 'plans', 'categories', 'planNetworkCategory'));
     }
 
     public function store(Request $request)
@@ -61,9 +66,10 @@ class PlanNetworkController extends Controller
             DB::commit();
             session()->flash('success', __('dashboard.response_item_create'));
             } catch (\Exception $e) {
-                DB::rollback();
-                session()->flash('success', __('dashboard.response_item_error_create'));
+            DB::rollback();
+            session()->flash('error', __('dashboard.response_item_error_create'));
         }
+        return redirect()->back();
     }
 
     public function update(Request $request, PlanNetwork $planNetwork)

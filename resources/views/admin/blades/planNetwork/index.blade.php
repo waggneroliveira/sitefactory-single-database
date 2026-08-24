@@ -35,60 +35,65 @@
                                             @endif
                                         </div>
                                         <div class="col-6 d-flex justify-content-end">
-                                            {{-- @if ($planSection == null)                                                
-                                                <button type="button" class="btn btn-primary text-black waves-effect waves-light me-2" data-bs-toggle="modal" data-bs-target="#planSection-create"><i class="mdi mdi-plus-circle me-1"></i> Info Sessão</button>
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="planSection-create" tabindex="-1" role="dialog" aria-hidden="true">
-                                                    <div class="plan modal-dialog modal-dialog-centered" style="max-width: 760px;">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header bg-light">
-                                                                <h4 class="modal-title" id="myCenterModalLabel">{{__('dashboard.btn_create')}}</h4>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-                                                            </div>
-                                                            <div class="modal-body p-4">
-                                                                <form action="{{route('admin.dashboard.planSection.store')}}" method="POST" enctype="multipart/form-data">
-                                                                    @csrf  
-                                                                    @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.planNetwork.form", ['textareaId' => 'textarea-create', 'planNetwork', 'themeData'])
-
-                                                                    <div class="d-flex justify-content-end gap-2">
-                                                                        <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">{{__('dashboard.btn_cancel')}}</button>
-                                                                        <button type="submit" class="btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_create')}}</button>
-                                                                    </div>                                                 
-                                                                </form>
-                                                            </div>
-                                                        </div><!-- /.modal-content -->
-                                                    </div><!-- /.modal-dialog -->
-                                                </div><!-- /.modal -->                                                
-                                            @endif --}}
-
                                             @if (Auth::user()->hasPermissionTo('plano.visualizar') &&
                                                 Auth::user()->hasPermissionTo('plano.editar') ||
                                                 Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
                                                 Auth::user()->hasRole('Super'))
-                                                    {{-- @if (isset($planSection))
-                                                        <button data-bs-toggle="modal" data-bs-target="#planSection-edit-{{$planSection->id}}" class="tabledit-edit-button btn btn-primary text-black me-2"><span class="mdi mdi-pencil me-1"></span>Info Sessão</button>
-                                                        <div class="modal fade" id="planSection-edit-{{$planSection->id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                                            <div class="plan modal-dialog modal-dialog-centered">
+                                                @if (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can(['serviceItem.visualizar', 'serviceItem.criar']))
+                                                    @if (empty($serviceSection['planNetwork']))
+                                                    
+                                                        <button type="button" class="me-2 btn btn-secondary text-black waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#serviceItem-section-create"><i class="mdi mdi-plus-circle me-1"></i> Informações da sessão</button>
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="serviceItem-section-create" tabindex="-1" role="dialog" aria-hidden="true">
+                                                            <div class="serviceItem modal-dialog modal-dialog-centered" style="max-width: 1260px;">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header bg-light">
-                                                                        <h4 class="modal-title" id="myCenterModalLabel">{{__('dashboard.btn_edit')}}</h4>
+                                                                        <h4 class="modal-title" id="myCenterModalLabel">{{__('dashboard.btn_create')}}</h4>
                                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                                                                     </div>
                                                                     <div class="modal-body p-4">
-                                                                        <form action="{{ route('admin.dashboard.planSection.update', ['planSection' => $planSection->id]) }}" method="POST" enctype="multipart/form-data">
+                                                                        <form action="{{route('admin.dashboard.serviceSection.store')}}" method="POST" enctype="multipart/form-data">
                                                                             @csrf
-                                                                            @method('PUT')
-                                                                            @include('admin.blades.planSection.form', ['textareaId' => 'textarea-edit-' . $planSection->id])   
+                                                                            
+                                                                            @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.planNetworkSection.form", ['textareaId' => 'textarea-create', 'serviceSection', 'serviceItem', 'themeData'])
+                                                                            
                                                                             <div class="d-flex justify-content-end gap-2">
                                                                                 <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">{{__('dashboard.btn_cancel')}}</button>
-                                                                                <button type="submit" class="btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_save')}}</button>
-                                                                            </div>                                                                                                                      
-                                                                        </form>                                                                    
+                                                                                <button type="submit" class="btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_create')}}</button>
+                                                                            </div>                                                 
+                                                                        </form>
                                                                     </div>
                                                                 </div><!-- /.modal-content -->
                                                             </div><!-- /.modal-dialog -->
                                                         </div><!-- /.modal -->
-                                                    @endif --}}
+                                                        @else
+                                                        <button type="button" class="me-2 btn btn-secondary text-black waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#serviceItem-section-edit"><i class="mdi mdi-plus-circle me-1"></i> Informações da sessão</button>
+                                                        <!-- Modal Edit -->
+                                                        <div class="modal fade" id="serviceItem-section-edit" tabindex="-1" role="dialog" aria-hidden="true">
+                                                            <div class="serviceItem modal-dialog modal-dialog-centered" style="max-width: 1260px;">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header bg-light">
+                                                                        <h4 class="modal-title" id="myCenterModalLabel">{{__('dashboard.btn_create')}}</h4>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                                                                    </div>
+                                                                    <div class="modal-body p-4">
+                                                                        <form action="{{route('admin.dashboard.serviceSection.update', ['serviceSection' => $serviceSection['planNetwork']['id']])}}" method="POST" enctype="multipart/form-data">
+                                                                            @csrf
+                                                                            @method('PUT')
+                                                                        
+                                                                            @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.planNetworkSection.form", ['serviceSection', 'serviceItem', 'themeData'])
+                                                                            
+                                                                            <div class="d-flex justify-content-end gap-2">
+                                                                                <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">{{__('dashboard.btn_cancel')}}</button>
+                                                                                <button type="submit" class="btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_create')}}</button>
+                                                                            </div>                                                 
+                                                                        </form>
+                                                                    </div>
+                                                                </div><!-- /.modal-content -->
+                                                            </div><!-- /.modal-dialog -->
+                                                        </div><!-- /.modal -->
+                                                    @endif                                             
+                                                @endif
                                             @endif
 
 
@@ -145,8 +150,8 @@
                                         <tbody data-route="{{route('admin.dashboard.planNetwork.sorting')}}">
                                             @foreach ($plans as $key => $plan)
                                                 @php
-                                                    if ($plan->plan_category) {
-                                                        $categoria = $planCategory[$plan->plan_category] ?? 'Nenhuma categoria';
+                                                    if ($plan->plan_network_category) {
+                                                        $categoria = $planCategory[$plan->plan_network_category] ?? 'Nenhuma categoria';
                                                     } 
                                                     \Carbon\Carbon::setLocale('pt_BR');
                                                     $dataFormatada = \Carbon\Carbon::parse($plan->date)->translatedFormat('d \d\e F \d\e Y');
@@ -180,7 +185,7 @@
                                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                                                                     </div>
                                                                     <div class="modal-body p-4">
-                                                                        <form action="{{ route('admin.dashboard.plan.update', ['plan' => $plan->id]) }}" method="POST" enctype="multipart/form-data">
+                                                                        <form action="{{ route('admin.dashboard.planNetwork.update', ['planNetwork' => $plan->id]) }}" method="POST" enctype="multipart/form-data">
                                                                             @csrf
                                                                             @method('PUT')  
                                                                             @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.planNetwork.form", ['textareaId' => 'textarea-edit-plan-' . $plan->id, 'planNetwork', 'themeData'])
