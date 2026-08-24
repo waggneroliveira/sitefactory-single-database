@@ -20,6 +20,7 @@ use App\Http\Controllers\FormIndexController;
 use App\Http\Controllers\GalleryImageController;
 use App\Http\Controllers\LetsgoController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\PlansController;
 use App\Http\Controllers\PopUpController;
 use App\Http\Controllers\ProductCategoryController;
@@ -351,6 +352,15 @@ Route::prefix('painel/')->group(function () {
 
         Route::patch('planos/{plans}/toggle-active', [PlansController::class, 'toggleActive']
         )->name('admin.dashboard.plans.toggleActive');
+
+        //PARTNER
+        Route::resource('parceiros', PartnerController::class)
+        ->names('admin.dashboard.partner')
+        ->parameters(['parceiros'=>'partner']);
+        Route::post('parceiros/delete', [PartnerController::class, 'destroySelected'])
+        ->name('admin.dashboard.partner.destroySelected');
+        Route::post('parceiros/sorting', [PartnerController::class, 'sorting'])
+        ->name('admin.dashboard.partner.sorting');
 
         //DESATIVAR COMENTARIO
         Route::put('/desativa-comentario/{comment}', [CommentController::class, 'desactiveComment'])

@@ -3,32 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Models\Partner;
+use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Response;
-use RealRashid\SweetAlert\Facades\Alert;
-use App\Repositories\SettingThemeRepository;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\ImageManager;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PartnerController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/partner/';
-    public function index()
+    public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
-        if(!Auth::user()->hasRole('Super') && 
-          !Auth::user()->can('usuario.tornar usuario master') && 
-          !Auth::user()->hasPermissionTo('parceiros.visualizar')){
-            return view('admin.error.403', compact('settingTheme'));
+
+        // Verifica permissão para visualizar slides
+        $check = checkPermission('partner', 'topico.visualizar', $settingTheme);
+        if ($check !== true) {
+            return $check; // retorna view 403
         }
-
         $partners = Partner::sorting()->get();
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
 
-        return view('admin.blades.partner.index', compact('partners'));
+        return view('admin.blades.partner.index', compact('partners', 'theme', 'themeData'));
     }
 
     public function store(Request $request)

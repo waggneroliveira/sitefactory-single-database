@@ -162,6 +162,7 @@
         'brands',
         'product_categories',
         'products',
+        'partner',
         'blog_categories',
         'blog',
         'contact',
@@ -286,6 +287,18 @@
                         'route' => route('admin.dashboard.serviceItem.index'),
                         'icon' => 'mdi-account-voice',
                         'title' => 'Serviços'
+                    ])
+
+                @endif
+
+                @if ($hasModule('partner') &&
+                    (Auth::user()->hasRole('Super') ||
+                    Auth::user()->can('parceiro.visualizar')))
+
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.partner.index'),
+                        'icon' => 'mdi-account-voice',
+                        'title' => 'Parceiros'
                     ])
 
                 @endif
@@ -736,6 +749,47 @@
                             'route' => route('admin.dashboard.blog.index'),
                             'icon' => 'mdi-newspaper-variant',
                             'title' => 'Notícias'
+                        ])
+
+                    @endif
+
+                </div>
+            </div>
+
+        @endif
+
+        {{-- ========================================================
+            PARCEIROS
+        ======================================================== --}}
+
+        @if ($hasAnyModule([
+            'partner',
+        ]))
+
+            <div class="mb-2">
+
+                <div class="d-flex align-items-center gap-2 mb-2">
+
+                    <span class="badge btn-green-whi bg-opacity-10 text-success p-2">
+                        <i class="mdi mdi-newspaper-variant fs-5"></i>
+                    </span>
+
+                    <h5 class="mb-0 fw-semibold">
+                        Parceiros
+                    </h5>
+
+                </div>
+
+                <div class="row g-2">
+
+                    @if ($hasModule('partner') &&
+                        (Auth::user()->hasRole('Super') ||
+                        Auth::user()->can('parceiro.visualizar')))
+
+                        @include('admin.components.dashboard-card', [
+                            'route' => route('admin.dashboard.partner.index'),
+                            'icon' => 'mdi-tag-multiple',
+                            'title' => 'Parceiros'
                         ])
 
                     @endif

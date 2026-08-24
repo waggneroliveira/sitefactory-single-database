@@ -314,4 +314,94 @@ return [
 
     ],
 
+    'provedor' => [
+        'onepage' => [
+
+            'home' => [
+                'slides',
+                'topics',
+                'statute',
+                'letsgo',
+                'testimonials',
+                'partner',
+
+                'about',
+                'benefits',
+
+                'brands',
+                'product_categories',
+                'products',
+
+                'contact',
+                'contact_leads',
+                'download_leads',
+            ],
+
+        ],
+
+        'multipage' => [
+
+            'home' => [
+                'slides',
+                'topics',
+                'statute',
+                'letsgo',
+                'faq_session',
+                'faq',
+                'testimonials',
+                'services',
+            ],
+
+            'about' => [
+                'about',
+                'benefits',
+                'mission',
+                'representatives',
+                'videos',
+                'service_locations',
+            ],
+
+            'products' => [
+                'brands',
+                'product_categories',
+                'products',
+            ],
+
+            'blog' => [
+                'blog_categories',
+                'blog',
+            ],
+
+            'contact' => [
+                'contact',
+                'contact_leads',
+                'download_leads',
+            ],
+
+        ],
+
+        'smtp' => [
+            'config_smtp',
+        ],
+
+        'security_and_access_control' => [
+            'audit',
+            'permissions',
+            'users',
+        ],
+
+        'config_theme' => [
+            'config_theme',
+        ],
+
+        'limits' => [
+            'slides' => 3,
+            'about' => 1,
+            'topics' => 3,
+            'testimonials' => 6,
+            'faq' => 10,
+            'services' => 6,
+        ],
+
+    ],
 ];

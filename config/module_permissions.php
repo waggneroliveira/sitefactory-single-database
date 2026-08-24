@@ -172,6 +172,16 @@ return [
         ],
     ],
 
+    'partner' => [
+        'permission' => 'parceiro',
+        'actions' => [
+            'criar',
+            'editar',
+            'visualizar',
+            'remover',
+        ],
+    ],
+
     'blog_categories' => [
         'permission' => 'categorias de noticias',
         'actions' => [
