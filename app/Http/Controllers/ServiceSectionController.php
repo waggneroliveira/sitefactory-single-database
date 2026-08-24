@@ -98,7 +98,6 @@ class ServiceSectionController extends Controller
             DB::commit();
             session()->flash('success', __('dashboard.response_item_update'));
         } catch (\Exception $e) {
-            dd($e);
             DB::rollback();
             session()->flash('error', __('dashboard.response_item_error_update'));
         }
