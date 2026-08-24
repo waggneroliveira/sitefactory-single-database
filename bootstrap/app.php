@@ -32,7 +32,7 @@ return Application::configure(basePath: dirname(__DIR__))
                     404
                 );
             }
-
+            
             return response()->view(
                 $view,
                 [],
