@@ -1,43 +1,6 @@
-
-/*-----------------------------------------------------------------------------------
-
-[Table of contents]
-
-1. Font
-2. Css Variable for colors
-3. Common CSS
-4. Heading CSS
-5. Button CSS
-6. Preloader CSS
-7. Animation CSS 
-8. Header - Main Navigation Section
-9. Hero Slider 
-10. Typing Text Section
-11. USP section
-12. Video Popup Model 
-13. Scrolling Text Section
-14. Features Section
-15. Dishes List Scroll Section
-16. Win Win Section
-17. Center CTA Section
-18. Advanced Features Section
-19. Logo Slider Section
-20. Testimonial Section
-21. CTA Section
-22. Footer Section
-23. Faq Section
-24. Download Section
-
-
------------------------------------------------------------------------------------*/
-
-
 /* --------Font--------------- */
 
 /* font 1 */
-
-// <uniquifier>: Use a unique and descriptive class name
-// <weight>: Use a value from 100 to 900
 
 .lexend-<uniquifier> {
   font-family: "Lexend", sans-serif;
@@ -48,9 +11,6 @@
 
 
 /* font 2 */
-
-// <uniquifier>: Use a unique and descriptive class name
-// <weight>: Use a value from 200 to 800
 
 .manrope-<uniquifier> {
   font-family: "Plus Jakarta Sans", sans-serif;
