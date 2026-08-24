@@ -53,7 +53,7 @@
 // <weight>: Use a value from 200 to 800
 
 .manrope-<uniquifier> {
-  font-family: "Manrope", sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: <weight>;
   font-style: normal;
@@ -92,7 +92,7 @@ body {
     box-sizing: border-box;
     font-size: 16px;
     line-height: 1.7;
-    font-family: "Manrope", sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     color: var(--body-text);
     background: var(--secondary) !important;
     font-variant-ligatures: none;
