@@ -156,6 +156,7 @@
         'about',
         'benefits',
         'mission',
+        'planNetwork',
         'representatives',
         'videos',
         'service_locations',
@@ -363,6 +364,17 @@
 
                     @endif
 
+                    @if ($hasModule('planNetwork') &&
+                        (Auth::user()->hasRole('Super') ||
+                        Auth::user()->can('plano.visualizar')))
+
+                        @include('admin.components.dashboard-card', [
+                            'route' => route('admin.dashboard.planNetwork.index'),
+                            'icon' => 'mdi-target',
+                            'title' => 'Planos de Internet'
+                        ])
+
+                    @endif
 
                     @if ($hasModule('representatives') &&
                         (Auth::user()->hasRole('Super') ||
@@ -528,6 +540,7 @@
         @if ($hasAnyModule([
             'about',
             'benefits',
+            'planNetwork',
             'mission',
             'representatives',
             'videos',
@@ -587,7 +600,20 @@
                         ])
 
                     @endif
+                    
+                    @if ($hasModule('planNetwork') &&
+                        (Auth::user()->hasRole('Super') ||
+                        Auth::user()->can('plano.visualizar')))
 
+                        @include('admin.components.dashboard-card', [
+                            'route' => route('admin.dashboard.planNetwork.index'),
+                            'icon' => 'mdi-target',
+                            'title' => 'Planos de Internet'
+                        ])
+
+                    @endif
+
+                    
 
                     @if ($hasModule('representatives') &&
                         (Auth::user()->hasRole('Super') ||

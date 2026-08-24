@@ -112,6 +112,16 @@ return [
         ],
     ],
 
+    'planNetwork' => [
+        'permission' => 'plano',
+        'actions' => [
+            'criar',
+            'editar',
+            'visualizar',
+            'remover',
+        ],
+    ],
+
     'representatives' => [
         'permission' => 'representantes',
         'actions' => [

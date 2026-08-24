@@ -324,6 +324,7 @@ return [
                 'letsgo',
                 'testimonials',
                 'partner',
+                'planNetwork',
 
                 'about',
                 'benefits',
@@ -348,6 +349,7 @@ return [
                 'letsgo',
                 'faq_session',
                 'faq',
+                'planNetwork',
                 'testimonials',
                 'services',
             ],
@@ -397,6 +399,7 @@ return [
         'limits' => [
             'slides' => 3,
             'about' => 1,
+            'planNetwork' => 20,
             'topics' => 3,
             'testimonials' => 6,
             'faq' => 10,

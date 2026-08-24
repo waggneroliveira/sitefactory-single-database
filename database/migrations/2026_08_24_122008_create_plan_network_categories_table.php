@@ -11,15 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('plan_network_categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('title')->nullable();
-            $table->string('slug')->nullable();
-            $table->boolean('active')->default(0);
-            $table->integer('sorting')->default(0);
-            $table->string('path_image')->nullable();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('plan_network_categories')) {
+            Schema::create('plan_network_categories', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('tenant_id')
+                ->constrained('tenants')
+                ->cascadeOnDelete();
+                $table->string('title')->nullable();
+                $table->string('slug')->nullable();
+                $table->boolean('active')->default(0);
+                $table->integer('sorting')->default(0);
+                $table->string('path_image')->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

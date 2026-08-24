@@ -23,7 +23,7 @@ class PlanNetworkCategory extends Model
         'path_image',
     ];
     public function plans(){
-        return $this->hasMany(Plan::class, 'plan_category');
+        return $this->hasMany(PlanNetwork::class, 'plan_network_category');
     }
     public function scopeActive($query)
     {

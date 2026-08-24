@@ -21,6 +21,7 @@ use App\Http\Controllers\GalleryImageController;
 use App\Http\Controllers\LetsgoController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\PlanNetworkController;
 use App\Http\Controllers\PlansController;
 use App\Http\Controllers\PopUpController;
 use App\Http\Controllers\ProductCategoryController;
@@ -322,9 +323,21 @@ Route::prefix('painel/')->group(function () {
         ->parameters(['seo-google' => 'seoGoogle'])
         ->names('admin.dashboard.seoGoogle');
        // PLANS
-        Route::resource('planos', PlansController::class)
-        ->parameters(['planos' => 'plan'])
+        Route::resource('plano-contratado', PlansController::class)
+        ->parameters(['plano-contratado' => 'plan'])
         ->names('admin.dashboard.plans');
+        Route::patch('plano-contratado/{plans}/toggle-active', [PlansController::class, 'toggleActive']
+        )->name('admin.dashboard.plans.toggleActive');
+
+        //PLAN NETWORK
+        Route::resource('plano-de-internet', PlanNetworkController::class)
+        ->parameters(['plano-de-internet' => 'planNetwork'])
+        ->names('admin.dashboard.planNetwork');
+        Route::post('plano-de-internet/delete', [PlanNetworkController::class, 'destroySelected'])
+        ->name('admin.dashboard.planNetwork.destroySelected');
+        Route::post('plano-de-internet/sorting', [PlanNetworkController::class, 'sorting'])
+        ->name('admin.dashboard.planNetwork.sorting');   
+
        // SERVICES
         Route::resource('sessao-servicos', ServiceSectionController::class)
         ->parameters(['sessao-servicos' => 'serviceSection'])
@@ -350,8 +363,7 @@ Route::prefix('painel/')->group(function () {
         Route::post('galeria-de-imagens/delete', [GalleryImageController::class, 'destroySelected'])
         ->name('admin.dashboard.gallery.destroySelected');
 
-        Route::patch('planos/{plans}/toggle-active', [PlansController::class, 'toggleActive']
-        )->name('admin.dashboard.plans.toggleActive');
+        
 
         //PARTNER
         Route::resource('parceiros', PartnerController::class)

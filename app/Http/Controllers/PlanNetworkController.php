@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\PlanNetwork;
 use App\Models\PlanNetworkCategory;
+use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,18 +17,32 @@ class PlanNetworkController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(ThemeManager $themeManager)
     {
+        $settingTheme = (new SettingThemeRepository())->settingTheme();
+
+        // 'planNetwork' → é o módulo definido no template_modules.php.
+        // 'plano.visualizar' → é a permissão definida no module_permissions.php.
+        $check = checkPermission('planNetwork', 'plano.visualizar', $settingTheme);
+        
+        if ($check !== true) {
+            return $check;
+        }
+
         $categories = PlanNetworkCategory::with('plans')->active()->sorting()->get();
         $plans = PlanNetwork::sorting()->get();
 
         $planNetworkCategory = [];
 
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        $planLimit = $themeManager->getLimit('planNetwork', 0);
+
         foreach ($categories as $category) {
             $planNetworkCategory[$category->id] = $category->title;
         }
         
-        return view('admin.blades.plan.index', compact('plans', 'categories', 'planNetworkCategory'));
+        return view('admin.blades.planNetwork.index', compact('theme', 'themeData', 'planLimit', 'plans', 'categories', 'planNetworkCategory'));
     }
 
     public function store(Request $request)

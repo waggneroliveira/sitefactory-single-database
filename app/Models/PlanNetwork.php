@@ -15,7 +15,7 @@ class PlanNetwork extends Model
     use Notifiable, HasFactory, LogsActivity, BelongsToTenant;
 
     protected $fillable = [
-        'plan_networks_category',
+        'plan_network_category',
         'title',
         'subtitle',
         'bandwidth_limit',
@@ -27,7 +27,7 @@ class PlanNetwork extends Model
     ];
 
     public function category(){
-        return $this->belongsTo(PlanNetworkCategory::class, 'plan_networks_category');
+        return $this->belongsTo(PlanNetworkCategory::class, 'plan_network_category');
     }
 
     public function scopeActive($query)

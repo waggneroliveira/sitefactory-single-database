@@ -11,19 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('plan_networks', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('plan_networks_category')->constrained()->onDelete('cascade');
-            $table->string('title')->nullable();
-            $table->string('subtitle')->nullable();
-            $table->integer('bandwidth_limit')->nullable();
-            $table->string('bandwidth_unit')->nullable();
-            $table->string('description')->nullable();
-            $table->decimal('price', 10, 2);
-            $table->boolean('active')->default(0);
-            $table->integer('sorting')->default(0);
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('plan_networks')) {
+            Schema::create('plan_networks', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('tenant_id')
+                ->constrained('tenants')
+                ->cascadeOnDelete();
+                $table->foreignId('plan_network_category')->constrained()->onDelete('cascade');
+                $table->string('title')->nullable();
+                $table->string('subtitle')->nullable();
+                $table->integer('bandwidth_limit')->nullable();
+                $table->string('bandwidth_unit')->nullable();
+                $table->string('description')->nullable();
+                $table->decimal('price', 10, 2);
+                $table->boolean('active')->default(0);
+                $table->integer('sorting')->default(0);
+                $table->timestamps();
+            });
+        }
     }
 
     /**
