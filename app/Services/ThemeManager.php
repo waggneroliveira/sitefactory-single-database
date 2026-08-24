@@ -211,5 +211,10 @@ class ThemeManager
             ])
             ->toArray();
     }
+
+    public function error(string $view): string
+    {
+        return "client.themes.{$this->current()}.{$this->variation()}.errors.{$view}";
+    }
 }
 
