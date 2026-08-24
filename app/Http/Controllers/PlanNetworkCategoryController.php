@@ -1,0 +1,215 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\PlanNetworkCategory;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+
+class PlanNetworkCategoryController extends Controller
+{
+    protected $pathUpload = 'admin/uploads/images/plan-network-category/';
+    public function index()
+    {
+        $planNetworkCategories = PlanNetworkCategory::sorting()->get();
+        
+        return view('admin.blades.planNetworkCategory.index', compact('planNetworkCategories'));
+    }
+
+    public function store(Request $request)
+    {
+                $data = $request->except(['path_image']);
+        $manager = new ImageManager(GdDriver::class);
+
+        $request->validate([
+            'path_image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif'],
+        ]);
+
+        if ($request->hasFile('path_image')) {
+            $file = $request->file('path_image');
+            $mime = $file->getMimeType();
+            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.webp';
+
+            if ($mime === 'image/svg+xml') {
+                Storage::putFileAs($this->pathUpload, $file, $filename);
+            } else {
+                $image = $manager->read($file)
+                    ->resize(null, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    })
+                    ->toWebp(quality: 95)
+                    ->toString();
+
+                Storage::put($this->pathUpload . $filename, $image);
+            }
+
+            $data['path_image'] = $this->pathUpload . $filename;
+        }
+
+        $data['active'] = $request->active ? 1 : 0;
+        $data['slug'] = Str::slug($request->title);
+
+        try {
+            DB::beginTransaction();
+                PlanNetworkCategory::create($data);
+                DB::commit();
+            session()->flash('success', __('dashboard.response_item_create'));
+            } catch (\Exception $e) {
+                DB::rollback();
+                session()->flash('error', __('dashboard.response_item_error_create'));
+        }
+
+        return redirect()->back();
+    }
+
+    public function update(Request $request, PlanNetworkCategory $planNetworkCategory)
+    {
+        $data = $request->all();
+        $manager = new ImageManager(GdDriver::class);
+
+        // ===============================
+        // Remover imagem antiga
+        // ===============================
+        if ($request->filled('delete_path_image')) {
+            if (!empty($planNetworkCategory->path_image)) {
+                Storage::delete($planNetworkCategory->path_image);
+            }
+            $data['path_image'] = null;
+        }
+
+        // ===============================
+        // Upload de nova imagem
+        // ===============================
+        if ($request->hasFile('path_image')) {
+            // Remove a antiga
+            if (!empty($planNetworkCategory->path_image)) {
+                Storage::delete($planNetworkCategory->path_image);
+            }
+
+            $file = $request->file('path_image');
+            $mime = $file->getMimeType();
+            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.webp';
+
+            if ($mime === 'image/svg+xml') {
+                Storage::putFileAs($this->pathUpload, $file, $filename);
+            } else {
+                $image = $manager->read($file)
+                    ->resize(null, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    })
+                    ->toWebp(quality: 95)
+                    ->toString();
+
+                Storage::put($this->pathUpload . $filename, $image);
+            }
+
+            $data['path_image'] = $this->pathUpload . $filename;
+        }
+
+        $data['active'] = $request->boolean('active');
+        $data['slug'] = Str::slug($request->title);
+
+        try {
+            DB::beginTransaction();
+                $planNetworkCategory->fill($data)->save();
+                DB::commit();
+            session()->flash('success', __('dashboard.response_item_update'));
+            } catch (\Exception $e) {
+                DB::rollBack();
+                session()->flash('success', __('dashboard.response_item_error_update'));
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(PlanNetworkCategory $planNetworkCategory)
+    {
+        Storage::delete(isset($planNetworkCategory->path_image)??$planNetworkCategory->path_image);
+        $planNetworkCategory->delete();
+        Session::flash('success',__('dashboard.response_item_delete'));
+        return redirect()->back();
+    }
+
+       public function destroySelected(Request $request)
+    {    
+        foreach ($request->deleteAll as $planNetworkCategoryId) {
+            $planNetworkCategory = PlanNetworkCategory::find($planNetworkCategoryId);
+    
+            if ($planNetworkCategory) {
+                activity()
+                    ->causedBy(Auth::user())
+                    ->performedOn($planNetworkCategory)
+                    ->event('multiple_deleted')
+                    ->withProperties([
+                        'attributes' => [
+                            'id' => $planNetworkCategoryId,
+                            'path_image' => $planNetworkCategory->path_image,
+                            'link' => $planNetworkCategory->link,
+                            'sorting' => $planNetworkCategory->sorting,
+                            'active' => $planNetworkCategory->active,
+                            'event' => 'multiple_deleted',
+                        ]
+                    ])
+                    ->log('multiple_deleted');
+            } else {
+                \Log::warning("Item com ID $planNetworkCategoryId não encontrado.");
+            }
+        }
+    
+        $deleted = PlanNetworkCategory::whereIn('id', $request->deleteAll)->delete();
+    
+        if ($deleted) {
+            return Response::json(['status' => 'success', 'message' => $deleted . ' '.__('dashboard.response_item_delete')]);
+        }
+    
+        return Response::json(['status' => 'error', 'message' => 'Nenhum item foi deletado.'], 500);
+    }
+
+    public function sorting(Request $request)
+    {
+        foreach($request->arrId as $sorting => $id) {
+            $planNetworkCategory = PlanNetworkCategory::find($id);
+    
+            if ($planNetworkCategory) {
+                $planNetworkCategory->sorting = $sorting;
+                $planNetworkCategory->save();
+            } else {
+                Log::warning("Item com ID $id não encontrado.");
+            }
+
+            if($planNetworkCategory) {
+                activity()
+                    ->causedBy(Auth::user())
+                    ->performedOn($planNetworkCategory)
+                    ->event('order_updated')
+                    ->withProperties([
+                        'attributes' => [
+                            'id' => $id,
+                            'path_image' => $planNetworkCategory->path_image,
+                            'link' => $planNetworkCategory->link,
+                            'sorting' => $planNetworkCategory->sorting,
+                            'active' => $planNetworkCategory->active,
+                            'event' => 'order_updated',
+                        ]
+                    ])
+                    ->log('order_updated');
+            } else {
+                \Log::warning("Item com ID $id não encontrado.");
+            }
+        }
+    
+        return Response::json(['status' => 'success']);
+    }
+}
