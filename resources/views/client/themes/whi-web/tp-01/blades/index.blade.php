@@ -235,41 +235,41 @@
 
         <div class="container position-relative">
             <!-- section title -->
-            <div class="section_title" data-aos="fade-up" data-aos-duration="1500">
+            <div class="section_title">
                 <span class="title_badge text-white">VANTAGENS</span>
                 <h2 class="trhee-step text-white">O que você ganha com<br> a <span>WHI Web</span></h2>
             </div>     
 
             <div class="row service_blocks flex-row-reverse">                
                 <div class="col-md-6">
-                    <div class="service_text right_side" data-aos="fade-up" data-aos-duration="1500">
+                    <div class="service_text right_side">
 
                         <span class="title_badge">Para você</span>
                         <h3 class="text-white">Design profissional para o seu negócio</h3>
                         <p class="text-white">Tenha acesso a layouts pensados para diferentes tipos de negócios, com uma estrutura moderna e pronta para apresentar sua empresa.</p>
 
                         <ul class="design_block py-3">
-                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                            <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
                                 <h6><span>Layouts</span> criados para diferentes segmentos</h6>
                             </li>
-                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                            <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
                                 <h6><span>Design</span> moderno e profissional</h6>
                             </li>
-                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                            <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
                                 <h6><span>Estrutura</span> pensada para destacar seu negócio</h6>
                             </li>
-                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                            <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
                                 <h6><span>Experiência</span> otimizada para seus visitantes</h6>
                             </li>
-                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                            <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
                                 <h6><span>Responsividade</span> em celulares, tablets e computadores</h6>
                             </li>
-                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                            <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
                                 <h6><span>Atualizações</span> contínuas nos modelos disponíveis</h6>
                             </li>
@@ -287,7 +287,7 @@
                 </div>                
 
                 <div class="col-md-6">
-                    <div class="inner_block dark_bg rotate_right" data-aos="fade-up" data-aos-duration="1500">
+                    <div class="inner_block dark_bg rotate_right">
                         <div class="img">
                             <img src="{{asset('build/client/images/themes/whi-web/benefit-1.png')}}" alt="image">
                         </div>
@@ -297,33 +297,33 @@
 
             <div class="row service_blocks no_bottom_padding">
                 <div class="col-md-6">
-                  <div class="service_text" data-aos="fade-up" data-aos-duration="1500">
+                  <div class="service_text">
                     <span class="title_badge">Para seu cliente</span>
                     <h3 class="text-white">Uma experiência melhor para quem visita</h3>
                     <p class="text-white">Ofereça um site organizado, rápido e adaptado para facilitar a navegação e apresentar sua empresa com clareza.</p>
 
                     <ul class="design_block py-3">
-                        <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                        <li class="d-flex gap-2 justify-content-start align-items-center">
                             <i class="bi bi-check-circle"></i>
                             <h6><span>Navega</span> por uma estrutura clara e intuitiva</h6>
                         </li>
-                        <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                        <li class="d-flex gap-2 justify-content-start align-items-center">
                             <i class="bi bi-check-circle"></i>
                             <h6><span>Encontra</span> informações importantes com facilidade</h6>
                         </li>
-                        <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                        <li class="d-flex gap-2 justify-content-start align-items-center">
                             <i class="bi bi-check-circle"></i>
                             <h6><span>Acessa</span> o site de qualquer dispositivo</h6>
                         </li>
-                        <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                        <li class="d-flex gap-2 justify-content-start align-items-center">
                             <i class="bi bi-check-circle"></i>
                             <h6><span>Conhece</span> melhor seus produtos e serviços</h6>
                         </li>
-                        <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                        <li class="d-flex gap-2 justify-content-start align-items-center">
                             <i class="bi bi-check-circle"></i>
                             <h6><span>Entra</span> em contato de forma rápida</h6>
                         </li>
-                        <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                        <li class="d-flex gap-2 justify-content-start align-items-center">
                             <i class="bi bi-check-circle"></i>
                             <h6><span>Percebe</span> mais profissionalismo na sua presença online</h6>
                         </li>
@@ -339,7 +339,7 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="inner_block" data-aos="fade-up" data-aos-duration="1500">
+                    <div class="inner_block">
                         <div class="img">
                             <img src="{{asset('build/client/images/themes/whi-web/benefit-2.png')}}" alt="image">
                         </div>
@@ -349,34 +349,34 @@
 
             <div class="row service_blocks flex-row-reverse">
                 <div class="col-md-6">
-                    <div class="service_text right_side" data-aos="fade-up" data-aos-duration="1500">
+                    <div class="service_text right_side">
 
                         <span class="title_badge">Para seu negócio</span>
                         <h3 class="text-white">Tenha autonomia para cuidar do seu site</h3>
                         <p class="text-white">Gerencie o conteúdo da sua presença digital em um só lugar, sem depender de alterações feitas por terceiros.</p>
 
                         <ul class="design_block py-3">
-                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                            <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
                                 <h6><span>Gerencie</span> todo o conteúdo pelo seu painel</h6>
                             </li>
-                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                            <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
                                 <h6><span>Atualize</span> informações sempre que necessário</h6>
                             </li>
-                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                            <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
                                 <h6><span>Controle</span> imagens, textos e informações da empresa</h6>
                             </li>
-                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                            <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
                                 <h6><span>Economize</span> tempo com uma gestão mais simples</h6>
                             </li>
-                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                            <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
                                 <h6><span>Mantenha</span> seu site sempre atualizado</h6>
                             </li>
-                            <li class="d-flex gap-2 justify-content-start align-items-center" data-aos="fade-up" data-aos-duration="1500">
+                            <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
                                 <h6><span>Tenha</span> mais autonomia sobre sua presença digital</h6>
                             </li>
@@ -393,7 +393,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="inner_block dark_bg rotate_right" data-aos="fade-up" data-aos-duration="1500">
+                    <div class="inner_block dark_bg rotate_right">
                         <div class="img">
                             <img src="{{asset('build/client/images/themes/whi-web/benefit-3.png')}}" alt="image">
                         </div>
@@ -524,7 +524,7 @@
 
       </div>
     </section>
-      
+
     @if (!empty($videos) && $videos->count() > 0)
       <section class="video-section">
         <div class="container">
@@ -1044,4 +1044,5 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       <span id="toast-message">Copiado com sucesso!</span>
     </div>
+
 @endsection

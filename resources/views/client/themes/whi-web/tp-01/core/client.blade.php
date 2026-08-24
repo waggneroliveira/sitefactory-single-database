@@ -160,9 +160,6 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Changa:wght@200..800&display=swap">
     </noscript>
 
-    <link rel="preload" href="https://unpkg.com/aos@2.3.1/dist/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"></noscript>
-
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"></noscript>
 
@@ -184,9 +181,9 @@
     <div id="organization" hidden></div>
 
     {{-- Preloader --}}
-    {{-- <div id="preloader">
+    <div id="preloader">
         <div id="loader"></div>
-    </div> --}}
+    </div>
 
     {{-- WhatsApp --}}
     @if(isset($contact) && $contact->phone_one <> null)
@@ -556,7 +553,6 @@
         });
     </script>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -564,19 +560,9 @@
     <script src="{{ asset('build/client/lgpd/script.js') }}"></script>
     <script src="{{ asset('build/client/themes/whi-web/tp-01/js/jquery.js') }}"></script>
     <script src="{{ asset('build/client/themes/whi-web/tp-01/js/typed.min.js') }}"></script>
-    <script src="{{ asset('build/client/themes/whi-web/tp-01/js/contador.js') }}"></script>
     <script src="{{ asset('build/client/themes/whi-web/tp-01/js/functions-site.js') }}"></script>
     <script src="{{ asset('build/client/themes/whi-web/tp-01/js/gsap-efect.js') }}"></script>
     <script src="{{ asset('build/client/themes/whi-web/tp-01/js/main.js') }}"></script>
-
-    <script>
-        AOS.init({ duration:800, once:true, offset:40 });
-
-        Fancybox.bind('[data-fancybox="wedding-gallery"]', {
-            Thumbs:{ type:"modern" },
-            Toolbar:{ display:{ left:["infobar"], right:["thumbs","close"] } }
-        });
-    </script>
 
     @php
         $slide = $slides->first();
