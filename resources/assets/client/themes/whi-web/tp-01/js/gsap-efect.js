@@ -449,20 +449,6 @@ document.addEventListener("DOMContentLoaded", () => {
         delay: 0.15
     });
 
-    gsap.from('.tpl-scroll-hint', {
-        scrollTrigger: {
-            trigger: '.tpl-scroll-hint',
-            start: 'top 85%',
-            toggleActions: 'play none none reverse',
-            id: "tplHint"
-        },
-        x: 20,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power2.out',
-        delay: 0.4
-    });
-
     // =============================================
     // SCROLL TRACK CARDS ANIMATION
     // =============================================
@@ -630,17 +616,18 @@ document.addEventListener("DOMContentLoaded", () => {
     // =============================================
     // SCROLL TRACK HORIZONTAL SCROLL ANIMATION
     // =============================================
-    gsap.to('.tpl-scroll-hint', {
+    gsap.from('.tpl-scroll-hint', {
         scrollTrigger: {
-            trigger: '.tpl-scroll-track',
-            start: 'top 90%',
-            end: 'bottom 80%',
-            scrub: 1.5,
-            toggleActions: 'play none none reverse'
+            trigger: '.tpl-scroll-hint',
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+            id: "tplHint"
         },
-        x: -100,
+        x: 20,
         opacity: 0,
-        ease: 'power1.inOut'
+        duration: 0.8,
+        ease: 'power2.out',
+        delay: 0.4
     });
 
     gsap.to('.tpl-scroll-hint i', {
