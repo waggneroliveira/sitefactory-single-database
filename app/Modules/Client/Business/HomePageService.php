@@ -47,12 +47,13 @@ class HomePageService
         $faqs = Faq::active()->sorting()->get();
         $sessaoFaq = SessaoFaq::active()->first();
         $services = ServiceItem::active()->get();
-        $sections = ServiceSection::active()->whereIn('section', ['testimonial', 'service', 'gallery', 'planNetwork'])->get()->keyBy('section');
+        $sections = ServiceSection::active()->whereIn('section', ['testimonial', 'service', 'gallery', 'planNetwork', 'product'])->get()->keyBy('section');
         $galleries = ProductGallery::get();
         $serviceLocation = ServiceLocation::active()->first();
         $benefitTopics = BenefitTopic::active()->sorting()->get();
         $planCategories = PlanNetworkCategory::with('plans')->whereHas('plans')->sorting()->active()->get();
         $plans = PlanNetwork::sorting()->active()->get();
+        $products = Product::sorting()->active()->get();
 
         $popUp = PopUp::active()->first();
 
@@ -61,6 +62,7 @@ class HomePageService
         $themeData = $themeManager->theme();
 
         return compact(
+            'products',
             'serviceLocation',
             'sessaoFaq',
             'benefitTopics',

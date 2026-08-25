@@ -44,18 +44,20 @@
                                                 </div>
 
                                                 <!-- Categoria -->
-                                                <div class="col-md-2">
-                                                    <label for="product_category_id" class="form-label">Categoria</label>
-                                                    <select name="product_category_id" id="product_category_id" class="form-select">
-                                                        <option value="">Todas</option>
-                                                        @foreach($categories as $category)
-                                                            <option value="{{ $category->id }}" 
-                                                                {{ request('product_category_id') == $category->id ? 'selected' : '' }}>
-                                                                {{ $category->title }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
+                                                @if (isset($categories) && $categories->count()) 
+                                                    <div class="col-md-2">
+                                                        <label for="product_category_id" class="form-label">Categoria</label>
+                                                        <select name="product_category_id" id="product_category_id" class="form-select">
+                                                            <option value="">Todas</option>
+                                                            @foreach($categories as $category)
+                                                                <option value="{{ $category->id }}" 
+                                                                    {{ request('product_category_id') == $category->id ? 'selected' : '' }}>
+                                                                    {{ $category->title }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                @endif
 
                                                 <!-- Botões -->
                                                 <div class="col-md-3 d-flex gap-2">
@@ -74,16 +76,71 @@
                                     </div>
                                     <div class="col-12 d-flex justify-between">
                                         <div class="col-6">
-                                            @if (Auth::user()->hasPermissionTo('noticias.visualizar') &&
-                                            Auth::user()->hasPermissionTo('noticias.remover') ||
+                                            @if (Auth::user()->hasPermissionTo('produtos.visualizar') &&
+                                            Auth::user()->hasPermissionTo('produtos.remover') ||
                                             Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
                                             Auth::user()->hasRole('Super'))
                                                 <button id="btSubmitDelete" data-route="{{route('admin.dashboard.product.destroySelected')}}" type="button" class="btSubmitDelete btn btn-danger" style="display: none;">{{__('dashboard.btn_delete_all')}}</button>
                                             @endif
                                         </div>
                                         <div class="col-6 d-flex justify-content-end">
-                                            @if (Auth::user()->hasPermissionTo('noticias.visualizar') &&
-                                            Auth::user()->hasPermissionTo('noticias.criar') ||
+                                            @if (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can(['produtos.visualizar', 'produtos.criar']))
+                                                @if (empty($serviceSection['product']))
+                                                
+                                                    <button type="button" class="me-2 btn btn-secondary text-black waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#serviceItem-section-create"><i class="mdi mdi-plus-circle me-1"></i> Informações da sessão</button>
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="serviceItem-section-create" tabindex="-1" role="dialog" aria-hidden="true">
+                                                        <div class="serviceItem modal-dialog modal-dialog-centered" style="max-width: 1260px;">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header bg-light">
+                                                                    <h4 class="modal-title" id="myCenterModalLabel">{{__('dashboard.btn_create')}}</h4>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                                                                </div>
+                                                                <div class="modal-body p-4">
+                                                                    <form action="{{route('admin.dashboard.serviceSection.store')}}" method="POST" enctype="multipart/form-data">
+                                                                        @csrf
+                                                                        
+                                                                        @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.productSection.form", ['textareaId' => 'textarea-create', 'serviceSection', 'serviceItem', 'themeData'])
+                                                                        
+                                                                        <div class="d-flex justify-content-end gap-2">
+                                                                            <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">{{__('dashboard.btn_cancel')}}</button>
+                                                                            <button type="submit" class="btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_create')}}</button>
+                                                                        </div>                                                 
+                                                                    </form>
+                                                                </div>
+                                                            </div><!-- /.modal-content -->
+                                                        </div><!-- /.modal-dialog -->
+                                                    </div><!-- /.modal -->
+                                                    @else
+                                                    <button type="button" class="me-2 btn btn-secondary text-black waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#serviceItem-section-edit"><i class="mdi mdi-plus-circle me-1"></i> Informações da sessão</button>
+                                                    <!-- Modal Edit -->
+                                                    <div class="modal fade" id="serviceItem-section-edit" tabindex="-1" role="dialog" aria-hidden="true">
+                                                        <div class="serviceItem modal-dialog modal-dialog-centered" style="max-width: 1260px;">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header bg-light">
+                                                                    <h4 class="modal-title" id="myCenterModalLabel">{{__('dashboard.btn_create')}}</h4>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                                                                </div>
+                                                                <div class="modal-body p-4">
+                                                                    <form action="{{route('admin.dashboard.serviceSection.update', ['serviceSection' => $serviceSection['product']['id']])}}" method="POST" enctype="multipart/form-data">
+                                                                        @csrf
+                                                                        @method('PUT')
+                                                                    
+                                                                        @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.productSection.form", ['serviceSection', 'serviceItem', 'themeData'])
+                                                                        
+                                                                        <div class="d-flex justify-content-end gap-2">
+                                                                            <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">{{__('dashboard.btn_cancel')}}</button>
+                                                                            <button type="submit" class="btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_create')}}</button>
+                                                                        </div>                                                 
+                                                                    </form>
+                                                                </div>
+                                                            </div><!-- /.modal-content -->
+                                                        </div><!-- /.modal-dialog -->
+                                                    </div><!-- /.modal -->
+                                                @endif                                             
+                                            @endif
+                                            @if (Auth::user()->hasPermissionTo('produtos.visualizar') &&
+                                            Auth::user()->hasPermissionTo('produtos.criar') ||
                                             Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
                                             Auth::user()->hasRole('Super'))
                                                 <a href="{{route('admin.dashboard.product.create')}}" class="mdi mdi-plus-circle me-1 btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_create')}}</a>
@@ -101,7 +158,9 @@
                                                 </th>
                                                 {{-- <th>Link</th> --}}
                                                 <th>Título</th>
-                                                <th>Categoria</th>
+                                                @if (isset($categories) && $categories->count())                                                    
+                                                    <th>Categoria</th>
+                                                @endif
                                                 <th>Imagem</th>
                                                 <th>Publicado</th>
                                                 <th>Status</th>
@@ -125,7 +184,9 @@
                                                         <label><input data-index="{{$key}}" name="btnSelectItem" class="btnSelectItem" type="checkbox" value="{{$product->id}}"></label>
                                                     </td>
                                                     <td>{{substr(strip_tags($product->title), 0, 40)}}...</td>
-                                                    <td>{{$categoria}}</td>
+                                                    @if ($product->product_category_id)                                                        
+                                                        <td>{{$categoria}}</td>
+                                                    @endif
                                                     <td class="table-user text-center">
                                                         @if ($product->path_image_thumbnail)
                                                             <img src="{{ asset('storage/'.$product->path_image_thumbnail) }}" name="path_image_thumbnail" alt="table-user" class="me-2 rounded-circle">
@@ -139,15 +200,15 @@
                                                         @endswitch
                                                     </td>
                                                     <td class="d-flex gap-lg-1 justify-center">
-                                                        @if (Auth::user()->hasPermissionTo('noticias.visualizar') &&
-                                                        Auth::user()->hasPermissionTo('noticias.editar') ||
+                                                        @if (Auth::user()->hasPermissionTo('produtos.visualizar') &&
+                                                        Auth::user()->hasPermissionTo('produtos.editar') ||
                                                         Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
                                                         Auth::user()->hasRole('Super'))
                                                             <a href="{{route('admin.dashboard.product.edit', ['product' => $product->id])}}" class="mdi mdi-pencil table-edit-button btn btn-primary text-black" style="padding: 2px 8px;width: 30px"></a>
                                                         @endif
 
-                                                        @if (Auth::user()->hasPermissionTo('noticias.visualizar') &&
-                                                        Auth::user()->hasPermissionTo('noticias.remover') ||
+                                                        @if (Auth::user()->hasPermissionTo('produtos.visualizar') &&
+                                                        Auth::user()->hasPermissionTo('produtos.remover') ||
                                                         Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
                                                         Auth::user()->hasRole('Super'))
                                                             <form action="{{route('admin.dashboard.product.destroy',['product' => $product->id])}}" style="width: 30px" method="POST">

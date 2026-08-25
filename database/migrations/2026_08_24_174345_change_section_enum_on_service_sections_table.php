@@ -14,6 +14,7 @@ return new class extends Migration
                 'gallery',
                 'testimonial',
                 'planNetwork',
+                'product',
             ])->nullable()->change();
             $table->text('description')->nullable()->change();
         });

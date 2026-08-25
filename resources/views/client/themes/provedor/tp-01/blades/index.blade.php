@@ -23,7 +23,7 @@
         <div class="col-12 topics">
             <div class="row text-white text-center">
                 @foreach ($topics as $topic)                
-                    <div class="box-topic col-md-4 grey-background p-4 d-flex justify-content-between align-items-center">
+                    <div class="box-topic col-md-4 bg-secondary-color p-4 d-flex justify-content-between align-items-center">
                         <div class="mb-3">
                             @if (isset($topic->path_image) && $topic->path_image <> null)                                
                                 <img src="{{asset('storage/'.$topic->path_image)}}" alt="Ícone {{$topic->title}}" loading="lazy">
@@ -251,22 +251,22 @@
         </div>
     </div>
 </section>
-@if ((!empty($productSection) && ($productSection->title || $productSection->subtitle || $productSection->text)) ||
+@if ((!empty($sections['product'])) ||
     (!empty($products) && count($products) > 0)) 
     <section id="products" class="background-plan py-5 products position-relative">
         <div class="content m-auto me-0 justify-content-end align-content-center d-flex flex-wrap flex-column flex-md-row" style="min-height: 512px;">
             <aside class="col-12 col-md-4">
-                @if (isset($productSection->title) || isset($productSection->subtitle))                    
+                @if (isset($sections['product']->title) || isset($sections['product']->subtitle))                    
                     <div class="w-100 animate-on-scroll" data-animation="animate__fadeInLeft">
-                        <h2 class=" montserrat-medium font-25 text-white">{{$productSection->title}}</h2>
-                        <h3 class="text-uppercase montserrat-ExtraBold font-35 text-white">{{$productSection->subtitle}}</h3>
+                        <h2 class=" montserrat-medium font-25 text-white">{{$sections['product']->title}}</h2>
+                        <h3 class="text-uppercase montserrat-ExtraBold font-35 text-white">{{$sections['product']->subtitle}}</h3>
                     </div>
                 @endif
 
-                @if (isset($productSection->text))                    
+                @if (isset($sections['product']->description))                    
                     <div class="obs animate-on-scroll mt-4 col-12 col-md-8" data-animation="animate__fadeInLeft">
                         <div class="description-session">
-                            {!! $productSection->text !!}
+                            {!! $sections['product']->description !!}
                         </div>
                     </div>
                 @endif
@@ -343,10 +343,10 @@
                                         </div>
                                     @endif
                                     <div class="call-to-action mt-3 text-center">
-                                        @if (isset($contact) && $contact->phone_one <> null)
+                                        @if (isset($contact) && $contact->whatsapp <> null)
                                             @php
                                                 // Remove caracteres não numéricos do telefone
-                                                $phone = preg_replace('/\D/', '', $contact->phone_one);
+                                                $phone = preg_replace('/\D/', '', $contact->whatsapp);
 
                                                 // Monta mensagem com ícones e quebras de linha
                                                 $mensagem = "Olá! Tenho interesse no produto:%0A"
@@ -377,34 +377,26 @@
         </div>
     </section>
 @endif
-@if ((!empty($depoimentSession) && ($depoimentSession->title || $depoimentSession->text)) ||
+@if ((isset($sections['testimonial']) && $sections <> null) ||
     (!empty($depoiments) && count($depoiments) > 0))
     <section id="depoiment" class="depoiment position-relative h-100">
         <div class="content m-auto me-0 justify-content-end d-flex flex-wrap align-items-center h-100 flex-column flex-md-row">
-            @if (!empty($depoimentSession) && isset($depoimentSession->title) && isset($depoimentSession->text))            
+            @if (isset($sections['testimonial']) && $sections <> null)            
                 <div class="col-11 col-lg-4 animate-on-scroll" data-animation="animate__fadeInLeft">
-                    @if ($depoimentSession->title)                    
-                        <h2 class="title mb-0 text-uppercase font-35 montserrat-semiBold text-black before">{{ $depoimentSession->title }}</h2>
+                    @if ($sections['testimonial']->title)                    
+                        <h2 class="title mb-0 text-uppercase font-35 montserrat-semiBold text-black before">{{ $sections['testimonial']->title }}</h2>
                     @endif
                     
-                    @if ($depoimentSession->text)                    
+                    @if ($sections['testimonial']->description)                    
                         <div class="description mb-0 mt-4 text-start p-0 col-12 col-lg-8">
-                            {!! $depoimentSession->text !!}
+                            {!! $sections['testimonial']->description !!}
                         </div>
                     @endif
                     
                     <div class="call-to-action mt-3">
-                        @if (isset($contact) && $contact->phone_one <> null)
-                            @php
-                                // Remove caracteres não numéricos do telefone
-                                $phone = preg_replace('/\D/', '', $contact->phone_one);
-
-                                // Monta mensagem com ícones e quebras de linha
-                                $mensagem = "Olá! Encontrei seu site e gostaria de conhecer mais sobre os planos disponíveis.%0A";
-                            @endphp
-
+                        @if (isset($sections['testimonial']->link) && $sections['testimonial']->link <> null)
                             <a 
-                                href="https://wa.me/55{{ $phone }}?text={{ $mensagem }}" 
+                                href="{{$sections['testimonial']->link}}" 
                                 target="_blank" 
                                 rel="noopener noreferrer" 
                                 class="btn background-red rounded-5 px-5 py-2 text-white montserrat-semiBold font-15"
@@ -465,7 +457,7 @@
                     <div class="swiper-wrapper align-items-start">
                         @foreach($depoiments as $depoiment)                        
                             <div class="swiper-slide">
-                                <div class="project-list-item dark-background px-3 py-4 rounded-4">
+                                <div class="project-list-item bg-secondary px-3 py-4 rounded-4">
                                     <svg class="position-absolute start-0 ms-2 mt-2 top-0" width="29" height="29" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1 13.0833H10.6667C12.0013 13.0833 13.0833 12.0013 13.0833 10.6667V3.41667C13.0833 2.08199 12.0013 1 10.6667 1H3.41667C2.08199 1 1 2.08199 1 3.41667V13.0833ZM1 13.0833V21.5417C1 26.2131 4.78692 30 9.45833 30M17.9167 13.0833H27.5833C28.9181 13.0833 30 12.0013 30 10.6667V3.41667C30 2.08199 28.9181 1 27.5833 1H20.3333C18.9987 1 17.9167 2.08199 17.9167 3.41667V13.0833ZM17.9167 13.0833V21.5417C17.9167 26.2131 21.7036 30 26.375 30" stroke="#F2E416"/>
                                     </svg>
@@ -481,7 +473,7 @@
                                             <span class="font-16 montserrat-medium">{{ $depoiment->title }}</span>
                                             <span class="font-12 montserrat-regular text-white">{{ $depoiment->time }}</span>
                                             <div class="image-rating">
-                                                <img src="{{asset('build/client/images/rating.svg')}}" loading="lazy" alt="Rating" class="w-100" loading="lazy">
+                                                <img src="{{asset('build/client/themes/provedor/tp-01/images/rating.svg')}}" loading="lazy" alt="Rating" class="w-100" loading="lazy">
                                             </div>
                                         </div> 
                                     </div> 

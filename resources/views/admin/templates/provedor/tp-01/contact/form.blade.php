@@ -42,10 +42,15 @@
             <h4 class="page-title">Informações das redes sociais</h4>
             <div class="card card-body">
                 <div class="row g-3">
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-3">
                         <label for="whatsapp" class="form-label">Whatsapp</label>
                         <input type="text" name="whatsapp" class="form-control" id="whatsapp"
                             value="{{ $contact->whatsapp ?? '' }}" placeholder="Whatsapp">
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <label for="mention" class="form-label">Menção</label>
+                        <input type="text" name="mention" class="form-control" id="mention"
+                            value="{{ $contact->mention ?? '' }}" placeholder="Ex: agenciawhi">
                     </div>
 
                     <div class="col-12 col-md-6">

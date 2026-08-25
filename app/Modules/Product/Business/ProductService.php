@@ -7,6 +7,7 @@ use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\ServiceSection;
 use App\Repositories\SettingThemeRepository;
 use App\Services\ThemeManager;
 use Illuminate\Http\Request;
@@ -25,10 +26,13 @@ class ProductService
     public function getIndexData(Request $request, ThemeManager $themeManager): array
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
-        $check = checkPermission('produtos.visualizar', $settingTheme);
+        $check = checkPermission('products', 'produtos.visualizar', $settingTheme);
         if ($check !== true) {
             return ['forbidden' => $check];
         }
+        $serviceSection = ServiceSection::whereIn('section', ['product'])
+        ->get()
+        ->keyBy('section');
 
         $categories = ProductCategory::active()->sorting()->get();
         $productsQuery = Product::with(['category']);
@@ -48,7 +52,7 @@ class ProductService
         }
         $theme = $themeManager;
         $themeData = $themeManager->theme();
-        return compact('products', 'categories', 'productCategory', 'theme', 'themeData', 'settingTheme');
+        return compact('products', 'categories', 'productCategory', 'theme', 'themeData', 'settingTheme', 'serviceSection');
     }
 
     public function getCreateData(ThemeManager $themeManager): array
