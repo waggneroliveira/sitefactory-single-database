@@ -25,12 +25,6 @@
     </div>
 </div>
 
-<div class="col-lg-12 mb-3">
-    <label for="path_image" class="form-label">Imagem</label>
-    <input type="file" name="path_image" data-plugins="dropify" data-default-file="{{isset($letsgo)?$letsgo->path_image<>''?url('storage/'.$letsgo->path_image):'':''}}"  />
-    <p class="text-muted text-center mt-2 mb-0">{{__('dashboard.text_img_size')}} <b class="text-danger">2 MB</b>.</p>
-</div>
-
 <div class="mb-3 col-12">
     <div class="form-check">
         <input 

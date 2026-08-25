@@ -5,11 +5,44 @@
         <div class="swiper hero-swiper">
             <div class="swiper-wrapper">
                 @foreach ($slides as $slide)
-                    <div class="swiper-slide">
-                        <picture>
-                            <source srcset="{{ asset('storage/' . $slide->path_image_mobile) }}" media="(max-width: 885px)">
-                            <img src="{{ asset('storage/' . $slide->path_image) }}" alt="Banner Hero" title="Banner Hero" class="image-hero w-100">
-                        </picture>
+                    <div class="swiper-slide">                        
+                        <!-- Imagem full -->
+                        <div class="hero-bg">
+                            <picture>
+                                <source srcset="{{ asset('storage/' . $slide->path_image_mobile) }}" media="(max-width: 885px)">
+                                <img src="{{ asset('storage/' . $slide->path_image) }}" alt="Banner Hero" title="Banner Hero" class="image-hero w-100">
+                            </picture>
+                        </div>
+
+                        <!-- Conteúdo -->
+                        <div class="hero-content mt-5 mt-lg-0 w-100">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-8">
+
+                                        <h1 class="hero-title font-changa font-40 font-bold text-white">
+                                            {{$slide->title}}
+                                        </h1>
+
+                                        <span class="hero-subtitle font-changa font-16 font-regular text-white">
+                                            {!!$slide->description!!}
+                                        </span>
+
+                                        <div class="hero-actions d-flex mt-3">
+                                            @if ($slide->link <> null)                                    
+                                                <a href="{{$slide->link}}" target="_blank" rel="noopener noreferrer" class="btn-one rounded-pill py-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
+                                                    {{$slide->btn_title}}
+                                                    <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"/>
+                                                    </svg>
+                                                </a>
+                                            @endif
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 @endforeach
             </div>
@@ -46,6 +79,14 @@
         <div class="container">
             @foreach($abouts as $about)                
                 <div class="d-flex justify-content-between align-items-start about flex-wrap w-100 pt-4 pt-lg-5">
+                    @if (isset($about->path_image) && $about->path_image <> null)                    
+                        <div class="col-11 col-lg-6 animate-on-scroll" data-animation="animate__fadeInRight">
+                            <div class="image d-flex justify-content-lg-start">
+                                <img src="{{asset('storage/'.$about->path_image)}}" alt="About" class="w-100 h-100 about-image d-none d-sm-block" loading="lazy">
+                            </div>
+                        </div>            
+                    @endif
+
                     <div class="col-11 col-lg-6 animate-on-scroll" data-animation="animate__fadeInLeft">
                         <h1 class="d-flex align-items-start gap-2 montserrat-semiBold font-28 text-black before text-uppercase">{{$about->title}}</h1>
                 
@@ -56,15 +97,7 @@
                                 <a href="{{$about->link}}" target="_blank" rel="noopener noreferrer" class="btn background-red rounded-5 px-4 py-2 text-white montserrat-semiBold font-15">{{$about->title_button}}</a>
                             </div>
                         @endif
-                    </div>
-
-                    @if (isset($about->path_image) && $about->path_image <> null)                    
-                        <div class="col-11 col-lg-6 animate-on-scroll" data-animation="animate__fadeInRight">
-                            <div class="image d-flex justify-content-end">
-                                <img src="{{asset('storage/'.$about->path_image)}}" alt="About" class="w-100 h-100 about-image d-none d-sm-block" loading="lazy">
-                            </div>
-                        </div>            
-                    @endif
+                    </div>                    
                 </div>
             @endforeach
             @if (!empty($partners))
@@ -91,7 +124,7 @@
 
 @if ((!empty($planCategories) && count($planCategories) > 0) ||
     (!empty($plans) && count($plans) > 0))
-    <section id="plans" class="background-plan py-5 plan">
+    <section id="plans" class="bg-secondary-color py-5 plan">
         <div class="content m-auto me-0 justify-content-end d-flex flex-wrap flex-column flex-md-row">
             <aside class="col-11 col-md-4 animate-on-scroll" data-animation="animate__fadeInLeft">
                 @if (isset($sections['planNetwork']->title) || isset($sections['planNetwork']->subtitle))
@@ -235,10 +268,27 @@
         </div>
     </section>
 @endif
-
+@if (isset($letsgo) && $letsgo <> null)
+    <section id="all-complete" class="animate-on-scroll" data-animation="animate__fadeIn">
+        <div class="container">
+            <div class="row align-items-center py-5">
+                <div class="col-12 col-md-4 mb-3 mb-md-0">
+                    <h2 class="d-flex align-items-start gap-2 montserrat-semiBold font-28 text-black before text-uppercase">
+                        {{$letsgo->title}}
+                    </h2>
+                </div>
+                <div class="col-12 col-md-8">
+                    <p class="montserrat-regular font-15 mt-2 mt-md-3">
+                        {{$letsgo->description}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+@endif
 @if ((!empty($sections['product'])) ||
     (!empty($products) && count($products) > 0)) 
-    <section id="products" class="background-plan py-5 products position-relative">
+    <section id="products" class="bg-secondary-color py-5 products position-relative">
         <div class="content m-auto me-0 justify-content-end align-content-center d-flex flex-wrap flex-column flex-md-row" style="min-height: 512px;">
             <aside class="col-12 col-md-4">
                 @if (isset($sections['product']->title) || isset($sections['product']->subtitle))                    
@@ -481,7 +531,7 @@
     </section>
 @endif
 @if (!empty($contact))
-    <section id="contact" class="contact-section py-5 bg-contact text-white">
+    <section id="contact" class="contact-section py-5 bg-secondary-color text-white">
         <div class="container">
             <div class="row align-items-center justify-content-between">
 
@@ -601,7 +651,7 @@
         const formData = $(this).serialize();
 
         $.ajax({
-            url: '{{ route("send-newsletter") }}',
+            url: '{{ route("send-contact") }}',
             type: 'POST',
             data: formData,
             success: function(response) {

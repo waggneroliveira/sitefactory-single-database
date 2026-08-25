@@ -52,6 +52,7 @@ class NewsletterController extends Controller
                 'message' => 'Cadastro realizado com sucesso!',
             ]);
         } catch (\Exception $e) {
+            dd($e);
             DB::rollBack();
 
             return response()->json([

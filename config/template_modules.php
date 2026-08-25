@@ -320,23 +320,16 @@ return [
             'home' => [
                 'slides',
                 'topics',
-                'statute',
                 'letsgo',
                 'testimonials',
                 'partner',
                 'planNetworkCategory',
                 'planNetwork',
-
                 'about',
-                'benefits',
-
-                'brands',
-                'product_categories',
                 'products',
 
                 'contact',
                 'contact_leads',
-                'download_leads',
             ],
 
         ],

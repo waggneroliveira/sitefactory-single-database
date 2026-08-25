@@ -30,24 +30,24 @@ class FormIndexController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'string',
-            'subject' => 'string|max:255',
-            'text' => 'string|max:255',
-            'term_privacy' => 'boolean',
+            'name' => 'sometimes|nullable|string|max:255',
+            'email' => 'sometimes|nullable|email|max:255',
+            'phone' => 'sometimes|nullable|string|max:255',
+            'subject' => 'sometimes|nullable|string|max:255',
+            'text' => 'sometimes|nullable|string|max:255',
+            'term_privacy' => 'sometimes|nullable|boolean',
         ]);
 
         try {
             DB::beginTransaction();
 
             FormIndex::create([
-                'name' => $validated['name'],
-                'email' => $validated['email'],
-                'phone' => $validated['phone'],
-                'subject' => $validated['subject'],
-                'text' => $validated['text'],
-                'term_privacy' => 1,
+                'name' => $validated['name'] ?? null,
+                'email' => $validated['email'] ?? null,
+                'phone' => $validated['phone'] ?? null,
+                'subject' => $validated['subject'] ?? null,
+                'text' => $validated['text'] ?? null,
+                'term_privacy' => $validated['term_privacy'] ?? 0,
             ]);
 
             DB::commit();
@@ -57,6 +57,7 @@ class FormIndexController extends Controller
                 'message' => 'Mensagem enviada com sucesso!',
             ]);
         } catch (\Exception $e) {
+            dd($e);
             DB::rollBack();
 
             return response()->json([

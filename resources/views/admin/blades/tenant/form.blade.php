@@ -166,7 +166,7 @@ HEADER
 
     <div class="col-12 col-lg-2">
         <div class="mb-3">
-            <label class="form-label">Cor do texto no Header</label>
+            <label class="form-label">Cor texto Header</label>
             <input type="text" name="text_color_header" class="form-control" id="colorpicker-text-header" value="{{ old('text_color_header', $tenant->text_color_header ?? '') }}">
         </div>
     </div>

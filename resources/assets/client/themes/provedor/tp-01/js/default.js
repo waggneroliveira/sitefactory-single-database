@@ -18,9 +18,9 @@
         const header = document.getElementById("header");
         if (header) {
             if (window.scrollY > 50) {
-                header.classList.add("bg-scroll");
+                header.classList.add("bg-header");
             } else {
-                header.classList.remove("bg-scroll");
+                header.classList.remove("bg-header");
             }
         }
         n && (window.scrollY > 100 ? n.classList.add("active") : n.classList.remove("active"))

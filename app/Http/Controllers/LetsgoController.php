@@ -22,7 +22,7 @@ class LetsgoController extends Controller
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
         // Verifica permissão para visualizar slides
-        $check = checkPermission('sesssao lets go.visualizar', $settingTheme);
+        $check = checkPermission('letsgo', 'sesssao lets go.visualizar', $settingTheme);
         if ($check !== true) {
             return $check; // retorna view 403
         }
