@@ -114,6 +114,11 @@ class ProductService
         $data = $request->all();
         $data['active'] = $request->active ? 1 : 0;
         $data['slug'] = Str::slug($request->title);
+        // Formata o campo 'price'
+        $valorFormatado = $request->price;
+        $valorNumerico = str_replace(['R$', ' ', ' ', "\u{A0}"], '', $valorFormatado);
+        $valorNumerico = str_replace(',', '.', $valorNumerico);
+        $data['price'] = floatval($valorNumerico);
 
         if (isset($data['sizes'])) {
             $sizes = array_values(array_filter($request->sizes, function ($size) {
@@ -193,6 +198,12 @@ class ProductService
         $data = $request->all();
         $data['active'] = $request->active ? 1 : 0;
         $data['slug'] = Str::slug($request->title);
+        // Formata o campo 'price'
+        $valorFormatado = $request->price;
+        $valorNumerico = str_replace(['R$', ' ', ' ', "\u{A0}"], '', $valorFormatado);
+        $valorNumerico = str_replace(',', '.', $valorNumerico);
+        $data['price'] = floatval($valorNumerico);
+        
         $manager = new ImageManager(new GdDriver());
 
         $request->validate([

@@ -235,22 +235,7 @@
         </div>
     </section>
 @endif
-<section id="all-complete" class="animate-on-scroll" data-animation="animate__fadeIn">
-    <div class="container">
-        <div class="row align-items-center py-5">
-            <div class="col-12 col-md-4 mb-3 mb-md-0">
-                <h2 class="d-flex align-items-start gap-2 montserrat-semiBold font-28 text-black before text-uppercase">
-                    TUDO COMPLETO PARA VOCÊ!
-                </h2>
-            </div>
-            <div class="col-12 col-md-8">
-                <p class="montserrat-regular font-15 mt-2 mt-md-3">
-                    CristoNet leva até você tecnologia de ponta, produtos de excelência, serviços eficientes e a qualidade que inspira confiança.
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
+
 @if ((!empty($sections['product'])) ||
     (!empty($products) && count($products) > 0)) 
     <section id="products" class="background-plan py-5 products position-relative">

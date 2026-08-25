@@ -28,6 +28,9 @@ class Product extends Model
         'text',
         'path_image',
         'path_file',
+        'price',
+        'link',
+        'btn_title',
         'active',
         'sorting',
     ];
