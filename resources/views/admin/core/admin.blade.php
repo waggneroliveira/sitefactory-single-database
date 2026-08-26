@@ -274,14 +274,18 @@
                                     </a>
                                     <div class="collapse" id="menuBlog">
                                         <ul class="sub-menu">
-                                            @if ($theme->hasModule('blog_categories') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('categorias de noticias.visualizar')))
+                                            @if ($theme->hasModule('blog_categories') && 
+                                            (Auth::user()->hasRole('Super') || 
+                                            Auth::user()->can('categorias de noticias.visualizar')))
                                                 <li class="menu-item">
                                                     <a href="{{ route('admin.dashboard.blogCategory.index') }}" class="menu-link">
                                                         <span class="menu-text">Categoria de notícias</span>
                                                     </a>
                                                 </li>
                                             @endif
-                                            @if ($theme->hasModule('blog') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('noticias.visualizar')))
+                                            @if ($theme->hasModule('blog') && 
+                                            (Auth::user()->hasRole('Super') || 
+                                            Auth::user()->can('noticias.visualizar')))
                                                 <li class="menu-item">
                                                     <a href="{{ route('admin.dashboard.blog.index') }}" class="menu-link">
                                                         <span class="menu-text">Notícias</span>
