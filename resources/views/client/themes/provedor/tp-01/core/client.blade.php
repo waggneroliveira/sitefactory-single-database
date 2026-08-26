@@ -492,12 +492,12 @@
                 <div class="social-links d-flex justify-content-between align-items-center gap-4 text-center col-9">
                     <nav class="none site-navigation ul position-relative text-end width-75">
                         <ul class="d-flex flex-row justify-content-start align-items-center gap-4 mb-0 list-unstyled">
-                            <li><a href="{{ route('index') }}#hero" class="nav-link text-color-header montserrat-regular font-18">Home</a></li>
-                            <li><a href="{{ route('index') }}#about" class="nav-link text-color-header montserrat-regular font-18">Sobre</a></li>
-                            <li><a href="{{ route('index') }}#plans" class="nav-link text-color-header montserrat-regular font-18">Planos</a></li>
-                            <li><a href="{{ route('index') }}#products" class="nav-link text-color-header montserrat-regular font-18">Produtos</a></li>
-                            <li><a href="{{ route('index') }}#depoiment" class="nav-link text-color-header montserrat-regular font-18">Depoimentos</a></li>
-                            <li><a href="{{ route('index') }}#contact" class="nav-link text-color-header montserrat-regular font-18">Contato</a></li>
+                            <li><a href="{{ route('index') }}#hero" class="text-color-header montserrat-regular font-18">Home</a></li>
+                            <li><a href="{{ route('index') }}#about" class="text-color-header montserrat-regular font-18">Sobre</a></li>
+                            <li><a href="{{ route('index') }}#plans" class="text-color-header montserrat-regular font-18">Planos</a></li>
+                            <li><a href="{{ route('index') }}#products" class="text-color-header montserrat-regular font-18">Produtos</a></li>
+                            <li><a href="{{ route('index') }}#depoiment" class="text-color-header montserrat-regular font-18">Depoimentos</a></li>
+                            <li><a href="{{ route('index') }}#contact" class="text-color-header montserrat-regular font-18">Contato</a></li>
                         </ul>
                     </nav>
 
@@ -603,12 +603,12 @@
         <div class="row justify-content-center gap-5">
             <nav class="mt-5">
                 <ul class="list-unstyled text-center">
-                    <li><a href="{{ route('index') }}#hero" class="text-white nav-link montserrat-regular font-18">Home</a></li>
-                    <li><a href="{{ route('index') }}#about" class="text-white nav-link montserrat-regular font-18">Sobre</a></li>
-                    <li><a href="{{ route('index') }}#plans" class="text-white nav-link montserrat-regular font-18">Planos</a></li>
-                    <li><a href="{{ route('index') }}#products" class="text-white nav-link montserrat-regular font-18">Produtos</a></li>
-                    <li><a href="{{ route('index') }}#depoiment" class="text-white nav-link montserrat-regular font-18">Depoimentos</a></li>
-                    <li><a href="{{ route('index') }}#contact" class="text-white nav-link montserrat-regular font-18">Contato</a></li>
+                    <li><a href="{{ route('index') }}#hero" class="text-white montserrat-regular font-18">Home</a></li>
+                    <li><a href="{{ route('index') }}#about" class="text-white montserrat-regular font-18">Sobre</a></li>
+                    <li><a href="{{ route('index') }}#plans" class="text-white montserrat-regular font-18">Planos</a></li>
+                    <li><a href="{{ route('index') }}#products" class="text-white montserrat-regular font-18">Produtos</a></li>
+                    <li><a href="{{ route('index') }}#depoiment" class="text-white montserrat-regular font-18">Depoimentos</a></li>
+                    <li><a href="{{ route('index') }}#contact" class="text-white montserrat-regular font-18">Contato</a></li>
                 </ul>
             </nav>
 
@@ -684,14 +684,14 @@
                     <img src="{{asset('build/client/themes/provedor/tp-01/images/logo.svg')}}" alt="WHI - Web de Alta Inovação" title="WHI - Web de Alta Inovação" loading="lazy" class="w-100">
                 </div>
                 <ul class="list-unstyled text-start mt-0">
-                    <li class="montserrat-regular font-16 mb-3"><a href="{{route('index')}}#hero" class="nav-link text-color-footer montserrat-regular font-16 mb-3">Home</a></li>
-                    <li><a href="{{route('index')}}#about" class="nav-link text-color-footer montserrat-regular font-16 mb-3">Sobre</a></li>
-                    <li><a href="{{route('index')}}#plans" class="nav-link text-color-footer montserrat-regular font-16 mb-3">Planos</a></li>
+                    <li class="montserrat-regular font-16 mb-3"><a href="{{route('index')}}#hero" class="text-color-footer montserrat-regular font-16 mb-3">Home</a></li>
+                    <li class="montserrat-regular font-16 mb-3"><a href="{{route('index')}}#about" class="text-color-footer montserrat-regular font-16 mb-3">Sobre</a></li>
+                    <li class="montserrat-regular font-16 mb-3"><a href="{{route('index')}}#plans" class="text-color-footer montserrat-regular font-16 mb-3">Planos</a></li>
                 </ul>
                 <ul class="list-unstyled text-start">                    
-                    <li><a href="{{route('index')}}#products" class="nav-link text-color-footer montserrat-regular font-16 mb-3">Produtos</a></li>
-                    <li><a href="{{route('index')}}#depoiment" class="nav-link text-color-footer montserrat-regular font-16 mb-3">Depoimentos</a></li>
-                    <li class="montserrat-regular font-16 mb-3"><a href="{{route('index')}}#contact" class="nav-link text-color-footer montserrat-regular font-16 mb-3">Contato</a></li>
+                    <li class="montserrat-regular font-16 mb-3"><a href="{{route('index')}}#products" class="text-color-footer montserrat-regular font-16 mb-3">Produtos</a></li>
+                    <li class="montserrat-regular font-16 mb-3"><a href="{{route('index')}}#depoiment" class="text-color-footer montserrat-regular font-16 mb-3">Depoimentos</a></li>
+                    <li class="montserrat-regular font-16 mb-3"><a href="{{route('index')}}#contact" class="text-color-footer montserrat-regular font-16 mb-3">Contato</a></li>
                 </ul>
                 <div class="d-flex justify-content-end align-items-end flex-column w-auto montserrat-semiBold">
                     <span class="col-12 col-lg-8">
