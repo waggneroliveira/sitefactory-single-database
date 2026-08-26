@@ -124,31 +124,28 @@ p {
 .bg-contact {
     background: var(--background-color-contact);
 }
-.btn-filter-category:hover {
-    background-color: #041A4B !important;
-}
-.btn-filter-category {
-    transition: all 0.3s ease;
-}
-.btn-filter-category.on-active {
-    background-color: #041A4B !important;
-    transition: all 0.3s ease;
-}
-.box-topic img {
-    width: 57px;
-}
+
 .depoiment .title.before:before {
     vertical-align: middle;
     margin-top: 0;
     margin-right: 15px;
 }
 .depoiment {
-    background-image: url(../images/bg-depoiment.webp);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     height: 500px;
     width: 100%;
+}
+.depoiment::before{
+    content:'';
+    background: rgb(0 0 0 / 20%);
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1; 
 }
 .depoiment-text, .client-info {
     width: 78%;
@@ -239,16 +236,14 @@ p {
     list-style: none;
 }
 .plan .list ul li::before {
-    content: '';
-    background-image: url('../images/certo.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
+    content: "\f26a";
+    font-family: "bootstrap-icons";
     width: 21px;
     height: 21px;
     display: inline-block;
     margin-right: 8px;
     vertical-align: middle;
+    color:green;
 }
 .partner-card img {
     height: 110px;
@@ -268,12 +263,6 @@ p {
     max-height: 516px;
 }
 
-.firula-about {
-    left: 15px;
-    bottom: 45px;
-    width: 60px;
-    height: auto;
-}
 .popup {
     display: none;
     position: fixed;
@@ -312,8 +301,8 @@ html, body {
     width: 35px;
 }
 .card-plan .image img {
-    width: 132px;
-    height: 114px;
+    width: auto;
+    height: 80;
     object-fit: contain;
     object-position: center;
 }
@@ -935,9 +924,7 @@ h1, h2, h3, h4, h5, h6 {
     .topics .montserrat-bold.font-25 {
         font-size: 1.25rem;
     }
-    .box-topic img {
-        width: 40px;
-    }
+
     .box-topic .description p {
         font-size: 0.813rem;
     }
