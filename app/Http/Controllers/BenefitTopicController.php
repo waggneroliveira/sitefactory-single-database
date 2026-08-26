@@ -23,7 +23,7 @@ class BenefitTopicController extends Controller
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
         // Verifica permissão para visualizar slides
-        $check = checkPermission('parametro.visualizar', $settingTheme);
+        $check = checkPermission('benefits', 'parametro.visualizar', $settingTheme);
         if ($check !== true) {
             return $check; // retorna view 403
         }
