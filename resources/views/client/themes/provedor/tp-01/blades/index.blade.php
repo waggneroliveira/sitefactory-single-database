@@ -30,7 +30,7 @@
 
                                         <div class="hero-actions d-flex mt-3">
                                             @if ($slide->link <> null)                                    
-                                                <a href="{{$slide->link}}" target="_blank" rel="noopener noreferrer" class="btn-one rounded-pill py-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
+                                                <a href="{{$slide->link}}" target="_blank" rel="noopener noreferrer" class="btn-one rounded-2 py-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
                                                     {{$slide->btn_title}}
                                                     <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"/>
@@ -146,9 +146,9 @@
                 @endif
 
                 @if (!empty($planCategories))                
-                    <ul class="d-flex justify-content-center align-items-center flex-wrap gap-4 p-0 mt-5 col-12">
+                    <ul class="d-flex justify-content-center align-items-center flex-wrap gap-0 p-0 mt-5 col-12">
                         @foreach ($planCategories as $planCategory)                    
-                            <li class="list-unstyled pb-4 col-auto">
+                            <li class="list-unstyled pb-4 col-auto me-0 me-lg-3">
                                 <button type="button" 
                                         class="border-transparent shadow-none border-none montserrat-medium font-15 bg-button-two color-button-two py-2 px-3 rounded-2 d-flex w-100 justify-content-center gap-3 align-items-center btn-filter-category" 
                                         data-id="{{ $planCategory->id }}">
@@ -285,7 +285,7 @@
                     </div>
                 @endif
 
-                <div class="content-left col-12 {{ !empty($letsgo->path_image) ? 'col-lg-6 text-start' : 'col-lg-12 text-center' }}">
+                <div class="content-left col-12 mt-4 mt-lg-0 {{ !empty($letsgo->path_image) ? 'col-lg-6 text-center text-lg-start' : 'col-lg-12 text-center' }}">
                     <h3 class="montserrat-semiBold font-28 primary-color text-uppercase mb-3">
                         {{$letsgo->title}}
                     </h3>
@@ -448,23 +448,25 @@
         @if(isset($sections['testimonial']) && !empty($sections['testimonial']->path_image))
             style="background-image: url('{{ asset('storage/' . $sections['testimonial']->path_image) }}');"
         @endif>
-        <div class="content m-auto me-0 justify-content-end d-flex flex-wrap align-items-center h-100 flex-column flex-md-row">
-            @if (isset($sections['testimonial']) && $sections <> null)            
+        <div class="content position-relative m-auto me-0 justify-content-end d-flex flex-wrap align-items-center h-100 flex-column flex-md-row">
+            @if (isset($sections['testimonial']) && $sections != null)            
                 <div class="col-11 col-lg-4 animate-on-scroll" data-animation="animate__fadeInLeft">
                     @if ($sections['testimonial']->title)                    
-                        <h2 class="title mb-0 text-uppercase font-35 montserrat-semiBold {{ (isset($sections['testimonial']) && !empty($sections['testimonial']->path_image)) ? 'text-white' : 'text-dark' }}">{{ $sections['testimonial']->title }}</h2>
+                        <h2 class="title mb-0 text-uppercase font-35 montserrat-semiBold {{ (!empty($sections['testimonial']->path_image)) ? 'text-white' : 'text-dark' }}">
+                            {{ $sections['testimonial']->title }}
+                        </h2>
                     @endif
                     
                     @if ($sections['testimonial']->description)                    
-                        <div class="description mb-0 mt-4 text-start p-0 col-12 col-lg-8 {{ (isset($sections['testimonial']) && !empty($sections['testimonial']->path_image)) ? 'text-white' : 'text-dark' }}">
+                        <div class="description mb-0 mt-4 text-start p-0 col-12 col-lg-8 {{ (!empty($sections['testimonial']->path_image)) ? 'text-white' : 'text-dark' }}">
                             {!! $sections['testimonial']->description !!}
                         </div>
                     @endif
                     
                     <div class="call-to-action mt-3">
-                        @if (isset($sections['testimonial']->link) && $sections['testimonial']->link <> null)
+                        @if (!empty($sections['testimonial']->link))
                             <a 
-                                href="{{$sections['testimonial']->link}}" 
+                                href="{{ $sections['testimonial']->link }}" 
                                 target="_blank" 
                                 rel="noopener noreferrer" 
                                 class="btn bg-button-two color-button-two rounded-2 px-5 py-2 montserrat-semiBold font-15"
@@ -478,56 +480,58 @@
 
             <div class="col-12 col-md-7 position-relative animate-on-scroll" data-animation="animate__fadeInRight">
                 <div class="project-list-details-slider swiper init-swiper">
-                    <script type=application/json class=swiper-config>
-                        {
-                            "speed": 500,
-                            "slidesPerView": 5,
-                            "slidesPerGroup": 1,
-                            "centeredSlides": true,
-                            "initialSlide": 0,
-                            "pagination": {
-                                "el": ".swiper-pagination",
-                                "type": "bullets",
-                                "clickable": true
+                    <script type="application/json" class="swiper-config">
+                    {
+                        "loop": true,
+                        "speed": 500,
+                        "slidesPerView": 5,
+                        "slidesPerGroup": 1,
+                        "centeredSlides": false,
+                        "initialSlide": 0,
+                        "pagination": {
+                            "el": ".swiper-pagination",
+                            "type": "bullets",
+                            "clickable": true
+                        },
+                        "navigation": {
+                            "nextEl": ".swiper-button-next",
+                            "prevEl": ".swiper-button-prev"
+                        },
+                        "breakpoints": {
+                            "320": {
+                                "slidesPerView": 1.2,
+                                "spaceBetween": 15
                             },
-                            "navigation": {
-                                "nextEl": ".swiper-button-next",
-                                "prevEl": ".swiper-button-prev"
+                            "475": {
+                                "slidesPerView": 1.2,
+                                "spaceBetween": 15
                             },
-                            "breakpoints": {
-                                "320": {
-                                    "slidesPerView": 1.2,
-                                    "spaceBetween": 5
-                                },
-                                "475": {
-                                    "slidesPerView": 1.2,
-                                    "spaceBetween": 5
-                                },
-                                "631": {
-                                    "slidesPerView": 2.3,
-                                    "spaceBetween": 5
-                                },
-                                "768": {
-                                    "slidesPerView": 2.3,
-                                    "spaceBetween": 5
-                                },
-                                "991": {
-                                    "slidesPerView": 2.3,
-                                    "spaceBetween": 5
-                                },
-                                "1025": {
-                                    "slidesPerView": 2.5,
-                                    "spaceBetween": 5
-                                }
+                            "631": {
+                                "slidesPerView": 2.3,
+                                "spaceBetween": 15
+                            },
+                            "768": {
+                                "slidesPerView": 2.3,
+                                "spaceBetween": 15
+                            },
+                            "991": {
+                                "slidesPerView": 2.3,
+                                "spaceBetween": 15
+                            },
+                            "1025": {
+                                "slidesPerView": 2.5,
+                                "spaceBetween": 20
                             }
                         }
+                    }
                     </script>
+                    
                     <div class="swiper-wrapper align-items-start">
                         @foreach($depoiments as $depoiment)                        
                             <div class="swiper-slide">
-                                <div class="project-list-item bg-secondary px-3 py-4 rounded-4">
+                                <div class="project-list-item bg-secondary px-3 py-4 rounded-4 position-relative">
                                     <svg class="position-absolute start-0 ms-2 mt-2 top-0" width="29" height="29" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1 13.0833H10.6667C12.0013 13.0833 13.0833 12.0013 13.0833 10.6667V3.41667C13.0833 2.08199 12.0013 1 10.6667 1H3.41667C2.08199 1 1 2.08199 1 3.41667V13.0833ZM1 13.0833V21.5417C1 26.2131 4.78692 30 9.45833 30M17.9167 13.0833H27.5833C28.9181 13.0833 30 12.0013 30 10.6667V3.41667C30 2.08199 28.9181 1 27.5833 1H20.3333C18.9987 1 17.9167 2.08199 17.9167 3.41667V13.0833ZM17.9167 13.0833V21.5417C17.9167 26.2131 21.7036 30 26.375 30" stroke="#F2E416"/>
+                                        <path d="M1 13.0833H10.6667C12.0013 13.0833 13.0833 12.0013 13.0833 10.6667V3.41667C13.0833 2.08199 12.0013 1 10.6667 1H3.41667C2.08199 1 1 2.08199 1 3.41667V13.0833ZM1 13.0833V21.5417C1 26.2131 4.78692 30 9.45833 30M17.9167 13.0833H27.5833C28.9181 13.0833 30 12.0013 30 10.6667V3.41667C30 2.08199 28.9181 1 27.5833 1H20.3333C18.9987 1 17.9167 2.08199 17.9167 3.41667V13.0833ZM17.9167 13.0833V21.5417C17.9167 26.2131 21.7036 30 26.375 30" stroke="#F2E416"/>
                                     </svg>
 
                                     <div class="row">
@@ -541,27 +545,27 @@
                                             <span class="font-16 montserrat-medium">{{ $depoiment->title }}</span>
                                             <span class="font-12 montserrat-regular text-white">{{ $depoiment->time }}</span>
                                             <div class="image-rating">
-                                                <img src="{{asset('build/client/themes/provedor/tp-01/images/rating.svg')}}" loading="lazy" alt="Rating" class="w-100" loading="lazy">
+                                                <img src="{{asset('build/client/themes/provedor/tp-01/images/rating.svg')}}" alt="Rating" class="w-100" loading="lazy">
                                             </div>
                                         </div> 
                                     </div> 
 
                                     <svg class="position-absolute end-0 me-2 mb-2 bottom-0" width="37" height="37" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M36 21.4167L24.3333 21.4167C22.7225 21.4167 21.4167 22.7225 21.4167 24.3333L21.4167 33.0833C21.4167 34.6941 22.7225 36 24.3333 36L33.0833 36C34.6941 36 36 34.6942 36 33.0833L36 21.4167ZM36 21.4167L36 11.2083C36 5.57042 31.4296 1 25.7917 1M15.5833 21.4167L3.91666 21.4167C2.30579 21.4167 0.999997 22.7225 0.999997 24.3333L0.999996 33.0833C0.999996 34.6941 2.30579 36 3.91666 36L12.6667 36C14.2775 36 15.5833 34.6941 15.5833 33.0833L15.5833 21.4167ZM15.5833 21.4167L15.5833 11.2083C15.5833 5.57042 11.0129 1 5.375 1" stroke="#F2E416"/>
+                                        <path d="M36 21.4167L24.3333 21.4167C22.7225 21.4167 21.4167 22.7225 21.4167 24.3333L21.4167 33.0833C21.4167 34.6941 22.7225 36 24.3333 36L33.0833 36C34.6941 36 36 34.6942 36 33.0833L36 21.4167ZM36 21.4167L36 11.2083C36 5.57042 31.4296 1 25.7917 1M15.5833 21.4167L3.91666 21.4167C2.30579 21.4167 0.999997 22.7225 0.999997 24.3333L0.999996 33.0833C0.999996 34.6941 2.30579 36 3.91666 36L12.6667 36C14.2775 36 15.5833 34.6941 15.5833 33.0833L15.5833 21.4167ZM15.5833 21.4167L15.5833 11.2083C15.5833 5.57042 11.0129 1 5.375 1" stroke="#F2E416"/>
                                     </svg>
-                                
                                 </div>
                             </div>
                         @endforeach                         
                     </div>
-                    <div class=btn-navigation>
-                        <div class=swiper-button-prev></div>
-                        <div class=swiper-button-next></div>
+
+                    <div class="btn-navigation">
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+</section>
 @endif
 @if (!empty($contact))
     <section id="contact" class="contact-section py-5 bg-secondary-color text-white">
