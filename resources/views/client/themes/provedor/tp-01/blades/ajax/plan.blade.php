@@ -1,17 +1,18 @@
 @foreach ($plans as $plan)  
     @php
-        $price = str_replace('.', ',', $plan->price);
-    @endphp
+        $priceformated = $plan->price;
+        $price = str_replace('.', ',', $priceformated);
+    @endphp                      
     <div class="swiper-slide plan-ajax-hidden">
-        <div class="card-plan bg-white rounded-3 p-3 w-100">
+        <div class="card-plan bg-white rounded-3 p-4 w-100">
             <div class="d-flex justify-content-between align-items-baseline">
                 <div class="title">
-                    <h4 class="montserrat-medium text-black font-18 mb-1">{{ $plan->title }}</h4>
-                    <h5 class="subtitle-plan montserrat-bold font-18 mb-0">{{ $plan->subtitle }}</h5>
+                    <h4 class="montserrat-medium text-black font-18 mb-1">{{$plan->title}}</h4>
+                    <h5 class="secondary-color montserrat-bold font-18 mb-0">{{$plan->subtitle}}</h5>
                 </div>
                 <div class="qtd-mb">
-                    <span class="subtitle-plan montserrat-bold font-20 lh-sm">{{ $plan->bandwidth_limit }}</span>
-                    <p class="montserrat-medium font-15 text-black mb-0 lh-sm">{{ $plan->bandwidth_unit }}</p>
+                    <span class="secondary-color montserrat-bold font-20 lh-sm">{{$plan->bandwidth_limit}}</span>
+                    <p class="montserrat-medium font-15 text-black mb-0 lh-sm">{{$plan->bandwidth_unit}}</p>
                 </div>
             </div>
             <div class="p-0 mt-4 list">
@@ -19,11 +20,10 @@
             </div>
             @if ($price <> "0,00")
                 <div class="price">
-                    <span class="montserrat-semiBold font-25 text-red d-block text-center">R$ {{ $price }}</span>
+                    <span class="montserrat-semiBold font-25 primary-color d-block text-center">R$ {{$price}}</span>
                 </div>
             @endif
-
-            <div class="call-to-action mt-3 text-center">
+            <div class="call-to-action mt-3 text-center hover-zoom bg-button-two color-button-two rounded-2 px-5 py-2 montserrat-semiBold">
                 @if (isset($contact) && $contact->phone_one <> null)
                     @php
                         // Remove caracteres não numéricos do telefone
@@ -40,7 +40,7 @@
                         href="https://wa.me/55{{ $phone }}?text={{ $mensagem }}" 
                         target="_blank" 
                         rel="noopener noreferrer" 
-                        class="btn background-red rounded-5 px-5 py-2 text-white montserrat-semiBold font-15"
+                        class="font-15"
                     >
                         Quero esse
                     </a>
@@ -48,4 +48,4 @@
             </div>
         </div>
     </div>
-@endforeach
+@endforeach  

@@ -152,6 +152,8 @@ Route::middleware([NeedsTenant::class])->group(function () {
     Route::post('/download-ficha/store', [DownloadFichaController::class, 'store'])
         ->name('download.ficha.store');
 
+    Route::get('planos/categoria/{id}', [HomePageController::class, 'getPlansByCategory']);
+
 });
 
 

@@ -2,6 +2,8 @@
 
 namespace App\Modules\Client\Presentation\Controllers;
 
+use App\Models\Contact;
+use App\Models\PlanNetwork;
 use App\Modules\Client\Business\HomePageService;
 use App\Services\ThemeManager;
 use Illuminate\Http\JsonResponse;
@@ -33,5 +35,26 @@ class HomePageController
             'count' => $data['allNews']->count(),
             'latest_count' => $data['latestNews']->count(),
         ]);
+    }
+
+    public function getPlansByCategory($id)
+    {
+        $contact = Contact::first();
+        $plans = PlanNetwork::select(
+        'plan_networks.plan_network_category',
+        'plan_networks.title',
+        'plan_networks.subtitle',
+        'plan_networks.bandwidth_limit',
+        'plan_networks.bandwidth_unit',
+        'plan_networks.description',
+        'plan_networks.price',
+        'plan_networks.active',
+        'plan_networks.sorting'
+        )->where('plan_network_category', $id)
+        ->active()->sorting()->get();
+
+        $html = view('client.themes.provedor.tp-01.blades.ajax.plan', compact('plans', 'contact'))->render();
+
+        return response()->json(['html' => $html]);
     }
 }
