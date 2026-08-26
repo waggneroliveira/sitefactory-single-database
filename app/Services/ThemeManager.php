@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Collection;
 use App\Models\TemplateTheme;
 use App\Models\Tenant;
 use App\Models\TenantModuleLimit;
@@ -33,8 +34,20 @@ class ThemeManager
      * Retorna o slug do tema atual.
      */
     public function current(): string
-    {  
+    {
         return $this->theme()?->slug ?? 'default';
+    }
+
+    /**
+     * Retorna o tipo de layout atual.
+     *
+     * Exemplo:
+     * onepage
+     * multipage
+     */
+    public function layoutType(): string
+    {
+        return $this->theme()?->layout_type ?? 'onepage';
     }
 
     /**
@@ -78,21 +91,68 @@ class ThemeManager
     }
 
     /**
-     * Verifica se o módulo existe no template atual.
+     * Retorna os módulos específicos do layout atual.
      */
-    public function hasModule(string $module): bool
+    protected function layoutModules(): Collection
     {
-        $modules = config("template_modules.{$this->current()}", []);
+        $modules = config(
+            "template_modules.{$this->current()}.{$this->layoutType()}",
+            []
+        );
 
         return collect($modules)
             ->flatten()
-            ->filter(fn ($item) => is_string($item))
-            ->contains($module);
+            ->filter(fn ($module) => is_string($module))
+            ->unique()
+            ->values();
+    }
+
+    /**
+     * Retorna os módulos globais do template.
+     */
+    protected function globalModules(): Collection
+    {
+        $templateModules = config(
+            "template_modules.{$this->current()}",
+            []
+        );
+
+        return collect([
+            'smtp',
+            'security_and_access_control',
+            'config_theme',
+        ])->flatMap(function ($section) use ($templateModules) {
+            return $templateModules[$section] ?? [];
+        })
+            ->filter(fn ($module) => is_string($module))
+            ->unique()
+            ->values();
+    }
+
+    /**
+     * Retorna todos os módulos disponíveis considerando
+     * o layout atual e os módulos globais.
+     */
+    public function modules(): Collection
+    {
+        return $this->layoutModules()
+            ->merge($this->globalModules())
+            ->unique()
+            ->values();
+    }
+
+    /**
+     * Verifica se o módulo existe no template atual
+     * considerando o tipo de layout.
+     */
+    public function hasModule(string $module): bool
+    {
+        return $this->modules()->contains($module);
     }
 
     /**
      * Verifica se pelo menos um dos módulos informados
-     * existe no template atual.
+     * existe no template atual considerando o layout.
      */
     public function hasAnyModule(array $modules): bool
     {
@@ -185,26 +245,22 @@ class ThemeManager
     }
 
     /**
-     * Retorna todos os módulos disponíveis no template atual.
+     * Retorna todos os módulos disponíveis no template atual,
+     * considerando o layout atual e os módulos globais.
      *
      * Não considera limites de tenant ou plano.
      *
      * Exemplo:
      *
      * [
+     *     'about' => 'About',
      *     'slides' => 'Slides',
      *     'topics' => 'Topics',
-     *     'faq' => 'Faq',
      * ]
      */
     public function availableModules(): array
     {
-        $modules = config("template_modules.{$this->current()}", []);
-
-        return collect($modules)
-            ->flatten()
-            ->filter(fn ($module) => is_string($module))
-            ->unique()
+        return $this->modules()
             ->sort()
             ->mapWithKeys(fn ($module) => [
                 $module => Str::headline($module),
@@ -212,9 +268,11 @@ class ThemeManager
             ->toArray();
     }
 
+    /**
+     * Retorna o caminho de uma view de erro do tema.
+     */
     public function error(string $view): string
     {
         return "client.themes.{$this->current()}.{$this->variation()}.errors.{$view}";
     }
 }
-
