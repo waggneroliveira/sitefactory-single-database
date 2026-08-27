@@ -58,6 +58,10 @@ use Illuminate\Support\Facades\View;
 
 
 Route::prefix('painel/')->group(function () {
+    Route::get('/', function () {
+        return redirect()->route('admin.login');
+    });
+    
     Route::get('login', function () {
         return view('admin.auth.login');
     })->name('admin.login');
