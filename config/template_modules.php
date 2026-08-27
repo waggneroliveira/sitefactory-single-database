@@ -245,6 +245,7 @@ return [
         ],
 
         'limits' => [
+            'about' => 1,
             'slides' => 3,
             'testimonials' => 6,
             'faq' => 10,
