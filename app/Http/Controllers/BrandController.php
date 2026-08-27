@@ -21,7 +21,7 @@ class BrandController extends Controller
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
         // Verifica permissão para visualizar slides
-        $check = checkPermission('marcas.visualizar', $settingTheme);
+        $check = checkPermission('brands', 'marcas.visualizar', $settingTheme);
         if ($check !== true) {
             return $check; // retorna view 403
         }

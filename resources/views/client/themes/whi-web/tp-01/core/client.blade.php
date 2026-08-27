@@ -524,24 +524,6 @@
         </div>
     </footer>
 
-    {{-- Modal Política de Privacidade --}}
-    <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="privacyModalLabel">Política de Privacidade</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                </div>
-                <div class="modal-body">
-                    {!! $tenantTheme->privacy_policy !!}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const currentYear = new Date().getFullYear();
@@ -587,5 +569,30 @@
             });
         </script>
     @endif
+
+    {{-- Identificar bg so footer e adicionar class foote-light ou footer-dark --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const footer = document.querySelector('.bg-footer');
+
+            if (!footer) return;
+
+            const bgColor = getComputedStyle(footer).backgroundColor;
+
+            const rgb = bgColor.match(/\d+/g);
+
+            if (!rgb || rgb.length < 3) return;
+
+            const [r, g, b] = rgb.map(Number);
+
+            const luminance = (0.299 * r) + (0.587 * g) + (0.114 * b);
+
+            if (luminance < 150) {
+                footer.classList.add('footer-dark');
+            } else {
+                footer.classList.add('footer-light');
+            }
+        });
+    </script>
 </body>
 </html>

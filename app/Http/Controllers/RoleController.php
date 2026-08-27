@@ -19,14 +19,16 @@ class RoleController extends Controller
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
-        // 'permissions' → é o módulo definido no template_modules.php.
-        // 'grupo.visualizar' → é a permissão definida no module_permissions.php.
-        $check = checkPermission('permissions', 'grupo.visualizar', $settingTheme);
+        $check = checkPermission(
+            'permissions',
+            'grupo.visualizar',
+            $settingTheme
+        );
 
         if ($check !== true) {
             return $check;
         }
-        
+
         $roles = Role::get();
 
         $theme = $themeManager;
@@ -36,25 +38,74 @@ class RoleController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Módulos disponíveis no template
+        | Tipo de layout atual
         |--------------------------------------------------------------------------
         */
-        $templateModules = config("template_modules.{$template}", []);
 
-        $modules = collect($templateModules)
-            ->except('limits')
+        $layoutType = $themeData->layout_type ?? 'onepage';
+
+        /*
+        |--------------------------------------------------------------------------
+        | Módulos do template
+        |--------------------------------------------------------------------------
+        */
+
+        $templateModules = config(
+            "template_modules.{$template}",
+            []
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Módulos do layout atual
+        |--------------------------------------------------------------------------
+        */
+
+        $layoutModules = collect(
+            $templateModules[$layoutType] ?? []
+        )
             ->flatten()
+            ->values();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Módulos globais
+        |--------------------------------------------------------------------------
+        |
+        | Estes módulos independem de OnePage/Multipage.
+        |
+        */
+
+        $globalModules = collect([
+            'smtp',
+            'security_and_access_control',
+            'config_theme',
+        ])->flatMap(function ($section) use ($templateModules) {
+            return $templateModules[$section] ?? [];
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | Todos os módulos disponíveis
+        |--------------------------------------------------------------------------
+        */
+
+        $modules = $layoutModules
+            ->merge($globalModules)
             ->unique()
             ->values();
 
         /*
         |--------------------------------------------------------------------------
-        | Categorias de permissões dos módulos
+        | Categorias de permissões
         |--------------------------------------------------------------------------
         */
+
         $permissionCategories = $modules
             ->map(function ($module) {
-                return config("module_permissions.{$module}.permission");
+                return config(
+                    "module_permissions.{$module}.permission"
+                );
             })
             ->filter()
             ->unique()
@@ -62,9 +113,10 @@ class RoleController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Permissões disponíveis para este template
+        | Permissões disponíveis
         |--------------------------------------------------------------------------
         */
+
         $permissions = Permission::query()
             ->where(function ($query) use ($permissionCategories) {
 
@@ -77,6 +129,7 @@ class RoleController extends Controller
                 }
 
             })
+            ->orderBy('name', 'asc')
             ->get();
 
         return view(

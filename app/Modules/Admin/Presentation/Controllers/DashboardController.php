@@ -19,7 +19,7 @@ class DashboardController
     {
         $data = $this->service->getDashboardData($this->theme);
         $user = $data['user'] ?? null;
-    // dd($data);
+
         if ($user) {
             return view('admin.dashboard', $data);
         }

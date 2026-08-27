@@ -37,7 +37,7 @@
                                         @endif
                                     </div>
                                     <div class="col-6 d-flex justify-content-end">
-                                        @if (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can(['serviceItem.visualizar', 'serviceItem.criar']))
+                                        @if (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can(['depoimento.visualizar', 'depoimento.criar']))
                                             @if (empty($serviceSection['testimonial']))
                                             
                                                 <button type="button" class="me-2 btn btn-secondary text-black waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#serviceItem-section-create"><i class="mdi mdi-plus-circle me-1"></i> Informações da sessão</button>

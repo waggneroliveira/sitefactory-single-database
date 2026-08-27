@@ -39,7 +39,7 @@
                                             Auth::user()->hasPermissionTo('sobre nos.criar') ||
                                             Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
                                             Auth::user()->hasRole('Super'))
-                                                @if (!$about)                                                    
+                                                @if (isset($abouts) && $abouts->count() < $aboutLimit)                                                    
                                                     <a href="{{route('admin.dashboard.about.create')}}" class="mdi mdi-plus-circle me-1 btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_create')}}</a>
                                                 @endif
                                             @endif
@@ -62,7 +62,7 @@
                                             </tr>
                                         </thead>
                                         
-                                        @if (isset($about))                                            
+                                        @foreach($abouts as $key => $about)                                            
                                             <tbody data-route="{{route('admin.dashboard.about.sorting')}}">
                                                 @php
                                                     if ( $about->about_category_id) {
@@ -110,7 +110,8 @@
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                        @endif
+                                        @endforeach                                           
+                                        
                                     </table>
                                 </div>
 

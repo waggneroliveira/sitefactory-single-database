@@ -31,10 +31,12 @@ class AboutController extends Controller
             return $check; // retorna view 403
         }
 
-        $about = About::first();
+        $abouts = About::get();
         $theme = $themeManager;
         $themeData = $themeManager->theme();
-        return view('admin.blades.about.index', compact('about', 'theme', 'themeData'));
+        $aboutLimit = $themeManager->getLimit('about', 0);
+
+        return view('admin.blades.about.index', compact('abouts', 'theme', 'themeData', 'aboutLimit'));
     }
     public function store(Request $request)
     {

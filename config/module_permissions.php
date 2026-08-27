@@ -112,6 +112,26 @@ return [
         ],
     ],
 
+    'planNetworkCategory' => [
+        'permission' => 'categorias do plano',
+        'actions' => [
+            'criar',
+            'editar',
+            'visualizar',
+            'remover',
+        ],
+    ],
+
+    'planNetwork' => [
+        'permission' => 'plano',
+        'actions' => [
+            'criar',
+            'editar',
+            'visualizar',
+            'remover',
+        ],
+    ],
+
     'representatives' => [
         'permission' => 'representantes',
         'actions' => [
@@ -164,6 +184,16 @@ return [
 
     'products' => [
         'permission' => 'produtos',
+        'actions' => [
+            'criar',
+            'editar',
+            'visualizar',
+            'remover',
+        ],
+    ],
+
+    'partner' => [
+        'permission' => 'parceiro',
         'actions' => [
             'criar',
             'editar',

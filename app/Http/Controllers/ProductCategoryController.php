@@ -25,7 +25,7 @@ class ProductCategoryController extends Controller
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
         // Verifica permissão para visualizar slides
-        $check = checkPermission('categorias de produtos.visualizar', $settingTheme);
+        $check = checkPermission('product_categories', 'categorias de produtos.visualizar', $settingTheme);
         if ($check !== true) {
             return $check; // retorna view 403
         }

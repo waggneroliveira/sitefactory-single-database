@@ -314,4 +314,174 @@ return [
 
     ],
 
+    'provedor' => [
+        'onepage' => [
+
+            'home' => [
+                'slides',
+                'topics',
+                'letsgo',
+                'testimonials',
+                'partner',
+                'planNetworkCategory',
+                'planNetwork',
+                'about',
+                'products',
+
+                'contact',
+                'contact_leads',
+            ],
+
+        ],
+
+        'multipage' => [
+
+            'home' => [
+                'slides',
+                'topics',
+                'statute',
+                'letsgo',
+                'faq_session',
+                'faq',
+                'planNetworkCategory',
+                'planNetwork',
+                'testimonials',
+                'services',
+            ],
+
+            'about' => [
+                'about',
+                'benefits',
+                'mission',
+                'representatives',
+                'videos',
+                'service_locations',
+            ],
+
+            'products' => [
+                'brands',
+                'product_categories',
+                'products',
+            ],
+
+            'blog' => [
+                'blog_categories',
+                'blog',
+            ],
+
+            'contact' => [
+                'contact',
+                'contact_leads',
+                'download_leads',
+            ],
+
+        ],
+
+        'smtp' => [
+            'config_smtp',
+        ],
+
+        'security_and_access_control' => [
+            'audit',
+            'permissions',
+            'users',
+        ],
+
+        'config_theme' => [
+            'config_theme',
+        ],
+
+        'limits' => [
+            'slides' => 3,
+            'about' => 1,
+            'planNetworkCategory' => 20,
+            'planNetwork' => 20,
+            'topics' => 3,
+            'testimonials' => 6,
+            'faq' => 10,
+            'services' => 6,
+        ],
+
+    ],
+    'ecommerce' => [
+        'onepage' => [
+
+            'home' => [
+                'slides',
+                'topics',
+                'letsgo',
+                'testimonials',
+                'partner',
+                'planNetworkCategory',
+                'planNetwork',
+                'about',
+                'products',
+
+                'contact',
+                'contact_leads',
+            ],
+
+        ],
+
+        'multipage' => [
+
+            'home' => [
+                'slides',
+                'topics',
+                'faq_session',
+                'faq',
+                'testimonials',                
+                'services',
+            ],
+
+            'about' => [
+                'about',
+                'benefits',
+                'videos',
+                'mission',
+                'representatives',                
+                'service_locations',
+            ],
+
+            'products' => [
+                'brands',
+                'product_categories',
+                'products',
+            ],
+
+            'contact' => [
+                'contact',
+                'contact_leads',
+                'download_leads',
+            ],
+
+        ],
+
+        'smtp' => [
+            'config_smtp',
+        ],
+
+        'security_and_access_control' => [
+            'audit',
+            'permissions',
+            'users',
+        ],
+
+        'config_theme' => [
+            'config_theme',
+        ],
+
+        'limits' => [
+            'slides' => 3,
+            'about' => 1,
+            'planNetworkCategory' => 20,
+            'planNetwork' => 20,
+            'topics' => 3,
+            'testimonials' => 6,
+            'faq' => 10,
+            'services' => 6,
+            'videos' => 1,
+        ],
+
+    ],
 ];
