@@ -53,6 +53,13 @@ class HomePageService
         $benefitTopics = BenefitTopic::active()->sorting()->get();
         $planCategories = PlanNetworkCategory::with('plans')->whereHas('plans')->sorting()->active()->get();
         $plans = PlanNetwork::sorting()->active()->get();
+        $productCategories = ProductCategory::whereHas('products', function ($query) {
+            $query->active()->whereHas('brand', fn ($q) => $q->active());
+        })
+            ->active()
+            ->sorting()
+            ->limit(4)
+            ->get();
         $products = Product::sorting()->active()->get();
 
         $popUp = PopUp::active()->first();
@@ -62,6 +69,7 @@ class HomePageService
         $themeData = $themeManager->theme();
 
         return compact(
+            'productCategories',
             'products',
             'serviceLocation',
             'sessaoFaq',

@@ -28,7 +28,9 @@ class VideoController extends Controller
         $videos = Video::get();
         $theme = $themeManager;
         $themeData = $themeManager->theme();
-        return view('admin.blades.video.index', compact('videos', 'theme', 'themeData'));
+        $videoLimit = $themeManager->getLimit('videos', 0);
+
+        return view('admin.blades.video.index', compact('videoLimit', 'videos', 'theme', 'themeData'));
     }
 
     public function store(Request $request)

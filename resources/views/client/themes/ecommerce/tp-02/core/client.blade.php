@@ -454,6 +454,15 @@
             display: inline-block;
             margin-left: 10px;
         }
+        .btn-filter.active{            
+            background: #FFF;     
+            border-color: #FFF;   
+            color: var(--primary-color);    
+        }
+        .btn-filter{
+            color: #FFF;
+            border-color: #FFF;
+        }
         .service-bg::after{
             content: '';
             height: 100%;
@@ -488,30 +497,30 @@
 
             <!-- Menu -->
             <div class="collapse navbar-collapse" id="mainNavbar">
-                <ul class="navbar-nav mx-auto m-auto me-4 mb-2 mb-lg-0 gap-lg-3">
+                <ul class="navbar-nav justify-content-center align-items-center gap-4 w-100 mt-0">
                     <li class="nav-item">
-                        <a class="font-changa font-18 font-semibold font-header text-color-header active" href="{{route('index')}}">Home</a>
+                        <a class="font-changa font-18 font-medium font-header text-color-header active" href="{{route('index')}}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="font-changa font-18 font-semibold font-header text-color-header" href="{{route('about')}}">Sobre Nós</a>
+                        <a class="font-changa font-18 font-medium font-header text-color-header" href="{{route('about')}}">Sobre Nós</a>
                     </li>
                     <li class="nav-item">
-                        <a class="font-changa font-18 font-semibold font-header text-color-header" href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}">Depoimentos</a>
+                        <a class="font-changa font-18 font-medium font-header text-color-header" href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}">Depoimentos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="font-changa font-18 font-semibold font-header text-color-header" href="{{ request()->routeIs('about') ? '#team-section' : route('about') . '#team-section' }}">Representantes</a>
+                        <a class="font-changa font-18 font-medium font-header text-color-header" href="{{ request()->routeIs('about') ? '#team-section' : route('about') . '#team-section' }}">Representantes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="font-changa font-18 font-semibold font-header text-color-header" href="{{route('products')}}">Produtos</a>
+                        <a class="font-changa font-18 font-medium font-header text-color-header" href="{{route('products')}}">Produtos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="font-changa font-18 font-semibold font-header text-color-header" href="{{route('contact')}}">Contato</a>
+                        <a class="font-changa font-18 font-medium font-header text-color-header" href="{{route('contact')}}">Contato</a>
                     </li>
                 </ul>
 
                 <!-- Botão -->
                 @if ($tenantTheme->link_header <> null)                    
-                    <div class="d-flex justify-content-center gap-2 align-items-center btn-header bg-button-one rounded-2 py-3 px-4 hover-zoom">
+                    <div class="col-auto d-flex justify-content-center gap-2 align-items-center btn-header bg-button-one rounded-2 py-3 px-4 hover-zoom">
                         
                         <a href="{{$tenantTheme->link_header}}" target="_blank" rel="noopener noreferrer" class="bg-button-one color-button-one font-changa font-15 font-medium text-decoration-none color-button-one">
                             {{ $tenantTheme->btn_title_header }}

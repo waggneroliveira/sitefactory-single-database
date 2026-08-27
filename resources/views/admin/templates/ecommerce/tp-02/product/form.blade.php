@@ -1,6 +1,6 @@
 <div class="col-12 col-lg-6">
     <div class="row">
-        <div class="mb-3 col-12 col-lg-4 d-flex align-items-start flex-column">
+        <div class="mb-3 col-12 col-lg-6 d-flex align-items-start flex-column">
             <label for="category-select" class="form-label">Categoria(s) <span class="text-danger">*</span></label>
             @php
                 $currentCategory = isset($product) ? $product->product_category_id : null;
@@ -33,7 +33,7 @@
         </div>
     </div>
 
-    <div class="mb-3 col-12 col-lg-8">
+    <div class="mb-3 col-12 col-lg-12">
         <label for="title" class="form-label">Título <span class="text-danger">*</span></label>
         <input type="text" name="title" class="form-control" id="title{{isset($product->id)?$product->id:''}}" value="{{isset($product)?$product->title:''}}" required placeholder="Digite seu nome">
     </div>

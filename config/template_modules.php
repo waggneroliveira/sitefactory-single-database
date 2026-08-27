@@ -428,20 +428,18 @@ return [
             'home' => [
                 'slides',
                 'topics',
-                'statute',
-                'letsgo',
                 'faq_session',
                 'faq',
-                'testimonials',
+                'testimonials',                
                 'services',
             ],
 
             'about' => [
                 'about',
                 'benefits',
-                'mission',
-                'representatives',
                 'videos',
+                'mission',
+                'representatives',                
                 'service_locations',
             ],
 
@@ -482,6 +480,7 @@ return [
             'testimonials' => 6,
             'faq' => 10,
             'services' => 6,
+            'videos' => 1,
         ],
 
     ],
