@@ -202,7 +202,7 @@ return [
                 'faq',
                 'testimonials',
                 'services',
-
+                'service_locations',
                 'about',
 
                 'contact',
@@ -245,6 +245,7 @@ return [
         ],
 
         'limits' => [
+            'about' => 1,
             'slides' => 3,
             'testimonials' => 6,
             'faq' => 10,

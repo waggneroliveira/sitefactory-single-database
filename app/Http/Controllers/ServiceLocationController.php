@@ -22,7 +22,7 @@ class ServiceLocationController extends Controller
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
         // Verifica permissão para visualizar slides
-        $check = checkPermission('onde atendemos.visualizar', $settingTheme);
+        $check = checkPermission('service_locations', 'onde atendemos.visualizar', $settingTheme);
         if ($check !== true) {
             return $check; // retorna view 403
         }

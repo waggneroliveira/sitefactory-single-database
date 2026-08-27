@@ -166,7 +166,7 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()
-            ->route('admin.dashboard.painel')
+            ->route('admin.login')
             ->with(
                 'success',
                 'Logout realizado com sucesso!'

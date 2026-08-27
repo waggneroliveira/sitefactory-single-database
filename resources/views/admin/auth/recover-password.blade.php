@@ -70,7 +70,7 @@
                     <div class="text-center mt-3">
                         <p class="text-muted small">
                             <i class="mdi mdi-arrow-left"></i>
-                            <a href="{{route('admin.dashboard.painel')}}" class="text-decoration-none fw-semibold">Voltar para o login</a>
+                            <a href="{{route('admin.login')}}" class="text-decoration-none fw-semibold">Voltar para o login</a>
                         </p>
                     </div>
 

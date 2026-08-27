@@ -72,7 +72,7 @@
                             </div>
 
                             <!-- Botão de ação -->
-                            <a href="{{route('admin.dashboard.painel')}}" class="btn btn-primary py-2 px-4 fw-semibold" style="border-radius: 12px; background: linear-gradient(135deg, #0d6efd, #0b5ed7); border: none; transition: all 0.3s;">
+                            <a href="{{route('admin.login')}}" class="btn btn-primary py-2 px-4 fw-semibold" style="border-radius: 12px; background: linear-gradient(135deg, #0d6efd, #0b5ed7); border: none; transition: all 0.3s;">
                                 <i class="mdi mdi-login me-1"></i>
                                 Fazer login novamente
                             </a>
@@ -166,7 +166,7 @@
                     segundos--;
                     if (segundos <= 0) {
                         clearInterval(interval);
-                        window.location.href = '{{route("admin.dashboard.painel")}}';
+                        window.location.href = '{{route("admin.login")}}';
                     } else {
                         contador.textContent = segundos;
                     }

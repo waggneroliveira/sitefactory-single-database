@@ -78,7 +78,7 @@
                                     <p class="text-muted font-14 mt-2"> Um e-mail foi enviado para  <b>{{$email}}</b>.
                                         Por favor, verifique sua caixa de entrada e siga as instruções para prosseguir com a redefinição de sua senha.
                                     </p>
-                                    <a href="{{route('admin.dashboard.painel')}}" class="btn w-100 btn-primary text-black fw-bold waves-effect waves-light mt-3">Voltar para Login</a>
+                                    <a href="{{route('admin.login')}}" class="btn w-100 btn-primary text-black fw-bold waves-effect waves-light mt-3">Voltar para Login</a>
                                 </div>
 
                             </div> <!-- end card-body -->
