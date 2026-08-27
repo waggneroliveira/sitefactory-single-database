@@ -61,7 +61,7 @@ Route::prefix('painel/')->group(function () {
     Route::get('/', function () {
         return redirect()->route('admin.login');
     });
-    
+
     Route::get('login', function () {
         return view('admin.auth.login');
     })->name('admin.login');
@@ -107,9 +107,9 @@ Route::prefix('painel/')->group(function () {
             return view('admin.loadPage.loading');
         })->name('loading');
 
-        Route::get('painel/', function () {
-            return redirect()->route('admin.dashboard.painel');
-        });
+        // Route::get('painel/', function () {
+        //     return redirect()->route('admin.dashboard.painel');
+        // });
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
