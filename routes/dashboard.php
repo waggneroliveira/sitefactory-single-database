@@ -60,7 +60,7 @@ use Illuminate\Support\Facades\View;
 Route::prefix('painel/')->group(function () {
     Route::get('login', function () {
         return view('admin.auth.login');
-    })->name('admin.dashboard.painel');
+    })->name('admin.login');
 
 
     Route::post('login.do', [AuthController::class, 'authenticate'])
