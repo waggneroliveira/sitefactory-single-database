@@ -392,6 +392,9 @@
         }
 
         /* ===== BACKGROUNDS ===== */
+        .bg-yellow{
+            background: var(--primary-color);
+        }
         .bg-primary-color {
             background: var(--primary-color);
         }
@@ -702,7 +705,7 @@
 
                 <!-- Logo + botão -->
                 <div class="col-lg-4 mb-4 mb-lg-0">
-                    <img src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ config('app.name') }}" height="40">
+                    <img src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ config('app.name') }}" height="80">
 
                     @if ($tenantTheme->link <> null)                        
                         <div class="mt-3 mt-lg-5">
@@ -775,29 +778,91 @@
             <hr class="border-light opacity-25 my-4">
 
             <div class="row align-items-center">
+                @php
+                    $cnpj = !empty($tenantTheme->cnpj) ? preg_replace('/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/', '$1.$2.$3/$4-$5', preg_replace('/\D/', '', $tenantTheme->cnpj)) : '';
+                @endphp
 
-                <div class="col-md-10 small">
-                    <div class="d-flex flex-wrap col-12 font-changa font-16 font-regular text-center text-lg-end justify-content-center justify-content-lg-end">
-                        <p id="footer-text" class="text-color-footer"></p>                        
+                <div class="row align-items-center g-4 m-0">
+                    <div class="col-12 col-lg-5 text-center text-lg-start small text-color-footer m-0 p-0">
+                        <p id="footer-text" class="mb-0 text-color-footer"></p>
                     </div>
 
-                    <script defer>
-                        const currentYeaar = (new Date).getFullYear();
-                        document.getElementById("footer-text").innerHTML = `© ${currentYeaar} <span> {{$tenantTheme->copyright}}
-                    Todos os direitos reservados.</span> <a href="https://policies.google.com/privacy?hl=pt-BR" target="_blank" class="text-color-footer font-semibold">| Política de Privacidade</a>`
-                    </script>
+                    <div class="col-12 col-lg-3 text-center small text-color-footer mt-0">
+                        @if ($tenantTheme->privacy_policy <> null)                            
+                            <a href="#" class="text-color-footer text-decoration-none" data-bs-toggle="modal" data-bs-target="#privacyModal">Política de Privacidade</a>
+                            <span class="mx-1">|</span>
+                        @endif
+                        @if ($tenantTheme->terms_of_use <> null)                            
+                            <a href="#" class="text-color-footer text-decoration-none" data-bs-toggle="modal" data-bs-target="#termsModal">Termos de Uso</a>
+                        @endif
+                    </div>
+
+                    <div class="col-12 col-lg-4 m-0 p-0">
+                        <div class="d-flex justify-content-center justify-content-lg-end align-items-center gap-3">
+                            <a href="https://www.whi.dev.br/" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
+                                <span class="font-13">Sistema</span>
+                                <img src="{{asset('build/client/themes/default/images/whi-web.png')}}" title="Whi Web" alt="WHI Web" height="50" class="logo-system">
+                            </a>
+
+                            <span class="text-color-footer opacity-50">|</span>
+
+                            <a href="https://www.whi.dev.br/" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
+                                <span class="font-13">Desenvolvido por</span>
+                                <img src="{{asset('build/client/themes/default/images/whi.png')}}" title="Agência WHI" alt="WHI" height="25" class="logo-system">
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="col-12 col-md-2 text-center text-md-end mt-3 mt-md-0">
-                    <a href="http://www.whi.dev.br" target="_blank" rel="noopener noreferrer">
-                        <img src="{{asset('build/client/themes/ecommerce/tp-02/images/whi.svg')}}" alt="Agência WHI" style="height:35px;">
-                    </a>
-                </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const currentYear = new Date().getFullYear();
+                        const footerText = document.getElementById('footer-text');
 
+                        if (footerText) {
+                            footerText.innerHTML = `© ${currentYear} <span>{{ $tenantTheme->copyright }} - Todos os direitos reservados{{ $cnpj ? ' | ' . $cnpj : '' }}.</span>`;
+                        }
+                    });
+                </script>
             </div>
 
         </div>
     </footer>
+
+    <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="privacyModalLabel">Política de Privacidade</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    {!! $tenantTheme->privacy_policy !!}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Termos de Uso -->
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="termsModalLabel">Termos de Uso</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    {!! $tenantTheme->terms_of_use !!}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <a href="#" id="scroll-top" class="scroll-top bg-scroll d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
     
@@ -855,6 +920,31 @@
 
             }
 
+        });
+    </script>
+
+        {{-- Identificar bg so footer e adicionar class foote-light ou footer-dark --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const footer = document.querySelector('.bg-footer');
+
+            if (!footer) return;
+
+            const bgColor = getComputedStyle(footer).backgroundColor;
+
+            const rgb = bgColor.match(/\d+/g);
+
+            if (!rgb || rgb.length < 3) return;
+
+            const [r, g, b] = rgb.map(Number);
+
+            const luminance = (0.299 * r) + (0.587 * g) + (0.114 * b);
+
+            if (luminance < 150) {
+                footer.classList.add('footer-dark');
+            } else {
+                footer.classList.add('footer-light');
+            }
         });
     </script>
 </body>

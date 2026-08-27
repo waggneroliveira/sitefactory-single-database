@@ -1,3 +1,11 @@
+.footer-light .logo-system{
+    filter: inherit;
+    opacity: inherit;
+}
+.footer-dark .logo-system{
+    filter: brightness(0) invert(1);
+    opacity: 0.7;
+}
 .bg-grey-light{
     background: var(--text-color-light);
 }
@@ -331,12 +339,6 @@
     height: 130px !important;
 }
 
-.gallery-top .swiper-slide img{
-    width: 220px;
-    height: 100%;
-    object-fit: cover;
-}
-
 .gallery-thumbs .swiper-slide-thumb-active {
     opacity: 1 !important;
     border: 2px solid var(--text-color-light);
@@ -355,12 +357,15 @@
     align-items: center;
     overflow: hidden;
 }
-
+.w-personlizado.h-personlizado{
+    width: 93%;
+    height: 93%;
+}
 /* Faz a imagem preencher o slide sem deformar nem estourar */
 .gallery-top .swiper-slide img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Use 'cover' se quiser preencher todo o espaço sem bordas */
+    object-fit: cover; 
 }
 
 /* Fixa o tamanho das miniaturas (thumbs) */
@@ -422,9 +427,6 @@
     border-color: #10513D;
 }
 
-.product-description .description{
-    border: 1px solid #10513D;
-}
 .product-description .desc-title:before{
     content: '';
     width: 0;

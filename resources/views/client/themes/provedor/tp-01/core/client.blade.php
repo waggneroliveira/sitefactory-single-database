@@ -876,7 +876,7 @@
         @endforeach
     @endif
 
-        {{-- Identificar bg so footer e adicionar class foote-light ou footer-dark --}}
+    {{-- Identificar bg so footer e adicionar class foote-light ou footer-dark --}}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const footer = document.querySelector('.bg-footer');
