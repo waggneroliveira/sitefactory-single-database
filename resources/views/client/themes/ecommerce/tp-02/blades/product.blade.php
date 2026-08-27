@@ -24,48 +24,54 @@
                             </a>
                         </div>
                         <div class="product-gallery p-0">
-                            
-                                <div class="custom-gallery-carousel position-relative h-100">
-                                    <div class="swiper gallery-top border rounded-4">
-                                        <div class="swiper-wrapper">
-                                            @foreach ($product->galleries as $file)                                
-                                                <div class="swiper-slide d-flex justify-content-center align-items-center"><img src="{{asset('storage/' . $file->file)}}" loading="lazy" alt="Imagem 1" /></div>
-                                            @endforeach
-                                        </div>
-                                    </div>
+    <!-- Removido o h-100 do wrapper para evitar conflito de altura relativa -->
+    <div class="custom-gallery-carousel position-relative">
+        
+        <!-- Swiper Principal -->
+        <div class="swiper gallery-top border rounded-4">
+            <div class="swiper-wrapper">
+                @foreach ($product->galleries as $file)                
+                    <div class="swiper-slide">
+                        <img src="{{asset('storage/' . $file->file)}}" loading="lazy" alt="Imagem do produto" />
+                    </div>
+                @endforeach
+            </div>
+        </div>
 
-                                    <!-- Fim das setas -->
-                                    <div class="mt-3 gap-1">
-                                        <div class="swiper gallery-thumbs w-100">
-                                            <div class="swiper-wrapper d-flex justify-content-center align-items-center">
-                                                @foreach ($product->galleries as $file) 
-                                                    <div class="swiper-slide thumbs-width"><img src="{{asset('storage/' . $file->file)}}" loading="lazy" alt="Thumb 1" class="w-100 h-100 cover" /></div>
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Setas de navegação do Swiper -->
-                                    <div class="navigation-swiper">
-                                        <div class="swiper-button-prev"></div>
-                                        <div class="swiper-button-next"></div>
-                                    </div>
-                                </div>
-                            
-
-                            @if ($product->path_file <> null)                        
-                                <div class="d-flex justify-content-center mt-4 btn-prod">
-                                    <a href="{{asset('storage/' . $product->path_file)}}" class="btn-download-ficha rounded-pill px-4 bg-button-two color-button-two font-changa py-2 font-18 font-medium text-decoration-none">
-                                        <svg class="me-2" width="15" height="20" viewBox="0 0 15 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M1.28975 9.17017C1.30848 9.53072 1.45344 9.87123 1.70426 10.1283L6.49015 15.0333C7.04555 15.6025 7.95515 15.6025 8.51054 15.0333L13.2964 10.1283C14.18 9.22192 13.5749 7.6319 12.2858 7.6319C11.9063 7.6319 11.544 7.78129 11.2752 8.05672L8.92907 10.4621V1.46592C8.92907 1.07699 8.77679 0.708085 8.51947 0.444363C7.53737 -0.533798 6.07158 0.23571 6.07158 1.46592V10.463L3.7246 8.05757C2.88827 7.19959 1.28975 7.66954 1.28975 9.17017ZM0.466453 17.457C-0.547411 18.4961 0.236799 20 1.43064 20H13.5708C14.8526 20 15.465 18.3842 14.5904 17.5136C14.307 17.2315 13.9706 17.0713 13.5708 17.0713L1.43064 17.0705C1.0715 17.0705 0.729482 17.2091 0.466453 17.457Z" fill="var(--color-button-two)"></path>
-                                        </svg>
-                                        Baixar Ficha Técnica
-                                    </a>
-                                </div>
-                            @endif
-
+        <!-- Swiper Thumbs -->
+        <div class="mt-3">
+            <div class="swiper gallery-thumbs">
+                <div class="swiper-wrapper gap-2">
+                    @foreach ($product->galleries as $file) 
+                        <div class="swiper-slide">
+                            <img src="{{asset('storage/' . $file->file)}}" loading="lazy" alt="Thumb" />
                         </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+        <!-- Setas de navegação -->
+        <div class="navigation-swiper">
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </div>
+
+    @if ($product->path_file != null)        
+        <div class="d-flex justify-content-center mt-4 btn-prod">
+            <a href="{{asset('storage/' . $product->path_file)}}" class="btn-download-ficha rounded-pill px-4 bg-button-two color-button-two font-changa py-2 font-18 font-medium text-decoration-none">
+                <svg class="me-2" width="15" height="20" viewBox="0 0 15 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M1.28975 9.17017C1.30848 9.53072 1.45344 9.87123 1.70426 10.1283L6.49015 15.0333C7.04555 15.6025 7.95515 15.6025 8.51054 15.0333L13.2964 10.1283C14.18 9.22192 13.5749 7.6319 12.2858 7.6319C11.9063 7.6319 11.544 7.78129 11.2752 8.05672L8.92907 10.4621V1.46592C8.92907 1.07699 8.77679 0.708085 8.51947 0.444363C7.53737 -0.533798 6.07158 0.23571 6.07158 1.46592V10.463L3.7246 8.05757C2.88827 7.19959 1.28975 7.66954 1.28975 9.17017ZM0.466453 17.457C-0.547411 18.4961 0.236799 20 1.43064 20H13.5708C14.8526 20 15.465 18.3842 14.5904 17.5136C14.307 17.2315 13.9706 17.0713 13.5708 17.0713L1.43064 17.0705C1.0715 17.0705 0.729482 17.2091 0.466453 17.457Z" fill="var(--color-button-two)"></path>
+                </svg>
+                Baixar Ficha Técnica
+            </a>
+        </div>
+    @endif
+</div>
                     </div>
                 @endif
+
                 <!-- INFO PRODUTO -->
                 <div class="col-lg-7 {{ !$product->galleries->count() ? 'w-100' : '' }}">
 

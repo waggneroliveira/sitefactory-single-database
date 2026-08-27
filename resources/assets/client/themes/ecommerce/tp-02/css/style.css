@@ -330,34 +330,66 @@
 .thumbs-width {
     height: 130px !important;
 }
-.gallery-top .swiper-slide{
-    height: 360px;
-}
+
 .gallery-top .swiper-slide img{
     width: 220px;
     height: 100%;
     object-fit: cover;
 }
 
-.gallery-thumbs .swiper-slide img{
-    object-fit: contain;
-    aspect-ratio: 1/1;
-}
-.gallery-thumbs .swiper-slide {
-    opacity: 0.5;
-    cursor: pointer;
-}
 .gallery-thumbs .swiper-slide-thumb-active {
-    opacity: 1;
+    opacity: 1 !important;
     border: 2px solid var(--text-color-light);
 }
+
+/* Fixa uma altura máxima para a galeria principal e impede o overflow */
+.gallery-top {
+    height: 450px; /* Ajuste esta altura conforme o layout desejado */
+    width: 100%;
+}
+
+.gallery-top .swiper-slide {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Faz a imagem preencher o slide sem deformar nem estourar */
+.gallery-top .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Use 'cover' se quiser preencher todo o espaço sem bordas */
+}
+
+/* Fixa o tamanho das miniaturas (thumbs) */
+.gallery-thumbs {
+    height: 80px; /* Altura fixa para as thumbs */
+    box-sizing: border-box;
+    padding: 5px 0;
+    width: 80%;
+}
+
+.gallery-thumbs .swiper-slide {
+    height: 100%;
+    opacity: 0.4;
+    cursor: pointer;
+}
+
+.gallery-thumbs .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .btn-prod a{
     border: 1px solid var(--secondary-color) !important;
 }
 .navigation-swiper{
     position: absolute;
     left: 0;
-    bottom: 65px;
+    bottom: 38px;
     display: flex;
     justify-content: space-between;
     align-items: center;
