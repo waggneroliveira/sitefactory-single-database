@@ -1,15 +1,16 @@
 @extends($theme->core('client'))
-
+<style>
+    header{
+        background: var(--bg-header);
+    }
+    .mt-102{
+        margin-top: 102px !important;
+    }
+</style>
 @section('content')
     @if (isset($product))
-        <div class="banner-inner blog container-fluid d-flex justify-content-center align-items-center flex-column position-relative" style="--banner-bg: url('../images/banner-product.png');">
-            <span class="color-yellow font-changa font-16 font-bold position-relative z-3 text-center">Produtos </span>
-            <h1 class="font-mobi font-changa font-40 font-bold text-white position-relative z-3 mt-2">Catálogo</h1>
-            <p class="font-changa text-center font-15 font-regular text-white position-relative z-3">Confira aqui a seleção dos nossos melhores produtos.</p>
-        </div>
-    
-        <div class="container my-5">
-            <div class="row g-4">
+        <div class="container mb-5">
+            <div class="row g-4 mt-102">
                 @if ($product->galleries->count())
                     <!-- GALERIA -->
                     <div class="col-lg-5">
@@ -24,7 +25,7 @@
                         </div>
                         <div class="product-gallery p-0">
                             
-                                <div class="custom-gallery-carousel position-relative">
+                                <div class="custom-gallery-carousel position-relative h-100">
                                     <div class="swiper gallery-top border rounded-4">
                                         <div class="swiper-wrapper">
                                             @foreach ($product->galleries as $file)                                
@@ -34,7 +35,7 @@
                                     </div>
 
                                     <!-- Fim das setas -->
-                                    <div class="mt-3 100 gap-1">
+                                    <div class="mt-3 gap-1">
                                         <div class="swiper gallery-thumbs w-100">
                                             <div class="swiper-wrapper d-flex justify-content-center align-items-center">
                                                 @foreach ($product->galleries as $file) 

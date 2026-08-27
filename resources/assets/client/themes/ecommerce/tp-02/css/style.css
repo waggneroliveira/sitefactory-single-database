@@ -128,6 +128,7 @@
     object-fit: contain;
     height: 221px;
     width: 100%;
+    margin-top: 102px;
 }
 .banner-inner::after{
     content: '';
@@ -333,10 +334,11 @@
     height: 360px;
 }
 .gallery-top .swiper-slide img{
-    width: 100%;
+    width: 220px;
     height: 100%;
     object-fit: cover;
 }
+
 .gallery-thumbs .swiper-slide img{
     object-fit: contain;
     aspect-ratio: 1/1;
@@ -488,6 +490,17 @@
 .filter-list li {
     cursor: pointer;
     transition: 0.2s;
+    position: relative;
+}
+.filter-list li:not(:last-child)::after{
+    content: '';
+    display: block;
+    width: 80%;
+    height: 0.1px;
+    background: #E9E9E9;
+    background: rgb(255 255 255 / 30%);
+    margin: 0 auto;
+    margin-top: 3px;
 }
 
 .filter-list li:hover {
