@@ -18,7 +18,7 @@ class HomePageController
     public function index(ThemeManager $theme): View
     {
         $data = $this->service->getIndexData($theme);
-        dd(view($theme->view('index'), $data));
+
         return view($theme->view('index'), $data);
     }
 
