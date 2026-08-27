@@ -56,22 +56,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 
-Route::get('painel/', function () {
-    return redirect()->route('admin.dashboard.painel');
-});
 
 Route::prefix('painel/')->group(function () {
     Route::get('login', function () {
         return view('admin.auth.login');
     })->name('admin.dashboard.painel');
 
-    // Route::get('success-logout', function () {
-    //     return redirect()->route('admin.dashboard.painel');
-    // });
-
-    // Route::get('/success-logout', function () {
-    //     return view('admin.success.success-logout');
-    // })->name('success-logout');
 
     Route::post('login.do', [AuthController::class, 'authenticate'])
     ->name('admin.user.authenticate');
@@ -112,6 +102,10 @@ Route::prefix('painel/')->group(function () {
         Route::get('/loading', function () {
             return view('admin.loadPage.loading');
         })->name('loading');
+
+        Route::get('painel/', function () {
+            return redirect()->route('admin.dashboard.painel');
+        });
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
