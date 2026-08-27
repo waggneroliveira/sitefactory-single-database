@@ -202,7 +202,7 @@ return [
                 'faq',
                 'testimonials',
                 'services',
-
+                'service_locations',
                 'about',
 
                 'contact',
