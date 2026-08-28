@@ -14,7 +14,7 @@
                             <div class="hero-bg">
                                 <picture>
                                     <source srcset="{{ asset('storage/' . $slide->path_image_mobile) }}" media="(max-width: 530px)">
-                                    <img src="{{ asset('storage/' . $slide->path_image) }}" alt="Distribuição PET" title="Distribuição PET">
+                                    <img src="{{ asset('storage/' . $slide->path_image) }}" alt="{{$slide->title}}" title="{{$slide->title}}">
                                 </picture>
                             </div>
 
