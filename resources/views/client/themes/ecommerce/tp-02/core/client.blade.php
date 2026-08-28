@@ -264,11 +264,15 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap">
     </noscript>
 
-
-
     {{-- ============================================================
     BIBLIOTECAS CSS
     ============================================================ --}}
+
+    <link href="{{ asset('build/client/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('build/client/themes/ecommerce/tp-02/css/style.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('build/client/themes/ecommerce/tp-02/css/responsivo.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('build/client/css/default.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('build/client/lgpd/style.css') }}" rel="stylesheet" type="text/css">
 
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"></noscript>
@@ -279,18 +283,11 @@
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
 
-    <link href="{{ asset('build/client/lgpd/style.css') }}" rel="stylesheet" type="text/css">
+    <link rel="preload" href="{{ asset('build/client/bootstrap-icons/bootstrap-icons.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ asset('build/client/bootstrap-icons/bootstrap-icons.css') }}"></noscript>
 
-    <!-- SweetAlert2 CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
-    <link href="{{ asset('build/client/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
-
-    <link rel="preload" href="{{ asset('build/client/bootstrap-icons/bootstrap-icons.css') }}" as="style" onload="this.rel='stylesheet'">
-
-    <link href="{{ asset('build/client/themes/ecommerce/tp-02/css/style.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('build/client/themes/ecommerce/tp-02/css/responsivo.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('build/client/css/default.css') }}" rel="stylesheet" type="text/css">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"></noscript>
 
 
     {{-- ============================================================
@@ -335,50 +332,54 @@
     <style>
         :root {
             /* Cores Gerais */
-            --primary-color: {{ $tenantTheme->primary_color ? $tenantTheme->primary_color : '#10513D' }};
-            --secondary-color: {{ $tenantTheme->secondary_color ? $tenantTheme->secondary_color : '#FDC20C' }};
-            --accent-color: {{ $tenantTheme->accent_color ? $tenantTheme->accent_color : 'rgba(16, 81, 61, 0.5)' }};
-            --text-color: {{ $tenantTheme->text_color ? $tenantTheme->text_color : '#565656' }};
-            
+            --primary-color: {{ $tenantTheme->primary_color ?: '#10513D' }};
+            --secondary-color: {{ $tenantTheme->secondary_color ?: '#FDC20C' }};
+            --accent-color: {{ $tenantTheme->accent_color ?: 'rgba(16, 81, 61, 0.5)' }};
+            --text-color: {{ $tenantTheme->text_color ?: '#565656' }};
+
+            /* Cores Neutras */
+            --white: #FFFFFF;
+            --black: #000000;
+            --grey-light: #E9E9E9;
+            --grey-background: #F8F9FA;
+
             /* Header */
-            --text-color-header: {{ $tenantTheme->text_color_header ? $tenantTheme->text_color_header : '#FFFFFF' }};
-            --bg-header: {{ $tenantTheme->bg_header ? $tenantTheme->bg_header : '#10513D' }};
+            --text-color-header: {{ $tenantTheme->text_color_header ?: '#FFFFFF' }};
+            --bg-header: {{ $tenantTheme->bg_header ?: '#10513D' }};
 
             /* Footer */
-            --text-color-footer: {{ $tenantTheme->text_color_footer ? $tenantTheme->text_color_footer : '#FFFFFF' }};
-            --bg-footer: {{ $tenantTheme->bg_footer ? $tenantTheme->bg_footer : '#10513D' }};
-            
-            /* Footer */
-            --bg-scroll: {{ $tenantTheme->bg_scroll ? $tenantTheme->bg_scroll : '#F8F9FA' }};
-            
-            /* Botões */
-            --color-button-one: {{ $tenantTheme->color_button_one ? $tenantTheme->color_button_one : "#FFF" }};
-            --color-button-two: {{ $tenantTheme->color_button_two ? $tenantTheme->color_button_two : '#000' }};
-            --text-button-one: {{ $tenantTheme->text_button_one ? $tenantTheme->text_button_one : 'Botão 1' }};
-            --bg-button-one: {{ $tenantTheme->bg_button_one ? $tenantTheme->bg_button_one : '#10513D' }};
-            --text-button-two: {{ $tenantTheme->text_button_two ? $tenantTheme->text_button_two : 'Botão 2' }};
-            --bg-button-two: {{ $tenantTheme->bg_button_two ? $tenantTheme->bg_button_two : '#FDC20C' }};
-            
+            --text-color-footer: {{ $tenantTheme->text_color_footer ?: '#FFFFFF' }};
+            --bg-footer: {{ $tenantTheme->bg_footer ?: '#10513D' }};
+
+            /* Scroll */
+            --bg-scroll: {{ $tenantTheme->bg_scroll ?: '#F8F9FA' }};
+
+            /* Botão 1 */
+            --color-button-one: {{ $tenantTheme->color_button_one ?: '#FFF' }};
+            --text-button-one: "{{ $tenantTheme->text_button_one ?: 'Botão 1' }}";
+            --bg-button-one: {{ $tenantTheme->bg_button_one ?: '#10513D' }};
+
+            /* Botão 2 */
+            --color-button-two: {{ $tenantTheme->color_button_two ?: '#000' }};
+            --text-button-two: "{{ $tenantTheme->text_button_two ?: 'Botão 2' }}";
+            --bg-button-two: {{ $tenantTheme->bg_button_two ?: '#FDC20C' }};
+
             /* Copyright */
-            --copyright-text: {{ $tenantTheme->copyright ? $tenantTheme->copyright  : '© 2024 Todos os direitos reservados' }};
+            --copyright-text: "{{ $tenantTheme->copyright ?: '© 2024 Todos os direitos reservados' }}";
         }
-        /* ===== CORES (Text Colors) ===== */
+
         .primary-color {
             color: var(--primary-color);
         }
-
         .secondary-color {
             color: var(--secondary-color);
         }
-
         .accent-color {
             color: var(--accent-color);
         }
-
         .text-color {
             color: var(--text-color);
         }
-
         .text-color-header {
             color: var(--text-color-header);
         }
@@ -392,98 +393,109 @@
             color: var(--color-button-two);
         }
 
-        /* ===== BACKGROUNDS ===== */
-        .bg-yellow{
+        .bg-yellow {
             background: var(--primary-color);
         }
         .bg-primary-color {
             background: var(--primary-color);
         }
-
         .bg-secondary-color {
             background: var(--secondary-color);
         }
-
         .bg-accent-color {
             background: var(--accent-color);
         }
-
         .bg-header {
             background: var(--bg-header);
         }
-
         .bg-footer {
             background: var(--bg-footer);
         }
-
         .bg-scroll {
             background: var(--bg-scroll);
         }
-
         .bg-button-one {
             background: var(--bg-button-one);
         }
-
         .bg-button-two {
             background: var(--bg-button-two);
         }
-        .about li::after{
+
+        .about li::after {
             color: var(--primary-color);
         }
-        .bg-grey-light{
-            background: #E9E9E9;
+        .about li::before {
+            color: var(--primary-color);
         }
-        .testimonial-swiper .swiper-pagination-bullet{
+
+        .bg-grey-light {
+            background: var(--grey-light);
+        }
+
+        .testimonial-swiper .swiper-pagination-bullet {
             background: var(--primary-color);
         }
-        #lgpd-banner button{
+        .main-swiper .swiper-pagination-bullet-active {
             background: var(--primary-color);
         }
+
+        #lgpd-banner button {
+            background: var(--primary-color);
+        }
+
         .list-service ul li::before {
             color: var(--primary-color);
         }
-        .border-warning{
+
+        .border-warning {
             border-color: var(--primary-color) !important;
         }
-        .z-index-10{
-            z-index: 4;
+        .border-color-footer {
+            border-color: var(--text-color-footer) !important;
         }
-        .about li::before{
-            color: var(--primary-color);
+
+        .z-index-10 {
+            z-index: 10;
         }
-        .line-firu{
+
+        .line-firu {
             height: 0.1px;
             width: 80px;
             background: var(--primary-color);
             display: inline-block;
             margin-left: 10px;
         }
-        .btn-filter.active{            
-            background: #FFF;     
-            border-color: #FFF;   
-            color: var(--primary-color);    
+
+        .btn-filter {
+            color: var(--white);
+            border-color: var(--white);
         }
-        .btn-filter{
-            color: #FFF;
-            border-color: #FFF;
+        .btn-filter.active {
+            background: var(--white);
+            border-color: var(--white);
+            color: var(--primary-color);
         }
-        .service-bg::after{
+
+        .service-bg::after {
             content: '';
             height: 100%;
             width: 100%;
             position: absolute;
             left: 0;
             top: 0;
-            background: color-mix(in srgb, var(--secondary-color) 80%, transparent);
-        }
-        .main-swiper .swiper-pagination-bullet-active{
-            background: var(--primary-color);
-        }
-        .scroll-top:hover{
             background: var(--secondary-color);
+            opacity: 0.8;
         }
-        .border-color-footer{
-            border-color: var(--text-color-footer) !important;
+
+        @supports (background: color-mix(in srgb, red 50%, transparent)) {
+            .service-bg::after {
+                background: color-mix(in srgb, var(--secondary-color) 80%, transparent);
+                opacity: 1;
+            }
+        }
+
+        .scroll-top:hover {
+            background: var(--secondary-color);
         }
     </style>
 
@@ -495,8 +507,8 @@
             </a>
 
             <!-- Toggle mobile -->
-            <button class="navbar-toggler navbar navbar-expand-lg navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler navbar navbar-expand-lg navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Abrir menu de navegação">
+                <span class="navbar-toggler-icon" aria-hidden="true"></span>
             </button>
 
             <!-- Menu -->
@@ -563,10 +575,10 @@
 
                 <!-- Mapa do site -->
                 <div class="col-lg-6 mb-4 mb-lg-0">
-                    <h6 class="font-changa text-color-footer font-16 font-bold mb-3 position-relative d-inline-block font-changa font-16 font-medium">
+                    <div class="font-changa text-color-footer font-16 font-bold mb-3 position-relative d-inline-block font-changa font-16 font-medium">
                         Mapa do Site
                         <span class="d-block bg-yellow mt-1" style="height:3px; width:40px;"></span>
-                    </h6>
+                    </div>
 
                     <div class="row">
                         <div class="col-6">
@@ -594,19 +606,21 @@
                 ))                    
                     <div class="col-lg-2 text-lg-end">
                         <div class="d-flex gap-3 justify-content-lg-end">
-                            @if ($contact->link_insta <> null)                            
-                                <a href="{{$contact->link_insta}}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5">
-                                    <i class="bi bi-instagram"></i>
+                            @if ($contact->link_insta)
+                                <a href="{{ $contact->link_insta }}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5" aria-label="Visite nosso Instagram">
+                                    <i class="bi bi-instagram" aria-hidden="true"></i>
                                 </a>
                             @endif
-                            @if ($contact->link_face <> null)                            
-                                <a href="{{$contact->link_face}}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5">
-                                    <i class="bi bi-facebook"></i>
+
+                            @if ($contact->link_face)
+                                <a href="{{ $contact->link_face }}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5" aria-label="Visite nosso Facebook">
+                                    <i class="bi bi-facebook" aria-hidden="true"></i>
                                 </a>
                             @endif
-                            @if ($contact->link_tik_tok <> null)                            
-                                <a href="{{$contact->link_tik_tok}}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5">
-                                    <i class="bi bi-linkedin"></i>
+
+                            @if ($contact->link_tik_tok)
+                                <a href="{{ $contact->link_tik_tok }}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5" aria-label="Visite nosso TikTok">
+                                    <i class="bi bi-tiktok" aria-hidden="true"></i>
                                 </a>
                             @endif
                         </div>
@@ -655,7 +669,7 @@
                     </div>
                 </div>
 
-                <script>
+                <script defer>
                     document.addEventListener('DOMContentLoaded', function () {
                         const currentYear = new Date().getFullYear();
                         const footerText = document.getElementById('footer-text');
@@ -707,19 +721,251 @@
 
     <a href="#" id="scroll-top" class="scroll-top bg-scroll d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
     
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-    <!-- SweetAlert2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('build/client/bootstrap/js/bootstrap.bundle.js') }}"></script>
-    <script src="{{ asset('build/client/lgpd/script.js') }}"></script>
-    <script src="{{ asset('build/client/themes/ecommerce/tp-02/js/default.js') }}"></script>
-    <script src="{{ asset('build/client/js/default.js') }}"></script>
-    <script src="{{ asset('build/client/themes/ecommerce/tp-02/js/gsap-efect.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <script src="{{ asset('build/client/bootstrap/js/bootstrap.bundle.js') }}" defer></script>
+    <script src="{{ asset('build/client/lgpd/script.js') }}" defer></script>
+    <script src="{{ asset('build/client/themes/ecommerce/tp-02/js/default.js') }}" defer></script>
+    <script src="{{ asset('build/client/js/default.js') }}" defer></script>
+    <script src="{{ asset('build/client/themes/ecommerce/tp-02/js/gsap-efect.js') }}" defer></script>
 
+    <script defer>
+        document.addEventListener('DOMContentLoaded', function () {
+            new Swiper('.testimonial-swiper', {
+                loop: true,
+                spaceBetween: 24,
+                pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+                },
+                breakpoints: {
+                0: {
+                    slidesPerView: 1.2,
+                },
+                768: {
+                    slidesPerView: 2,
+                },
+                1200: {
+                    slidesPerView: 3,
+                }
+                }
+            });
+        });
+    </script>
+
+    <script defer>
+        const buttons = document.querySelectorAll('.btn-filter');
+        const products = document.querySelectorAll('.product');
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filter = btn.dataset.filter;
+
+            products.forEach(product => {
+                product.classList.toggle(
+                'd-none',
+                filter !== 'all' && !product.classList.contains(filter)
+                );
+            });
+            });
+        });
+    </script>
+
+    <script defer>
+        // ===========================
+        // Helpers
+        // ===========================
+
+        function norm(url) {
+            if (!url) return "";
+            return url.startsWith("//") ? window.location.protocol + url : url;
+        }
+
+        function toEmbed(rawUrl) {
+            const urlStr = norm(rawUrl);
+            if (!urlStr) return "";
+
+            let u;
+            try {
+                u = new URL(urlStr);
+            } catch {
+                return urlStr;
+            }
+
+            const host = u.hostname.replace(/^www\./, "");
+
+            // YouTube
+            if (host.includes("youtube.com") || host.includes("youtu.be")) {
+
+                if (u.pathname.startsWith("/embed/")) {
+                    return u.toString();
+                }
+
+                if (host === "youtu.be") {
+                    const id = u.pathname.split("/")[1];
+                    return `https://www.youtube.com/embed/${id}`;
+                }
+
+                if (u.pathname.startsWith("/shorts/")) {
+                    const id = u.pathname.split("/")[2];
+                    return `https://www.youtube.com/embed/${id}`;
+                }
+
+                const v = u.searchParams.get("v");
+
+                if (v) {
+                    return `https://www.youtube.com/embed/${v}`;
+                }
+            }
+
+            // Vimeo
+            if (host.includes("vimeo.com")) {
+
+                if (host === "player.vimeo.com") {
+                    return u.toString();
+                }
+
+                const id = u.pathname.split("/").filter(Boolean).pop();
+
+                if (/^\d+$/.test(id)) {
+                    return `https://player.vimeo.com/video/${id}`;
+                }
+            }
+
+            return urlStr;
+        }
+
+        function getYouTubeId(url) {
+
+            try {
+
+                const u = new URL(url);
+                const host = u.hostname.replace(/^www\./, "");
+
+                if (host === "youtu.be") {
+                    return u.pathname.split("/")[1];
+                }
+
+                if (u.pathname.startsWith("/shorts/")) {
+                    return u.pathname.split("/")[2];
+                }
+
+                return u.searchParams.get("v");
+
+            } catch {
+                return null;
+            }
+        }
+
+        // ===========================
+        // DOM Ready
+        // ===========================
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // ===========================
+            // Vídeo
+            // ===========================
+
+            const playBtn = document.querySelector(".video-play-btn");
+
+            if (playBtn) {
+
+                playBtn.addEventListener("click", function () {
+
+                    const container = this.closest(".video-container");
+
+                    if (!container) return;
+
+                    const embedUrl = toEmbed(container.dataset.video);
+
+                    container.innerHTML = `
+                        <iframe
+                            src="${embedUrl}?autoplay=1"
+                            frameborder="0"
+                            allow="autoplay; encrypted-media"
+                            allowfullscreen
+                            style="width:100%;height:100%;">
+                        </iframe>
+                    `;
+                });
+            }
+
+            const videoContainer = document.querySelector(".video-container");
+
+            if (videoContainer) {
+
+                const img = videoContainer.querySelector(".video-thumb");
+
+                if (img) {
+
+                    const id = getYouTubeId(videoContainer.dataset.video);
+
+                    if (id) {
+                        img.src = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+                    }
+                }
+            }
+
+            // ===========================
+            // MVW
+            // ===========================
+
+            const section = document.getElementById("mvwSection");
+
+            if (!section) return;
+
+            const cards = section.querySelectorAll(".mvw-card");
+
+            if (!cards.length) return;
+
+            function changeBackground(card) {
+
+                const bg = card.dataset.bg;
+
+                if (!bg) return;
+
+                section.style.backgroundImage = `url("${bg}")`;
+
+                cards.forEach(c => c.classList.remove("active"));
+
+                card.classList.add("active");
+            }
+
+            // imagem inicial
+            changeBackground(cards[0]);
+
+            cards.forEach(card => {
+
+                // Desktop
+                card.addEventListener("mouseenter", function () {
+
+                    if (window.innerWidth > 768) {
+                        changeBackground(this);
+                    }
+
+                });
+
+                // Mobile
+                card.addEventListener("click", function () {
+
+                    if (window.innerWidth <= 768) {
+                        changeBackground(this);
+                    }
+
+                });
+
+            });
+
+        });
+    </script>
     {{-- Modais alert --}}
-    <script>
+    <script defer>
         document.addEventListener('DOMContentLoaded', function () {
 
             let successMessage = @json(session('success'));
