@@ -192,7 +192,7 @@
                 <div class="row g-4 products mb-5">
                     <!-- Produto -->
                     @foreach ($products as $product)                
-                        <div class="col-6 col-sm-6 col-lg-3 product {{$product->category->slug}}">
+                        <div class="col-6 col-sm-6 col-lg-3 mb-4 product {{$product->category->slug}}">
                             <div class="product-card bg-accent-color shadow-sm rounded-3 p-2 p-lg-3 position-relative">
                                 <div class="image position-relative mb-0">
                                     <img src="{{asset('storage/' . $product->path_image)}}" alt="{{$product->title}}" loading="lazy">

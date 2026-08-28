@@ -309,10 +309,10 @@
 
     @include('client/themes/ecommerce/tp-02/includes/lgpd/lgpd')
 
-     @if (isset($contact) && $contact->phone_one <> null)
+    @if (isset($contact) && $contact->whatsapp <> null)
         @php
             // Remove caracteres não numéricos do telefone
-            $phone = preg_replace('/\D/', '', $contact->phone_one);
+            $phone = preg_replace('/\D/', '', $contact->whatsapp);
 
             // Monta mensagem com ícones e quebras de linha
             $mensagem = "Olá! Encontrei seu site e gostaria de conhecer mais sobre os planos disponíveis.%0A";
