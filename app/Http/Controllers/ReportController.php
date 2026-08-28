@@ -22,7 +22,7 @@ class ReportController extends Controller
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
         // Verifica permissão para visualizar slides
-        $check = checkPermission('missao visao e valores.visualizar', $settingTheme);
+        $check = checkPermission('mission', 'missao visao e valores.visualizar', $settingTheme);
         if ($check !== true) {
             return $check; // retorna view 403
         }

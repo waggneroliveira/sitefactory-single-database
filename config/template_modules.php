@@ -428,20 +428,15 @@ return [
 
             'home' => [
                 'slides',
-                'topics',
                 'faq_session',
                 'faq',
-                'testimonials',                
-                'services',
+                'testimonials',
             ],
 
             'about' => [
                 'about',
                 'benefits',
                 'videos',
-                'mission',
-                'representatives',                
-                'service_locations',
             ],
 
             'products' => [
