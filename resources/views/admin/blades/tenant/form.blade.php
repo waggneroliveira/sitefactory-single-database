@@ -4,70 +4,71 @@
 {{-- ============================================================
 DADOS DO CLIENTE
 ============================================================ --}}
-
-<div class="row g-3">
-    <div class="col-12">
-        <h5 class="mb-3 border-bottom pb-2">Dados do Cliente</h5>
-    </div>
-
-    {{-- NOME --}}
-    <div class="col-12 col-lg-3">
-        <div class="mb-3">
-            <label for="name{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-label">Nome</label>
-            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name{{ isset($tenant->id) ? $tenant->id : '' }}" value="{{ old('name', $tenant->name ?? '') }}" placeholder="Nome do cliente" required>
-            @error('name')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
+@if (Auth::user()->hasRole('Super'))
+    <div class="row g-3">
+        <div class="col-12">
+            <h5 class="mb-3 border-bottom pb-2">Dados do Cliente</h5>
+        </div>
+    
+        {{-- NOME --}}
+        <div class="col-12 col-lg-3">
+            <div class="mb-3">
+                <label for="name{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-label">Nome</label>
+                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name{{ isset($tenant->id) ? $tenant->id : '' }}" value="{{ old('name', $tenant->name ?? '') }}" placeholder="Nome do cliente" required>
+                @error('name')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+    
+        {{-- DOMÍNIO --}}
+        <div class="col-12 col-lg-3">
+            <div class="mb-3">
+                <label for="domain{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-label">Domínio</label>
+                <input type="text" name="domain" class="form-control @error('domain') is-invalid @enderror" id="domain{{ isset($tenant->id) ? $tenant->id : '' }}" value="{{ old('domain', $tenant->domain ?? '') }}" placeholder="exemplo.com.br" required>
+                @error('domain')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+    
+        {{-- TEMPLATE --}}
+        <div class="col-12 col-lg-3">
+            <div class="mb-3">
+                <label for="template_theme_id{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-label">Template</label>
+                <select name="template_theme_id" id="template_theme_id{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-select @error('template_theme_id') is-invalid @enderror">
+                    <option value="">Selecione um template</option>
+                    @foreach($templateThemes ?? [] as $templateTheme)
+                        <option value="{{ $templateTheme->id }}" {{ old('template_theme_id', $tenant->template_theme_id ?? '') == $templateTheme->id ? 'selected' : '' }}>
+                            {{ $templateTheme->name . ' - ' . ucwords($templateTheme->layout_type) . ' - ' . ucwords($templateTheme->template_variation)}}
+                        </option>
+                    @endforeach
+                </select>
+                @error('template_theme_id')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+    
+        {{-- PLANO --}}
+        <div class="col-12 col-lg-3">
+            <div class="mb-3">
+                <label for="plan_id{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-label">Plano contratado</label>
+                <select name="plan_id" id="plan_id{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-select @error('plan_id') is-invalid @enderror">
+                    <option value="">Selecione um plano</option>
+                    @foreach($plans as $planOption)
+                        <option value="{{ $planOption->id }}" {{ old('plan_id', $tenant->plan_id ?? '') == $planOption->id ? 'selected' : '' }}>
+                            {{ $planOption->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('plan_id')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
         </div>
     </div>
-
-    {{-- DOMÍNIO --}}
-    <div class="col-12 col-lg-3">
-        <div class="mb-3">
-            <label for="domain{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-label">Domínio</label>
-            <input type="text" name="domain" class="form-control @error('domain') is-invalid @enderror" id="domain{{ isset($tenant->id) ? $tenant->id : '' }}" value="{{ old('domain', $tenant->domain ?? '') }}" placeholder="exemplo.com.br" required>
-            @error('domain')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-    </div>
-
-    {{-- TEMPLATE --}}
-    <div class="col-12 col-lg-3">
-        <div class="mb-3">
-            <label for="template_theme_id{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-label">Template</label>
-            <select name="template_theme_id" id="template_theme_id{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-select @error('template_theme_id') is-invalid @enderror">
-                <option value="">Selecione um template</option>
-                @foreach($templateThemes ?? [] as $templateTheme)
-                    <option value="{{ $templateTheme->id }}" {{ old('template_theme_id', $tenant->template_theme_id ?? '') == $templateTheme->id ? 'selected' : '' }}>
-                        {{ $templateTheme->name . ' - ' . ucwords($templateTheme->layout_type) . ' - ' . ucwords($templateTheme->template_variation)}}
-                    </option>
-                @endforeach
-            </select>
-            @error('template_theme_id')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-    </div>
-
-    {{-- PLANO --}}
-    <div class="col-12 col-lg-3">
-        <div class="mb-3">
-            <label for="plan_id{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-label">Plano contratado</label>
-            <select name="plan_id" id="plan_id{{ isset($tenant->id) ? $tenant->id : '' }}" class="form-select @error('plan_id') is-invalid @enderror">
-                <option value="">Selecione um plano</option>
-                @foreach($plans as $planOption)
-                    <option value="{{ $planOption->id }}" {{ old('plan_id', $tenant->plan_id ?? '') == $planOption->id ? 'selected' : '' }}>
-                        {{ $planOption->name }}
-                    </option>
-                @endforeach
-            </select>
-            @error('plan_id')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-    </div>
-</div>
+@endif
 
 {{-- ============================================================
 INFORMAÇÕES DO TEMPLATE
@@ -126,28 +127,28 @@ CORES GERAIS
         <h5 class="mb-3 border-bottom pb-2">Cores Gerais</h5>
     </div>
 
-    <div class="col-12 col-lg-3">
+    <div class="col-12 col-lg-4">
         <div class="mb-3">
             <label class="form-label">Cor primária</label>
             <input type="text" name="primary_color" class="form-control" id="colorpicker-default" value="{{ old('primary_color', $tenant->primary_color ?? '') }}">
         </div>
     </div>
 
-    <div class="col-12 col-lg-3">
+    <div class="col-12 col-lg-4">
         <div class="mb-3">
             <label class="form-label">Cor secundária</label>
             <input type="text" name="secondary_color" class="form-control" id="colorpicker-showalpha" value="{{ old('secondary_color', $tenant->secondary_color ?? '') }}">
         </div>
     </div>
 
-    <div class="col-12 col-lg-3">
+    <div class="col-12 col-lg-4">
         <div class="mb-3">
-            <label class="form-label">Cor de destaque (Accent)</label>
+            <label class="form-label">Cor de destaque</label>
             <input type="text" name="accent_color" class="form-control" id="colorpicker-showpaletteonly" value="{{ old('accent_color', $tenant->accent_color ?? '') }}">
         </div>
     </div>
 
-    <div class="col-12 col-lg-3">
+    <div class="col-12 col-lg-3 d-none">
         <div class="mb-3">
             <label class="form-label">Cor do texto</label>
             <input type="text" name="text_color" class="form-control" id="colorpicker-togglepaletteonly" value="{{ old('text_color', $tenant->text_color ?? '') }}">
@@ -202,21 +203,21 @@ BOTÃO 1
         <h5 class="mb-3 border-bottom pb-2">Configurações do Botão Primário</h5>
     </div>
 
-    <div class="col-12 col-lg-4">
+    <div class="col-12 col-lg-4 d-none">
         <div class="mb-3">
             <label class="form-label">Texto do Botão Primário</label>
             <input type="text" name="text_button_one" class="form-control" value="{{ old('text_button_one', $tenant->text_button_one ?? '') }}">
         </div>
     </div>
 
-    <div class="col-12 col-lg-4">
+    <div class="col-12 col-lg-6">
         <div class="mb-3">
             <label class="form-label">Cor do Texto</label>
             <input type="text" name="color_button_one" class="form-control" id="colorpicker-color-button1" value="{{ old('color_button_one', $tenant->color_button_one ?? '') }}">
         </div>
     </div>
 
-    <div class="col-12 col-lg-4">
+    <div class="col-12 col-lg-6">
         <div class="mb-3">
             <label class="form-label">Cor de Fundo</label>
             <input type="text" name="bg_button_one" class="form-control" id="colorpicker-bg-button1" value="{{ old('bg_button_one', $tenant->bg_button_one ?? '') }}">
@@ -233,21 +234,21 @@ BOTÃO 2
         <h5 class="mb-3 border-bottom pb-2">Configurações do Botão Secundário</h5>
     </div>
 
-    <div class="col-12 col-lg-4">
+    <div class="col-12 col-lg-4 d-none">
         <div class="mb-3">
             <label class="form-label">Texto do Botão Secundário</label>
             <input type="text" name="text_button_two" class="form-control" value="{{ old('text_button_two', $tenant->text_button_two ?? '') }}">
         </div>
     </div>
 
-    <div class="col-12 col-lg-4">
+    <div class="col-12 col-lg-6">
         <div class="mb-3">
             <label class="form-label">Cor do Texto</label>
             <input type="text" name="color_button_two" class="form-control" id="colorpicker-color-button2" value="{{ old('color_button_two', $tenant->color_button_two ?? '') }}">
         </div>
     </div>
 
-    <div class="col-12 col-lg-4">
+    <div class="col-12 col-lg-6">
         <div class="mb-3">
             <label class="form-label">Cor de Fundo</label>
             <input type="text" name="bg_button_two" class="form-control" id="colorpicker-bg-button2" value="{{ old('bg_button_two', $tenant->bg_button_two ?? '') }}">
