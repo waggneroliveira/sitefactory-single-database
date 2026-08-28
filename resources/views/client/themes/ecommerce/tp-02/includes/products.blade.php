@@ -20,7 +20,7 @@
         <div class="col-6 col-sm-6 col-lg-4 mb-4">
             <div class="product-card bg-accent-color shadow-sm rounded-3 p-2 p-lg-3 position-relative">
                 <div class="image position-relative mb-0">
-                    <img src="{{asset('storage/' . $product->path_image)}}" alt="{{$product->title}}">
+                    <img src="{{asset('storage/' . $product->path_image)}}" alt="{{$product->title}}" loading="lazy">
                 </div>
                 <div class="pt-3 pb-3 pb-lg-4">
                     <h6 class="font-changa font-18 font-semibold text-dark">{{$product->title}}</h6>

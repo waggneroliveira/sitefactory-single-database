@@ -537,160 +537,6 @@
         </nav>
     </header>
 
-    <div class="modal fade" id="modalDownloadFicha" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <form id="formDownloadFicha">
-                    @csrf
-
-                    <div class="modal-header flex-column">
-                        <div class="d-flex justify-content-end col-12">
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                        </div>
-                        <img src="{{asset('build/client/themes/ecommerce/tp-02/images/girollato-footer.svg')}}" alt="{{ config('app.name') }}" height="40">
-                        <h5 class="modal-title text-white font-changa font-20 font-medium mt-3">Preencha o formulário para baixar o arquivo</h5>
-                    </div>
-
-                    <div class="modal-body">
-
-                        <div class="mb-3">
-                            <label class="form-label text-white font-changa font-15 font-regular">Nome</label>
-                            <input type="text" name="name" class="form-control" required>
-                        </div>
-
-                        <div class="row">
-                            <div class="mb-3 col-12 col-lg-6">
-                                <label class="form-label text-white font-changa font-15 font-regular">CNPJ</label>
-                                <input type="text" inputmode="numeric" name="cnpj" id="cnpj" class="form-control" required>
-                            </div>
-    
-                            <div class="mb-3 col-12 col-lg-6">
-                                <label class="form-label text-white font-changa font-15 font-regular">Telefone</label>
-                                <input type="text" inputmode="numeric" name="phone" id="phone" class="form-control" required>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="submit" class="btn bg-yellow border">
-                            Baixar arquivo
-                        </button>
-                    </div>
-
-                </form>
-
-            </div>
-        </div>
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-
-            const modal = new bootstrap.Modal(document.getElementById('modalDownloadFicha'));
-            const form = document.getElementById('formDownloadFicha');
-
-            let currentFile = null;
-
-            document.querySelectorAll('.btn-download-ficha').forEach(button => {
-
-                button.addEventListener('click', function(e){
-
-                    e.preventDefault();
-
-                    currentFile = this.getAttribute('href');
-
-                    modal.show();
-
-                });
-
-            });
-
-            form.addEventListener('submit', function(e){
-
-                e.preventDefault();
-
-                const formData = new FormData(form);
-
-                fetch("{{ route('download.ficha.store') }}", {
-                    method: "POST",
-                    headers: {
-                        "X-CSRF-TOKEN": document.querySelector('input[name=_token]').value
-                    },
-                    body: formData
-                })
-                .then(res => res.json())
-                .then(res => {
-
-                    if(res.success){
-
-                        modal.hide();
-
-                        // FORÇA DOWNLOAD
-                        const link = document.createElement('a');
-                        link.href = currentFile;
-                        link.setAttribute('download', '');
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-
-                        form.reset();
-
-                    }
-
-                });
-
-            });
-
-        });
-
-        // mascara CNPJ
-        function maskCNPJ(value) {
-
-            value = value.replace(/\D/g, '');
-
-            value = value.replace(/^(\d{2})(\d)/, '$1.$2');
-            value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
-            value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
-            value = value.replace(/(\d{4})(\d)/, '$1-$2');
-
-            return value.substring(0, 18);
-        }
-
-
-        // mascara celular
-        function maskPhone(value) {
-
-            value = value.replace(/\D/g, '');
-
-            value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
-            value = value.replace(/(\d{5})(\d)/, '$1-$2');
-
-            return value.substring(0, 15);
-        }
-
-
-        // aplicar máscaras
-        document.addEventListener('DOMContentLoaded', function () {
-
-            const cnpj = document.getElementById('cnpj');
-            const phone = document.getElementById('phone');
-
-            if(cnpj){
-                cnpj.addEventListener('input', function(){
-                    this.value = maskCNPJ(this.value);
-                });
-            }
-
-            if(phone){
-                phone.addEventListener('input', function(){
-                    this.value = maskPhone(this.value);
-                });
-            }
-
-        });
-    </script>
-
     <main>
         @yield('content') 
     </main>
@@ -794,16 +640,16 @@
 
                     <div class="col-12 col-lg-4 m-0 p-0">
                         <div class="d-flex justify-content-center justify-content-lg-end align-items-center gap-3">
-                            <a href="https://www.whi.dev.br/" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
+                            <a href="http://whiweb.com.br/" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
                                 <span class="font-13">Sistema</span>
-                                <img src="{{asset('build/client/themes/default/images/whi-web.png')}}" title="Whi Web" alt="WHI Web" height="50" class="logo-system">
+                                <img src="{{asset('build/client/themes/default/images/whi-web.png')}}" title="Whi Web" alt="WHI Web" height="50" class="logo-system" loading="lazy">
                             </a>
 
                             <span class="text-color-footer opacity-50">|</span>
 
                             <a href="https://www.whi.dev.br/" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
                                 <span class="font-13">Desenvolvido por</span>
-                                <img src="{{asset('build/client/themes/default/images/whi.png')}}" title="Agência WHI" alt="WHI" height="25" class="logo-system">
+                                <img src="{{asset('build/client/themes/default/images/whi.png')}}" title="Agência WHI" alt="WHI" height="25" class="logo-system" loading="lazy">
                             </a>
                         </div>
                     </div>
@@ -861,8 +707,8 @@
 
     <a href="#" id="scroll-top" class="scroll-top bg-scroll d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
     
-    <script src="https://cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -870,6 +716,7 @@
     <script src="{{ asset('build/client/lgpd/script.js') }}"></script>
     <script src="{{ asset('build/client/themes/ecommerce/tp-02/js/default.js') }}"></script>
     <script src="{{ asset('build/client/js/default.js') }}"></script>
+    <script src="{{ asset('build/client/themes/ecommerce/tp-02/js/gsap-efect.js') }}"></script>
 
     {{-- Modais alert --}}
     <script>

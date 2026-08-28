@@ -77,7 +77,7 @@
             </div>
         </section>
     @endif
-    
+
     @if($abouts->count())
         <section id="about" class="about py-3 py-lg-5">
             <div class="container">
@@ -131,7 +131,7 @@
         </section>
     @endif    
 
-     @if ($topics->count() > 0)
+    @if ($topics->count() > 0)
         <section id="topic" class="topics py-5">
             <div class="container">
                 <div class="row g-4 justify-content-center">
@@ -195,7 +195,7 @@
                         <div class="col-6 col-sm-6 col-lg-3 product {{$product->category->slug}}">
                             <div class="product-card bg-accent-color shadow-sm rounded-3 p-2 p-lg-3 position-relative">
                                 <div class="image position-relative mb-0">
-                                    <img src="{{asset('storage/' . $product->path_image)}}" alt="{{$product->title}}">
+                                    <img src="{{asset('storage/' . $product->path_image)}}" alt="{{$product->title}}" loading="lazy">
                                 </div>
                                 <div class="pt-3 pb-3 pb-lg-4">
                                     <h6 class="font-changa font-18 font-semibold text-dark">{{$product->title}}</h6>
@@ -328,7 +328,7 @@
                                 <div class="testimonial-card p-3 p-lg-4">
                                     @if ($depoiment->path_image <> null)                                
                                         <div class="icon mb-3">
-                                            <img src="{{asset('storage/' . $depoiment->path_image)}}" alt="Depoimento-{{$depoiment->id}}">
+                                            <img src="{{asset('storage/' . $depoiment->path_image)}}" alt="Depoimento-{{$depoiment->id}}" loading="lazy">
                                         </div>
                                     @endif
 
@@ -355,49 +355,26 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-        new Swiper('.blog-swiper', {
-            spaceBetween: 24,
-            pagination: {
-            el: '.swiper-pagination-blog',
-            clickable: true,
-            },
-            breakpoints: {
-            0: {
-                slidesPerView: 1.3,
-            },
-            576: {
-                slidesPerView: 2,
-            },
-            992: {
-                slidesPerView: 4,
-                allowTouchMove: false,
-            }
-            }
+            new Swiper('.testimonial-swiper', {
+                loop: true,
+                spaceBetween: 24,
+                pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+                },
+                breakpoints: {
+                0: {
+                    slidesPerView: 1.2,
+                },
+                768: {
+                    slidesPerView: 2,
+                },
+                1200: {
+                    slidesPerView: 3,
+                }
+                }
+            });
         });
-        });
-
-        document.addEventListener('DOMContentLoaded', function () {
-        new Swiper('.testimonial-swiper', {
-            loop: true,
-            spaceBetween: 24,
-            pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-            },
-            breakpoints: {
-            0: {
-                slidesPerView: 1.2,
-            },
-            768: {
-                slidesPerView: 2,
-            },
-            1200: {
-                slidesPerView: 3,
-            }
-            }
-        });
-        });
-
     </script>
 
     <script>

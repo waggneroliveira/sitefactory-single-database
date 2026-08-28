@@ -87,7 +87,7 @@
                 </div>
 
                 <!-- Produtos -->
-                <div id="products-container" class="row g-4 products mt-4">
+                <div id="products-container" class="row g-4 products mt-4 mb-5">
                     @include('client.themes.ecommerce.tp-02.includes.products')
                 </div>
             </div>
