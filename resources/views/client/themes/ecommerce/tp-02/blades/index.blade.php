@@ -158,7 +158,7 @@
             <div class="container">
 
                 <!-- Header -->
-                <div class="my-4 d-flex justify-content-center justify-content-lg-between align-items-center flex-wrap">
+                <div class="my-5 my-lg-4 d-flex justify-content-center justify-content-lg-between align-items-center flex-wrap">
                     <div class="col-10">
                         <div class="about-span primary-color font-changa justify-content-center justify-content-lg-start font-16 font-medium d-flex align-items-center mb-0">
                             {{$sections['product']->subtitle}} <span class="line-firu"></span>
