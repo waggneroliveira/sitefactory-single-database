@@ -209,15 +209,33 @@
     });
   });
 
-  document.addEventListener("scroll", (function() {
+  document.addEventListener("DOMContentLoaded", function () {
       const header = document.getElementById("header");
-      if (header) {
-          if (window.scrollY > 50) {
+
+      function updateHeader() {
+          if (!header) return;
+
+          const isMobile = window.innerWidth <= 991;
+
+          if (isMobile || window.scrollY > 50) {
               header.classList.add("bg-header");
           } else {
               header.classList.remove("bg-header");
           }
       }
-      n && (window.scrollY > 100 ? n.classList.add("active") : n.classList.remove("active"))
-  }));
+
+      updateHeader();
+
+      document.addEventListener("scroll", function () {
+          updateHeader();
+
+          if (n) {
+              window.scrollY > 100
+                  ? n.classList.add("active")
+                  : n.classList.remove("active");
+          }
+      });
+
+      window.addEventListener("resize", updateHeader);
+  });
 })();

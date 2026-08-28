@@ -79,13 +79,13 @@
     @endif
     
     @if($abouts->count())
-        <section class="about py-5">
+        <section id="about" class="about py-3 py-lg-5">
             <div class="container">
                 <div class="row align-items-center justify-content-between">
                     @foreach($abouts as $about)
                         @if (isset($about->path_image) && $about->path_image <> null)                    
                             <!-- IMAGEM (fora do container) -->
-                            <div class="col-12 col-lg-5 p-0 about-image">
+                            <div class="col-12 col-lg-5 p-0 about-image text-center text-lg-start">
                                 <img
                                 src="{{asset('storage/'.$about->path_image)}}"
                                 alt="Sobre a Girollato"
@@ -103,7 +103,7 @@
                                     Sobre Nós <span class="line-firu"></span>
                                 </div>
 
-                                <h3 class="about-title font-changa font-50 font-bold mb-3 text-black">
+                                <h3 class="about-title font-changa font-50 font-bold mb-3 text-black text-start">
                                     {{$about->title}}
                                 </h3>
 
@@ -154,17 +154,17 @@
     @endif
 
     @if (!empty($sections['product']) || isset($products) && $products->count())
-        <section class="products-section py-5 bg-secondary-color">
+        <section class="products-section py-3 py-lg-5 bg-secondary-color">
             <div class="container">
 
                 <!-- Header -->
-                <div class="my-4 d-flex justify-content-between align-items-center">
+                <div class="my-4 d-flex justify-content-center justify-content-lg-between align-items-center flex-wrap">
                     <div class="col-10">
-                        <div class="about-span primary-color font-changa font-16 font-medium d-flex align-items-center mb-0">
+                        <div class="about-span primary-color font-changa justify-content-center justify-content-lg-start font-16 font-medium d-flex align-items-center mb-0">
                             {{$sections['product']->subtitle}} <span class="line-firu"></span>
                         </div>
     
-                        <h3 class="about-title text-start font-changa font-50 font-bold text-white mb-3 position-relative">
+                        <h3 class="about-title text-start font-changa d-flex justify-content-center justify-content-lg-start font-50 font-bold text-white mb-3 position-relative">
                             {{$sections['product']->title}}
                         </h3>
                     </div>
@@ -181,10 +181,10 @@
                 </div>
 
                 <!-- Filtros -->
-                <div class="d-flex justify-content-start gap-3 mb-5 flex-wrap">
-                    <button class="btn-filter font-changa font-18 font-medium primary-color px-5 py-1 active" data-filter="all">Todos</button>
+                <div class="d-flex justify-content-center justify-content-lg-start gap-2 mb-5 flex-wrap">
+                    <button class="btn-filter font-changa font-18 font-medium primary-color px-4 px-lg-5 py-1 active" data-filter="all">Todos</button>
                     @foreach ($productCategories as $productCategory)
-                        <button class="btn-filter font-changa font-18 font-medium primary-color px-5 py-1" data-filter="{{$productCategory->slug}}">{{$productCategory->title}}</button>
+                        <button class="btn-filter font-changa font-18 font-medium primary-color px-4 px-lg-5 py-1" data-filter="{{$productCategory->slug}}">{{$productCategory->title}}</button>
                     @endforeach
                 </div>
                 
@@ -193,16 +193,16 @@
                     <!-- Produto -->
                     @foreach ($products as $product)                
                         <div class="col-6 col-sm-6 col-lg-3 product {{$product->category->slug}}">
-                            <div class="product-card bg-accent-color shadow-sm rounded-3 p-3 position-relative">
+                            <div class="product-card bg-accent-color shadow-sm rounded-3 p-2 p-lg-3 position-relative">
                                 <div class="image position-relative mb-0">
                                     <img src="{{asset('storage/' . $product->path_image)}}" alt="{{$product->title}}">
                                 </div>
-                                <div class="pt-3 pb-5">
+                                <div class="pt-3 pb-3 pb-lg-4">
                                     <h6 class="font-changa font-18 font-semibold text-dark">{{$product->title}}</h6>
                                     <p class="color-grey font-changa font-16 font-regular mb-0">{{substr(strip_tags($product->description), 0, 70)}}</p>
                                 </div>
                                 <a href="{{ route('client.product', ['category' => $product->category->slug, 'slug' => $product->slug]) }}" class="col-12">
-                                    <span class="bg-button-two color-button-two rounded-2 py-3 px-3 btn-view font-changa font-16 font-medium col-11 col-lg-8 d-flex align-items-center justify-content-center">
+                                    <span class="bg-button-two color-button-two rounded-2 py-2 py-lg-3 px-2 px-lg-3 btn-view font-changa font-16 font-medium col-9 col-lg-8 d-flex align-items-center justify-content-center">
                                         Comprar agora
                                         <svg class="ms-2" width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.77699 8.90909L5.01136 8.15341L8.16335 5.00142H0V3.90767H8.16335L5.01136 0.765624L5.77699 -7.15256e-07L10.2315 4.45454L5.77699 8.90909Z" fill="var(--color-button-two)"/>
@@ -255,7 +255,7 @@
                         <div class="col-lg-5">
                             <!-- Header -->
                             <div class="mb-4">
-                                <div class="about-span primary-color font-changa font-16 font-medium d-flex align-items-center mb-0">
+                                <div class="about-span primary-color font-changa font-16 justify-content-center justify-content-lg-start font-medium d-flex align-items-center mb-0">
                                     {{$sessaoFaq->subtitle}} <span class="line-firu"></span>
                                 </div>
 
@@ -325,7 +325,7 @@
                         <!-- Slide -->
                         @foreach ($depoiments as $depoiment)                    
                             <div class="swiper-slide">
-                                <div class="testimonial-card">
+                                <div class="testimonial-card p-3 p-lg-4">
                                     @if ($depoiment->path_image <> null)                                
                                         <div class="icon mb-3">
                                             <img src="{{asset('storage/' . $depoiment->path_image)}}" alt="Depoimento-{{$depoiment->id}}">

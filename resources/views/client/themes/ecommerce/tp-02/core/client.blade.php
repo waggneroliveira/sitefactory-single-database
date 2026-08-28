@@ -258,11 +258,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Changa:wght@200..800&display=swap" onload='this.onload=null,this.rel="stylesheet"'>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" onload='this.onload=null,this.rel="stylesheet"'>
 
     <noscript>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Changa:wght@200..800&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap">
     </noscript>
+
 
 
     {{-- ============================================================
@@ -494,7 +495,7 @@
             </a>
 
             <!-- Toggle mobile -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+            <button class="navbar-toggler navbar navbar-expand-lg navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -505,20 +506,17 @@
                         <a class="font-changa font-18 font-medium font-header text-color-header active" href="{{route('index')}}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="font-changa font-18 font-medium font-header text-color-header" href="{{route('about')}}">Sobre Nós</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="font-changa font-18 font-medium font-header text-color-header" href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}">Depoimentos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="font-changa font-18 font-medium font-header text-color-header" href="{{ request()->routeIs('about') ? '#team-section' : route('about') . '#team-section' }}">Representantes</a>
+                        <a class="font-changa font-18 font-medium font-header text-color-header" href="{{ request()->routeIs('index') ? '#about' : route('index') . '#about' }}">Sobre Nós</a>
                     </li>
                     <li class="nav-item">
                         <a class="font-changa font-18 font-medium font-header text-color-header" href="{{route('products')}}">Produtos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="font-changa font-18 font-medium font-header text-color-header" href="{{route('contact')}}">Contato</a>
+                        <a class="font-changa font-18 font-medium font-header text-color-header" href="{{ request()->routeIs('index') ? '#faq' : route('index') . '#faq' }}">FAQ</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="font-changa font-18 font-medium font-header text-color-header" href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}">Depoimentos</a>
+                    </li>                    
                 </ul>
 
                 <!-- Botão -->
@@ -728,18 +726,15 @@
                         <div class="col-6">
                             <ul class="list-unstyled">
                                 <li><a href="{{route('index')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Início</a></li>
-                                <li><a href="{{route('about')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Quem Somos</a></li>
-                                <li><a href="{{ request()->routeIs('index') ? '#stats-section' : route('index') . '#stats-section' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Diferenciais</a></li>
-                                <li><a href="{{route('blogAll')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Blog</a></li>
+                                <li><a href="{{ request()->routeIs('index') ? '#about' : route('index') . '#about' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Sobre Nós</a></li>
                                 <li><a href="{{route('products')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Produtos</a></li>
                             </ul>
                         </div>
 
                         <div class="col-6">
                             <ul class="list-unstyled">
-                                <li><a href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Depoimentos</a></li>
                                 <li><a href="{{ request()->routeIs('index') ? '#faq' : route('index') . '#faq' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">FAQ</a></li>
-                                <li><a href="{{route('contact')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Contato</a></li>
+                                <li><a href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Depoimentos</a></li>
                             </ul>
                         </div>
                     </div>
@@ -874,6 +869,7 @@
     <script src="{{ asset('build/client/bootstrap/js/bootstrap.bundle.js') }}"></script>
     <script src="{{ asset('build/client/lgpd/script.js') }}"></script>
     <script src="{{ asset('build/client/themes/ecommerce/tp-02/js/default.js') }}"></script>
+    <script src="{{ asset('build/client/js/default.js') }}"></script>
 
     {{-- Modais alert --}}
     <script>
@@ -920,31 +916,6 @@
 
             }
 
-        });
-    </script>
-
-        {{-- Identificar bg so footer e adicionar class foote-light ou footer-dark --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const footer = document.querySelector('.bg-footer');
-
-            if (!footer) return;
-
-            const bgColor = getComputedStyle(footer).backgroundColor;
-
-            const rgb = bgColor.match(/\d+/g);
-
-            if (!rgb || rgb.length < 3) return;
-
-            const [r, g, b] = rgb.map(Number);
-
-            const luminance = (0.299 * r) + (0.587 * g) + (0.114 * b);
-
-            if (luminance < 150) {
-                footer.classList.add('footer-dark');
-            } else {
-                footer.classList.add('footer-light');
-            }
         });
     </script>
 </body>

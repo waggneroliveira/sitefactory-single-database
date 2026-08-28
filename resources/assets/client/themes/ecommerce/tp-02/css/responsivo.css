@@ -78,7 +78,7 @@
         height: 270px;
     }
     .product-card img{
-        height: 140px;
+        height: 125px;
     }
     .firula-about{
         left: 56px;
@@ -96,7 +96,7 @@
         font-size: 1.75rem;
     }
     .hero-content{
-        align-items: baseline;
+        align-items: center;
     }
     .hero-title, .about-title, .faq-title, .font-mobi{
         font-size: 1.75rem;
@@ -119,6 +119,15 @@
     }
     .about-subtitle.span-product{
         width: 62%;
+    }
+    .about-image img{
+        height: 375px;
+    }
+    .btn-view{
+        bottom: -16px;
+    }
+    .scroll-top.active{
+        bottom: 65px !important;
     }
 }
 @media (max-width: 441px) {
@@ -172,7 +181,6 @@
     .hero-title{
         font-size: 24px;
     }
-
 }
 @media (max-width: 414px) {
     .team-card {
@@ -182,14 +190,15 @@
         font-size: 0.938rem;
     }
     .btn-filter{
-        font-size: 0.75rem;
+        font-size: 0.75rem !important;
     }
     .hero-title{
         font-size: 1.25rem;
     }
     .hero-slide, .hero-content {
-        min-height: 80vh;
-        height: 80vh;
+        margin-top: 0 !important;
+        min-height: 100%;
+        height: 90vh;
     }
     .btn-one, .btn-two{
         font-size: 0.75rem;
