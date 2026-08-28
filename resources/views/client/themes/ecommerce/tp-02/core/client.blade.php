@@ -498,6 +498,9 @@
             background: var(--secondary-color);
         }
         @media (max-width: 680px) {
+            .stat-number{
+                font-size: 1.375rem !important;
+            }
             .video-container {
                 height: 215px;
             }
