@@ -201,7 +201,7 @@
     @if (isset($sessaoFaq) && $sessaoFaq <> null || isset($faqs) && $faqs->count())
         <section id="faq" class="faq-section py-5 bg-grey-light">
             <div class="container">
-                <div class="row align-items-start g-5">
+                <div class="row align-items-start flex-column-reverse flex-lg-row flex-wrap g-5">
                     @if (isset($faqs) && $faqs->count())
                         <!-- COLUNA DIREITA -->
                         <div class="col-lg-7">

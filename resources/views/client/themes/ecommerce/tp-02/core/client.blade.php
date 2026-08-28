@@ -497,6 +497,11 @@
         .scroll-top:hover {
             background: var(--secondary-color);
         }
+        @media (max-width: 680px) {
+            .video-container {
+                height: 215px;
+            }
+        }
     </style>
 
     <header id="header" class="shadow-sm position w-100">
