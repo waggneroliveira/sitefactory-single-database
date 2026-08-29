@@ -323,7 +323,7 @@
             </svg>
         </a>
     @endif
-
+    
     <style>
         :root {
             /* Cores Gerais */
@@ -495,10 +495,15 @@
     </style>
 
     <header id="header" class="shadow-sm position w-100">
-        <nav class="navbar navbar-expand-lg navbar-light container py-3 px-3 px-lg-0">            
+        <nav class="navbar navbar-expand-lg navbar-light container py-3 px-3 px-lg-0">         
+            {{-- Pegar tamanho/proporção da logo --}}
+            @php
+                $logoPath = storage_path('app/public/' . $tenantTheme->path_image_logo_header);
+                $dimensions = file_exists($logoPath) ? @getimagesize($logoPath) : null;
+            @endphp 
             <!-- Logo -->
             <a class="navbar-brand d-flex align-items-center" href="{{route('index')}}">
-                <img src="{{asset('storage/' .$tenantTheme->path_image_logo_header)}}" alt="{{ config('app.name') }}" height="60">
+                <img src="{{asset('storage/' .$tenantTheme->path_image_logo_header)}}" alt="{{ $tenantTheme->name }}" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}">
             </a>
 
             <!-- Toggle mobile -->
@@ -556,7 +561,12 @@
 
                 <!-- Logo + botão -->
                 <div class="col-lg-4 mb-4 mb-lg-0">
-                    <img src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ config('app.name') }}" height="80">
+                    {{-- Pegar tamanho/proporção da logo --}}
+                    @php
+                        $logoPath = storage_path('app/public/' . $tenantTheme->path_image_logo_footer);
+                        $dimensions = file_exists($logoPath) ? @getimagesize($logoPath) : null;
+                    @endphp 
+                    <img src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ $tenantTheme->name }}" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}">
 
                     @if ($tenantTheme->link <> null)                        
                         <div class="mt-3 mt-lg-5">
@@ -651,14 +661,14 @@
                         <div class="d-flex justify-content-center justify-content-lg-end align-items-center gap-3">
                             <a href="http://whiweb.com.br/" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
                                 <span class="font-13">Sistema</span>
-                                <img src="{{asset('build/client/themes/default/images/whi-web.png')}}" title="Whi Web" alt="WHI Web" height="50" class="logo-system" loading="lazy">
+                                <img src="{{asset('build/client/themes/default/images/whi-web.png')}}" title="Whi Web" alt="WHI Web" width="89" height="50" class="logo-system" loading="lazy">
                             </a>
 
                             <span class="text-color-footer opacity-50">|</span>
 
                             <a href="https://www.whi.dev.br/" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
                                 <span class="font-13">Desenvolvido por</span>
-                                <img src="{{asset('build/client/themes/default/images/whi.png')}}" title="Agência WHI" alt="WHI" height="25" class="logo-system" loading="lazy">
+                                <img src="{{asset('build/client/themes/default/images/whi.png')}}" title="Agência WHI" alt="WHI" width="44" height="25" class="logo-system" loading="lazy">
                             </a>
                         </div>
                     </div>
