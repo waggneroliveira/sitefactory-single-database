@@ -1,117 +1,91 @@
 <IfModule mod_rewrite.c>
-    <IfModule mod_negotiation.c>
-        Options -MultiViews -Indexes
-    </IfModule>
-
     RewriteEngine On
+    <!-- RewriteBase /homologacao/ -->
 
-    # Mantém o header de Autorização (Essencial para APIs/JWT)
-    RewriteCond %{HTTP:Authorization} .
-    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-
-    # Redireciona para o controller / index.php se o arquivo/pasta não existir
-    RewriteCond %{REQUEST_FILENAME} !-d
+    # Redireciona requisições para index.php
     RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^ index.php [L]
 </IfModule>
 
 
-# Compressão Brotli (Prioridade máxima de velocidade se disponível)
+# Compressão Brotli (se disponível)
 <IfModule mod_brotli.c>
-    AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css application/javascript application/x-javascript application/json image/svg+xml image/x-icon
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css application/javascript application/json image/svg+xml
 </IfModule>
 
-# Compressão GZIP (Fallback rápido para servidores sem Brotli)
+# Compressão GZIP (melhora velocidade e economia de banda)
 <IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
-    AddOutputFilterByType DEFLATE application/javascript application/x-javascript application/json
-    AddOutputFilterByType DEFLATE image/svg+xml image/x-icon
-    AddOutputFilterByType DEFLATE font/woff2 font/woff application/font-woff2
-    
-    Header append Vary User-Agent env=!dont-vary
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+  AddOutputFilterByType DEFLATE application/javascript application/x-javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+  AddOutputFilterByType DEFLATE font/woff2 font/woff
+  Header append Vary User-Agent env=!dont-vary
 </IfModule>
 
-
-# Cache por Tipos (Expires) - Alinhado com o Cache-Control
+# Cache inteligente de arquivos estáticos
 <IfModule mod_expires.c>
-    ExpiresActive On
-    ExpiresDefault "access plus 1 month"
+  ExpiresActive On
+  ExpiresDefault "access plus 1 month"
 
-    # HTML (curta duração para refletir mudanças do site)
-    ExpiresByType text/html "access plus 600 seconds"
+  # Imagens
+  ExpiresByType image/webp "access plus 6 months"
+  ExpiresByType image/jpeg "access plus 6 months"
+  ExpiresByType image/png "access plus 6 months"
+  ExpiresByType image/gif "access plus 6 months"
+  ExpiresByType image/svg+xml "access plus 6 months"
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType application/pdf "access plus 1 year"
 
-    # Imagens e PDFs (6 meses a 1 ano)
-    ExpiresByType image/avif "access plus 1 year"
-    ExpiresByType image/webp "access plus 1 year"
-    ExpiresByType image/jpeg "access plus 1 year"
-    ExpiresByType image/png "access plus 1 year"
-    ExpiresByType image/gif "access plus 1 year"
-    ExpiresByType image/svg+xml "access plus 1 year"
-    ExpiresByType image/x-icon "access plus 1 year"
-    ExpiresByType application/pdf "access plus 1 year"
+  # Fontes
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType application/font-woff2 "access plus 1 year"
 
-    # Fontes Web
-    ExpiresByType font/woff2 "access plus 1 year"
-    ExpiresByType font/woff "access plus 1 year"
-    ExpiresByType application/font-woff2 "access plus 1 year"
-
-    # CSS e JS (Ajustado para 1 ano)
-    ExpiresByType text/css "access plus 1 year"
-    ExpiresByType application/javascript "access plus 1 year"
-    ExpiresByType application/json "access plus 1 month"
+  # CSS, JS
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType application/json "access plus 1 month"
 </IfModule>
 
-
-# Headers HTTP para Segurança e Performance
+# Headers para cache, segurança e performance
 <IfModule mod_headers.c>
-    # Cache de HTML
-    <FilesMatch "\.(html|htm)$">
-        Header set Cache-Control "max-age=600, private, must-revalidate"
-    </FilesMatch>
+  # Cache-Control para HTML (cache leve)
+  <FilesMatch "\.(html)$">
+    Header set Cache-Control "public, max-age=600"
+  </FilesMatch>
 
-    # Cache agressivo para assets estáticos (Imagens, Fontes, CSS, JS)
-    <FilesMatch "\.(js|css|png|jpg|jpeg|gif|webp|avif|svg|woff2?|ico)$">
-        Header set Cache-Control "public, max-age=31536000, immutable"
-    </FilesMatch>
+  # Cache-Control para demais arquivos
+  <FilesMatch "\.(js|css|png|jpg|jpeg|gif|webp|svg|woff2?)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
 
-    # Liberar fontes para CORS (Evita erro de carregamento em subdomínios/CDNs)
-    <FilesMatch "\.(woff2|woff|eot|ttf|otf)$">
-        Header set Access-Control-Allow-Origin "*"
-    </FilesMatch>
+  # CORS para fontes
+  <FilesMatch "\.(woff2|woff)$">
+    Header set Access-Control-Allow-Origin "*"
+  </FilesMatch>
 
-    # Segurança HTTP / SEO
-    Header always set X-Content-Type-Options "nosniff"
-    Header always set X-Frame-Options "SAMEORIGIN"
-    Header always set Referrer-Policy "strict-origin-when-cross-origin"
-    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
-    Header always set X-XSS-Protection "1; mode=block"
-    Header set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
-    
-    # Remove marcas d'água de servidores para segurança
-    Header unset X-Powered-By
-    Header unset Server
-
-    # SameSite nos Cookies
-    Header always edit Set-Cookie ^(.*)$ "$1; SameSite=Lax; Secure"
+  # Segurança extra
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+  Header always set X-XSS-Protection "1; mode=block"
+  Header set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+  Header unset X-Powered-By
+  # Cookies SameSite (se usar cookies)
+  Header always edit Set-Cookie ^(.*)$ $1;SameSite=Lax
 </IfModule>
 
-
-# Segurança: Desativa navegação por diretórios e esconde arquivos sensíveis
+# Evita listagem de diretórios
 Options -Indexes
 
-<FilesMatch "\.(htaccess|htpasswd|ini|phps|fla|psd|log|sh|env|git)$">
-    <IfModule mod_authz_core.c>
-        Require all denied
-    </IfModule>
-    <IfModule !mod_authz_core.c>
-        Order Allow,Deny
-        Deny from all
-    </IfModule>
+# Bloqueia arquivos sensíveis
+<FilesMatch "\.(htaccess|htpasswd|ini|phps|fla|psd|log|sh)$">
+  Order Allow,Deny
+  Deny from all
 </FilesMatch>
 
-
-# Desativa ETag (Impede revalidação desnecessária entre servidores)
+# Remove ETag (para evitar conflitos de cache entre servidores)
 FileETag None
-<IfModule mod_headers.c>
-    Header unset ETag
-</IfModule>
+Header unset ETag
