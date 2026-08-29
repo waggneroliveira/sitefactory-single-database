@@ -500,10 +500,10 @@
             @php
                 $logoPath = storage_path('app/public/' . $tenantTheme->path_image_logo_header);
                 $dimensions = file_exists($logoPath) ? @getimagesize($logoPath) : null;
-            @endphp 
+            @endphp
             <!-- Logo -->
-            <a class="navbar-brand d-flex align-items-center" href="{{route('index')}}">
-                <img src="{{asset('storage/' .$tenantTheme->path_image_logo_header)}}" alt="{{ $tenantTheme->name }}" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}">
+            <a class="navbar-brand d-flex align-items-center" href="{{ route('index') }}">
+                <img src="{{ asset('storage/' . $tenantTheme->path_image_logo_header) }}" alt="{{ $tenantTheme->name }}" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
             </a>
 
             <!-- Toggle mobile -->
@@ -565,9 +565,9 @@
                     @php
                         $logoPath = storage_path('app/public/' . $tenantTheme->path_image_logo_footer);
                         $dimensions = file_exists($logoPath) ? @getimagesize($logoPath) : null;
-                    @endphp 
-                    <img src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ $tenantTheme->name }}" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}">
-
+                    @endphp
+                    <img src="{{ asset('storage/' . $tenantTheme->path_image_logo_footer) }}" alt="{{ $tenantTheme->name }}" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
+                    
                     @if ($tenantTheme->link <> null)                        
                         <div class="mt-3 mt-lg-5">
                             <a href="{{ $tenantTheme->link }}" target="_blank" rel="noopener noreferrer" class="bg-button-one color-button-one px-4 py-2 font-changa font-16 font-medium text-decoration-none hover-zoom">
