@@ -495,7 +495,7 @@
     </style>
 
     <header id="header" class="shadow-sm position w-100">
-        <nav class="navbar navbar-expand-lg navbar-light container py-3 px-3 px-lg-0">         
+        <nav class="navbar navbar-expand-lg navbar-light container py-1 py-lg-3 px-3 px-lg-0">         
             {{-- Pegar tamanho/proporção da logo --}}
             @php
                 $logoPath = storage_path('app/public/' . $tenantTheme->path_image_logo_header);
