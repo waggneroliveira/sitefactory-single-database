@@ -34,77 +34,78 @@ return [
 
     'petshop' => [
         'onepage' => [
-
-            'home' => [
-                'slides',
-                'topics',
-                'statute',
-                'letsgo',
-                'faq_session',
-                'faq',
-                'testimonials',
-                'services',
-
-                'about',
-                'benefits',
-                'mission',
-                'representatives',
-                'videos',
-                'service_locations',
-
-                'brands',
-                'product_categories',
-                'products',
-
-                'blog_categories',
-                'blog',
-
-                'contact',
-                'contact_leads',
-                'download_leads',
-            ],
-
+            'tp-01' => [
+                'home' => [
+                    'slides',
+                    'topics',
+                    'statute',
+                    'letsgo',
+                    'faq_session',
+                    'faq',
+                    'testimonials',
+                    'services',
+    
+                    'about',
+                    'benefits',
+                    'mission',
+                    'representatives',
+                    'videos',
+                    'service_locations',
+    
+                    'brands',
+                    'product_categories',
+                    'products',
+    
+                    'blog_categories',
+                    'blog',
+    
+                    'contact',
+                    'contact_leads',
+                    'download_leads',
+                ],
+            ],    
         ],
 
         'multipage' => [
+            'tp-01' => [
+                'home' => [
+                    'slides',
+                    'topics',
+                    'statute',
+                    'letsgo',
+                    'faq_session',
+                    'faq',
+                    'testimonials',
+                    'services',
+                ],
 
-            'home' => [
-                'slides',
-                'topics',
-                'statute',
-                'letsgo',
-                'faq_session',
-                'faq',
-                'testimonials',
-                'services',
+                'about' => [
+                    'about',
+                    'benefits',
+                    'mission',
+                    'representatives',
+                    'videos',
+                    'service_locations',
+                ],
+
+                'products' => [
+                    'brands',
+                    'product_categories',
+                    'products',
+                ],
+
+                'blog' => [
+                    'blog_categories',
+                    'blog',
+                ],
+
+                'contact' => [
+                    'contact',
+                    'contact_leads',
+                    'download_leads',
+                ],
+
             ],
-
-            'about' => [
-                'about',
-                'benefits',
-                'mission',
-                'representatives',
-                'videos',
-                'service_locations',
-            ],
-
-            'products' => [
-                'brands',
-                'product_categories',
-                'products',
-            ],
-
-            'blog' => [
-                'blog_categories',
-                'blog',
-            ],
-
-            'contact' => [
-                'contact',
-                'contact_leads',
-                'download_leads',
-            ],
-
         ],
 
         'smtp' => [
@@ -132,42 +133,26 @@ return [
     ],
 
     'cartorio' => [
-
-        'onepage' => [
-
-            'home' => [
-                'slides',
-                'topics',
-                'services',
-                'gallery',
-
-                'about',
-
-                'contact',
-                'contact_leads',
+        'tp-01' => [
+            'onepage' => [
+    
+                'home' => [
+                    'slides',
+                    'topics',
+                    'services',
+                    'gallery',
+    
+                    'about',
+    
+                    'contact',
+                    'contact_leads',
+                ],
+    
             ],
-
         ],
 
-        'multipage' => [
-
-            'home' => [
-                'slides',
-                'topics',
-                'services',
-                'gallery',
-            ],
-
-            'about' => [
-                'about',
-            ],
-
-            'contact' => [
-                'contact',
-                'contact_leads',
-            ],
-
-        ],
+        // Adiciona array multipage
+        /*Aqui*/
 
         'smtp' => [
             'config_smtp',
@@ -195,40 +180,23 @@ return [
     'transporte' => [
 
         'onepage' => [
-
-            'home' => [
-                'slides',
-                'faq_session',
-                'faq',
-                'testimonials',
-                'services',
-                'service_locations',
-                'about',
-
-                'contact',
+            'tp-01' => [
+                'home' => [
+                    'slides',
+                    'faq_session',
+                    'faq',
+                    'testimonials',
+                    'services',
+                    'service_locations',
+                    'about',
+                    'contact',
+                ],
             ],
 
         ],
 
-        'multipage' => [
-
-            'home' => [
-                'slides',
-                'faq_session',
-                'faq',
-                'testimonials',
-                'services',
-            ],
-
-            'about' => [
-                'about',
-            ],
-
-            'contact' => [
-                'contact',
-            ],
-
-        ],
+        // Adiciona array multipage
+        /*Aqui*/
 
         'smtp' => [
             'config_smtp',
@@ -257,40 +225,23 @@ return [
     'whi-web' => [
 
         'onepage' => [
-
-            'home' => [
-                'slides',
-                'topics',
-                'services',
-                'gallery',
-                'videos',
-                'about',
-
-                'contact',
-                'contact_leads',
+            'tp-01' => [
+                'home' => [
+                    'slides',
+                    'topics',
+                    'services',
+                    'gallery',
+                    'videos',
+                    'about',
+    
+                    'contact',
+                    'contact_leads',
+                ],
             ],
-
         ],
 
-        'multipage' => [
-
-            'home' => [
-                'slides',
-                'topics',
-                'services',
-                'gallery',
-            ],
-
-            'about' => [
-                'about',
-            ],
-
-            'contact' => [
-                'contact',
-                'contact_leads',
-            ],
-
-        ],
+        // Adiciona array multipage
+        /*Aqui*/
 
         'smtp' => [
             'config_smtp',
@@ -317,66 +268,27 @@ return [
 
     'provedor' => [
         'onepage' => [
-
-            'home' => [
-                'slides',
-                'topics',
-                'letsgo',
-                'testimonials',
-                'partner',
-                'planNetworkCategory',
-                'planNetwork',
-                'about',
-                'products',
-
-                'contact',
-                'contact_leads',
+            'tp-01' => [
+                'home' => [
+                    'slides',
+                    'topics',
+                    'letsgo',
+                    'testimonials',
+                    'partner',
+                    'planNetworkCategory',
+                    'planNetwork',
+                    'about',
+                    'products',
+    
+                    'contact',
+                    'contact_leads',
+                ],
             ],
 
         ],
 
-        'multipage' => [
-
-            'home' => [
-                'slides',
-                'topics',
-                'statute',
-                'letsgo',
-                'faq_session',
-                'faq',
-                'planNetworkCategory',
-                'planNetwork',
-                'testimonials',
-                'services',
-            ],
-
-            'about' => [
-                'about',
-                'benefits',
-                'mission',
-                'representatives',
-                'videos',
-                'service_locations',
-            ],
-
-            'products' => [
-                'brands',
-                'product_categories',
-                'products',
-            ],
-
-            'blog' => [
-                'blog_categories',
-                'blog',
-            ],
-
-            'contact' => [
-                'contact',
-                'contact_leads',
-                'download_leads',
-            ],
-
-        ],
+        // Adiciona array multipage
+        /*Aqui*/
 
         'smtp' => [
             'config_smtp',
