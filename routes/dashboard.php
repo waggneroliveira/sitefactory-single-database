@@ -107,10 +107,6 @@ Route::prefix('painel/')->group(function () {
             return view('admin.loadPage.loading');
         })->name('loading');
 
-        // Route::get('painel/', function () {
-        //     return redirect()->route('admin.dashboard.painel');
-        // });
-
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
         Route::resource('pop-up', PopUpController::class)
