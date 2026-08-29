@@ -2,14 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\About;
+use App\Models\Blog;
+use App\Models\Contact;
+use App\Models\Product;
 use App\Models\SeoGoogle;
 use App\Services\ThemeManager;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Multitenancy\Models\Tenant;
 
 class SeoGoogleController extends Controller
 {
+    public function __construct(
+        protected ThemeManager $themeManager
+    ) {
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -18,9 +28,14 @@ class SeoGoogleController extends Controller
         $tenant = Tenant::current();
 
         $seoGoogle = SeoGoogle::where('tenant_id', $tenant->id)->first();
+
         $theme = $themeManager;
         $themeData = $themeManager->theme();
-        return view('admin.blades.seo.index', compact('seoGoogle','theme', 'themeData'));
+
+        return view(
+            'admin.blades.seo.index',
+            compact('seoGoogle', 'theme', 'themeData')
+        );
     }
 
     /**
@@ -30,15 +45,19 @@ class SeoGoogleController extends Controller
     {
         $tenant = Tenant::current();
 
-        // Já existe SEO cadastrado para este tenant
         if (SeoGoogle::where('tenant_id', $tenant->id)->exists()) {
             return redirect()
                 ->route('admin.dashboard.seoGoogle.index')
                 ->with('warning', 'O SEO deste site já está cadastrado.');
         }
+
         $theme = $themeManager;
         $themeData = $themeManager->theme();
-        return view('admin.blades.seo.create', compact('theme', 'themeData'));
+
+        return view(
+            'admin.blades.seo.create',
+            compact('theme', 'themeData')
+        );
     }
 
     /**
@@ -52,42 +71,33 @@ class SeoGoogleController extends Controller
             'title' => ['nullable', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'keywords' => ['nullable', 'string'],
-
             'social_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,svg', 'max:5120'],
             'favicon' => ['nullable', 'image', 'mimes:png,ico,jpg,jpeg,webp', 'max:2048'],
-
             'organization_name' => ['nullable', 'string', 'max:255'],
             'legal_name' => ['nullable', 'string', 'max:255'],
             'organization_url' => ['nullable', 'url', 'max:255'],
             'organization_logo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,svg', 'max:5120'],
             'organization_description' => ['nullable', 'string'],
             'founding_date' => ['nullable', 'date'],
-
             'email' => ['nullable', 'email', 'max:255'],
             'telephone' => ['nullable', 'string', 'max:50'],
-
             'street_address' => ['nullable', 'string', 'max:255'],
             'address_locality' => ['nullable', 'string', 'max:255'],
             'address_region' => ['nullable', 'string', 'max:100'],
             'postal_code' => ['nullable', 'string', 'max:20'],
             'address_country' => ['nullable', 'string', 'max:10'],
-
             'contact_type' => ['nullable', 'string', 'max:255'],
             'area_served' => ['nullable', 'string', 'max:255'],
             'available_languages' => ['nullable', 'string'],
-
             'opening_hours' => ['nullable', 'string'],
-
             'slogan' => ['nullable', 'string', 'max:255'],
             'organization_keywords' => ['nullable', 'string'],
-
             'search_console' => ['nullable', 'string', 'max:255'],
             'google_tag_manager' => ['nullable', 'string', 'max:50'],
             'google_ads' => ['nullable', 'string', 'max:50'],
             'meta_pixel' => ['nullable', 'string', 'max:50'],
         ]);
 
-        // Garante apenas um SEO por tenant
         if (SeoGoogle::where('tenant_id', $tenant->id)->exists()) {
             return redirect()
                 ->route('admin.dashboard.seoGoogle.index')
@@ -198,11 +208,15 @@ class SeoGoogleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SeoGoogle $seoGoogle, ThemeManager $themeManager)
-    {
+    public function edit(
+        SeoGoogle $seoGoogle,
+        ThemeManager $themeManager
+    ) {
         $this->authorizeTenant($seoGoogle);
+
         $theme = $themeManager;
         $themeData = $themeManager->theme();
+
         return view(
             'admin.blades.seo.edit',
             compact('seoGoogle', 'theme', 'themeData')
@@ -212,43 +226,37 @@ class SeoGoogleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SeoGoogle $seoGoogle)
-    {
+    public function update(
+        Request $request,
+        SeoGoogle $seoGoogle
+    ) {
         $this->authorizeTenant($seoGoogle);
 
         $validated = $request->validate([
             'title' => ['nullable', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'keywords' => ['nullable', 'string'],
-
             'social_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,svg', 'max:5120'],
             'favicon' => ['nullable', 'image', 'mimes:png,ico,jpg,jpeg,webp', 'max:2048'],
             'organization_logo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,svg', 'max:5120'],
-
             'organization_name' => ['nullable', 'string', 'max:255'],
             'legal_name' => ['nullable', 'string', 'max:255'],
             'organization_url' => ['nullable', 'url', 'max:255'],
             'organization_description' => ['nullable', 'string'],
             'founding_date' => ['nullable', 'date'],
-
             'email' => ['nullable', 'email', 'max:255'],
             'telephone' => ['nullable', 'string', 'max:50'],
-
             'street_address' => ['nullable', 'string', 'max:255'],
             'address_locality' => ['nullable', 'string', 'max:255'],
             'address_region' => ['nullable', 'string', 'max:100'],
             'postal_code' => ['nullable', 'string', 'max:20'],
             'address_country' => ['nullable', 'string', 'max:10'],
-
             'contact_type' => ['nullable', 'string', 'max:255'],
             'area_served' => ['nullable', 'string', 'max:255'],
             'available_languages' => ['nullable', 'string'],
-
             'opening_hours' => ['nullable', 'string'],
-
             'slogan' => ['nullable', 'string', 'max:255'],
             'organization_keywords' => ['nullable', 'string'],
-
             'search_console' => ['nullable', 'string', 'max:255'],
             'google_tag_manager' => ['nullable', 'string', 'max:50'],
             'google_ads' => ['nullable', 'string', 'max:50'],
@@ -305,7 +313,6 @@ class SeoGoogleController extends Controller
         */
 
         if ($request->hasFile('social_image')) {
-
             if (
                 $seoGoogle->social_image &&
                 Storage::disk('public')->exists($seoGoogle->social_image)
@@ -325,7 +332,6 @@ class SeoGoogleController extends Controller
         */
 
         if ($request->hasFile('favicon')) {
-
             if (
                 $seoGoogle->favicon &&
                 Storage::disk('public')->exists($seoGoogle->favicon)
@@ -345,7 +351,6 @@ class SeoGoogleController extends Controller
         */
 
         if ($request->hasFile('organization_logo')) {
-
             if (
                 $seoGoogle->organization_logo &&
                 Storage::disk('public')->exists($seoGoogle->organization_logo)
@@ -372,19 +377,19 @@ class SeoGoogleController extends Controller
     {
         $this->authorizeTenant($seoGoogle);
 
-        /*
-        |--------------------------------------------------------------------------
-        | Remove arquivos
-        |--------------------------------------------------------------------------
-        */
-
         $disk = Storage::disk('public');
 
-        if ($seoGoogle->social_image && $disk->exists($seoGoogle->social_image)) {
+        if (
+            $seoGoogle->social_image &&
+            $disk->exists($seoGoogle->social_image)
+        ) {
             $disk->delete($seoGoogle->social_image);
         }
 
-        if ($seoGoogle->favicon && $disk->exists($seoGoogle->favicon)) {
+        if (
+            $seoGoogle->favicon &&
+            $disk->exists($seoGoogle->favicon)
+        ) {
             $disk->delete($seoGoogle->favicon);
         }
 
@@ -413,5 +418,352 @@ class SeoGoogleController extends Controller
             $tenant && $seoGoogle->tenant_id === $tenant->id,
             403
         );
+    }
+
+    /**
+     * Robots.txt dinâmico por tenant.
+     */
+    public function robots(): Response
+    {
+        $tenant = Tenant::current();
+
+        if (!$tenant) {
+            abort(404);
+        }
+
+        $content = "User-agent: *\n";
+        $content .= "Allow: /\n\n";
+
+        $content .= "Disallow: /admin\n";
+        $content .= "Disallow: /login.do\n";
+        $content .= "Disallow: /logout\n";
+        $content .= "Disallow: /client/\n";
+        $content .= "Disallow: /api/\n";
+        $content .= "Disallow: /password/\n";
+        $content .= "Disallow: /cliente/cadastro\n";
+        $content .= "Disallow: /send-contact\n";
+        $content .= "Disallow: /send-newsletter\n";
+        $content .= "Disallow: /blog/search\n";
+        $content .= "Disallow: /download-ficha/store\n";
+        $content .= "\n";
+
+        $content .= "Sitemap: " . url('/sitemap.xml') . "\n";
+
+        return response($content, 200)
+            ->header(
+                'Content-Type',
+                'text/plain; charset=UTF-8'
+            )
+            ->header(
+                'Cache-Control',
+                'public, max-age=3600'
+            );
+    }
+
+    /**
+     * Sitemap.xml dinâmico por tenant.
+     */
+    public function sitemap(): Response
+    {
+        $tenant = Tenant::current();
+
+        if (!$tenant) {
+            abort(404);
+        }
+
+        $urls = [];
+
+        /*
+        |--------------------------------------------------------------------------
+        | HOME
+        |--------------------------------------------------------------------------
+        */
+
+        $urls[] = $this->makeUrl(
+            url('/'),
+            $this->latestUpdatedAt([
+                'slides',
+                'topics',
+                'services',
+                'about',
+                'contact',
+                'blog',
+                'products',
+            ])
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | ONEPAGE
+        |--------------------------------------------------------------------------
+        |
+        | No Onepage, todas as seções estão na home.
+        | Portanto não criamos URLs artificiais para:
+        |
+        | /sobre
+        | /contato
+        | /blog
+        | /produtos
+        |
+        */
+
+        if ($this->themeManager->layoutType() === 'onepage') {
+            return $this->renderSitemap($urls);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | SOBRE
+        |--------------------------------------------------------------------------
+        */
+
+        if ($this->themeManager->hasModule('about')) {
+            $about = About::query()
+                ->active()
+                ->latest('updated_at')
+                ->first();
+
+            if ($about) {
+                $urls[] = $this->makeUrl(
+                    url('/sobre'),
+                    $about->updated_at
+                );
+            }
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | CONTATO
+        |--------------------------------------------------------------------------
+        */
+
+        if ($this->themeManager->hasModule('contact')) {
+            $contact = Contact::query()
+                ->latest('updated_at')
+                ->first();
+
+            if ($contact) {
+                $urls[] = $this->makeUrl(
+                    url('/contato'),
+                    $contact->updated_at
+                );
+            }
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | BLOG
+        |--------------------------------------------------------------------------
+        */
+
+        if ($this->themeManager->hasModule('blog')) {
+            $this->addBlogUrls($urls);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | PRODUTOS
+        |--------------------------------------------------------------------------
+        */
+
+        if ($this->themeManager->hasModule('products')) {
+            $this->addProductUrls($urls);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | REMOVE DUPLICADAS
+        |--------------------------------------------------------------------------
+        */
+
+        $urls = collect($urls)
+            ->unique('loc')
+            ->values()
+            ->all();
+
+        return $this->renderSitemap($urls);
+    }
+
+    /**
+     * Adiciona URLs do blog.
+     */
+    protected function addBlogUrls(array &$urls): void
+    {
+        $blogs = Blog::query()
+            ->active()
+            ->latest('updated_at')
+            ->get();
+
+        if ($blogs->isEmpty()) {
+            return;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Página principal do blog
+        |--------------------------------------------------------------------------
+        */
+
+        $urls[] = $this->makeUrl(
+            url('/blog'),
+            $blogs->first()->updated_at
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Artigos
+        |--------------------------------------------------------------------------
+        */
+
+        foreach ($blogs as $blog) {
+            if (!$blog->slug) {
+                continue;
+            }
+
+            $urls[] = $this->makeUrl(
+                url('/blog/' . $blog->slug),
+                $blog->updated_at
+            );
+        }
+    }
+
+    /**
+     * Adiciona URLs dos produtos.
+     */
+    protected function addProductUrls(array &$urls): void
+    {
+        $products = Product::query()
+            ->where('active', 1)
+            ->latest('updated_at')
+            ->get();
+
+        if ($products->isEmpty()) {
+            return;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Página principal dos produtos
+        |--------------------------------------------------------------------------
+        */
+
+        $urls[] = $this->makeUrl(
+            url('/produtos'),
+            $products->first()->updated_at
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Produtos individuais
+        |--------------------------------------------------------------------------
+        */
+
+        foreach ($products as $product) {
+            if (!$product->slug) {
+                continue;
+            }
+
+            if (
+                !isset($product->category) ||
+                !$product->category ||
+                !$product->category->slug
+            ) {
+                continue;
+            }
+
+            $urls[] = $this->makeUrl(
+                url(
+                    '/produto/' .
+                    $product->category->slug .
+                    '/' .
+                    $product->slug
+                ),
+                $product->updated_at
+            );
+        }
+    }
+
+    /**
+     * Cria estrutura de URL.
+     */
+    protected function makeUrl(
+        string $url,
+        $lastmod = null
+    ): array {
+        return [
+            'loc' => $url,
+            'lastmod' => $lastmod?->toAtomString(),
+        ];
+    }
+
+    /**
+     * Retorna a data mais recente entre os módulos informados.
+     *
+     * Usada para definir o lastmod da home.
+     */
+    protected function latestUpdatedAt(array $modules)
+    {
+        $dates = collect();
+
+        foreach ($modules as $module) {
+            switch ($module) {
+                case 'about':
+                    $date = About::query()
+                        ->latest('updated_at')
+                        ->value('updated_at');
+                    break;
+
+                case 'contact':
+                    $date = Contact::query()
+                        ->latest('updated_at')
+                        ->value('updated_at');
+                    break;
+
+                case 'blog':
+                    $date = Blog::query()
+                        ->active()
+                        ->latest('updated_at')
+                        ->value('updated_at');
+                    break;
+
+                case 'products':
+                    $date = Product::query()
+                        ->where('active', 1)
+                        ->latest('updated_at')
+                        ->value('updated_at');
+                    break;
+
+                default:
+                    $date = null;
+                    break;
+            }
+
+            if ($date) {
+                $dates->push($date);
+            }
+        }
+
+        return $dates->sortDesc()->first() ?? now();
+    }
+
+    /**
+     * Renderiza o sitemap.
+     */
+    protected function renderSitemap(array $urls): Response
+    {
+        $xml = view(
+            'client.script-seo-google.sitemap',
+            compact('urls')
+        )->render();
+
+        return response($xml, 200)
+            ->header(
+                'Content-Type',
+                'application/xml; charset=UTF-8'
+            )
+            ->header(
+                'Cache-Control',
+                'public, max-age=3600'
+            );
     }
 }

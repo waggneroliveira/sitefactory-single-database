@@ -7,6 +7,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DownloadFichaController;
 use App\Http\Controllers\FormIndexController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\SeoGoogleController;
 use App\Http\Middleware\AuthClientMiddleware;
 use App\Models\About;
 use App\Models\Announcement;
@@ -154,6 +155,8 @@ Route::middleware([NeedsTenant::class])->group(function () {
 
     Route::get('planos/categoria/{id}', [HomePageController::class, 'getPlansByCategory']);
 
+    Route::get('/robots.txt', [SeoGoogleController::class, 'robots'])->name('seo.robots');
+    Route::get('/sitemap.xml', [SeoGoogleController::class, 'sitemap'])->name('seo.sitemap');
 });
 
 

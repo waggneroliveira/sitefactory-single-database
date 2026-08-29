@@ -406,49 +406,68 @@ return [
     ],
     'ecommerce' => [
         'onepage' => [
+            'tp-01' => [
+                'home' => [
+                    'slides',
+                    'topics',
+                    'letsgo',
+                    'testimonials',
+                    'partner',
+                    'planNetworkCategory',
+                    'planNetwork',
+                    'about',
+                    'products',
 
-            'home' => [
-                'slides',
-                'topics',
-                'letsgo',
-                'testimonials',
-                'partner',
-                'planNetworkCategory',
-                'planNetwork',
-                'about',
-                'products',
-
-                'contact',
-                'contact_leads',
+                    'contact',
+                    'contact_leads',
+                ],
             ],
-
         ],
 
         'multipage' => [
+            'tp-01' => [
+                'home' => [
+                    'slides',
+                    'faq_session',
+                    'faq',
+                    'testimonials',
+                ],
 
-            'home' => [
-                'slides',
-                'faq_session',
-                'faq',
-                'testimonials',
+                'about' => [
+                    'about',
+                    'benefits',
+                    'videos',
+                ],
+
+                'products' => [
+                    'brands',
+                    'product_categories',
+                    'products',
+                ],
+
+                'contact' => [
+                    'contact',
+                    'contact_leads',
+                    'download_leads',
+                ],
             ],
+            'tp-02' => [
+                'home' => [
+                    'slides',
+                    'faq_session',
+                    'faq',
+                    'testimonials',
+                    'about', //parametro
+                    'benefits',
+                    'videos',
+                    'contact',
+                ],
 
-            'about' => [
-                'about',
-                'benefits',
-                'videos',
-            ],
-
-            'products' => [
-                'brands',
-                'product_categories',
-                'products',
-            ],
-
-            'contact' => [
-                'contact',
-                'contact_leads',
-                'download_leads',
+                'products' => [
+                    'brands',
+                    'product_categories',
+                    'products',
+                ],
             ],
 
         ],

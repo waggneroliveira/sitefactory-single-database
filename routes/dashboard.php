@@ -316,8 +316,8 @@ Route::prefix('painel/')->group(function () {
         //SEO GOOGLE
         Route::resource('seo-google', SeoGoogleController::class)
         ->parameters(['seo-google' => 'seoGoogle'])
-        ->names('admin.dashboard.seoGoogle');
-       // PLANS
+        ->names('admin.dashboard.seoGoogle');        
+        // PLANS
         Route::resource('plano-contratado', PlansController::class)
         ->parameters(['plano-contratado' => 'plan'])
         ->names('admin.dashboard.plans');

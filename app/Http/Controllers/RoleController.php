@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Session;
 
 class RoleController extends Controller
 {
+
     public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
@@ -34,66 +35,21 @@ class RoleController extends Controller
         $theme = $themeManager;
         $themeData = $themeManager->theme();
 
-        $template = $themeData->slug;
-
         /*
         |--------------------------------------------------------------------------
-        | Tipo de layout atual
-        |--------------------------------------------------------------------------
-        */
-
-        $layoutType = $themeData->layout_type ?? 'onepage';
-
-        /*
-        |--------------------------------------------------------------------------
-        | Módulos do template
-        |--------------------------------------------------------------------------
-        */
-
-        $templateModules = config(
-            "template_modules.{$template}",
-            []
-        );
-
-        /*
-        |--------------------------------------------------------------------------
-        | Módulos do layout atual
-        |--------------------------------------------------------------------------
-        */
-
-        $layoutModules = collect(
-            $templateModules[$layoutType] ?? []
-        )
-            ->flatten()
-            ->values();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Módulos globais
+        | Módulos disponíveis no template atual
         |--------------------------------------------------------------------------
         |
-        | Estes módulos independem de OnePage/Multipage.
+        | O ThemeManager já considera:
+        |
+        | 1. Template
+        | 2. Tipo de layout
+        | 3. Variação (tp-01, tp-02, etc.)
+        | 4. Módulos globais
         |
         */
 
-        $globalModules = collect([
-            'smtp',
-            'security_and_access_control',
-            'config_theme',
-        ])->flatMap(function ($section) use ($templateModules) {
-            return $templateModules[$section] ?? [];
-        });
-
-        /*
-        |--------------------------------------------------------------------------
-        | Todos os módulos disponíveis
-        |--------------------------------------------------------------------------
-        */
-
-        $modules = $layoutModules
-            ->merge($globalModules)
-            ->unique()
-            ->values();
+        $modules = $themeManager->modules();
 
         /*
         |--------------------------------------------------------------------------
@@ -118,20 +74,23 @@ class RoleController extends Controller
         */
 
         $permissions = Permission::query()
-            ->where(function ($query) use ($permissionCategories) {
-
-                foreach ($permissionCategories as $category) {
-                    $query->orWhere(
-                        'name',
-                        'like',
-                        $category . '.%'
-                    );
+            ->when(
+                $permissionCategories->isNotEmpty(),
+                function ($query) use ($permissionCategories) {
+                    $query->where(function ($query) use ($permissionCategories) {
+                        foreach ($permissionCategories as $category) {
+                            $query->orWhere(
+                                'name',
+                                'like',
+                                $category . '.%'
+                            );
+                        }
+                    });
                 }
-
-            })
+            )
             ->orderBy('name', 'asc')
             ->get();
-
+        
         return view(
             'admin.blades.group.index',
             compact(
@@ -139,10 +98,11 @@ class RoleController extends Controller
                 'permissions',
                 'theme',
                 'themeData',
-                'settingTheme',
+                'settingTheme'
             )
         );
     }
+
     public function store(Request $request)
     {   
         $data = $request->all();

@@ -3,126 +3,136 @@
 @section('content')
 
     @php
-
         /*
         |--------------------------------------------------------------------------
-        | Layout atual
+        | Tema atual
         |--------------------------------------------------------------------------
         */
-
-        $layoutType = $theme->layout_type ?? 'multipage';
-
-        /*
-        |--------------------------------------------------------------------------
-        | Template atual
-        |--------------------------------------------------------------------------
-        |
-        | O ThemeManager::__get() permite acessar:
-        | $theme->slug
-        | $theme->layout_type
-        |
-        */
-
         $templateSlug = $theme->slug ?? 'default';
+        $layoutType = $theme->layout_type ?? 'onepage';
 
         /*
         |--------------------------------------------------------------------------
-        | Módulos conforme o layout
+        | Módulos do layout atual
+        |--------------------------------------------------------------------------
+        |
+        | A configuração agora é específica por:
+        |
+        | template
+        |   -> layout
+        |       -> template variation
+        |           -> página
+        |               -> módulos
+        |
+        | Exemplo:
+        |
+        | ecommerce
+        |   multipage
+        |       tp-01
+        |           home
+        |           about
+        |           products
+        |           contact
+        |
         |--------------------------------------------------------------------------
         */
+        $layoutConfig = config(
+            "template_modules.{$templateSlug}.{$layoutType}.{$theme->template_variation}",
+            []
+        );
 
-        if ($layoutType === 'onepage') {
-
-            /*
-            | Onepage:
-            | Todos os módulos de conteúdo ficam na Home.
-            */
-
-            $homeModules = config(
-                "template_modules.{$templateSlug}.onepage.home",
-                []
-            );
-
-            $aboutModules = [];
-            $productModules = [];
-            $blogModules = [];
-            $contactModules = [];
-
-        } else {
-
-            /*
-            | Multipage:
-            | Cada página possui seus próprios módulos.
-            */
-
-            $homeModules = config(
-                "template_modules.{$templateSlug}.multipage.home",
-                []
-            );
-
-            $aboutModules = config(
-                "template_modules.{$templateSlug}.multipage.about",
-                []
-            );
-
-            $productModules = config(
-                "template_modules.{$templateSlug}.multipage.products",
-                []
-            );
-
-            $blogModules = config(
-                "template_modules.{$templateSlug}.multipage.blog",
-                []
-            );
-
-            $contactModules = config(
-                "template_modules.{$templateSlug}.multipage.contact",
+        /*
+        |--------------------------------------------------------------------------
+        | Fallback caso não exista configuração específica da variação
+        |--------------------------------------------------------------------------
+        */
+        if (empty($layoutConfig)) {
+            $layoutConfig = config(
+                "template_modules.{$templateSlug}.{$layoutType}.tp-01",
                 []
             );
         }
 
         /*
         |--------------------------------------------------------------------------
-        | Verifica se o módulo existe no layout atual
+        | Páginas e módulos disponíveis
+        |--------------------------------------------------------------------------
+        |
+        | No OnePage tudo pertence à Home.
+        |
+        | No Multipage cada chave representa uma página real do template.
+        |
         |--------------------------------------------------------------------------
         */
-
-        $hasModule = function ($module) use (
-            $homeModules,
-            $aboutModules,
-            $productModules,
-            $blogModules,
-            $contactModules
-        ) {
-            return
-                in_array($module, $homeModules) ||
-                in_array($module, $aboutModules) ||
-                in_array($module, $productModules) ||
-                in_array($module, $blogModules) ||
-                in_array($module, $contactModules);
-        };
+        if ($layoutType === 'onepage') {
+            $pageModules = [
+                'home' => $layoutConfig['home'] ?? [],
+            ];
+        } else {
+            $pageModules = $layoutConfig;
+        }
 
         /*
         |--------------------------------------------------------------------------
-        | Verifica se existe pelo menos um módulo
+        | Verifica se um módulo existe em qualquer página do layout
         |--------------------------------------------------------------------------
         */
+        $hasModule = function (string $module) use ($pageModules, $theme) {
+            if ($theme->hasModule($module)) {
+                return true;
+            }
 
-        $hasAnyModule = function (array $modules) use ($hasModule) {
-
-            foreach ($modules as $module) {
-
-                if ($hasModule($module)) {
+            foreach ($pageModules as $modules) {
+                if (is_array($modules) && in_array($module, $modules, true)) {
                     return true;
                 }
-
             }
 
             return false;
         };
 
-    @endphp
+        /*
+        |--------------------------------------------------------------------------
+        | Verifica se existe pelo menos um módulo em determinada página
+        |--------------------------------------------------------------------------
+        */
+        $hasPageModules = function (string $page) use ($pageModules) {
+            return !empty($pageModules[$page]);
+        };
 
+        /*
+        |--------------------------------------------------------------------------
+        | Verifica se existe pelo menos um dos módulos informados em uma página
+        |--------------------------------------------------------------------------
+        */
+        $hasAnyPageModule = function (string $page, array $modules) use ($pageModules) {
+            $available = $pageModules[$page] ?? [];
+
+            foreach ($modules as $module) {
+                if (in_array($module, $available, true)) {
+                    return true;
+                }
+            }
+
+            return false;
+        };
+
+        /*
+        |--------------------------------------------------------------------------
+        | Usuário atual
+        |--------------------------------------------------------------------------
+        */
+        $user = Auth::user();
+        $isSuper = $user->hasRole('Super');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Módulos da Home
+        |--------------------------------------------------------------------------
+        */
+        $homeModules = $pageModules['home'] ?? [];
+
+    @endphp
 
     {{-- HEADER --}}
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -131,406 +141,233 @@
                 <i class="mdi mdi-view-dashboard-outline me-2 text-primary"></i>
                 {{ __('dashboard.title_dashboard') }}
             </h1>
-
             <p class="text-muted small mb-0">
                 Gerencie todos os módulos do seu site
             </p>
         </div>
     </div>
 
-
     {{-- ============================================================
         HOME
     ============================================================ --}}
-
-    @if ($hasAnyModule([
-        'slides',
-        'topics',
-        'statute',
-        'letsgo',
-        'faq_session',
-        'faq',
-        'testimonials',
-        'services',
-        'gallery',
-        'about',
-        'benefits',
-        'mission',
-        'planNetworkCategory',
-        'planNetwork',
-        'representatives',
-        'videos',
-        'service_locations',
-        'brands',
-        'product_categories',
-        'products',
-        'partner',
-        'blog_categories',
-        'blog',
-        'contact',
-        'contact_leads',
-        'download_leads'
-    ]))
+    @if ($hasPageModules('home'))
 
         <div class="mb-2">
-
             <div class="d-flex align-items-center gap-2 mb-2">
-
                 <span class="badge bg-primary bg-opacity-10 text-primary p-2">
                     <i class="mdi mdi-home fs-5"></i>
                 </span>
-
                 <h5 class="mb-0 fw-semibold">Home</h5>
-
             </div>
 
             <div class="row g-2">
 
-                {{-- ====================================================
-                    HOME
-                ==================================================== --}}
-
-                @if ($hasModule('slides') &&
-                    (Auth::user()->hasRole('Super') ||
-                    Auth::user()->can('slide.visualizar')))
-
+                @if (in_array('slides', $homeModules, true) && ($isSuper || $user->can('slide.visualizar')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.slide.index'),
                         'icon' => 'mdi-image-size-select-actual',
                         'title' => 'Slides'
                     ])
-
                 @endif
 
-
-                @if ($hasModule('topics') &&
-                    (Auth::user()->hasRole('Super') ||
-                    Auth::user()->can('topico.visualizar')))
-
+                @if (in_array('topics', $homeModules, true) && ($isSuper || $user->can('topico.visualizar')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.topic.index'),
                         'icon' => 'mdi-format-list-bulleted',
                         'title' => 'Tópicos'
                     ])
-
                 @endif
 
-
-                @if ($hasModule('statute') &&
-                    (Auth::user()->hasRole('Super') ||
-                    Auth::user()->can('passo a passo.visualizar')))
-
+                @if (in_array('statute', $homeModules, true) && ($isSuper || $user->can('passo a passo.visualizar')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.statute.index'),
                         'icon' => 'mdi-file-document',
                         'title' => 'Passo a passo'
                     ])
-
                 @endif
 
-
-                @if ($hasModule('letsgo') &&
-                    (Auth::user()->hasRole('Super') ||
-                    Auth::user()->can('sesssao lets go.visualizar')))
-
+                @if (in_array('letsgo', $homeModules, true) && ($isSuper || $user->can('sesssao lets go.visualizar')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.letsgo.index'),
                         'icon' => 'mdi-alert-circle',
                         'title' => 'Sessão Lets Go'
                     ])
-
                 @endif
 
-
-                @if ($hasModule('faq_session') &&
-                    (Auth::user()->hasRole('Super') ||
-                    Auth::user()->can('sesssao faq.visualizar')))
-
+                @if (in_array('faq_session', $homeModules, true) && ($isSuper || $user->can('sesssao faq.visualizar')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.sessaoFaq.index'),
                         'icon' => 'mdi-help-circle',
                         'title' => 'Sessão FAQ'
                     ])
-
                 @endif
 
-
-                @if ($hasModule('faq') &&
-                    (Auth::user()->hasRole('Super') ||
-                    Auth::user()->can('perguntas e respostas.visualizar')))
-
+                @if (in_array('faq', $homeModules, true) && ($isSuper || $user->can('perguntas e respostas.visualizar')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.faq.index'),
                         'icon' => 'mdi-comment-question',
                         'title' => 'Perguntas/Respostas'
                     ])
-
                 @endif
 
-
-                @if ($hasModule('testimonials') &&
-                    (Auth::user()->hasRole('Super') ||
-                    Auth::user()->can('depoimento.visualizar')))
-
+                @if (in_array('testimonials', $homeModules, true) && ($isSuper || $user->can('depoimento.visualizar')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.depoiment.index'),
                         'icon' => 'mdi-account-voice',
                         'title' => 'Depoimentos'
                     ])
-
                 @endif
 
-
-                @if ($hasModule('services') &&
-                    (Auth::user()->hasRole('Super') ||
-                    Auth::user()->can('depoimento.visualizar')))
-
+                @if (in_array('services', $homeModules, true) && ($isSuper || $user->can('servico.visualizar')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.serviceItem.index'),
-                        'icon' => 'mdi-account-voice',
+                        'icon' => 'mdi-briefcase-outline',
                         'title' => 'Serviços'
                     ])
-
                 @endif
 
-                @if ($hasModule('partner') &&
-                    (Auth::user()->hasRole('Super') ||
-                    Auth::user()->can('parceiro.visualizar')))
-
-                    @include('admin.components.dashboard-card', [
-                        'route' => route('admin.dashboard.partner.index'),
-                        'icon' => 'mdi-account-voice',
-                        'title' => 'Parceiros'
-                    ])
-
-                @endif
-
-
-                @if ($hasModule('gallery') &&
-                    (Auth::user()->hasRole('Super') ||
-                    Auth::user()->can('depoimento.visualizar')))
-
+                @if (in_array('gallery', $homeModules, true) && ($isSuper || $user->can('galeria.visualizar')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.gallery.index'),
-                        'icon' => 'mdi-account-voice',
+                        'icon' => 'mdi-image-multiple',
                         'title' => 'Galeria'
                     ])
-
                 @endif
 
+                @if (in_array('about', $homeModules, true) && ($isSuper || $user->can('sobre nos.visualizar')))
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.about.index'),
+                        'icon' => 'mdi-help-circle',
+                        'title' => 'Sobre Nós'
+                    ])
+                @endif
 
-                {{-- ====================================================
-                    ONEPAGE
-                    Se for Onepage, os módulos abaixo também ficam
-                    dentro da Home.
-                ==================================================== --}}
+                @if (in_array('benefits', $homeModules, true) && ($isSuper || $user->can('parametro.visualizar')))
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.benefitTopic.index'),
+                        'icon' => 'mdi-star',
+                        'title' => 'Parâmetros'
+                    ])
+                @endif
 
-                @if ($layoutType === 'onepage')
+                @if (in_array('mission', $homeModules, true) && ($isSuper || $user->can('missao visao e valores.visualizar')))
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.report.index'),
+                        'icon' => 'mdi-target',
+                        'title' => 'Missão, Visão e Valores'
+                    ])
+                @endif
 
-                    @if ($hasModule('about') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('sobre nos.visualizar')))
+                @if (in_array('planNetworkCategory', $homeModules, true) && ($isSuper || $user->can('categorias do plano.visualizar')))
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.planNetworkCategory.index'),
+                        'icon' => 'mdi-shape',
+                        'title' => 'Categorias do Plano'
+                    ])
+                @endif
 
-                        @include('admin.components.dashboard-card', [
-                            'route' => route('admin.dashboard.about.index'),
-                            'icon' => 'mdi-help-circle',
-                            'title' => 'Sobre Nós'
-                        ])
+                @if (in_array('planNetwork', $homeModules, true) && ($isSuper || $user->can('plano.visualizar')))
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.planNetwork.index'),
+                        'icon' => 'mdi-wifi',
+                        'title' => 'Planos de Internet'
+                    ])
+                @endif
 
-                    @endif
+                @if (in_array('representatives', $homeModules, true) && ($isSuper || $user->can('representantes.visualizar')))
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.direction.index'),
+                        'icon' => 'mdi-account-group',
+                        'title' => 'Representantes'
+                    ])
+                @endif
 
+                @if (in_array('videos', $homeModules, true) && ($isSuper || $user->can('video.visualizar')))
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.video.index'),
+                        'icon' => 'mdi-play-circle',
+                        'title' => 'Vídeos'
+                    ])
+                @endif
 
-                    @if ($hasModule('benefits') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('parametro.visualizar')))
+                @if (in_array('service_locations', $homeModules, true) && ($isSuper || $user->can('onde atendemos.visualizar')))
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.serviceLocation.index'),
+                        'icon' => 'mdi-map-marker',
+                        'title' => 'Sessão Onde Atendemos'
+                    ])
+                @endif
 
-                        @include('admin.components.dashboard-card', [
-                            'route' => route('admin.dashboard.benefitTopic.index'),
-                            'icon' => 'mdi-star',
-                            'title' => 'Parâmetros'
-                        ])
+                @if (in_array('brands', $homeModules, true) && ($isSuper || $user->can('marcas.visualizar')))
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.brand.index'),
+                        'icon' => 'mdi-tag-multiple',
+                        'title' => 'Marcas'
+                    ])
+                @endif
 
-                    @endif
+                @if (in_array('product_categories', $homeModules, true) && ($isSuper || $user->can('categorias de produtos.visualizar')))
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.productCategory.index'),
+                        'icon' => 'mdi-tag-multiple',
+                        'title' => 'Categorias dos produtos'
+                    ])
+                @endif
 
+                @if (in_array('products', $homeModules, true) && ($isSuper || $user->can('produtos.visualizar')))
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.product.index'),
+                        'icon' => 'mdi-package-variant',
+                        'title' => 'Produtos'
+                    ])
+                @endif
 
-                    @if ($hasModule('mission') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('missao visao e valores.visualizar')))
+                @if (in_array('partner', $homeModules, true) && ($isSuper || $user->can('parceiro.visualizar')))
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.partner.index'),
+                        'icon' => 'mdi-handshake-outline',
+                        'title' => 'Parceiros'
+                    ])
+                @endif
 
-                        @include('admin.components.dashboard-card', [
-                            'route' => route('admin.dashboard.report.index'),
-                            'icon' => 'mdi-target',
-                            'title' => 'Missão, Visão e Valores'
-                        ])
+                @if (in_array('blog_categories', $homeModules, true) && ($isSuper || $user->can('categorias de noticias.visualizar')))
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.blogCategory.index'),
+                        'icon' => 'mdi-tag-multiple',
+                        'title' => 'Categorias das Notícias'
+                    ])
+                @endif
 
-                    @endif
+                @if (in_array('blog', $homeModules, true) && ($isSuper || $user->can('noticias.visualizar')))
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.blog.index'),
+                        'icon' => 'mdi-newspaper-variant',
+                        'title' => 'Notícias'
+                    ])
+                @endif
 
-                    @if ($hasModule('planNetworkCategory') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('categorias do plano.visualizar')))
+                @if (in_array('contact', $homeModules, true) && ($isSuper || $user->can('contato.visualizar')))
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.contact.index'),
+                        'icon' => 'mdi-card-account-mail-outline',
+                        'title' => 'Contato'
+                    ])
+                @endif
 
-                        @include('admin.components.dashboard-card', [
-                            'route' => route('admin.dashboard.planNetworkCategory.index'),
-                            'icon' => 'mdi-target',
-                            'title' => 'Categorias do Plano'
-                        ])
+                @if (in_array('contact_leads', $homeModules, true) && ($isSuper || $user->can('lead contato.visualizar')))
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.formIndex.index'),
+                        'icon' => 'mdi-account-box-outline',
+                        'title' => 'Lead Contato'
+                    ])
+                @endif
 
-                    @endif
-
-                    @if ($hasModule('planNetwork') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('plano.visualizar')))
-
-                        @include('admin.components.dashboard-card', [
-                            'route' => route('admin.dashboard.planNetwork.index'),
-                            'icon' => 'mdi-target',
-                            'title' => 'Planos de Internet'
-                        ])
-
-                    @endif
-
-                    @if ($hasModule('representatives') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('representantes.visualizar')))
-
-                        @include('admin.components.dashboard-card', [
-                            'route' => route('admin.dashboard.direction.index'),
-                            'icon' => 'mdi-account-group',
-                            'title' => 'Representantes'
-                        ])
-
-                    @endif
-
-
-                    @if ($hasModule('videos') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('video.visualizar')))
-
-                        @include('admin.components.dashboard-card', [
-                            'route' => route('admin.dashboard.video.index'),
-                            'icon' => 'mdi-play-circle',
-                            'title' => 'Vídeos'
-                        ])
-
-                    @endif
-
-
-                    @if ($hasModule('service_locations') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('onde atendemos.visualizar')))
-
-                        @include('admin.components.dashboard-card', [
-                            'route' => route('admin.dashboard.serviceLocation.index'),
-                            'icon' => 'mdi-map-marker',
-                            'title' => 'Sessão Onde Atendemos'
-                        ])
-
-                    @endif
-
-
-                    @if ($hasModule('brands') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('marcas.visualizar')))
-
-                        @include('admin.components.dashboard-card', [
-                            'route' => route('admin.dashboard.brand.index'),
-                            'icon' => 'mdi-tag-multiple',
-                            'title' => 'Marcas'
-                        ])
-
-                    @endif
-
-
-                    @if ($hasModule('product_categories') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('categorias de produtos.visualizar')))
-
-                        @include('admin.components.dashboard-card', [
-                            'route' => route('admin.dashboard.productCategory.index'),
-                            'icon' => 'mdi-tag-multiple',
-                            'title' => 'Categorias dos produtos'
-                        ])
-
-                    @endif
-
-
-                    @if ($hasModule('products') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('produtos.visualizar')))
-
-                        @include('admin.components.dashboard-card', [
-                            'route' => route('admin.dashboard.product.index'),
-                            'icon' => 'mdi-package-variant',
-                            'title' => 'Produtos'
-                        ])
-
-                    @endif
-
-
-                    @if ($hasModule('blog_categories') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('categorias de noticias.visualizar')))
-
-                        @include('admin.components.dashboard-card', [
-                            'route' => route('admin.dashboard.blogCategory.index'),
-                            'icon' => 'mdi-tag-multiple',
-                            'title' => 'Categorias das Notícias'
-                        ])
-
-                    @endif
-
-
-                    @if ($hasModule('blog') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('noticias.visualizar')))
-
-                        @include('admin.components.dashboard-card', [
-                            'route' => route('admin.dashboard.blog.index'),
-                            'icon' => 'mdi-newspaper-variant',
-                            'title' => 'Notícias'
-                        ])
-
-                    @endif
-
-
-                    @if ($hasModule('contact') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('contato.visualizar')))
-
-                        @include('admin.components.dashboard-card', [
-                            'route' => route('admin.dashboard.contact.index'),
-                            'icon' => 'mdi-card-account-mail-outline',
-                            'title' => 'Contato'
-                        ])
-
-                    @endif
-
-
-                    @if ($hasModule('contact_leads') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('lead contato.visualizar')))
-
-                        @include('admin.components.dashboard-card', [
-                            'route' => route('admin.dashboard.formIndex.index'),
-                            'icon' => 'mdi-account-box-outline',
-                            'title' => 'Lead Contato'
-                        ])
-
-                    @endif
-
-
-                    @if ($hasModule('download_leads') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('usuario.tornar usuario master')))
-
-                        @include('admin.components.dashboard-card', [
-                            'route' => route('admin.dashboard.leadDownload.index'),
-                            'icon' => 'mdi-download',
-                            'title' => 'Lead Download'
-                        ])
-
-                    @endif
-
+                @if (in_array('download_leads', $homeModules, true) && ($isSuper || $user->can('usuario.tornar usuario master')))
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.leadDownload.index'),
+                        'icon' => 'mdi-download',
+                        'title' => 'Lead Download'
+                    ])
                 @endif
 
             </div>
@@ -538,143 +375,90 @@
 
     @endif
 
-
     {{-- ============================================================
-        MULTIPAGE
-        As seções abaixo só aparecem quando o layout é multipage.
+        MULTIPAGE - PÁGINAS DINÂMICAS
     ============================================================ --}}
-
     @if ($layoutType === 'multipage')
 
         {{-- ========================================================
             SOBRE NÓS
         ======================================================== --}}
+        @if ($hasPageModules('about'))
 
-        @if ($hasAnyModule([
-            'about',
-            'benefits',
-            'planNetworkCategory',
-            'planNetwork',
-            'mission',
-            'representatives',
-            'videos',
-            'service_locations'
-        ]))
+            @php $aboutModules = $pageModules['about']; @endphp
 
             <div class="mb-2">
-
                 <div class="d-flex align-items-center gap-2 mb-2">
-
                     <span class="badge bg-info bg-opacity-10 text-info p-2">
                         <i class="mdi mdi-help-circle fs-5"></i>
                     </span>
-
-                    <h5 class="mb-0 fw-semibold">
-                        Sobre Nós
-                    </h5>
-
+                    <h5 class="mb-0 fw-semibold">Sobre Nós</h5>
                 </div>
 
                 <div class="row g-2">
 
-                    @if ($hasModule('about') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('sobre nos.visualizar')))
-
+                    @if (in_array('about', $aboutModules, true) && ($isSuper || $user->can('sobre nos.visualizar')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.about.index'),
                             'icon' => 'mdi-help-circle',
                             'title' => 'Sobre Nós'
                         ])
-
                     @endif
 
-
-                    @if ($hasModule('benefits') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('parametro.visualizar')))
-
+                    @if (in_array('benefits', $aboutModules, true) && ($isSuper || $user->can('parametro.visualizar')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.benefitTopic.index'),
                             'icon' => 'mdi-star',
                             'title' => 'Parâmetros'
                         ])
-
                     @endif
 
-
-                    @if ($hasModule('mission') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('missao visao e valores.visualizar')))
-
+                    @if (in_array('mission', $aboutModules, true) && ($isSuper || $user->can('missao visao e valores.visualizar')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.report.index'),
                             'icon' => 'mdi-target',
                             'title' => 'Missão, Visão e Valores'
                         ])
-
                     @endif
-                    
-                    @if ($hasModule('planNetworkCategory') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('categorias do plano.visualizar')))
 
+                    @if (in_array('planNetworkCategory', $aboutModules, true) && ($isSuper || $user->can('categorias do plano.visualizar')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.planNetworkCategory.index'),
-                            'icon' => 'mdi-target',
+                            'icon' => 'mdi-shape',
                             'title' => 'Categorias do Plano'
                         ])
-
                     @endif
 
-                    @if ($hasModule('planNetwork') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('plano.visualizar')))
-
+                    @if (in_array('planNetwork', $aboutModules, true) && ($isSuper || $user->can('plano.visualizar')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.planNetwork.index'),
-                            'icon' => 'mdi-target',
+                            'icon' => 'mdi-wifi',
                             'title' => 'Planos de Internet'
                         ])
+                    @endif
 
-                    @endif                    
-
-                    @if ($hasModule('representatives') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('representantes.visualizar')))
-
+                    @if (in_array('representatives', $aboutModules, true) && ($isSuper || $user->can('representantes.visualizar')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.direction.index'),
                             'icon' => 'mdi-account-group',
                             'title' => 'Representantes'
                         ])
-
                     @endif
 
-
-                    @if ($hasModule('videos') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('video.visualizar')))
-
+                    @if (in_array('videos', $aboutModules, true) && ($isSuper || $user->can('video.visualizar')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.video.index'),
                             'icon' => 'mdi-play-circle',
                             'title' => 'Vídeos'
                         ])
-
                     @endif
 
-
-                    @if ($hasModule('service_locations') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('onde atendemos.visualizar')))
-
+                    @if (in_array('service_locations', $aboutModules, true) && ($isSuper || $user->can('onde atendemos.visualizar')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.serviceLocation.index'),
                             'icon' => 'mdi-map-marker',
                             'title' => 'Sessão Onde Atendemos'
                         ])
-
                     @endif
 
                 </div>
@@ -682,69 +466,45 @@
 
         @endif
 
-
         {{-- ========================================================
             PRODUTOS
         ======================================================== --}}
+        @if ($hasPageModules('products'))
 
-        @if ($hasAnyModule([
-            'brands',
-            'product_categories',
-            'products'
-        ]))
+            @php $productModules = $pageModules['products']; @endphp
 
             <div class="mb-2">
-
                 <div class="d-flex align-items-center gap-2 mb-2">
-
                     <span class="badge bg-warning bg-opacity-10 text-warning p-2">
                         <i class="mdi mdi-toolbox fs-5"></i>
                     </span>
-
-                    <h5 class="mb-0 fw-semibold">
-                        Produtos
-                    </h5>
-
+                    <h5 class="mb-0 fw-semibold">Produtos</h5>
                 </div>
 
                 <div class="row g-2">
 
-                    @if ($hasModule('brands') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('marcas.visualizar')))
-
+                    @if (in_array('brands', $productModules, true) && ($isSuper || $user->can('marcas.visualizar')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.brand.index'),
                             'icon' => 'mdi-tag-multiple',
                             'title' => 'Marcas'
                         ])
-
                     @endif
 
-
-                    @if ($hasModule('product_categories') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('categorias de produtos.visualizar')))
-
+                    @if (in_array('product_categories', $productModules, true) && ($isSuper || $user->can('categorias de produtos.visualizar')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.productCategory.index'),
                             'icon' => 'mdi-tag-multiple',
                             'title' => 'Categorias dos produtos'
                         ])
-
                     @endif
 
-
-                    @if ($hasModule('products') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('produtos.visualizar')))
-
+                    @if (in_array('products', $productModules, true) && ($isSuper || $user->can('produtos.visualizar')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.product.index'),
                             'icon' => 'mdi-package-variant',
                             'title' => 'Produtos'
                         ])
-
                     @endif
 
                 </div>
@@ -752,55 +512,37 @@
 
         @endif
 
-
         {{-- ========================================================
             NOTÍCIAS
         ======================================================== --}}
+        @if ($hasPageModules('blog'))
 
-        @if ($hasAnyModule([
-            'blog_categories',
-            'blog'
-        ]))
+            @php $blogModules = $pageModules['blog']; @endphp
 
             <div class="mb-2">
-
                 <div class="d-flex align-items-center gap-2 mb-2">
-
                     <span class="badge btn-green-whi bg-opacity-10 text-success p-2">
                         <i class="mdi mdi-newspaper-variant fs-5"></i>
                     </span>
-
-                    <h5 class="mb-0 fw-semibold">
-                        Notícias
-                    </h5>
-
+                    <h5 class="mb-0 fw-semibold">Notícias</h5>
                 </div>
 
                 <div class="row g-2">
 
-                    @if ($hasModule('blog_categories') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('categorias de noticias.visualizar')))
-
+                    @if (in_array('blog_categories', $blogModules, true) && ($isSuper || $user->can('categorias de noticias.visualizar')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.blogCategory.index'),
                             'icon' => 'mdi-tag-multiple',
                             'title' => 'Categorias das Notícias'
                         ])
-
                     @endif
 
-
-                    @if ($hasModule('blog') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('noticias.visualizar')))
-
+                    @if (in_array('blog', $blogModules, true) && ($isSuper || $user->can('noticias.visualizar')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.blog.index'),
                             'icon' => 'mdi-newspaper-variant',
                             'title' => 'Notícias'
                         ])
-
                     @endif
 
                 </div>
@@ -811,37 +553,26 @@
         {{-- ========================================================
             PARCEIROS
         ======================================================== --}}
+        @if ($hasPageModules('partner'))
 
-        @if ($hasAnyModule([
-            'partner',
-        ]))
+            @php $partnerModules = $pageModules['partner']; @endphp
 
             <div class="mb-2">
-
                 <div class="d-flex align-items-center gap-2 mb-2">
-
                     <span class="badge btn-green-whi bg-opacity-10 text-success p-2">
-                        <i class="mdi mdi-newspaper-variant fs-5"></i>
+                        <i class="mdi mdi-handshake-outline fs-5"></i>
                     </span>
-
-                    <h5 class="mb-0 fw-semibold">
-                        Parceiros
-                    </h5>
-
+                    <h5 class="mb-0 fw-semibold">Parceiros</h5>
                 </div>
 
                 <div class="row g-2">
 
-                    @if ($hasModule('partner') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('parceiro.visualizar')))
-
+                    @if (in_array('partner', $partnerModules, true) && ($isSuper || $user->can('parceiro.visualizar')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.partner.index'),
-                            'icon' => 'mdi-tag-multiple',
+                            'icon' => 'mdi-handshake-outline',
                             'title' => 'Parceiros'
                         ])
-
                     @endif
 
                 </div>
@@ -849,69 +580,45 @@
 
         @endif
 
-
         {{-- ========================================================
             CONTATO
         ======================================================== --}}
+        @if ($hasPageModules('contact'))
 
-        @if ($hasAnyModule([
-            'contact',
-            'contact_leads',
-            'download_leads'
-        ]))
+            @php $contactModules = $pageModules['contact']; @endphp
 
             <div class="mb-2">
-
                 <div class="d-flex align-items-center gap-2 mb-2">
-
                     <span class="badge bg-danger bg-opacity-10 text-danger p-2">
                         <i class="mdi mdi-card-account-mail-outline fs-5"></i>
                     </span>
-
-                    <h5 class="mb-0 fw-semibold">
-                        Contato
-                    </h5>
-
+                    <h5 class="mb-0 fw-semibold">Contato</h5>
                 </div>
 
                 <div class="row g-2">
 
-                    @if ($hasModule('contact') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('contato.visualizar')))
-
+                    @if (in_array('contact', $contactModules, true) && ($isSuper || $user->can('contato.visualizar')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.contact.index'),
                             'icon' => 'mdi-card-account-mail-outline',
                             'title' => 'Contato'
                         ])
-
                     @endif
 
-
-                    @if ($hasModule('contact_leads') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('lead contato.visualizar')))
-
+                    @if (in_array('contact_leads', $contactModules, true) && ($isSuper || $user->can('lead contato.visualizar')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.formIndex.index'),
                             'icon' => 'mdi-account-box-outline',
                             'title' => 'Lead Contato'
                         ])
-
                     @endif
 
-
-                    @if ($hasModule('download_leads') &&
-                        (Auth::user()->hasRole('Super') ||
-                        Auth::user()->can('usuario.tornar usuario master')))
-
+                    @if (in_array('download_leads', $contactModules, true) && ($isSuper || $user->can('usuario.tornar usuario master')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.leadDownload.index'),
                             'icon' => 'mdi-download',
                             'title' => 'Lead Download'
                         ])
-
                     @endif
 
                 </div>
@@ -921,167 +628,138 @@
 
     @endif
 
-
     {{-- ============================================================
         SMTP
     ============================================================ --}}
-
-    @if ($theme->hasModule('config_smtp') &&
-        (Auth::user()->hasRole('Super')))
+    @if ($theme->hasModule('config_smtp') && $isSuper)
 
         <div class="mb-2">
-
             <div class="d-flex align-items-center gap-2 mb-2">
-
                 <span class="badge bg-secondary bg-opacity-10 text-secondary p-2">
                     <i class="mdi mdi-email-edit fs-5"></i>
                 </span>
-
                 <h5 class="mb-0 fw-semibold">
                     {{ __('dashboard.setting_smtp') }}
                 </h5>
-
             </div>
 
             <div class="row g-2">
-
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.settingEmail.index'),
                     'icon' => 'mdi-email',
                     'title' => __('dashboard.setting_email')
                 ])
-
             </div>
         </div>
 
     @endif
-
 
     {{-- ============================================================
         SEGURANÇA
     ============================================================ --}}
+    @if (
+        $theme->hasModule('audit') ||
+        $theme->hasModule('permissions') ||
+        $theme->hasModule('users')
+    )
 
-    @if (Auth::user()->hasRole('Super') ||
-        Auth::user()->can('usuario.tornar usuario master') ||
-        Auth::user()->can('auditoria.visualizar') ||
-        Auth::user()->can('usuario.visualizar') ||
-        Auth::user()->can('grupo.visualizar'))
+        @if (
+            $isSuper ||
+            $user->can('usuario.tornar usuario master') ||
+            ($theme->hasModule('audit') && $user->can('auditoria.visualizar')) ||
+            ($theme->hasModule('users') && $user->can('usuario.visualizar')) ||
+            ($theme->hasModule('permissions') && $user->can('grupo.visualizar'))
+        )
 
-        <div class="mb-2">
+            <div class="mb-2">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <span class="badge bg-dark bg-opacity-10 text-dark p-2">
+                        <i class="mdi mdi-security fs-5"></i>
+                    </span>
+                    <h5 class="mb-0 fw-semibold">
+                        {{ __('dashboard.security_and_access_control') }}
+                    </h5>
+                </div>
 
-            <div class="d-flex align-items-center gap-2 mb-2">
+                <div class="row g-2">
 
-                <span class="badge bg-dark bg-opacity-10 text-dark p-2">
-                    <i class="mdi mdi-security fs-5"></i>
-                </span>
+                    @if ($theme->hasModule('audit') && ($isSuper || $user->can('auditoria.visualizar')))
+                        @include('admin.components.dashboard-card', [
+                            'route' => route('admin.dashboard.audit.index'),
+                            'icon' => 'mdi-clipboard-text',
+                            'title' => __('dashboard.audit')
+                        ])
+                    @endif
 
-                <h5 class="mb-0 fw-semibold">
-                    {{ __('dashboard.security_and_access_control') }}
-                </h5>
+                    @if ($theme->hasModule('permissions') && ($isSuper || $user->can('grupo.visualizar')))
+                        @include('admin.components.dashboard-card', [
+                            'route' => route('admin.dashboard.group.index'),
+                            'icon' => 'mdi-account-group',
+                            'title' => __('dashboard.group_and_permission')
+                        ])
+                    @endif
 
+                    @if ($theme->hasModule('users') && ($isSuper || $user->can('usuario.visualizar')))
+                        @include('admin.components.dashboard-card', [
+                            'route' => route('admin.dashboard.user.index'),
+                            'icon' => 'mdi-account-multiple',
+                            'title' => __('dashboard.users')
+                        ])
+                    @endif
+
+                </div>
             </div>
 
-            <div class="row g-2">
-
-                @if ($theme->hasModule('audit') &&
-                    (Auth::user()->hasRole('Super') ||
-                    Auth::user()->can('auditoria.visualizar')))
-
-                    @include('admin.components.dashboard-card', [
-                        'route' => route('admin.dashboard.audit.index'),
-                        'icon' => 'mdi-clipboard-text',
-                        'title' => __('dashboard.audit')
-                    ])
-
-                @endif
-
-
-                @if ($theme->hasModule('permissions') &&
-                    (Auth::user()->hasRole('Super') ||
-                    Auth::user()->can('grupo.visualizar')))
-
-                    @include('admin.components.dashboard-card', [
-                        'route' => route('admin.dashboard.group.index'),
-                        'icon' => 'mdi-account-group',
-                        'title' => __('dashboard.group_and_permission')
-                    ])
-
-                @endif
-
-
-                @if ($theme->hasModule('users') &&
-                    (Auth::user()->hasRole('Super') ||
-                    Auth::user()->can('usuario.visualizar')))
-
-                    @include('admin.components.dashboard-card', [
-                        'route' => route('admin.dashboard.user.index'),
-                        'icon' => 'mdi-account-multiple',
-                        'title' => __('dashboard.users')
-                    ])
-
-                @endif
-
-            </div>
-        </div>
+        @endif
 
     @endif
-
 
     {{-- ============================================================
         CONFIGURAÇÃO DO TEMA
     ============================================================ --}}
-
-    @if ($theme->hasModule('config_theme') &&
-        (Auth::user()->hasRole('Super') ||
-        Auth::user()->can('usuario.tornar usuario master') ||
-        Auth::user()->can('configuracao do tema.visualizar')))
+    @if (
+        $theme->hasModule('config_theme') &&
+        (
+            $isSuper ||
+            $user->can('usuario.tornar usuario master') ||
+            $user->can('configuracao do tema.visualizar')
+        )
+    )
 
         <div class="mb-2">
-
             <div class="d-flex align-items-center gap-2 mb-2">
-
                 <span class="badge bg-purple bg-opacity-10 text-purple p-2">
                     <i class="mdi mdi-palette fs-5"></i>
                 </span>
-
                 <h5 class="mb-0 fw-semibold">
                     Configuração do Tema
                 </h5>
-
             </div>
 
             <div class="row g-2">
-
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.tenant.index'),
                     'icon' => 'mdi-palette',
                     'title' => 'Configuração do Tema'
                 ])
-
             </div>
         </div>
 
     @endif
 
-
     {{-- ============================================================
         SEO E PLANOS
     ============================================================ --}}
-
-    @if (Auth::user()->hasRole('Super'))
+    @if ($isSuper)
 
         <div class="mb-2">
-
             <div class="d-flex align-items-center gap-2 mb-2">
-
                 <span class="badge bg-purple bg-opacity-10 text-purple p-2">
                     <i class="mdi mdi-google-analytics fs-5"></i>
                 </span>
-
                 <h5 class="mb-0 fw-semibold">
                     SEO e Planos
                 </h5>
-
             </div>
 
             <div class="row g-2">
@@ -1109,21 +787,15 @@
 
     @endif
 
-
     {{-- ============================================================
         FOOTER
     ============================================================ --}}
-
     <footer class="footer">
-
         <div class="container-fluid">
-
             <div class="row">
 
                 <div class="col-md-6">
-
                     <div>
-
                         <a
                             href="https://www.whi.dev.br/"
                             target="_blank"
@@ -1133,18 +805,12 @@
                             <script>
                                 document.write(new Date().getFullYear())
                             </script>
-
                             © WHI - Web de Alta Inspiração
-
                         </a>
-
                     </div>
-
                 </div>
 
-
                 <div class="col-md-6">
-
                     <div class="d-none d-md-flex gap-4 align-items-center justify-content-md-end footer-links">
 
                         <a
@@ -1166,15 +832,11 @@
                         </a>
 
                     </div>
-
                 </div>
 
             </div>
-
         </div>
-
     </footer>
-
 
     @include('admin.loadPage.loading')
 

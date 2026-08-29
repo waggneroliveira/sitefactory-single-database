@@ -32,6 +32,11 @@ class ThemeManager
 
     /**
      * Retorna o slug do tema atual.
+     *
+     * Exemplo:
+     * ecommerce
+     * petshop
+     * cartorio
      */
     public function current(): string
     {
@@ -52,10 +57,46 @@ class ThemeManager
 
     /**
      * Retorna a variação atual do template.
+     *
+     * Exemplo:
+     * tp-01
+     * tp-02
      */
     public function variation(): ?string
     {
         return $this->theme()?->template_variation ?? 'error';
+    }
+
+    /**
+     * Retorna a configuração completa do template atual.
+     *
+     * Exemplo:
+     * template_modules.ecommerce
+     */
+    public function templateConfig(): array
+    {
+        return config(
+            "template_modules.{$this->current()}",
+            []
+        );
+    }
+
+    /**
+     * Retorna a configuração específica do layout
+     * e da variação atual.
+     *
+     * Exemplo:
+     *
+     * ecommerce
+     * └── multipage
+     *     └── tp-01
+     */
+    public function layoutConfig(): array
+    {
+        return config(
+            "template_modules.{$this->current()}.{$this->layoutType()}.{$this->variation()}",
+            []
+        );
     }
 
     /**
@@ -91,16 +132,22 @@ class ThemeManager
     }
 
     /**
-     * Retorna os módulos específicos do layout atual.
+     * Retorna os módulos específicos do layout e
+     * da variação atual.
+     *
+     * Exemplo:
+     *
+     * ecommerce
+     * └── multipage
+     *     └── tp-01
+     *         ├── home
+     *         ├── about
+     *         ├── products
+     *         └── contact
      */
     protected function layoutModules(): Collection
     {
-        $modules = config(
-            "template_modules.{$this->current()}.{$this->layoutType()}",
-            []
-        );
-
-        return collect($modules)
+        return collect($this->layoutConfig())
             ->flatten()
             ->filter(fn ($module) => is_string($module))
             ->unique()
@@ -109,29 +156,34 @@ class ThemeManager
 
     /**
      * Retorna os módulos globais do template.
+     *
+     * Esses módulos não dependem de:
+     * - onepage / multipage
+     * - tp-01 / tp-02
      */
     protected function globalModules(): Collection
     {
-        $templateModules = config(
-            "template_modules.{$this->current()}",
-            []
-        );
+        $templateModules = $this->templateConfig();
 
         return collect([
             'smtp',
             'security_and_access_control',
             'config_theme',
-        ])->flatMap(function ($section) use ($templateModules) {
-            return $templateModules[$section] ?? [];
-        })
+        ])
+            ->flatMap(function ($section) use ($templateModules) {
+                return $templateModules[$section] ?? [];
+            })
             ->filter(fn ($module) => is_string($module))
             ->unique()
             ->values();
     }
 
     /**
-     * Retorna todos os módulos disponíveis considerando
-     * o layout atual e os módulos globais.
+     * Retorna todos os módulos disponíveis considerando:
+     * - template
+     * - layout
+     * - variação
+     * - módulos globais
      */
     public function modules(): Collection
     {
@@ -142,8 +194,90 @@ class ThemeManager
     }
 
     /**
-     * Verifica se o módulo existe no template atual
-     * considerando o tipo de layout.
+     * Retorna os módulos de uma página específica.
+     *
+     * Exemplo:
+     *
+     * $theme->pageModules('about');
+     */
+    public function pageModules(string $page): Collection
+    {
+        return collect(
+            $this->layoutConfig()[$page] ?? []
+        )
+            ->filter(fn ($module) => is_string($module))
+            ->unique()
+            ->values();
+    }
+
+    /**
+     * Verifica se uma página existe no layout e
+     * variação atuais.
+     *
+     * IMPORTANTE:
+     *
+     * Isso verifica a existência da PÁGINA,
+     * e não apenas do módulo.
+     *
+     * Exemplo:
+     *
+     * tp-01:
+     *
+     * 'home' => [
+     *     'about',
+     * ],
+     *
+     * 'about' => [
+     *     'about',
+     * ],
+     *
+     * Nesse caso:
+     *
+     * hasPage('about')  = true
+     * hasModule('about') = true
+     *
+     * Já:
+     *
+     * 'home' => [
+     *     'about',
+     * ],
+     *
+     * Nesse caso:
+     *
+     * hasPage('about')  = false
+     * hasModule('about') = true
+     */
+    public function hasPage(string $page): bool
+    {
+        return array_key_exists(
+            $page,
+            $this->layoutConfig()
+        );
+    }
+
+    /**
+     * Retorna todas as páginas disponíveis no
+     * layout e variação atuais.
+     *
+     * Exemplo:
+     *
+     * [
+     *     'home',
+     *     'about',
+     *     'products',
+     *     'contact',
+     * ]
+     */
+    public function pages(): Collection
+    {
+        return collect(
+            array_keys($this->layoutConfig())
+        );
+    }
+
+    /**
+     * Verifica se o módulo existe no template atual,
+     * considerando layout e variação.
      */
     public function hasModule(string $module): bool
     {
@@ -152,7 +286,7 @@ class ThemeManager
 
     /**
      * Verifica se pelo menos um dos módulos informados
-     * existe no template atual considerando o layout.
+     * existe no template atual.
      */
     public function hasAnyModule(array $modules): bool
     {
@@ -225,10 +359,8 @@ class ThemeManager
         |--------------------------------------------------------------------------
         */
 
-        $templateSlug = $this->current();
-
         $templateLimit = config(
-            "template_modules.{$templateSlug}.limits.{$module}"
+            "template_modules.{$this->current()}.limits.{$module}"
         );
 
         if ($templateLimit !== null) {
@@ -246,7 +378,7 @@ class ThemeManager
 
     /**
      * Retorna todos os módulos disponíveis no template atual,
-     * considerando o layout atual e os módulos globais.
+     * considerando layout, variação e módulos globais.
      *
      * Não considera limites de tenant ou plano.
      *
