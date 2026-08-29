@@ -363,6 +363,9 @@
             --copyright-text: "{{ $tenantTheme->copyright ?: '© 2024 Todos os direitos reservados' }}";
         }
 
+        #lgpd-banner{
+            background: #000000;
+        }
         .primary-color {
             color: var(--primary-color);
         }
