@@ -7,6 +7,8 @@ use App\Models\Blog;
 use App\Models\Contact;
 use App\Models\Product;
 use App\Models\SeoGoogle;
+use App\Models\Slide;
+use App\Models\Topic;
 use App\Services\ThemeManager;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -433,7 +435,6 @@ class SeoGoogleController extends Controller
 
         $content = "User-agent: *\n";
         $content .= "Allow: /\n\n";
-
         $content .= "Disallow: /admin\n";
         $content .= "Disallow: /login.do\n";
         $content .= "Disallow: /logout\n";
@@ -446,18 +447,11 @@ class SeoGoogleController extends Controller
         $content .= "Disallow: /blog/search\n";
         $content .= "Disallow: /download-ficha/store\n";
         $content .= "\n";
-
         $content .= "Sitemap: " . url('/sitemap.xml') . "\n";
 
         return response($content, 200)
-            ->header(
-                'Content-Type',
-                'text/plain; charset=UTF-8'
-            )
-            ->header(
-                'Cache-Control',
-                'public, max-age=3600'
-            );
+            ->header('Content-Type', 'text/plain; charset=UTF-8')
+            ->header('Cache-Control', 'public, max-age=3600');
     }
 
     /**
@@ -479,17 +473,31 @@ class SeoGoogleController extends Controller
         |--------------------------------------------------------------------------
         */
 
+        $homeModules = [
+            'slides',
+            'topics',
+            'statute',
+            'letsgo',
+            'faq_session',
+            'faq',
+            'testimonials',
+            'services',
+            'about',
+            'benefits',
+            'mission',
+            'representatives',
+            'videos',
+            'service_locations',
+            'contact',
+            'contact_leads',
+            'download_leads',
+            'blog',
+            'products',
+        ];
+
         $urls[] = $this->makeUrl(
             url('/'),
-            $this->latestUpdatedAt([
-                'slides',
-                'topics',
-                'services',
-                'about',
-                'contact',
-                'blog',
-                'products',
-            ])
+            $this->latestUpdatedAt($homeModules)
         );
 
         /*
@@ -508,7 +516,9 @@ class SeoGoogleController extends Controller
         */
 
         if ($this->themeManager->layoutType() === 'onepage') {
-            return $this->renderSitemap($urls);
+            return $this->renderSitemap(
+                collect($urls)->unique('loc')->values()->all()
+            );
         }
 
         /*
@@ -634,6 +644,7 @@ class SeoGoogleController extends Controller
     {
         $products = Product::query()
             ->where('active', 1)
+            ->with('category')
             ->latest('updated_at')
             ->get();
 
@@ -663,21 +674,12 @@ class SeoGoogleController extends Controller
                 continue;
             }
 
-            if (
-                !isset($product->category) ||
-                !$product->category ||
-                !$product->category->slug
-            ) {
+            if (!$product->category || !$product->category->slug) {
                 continue;
             }
 
             $urls[] = $this->makeUrl(
-                url(
-                    '/produto/' .
-                    $product->category->slug .
-                    '/' .
-                    $product->slug
-                ),
+                url('/produto/' . $product->category->slug . '/' . $product->slug),
                 $product->updated_at
             );
         }
@@ -686,10 +688,8 @@ class SeoGoogleController extends Controller
     /**
      * Cria estrutura de URL.
      */
-    protected function makeUrl(
-        string $url,
-        $lastmod = null
-    ): array {
+    protected function makeUrl(string $url, $lastmod = null): array
+    {
         return [
             'loc' => $url,
             'lastmod' => $lastmod?->toAtomString(),
@@ -706,9 +706,26 @@ class SeoGoogleController extends Controller
         $dates = collect();
 
         foreach ($modules as $module) {
+            if (!$this->themeManager->hasModule($module)) {
+                continue;
+            }
+
             switch ($module) {
+                case 'slides':
+                    $date = Slide::query()
+                        ->latest('updated_at')
+                        ->value('updated_at');
+                    break;
+
+                case 'topics':
+                    $date = Topic::query()
+                        ->latest('updated_at')
+                        ->value('updated_at');
+                    break;
+
                 case 'about':
                     $date = About::query()
+                        ->active()
                         ->latest('updated_at')
                         ->value('updated_at');
                     break;
@@ -757,13 +774,7 @@ class SeoGoogleController extends Controller
         )->render();
 
         return response($xml, 200)
-            ->header(
-                'Content-Type',
-                'application/xml; charset=UTF-8'
-            )
-            ->header(
-                'Cache-Control',
-                'public, max-age=3600'
-            );
+            ->header('Content-Type', 'application/xml; charset=UTF-8')
+            ->header('Cache-Control', 'public, max-age=3600');
     }
 }
