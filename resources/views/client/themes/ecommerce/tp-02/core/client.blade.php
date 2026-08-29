@@ -257,11 +257,10 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" onload='this.onload=null,this.rel="stylesheet"'>
-
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap">
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
     </noscript>
 
     {{-- ============================================================
@@ -270,9 +269,11 @@
 
     <link href="{{ asset('build/client/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('build/client/themes/ecommerce/tp-02/css/style.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('build/client/themes/ecommerce/tp-02/css/responsivo.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('build/client/css/default.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('build/client/lgpd/style.css') }}" rel="stylesheet" type="text/css">
+    <link rel="preload" href="{{ asset('build/client/lgpd/style.css') }}" as="style"  onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet"  href="{{ asset('build/client/lgpd/style.css') }}">
+    </noscript>
 
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"></noscript>
@@ -315,13 +316,7 @@
             $mensagem = "Olá! Encontrei seu site e gostaria de conhecer mais sobre os planos disponíveis.%0A";
         @endphp
 
-        <a
-            href="https://wa.me/55{{ $phone }}?text={{ $mensagem }}"
-            class="whatsapp-float"
-            aria-label="Fale conosco no WhatsApp"
-            target="_blank"
-            rel="noopener noreferrer"
-            >
+        <a href="https://wa.me/55{{ $phone }}?text={{ $mensagem }}" class="whatsapp-float" aria-label="Fale conosco no WhatsApp" target="_blank" rel="noopener noreferrer">
             <!-- Ícone SVG do WhatsApp -->
             <svg viewBox="0 0 32 32" aria-hidden="true">
                 <path d="M19.11 17.27c-.23-.12-1.37-.67-1.58-.75-.21-.08-.36-.12-.52.12-.16.23-.6.74-.74.89-.14.15-.27.17-.5.06-.23-.12-.97-.36-1.85-1.12-.68-.6-1.14-1.34-1.27-1.57-.13-.23-.01-.35.1-.47.1-.1.23-.27.35-.4.12-.13.16-.23.24-.39.08-.16.04-.3-.02-.42-.06-.12-.52-1.25-.71-1.72-.19-.46-.38-.4-.52-.4h-.45c-.16 0-.42.06-.64.3-.22.23-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.69 2.58 4.1 3.61.57.25 1.01.4 1.35.52.57.18 1.1.16 1.52.1.46-.07 1.37-.56 1.57-1.1.19-.54.19-1 .13-1.1-.06-.1-.21-.16-.44-.27zM16 3.2c-7.06 0-12.8 5.73-12.8 12.8 0 2.26.61 4.36 1.67 6.17L3.2 28.8l6.78-1.6c1.74.95 3.74 1.5 5.87 1.5 7.07 0 12.8-5.73 12.8-12.8S23.07 3.2 16 3.2zm0 22.94c-1.98 0-3.81-.58-5.35-1.57l-.38-.24-4.02.95.95-3.92-.25-.4a10.58 10.58 0 0 1-1.64-5.62c0-5.86 4.77-10.62 10.63-10.62S26.62 9.38 26.62 15.24 21.86 26.14 16 26.14z"/>
@@ -496,14 +491,6 @@
 
         .scroll-top:hover {
             background: var(--secondary-color);
-        }
-        @media (max-width: 680px) {
-            .stat-number{
-                font-size: 1.375rem !important;
-            }
-            .video-container {
-                height: 215px;
-            }
         }
     </style>
 
@@ -796,9 +783,11 @@
 
         function toEmbed(rawUrl) {
             const urlStr = norm(rawUrl);
+
             if (!urlStr) return "";
 
             let u;
+
             try {
                 u = new URL(urlStr);
             } catch {
@@ -816,12 +805,18 @@
 
                 if (host === "youtu.be") {
                     const id = u.pathname.split("/")[1];
-                    return `https://www.youtube.com/embed/${id}`;
+
+                    if (id) {
+                        return `https://www.youtube.com/embed/${id}`;
+                    }
                 }
 
                 if (u.pathname.startsWith("/shorts/")) {
                     const id = u.pathname.split("/")[2];
-                    return `https://www.youtube.com/embed/${id}`;
+
+                    if (id) {
+                        return `https://www.youtube.com/embed/${id}`;
+                    }
                 }
 
                 const v = u.searchParams.get("v");
@@ -849,24 +844,37 @@
         }
 
         function getYouTubeId(url) {
-
             try {
-
-                const u = new URL(url);
+                const u = new URL(norm(url));
                 const host = u.hostname.replace(/^www\./, "");
 
                 if (host === "youtu.be") {
-                    return u.pathname.split("/")[1];
+                    return u.pathname.split("/")[1] || null;
                 }
 
                 if (u.pathname.startsWith("/shorts/")) {
-                    return u.pathname.split("/")[2];
+                    return u.pathname.split("/")[2] || null;
+                }
+
+                if (u.pathname.startsWith("/embed/")) {
+                    return u.pathname.split("/")[2] || null;
                 }
 
                 return u.searchParams.get("v");
-
             } catch {
                 return null;
+            }
+        }
+
+        function getAutoplayUrl(url) {
+            try {
+                const u = new URL(url);
+
+                u.searchParams.set("autoplay", "1");
+
+                return u.toString();
+            } catch {
+                return url;
             }
         }
 
@@ -883,7 +891,6 @@
             const playBtn = document.querySelector(".video-play-btn");
 
             if (playBtn) {
-
                 playBtn.addEventListener("click", function () {
 
                     const container = this.closest(".video-container");
@@ -892,17 +899,25 @@
 
                     const embedUrl = toEmbed(container.dataset.video);
 
+                    if (!embedUrl) return;
+
+                    const autoplayUrl = getAutoplayUrl(embedUrl);
+
                     container.innerHTML = `
                         <iframe
-                            src="${embedUrl}?autoplay=1"
+                            src="${autoplayUrl}"
                             frameborder="0"
-                            allow="autoplay; encrypted-media"
+                            allow="autoplay; encrypted-media; picture-in-picture"
                             allowfullscreen
-                            style="width:100%;height:100%;">
+                            style="width:100%;height:100%;border:0;">
                         </iframe>
                     `;
                 });
             }
+
+            // ===========================
+            // Thumbnail do vídeo
+            // ===========================
 
             const videoContainer = document.querySelector(".video-container");
 
@@ -912,10 +927,42 @@
 
                 if (img) {
 
-                    const id = getYouTubeId(videoContainer.dataset.video);
+                    const loadThumbnail = function () {
 
-                    if (id) {
+                        if (img.dataset.loaded) return;
+
+                        const id = getYouTubeId(videoContainer.dataset.video);
+
+                        if (!id) return;
+
                         img.src = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+
+                        img.dataset.loaded = "true";
+                    };
+
+                    if ("IntersectionObserver" in window) {
+
+                        const observer = new IntersectionObserver(function (entries) {
+
+                            entries.forEach(function (entry) {
+
+                                if (entry.isIntersecting) {
+
+                                    loadThumbnail();
+
+                                    observer.unobserve(entry.target);
+                                }
+                            });
+
+                        }, {
+                            rootMargin: "300px 0px"
+                        });
+
+                        observer.observe(videoContainer);
+
+                    } else {
+
+                        loadThumbnail();
                     }
                 }
             }
@@ -956,7 +1003,6 @@
                     if (window.innerWidth > 768) {
                         changeBackground(this);
                     }
-
                 });
 
                 // Mobile
@@ -965,13 +1011,11 @@
                     if (window.innerWidth <= 768) {
                         changeBackground(this);
                     }
-
                 });
-
             });
-
         });
     </script>
+
     {{-- Modais alert --}}
     <script defer>
         document.addEventListener('DOMContentLoaded', function () {
