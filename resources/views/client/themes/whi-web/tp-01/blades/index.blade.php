@@ -248,7 +248,7 @@
                         <h3 class="text-white">Design profissional para o seu negócio</h3>
                         <p class="text-white">Tenha acesso a layouts pensados para diferentes tipos de negócios, com uma estrutura moderna e pronta para apresentar sua empresa.</p>
 
-                        <ul class="design_block py-3">
+                        <ul class="design_block py-3 px-0">
                             <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
                                 <h6><span>Layouts</span> criados para diferentes segmentos</h6>
@@ -301,7 +301,7 @@
                     <h3 class="text-white">Uma experiência melhor para quem visita</h3>
                     <p class="text-white">Ofereça um site organizado, rápido e adaptado para facilitar a navegação e apresentar sua empresa com clareza.</p>
 
-                    <ul class="design_block py-3">
+                    <ul class="design_block py-3 px-0">
                         <li class="d-flex gap-2 justify-content-start align-items-center">
                             <i class="bi bi-check-circle"></i>
                             <h6><span>Navega</span> por uma estrutura clara e intuitiva</h6>
@@ -354,7 +354,7 @@
                         <h3 class="text-white">Tenha autonomia para cuidar do seu site</h3>
                         <p class="text-white">Gerencie o conteúdo da sua presença digital em um só lugar, sem depender de alterações feitas por terceiros.</p>
 
-                        <ul class="design_block py-3">
+                        <ul class="design_block py-3 px-0">
                             <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
                                 <h6><span>Gerencie</span> todo o conteúdo pelo seu painel</h6>

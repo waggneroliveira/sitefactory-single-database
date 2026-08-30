@@ -288,6 +288,11 @@
         .bg-scroll { background: var(--bg-scroll); }
         .bg-button-one { background: var(--bg-button-one); }
         .bg-button-two { background: var(--bg-button-two); }
+        @media (max-width: 767.98px) {
+            .testimonials-section {
+                padding-top: 0px;
+            }
+        }
     </style>
 
     {{-- Header --}}
@@ -440,7 +445,7 @@
                             
                             <label class="text-color-footer font-12 d-flex justify-content-start gap-1 align-items-center mt-2">
                                 <input type="checkbox" id="privacy-policy" required=""> 
-                                Concordo com a Política de Privacidade da Delifast.
+                                Concordo com a Política de Privacidade da Whiweb.
                             </label>
                             
                             <!-- Mensagem de feedback -->
