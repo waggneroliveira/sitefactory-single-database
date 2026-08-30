@@ -275,8 +275,7 @@
                             </li>
                         </ul>
                         <div class="btn_block">
-                            <a href="#plans" 
-                            class="bg-button-two color-button-two px-3 py-2 rounded-3">
+                            <a href="#plans" class="bg-button-two color-button-two px-3 py-2 rounded-3">
                               <span>
                                 Começar agora
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
@@ -962,7 +961,7 @@
     <div class="cta-glow-2"></div>
 
     <div class="container">
-      <div class="cta-glass-card">
+      <div class="cta-glass-card p-3 p-lg-4">
         <div class="row align-items-center">
           
           <!-- Conteúdo Principal -->

@@ -401,10 +401,10 @@
 
                 <!-- Mapa do site -->
                 <div class="col-lg-4 mb-4 mb-0 text-start">
-                    <h6 class="font-changa text-color-footer font-16 font-bold mb-3 position-relative d-inline-block font-changa font-16 font-medium">
+                    <div class="text-color-footer mb-3 position-relative d-inline-block font-changa font-16 font-bold map-footer">
                         Mapa do Site
                         <span class="d-block bg-yellow mt-1" style="height:3px; width:40px;"></span>
-                    </h6>
+                    </div>
 
                     <div class="row">
                         <div class="col-6">
@@ -554,7 +554,7 @@
     </script>
 
     <script defer src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>    
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script defer src="{{ asset('build/client/bootstrap/js/bootstrap.bundle.js') }}"></script>
     <script defer src="{{ asset('build/client/lgpd/script.js') }}"></script>
@@ -570,21 +570,29 @@
     @endphp
 
     @if ($slide)
-        <script defer>
-            const typedStrings = @json($slide->typed ?? '')
-                .split(',')
-                .map(item => item.trim())
-                .filter(item => item !== '');
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const typedStrings = @json($slide->typed ?? '')
+                    .split(',')
+                    .map(item => item.trim())
+                    .filter(item => item !== '');
 
-            $("#typed").typed({
-                strings: typedStrings,
-                typeSpeed: 100,
-                startDelay: 0,
-                backSpeed: 60,
-                backDelay: 2000,
-                loop: true,
-                cursorChar: "|",
-                contentType: 'html'
+                if (
+                    typeof jQuery !== 'undefined' &&
+                    typeof jQuery.fn.typed === 'function' &&
+                    typedStrings.length > 0
+                ) {
+                    jQuery('#typed').typed({
+                        strings: typedStrings,
+                        typeSpeed: 100,
+                        startDelay: 0,
+                        backSpeed: 60,
+                        backDelay: 2000,
+                        loop: true,
+                        cursorChar: '|',
+                        contentType: 'html'
+                    });
+                }
             });
         </script>
     @endif
