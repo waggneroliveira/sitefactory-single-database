@@ -108,7 +108,7 @@
                                                         @endif
                                                     </a>
 
-                                                    <h5 class="mt-2">{{ $topic->title }}</h5>
+                                                    <div class="h5 mt-2">{{ $topic->title }}</div>
                                                 </div>
                                                 <p>{{ $topic->description }}</p>
                                             </div>
@@ -162,7 +162,7 @@
                     </div>
                     <!-- text -->
                     <div class="text col-12 col-md-10">
-                        <h6>Escolha seu template</h6>
+                        <div class="font-semibold font-15 font-changa">Escolha seu template</div>
                         <p>Escolha o modelo que mais combina com o seu negócio e comece a personalizar seu site.</p>
                     </div>
                   </div>
@@ -175,7 +175,7 @@
                     </div>
                     <!-- text -->
                     <div class="text col-12 col-md-10">
-                      <h6>Acesse seu painel</h6>
+                      <div class="font-semibold font-15 font-changa">Acesse seu painel</div>
                       <p>Entre na sua conta e tenha acesso a todas as opções de personalização do seu site.</p>
                     </div>
                   </div>
@@ -188,7 +188,7 @@
                     </div>
                     <!-- text -->
                     <div class="text col-12 col-md-10">
-                      <h6>Personalize seu tema</h6>
+                      <div class="font-semibold font-15 font-changa">Personalize seu tema</div>
                       <p>Altere cores, textos, imagens e outros elementos para deixar o site com a identidade da sua marca.</p>
                     </div>
                   </div>
@@ -201,7 +201,7 @@
                     </div>
                     <!-- text -->
                     <div class="text col-12 col-md-10">
-                      <h6>Salve e veja a mudança</h6>
+                      <div class="font-semibold font-15 font-changa">Salve e veja a mudança</div>
                       <p>Salve suas alterações e confira seu site personalizado em poucos instantes.</p>
                     </div>
                   </div>
@@ -251,27 +251,27 @@
                         <ul class="design_block py-3 px-0">
                             <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
-                                <h6><span>Layouts</span> criados para diferentes segmentos</h6>
+                                Layouts criados para diferentes segmentos
                             </li>
                             <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
-                                <h6><span>Design</span> moderno e profissional</h6>
+                                Design moderno e profissional
                             </li>
                             <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
-                                <h6><span>Estrutura</span> pensada para destacar seu negócio</h6>
+                                Estrutura pensada para destacar seu negócio
                             </li>
                             <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
-                                <h6><span>Experiência</span> otimizada para seus visitantes</h6>
+                                Experiência otimizada para seus visitantes
                             </li>
                             <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
-                                <h6><span>Responsividade</span> em celulares, tablets e computadores</h6>
+                                Responsividade em celulares, tablets e computadores
                             </li>
                             <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
-                                <h6><span>Atualizações</span> contínuas nos modelos disponíveis</h6>
+                                Atualizações contínuas nos modelos disponíveis
                             </li>
                         </ul>
                         <div class="btn_block">
@@ -304,27 +304,27 @@
                     <ul class="design_block py-3 px-0">
                         <li class="d-flex gap-2 justify-content-start align-items-center">
                             <i class="bi bi-check-circle"></i>
-                            <h6><span>Navega</span> por uma estrutura clara e intuitiva</h6>
+                            Navega por uma estrutura clara e intuitiva
                         </li>
                         <li class="d-flex gap-2 justify-content-start align-items-center">
                             <i class="bi bi-check-circle"></i>
-                            <h6><span>Encontra</span> informações importantes com facilidade</h6>
+                            Encontra informações importantes com facilidade
                         </li>
                         <li class="d-flex gap-2 justify-content-start align-items-center">
                             <i class="bi bi-check-circle"></i>
-                            <h6><span>Acessa</span> o site de qualquer dispositivo</h6>
+                            Acessa o site de qualquer dispositivo
                         </li>
                         <li class="d-flex gap-2 justify-content-start align-items-center">
                             <i class="bi bi-check-circle"></i>
-                            <h6><span>Conhece</span> melhor seus produtos e serviços</h6>
+                            Conhece melhor seus produtos e serviços
                         </li>
                         <li class="d-flex gap-2 justify-content-start align-items-center">
                             <i class="bi bi-check-circle"></i>
-                            <h6><span>Entra</span> em contato de forma rápida</h6>
+                            Entra em contato de forma rápida
                         </li>
                         <li class="d-flex gap-2 justify-content-start align-items-center">
                             <i class="bi bi-check-circle"></i>
-                            <h6><span>Percebe</span> mais profissionalismo na sua presença online</h6>
+                            Percebe mais profissionalismo na sua presença online
                         </li>
                     </ul>
 
@@ -357,27 +357,27 @@
                         <ul class="design_block py-3 px-0">
                             <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
-                                <h6><span>Gerencie</span> todo o conteúdo pelo seu painel</h6>
+                                Gerencie todo o conteúdo pelo seu painel
                             </li>
                             <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
-                                <h6><span>Atualize</span> informações sempre que necessário</h6>
+                                Atualize informações sempre que necessário
                             </li>
                             <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
-                                <h6><span>Controle</span> imagens, textos e informações da empresa</h6>
+                                Controle imagens, textos e informações da empresa
                             </li>
                             <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
-                                <h6><span>Economize</span> tempo com uma gestão mais simples</h6>
+                                Economize tempo com uma gestão mais simples
                             </li>
                             <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
-                                <h6><span>Mantenha</span> seu site sempre atualizado</h6>
+                                Mantenha seu site sempre atualizado
                             </li>
                             <li class="d-flex gap-2 justify-content-start align-items-center">
                                 <i class="bi bi-check-circle"></i>
-                                <h6><span>Tenha</span> mais autonomia sobre sua presença digital</h6>
+                                Tenha mais autonomia sobre sua presença digital
                             </li>
                         </ul>
                         <div class="btn_block">
@@ -693,6 +693,7 @@
               <span class="toggle-label active" id="label-monthly">Cobrança Mensal</span>
               <div class="form-check form-switch p-0 m-0">
                 <input class="form-check-input pricing-switch" type="checkbox" id="pricingToggle">
+                <label class="visually-hidden" for="pricingToggle">Alternar entre cobrança mensal e anual</label>
               </div>
               <span class="toggle-label" id="label-yearly">
                 Cobrança Anual
@@ -994,7 +995,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                   </div>
                   <div class="channel-details">
-                    <h4>Atendimento Telefônico / WhatsApp</h4>
+                    <div class="h4">Atendimento Telefônico / WhatsApp</div>
                     <p class="d-flex justify-content-start">(71) 99276-8360</p>
                   </div>
                 </div>
@@ -1016,7 +1017,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                   </div>
                   <div class="channel-details">
-                    <h4>Envie uma mensagem por e-mail</h4>
+                    <div class="h4">Envie uma mensagem por e-mail</div>
                     <p class="d-flex justify-content-star">atendimento@whi.dev.br</p>
                   </div>
                 </div>

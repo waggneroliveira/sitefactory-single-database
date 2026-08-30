@@ -288,11 +288,6 @@
         .bg-scroll { background: var(--bg-scroll); }
         .bg-button-one { background: var(--bg-button-one); }
         .bg-button-two { background: var(--bg-button-two); }
-        @media (max-width: 767.98px) {
-            .testimonials-section {
-                padding-top: 0px;
-            }
-        }
     </style>
 
     {{-- Header --}}
@@ -432,12 +427,12 @@
                 
                 <div class="col-lg-3 col-md-6 col-12 text-start">
 
-                    <h5 class="text-color-footer">Newsletter</h5>
+                    <div class="h5 text-color-footer mb-1 font-changa font-16 font-bold">Newsletter</div>
                     <div class="news_letter">
                         <p class="text-color-footer font-15">Inscreva-se e seja o primeiro a receber promoções incríveis</p>
                         <form id="newsletter-form">
                             <div class="form-group">
-                                <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required="">
+                                <input type="email" id="email" name="email" class="form-control" placeholder="Informe seu email" required="">
                                 <button type="submit" class="btn" aria-label="subscribe">
                                     <i class="bi bi-send-fill"></i>
                                 </button>
