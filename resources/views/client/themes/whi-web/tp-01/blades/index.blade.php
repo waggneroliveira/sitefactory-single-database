@@ -234,6 +234,10 @@
         <div class="blure_shape bg-secondary-color bs_2"> </div>
 
         <div class="container position-relative">
+            @php
+                $logoPath = storage_path('app/public/' . $tenantTheme->path_image_logo_header);
+                $dimensions = file_exists($logoPath) ? @getimagesize($logoPath) : null;
+            @endphp
             <!-- section title -->
             <div class="section_title">
                 <span class="title_badge text-white">VANTAGENS</span>
@@ -288,7 +292,7 @@
                 <div class="col-md-6">
                     <div class="inner_block dark_bg rotate_right">
                         <div class="img">
-                            <img src="{{asset('build/client/images/themes/whi-web/benefit-1.png')}}" alt="image" loading="lazy">
+                            <img src="{{asset('build/client/images/themes/whi-web/benefit-1.png')}}" alt="image" loading="lazy" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
                         </div>
                     </div>
                 </div>
@@ -340,7 +344,7 @@
                 <div class="col-md-6">
                     <div class="inner_block">
                         <div class="img">
-                            <img src="{{asset('build/client/images/themes/whi-web/benefit-2.png')}}" alt="image" loading="lazy">
+                            <img src="{{asset('build/client/images/themes/whi-web/benefit-2.png')}}" alt="image" loading="lazy" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
                         </div>
                     </div>
                 </div>
@@ -394,7 +398,7 @@
                 <div class="col-md-6">
                     <div class="inner_block dark_bg rotate_right">
                         <div class="img">
-                            <img src="{{asset('build/client/images/themes/whi-web/benefit-3.png')}}" alt="image" loading="lazy">
+                            <img src="{{asset('build/client/images/themes/whi-web/benefit-3.png')}}" alt="image" loading="lazy" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
                         </div>
                     </div>
                 </div>
