@@ -160,6 +160,14 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&display=swap">
     </noscript>
 
+    <link href="{{ asset('build/client/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('build/client/themes/whi-web/tp-01/css/style.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('build/client/css/default.css') }}" rel="stylesheet" type="text/css">
+    <link rel="preload" href="{{ asset('build/client/lgpd/style.css') }}" as="style"  onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet"  href="{{ asset('build/client/lgpd/style.css') }}">
+    </noscript>
+
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"></noscript>
 
@@ -168,10 +176,6 @@
 
     <link href="{{ asset('build/client/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link rel="preload" href="{{ asset('build/client/bootstrap-icons/bootstrap-icons.css') }}" as="style" onload="this.rel='stylesheet'">
-    <link href="{{ asset('build/client/lgpd/style.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('build/client/themes/whi-web/tp-01/css/style.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('build/client/themes/whi-web/tp-01/css/responsivo.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('build/client/css/default.css') }}" rel="stylesheet" type="text/css">
 
     <script type="application/ld+json">{!! json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}</script>
 </head>
@@ -217,6 +221,7 @@
             --copyright-text: {{ $tenantTheme->copyright ?: '© 2024 Todos os direitos reservados' }};
         }
         body{ background: #021127 !important }
+        .bg-yellow{ background: var(--secondary-color)}
         .tpl-modal-sec .tpl-badge{
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.12);
@@ -291,7 +296,13 @@
             <nav class="navbar navbar-expand-lg mt-0 justify-content-center justify-content-md-start">
                 <a class="navbar-brand logo-header" href="#">
                     @if(!empty($tenantTheme->path_image_logo_header))
-                        <img src="{{ asset('storage/' . $tenantTheme->path_image_logo_header) }}" alt="{{ $seoGoogle->organization_name ?? config('app.name') }}">
+                        {{-- Pegar tamanho/proporção da logo --}}
+                        @php
+                            $logoPath = storage_path('app/public/' . $tenantTheme->path_image_logo_header);
+                            $dimensions = file_exists($logoPath) ? @getimagesize($logoPath) : null;
+                        @endphp
+
+                        <img src="{{ asset('storage/' . $tenantTheme->path_image_logo_header) }}" alt="{{ $tenantTheme->name }}" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
                     @else
                         <span class="fw-bold">{{ $seoGoogle->organization_name ?? config('app.name') }}</span>
                     @endif
@@ -370,7 +381,14 @@
 
                 <!-- Logo + botão -->
                 <div class="col-lg-3 mb-4 mb-lg-0">
-                    <img src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ config('app.name') }}" height="65">
+                    {{-- Pegar tamanho/proporção da logo --}}
+                    @php
+                        $logoPath = storage_path('app/public/' . $tenantTheme->path_image_logo_footer);
+                        $dimensions = file_exists($logoPath) ? @getimagesize($logoPath) : null;
+                    @endphp
+
+                    <img src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ $tenantTheme->name }}" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" loading="lazy" style="max-width:100%;height:auto;">
+
                     @if ($tenantTheme->link <> null)                        
                         <div class="mt-3 mt-lg-5">
                             <a href="{{ $tenantTheme->link }}" target="_blank" rel="noopener noreferrer" class="bg-button-two color-button-two px-4 py-2 font-changa font-16 font-medium text-decoration-none hover-zoom">
@@ -382,7 +400,7 @@
                 </div>
 
                 <!-- Mapa do site -->
-                <div class="col-lg-4 mb-4 mb-0">
+                <div class="col-lg-4 mb-4 mb-0 text-start">
                     <h6 class="font-changa text-color-footer font-16 font-bold mb-3 position-relative d-inline-block font-changa font-16 font-medium">
                         Mapa do Site
                         <span class="d-block bg-yellow mt-1" style="height:3px; width:40px;"></span>
@@ -391,27 +409,27 @@
                     <div class="row">
                         <div class="col-6">
                             <ul class="list-unstyled">
-                                <li><a href="{{route('index')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Início</a></li>
-                                <li><a href="{{route('index')}}#about" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Quem Somos</a></li>
-                                <li><a href="{{route('index')}}#services" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Serviços</a></li>
+                                <li><a href="{{route('index')}}" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Início</a></li>
+                                <li><a href="{{route('index')}}#about" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Quem Somos</a></li>
+                                <li><a href="{{route('index')}}#services" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Serviços</a></li>
                             </ul>
                         </div>
 
                         <div class="col-6">
                             <ul class="list-unstyled">
-                                <li><a href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Depoimentos</a></li>
-                                <li><a href="{{ request()->routeIs('index') ? '#faq' : route('index') . '#faq' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">FAQ</a></li>
-                                <li><a href="{{route('index')}}#contato" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Contato</a></li>
+                                <li><a href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Depoimentos</a></li>
+                                <li><a href="{{ request()->routeIs('index') ? '#faq' : route('index') . '#faq' }}" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">FAQ</a></li>
+                                <li><a href="{{route('index')}}#contato" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Contato</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 
-                <div class="col-lg-3 col-md-6 col-12">
+                <div class="col-lg-3 col-md-6 col-12 text-start">
 
                     <h5 class="text-color-footer">Newsletter</h5>
                     <div class="news_letter">
-                        <p class="text-color-footer">Inscreva-se e seja o primeiro a receber promoções incríveis</p>
+                        <p class="text-color-footer font-15">Inscreva-se e seja o primeiro a receber promoções incríveis</p>
                         <form id="newsletter-form">
                             <div class="form-group">
                                 <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required="">
@@ -420,7 +438,7 @@
                                 </button>
                             </div>
                             
-                            <label class="text-color-footer">
+                            <label class="text-color-footer font-12 d-flex justify-content-start gap-1 align-items-center mt-2">
                                 <input type="checkbox" id="privacy-policy" required=""> 
                                 Concordo com a Política de Privacidade da Delifast.
                             </label>
@@ -496,14 +514,14 @@
                         <div class="d-flex justify-content-center justify-content-lg-end align-items-center gap-3">
                             <a href="http://whiweb.com.br/" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
                                 <span class="font-13">Sistema</span>
-                                <img src="{{asset('build/client/themes/default/images/whi-web.png')}}" title="Whi Web" alt="WHI Web" height="50" class="logo-system">
+                                <img src="{{asset('build/client/themes/default/images/whi-web.png')}}" title="Whi Web" alt="WHI Web" height="50" class="logo-system" loading="lazy">
                             </a>
 
                             <span class="text-color-footer opacity-50">|</span>
 
                             <a href="https://www.whi.dev.br/" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
                                 <span class="font-13">Desenvolvido por</span>
-                                <img src="{{asset('build/client/themes/default/images/whi.png')}}" title="Agência WHI" alt="WHI" height="25" class="logo-system">
+                                <img src="{{asset('build/client/themes/default/images/whi.png')}}" title="Agência WHI" alt="WHI" height="25" class="logo-system" loading="lazy">
                             </a>
                         </div>
                     </div>
@@ -535,24 +553,24 @@
         });
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="{{ asset('build/client/bootstrap/js/bootstrap.bundle.js') }}"></script>
-    <script src="{{ asset('build/client/lgpd/script.js') }}"></script>
-    <script src="{{ asset('build/client/themes/whi-web/tp-01/js/jquery.js') }}"></script>
-    <script src="{{ asset('build/client/themes/whi-web/tp-01/js/typed.min.js') }}"></script>
-    <script src="{{ asset('build/client/themes/whi-web/tp-01/js/functions-site.js') }}"></script>
-    <script src="{{ asset('build/client/themes/whi-web/tp-01/js/gsap-efect.js') }}"></script>
-    <script src="{{ asset('build/client/themes/whi-web/tp-01/js/main.js') }}"></script>
-    <script src="{{ asset('build/client/js/default.js') }}"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>    
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script defer src="{{ asset('build/client/bootstrap/js/bootstrap.bundle.js') }}"></script>
+    <script defer src="{{ asset('build/client/lgpd/script.js') }}"></script>
+    <script defer src="{{ asset('build/client/themes/whi-web/tp-01/js/jquery.js') }}"></script>
+    <script defer src="{{ asset('build/client/themes/whi-web/tp-01/js/typed.min.js') }}"></script>
+    <script defer src="{{ asset('build/client/themes/whi-web/tp-01/js/functions-site.js') }}"></script>
+    <script defer src="{{ asset('build/client/themes/whi-web/tp-01/js/gsap-efect.js') }}"></script>
+    <script defer src="{{ asset('build/client/themes/whi-web/tp-01/js/main.js') }}"></script>
+    <script defer src="{{ asset('build/client/js/default.js') }}"></script>
 
     @php
         $slide = $slides->first();
     @endphp
 
     @if ($slide)
-        <script>
+        <script defer>
             const typedStrings = @json($slide->typed ?? '')
                 .split(',')
                 .map(item => item.trim())

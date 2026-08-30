@@ -33,7 +33,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-3 d-flex justify-conten-center flex-wrap gap-3">
+                    <div class="mt-3 d-flex justify-content-center justify-content-lg-start flex-wrap gap-3">
                         @if ($slide->link <> null)                                    
                             <a href="{{$slide->link}}" target="_blank" rel="noopener noreferrer" class="rounded-1 d-flex align-items-center btn-one py-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none">
                                 {{$slide->btn_title}}
@@ -128,7 +128,7 @@
 
         <!-- device image -->
         <div class="device">
-            <img src="{{asset('build/client/images/themes/whi-web/device.png')}}" alt="image" height="250">
+            <img src="{{asset('build/client/images/themes/whi-web/device.png')}}" alt="image" height="250" loading="lazy">
         </div>
 
     </section>
@@ -210,11 +210,11 @@
               </div>
 
               <div class="col-lg-6 col-md-12 position-relative">
-                <img src="{{asset('build/client/images/themes/whi-web/tablet.png')}}" class="position-absolute" alt="image" style="height: 250px; bottom: 15px; right: 11px;z-index: 1;">
-                <img src="{{asset('build/client/images/themes/whi-web/phone-login.png')}}" class="position-absolute" alt="image" style="    height: 220px; bottom: 15px; left: -34px; z-index: 1;">
+                <img src="{{asset('build/client/images/themes/whi-web/tablet.png')}}" class="position-absolute tablet" loading="lazy" alt="image" style="height: 250px; bottom: 15px; right: 11px;z-index: 1;">
+                <img src="{{asset('build/client/images/themes/whi-web/phone-login.png')}}" class="position-absolute phone-img" loading="lazy" alt="image" style="height: 220px; bottom: 15px; left: 0px; z-index: 1;">
                 <!-- why us new image -->
                 <div class="why_us_new_img position-relative">
-                  <img src="{{asset('build/client/images/themes/whi-web/gif-paine-one.gif')}}" alt="image">
+                  <img src="{{asset('build/client/images/themes/whi-web/gif-paine-one.gif')}}" loading="lazy" alt="image">
                 </div>
               </div>
             </div>
@@ -289,7 +289,7 @@
                 <div class="col-md-6">
                     <div class="inner_block dark_bg rotate_right">
                         <div class="img">
-                            <img src="{{asset('build/client/images/themes/whi-web/benefit-1.png')}}" alt="image">
+                            <img src="{{asset('build/client/images/themes/whi-web/benefit-1.png')}}" alt="image" loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -341,7 +341,7 @@
                 <div class="col-md-6">
                     <div class="inner_block">
                         <div class="img">
-                            <img src="{{asset('build/client/images/themes/whi-web/benefit-2.png')}}" alt="image">
+                            <img src="{{asset('build/client/images/themes/whi-web/benefit-2.png')}}" alt="image" loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -395,7 +395,7 @@
                 <div class="col-md-6">
                     <div class="inner_block dark_bg rotate_right">
                         <div class="img">
-                            <img src="{{asset('build/client/images/themes/whi-web/benefit-3.png')}}" alt="image">
+                            <img src="{{asset('build/client/images/themes/whi-web/benefit-3.png')}}" alt="image" loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -435,7 +435,7 @@
               <span class="tpl-tag">Popular</span>
             </div>
             <div class="tpl-preview">
-              <img src="https://halothemes.net/cdn/shop/files/petcity-theme.jpg" onerror="this.src='https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=800&q=80'" alt="Petshop">
+              <img src="https://halothemes.net/cdn/shop/files/petcity-theme.jpg" onerror="this.src='https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=800&q=80'" alt="Petshop" loading="lazy">
               <div class="tpl-overlay">
                 <a href="#" class="tpl-btn-preview bg-secondary">Ver Demo <i class="bi bi-arrow-up-right"></i></a>
               </div>
@@ -456,7 +456,7 @@
               <span class="tpl-tag">Destaque</span>
             </div>
             <div class="tpl-preview">
-              <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/7b3e7c176553645.64c7c4c7e7a6f9.png" onerror="this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80'" alt="Restaurante">
+              <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/7b3e7c176553645.64c7c4c7e7a6f9.png" onerror="this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80'" alt="Restaurante" loading="lazy">
               <div class="tpl-overlay">
                 <a href="#" class="tpl-btn-preview">Ver Demo <i class="bi bi-arrow-up-right"></i></a>
               </div>
@@ -476,7 +476,7 @@
               <div class="tpl-dots"><span></span><span></span><span></span></div>
             </div>
             <div class="tpl-preview">
-              <img src="https://y4pdgnepgswqffpt.public.blob.vercel-storage.com/templates/52439/servexa-UBoXqFa1RHZGFrlhyXS8hvp8hA4fKN" alt="Serviços">
+              <img src="https://y4pdgnepgswqffpt.public.blob.vercel-storage.com/templates/52439/servexa-UBoXqFa1RHZGFrlhyXS8hvp8hA4fKN" alt="Serviços" loading="lazy">
               <div class="tpl-overlay">
                 <a href="#" class="tpl-btn-preview">Ver Demo <i class="bi bi-arrow-up-right"></i></a>
               </div>
@@ -497,7 +497,7 @@
               <span class="tpl-tag">Novo</span>
             </div>
             <div class="tpl-preview">
-              <img src="https://www.yola.com/ws/media-library/0a36e7e121e846f3a45f539f5f88a90e/27c5bb58f4394abeb3d85fc6c41574db.jpeg" alt="Empresas">
+              <img src="https://www.yola.com/ws/media-library/0a36e7e121e846f3a45f539f5f88a90e/27c5bb58f4394abeb3d85fc6c41574db.jpeg" alt="Empresas" loading="lazy">
               <div class="tpl-overlay">
                 <a href="#" class="tpl-btn-preview">Ver Demo <i class="bi bi-arrow-up-right"></i></a>
               </div>
@@ -531,7 +531,7 @@
           <div class="row video-card-container g-0">
             
             <!-- Lista Lateral (Esquerda) -->
-            <div class="col-lg-5 video-sidebar">
+            <div class="col-lg-5 p-2 p-lg-4 video-sidebar">
               <div class="video-sidebar-header">
                 <h2 class="video-sidebar-title">Playlist de Vídeos</h2>
                 <span class="video-count-badge">{{ $videos->count() }} vídeos</span>
@@ -542,7 +542,7 @@
                   <div class="video-item" data-video="{{ $video->link }}">
                     <div class="video-thumb-wrapper">
                       <!-- Thumbnail dinâmica gerada via JS -->
-                      <img class="video-thumb-img" src="" alt="Thumbnail">
+                      <img class="video-thumb-img" src="" alt="Thumbnail" loading="lazy">
                       <div class="play-icon-overlay">
                         <svg viewBox="0 0 24 24">
                           <path d="M8 5v14l11-7z"/>
@@ -618,7 +618,7 @@
                   <strong>"Agilidade sem igual!"</strong> O serviço superou minhas expectativas. A entrega chegou muito antes do prazo e o atendimento tirou todas as minhas dúvidas instantaneamente.
                 </p>
                 <div class="author-wrapper">
-                  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="author-avatar">
+                  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="author-avatar" loading="lazy">
                   <div>
                     <h3 class="author-name">Beatriz Rossi</h3>
                     <p class="author-role">Empresária</p>
@@ -636,7 +636,7 @@
                   <strong>"Qualidade Impecável!"</strong> Desde o primeiro contato percebi o profissionalismo. O produto chegou muito bem embalado e a experiência de uso é nota 10.
                 </p>
                 <div class="author-wrapper">
-                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="author-avatar">
+                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="author-avatar" loading="lazy">
                   <div>
                     <h3 class="author-name">Ricardo Mendes</h3>
                     <p class="author-role">Designer Lead</p>
@@ -654,7 +654,7 @@
                   <strong>"Facilidade e Segurança"</strong> A plataforma é super intuitiva. Resolver as minhas demandas diárias ficou muito mais rápido depois que comecei a usar.
                 </p>
                 <div class="author-wrapper">
-                  <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="author-avatar">
+                  <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="author-avatar" loading="lazy">
                   <div>
                     <h3 class="author-name">Camila Fernandes</h3>
                     <p class="author-role">Gerente de Projetos</p>
@@ -690,7 +690,7 @@
             <p class="pricing-subtitle">Transparência total. Sem taxas escondidas, altere ou cancele quando quiser.</p>
             
             <!-- Toggle Mensal / Anual -->
-            <div class="pricing-toggle-wrapper">
+            <div class="pricing-toggle-wrapper flex-wrap">
               <span class="toggle-label active" id="label-monthly">Cobrança Mensal</span>
               <div class="form-check form-switch p-0 m-0">
                 <input class="form-check-input pricing-switch" type="checkbox" id="pricingToggle">
@@ -976,7 +976,7 @@
 
             <!-- Seletor de Assuntos (Interativo) -->
             <div class="cta-topics-label">Sobre o que deseja falar?</div>
-            <div class="cta-topics-group">
+            <div class="cta-topics-group justify-content-center justify-content-lg-start">
               <span class="topic-chip active" data-subject="Orçamento & Prazos">Orçamento</span>
               <span class="topic-chip" data-subject="Dúvidas Técnicas">Dúvidas Técnicas</span>
               <span class="topic-chip" data-subject="Contratar Plano">Contratar Plano</span>
@@ -989,14 +989,14 @@
             <div class="d-flex flex-column gap-3">
 
               <!-- Canal 1: WhatsApp Direto -->
-              <div class="contact-channel-card">
+              <div class="contact-channel-card justify-content-start justify-content-lg-between p-2 p-lg-4">
                 <div class="channel-info">
                   <div class="channel-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                   </div>
                   <div class="channel-details">
                     <h4>Atendimento Telefônico / WhatsApp</h4>
-                    <p>(71) 99276-8360</p>
+                    <p class="d-flex justify-content-start">(71) 99276-8360</p>
                   </div>
                 </div>
                 <div class="d-flex gap-2 w-100-mobile">
@@ -1011,14 +1011,14 @@
               </div>
 
               <!-- Canal 2: E-mail -->
-              <div class="contact-channel-card">
+              <div class="contact-channel-card justify-content-start justify-content-lg-between p-2 p-lg-4">
                 <div class="channel-info">
                   <div class="channel-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                   </div>
                   <div class="channel-details">
                     <h4>Envie uma mensagem por e-mail</h4>
-                    <p>atendimento@whi.dev.br</p>
+                    <p class="d-flex justify-content-star">atendimento@whi.dev.br</p>
                   </div>
                 </div>
                 <div class="d-flex gap-2 w-100-mobile">
