@@ -692,8 +692,12 @@
             <div class="pricing-toggle-wrapper flex-wrap">
               <span class="toggle-label active" id="label-monthly">Cobrança Mensal</span>
               <div class="form-check form-switch p-0 m-0">
-                <input class="form-check-input pricing-switch" type="checkbox" id="pricingToggle">
-                <label class="visually-hidden" for="pricingToggle">Alternar entre cobrança mensal e anual</label>
+                <input 
+                  class="form-check-input pricing-switch" 
+                  type="checkbox" 
+                  id="pricingToggle"
+                  aria-labelledby="label-monthly label-yearly"
+                >
               </div>
               <span class="toggle-label" id="label-yearly">
                 Cobrança Anual
