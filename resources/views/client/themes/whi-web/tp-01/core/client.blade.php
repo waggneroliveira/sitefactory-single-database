@@ -427,7 +427,7 @@
                 
                 <div class="col-lg-3 col-md-6 col-12 text-start">
 
-                    <div class="h5 text-color-footer mb-1 font-changa font-16 font-bold">Newsletter</div>
+                    <div class="h5 text-color-footer mb-1 font-changa font-16 font-bold map-footer">Newsletter</div>
                     <div class="news_letter">
                         <p class="text-color-footer font-15">Inscreva-se e seja o primeiro a receber promoções incríveis</p>
                         <form id="newsletter-form">
