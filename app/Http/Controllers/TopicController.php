@@ -18,7 +18,15 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class TopicController extends Controller
 {
-    protected $pathUpload = 'admin/uploads/project/image/';
+    protected function getPathUpload(): string
+    {
+        $themeManager = app(ThemeManager::class);
+
+        $template = $themeManager->current() ?? 'default';
+        $variation = $themeManager->variation() ?? 'default';
+
+        return "admin/uploads/images/templates/{$template}/{$variation}/topics/";
+    }
     public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
@@ -50,105 +58,198 @@ class TopicController extends Controller
 
     public function store(Request $request, ThemeManager $themeManager)
     {
-        $data = $request->except(['path_image', 'path_image_mobile']);
-        $manager = new ImageManager(GdDriver::class);
-        $data['active'] = $request->active?1:0;
-
         $request->validate([
-            'path_image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif']
+        'path_image' => ['nullable', 'file', 'image', 'max:2048']
         ]);
-        
-        $theme = $themeManager;
-        $limit = $theme->getLimit('topics', 0);
+
+        $data = $request->except([
+            'path_image',
+            'path_image_mobile'
+        ]);
+
+        $data['active'] = $request->active ? 1 : 0;
+
+        $limit = $themeManager->getLimit('topics', 0);
 
         $currentCount = Topic::count();
 
-        if ($currentCount >= $limit) {
+        if ($limit !== null && $currentCount >= $limit) {
             return back()->with(
                 'error',
                 'O limite de tópicos deste cliente foi atingido.'
             );
         }
 
+        $pathUpload = $this->getPathUpload();
+
+        $manager = new ImageManager(GdDriver::class);
+
         if ($request->hasFile('path_image')) {
+
             $file = $request->file('path_image');
+
             $mime = $file->getMimeType();
-            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.webp';
 
             if ($mime === 'image/svg+xml') {
-                Storage::putFileAs($this->pathUpload, $file, $filename);
+
+                $filename = pathinfo(
+                    $file->getClientOriginalName(),
+                    PATHINFO_FILENAME
+                ) . '.svg';
+
+                Storage::putFileAs(
+                    $pathUpload,
+                    $file,
+                    $filename
+                );
+
             } else {
-                $image = $manager->read($file)
+
+                $filename = pathinfo(
+                    $file->getClientOriginalName(),
+                    PATHINFO_FILENAME
+                ) . '.avif';
+
+                $image = $manager
+                    ->read($file)
                     ->resize(null, null, function ($constraint) {
                         $constraint->aspectRatio();
                         $constraint->upsize();
                     })
-                    ->toWebp(quality: 95)
+                    ->toAvif(quality: 90)
                     ->toString();
 
-                Storage::put($this->pathUpload . $filename, $image);
+                Storage::put(
+                    $pathUpload . $filename,
+                    $image
+                );
             }
 
-        $data['path_image'] = $this->pathUpload . $filename;
-    }
+            $data['path_image'] = $pathUpload . $filename;
+        }
 
         try {
+
             DB::beginTransaction();
-                Topic::create($data);
+
+            Topic::create($data);
+
             DB::commit();
-            session()->flash('success', __('dashboard.response_item_create'));
+
+            session()->flash(
+                'success',
+                __('dashboard.response_item_create')
+            );
+
             return redirect()->back();
+
         } catch (\Exception $e) {
-            DB::rollback();            
-            Alert::error('error', __('dashboard.response_item_error_create'));
+
+            DB::rollBack();
+
+            Alert::error(
+                'error',
+                __('dashboard.response_item_error_create')
+            );
+
             return redirect()->back();
         }
+
     }
 
     public function update(Request $request, Topic $topic)
     {
-        $data = $request->except(['path_image', 'path_image_mobile']);
-        $manager = new ImageManager(GdDriver::class);
-        $data['active'] = $request->active?1:0;
-        
         $request->validate([
-            'path_image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif']
+        'path_image' => ['nullable', 'file', 'image', 'max:2048']
         ]);
 
+        $data = $request->except([
+            'path_image',
+            'path_image_mobile'
+        ]);
+
+        $data['active'] = $request->active ? 1 : 0;
+
+        $pathUpload = $this->getPathUpload();
+
+        $manager = new ImageManager(GdDriver::class);
+
         if ($request->hasFile('path_image')) {
+
             $file = $request->file('path_image');
+
             $mime = $file->getMimeType();
-            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.webp';
 
             if ($mime === 'image/svg+xml') {
-                Storage::putFileAs($this->pathUpload, $file, $filename);
+
+                $filename = pathinfo(
+                    $file->getClientOriginalName(),
+                    PATHINFO_FILENAME
+                ) . '.svg';
+
+                Storage::putFileAs(
+                    $pathUpload,
+                    $file,
+                    $filename
+                );
+
             } else {
-                $image = $manager->read($file)
+
+                $filename = pathinfo(
+                    $file->getClientOriginalName(),
+                    PATHINFO_FILENAME
+                ) . '.avif';
+
+                $image = $manager
+                    ->read($file)
                     ->resize(null, null, function ($constraint) {
                         $constraint->aspectRatio();
                         $constraint->upsize();
                     })
-                    ->toWebp(quality: 95)
+                    ->toAvif(quality: 90)
                     ->toString();
 
-                Storage::put($this->pathUpload . $filename, $image);
+                Storage::put(
+                    $pathUpload . $filename,
+                    $image
+                );
             }
 
-            Storage::delete(isset($topic->path_image)??$topic->path_image);
-            $data['path_image'] = $this->pathUpload . $filename;
+            if (!empty($topic->path_image)) {
+                Storage::delete($topic->path_image);
+            }
+
+            $data['path_image'] = $pathUpload . $filename;
         }
+
         try {
+
             DB::beginTransaction();
-                $topic->fill($data)->save();
+
+            $topic->fill($data)->save();
+
             DB::commit();
-            session()->flash('success', __('dashboard.response_item_update'));
+
+            session()->flash(
+                'success',
+                __('dashboard.response_item_update')
+            );
+
             return redirect()->back();
+
         } catch (\Exception $e) {
-            DB::rollback();
-            Alert::error('error', __('dashboard.response_item_error_update'));
+
+            DB::rollBack();
+
+            Alert::error(
+                'error',
+                __('dashboard.response_item_error_update')
+            );
+
             return redirect()->back();
-        }
+        }        
     }
+
 
     public function destroy(Topic $topic)
     {

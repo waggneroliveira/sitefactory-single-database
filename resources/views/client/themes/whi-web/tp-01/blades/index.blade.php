@@ -128,7 +128,7 @@
 
         <!-- device image -->
         <div class="device">
-            <img src="{{asset('build/client/images/themes/whi-web/device.avif')}}" alt="image" height="250" loading="lazy">
+            <img src="{{asset('build/client/images/themes/whi-web/device.png')}}" alt="image" height="250" loading="lazy">
         </div>
 
     </section>
@@ -210,8 +210,8 @@
               </div>
 
               <div class="col-lg-6 col-md-12 position-relative">
-                <img src="{{asset('build/client/images/themes/whi-web/tablet.avif')}}" class="position-absolute tablet" loading="lazy" alt="image" style="height: 250px; bottom: 15px; right: 11px;z-index: 1;">
-                <img src="{{asset('build/client/images/themes/whi-web/phone-login.avif')}}" class="position-absolute phone-img" loading="lazy" alt="image" style="height: 220px; bottom: 15px; left: 0px; z-index: 1;">
+                <img src="{{asset('build/client/images/themes/whi-web/tablet.png')}}" class="position-absolute tablet" loading="lazy" alt="image" style="height: 250px; bottom: 15px; right: 11px;z-index: 1;">
+                <img src="{{asset('build/client/images/themes/whi-web/phone-login.png')}}" class="position-absolute phone-img" loading="lazy" alt="image" style="height: 220px; bottom: 15px; left: 0px; z-index: 1;">
                 <!-- why us new image -->
                 <div class="why_us_new_img position-relative">
                   <img src="{{asset('build/client/images/themes/whi-web/gif-paine-one.gif')}}" loading="lazy" alt="image">

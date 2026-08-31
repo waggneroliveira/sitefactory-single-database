@@ -21,7 +21,15 @@ use Intervention\Image\ImageManager;
 
 class ProductService
 {
-    protected string $pathUpload = 'admin/uploads/images/product/';
+    protected function getPathUpload(): string
+    {
+        $themeManager = app(ThemeManager::class);
+
+        $template = $themeManager->current() ?? 'default';
+        $variation = $themeManager->variation() ?? 'default';
+
+        return "admin/uploads/images/templates/{$template}/{$variation}/product/";
+    }
 
     public function getIndexData(Request $request, ThemeManager $themeManager): array
     {
@@ -112,155 +120,357 @@ class ProductService
     public function store(ProductStoreRequest $request): Product
     {
         $data = $request->all();
+
         $data['active'] = $request->active ? 1 : 0;
+
         $data['slug'] = Str::slug($request->title);
-        // Formata o campo 'price'
+
+        // Formata o campo price
         $valorFormatado = $request->price;
-        $valorNumerico = str_replace(['R$', ' ', ' ', "\u{A0}"], '', $valorFormatado);
-        $valorNumerico = str_replace(',', '.', $valorNumerico);
+
+        $valorNumerico = str_replace(
+            ['R$', ' ', ' ', "\u{A0}"],
+            '',
+            $valorFormatado
+        );
+
+        $valorNumerico = str_replace(
+            ',',
+            '.',
+            $valorNumerico
+        );
+
         $data['price'] = floatval($valorNumerico);
 
         if (isset($data['sizes'])) {
-            $sizes = array_values(array_filter($request->sizes, function ($size) {
-                return !is_null($size) && trim($size) !== '';
-            }));
-            $data['sizes'] = !empty($sizes) ? json_encode($sizes) : json_encode([]);
+
+            $sizes = array_values(
+                array_filter(
+                    $request->sizes,
+                    function ($size) {
+                        return !is_null($size) && trim($size) !== '';
+                    }
+                )
+            );
+
+            $data['sizes'] = !empty($sizes)
+                ? json_encode($sizes)
+                : json_encode([]);
+
         } else {
+
             $data['sizes'] = null;
         }
+
+        $pathUpload = $this->getPathUpload();
 
         $manager = new ImageManager(new GdDriver());
 
         if ($request->hasFile('path_image')) {
+
             $file = $request->file('path_image');
+
             $mime = $file->getMimeType();
-            $filename = Str::uuid() . '.webp';
+
             if ($mime === 'image/svg+xml') {
-                Storage::disk('public')->putFileAs($this->pathUpload, $file, $filename);
+
+                $filename = Str::uuid() . '.svg';
+
+                Storage::disk('public')->putFileAs(
+                    $pathUpload,
+                    $file,
+                    $filename
+                );
+
             } else {
-                $image = $manager->read($file)->resize(null, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                })->toWebp(quality: 95)->toString();
-                Storage::disk('public')->put($this->pathUpload . $filename, $image);
+
+                $filename = Str::uuid() . '.avif';
+
+                $image = $manager
+                    ->read($file)
+                    ->toAvif(quality: 90)
+                    ->toString();
+
+                Storage::disk('public')->put(
+                    $pathUpload . $filename,
+                    $image
+                );
             }
-            $data['path_image'] = $this->pathUpload . $filename;
+
+            $data['path_image'] = $pathUpload . $filename;
         }
 
         if ($request->hasFile('path_file')) {
+
             $file = $request->file('path_file');
-            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.pdf';
-            Storage::putFileAs($this->pathUpload, $file, $filename);
-            $data['path_file'] = $this->pathUpload . $filename;
+
+            $filename = Str::uuid() . '.pdf';
+
+            Storage::disk('public')->putFileAs(
+                $pathUpload,
+                $file,
+                $filename
+            );
+
+            $data['path_file'] = $pathUpload . $filename;
         }
 
         DB::beginTransaction();
-        $product = Product::create($data);
-        DB::commit();
 
-        return $product;
+        try {
+
+            $product = Product::create($data);
+
+            DB::commit();
+
+            return $product;
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            throw $e;
+        }
     }
+
 
     public function uploadImageCkeditor(Request $request): array
     {
-        if ($request->hasFile('upload')) {
-            $file = $request->file('upload');
-            $mime = $file->getMimeType();
-            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.webp';
-            $pathUpload = 'uploads/product_images/';
-            $manager = ImageManager::gd();
-
-            if ($mime === 'image/svg+xml') {
-                Storage::disk('public')->putFileAs($pathUpload, $file, $filename);
-            } else {
-                $image = $manager->read($file)->resize(null, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                })->toWebp(quality: 95)->toString();
-                Storage::disk('public')->put($pathUpload . $filename, $image);
-            }
-
-            return [
-                'uploaded' => 1,
-                'fileName' => $filename,
-                'url' => asset('storage/' . $pathUpload . $filename),
-            ];
-        }
-
+        if (!$request->hasFile('upload')) {
         return [
             'uploaded' => 0,
             'error' => ['message' => 'Upload falhou.'],
         ];
+        }
+
+        $file = $request->file('upload');
+
+        $mime = $file->getMimeType();
+
+        $pathUpload = $this->getPathUpload();
+
+        $manager = new ImageManager(new GdDriver());
+
+        if ($mime === 'image/svg+xml') {
+
+            $filename = Str::uuid() . '.svg';
+
+            Storage::disk('public')->putFileAs(
+                $pathUpload,
+                $file,
+                $filename
+            );
+
+        } else {
+
+            $filename = Str::uuid() . '.avif';
+
+            $image = $manager
+                ->read($file)
+                ->toAvif(quality: 90)
+                ->toString();
+
+            Storage::disk('public')->put(
+                $pathUpload . $filename,
+                $image
+            );
+        }
+
+        return [
+            'uploaded' => 1,
+
+            'fileName' => $filename,
+
+            'url' => asset(
+                'storage/' . $pathUpload . $filename
+            ),
+        ];
+
     }
 
     public function update(ProductUpdateRequest $request, Product $product): Product
     {
         $data = $request->all();
+
         $data['active'] = $request->active ? 1 : 0;
+
         $data['slug'] = Str::slug($request->title);
-        // Formata o campo 'price'
+
+        // Formata o campo price
         $valorFormatado = $request->price;
-        $valorNumerico = str_replace(['R$', ' ', ' ', "\u{A0}"], '', $valorFormatado);
-        $valorNumerico = str_replace(',', '.', $valorNumerico);
+
+        $valorNumerico = str_replace(
+            ['R$', ' ', ' ', "\u{A0}"],
+            '',
+            $valorFormatado
+        );
+
+        $valorNumerico = str_replace(
+            ',',
+            '.',
+            $valorNumerico
+        );
+
         $data['price'] = floatval($valorNumerico);
-        
-        $manager = new ImageManager(new GdDriver());
 
         $request->validate([
             'sizes' => 'array|nullable',
             'sizes.*' => 'string|max:50|nullable',
-            'path_image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif'],
-            'path_file' => ['nullable', 'file', 'mimes:pdf', 'max:3072'],
+
+            'path_image' => [
+                'nullable',
+                'file',
+                'image',
+                'max:2048',
+                'mimes:jpg,jpeg,png,gif,webp,svg'
+            ],
+
+            'path_file' => [
+                'nullable',
+                'file',
+                'mimes:pdf',
+                'max:3072'
+            ],
         ]);
 
-        if ($request->hasFile('path_image')) {
-            $file = $request->file('path_image');
-            $mime = $file->getMimeType();
-            $filename = Str::uuid() . '.webp';
-            if ($mime === 'image/svg+xml') {
-                Storage::disk('public')->putFileAs($this->pathUpload, $file, $filename);
-            } else {
-                $image = $manager->read($file)->resize(null, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                })->toWebp(quality: 95)->toString();
-                Storage::disk('public')->put($this->pathUpload . $filename, $image);
-            }
-            if (!empty($product->path_image)) {
-                Storage::disk('public')->delete($product->path_image);
-            }
-            $data['path_image'] = $this->pathUpload . $filename;
+        if (isset($data['sizes'])) {
+
+            $sizes = array_values(
+                array_filter(
+                    $request->sizes,
+                    function ($size) {
+                        return !is_null($size) && trim($size) !== '';
+                    }
+                )
+            );
+
+            $data['sizes'] = !empty($sizes)
+                ? json_encode($sizes)
+                : json_encode([]);
+
+        } else {
+
+            $data['sizes'] = null;
         }
 
-        if ($request->has('delete_path_image')) {
-            if (!empty($product->path_image)) {
-                Storage::disk('public')->delete($product->path_image);
+        $pathUpload = $this->getPathUpload();
+
+        $manager = new ImageManager(new GdDriver());
+
+        // Imagem do produto
+        if ($request->hasFile('path_image')) {
+
+            $file = $request->file('path_image');
+
+            $mime = $file->getMimeType();
+
+            if ($mime === 'image/svg+xml') {
+
+                $filename = Str::uuid() . '.svg';
+
+                Storage::disk('public')->putFileAs(
+                    $pathUpload,
+                    $file,
+                    $filename
+                );
+
+            } else {
+
+                $filename = Str::uuid() . '.avif';
+
+                $image = $manager
+                    ->read($file)
+                    ->toAvif(quality: 90)
+                    ->toString();
+
+                Storage::disk('public')->put(
+                    $pathUpload . $filename,
+                    $image
+                );
             }
+
+            if (!empty($product->path_image)) {
+
+                Storage::disk('public')->delete(
+                    $product->path_image
+                );
+            }
+
+            $data['path_image'] = $pathUpload . $filename;
+        }
+
+        // Remover imagem
+        if (
+            $request->has('delete_path_image') &&
+            !$request->hasFile('path_image')
+        ) {
+
+            if (!empty($product->path_image)) {
+
+                Storage::disk('public')->delete(
+                    $product->path_image
+                );
+            }
+
             $data['path_image'] = null;
         }
 
+        // Arquivo PDF
         if ($request->hasFile('path_file')) {
+
             $file = $request->file('path_file');
-            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.pdf';
-            if (!empty($product->path_file) && Storage::exists($product->path_file)) {
-                Storage::delete($product->path_file);
+
+            $filename = Str::uuid() . '.pdf';
+
+            if (!empty($product->path_file)) {
+
+                Storage::disk('public')->delete(
+                    $product->path_file
+                );
             }
-            Storage::putFileAs($this->pathUpload, $file, $filename);
-            $data['path_file'] = $this->pathUpload . $filename;
+
+            Storage::disk('public')->putFileAs(
+                $pathUpload,
+                $file,
+                $filename
+            );
+
+            $data['path_file'] = $pathUpload . $filename;
         }
 
-        if ($request->has('delete_path_file')) {
-            if (!empty($product->path_file) && Storage::exists($product->path_file)) {
-                Storage::delete($product->path_file);
+        // Remover PDF
+        if (
+            $request->has('delete_path_file') &&
+            !$request->hasFile('path_file')
+        ) {
+
+            if (!empty($product->path_file)) {
+
+                Storage::disk('public')->delete(
+                    $product->path_file
+                );
             }
+
             $data['path_file'] = null;
         }
 
         DB::beginTransaction();
-        $product->fill($data)->save();
-        DB::commit();
 
-        return $product;
+        try {
+
+            $product->fill($data)->save();
+
+            DB::commit();
+
+            return $product;
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            throw $e;
+        }
+
     }
 
     public function delete(Product $product): void
