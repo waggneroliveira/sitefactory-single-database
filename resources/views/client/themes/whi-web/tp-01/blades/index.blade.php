@@ -128,7 +128,7 @@
 
         <!-- device image -->
         <div class="device">
-            <img src="{{asset('build/client/images/themes/whi-web/device.png')}}" alt="image" height="250" loading="lazy">
+            <img src="{{asset('build/client/images/themes/whi-web/device.avif')}}" alt="image" height="250" loading="lazy">
         </div>
 
     </section>
@@ -210,8 +210,8 @@
               </div>
 
               <div class="col-lg-6 col-md-12 position-relative">
-                <img src="{{asset('build/client/images/themes/whi-web/tablet.png')}}" class="position-absolute tablet" loading="lazy" alt="image" style="height: 250px; bottom: 15px; right: 11px;z-index: 1;">
-                <img src="{{asset('build/client/images/themes/whi-web/phone-login.png')}}" class="position-absolute phone-img" loading="lazy" alt="image" style="height: 220px; bottom: 15px; left: 0px; z-index: 1;">
+                <img src="{{asset('build/client/images/themes/whi-web/tablet.avif')}}" class="position-absolute tablet" loading="lazy" alt="image" style="height: 250px; bottom: 15px; right: 11px;z-index: 1;">
+                <img src="{{asset('build/client/images/themes/whi-web/phone-login.avif')}}" class="position-absolute phone-img" loading="lazy" alt="image" style="height: 220px; bottom: 15px; left: 0px; z-index: 1;">
                 <!-- why us new image -->
                 <div class="why_us_new_img position-relative">
                   <img src="{{asset('build/client/images/themes/whi-web/gif-paine-one.gif')}}" loading="lazy" alt="image">
@@ -292,7 +292,7 @@
                 <div class="col-md-6">
                     <div class="inner_block dark_bg rotate_right">
                         <div class="img">
-                            <img src="{{asset('build/client/images/themes/whi-web/benefit-1.png')}}" alt="image" loading="lazy" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
+                            <img src="{{asset('build/client/images/themes/whi-web/benefit-1.avif')}}" alt="image" loading="lazy" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
                         </div>
                     </div>
                 </div>
@@ -344,7 +344,7 @@
                 <div class="col-md-6">
                     <div class="inner_block">
                         <div class="img">
-                            <img src="{{asset('build/client/images/themes/whi-web/benefit-2.png')}}" alt="image" loading="lazy" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
+                            <img src="{{asset('build/client/images/themes/whi-web/benefit-2.avif')}}" alt="image" loading="lazy" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
                         </div>
                     </div>
                 </div>
@@ -398,7 +398,7 @@
                 <div class="col-md-6">
                     <div class="inner_block dark_bg rotate_right">
                         <div class="img">
-                            <img src="{{asset('build/client/images/themes/whi-web/benefit-3.png')}}" alt="image" loading="lazy" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
+                            <img src="{{asset('build/client/images/themes/whi-web/benefit-3.avif')}}" alt="image" loading="lazy" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
                         </div>
                     </div>
                 </div>
