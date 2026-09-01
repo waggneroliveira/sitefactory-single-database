@@ -181,6 +181,15 @@ return [
             'remover',
         ],
     ],
+    'product_gallery' => [
+        'permission' => 'galeria de produtos',
+        'actions' => [
+            'criar',
+            'editar',
+            'visualizar',
+            'remover',
+        ],
+    ],
 
     'products' => [
         'permission' => 'produtos',

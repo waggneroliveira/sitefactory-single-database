@@ -17,7 +17,15 @@ use Intervention\Image\ImageManager;
 
 class PlanNetworkCategoryController extends Controller
 {
-    protected $pathUpload = 'admin/uploads/images/plan-network-category/';
+    protected function getPathUpload(): string
+    {
+        $themeManager = app(ThemeManager::class);
+
+        $template = $themeManager->current() ?? 'default';
+        $variation = $themeManager->variation() ?? 'default';
+
+        return "admin/uploads/images/templates/{$template}/{$variation}/plan-network-category/";
+    }
     public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
@@ -41,93 +49,35 @@ class PlanNetworkCategoryController extends Controller
     public function store(Request $request)
     {
         $data = $request->except(['path_image']);
-        $manager = new ImageManager(GdDriver::class);
+        $pathUpload = $this->getPathUpload();
+        $manager = new ImageManager(new GdDriver());
 
         $request->validate([
-            'path_image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif'],
+            'path_image' => ['nullable', 'file', 'image', 'max:2048'],
         ]);
 
         if ($request->hasFile('path_image')) {
             $file = $request->file('path_image');
             $mime = $file->getMimeType();
-            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.webp';
+            $extension = strtolower($file->getClientOriginalExtension());
 
-            if ($mime === 'image/svg+xml') {
-                Storage::putFileAs($this->pathUpload, $file, $filename);
+            if ($mime === 'image/svg+xml' || $extension === 'svg') {
+                $filename = Str::uuid() . '.svg';
+                Storage::disk('public')->putFileAs($pathUpload, $file, $filename);
             } else {
+                $filename = Str::uuid() . '.avif';
                 $image = $manager->read($file)
                     ->resize(null, null, function ($constraint) {
                         $constraint->aspectRatio();
                         $constraint->upsize();
                     })
-                    ->toWebp(quality: 95)
+                    ->toAvif(quality: 95)
                     ->toString();
 
-                Storage::put($this->pathUpload . $filename, $image);
+                Storage::disk('public')->put($pathUpload . $filename, $image);
             }
 
-            $data['path_image'] = $this->pathUpload . $filename;
-        }
-
-        $data['active'] = $request->active ? 1 : 0;
-        $data['slug'] = Str::slug($request->title);
-
-        try {
-            DB::beginTransaction();
-                PlanNetworkCategory::create($data);
-                DB::commit();
-            session()->flash('success', __('dashboard.response_item_create'));
-            } catch (\Exception $e) {
-                DB::rollback();
-                session()->flash('error', __('dashboard.response_item_error_create'));
-        }
-
-        return redirect()->back();
-    }
-
-    public function update(Request $request, PlanNetworkCategory $planNetworkCategory)
-    {
-        $data = $request->all();
-        $manager = new ImageManager(GdDriver::class);
-
-        // ===============================
-        // Remover imagem antiga
-        // ===============================
-        if ($request->filled('delete_path_image')) {
-            if (!empty($planNetworkCategory->path_image)) {
-                Storage::delete($planNetworkCategory->path_image);
-            }
-            $data['path_image'] = null;
-        }
-
-        // ===============================
-        // Upload de nova imagem
-        // ===============================
-        if ($request->hasFile('path_image')) {
-            // Remove a antiga
-            if (!empty($planNetworkCategory->path_image)) {
-                Storage::delete($planNetworkCategory->path_image);
-            }
-
-            $file = $request->file('path_image');
-            $mime = $file->getMimeType();
-            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.webp';
-
-            if ($mime === 'image/svg+xml') {
-                Storage::putFileAs($this->pathUpload, $file, $filename);
-            } else {
-                $image = $manager->read($file)
-                    ->resize(null, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    })
-                    ->toWebp(quality: 95)
-                    ->toString();
-
-                Storage::put($this->pathUpload . $filename, $image);
-            }
-
-            $data['path_image'] = $this->pathUpload . $filename;
+            $data['path_image'] = $pathUpload . $filename;
         }
 
         $data['active'] = $request->boolean('active');
@@ -135,12 +85,74 @@ class PlanNetworkCategoryController extends Controller
 
         try {
             DB::beginTransaction();
-                $planNetworkCategory->fill($data)->save();
-                DB::commit();
+            PlanNetworkCategory::create($data);
+            DB::commit();
+            session()->flash('success', __('dashboard.response_item_create'));
+        } catch (\Exception $e) {
+            DB::rollBack();
+            session()->flash('error', __('dashboard.response_item_error_create'));
+        }
+
+        return redirect()->back();
+    }
+
+    public function update(Request $request, PlanNetworkCategory $planNetworkCategory)
+    {
+        $data = $request->except(['path_image']);
+        $pathUpload = $this->getPathUpload();
+        $manager = new ImageManager(new GdDriver());
+
+        $request->validate([
+            'path_image' => ['nullable', 'file', 'image', 'max:2048'],
+        ]);
+
+        if ($request->hasFile('path_image')) {
+            $file = $request->file('path_image');
+            $mime = $file->getMimeType();
+            $extension = strtolower($file->getClientOriginalExtension());
+
+            if ($mime === 'image/svg+xml' || $extension === 'svg') {
+                $filename = Str::uuid() . '.svg';
+                Storage::disk('public')->putFileAs($pathUpload, $file, $filename);
+            } else {
+                $filename = Str::uuid() . '.avif';
+                $image = $manager->read($file)
+                    ->resize(null, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    })
+                    ->toAvif(quality: 95)
+                    ->toString();
+
+                Storage::disk('public')->put($pathUpload . $filename, $image);
+            }
+
+            if (!empty($planNetworkCategory->path_image)) {
+                Storage::disk('public')->delete($planNetworkCategory->path_image);
+            }
+
+            $data['path_image'] = $pathUpload . $filename;
+        }
+
+        if ($request->filled('delete_path_image') && !$request->hasFile('path_image')) {
+            if (!empty($planNetworkCategory->path_image)) {
+                Storage::disk('public')->delete($planNetworkCategory->path_image);
+            }
+
+            $data['path_image'] = null;
+        }
+
+        $data['active'] = $request->boolean('active');
+        $data['slug'] = Str::slug($request->title);
+
+        try {
+            DB::beginTransaction();
+            $planNetworkCategory->fill($data)->save();
+            DB::commit();
             session()->flash('success', __('dashboard.response_item_update'));
-            } catch (\Exception $e) {
-                DB::rollBack();
-                session()->flash('success', __('dashboard.response_item_error_update'));
+        } catch (\Exception $e) {
+            DB::rollBack();
+            session()->flash('error', __('dashboard.response_item_error_update'));
         }
 
         return redirect()->back();

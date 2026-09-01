@@ -15,13 +15,22 @@ use Illuminate\Support\Facades\Storage;
 
 class GalleryImageController extends Controller
 {
-    protected $pathUploadImage = 'admin/uploads/GalleryImage/file';
+
+    protected function getPathUpload(): string
+    {
+        $themeManager = app(ThemeManager::class);
+
+        $template = $themeManager->current() ?? 'default';
+        $variation = $themeManager->variation() ?? 'default';
+
+        return "admin/uploads/images/templates/{$template}/{$variation}/gallery-image/";
+    }
 
     public function index(ThemeManager $themeManager){
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
         // Verifica permissão para visualizar slides
-        $check = checkPermission('perguntas e respostas.visualizar', $settingTheme);
+        $check = checkPermission('product_gallery', 'galeria de produtos.visualizar', $settingTheme);
         if ($check !== true) {
             return $check; // retorna view 403
         }

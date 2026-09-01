@@ -10,13 +10,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
 use Intervention\Image\ImageManager;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class TemplateThemeController extends Controller
 {
-    protected $pathUpload = 'admin/uploads/images/templateTheme/';
+    protected function getPathUpload(): string
+    {
+        $themeManager = app(ThemeManager::class);
+
+        $template = $themeManager->current() ?? 'default';
+        $variation = $themeManager->variation() ?? 'default';
+
+        return "admin/uploads/images/templates/{$template}/{$variation}/template-theme/";
+    }
 
     public function index(ThemeManager $themeManager)
     {
@@ -36,175 +45,557 @@ class TemplateThemeController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->except(['path_image_logo_header', 'path_image_logo_footer']);
-        $helper = new HelperArchive();
-        $manager = new ImageManager(GdDriver::class);
-        
         $request->validate([
-            'path_image_logo_header' => ['nullable', 'file', 'image', 'max:2048'],
-            'path_image_logo_footer' => ['nullable', 'file', 'image', 'max:2048'],
+            'path_image_logo_header' => [
+                'nullable',
+                'file',
+                'image',
+                'max:2048'
+            ],
+
+            'path_image_logo_footer' => [
+                'nullable',
+                'file',
+                'image',
+                'max:2048'
+            ],
         ]);
 
-        // templateTheme desktop
+        $data = $request->except([
+            'path_image_logo_header',
+            'path_image_logo_footer',
+            'delete_path_image_logo_header',
+            'delete_path_image_logo_footer',
+        ]);
+
+        $pathUpload = $this->getPathUpload();
+
+        $manager = new ImageManager(
+            new GdDriver()
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Logo Header
+        |--------------------------------------------------------------------------
+        */
+
         if ($request->hasFile('path_image_logo_header')) {
-            $file = $request->file('path_image_logo_header');
+
+            $file = $request->file(
+                'path_image_logo_header'
+            );
+
             $mime = $file->getMimeType();
-            $extension = $file->getClientOriginalExtension();
-            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.webp';
 
-            if ($mime === 'image/svg+xml' || $extension === 'svg') {
-                Storage::putFileAs($this->pathUpload, $file, $filename);
+            $extension = strtolower(
+                $file->getClientOriginalExtension()
+            );
+
+            $isSvg = $mime === 'image/svg+xml'
+                || $extension === 'svg';
+
+            /*
+            |--------------------------------------------------------------------------
+            | SVG
+            |--------------------------------------------------------------------------
+            */
+
+            if ($isSvg) {
+
+                $filename = Str::uuid()->toString() . '.svg';
+
+                Storage::disk('public')->putFileAs(
+                    $pathUpload,
+                    $file,
+                    $filename
+                );
+
             } else {
-                try {
-                    $image = $manager->read($file)
-                        ->resize(null, null, function ($constraint) {
+
+                /*
+                |--------------------------------------------------------------------------
+                | Converter para AVIF
+                |--------------------------------------------------------------------------
+                */
+
+                $filename = Str::uuid()->toString() . '.avif';
+
+                $image = $manager
+                    ->read($file)
+                    ->resize(
+                        null,
+                        null,
+                        function ($constraint) {
+
                             $constraint->aspectRatio();
+
                             $constraint->upsize();
-                        })
-                        ->toWebp(quality: 95)
-                        ->toString();
 
-                    Storage::put($this->pathUpload . $filename, $image);
-                } catch (\Exception $e) {
-                    // Fallback: salva o arquivo original
-                    $originalName = $file->getClientOriginalName();
-                    Storage::putFileAs($this->pathUpload, $file, $originalName);
-                    $data['path_image_logo_header'] = $this->pathUpload . $originalName;
-                    // Remove o continue e use um flag ou retorne
-                    // continue; // REMOVA ESTA LINHA
-                }
+                        }
+                    )
+                    ->toAvif(quality: 95)
+                    ->toString();
+
+                Storage::disk('public')->put(
+                    $pathUpload . $filename,
+                    $image
+                );
+
             }
 
-            // Só define se não foi definido no catch
-            if (!isset($data['path_image_logo_header'])) {
-                $data['path_image_logo_header'] = $this->pathUpload . $filename;
-            }
+            $data['path_image_logo_header'] =
+                $pathUpload . $filename;
+
         }
 
-        // templateTheme mobile - similar
+        /*
+        |--------------------------------------------------------------------------
+        | Logo Footer
+        |--------------------------------------------------------------------------
+        */
+
         if ($request->hasFile('path_image_logo_footer')) {
-            $fileMobile = $request->file('path_image_logo_footer');
-            $mimeMobile = $fileMobile->getMimeType();
-            $extensionMobile = $fileMobile->getClientOriginalExtension();
-            $filenameMobile = pathinfo($fileMobile->getClientOriginalName(), PATHINFO_FILENAME) . '_mobile.webp';
 
-            if ($mimeMobile === 'image/svg+xml' || $extensionMobile === 'svg') {
-                Storage::putFileAs($this->pathUpload, $fileMobile, $filenameMobile);
+            $file = $request->file(
+                'path_image_logo_footer'
+            );
+
+            $mime = $file->getMimeType();
+
+            $extension = strtolower(
+                $file->getClientOriginalExtension()
+            );
+
+            $isSvg = $mime === 'image/svg+xml'
+                || $extension === 'svg';
+
+            /*
+            |--------------------------------------------------------------------------
+            | SVG
+            |--------------------------------------------------------------------------
+            */
+
+            if ($isSvg) {
+
+                $filename = Str::uuid()->toString()
+                    . '_footer.svg';
+
+                Storage::disk('public')->putFileAs(
+                    $pathUpload,
+                    $file,
+                    $filename
+                );
+
             } else {
-                try {
-                    $imageMobile = $manager->read($fileMobile)
-                        ->resize(null, null, function ($constraint) {
+
+                /*
+                |--------------------------------------------------------------------------
+                | Converter para AVIF
+                |--------------------------------------------------------------------------
+                */
+
+                $filename = Str::uuid()->toString()
+                    . '_footer.avif';
+
+                $image = $manager
+                    ->read($file)
+                    ->resize(
+                        null,
+                        null,
+                        function ($constraint) {
+
                             $constraint->aspectRatio();
+
                             $constraint->upsize();
-                        })
-                        ->toWebp(quality: 95)
-                        ->toString();
 
-                    Storage::put($this->pathUpload . $filenameMobile, $imageMobile);
-                } catch (\Exception $e) {
-                    $originalName = $fileMobile->getClientOriginalName();
-                    Storage::putFileAs($this->pathUpload, $fileMobile, $originalName);
-                    $data['path_image_logo_footer'] = $this->pathUpload . $originalName;
-                }
+                        }
+                    )
+                    ->toAvif(quality: 95)
+                    ->toString();
+
+                Storage::disk('public')->put(
+                    $pathUpload . $filename,
+                    $image
+                );
+
             }
 
-            if (!isset($data['path_image_logo_footer'])) {
-                $data['path_image_logo_footer'] = $this->pathUpload . $filenameMobile;
-            }
+            $data['path_image_logo_footer'] =
+                $pathUpload . $filename;
+
         }
 
-        $data['active'] = $request->active ? 1 : 0;
+        $data['active'] = $request->boolean('active') ? 1 : 0;
 
         try {
+
             DB::beginTransaction();
+
             TemplateTheme::create($data);
+
             DB::commit();
-            session()->flash('success', __('dashboard.response_item_create'));
+
+            session()->flash(
+                'success',
+                __('dashboard.response_item_create')
+            );
+
         } catch (\Exception $e) {
-            dd($e);
-            DB::rollback();
-            session()->flash('error', __('dashboard.response_item_error_create'));
+
+            DB::rollBack();
+
+            report($e);
+
+            session()->flash(
+                'error',
+                __('dashboard.response_item_error_create')
+            );
+
         }
 
         return redirect()->back();
-    } 
-    
-    public function update(Request $request, TemplateTheme $templateTheme)
-    {
-        $data = $request->all();
-        $helper = new HelperArchive();
-        $manager = new ImageManager(GdDriver::class);
+    }
 
-        // templateTheme desktop
-        if ($request->hasFile('path_image_logo_header')) {
-            $file = $request->file('path_image_logo_header');
-            $mime = $file->getMimeType();
-            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.webp';
 
-            if ($mime === 'image/svg+xml') {
-                Storage::putFileAs($this->pathUpload, $file, $filename);
-            } else {
-                $image = $manager->read($file)
-                    ->resize(null, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    })
-                    ->toWebp(quality: 95)
-                    ->toString();
+    public function update(
+        Request $request,
+        TemplateTheme $templateTheme
+    ) {
+        $request->validate([
+            'path_image_logo_header' => [
+                'nullable',
+                'file',
+                'image',
+                'max:2048'
+            ],
 
-                Storage::put($this->pathUpload . $filename, $image);
-            }
+            'path_image_logo_footer' => [
+                'nullable',
+                'file',
+                'image',
+                'max:2048'
+            ],
+        ]);
 
-            Storage::delete(isset($templateTheme->path_image)??$templateTheme->path_image);
-            $data['path_image_logo_header'] = $this->pathUpload . $filename;
-        }
+        $data = $request->except([
+            'path_image_logo_header',
+            'path_image_logo_footer',
+            'delete_path_image_logo_header',
+            'delete_path_image_logo_footer',
+        ]);
 
-        if (isset($request->delete_path_image)) {
-            Storage::delete(isset($templateTheme->path_image)??$templateTheme->path_image);
-            $data['path_image_logo_header'] = null;
-        }
+        $pathUpload = $this->getPathUpload();
 
-        // templateTheme mobile
-        if ($request->hasFile('path_image_logo_footer')) {
-            $fileMobile = $request->file('path_image_logo_footer');
-            $mimeMobile = $fileMobile->getMimeType();
-            $filenameMobile = pathinfo($fileMobile->getClientOriginalName(), PATHINFO_FILENAME) . '_mobile.webp';
-
-            if ($mimeMobile === 'image/svg+xml') {
-                Storage::putFileAs($this->pathUpload, $fileMobile, $filenameMobile);
-            } else {
-                $imageMobile = $manager->read($fileMobile)
-                    ->resize(null, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    })
-                    ->toWebp(quality: 95)
-                    ->toString();
-
-                Storage::put($this->pathUpload . $filenameMobile, $imageMobile);
-            }
-
-            Storage::delete($templateTheme->path_image_logo_footer?$templateTheme->path_image_logo_footer:'');
-            $data['path_image_logo_footer'] = $this->pathUpload . $filenameMobile;
-        }
-
-        if (isset($request->delete_path_image_logo_footer)) {
-            Storage::delete($templateTheme->path_image_logo_footer?$templateTheme->path_image_logo_footer:'');
-            $data['path_image_logo_footer'] = null;
-        }
-
-        $data['active'] = $request->active ? 1 : 0;
+        $manager = new ImageManager(
+            new GdDriver()
+        );
 
         try {
+
             DB::beginTransaction();
-            // dd($data);
+
+            /*
+            |--------------------------------------------------------------------------
+            | Atualizar Logo Header
+            |--------------------------------------------------------------------------
+            */
+
+            if ($request->hasFile('path_image_logo_header')) {
+
+                $file = $request->file(
+                    'path_image_logo_header'
+                );
+
+                $mime = $file->getMimeType();
+
+                $extension = strtolower(
+                    $file->getClientOriginalExtension()
+                );
+
+                $isSvg = $mime === 'image/svg+xml'
+                    || $extension === 'svg';
+
+                /*
+                |--------------------------------------------------------------------------
+                | Salvar SVG
+                |--------------------------------------------------------------------------
+                */
+
+                if ($isSvg) {
+
+                    $filename = Str::uuid()->toString()
+                        . '.svg';
+
+                    Storage::disk('public')->putFileAs(
+                        $pathUpload,
+                        $file,
+                        $filename
+                    );
+
+                } else {
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Converter para AVIF
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $filename = Str::uuid()->toString()
+                        . '.avif';
+
+                    $image = $manager
+                        ->read($file)
+                        ->resize(
+                            null,
+                            null,
+                            function ($constraint) {
+
+                                $constraint->aspectRatio();
+
+                                $constraint->upsize();
+
+                            }
+                        )
+                        ->toAvif(quality: 95)
+                        ->toString();
+
+                    Storage::disk('public')->put(
+                        $pathUpload . $filename,
+                        $image
+                    );
+
+                }
+
+                /*
+                |--------------------------------------------------------------------------
+                | Remover imagem anterior
+                |--------------------------------------------------------------------------
+                */
+
+                if (
+                    !empty(
+                        $templateTheme->path_image_logo_header
+                    )
+                    &&
+                    Storage::disk('public')->exists(
+                        $templateTheme->path_image_logo_header
+                    )
+                ) {
+
+                    Storage::disk('public')->delete(
+                        $templateTheme->path_image_logo_header
+                    );
+
+                }
+
+                $data['path_image_logo_header'] =
+                    $pathUpload . $filename;
+
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Remover Logo Header
+            |--------------------------------------------------------------------------
+            */
+
+            elseif (
+                $request->boolean(
+                    'delete_path_image_logo_header'
+                )
+            ) {
+
+                if (
+                    !empty(
+                        $templateTheme->path_image_logo_header
+                    )
+                    &&
+                    Storage::disk('public')->exists(
+                        $templateTheme->path_image_logo_header
+                    )
+                ) {
+
+                    Storage::disk('public')->delete(
+                        $templateTheme->path_image_logo_header
+                    );
+
+                }
+
+                $data['path_image_logo_header'] = null;
+
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Atualizar Logo Footer
+            |--------------------------------------------------------------------------
+            */
+
+            if ($request->hasFile('path_image_logo_footer')) {
+
+                $file = $request->file(
+                    'path_image_logo_footer'
+                );
+
+                $mime = $file->getMimeType();
+
+                $extension = strtolower(
+                    $file->getClientOriginalExtension()
+                );
+
+                $isSvg = $mime === 'image/svg+xml'
+                    || $extension === 'svg';
+
+                /*
+                |--------------------------------------------------------------------------
+                | Salvar SVG
+                |--------------------------------------------------------------------------
+                */
+
+                if ($isSvg) {
+
+                    $filename = Str::uuid()->toString()
+                        . '_footer.svg';
+
+                    Storage::disk('public')->putFileAs(
+                        $pathUpload,
+                        $file,
+                        $filename
+                    );
+
+                } else {
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Converter para AVIF
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $filename = Str::uuid()->toString()
+                        . '_footer.avif';
+
+                    $image = $manager
+                        ->read($file)
+                        ->resize(
+                            null,
+                            null,
+                            function ($constraint) {
+
+                                $constraint->aspectRatio();
+
+                                $constraint->upsize();
+
+                            }
+                        )
+                        ->toAvif(quality: 95)
+                        ->toString();
+
+                    Storage::disk('public')->put(
+                        $pathUpload . $filename,
+                        $image
+                    );
+
+                }
+
+                /*
+                |--------------------------------------------------------------------------
+                | Remover imagem anterior
+                |--------------------------------------------------------------------------
+                */
+
+                if (
+                    !empty(
+                        $templateTheme->path_image_logo_footer
+                    )
+                    &&
+                    Storage::disk('public')->exists(
+                        $templateTheme->path_image_logo_footer
+                    )
+                ) {
+
+                    Storage::disk('public')->delete(
+                        $templateTheme->path_image_logo_footer
+                    );
+
+                }
+
+                $data['path_image_logo_footer'] =
+                    $pathUpload . $filename;
+
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Remover Logo Footer
+            |--------------------------------------------------------------------------
+            */
+
+            elseif (
+                $request->boolean(
+                    'delete_path_image_logo_footer'
+                )
+            ) {
+
+                if (
+                    !empty(
+                        $templateTheme->path_image_logo_footer
+                    )
+                    &&
+                    Storage::disk('public')->exists(
+                        $templateTheme->path_image_logo_footer
+                    )
+                ) {
+
+                    Storage::disk('public')->delete(
+                        $templateTheme->path_image_logo_footer
+                    );
+
+                }
+
+                $data['path_image_logo_footer'] = null;
+
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Status
+            |--------------------------------------------------------------------------
+            */
+
+            $data['active'] = $request->boolean('active')
+                ? 1
+                : 0;
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Atualizar registro
+            |--------------------------------------------------------------------------
+            */
+
             $templateTheme->fill($data)->save();
+
             DB::commit();
-            session()->flash('success', __('dashboard.response_item_update'));
+
+            session()->flash(
+                'success',
+                __('dashboard.response_item_update')
+            );
+
         } catch (\Exception $e) {
-            dd($e);
+
             DB::rollBack();
-            session()->flash('error', __('dashboard.response_item_error_update'));
+
+            report($e);
+
+            session()->flash(
+                'error',
+                __('dashboard.response_item_error_update')
+            );
+
         }
 
         return redirect()->back();

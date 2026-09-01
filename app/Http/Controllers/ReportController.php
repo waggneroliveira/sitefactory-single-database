@@ -10,13 +10,22 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
 use Intervention\Image\ImageManager;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ReportController extends Controller
 {
-    protected $pathUpload = 'admin/uploads/images/report/';
+    protected function getPathUpload(): string
+    {
+        $themeManager = app(ThemeManager::class);
+
+        $template = $themeManager->current() ?? 'default';
+        $variation = $themeManager->variation() ?? 'default';
+
+        return "admin/uploads/images/templates/{$template}/{$variation}/report/";
+    }
     public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
@@ -32,158 +41,236 @@ class ReportController extends Controller
         return view('admin.blades.report.index', compact('reports', 'theme', 'themeData'));
     }
 
-   
+
     public function store(Request $request)
     {
         $data = $request->except(['path_image', 'path_file']);
-        $manager = new ImageManager(GdDriver::class);
+        $pathUpload = $this->getPathUpload();
+        $manager = new ImageManager(new GdDriver());
 
         $request->validate([
-            'path_image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif'],
-            'path_file' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif'] 
+            'path_image' => ['nullable', 'file', 'image', 'max:2048'],
+            'path_file' => ['nullable', 'file', 'image', 'max:2048'],
         ]);
 
         if ($request->hasFile('path_image')) {
             $file = $request->file('path_image');
             $mime = $file->getMimeType();
-            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.webp';
+            $extension = strtolower($file->getClientOriginalExtension());
 
-            if ($mime === 'image/svg+xml') {
-                Storage::putFileAs($this->pathUpload, $file, $filename);
+            if ($mime === 'image/svg+xml' || $extension === 'svg') {
+                $filename = Str::uuid() . '.svg';
+
+                Storage::disk('public')->putFileAs(
+                    $pathUpload,
+                    $file,
+                    $filename
+                );
             } else {
+                $filename = Str::uuid() . '.avif';
+
                 $image = $manager->read($file)
                     ->resize(null, null, function ($constraint) {
                         $constraint->aspectRatio();
                         $constraint->upsize();
                     })
-                    ->toWebp(quality: 95)
+                    ->toAvif(quality: 95)
                     ->toString();
 
-                Storage::put($this->pathUpload . $filename, $image);
+                Storage::disk('public')->put(
+                    $pathUpload . $filename,
+                    $image
+                );
             }
 
-            $data['path_image'] = $this->pathUpload . $filename;
+            $data['path_image'] = $pathUpload . $filename;
         }
 
-        //icone
         if ($request->hasFile('path_file')) {
             $file = $request->file('path_file');
             $mime = $file->getMimeType();
-            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.webp';
+            $extension = strtolower($file->getClientOriginalExtension());
 
-            if ($mime === 'image/svg+xml') {
-                Storage::putFileAs($this->pathUpload, $file, $filename);
+            if ($mime === 'image/svg+xml' || $extension === 'svg') {
+                $filename = Str::uuid() . '.svg';
+
+                Storage::disk('public')->putFileAs(
+                    $pathUpload,
+                    $file,
+                    $filename
+                );
             } else {
+                $filename = Str::uuid() . '.avif';
+
                 $image = $manager->read($file)
                     ->resize(null, null, function ($constraint) {
                         $constraint->aspectRatio();
                         $constraint->upsize();
                     })
-                    ->toWebp(quality: 95)
+                    ->toAvif(quality: 95)
                     ->toString();
 
-                Storage::put($this->pathUpload . $filename, $image);
+                Storage::disk('public')->put(
+                    $pathUpload . $filename,
+                    $image
+                );
             }
 
-            $data['path_file'] = $this->pathUpload . $filename;
+            $data['path_file'] = $pathUpload . $filename;
         }
 
-
-
-        $data['active'] = $request->active ? 1 : 0;
+        $data['active'] = $request->boolean('active');
 
         try {
             DB::beginTransaction();
+
             Report::create($data);
+
             DB::commit();
-            session()->flash('success', __('dashboard.response_item_create'));
+
+            session()->flash(
+                'success',
+                __('dashboard.response_item_create')
+            );
         } catch (\Exception $e) {
-            DB::rollback();
-            session()->flash('error', __('dashboard.response_item_error_create'));
+            DB::rollBack();
+
+            session()->flash(
+                'error',
+                __('dashboard.response_item_error_create')
+            );
         }
 
         return redirect()->back();
     }
 
-   
     public function update(Request $request, Report $report)
     {
         $data = $request->except(['path_image', 'path_file']);
-        $manager = new ImageManager(GdDriver::class);
+        $pathUpload = $this->getPathUpload();
+        $manager = new ImageManager(new GdDriver());
 
         $request->validate([
-            'path_image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif'],
-            'path_file' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif'] 
+            'path_image' => ['nullable', 'file', 'image', 'max:2048'],
+            'path_file' => ['nullable', 'file', 'image', 'max:2048'],
         ]);
 
-        // report desktop
         if ($request->hasFile('path_image')) {
             $file = $request->file('path_image');
             $mime = $file->getMimeType();
-            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.webp';
+            $extension = strtolower($file->getClientOriginalExtension());
 
-            if ($mime === 'image/svg+xml') {
-                Storage::putFileAs($this->pathUpload, $file, $filename);
+            if ($mime === 'image/svg+xml' || $extension === 'svg') {
+                $filename = Str::uuid() . '.svg';
+
+                Storage::disk('public')->putFileAs(
+                    $pathUpload,
+                    $file,
+                    $filename
+                );
             } else {
+                $filename = Str::uuid() . '.avif';
+
                 $image = $manager->read($file)
                     ->resize(null, null, function ($constraint) {
                         $constraint->aspectRatio();
                         $constraint->upsize();
                     })
-                    ->toWebp(quality: 95)
+                    ->toAvif(quality: 95)
                     ->toString();
 
-                Storage::put($this->pathUpload . $filename, $image);
+                Storage::disk('public')->put(
+                    $pathUpload . $filename,
+                    $image
+                );
             }
 
-            Storage::delete(isset($report->path_image)??$report->path_image);
-            $data['path_image'] = $this->pathUpload . $filename;
+            if (!empty($report->path_image)) {
+                Storage::disk('public')->delete($report->path_image);
+            }
+
+            $data['path_image'] = $pathUpload . $filename;
         }
 
-        if (isset($request->delete_path_image)) {
-            Storage::delete(isset($report->path_image)??$report->path_image);
+        if (
+            $request->has('delete_path_image') &&
+            !$request->hasFile('path_image')
+        ) {
+            if (!empty($report->path_image)) {
+                Storage::disk('public')->delete($report->path_image);
+            }
+
             $data['path_image'] = null;
         }
 
-        //icone
         if ($request->hasFile('path_file')) {
             $file = $request->file('path_file');
             $mime = $file->getMimeType();
-            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.webp';
+            $extension = strtolower($file->getClientOriginalExtension());
 
-            if ($mime === 'image/svg+xml') {
-                Storage::putFileAs($this->pathUpload, $file, $filename);
+            if ($mime === 'image/svg+xml' || $extension === 'svg') {
+                $filename = Str::uuid() . '.svg';
+
+                Storage::disk('public')->putFileAs(
+                    $pathUpload,
+                    $file,
+                    $filename
+                );
             } else {
+                $filename = Str::uuid() . '.avif';
+
                 $image = $manager->read($file)
                     ->resize(null, null, function ($constraint) {
                         $constraint->aspectRatio();
                         $constraint->upsize();
                     })
-                    ->toWebp(quality: 95)
+                    ->toAvif(quality: 95)
                     ->toString();
 
-                Storage::put($this->pathUpload . $filename, $image);
+                Storage::disk('public')->put(
+                    $pathUpload . $filename,
+                    $image
+                );
             }
 
-            Storage::delete(isset($report->path_file)??$report->path_file);
-            $data['path_file'] = $this->pathUpload . $filename;
+            if (!empty($report->path_file)) {
+                Storage::disk('public')->delete($report->path_file);
+            }
+
+            $data['path_file'] = $pathUpload . $filename;
         }
 
-        if (isset($request->delete_path_file)) {
-            Storage::delete(isset($report->path_file)??$report->path_file);
+        if (
+            $request->has('delete_path_file') &&
+            !$request->hasFile('path_file')
+        ) {
+            if (!empty($report->path_file)) {
+                Storage::disk('public')->delete($report->path_file);
+            }
+
             $data['path_file'] = null;
         }
 
-        $data['active'] = $request->active ? 1 : 0;
+        $data['active'] = $request->boolean('active');
 
         try {
             DB::beginTransaction();
+
             $report->fill($data)->save();
+
             DB::commit();
-            session()->flash('success', __('dashboard.response_item_update'));
+
+            session()->flash(
+                'success',
+                __('dashboard.response_item_update')
+            );
         } catch (\Exception $e) {
             DB::rollBack();
-            session()->flash('error', __('dashboard.response_item_error_update'));
+
+            session()->flash(
+                'error',
+                __('dashboard.response_item_error_update')
+            );
         }
 
         return redirect()->back();

@@ -11,15 +11,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
 use Intervention\Image\ImageManager;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class TenantController extends Controller
 {
-    protected $pathUpload = 'admin/uploads/images/tenant/';
+    protected function getPathUpload(): string
+    {
+        $themeManager = app(ThemeManager::class);
 
-    
+        $template = $themeManager->current() ?? 'default';
+        $variation = $themeManager->variation() ?? 'default';
+
+        return "admin/uploads/images/templates/{$template}/{$variation}/tenant/";
+    }
+
     public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
@@ -52,17 +60,28 @@ class TenantController extends Controller
 
         if (!$tenant) {
             Alert::error('Erro', 'Tenant não encontrado.');
+
             return redirect()->back();
         }
+
+        $request->validate([
+            'path_image_logo_header' => ['nullable','file','image','max:2048'],
+            'path_image_logo_footer' => ['nullable','file','image','max:2048'],
+        ]);
 
         $data = $request->except([
             'path_image_logo_header',
             'path_image_logo_footer',
+            'delete_path_image_logo_header',
+            'delete_path_image_logo_footer',
         ]);
 
-        $manager = new ImageManager(GdDriver::class);
+        $manager = new ImageManager(new GdDriver());
+
+        $pathUpload = $this->getPathUpload();
 
         try {
+
             DB::beginTransaction();
 
             /*
@@ -72,38 +91,68 @@ class TenantController extends Controller
             */
 
             if ($request->hasFile('path_image_logo_header')) {
+
                 $file = $request->file('path_image_logo_header');
                 $mime = $file->getMimeType();
-                $extension = strtolower($file->getClientOriginalExtension());
 
-                $filename = pathinfo(
-                    $file->getClientOriginalName(),
-                    PATHINFO_FILENAME
-                ) . '.webp';
+                $extension = strtolower(
+                    $file->getClientOriginalExtension()
+                );
 
-                if ($mime === 'image/svg+xml' || $extension === 'svg') {
-                    Storage::putFileAs(
-                        $this->pathUpload,
+                $isSvg = $mime === 'image/svg+xml'
+                    || $extension === 'svg';
+
+                $filename = Str::uuid()->toString()
+                    . ($isSvg ? '.svg' : '.avif');
+
+                /*
+                |--------------------------------------------------------------------------
+                | SVG
+                |--------------------------------------------------------------------------
+                */
+
+                if ($isSvg) {
+
+                    Storage::disk('public')->putFileAs(
+                        $pathUpload,
                         $file,
                         $filename
                     );
+
                 } else {
-                    $image = $manager->read($file)
-                        ->resize(null, null, function ($constraint) {
-                            $constraint->aspectRatio();
-                            $constraint->upsize();
-                        })
-                        ->toWebp(quality: 85)
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Converter para AVIF
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $image = $manager
+                        ->read($file)
+                        ->resize(
+                            null,
+                            null,
+                            function ($constraint) {
+
+                                $constraint->aspectRatio();
+
+                                $constraint->upsize();
+
+                            }
+                        )
+                        ->toAvif(quality: 95)
                         ->toString();
 
-                    Storage::put(
-                        $this->pathUpload . $filename,
+                    Storage::disk('public')->put(
+                        $pathUpload . $filename,
                         $image
                     );
+
                 }
 
                 $data['path_image_logo_header'] =
-                    $this->pathUpload . $filename;
+                    $pathUpload . $filename;
+
             }
 
             /*
@@ -113,120 +162,235 @@ class TenantController extends Controller
             */
 
             if ($request->hasFile('path_image_logo_footer')) {
+
                 $file = $request->file('path_image_logo_footer');
                 $mime = $file->getMimeType();
-                $extension = strtolower($file->getClientOriginalExtension());
 
-                $filename = pathinfo(
-                    $file->getClientOriginalName(),
-                    PATHINFO_FILENAME
-                ) . '_footer.webp';
+                $extension = strtolower(
+                    $file->getClientOriginalExtension()
+                );
 
-                if ($mime === 'image/svg+xml' || $extension === 'svg') {
-                    Storage::putFileAs(
-                        $this->pathUpload,
+                $isSvg = $mime === 'image/svg+xml'
+                    || $extension === 'svg';
+
+                $filename = Str::uuid()->toString()
+                    . '_footer'
+                    . ($isSvg ? '.svg' : '.avif');
+
+                /*
+                |--------------------------------------------------------------------------
+                | SVG
+                |--------------------------------------------------------------------------
+                */
+
+                if ($isSvg) {
+
+                    Storage::disk('public')->putFileAs(
+                        $pathUpload,
                         $file,
                         $filename
                     );
+
                 } else {
-                    $image = $manager->read($file)
-                        ->resize(null, null, function ($constraint) {
-                            $constraint->aspectRatio();
-                            $constraint->upsize();
-                        })
-                        ->toWebp(quality: 85)
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Converter para AVIF
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $image = $manager
+                        ->read($file)
+                        ->resize(
+                            null,
+                            null,
+                            function ($constraint) {
+
+                                $constraint->aspectRatio();
+
+                                $constraint->upsize();
+
+                            }
+                        )
+                        ->toAvif(quality: 95)
                         ->toString();
 
-                    Storage::put(
-                        $this->pathUpload . $filename,
+                    Storage::disk('public')->put(
+                        $pathUpload . $filename,
                         $image
                     );
+
                 }
 
                 $data['path_image_logo_footer'] =
-                    $this->pathUpload . $filename;
+                    $pathUpload . $filename;
+
             }
 
-            $tenant->create($data);
+            /*
+            |--------------------------------------------------------------------------
+            | Atualizar Tenant
+            |--------------------------------------------------------------------------
+            */
+
+            $tenant->fill($data)->save();
+
             DB::commit();
 
             session()->flash(
                 'success',
-                __('dashboard.response_item_create')
+                __('dashboard.response_item_update')
             );
+
         } catch (\Exception $e) {
+
             DB::rollBack();
+
+            report($e);
 
             Alert::error(
                 'Erro',
-                __('dashboard.response_item_error_create')
+                __('dashboard.response_item_error_update')
             );
 
             return redirect()->back();
+
         }
 
         return redirect()->back();
     }
 
-    public function update(Request $request, Tenant $tenant, ThemeManager $themeManager)
-    {
+    public function update(Request $request, Tenant $tenant, ThemeManager $themeManager) {
+
         $tenant = Tenant::current();
+
+        if (!$tenant) {
+
+            Alert::error(
+                'Erro',
+                'Tenant não encontrado.'
+            );
+
+            return redirect()->back();
+
+        }
+
+        $request->validate([
+            'path_image_logo_header' => ['nullable','file','image','max:2048'],
+            'path_image_logo_footer' => ['nullable','file','image','max:2048'],
+        ]);
 
         $data = $request->except([
             'path_image_logo_header',
             'path_image_logo_footer',
+            'delete_path_image_logo_header',
+            'delete_path_image_logo_footer',
         ]);
-     
-        $manager = new ImageManager(GdDriver::class);
+
+        $manager = new ImageManager(
+            new GdDriver()
+        );
+
+        $pathUpload = $this->getPathUpload();
 
         try {
+
             DB::beginTransaction();
 
             /*
             |--------------------------------------------------------------------------
-            | Logo Header
+            | Atualizar Logo Header
             |--------------------------------------------------------------------------
             */
 
             if ($request->hasFile('path_image_logo_header')) {
-                $file = $request->file('path_image_logo_header');
+
+                $file = $request->file(
+                    'path_image_logo_header'
+                );
+
                 $mime = $file->getMimeType();
-                $extension = strtolower($file->getClientOriginalExtension());
 
-                $filename = pathinfo(
-                    $file->getClientOriginalName(),
-                    PATHINFO_FILENAME
-                ) . '.webp';
+                $extension = strtolower(
+                    $file->getClientOriginalExtension()
+                );
 
-                if ($mime === 'image/svg+xml' || $extension === 'svg') {
-                    Storage::putFileAs(
-                        $this->pathUpload,
+                $isSvg = $mime === 'image/svg+xml'
+                    || $extension === 'svg';
+
+                $filename = Str::uuid()->toString()
+                    . ($isSvg ? '.svg' : '.avif');
+
+                /*
+                |--------------------------------------------------------------------------
+                | Salvar SVG
+                |--------------------------------------------------------------------------
+                */
+
+                if ($isSvg) {
+
+                    Storage::disk('public')->putFileAs(
+                        $pathUpload,
                         $file,
                         $filename
                     );
+
                 } else {
-                    $image = $manager->read($file)
-                        ->resize(null, null, function ($constraint) {
-                            $constraint->aspectRatio();
-                            $constraint->upsize();
-                        })
-                        ->toWebp(quality: 85)
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Converter para AVIF
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $image = $manager
+                        ->read($file)
+                        ->resize(
+                            null,
+                            null,
+                            function ($constraint) {
+
+                                $constraint->aspectRatio();
+
+                                $constraint->upsize();
+
+                            }
+                        )
+                        ->toAvif(quality: 95)
                         ->toString();
 
-                    Storage::put(
-                        $this->pathUpload . $filename,
+                    Storage::disk('public')->put(
+                        $pathUpload . $filename,
                         $image
                     );
+
                 }
 
-                if ($tenant->path_image_logo_header) {
-                    Storage::delete(
+                /*
+                |--------------------------------------------------------------------------
+                | Remover imagem anterior
+                |--------------------------------------------------------------------------
+                */
+
+                if (
+                    !empty(
+                        $tenant->path_image_logo_header
+                    )
+                    &&
+                    Storage::disk('public')->exists(
+                        $tenant->path_image_logo_header
+                    )
+                ) {
+
+                    Storage::disk('public')->delete(
                         $tenant->path_image_logo_header
                     );
+
                 }
 
                 $data['path_image_logo_header'] =
-                    $this->pathUpload . $filename;
+                    $pathUpload . $filename;
+
             }
 
             /*
@@ -235,61 +399,127 @@ class TenantController extends Controller
             |--------------------------------------------------------------------------
             */
 
-            if ($request->has('delete_path_image_logo_header')) {
-                if ($tenant->path_image_logo_header) {
-                    Storage::delete(
+            if (
+                $request->boolean(
+                    'delete_path_image_logo_header'
+                )
+            ) {
+
+                if (
+                    !empty(
+                        $tenant->path_image_logo_header
+                    )
+                    &&
+                    Storage::disk('public')->exists(
+                        $tenant->path_image_logo_header
+                    )
+                ) {
+
+                    Storage::disk('public')->delete(
                         $tenant->path_image_logo_header
                     );
+
                 }
 
                 $data['path_image_logo_header'] = null;
+
             }
 
             /*
             |--------------------------------------------------------------------------
-            | Logo Footer
+            | Atualizar Logo Footer
             |--------------------------------------------------------------------------
             */
 
             if ($request->hasFile('path_image_logo_footer')) {
-                $file = $request->file('path_image_logo_footer');
+
+                $file = $request->file(
+                    'path_image_logo_footer'
+                );
+
                 $mime = $file->getMimeType();
-                $extension = strtolower($file->getClientOriginalExtension());
 
-                $filename = pathinfo(
-                    $file->getClientOriginalName(),
-                    PATHINFO_FILENAME
-                ) . '_footer.webp';
+                $extension = strtolower(
+                    $file->getClientOriginalExtension()
+                );
 
-                if ($mime === 'image/svg+xml' || $extension === 'svg') {
-                    Storage::putFileAs(
-                        $this->pathUpload,
+                $isSvg = $mime === 'image/svg+xml'
+                    || $extension === 'svg';
+
+                $filename = Str::uuid()->toString()
+                    . '_footer'
+                    . ($isSvg ? '.svg' : '.avif');
+
+                /*
+                |--------------------------------------------------------------------------
+                | Salvar SVG
+                |--------------------------------------------------------------------------
+                */
+
+                if ($isSvg) {
+
+                    Storage::disk('public')->putFileAs(
+                        $pathUpload,
                         $file,
                         $filename
                     );
+
                 } else {
-                    $image = $manager->read($file)
-                        ->resize(null, null, function ($constraint) {
-                            $constraint->aspectRatio();
-                            $constraint->upsize();
-                        })
-                        ->toWebp(quality: 85)
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Converter para AVIF
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $image = $manager
+                        ->read($file)
+                        ->resize(
+                            null,
+                            null,
+                            function ($constraint) {
+
+                                $constraint->aspectRatio();
+
+                                $constraint->upsize();
+
+                            }
+                        )
+                        ->toAvif(quality: 95)
                         ->toString();
 
-                    Storage::put(
-                        $this->pathUpload . $filename,
+                    Storage::disk('public')->put(
+                        $pathUpload . $filename,
                         $image
                     );
+
                 }
 
-                if ($tenant->path_image_logo_footer) {
-                    Storage::delete(
+                /*
+                |--------------------------------------------------------------------------
+                | Remover imagem anterior
+                |--------------------------------------------------------------------------
+                */
+
+                if (
+                    !empty(
+                        $tenant->path_image_logo_footer
+                    )
+                    &&
+                    Storage::disk('public')->exists(
+                        $tenant->path_image_logo_footer
+                    )
+                ) {
+
+                    Storage::disk('public')->delete(
                         $tenant->path_image_logo_footer
                     );
+
                 }
 
                 $data['path_image_logo_footer'] =
-                    $this->pathUpload . $filename;
+                    $pathUpload . $filename;
+
             }
 
             /*
@@ -298,16 +528,39 @@ class TenantController extends Controller
             |--------------------------------------------------------------------------
             */
 
-            if ($request->has('delete_path_image_logo_footer')) {
-                if ($tenant->path_image_logo_footer) {
-                    Storage::delete(
+            if (
+                $request->boolean(
+                    'delete_path_image_logo_footer'
+                )
+            ) {
+
+                if (
+                    !empty(
+                        $tenant->path_image_logo_footer
+                    )
+                    &&
+                    Storage::disk('public')->exists(
+                        $tenant->path_image_logo_footer
+                    )
+                ) {
+
+                    Storage::disk('public')->delete(
                         $tenant->path_image_logo_footer
                     );
+
                 }
 
                 $data['path_image_logo_footer'] = null;
+
             }
-            $tenant->update($data);
+
+            /*
+            |--------------------------------------------------------------------------
+            | Atualizar Tenant
+            |--------------------------------------------------------------------------
+            */
+
+            $tenant->fill($data)->save();
 
             DB::commit();
 
@@ -315,8 +568,12 @@ class TenantController extends Controller
                 'success',
                 __('dashboard.response_item_update')
             );
+
         } catch (\Exception $e) {
+
             DB::rollBack();
+
+            report($e);
 
             Alert::error(
                 'Erro',
@@ -324,11 +581,13 @@ class TenantController extends Controller
             );
 
             return redirect()->back();
+
         }
 
         return redirect()->back();
-    }
 
+    }
+    
     public function destroy(Tenant $tenant)
     {
         if ($tenant->path_image_logo_header) {

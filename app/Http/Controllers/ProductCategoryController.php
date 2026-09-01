@@ -19,7 +19,16 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class ProductCategoryController extends Controller
 {
-    protected $pathUpload = 'admin/uploads/images/productCategory/';
+    protected function getPathUpload(): string
+    {
+        $themeManager = app(ThemeManager::class);
+
+        $template = $themeManager->current() ?? 'default';
+        $variation = $themeManager->variation() ?? 'default';
+
+        return "admin/uploads/images/templates/{$template}/{$variation}/product-category/";
+    }
+
     public function index(Request $request, ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
@@ -38,103 +47,157 @@ class ProductCategoryController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->except('path_image');
-        $manager = new ImageManager(GdDriver::class);
-        $data['active'] = $request->active?1:0;
-        $data['highlight'] = $request->highlight ? 1 : 0;
-        $data['slug'] = Str::slug($request->title);
+        $data = $request->except(['path_image']);
+        $pathUpload = $this->getPathUpload();
+        $manager = new ImageManager(new GdDriver());
 
         $request->validate([
-            'path_image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif']
+            'path_image' => ['nullable', 'file', 'image', 'max:2048'],
         ]);
+
+        $data['active'] = $request->boolean('active');
+        $data['highlight'] = $request->boolean('highlight');
+        $data['slug'] = Str::slug($request->title);
 
         if ($request->hasFile('path_image')) {
             $file = $request->file('path_image');
             $mime = $file->getMimeType();
-            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.webp';
+            $extension = strtolower($file->getClientOriginalExtension());
 
-            if ($mime === 'image/svg+xml') {
-                Storage::putFileAs($this->pathUpload, $file, $filename);
+            if ($mime === 'image/svg+xml' || $extension === 'svg') {
+                $filename = Str::uuid() . '.svg';
+
+                Storage::disk('public')->putFileAs(
+                    $pathUpload,
+                    $file,
+                    $filename
+                );
             } else {
+                $filename = Str::uuid() . '.avif';
+
                 $image = $manager->read($file)
                     ->resize(null, null, function ($constraint) {
                         $constraint->aspectRatio();
                         $constraint->upsize();
                     })
-                    ->toWebp(quality: 95)
+                    ->toAvif(quality: 95)
                     ->toString();
 
-                Storage::put($this->pathUpload . $filename, $image);
+                Storage::disk('public')->put(
+                    $pathUpload . $filename,
+                    $image
+                );
             }
 
-            $data['path_image'] = $this->pathUpload . $filename;
+            $data['path_image'] = $pathUpload . $filename;
         }
 
         try {
             DB::beginTransaction();
-                ProductCategory::create($data);
+            ProductCategory::create($data);
             DB::commit();
-            session()->flash('success', __('dashboard.response_item_create'));
-            return redirect()->back();
+
+            session()->flash(
+                'success',
+                __('dashboard.response_item_create')
+            );
         } catch (\Exception $e) {
-            dd($e);
-            DB::rollback();            
-            Alert::error('error', __('dashboard.response_item_error_create'));
-            return redirect()->back();
+            DB::rollBack();
+
+            Alert::error(
+                'error',
+                __('dashboard.response_item_error_create')
+            );
         }
+
+        return redirect()->back();
     }
 
     public function update(Request $request, ProductCategory $productCategory)
     {
-        $data = $request->except('path_image');
-        $manager = new ImageManager(GdDriver::class);
-        $data['active'] = $request->active?1:0;
-        $data['highlight'] = $request->highlight ? 1 : 0;
-        $data['slug'] = Str::slug($request->title);
+        $data = $request->except(['path_image']);
+        $pathUpload = $this->getPathUpload();
+        $manager = new ImageManager(new GdDriver());
 
         $request->validate([
-            'path_image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif']
+            'path_image' => ['nullable', 'file', 'image', 'max:2048'],
         ]);
+
+        $data['active'] = $request->boolean('active');
+        $data['highlight'] = $request->boolean('highlight');
+        $data['slug'] = Str::slug($request->title);
 
         if ($request->hasFile('path_image')) {
             $file = $request->file('path_image');
             $mime = $file->getMimeType();
-            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.webp';
+            $extension = strtolower($file->getClientOriginalExtension());
 
-            if ($mime === 'image/svg+xml') {
-                Storage::putFileAs($this->pathUpload, $file, $filename);
+            if ($mime === 'image/svg+xml' || $extension === 'svg') {
+                $filename = Str::uuid() . '.svg';
+
+                Storage::disk('public')->putFileAs(
+                    $pathUpload,
+                    $file,
+                    $filename
+                );
             } else {
+                $filename = Str::uuid() . '.avif';
+
                 $image = $manager->read($file)
                     ->resize(null, null, function ($constraint) {
                         $constraint->aspectRatio();
                         $constraint->upsize();
                     })
-                    ->toWebp(quality: 95)
+                    ->toAvif(quality: 95)
                     ->toString();
 
-                Storage::put($this->pathUpload . $filename, $image);
+                Storage::disk('public')->put(
+                    $pathUpload . $filename,
+                    $image
+                );
             }
 
-            Storage::delete(isset($productCategory->path_image)??$productCategory->path_image);
-            $data['path_image'] = $this->pathUpload . $filename;
+            if (!empty($productCategory->path_image)) {
+                Storage::disk('public')->delete(
+                    $productCategory->path_image
+                );
+            }
+
+            $data['path_image'] = $pathUpload . $filename;
         }
 
-        if (isset($request->delete_path_image)) {
-            Storage::delete(isset($productCategory->path_image)??$productCategory->path_image);
+        if (
+            $request->has('delete_path_image') &&
+            !$request->hasFile('path_image')
+        ) {
+            if (!empty($productCategory->path_image)) {
+                Storage::disk('public')->delete(
+                    $productCategory->path_image
+                );
+            }
+
             $data['path_image'] = null;
         }
 
         try {
             DB::beginTransaction();
-                $productCategory->fill($data)->save();
+            $productCategory->fill($data)->save();
             DB::commit();
-            session()->flash('success', __('dashboard.response_item_update'));
-            return redirect()->back();
+
+            session()->flash(
+                'success',
+                __('dashboard.response_item_update')
+            );
         } catch (\Exception $e) {
-            DB::rollback();
-            Alert::error('error', __('dashboard.response_item_error_update'));
-            return redirect()->back();
+            DB::rollBack();
+
+            Alert::error(
+                'error',
+                __('dashboard.response_item_error_update')
+            );
         }
+
+        return redirect()->back();
     }
 
     public function destroy(ProductCategory $productCategory)

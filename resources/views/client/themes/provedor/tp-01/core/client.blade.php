@@ -1,118 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-{{-- <head>
-    <meta charset="UTF-8">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="robots" content="index, follow">
-    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="theme-color" content="#0d0d0d">
-    <meta name="description" content="CristoNet - Provedor de internet rápida e estável. Planos de fibra óptica com alta velocidade e suporte de qualidade para sua casa ou empresa.">
-    <meta name="keywords" content="CristoNet, provedor de internet, internet fibra óptica, planos de internet, internet rápida, internet residencial, internet empresarial, Wi-Fi, banda larga, internet veloz, provedor de fibra, internet estável, internet para empresas, internet de qualidade">
-    <title>CristoNet</title>
-    <meta property="og:url" content="https://www.cristonettelecom.com.br">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="CristoNet">
-    <meta property="og:description" content="CristoNet - Provedor de internet rápida e estável. Planos de fibra óptica com alta velocidade e suporte de qualidade para sua casa ou empresa.">
-    <meta name="twitter:card" content=summary_large_image>
-    <meta name="twitter:url" content=https://www.cristonettelecom.com.br>
-    <meta name="twitter:title" content="CristoNet">
-    <meta name="twitter:description" content="CristoNet - Provedor de internet rápida e estável. Planos de fibra óptica com alta velocidade e suporte de qualidade para sua casa ou empresa.">
-    <meta name="twitter:image" content=https://www.cristonettelecom.com.br/build/client/themes/provedor/tp-01/images/logo.svg>
-    <link rel="canonical" href="{{ url()->current() }}">
-    <meta name="copyright" content="Direitos reservados WHI">
-    <meta name="author" content="WHI">
-    <link rel="shortcut icon" href="https://www.cristonettelecom.com.br/build/client/themes/provedor/tp-01/images/favicon.svg">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    
-    <link rel="preload" as=style href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" onload='this.onload=null,this.rel="stylesheet"'>
-    <noscript>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap">
-    </noscript>
-
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"></noscript>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" media="print" onload="this.media='all'">
-    <link rel="preload" href="{{ asset('build/admin/js/libs/sweetalert2/sweetalert2.min.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-
-    <noscript>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    </noscript>
-
-    <link href="{{ asset('build/client/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
-    <link rel="preload" href="{{ asset('build/client/bootstrap-icons/bootstrap-icons.css') }}" as="style" onload="this.rel='stylesheet'">
-
-    <link href="{{ asset('build/client/lgpd/style.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('build/client/themes/provedor/tp-01/css/style.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('build/client/themes/provedor/tp-01/css/responsivo.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('build/client/css/default.css') }}" rel="stylesheet" type="text/css">
-    
-
-    <script type=application/ld+json>
-        {
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "@id": "https://www.cristonettelecom.com.br/#organization",
-            "name": "CristoNet",
-            "legalName": "CristoNet",
-            "url": "https://www.cristonettelecom.com.br",
-            "logo": "https://www.cristonettelecom.com.br/build/client/themes/provedor/tp-01/images/logo.svg",
-            "image": "https://www.cristonettelecom.com.br/build/client/themes/provedor/tp-01/images/logo.svg",
-            "description": "CristoNet - Provedor de internet rápida e estável. Planos de fibra óptica com alta velocidade e suporte de qualidade para sua casa ou empresa.",
-            "foundingDate": "2007",
-            "email": "Jrdinario@hotmail.com",
-            "telephone": "+55 71 98655-0508",
-            "sameAs": [
-                "https://www.instagram.com/cristonettelecom"
-            ],
-            "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "Rua Direta da Mata Escura, 550 - Mata Escura",                
-                "addressLocality": "Salvador",
-                "addressRegion": "BA",
-                "postalCode": "41225-190",
-                "addressCountry": "BR"
-            },
-            "contactPoint": {
-                "@type": "ContactPoint",
-                "telephone": "+55 71 98655-0508",
-                "contactType": "customer service",
-                "email": "Jrdinario@hotmail.com",
-                "areaServed": "BR",
-                "availableLanguage": ["pt", "en"]
-            },
-            "openingHoursSpecification": {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-                "opens": "08:00",
-                "closes": "17:00"
-            },
-            "identifier": {
-                "@type": "PropertyValue",
-                "propertyID": "CNPJ",
-                "value": "46.645.660/0001-20"
-            },
-            "slogan": "CristoNet",
-            "keywords": [
-                "CristoNet",
-                "provedor de internet",
-                "internet fibra óptica",
-                "planos de internet",
-                "internet rápida",
-                "internet residencial",
-                "internet empresarial",
-                "Wi-Fi",
-                "banda larga",
-                "internet veloz",
-                "provedor de fibra",
-                "internet estável",
-                "internet para empresas",
-                "internet de qualidade"
-            ]
-        }
-    </script>
-</head> --}}
 <head>
     @php
         // ============================================================
@@ -681,7 +568,7 @@
         <div class="container pt-5 pb-3">
             <div class="sitemap mt-2 mb-5 row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-3 justify-content-between align-items-baseline">
                 <div class=logo>
-                    <img src="{{asset('build/client/themes/provedor/tp-01/images/logo.svg')}}" alt="WHI - Web de Alta Inovação" title="WHI - Web de Alta Inovação" loading="lazy" class="w-100">
+                        <img src="{{ asset('storage/' . $tenantTheme->path_image_logo_footer) }}" alt="{{ $seoGoogle->organization_name ?? config('app.name') }}" title="{{ $seoGoogle->organization_name ?? config('app.name') }}" class="w-100">
                 </div>
                 <ul class="list-unstyled text-start mt-0">
                     <li class="mb-3"><a href="{{route('index')}}#hero" class="text-color-footer montserrat-regular font-16">Home</a></li>

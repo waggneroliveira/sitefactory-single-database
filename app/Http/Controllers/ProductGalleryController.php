@@ -3,50 +3,89 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductGallery;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\ImageManager;
 
 class ProductGalleryController extends Controller
 {
-    protected $pathUploadImage = 'admin/uploads/productGallery/file';
+
+    protected function getPathUpload(): string
+    {
+        $themeManager = app(ThemeManager::class);
+        $template = $themeManager->current() ?? 'default';
+        $variation = $themeManager->variation() ?? 'default';
+        return "admin/uploads/images/templates/{$template}/{$variation}/product-gallery/";
+    }
+
     public function store(Request $request)
     {
+        $pathUpload = $this->getPathUpload();
+        $manager = new ImageManager(new GdDriver());
+
+        $request->validate([
+            'file.*' => ['required', 'file', 'image', 'max:2048'],
+            'product_id' => ['required', 'exists:products,id'],
+        ]);
+
         try {
             DB::beginTransaction();
-            $data = $request->all();
 
-            $request->validate([
-                'file.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-                'product_id' => 'required|exists:products,id'
-            ]);
-            // dd($data);
-            
-            foreach ($request->file('file') as $file) {
-                $path = $file->store($this->pathUploadImage, 'public');
-                
+            foreach ($request->file('file', []) as $file) {
+                $mime = $file->getMimeType();
+                $extension = strtolower($file->getClientOriginalExtension());
+
+                if ($mime === 'image/svg+xml' || $extension === 'svg') {
+                    $filename = Str::uuid() . '.svg';
+
+                    Storage::disk('public')->putFileAs(
+                        $pathUpload,
+                        $file,
+                        $filename
+                    );
+                } else {
+                    $filename = Str::uuid() . '.avif';
+
+                    $image = $manager->read($file)
+                        ->resize(null, null, function ($constraint) {
+                            $constraint->aspectRatio();
+                            $constraint->upsize();
+                        })
+                        ->toAvif(quality: 95)
+                        ->toString();
+
+                    Storage::disk('public')->put(
+                        $pathUpload . $filename,
+                        $image
+                    );
+                }
+
                 ProductGallery::create([
                     'product_id' => $request->product_id,
-                    'file' => $path,
+                    'file' => $pathUpload . $filename,
                     'active' => 1,
                 ]);
             }
 
             DB::commit();
-            return redirect()->back()->with('success', 'Arquivos enviados com sucesso!');
-            
+
+            return redirect()
+                ->back()
+                ->with('success', 'Arquivos enviados com sucesso!');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', 'Erro ao enviar arquivos: ' . $e->getMessage());
-        }
-    }
 
-    public function update(Request $request, ProductGallery $productGallery)
-    {
-        //
+            return redirect()
+                ->back()
+                ->with('error', 'Erro ao enviar arquivos: ' . $e->getMessage());
+        }
     }
 
     public function destroy(ProductGallery $productGallery)

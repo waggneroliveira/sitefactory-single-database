@@ -19,7 +19,15 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class ServiceItemController extends Controller
 {
-    protected $pathUpload = 'admin/uploads/images/services/';
+    protected function getPathUpload(): string
+    {
+        $themeManager = app(ThemeManager::class);
+
+        $template = $themeManager->current() ?? 'default';
+        $variation = $themeManager->variation() ?? 'default';
+
+        return "admin/uploads/images/templates/{$template}/{$variation}/services/";
+    }
     public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
@@ -41,11 +49,12 @@ class ServiceItemController extends Controller
         return view('admin.blades.serviceItems.index',compact('serviceItems','serviceSection', 'serviceItemLimit', 'theme', 'themeData'));
     }
 
+
     public function store(Request $request, ThemeManager $themeManager)
     {
         $request->validate([
-            'path_image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif'],
-            'path_icon' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif'],
+            'path_image' => ['nullable', 'file', 'image', 'max:2048'],
+            'path_icon' => ['nullable', 'file', 'image', 'max:2048'],
         ]);
 
         $limit = $themeManager->getLimit('services', 0);
@@ -60,65 +69,107 @@ class ServiceItemController extends Controller
                 ]);
         }
 
-        $data = $request->except(['path_image', 'path_icon']);
-        $helper = new HelperArchive();
-        $manager = new ImageManager(GdDriver::class);
+        $data = $request->except([
+            'path_image',
+            'path_icon'
+        ]);
+
+        $pathUpload = $this->getPathUpload();
+
+        $manager = new ImageManager(new GdDriver());
 
         if ($request->hasFile('path_image')) {
             $file = $request->file('path_image');
+
             $mime = $file->getMimeType();
-            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.webp';
 
             if ($mime === 'image/svg+xml') {
-                Storage::putFileAs($this->pathUpload, $file, $filename);
+                $filename = pathinfo(
+                    $file->getClientOriginalName(),
+                    PATHINFO_FILENAME
+                ) . '.svg';
+
+                Storage::putFileAs(
+                    $pathUpload,
+                    $file,
+                    $filename
+                );
             } else {
-                $image = $manager->read($file)
-                    ->resize(null, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    })
-                    ->toWebp(quality: 95)
+                $filename = pathinfo(
+                    $file->getClientOriginalName(),
+                    PATHINFO_FILENAME
+                ) . '.avif';
+
+                $image = $manager
+                    ->read($file)
+                    ->toAvif(quality: 95)
                     ->toString();
 
-                Storage::put($this->pathUpload . $filename, $image);
+                Storage::put(
+                    $pathUpload . $filename,
+                    $image
+                );
             }
 
-            $data['path_image'] = $this->pathUpload . $filename;
+            $data['path_image'] = $pathUpload . $filename;
         }
 
         if ($request->hasFile('path_icon')) {
-            $fileMobile = $request->file('path_icon');
-            $mimeMobile = $fileMobile->getMimeType();
-            $filenameMobile = pathinfo($fileMobile->getClientOriginalName(), PATHINFO_FILENAME) . '_mobile.webp';
+            $fileIcon = $request->file('path_icon');
 
-            if ($mimeMobile === 'image/svg+xml') {
-                Storage::putFileAs($this->pathUpload, $fileMobile, $filenameMobile);
+            $mimeIcon = $fileIcon->getMimeType();
+
+            if ($mimeIcon === 'image/svg+xml') {
+                $filenameIcon = pathinfo(
+                    $fileIcon->getClientOriginalName(),
+                    PATHINFO_FILENAME
+                ) . '.svg';
+
+                Storage::putFileAs(
+                    $pathUpload,
+                    $fileIcon,
+                    $filenameIcon
+                );
             } else {
-                $imageMobile = $manager->read($fileMobile)
-                    ->resize(null, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    })
-                    ->toWebp(quality: 95)
+                $filenameIcon = pathinfo(
+                    $fileIcon->getClientOriginalName(),
+                    PATHINFO_FILENAME
+                ) . '.avif';
+
+                $imageIcon = $manager
+                    ->read($fileIcon)
+                    ->toAvif(quality: 95)
                     ->toString();
 
-                Storage::put($this->pathUpload . $filenameMobile, $imageMobile);
+                Storage::put(
+                    $pathUpload . $filenameIcon,
+                    $imageIcon
+                );
             }
 
-            $data['path_icon'] = $this->pathUpload . $filenameMobile;
+            $data['path_icon'] = $pathUpload . $filenameIcon;
         }
 
         $data['active'] = $request->active ? 1 : 0;
 
         try {
             DB::beginTransaction();
+
             ServiceItem::create($data);
+
             DB::commit();
-            session()->flash('success', __('dashboard.response_item_create'));
+
+            session()->flash(
+                'success',
+                __('dashboard.response_item_create')
+            );
         } catch (\Exception $e) {
-            dd($e);
             DB::rollBack();
-            session()->flash('error', __('dashboard.response_item_error_create'));
+
+            session()->flash(
+                'error',
+                __('dashboard.response_item_error_create')
+            );
         }
 
         return redirect()->back();
@@ -127,68 +178,149 @@ class ServiceItemController extends Controller
     public function update(Request $request, ServiceItem $serviceItem)
     {
         $request->validate([
-            'path_image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif'],
-            'path_icon' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif'],
+            'path_image' => ['nullable', 'file', 'image', 'max:2048'],
+            'path_icon' => ['nullable', 'file', 'image', 'max:2048'],
         ]);
 
-        $data = $request->except(['path_image', 'path_icon']);
-        $helper = new HelperArchive();
-        $manager = new ImageManager(GdDriver::class);
+        $data = $request->except([
+            'path_image',
+            'path_icon'
+        ]);
+
+        $pathUpload = $this->getPathUpload();
+
+        $manager = new ImageManager(new GdDriver());
 
         if ($request->hasFile('path_image')) {
             $file = $request->file('path_image');
+
             $mime = $file->getMimeType();
-            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.webp';
 
             if ($mime === 'image/svg+xml') {
-                Storage::putFileAs($this->pathUpload, $file, $filename);
+                $filename = pathinfo(
+                    $file->getClientOriginalName(),
+                    PATHINFO_FILENAME
+                ) . '.svg';
+
+                Storage::putFileAs(
+                    $pathUpload,
+                    $file,
+                    $filename
+                );
             } else {
-                $image = $manager->read($file)
-                    ->resize(null, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    })
-                    ->toWebp(quality: 95)
+                $filename = pathinfo(
+                    $file->getClientOriginalName(),
+                    PATHINFO_FILENAME
+                ) . '.avif';
+
+                $image = $manager
+                    ->read($file)
+                    ->toAvif(quality: 95)
                     ->toString();
 
-                Storage::put($this->pathUpload . $filename, $image);
+                Storage::put(
+                    $pathUpload . $filename,
+                    $image
+                );
             }
 
-            $data['path_image'] = $this->pathUpload . $filename;
+            if (!empty($serviceItem->path_image)) {
+                Storage::delete(
+                    $serviceItem->path_image
+                );
+            }
+
+            $data['path_image'] = $pathUpload . $filename;
         }
 
         if ($request->hasFile('path_icon')) {
-            $fileMobile = $request->file('path_icon');
-            $mimeMobile = $fileMobile->getMimeType();
-            $filenameMobile = pathinfo($fileMobile->getClientOriginalName(), PATHINFO_FILENAME) . '_mobile.webp';
+            $fileIcon = $request->file('path_icon');
 
-            if ($mimeMobile === 'image/svg+xml') {
-                Storage::putFileAs($this->pathUpload, $fileMobile, $filenameMobile);
+            $mimeIcon = $fileIcon->getMimeType();
+
+            if ($mimeIcon === 'image/svg+xml') {
+                $filenameIcon = pathinfo(
+                    $fileIcon->getClientOriginalName(),
+                    PATHINFO_FILENAME
+                ) . '.svg';
+
+                Storage::putFileAs(
+                    $pathUpload,
+                    $fileIcon,
+                    $filenameIcon
+                );
             } else {
-                $imageMobile = $manager->read($fileMobile)
-                    ->resize(null, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    })
-                    ->toWebp(quality: 95)
+                $filenameIcon = pathinfo(
+                    $fileIcon->getClientOriginalName(),
+                    PATHINFO_FILENAME
+                ) . '.avif';
+
+                $imageIcon = $manager
+                    ->read($fileIcon)
+                    ->toAvif(quality: 95)
                     ->toString();
 
-                Storage::put($this->pathUpload . $filenameMobile, $imageMobile);
+                Storage::put(
+                    $pathUpload . $filenameIcon,
+                    $imageIcon
+                );
             }
 
-            $data['path_icon'] = $this->pathUpload . $filenameMobile;
+            if (!empty($serviceItem->path_icon)) {
+                Storage::delete(
+                    $serviceItem->path_icon
+                );
+            }
+
+            $data['path_icon'] = $pathUpload . $filenameIcon;
+        }
+
+        if ($request->has('delete_path_image')) {
+            if (
+                !empty($serviceItem->path_image) &&
+                Storage::exists($serviceItem->path_image)
+            ) {
+                Storage::delete(
+                    $serviceItem->path_image
+                );
+            }
+
+            $data['path_image'] = null;
+        }
+
+        if ($request->has('delete_path_icon')) {
+            if (
+                !empty($serviceItem->path_icon) &&
+                Storage::exists($serviceItem->path_icon)
+            ) {
+                Storage::delete(
+                    $serviceItem->path_icon
+                );
+            }
+
+            $data['path_icon'] = null;
         }
 
         $data['active'] = $request->active ? 1 : 0;
 
         try {
             DB::beginTransaction();
+
             $serviceItem->fill($data)->save();
+
             DB::commit();
-            session()->flash('success', __('dashboard.response_item_update'));
+
+            session()->flash(
+                'success',
+                __('dashboard.response_item_update')
+            );
         } catch (\Exception $e) {
             DB::rollBack();
-            session()->flash('error', __('dashboard.response_item_error_update'));
+
+            session()->flash(
+                'error',
+                __('dashboard.response_item_error_update')
+            );
         }
 
         return redirect()->back();
