@@ -70,9 +70,7 @@ class TemplateThemeController extends Controller
 
         $pathUpload = $this->getPathUpload();
 
-        $manager = new ImageManager(
-            new GdDriver()
-        );
+        $manager = new ImageManager(new ImagickDriver());
 
         /*
         |--------------------------------------------------------------------------
@@ -287,9 +285,7 @@ class TemplateThemeController extends Controller
 
         $pathUpload = $this->getPathUpload();
 
-        $manager = new ImageManager(
-            new GdDriver()
-        );
+        $manager = new ImageManager(new ImagickDriver());
 
         try {
 

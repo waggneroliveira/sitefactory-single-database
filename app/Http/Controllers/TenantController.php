@@ -287,9 +287,7 @@ class TenantController extends Controller
             'delete_path_image_logo_footer',
         ]);
 
-        $manager = new ImageManager(
-            new GdDriver()
-        );
+        $manager = new ImageManager(new ImagickDriver());
 
         $pathUpload = $this->getPathUpload();
 
