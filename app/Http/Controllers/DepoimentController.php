@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\Drivers\Imagick\Driver as ImagickDriver;
 use Intervention\Image\ImageManager;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -56,7 +56,7 @@ class DepoimentController extends Controller
 
         $data = $request->except('path_image');
         $pathUpload = $this->getPathUpload();
-        $manager = new ImageManager(GdDriver::class);
+        $manager = new ImageManager(new ImagickDriver());
 
         if ($request->hasFile('path_image')) {
 
@@ -127,7 +127,7 @@ class DepoimentController extends Controller
 
         $data = $request->except('path_image');
         $pathUpload = $this->getPathUpload();
-        $manager = new ImageManager(GdDriver::class);
+        $manager = new ImageManager(new ImagickDriver());
 
         if ($request->hasFile('path_image')) {
 

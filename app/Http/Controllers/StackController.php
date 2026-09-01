@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Response;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Controllers\Helpers\HelperArchive;
 use App\Models\StackSessionTitle;
-use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\Drivers\Imagick\Driver as ImagickDriver;
 use Illuminate\Support\Facades\Log;
 
 class StackController extends Controller
@@ -30,7 +30,7 @@ class StackController extends Controller
     {
         $data = $request->except(['path_image']);
         $helper = new HelperArchive();
-        $manager = new ImageManager(GdDriver::class);
+        $manager = new ImageManager(new ImagickDriver());
 
         $request->validate([
             'path_image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,svg,jpeg,png,gif,webp'],
@@ -69,7 +69,7 @@ class StackController extends Controller
     {
         $data = $request->all();
         $helper = new HelperArchive();
-        $manager = new ImageManager(GdDriver::class);
+        $manager = new ImageManager(new ImagickDriver());
 
         $path_image = $helper->renameArchiveUpload($request, 'path_image', $this->pathUpload, true);
         if ($path_image) {

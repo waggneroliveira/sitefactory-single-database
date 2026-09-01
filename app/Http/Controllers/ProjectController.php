@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\Drivers\Imagick\Driver as ImagickDriver;
 use Intervention\Image\ImageManager;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -39,7 +39,7 @@ class ProjectController extends Controller
 
         $helper = new HelperArchive();
 
-        $manager = new ImageManager(GdDriver::class);
+        $manager = new ImageManager(new ImagickDriver());
 
         $filename = null;
         
@@ -138,7 +138,7 @@ class ProjectController extends Controller
 
         $helper = new HelperArchive();
 
-        $manager = new ImageManager(GdDriver::class);
+        $manager = new ImageManager(new ImagickDriver());
 
         $filename = null;
 

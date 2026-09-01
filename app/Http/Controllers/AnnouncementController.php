@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Response;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Repositories\SettingThemeRepository;
 use App\Http\Controllers\Helpers\HelperArchive;
-use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\Drivers\Imagick\Driver as ImagickDriver;
 
 class AnnouncementController extends Controller
 {
@@ -35,7 +35,7 @@ class AnnouncementController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $manager = new ImageManager(GdDriver::class);
+        $manager = new ImageManager(new ImagickDriver());
 
         // anuncio horizontal
         if ($request->hasFile('path_image')) {
@@ -126,7 +126,7 @@ class AnnouncementController extends Controller
     {
         $data = $request->all();
         $helper = new HelperArchive();
-        $manager = new ImageManager(GdDriver::class);
+        $manager = new ImageManager(new ImagickDriver());
 
         // Anuncio horizontal
         if ($request->hasFile('path_image')) {

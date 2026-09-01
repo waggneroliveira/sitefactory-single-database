@@ -77,7 +77,7 @@ class ClientService
         if ($mime === 'image/svg+xml') {
             $file->storeAs($this->pathUpload, $filename, 'public');
         } else {
-            $manager = new ImageManager(GdDriver::class);
+            $manager = new ImageManager(new ImagickDriver());
             $image = $manager->read($file)
                 ->resize(null, null, function ($constraint) {
                     $constraint->aspectRatio();

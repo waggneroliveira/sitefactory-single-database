@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\Drivers\Imagick\Driver as ImagickDriver;
 use Intervention\Image\ImageManager;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -38,7 +38,7 @@ class BenefitTopicController extends Controller
     public function store(Request $request)
     {
         $data = $request->except('path_image');
-        $manager = new ImageManager(GdDriver::class);
+        $manager = new ImageManager(new ImagickDriver());
 
         $request->validate([
             'path_image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif']
@@ -85,7 +85,7 @@ class BenefitTopicController extends Controller
     public function update(Request $request, BenefitTopic $benefitTopic)
         {
         $data = $request->except('path_image');
-        $manager = new ImageManager(GdDriver::class);
+        $manager = new ImageManager(new ImagickDriver());
 
         $request->validate([
             'path_image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif']

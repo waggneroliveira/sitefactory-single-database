@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Repositories\SettingThemeRepository;
-use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\Drivers\Imagick\Driver as ImagickDriver;
 
 class AgreementController extends Controller
 {
@@ -33,7 +33,7 @@ class AgreementController extends Controller
     public function store(Request $request)
     {
         $data = $request->except(['path_image', 'path_file']);
-        $manager = new ImageManager(GdDriver::class);
+        $manager = new ImageManager(new ImagickDriver());
 
         $request->validate([
             'path_image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif'],
@@ -90,7 +90,7 @@ class AgreementController extends Controller
     public function update(Request $request, Agreement $agreement)
     {
         $data = $request->except(['path_image', 'path_file']);
-        $manager = new ImageManager(GdDriver::class);
+        $manager = new ImageManager(new ImagickDriver());
 
         $request->validate([
             'path_image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif'],
