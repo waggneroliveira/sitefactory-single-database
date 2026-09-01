@@ -47,7 +47,7 @@ class SessaoFaqController extends Controller
     {
         $data = $request->except('path_file');
         $pathUpload = $this->getPathUpload();
-        $manager = new ImageManager(new GdDriver());
+        $manager = new ImageManager(new ImagickDriver());
 
         $request->validate([
             'path_file' => ['nullable', 'file', 'image', 'max:2048'],
@@ -116,7 +116,7 @@ class SessaoFaqController extends Controller
     {
         $data = $request->except('path_file');
         $pathUpload = $this->getPathUpload();
-        $manager = new ImageManager(new GdDriver());
+        $manager = new ImageManager(new ImagickDriver());
 
         $request->validate([
             'path_file' => ['nullable', 'file', 'image', 'max:248'],

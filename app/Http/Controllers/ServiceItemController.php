@@ -76,7 +76,7 @@ class ServiceItemController extends Controller
 
         $pathUpload = $this->getPathUpload();
 
-        $manager = new ImageManager(new GdDriver());
+        $manager = new ImageManager(new ImagickDriver());
 
         if ($request->hasFile('path_image')) {
             $file = $request->file('path_image');
@@ -189,7 +189,7 @@ class ServiceItemController extends Controller
 
         $pathUpload = $this->getPathUpload();
 
-        $manager = new ImageManager(new GdDriver());
+        $manager = new ImageManager(new ImagickDriver());
 
         if ($request->hasFile('path_image')) {
             $file = $request->file('path_image');

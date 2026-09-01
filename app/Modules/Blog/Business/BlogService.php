@@ -114,7 +114,7 @@ class BlogService
         $data['slug'] = Str::slug($request->title);
         $pathUpload = $this->getPathUpload();
 
-        $manager = new ImageManager(new GdDriver());
+        $manager = new ImageManager(new ImagickDriver());
 
         if ($request->hasFile('path_image')) {
 
@@ -203,7 +203,7 @@ class BlogService
             $file = $request->file('upload');
             $mime = $file->getMimeType();
             $pathUpload = $this->getPathUpload() . 'ckeditor/';
-            $manager = new ImageManager(new GdDriver());
+            $manager = new ImageManager(new ImagickDriver());
 
             if ($mime === 'image/svg+xml') {
 
@@ -255,7 +255,7 @@ class BlogService
         $data['slug'] = Str::slug($request->title);
         $pathUpload = $this->getPathUpload();
 
-        $manager = new ImageManager(new GdDriver());
+        $manager = new ImageManager(new ImagickDriver());
 
         if ($request->hasFile('path_image')) {
 

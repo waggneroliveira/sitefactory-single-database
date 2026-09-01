@@ -28,7 +28,7 @@ class ProductGalleryController extends Controller
     public function store(Request $request)
     {
         $pathUpload = $this->getPathUpload();
-        $manager = new ImageManager(new GdDriver());
+        $manager = new ImageManager(new ImagickDriver());
 
         $request->validate([
             'file.*' => ['required', 'file', 'image', 'max:2048'],

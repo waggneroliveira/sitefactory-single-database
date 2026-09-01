@@ -47,7 +47,7 @@ class DirectionController extends Controller
     {
         $data = $request->except(['path_image']);
         $pathUpload = $this->getPathUpload();
-        $manager = new ImageManager(new GdDriver());
+        $manager = new ImageManager(new ImagickDriver());
 
         $request->validate([
             'path_image' => ['nullable', 'file', 'image', 'max:2048'],
@@ -115,7 +115,7 @@ class DirectionController extends Controller
     {
         $data = $request->except(['path_image']);
         $pathUpload = $this->getPathUpload();
-        $manager = new ImageManager(new GdDriver());
+        $manager = new ImageManager(new ImagickDriver());
 
         $request->validate([
             'path_image' => ['nullable', 'file', 'image', 'max:2048'],

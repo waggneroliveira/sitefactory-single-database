@@ -37,7 +37,7 @@ class PopUpController extends Controller
         $data = $request->all();
         $data['active'] = $request->active ? 1 : 0;
 
-        $manager = new ImageManager(new GdDriver());
+        $manager = new ImageManager(new ImagickDriver());
 
         // Imagem principal
         if ($request->hasFile('path_image')) {
@@ -81,7 +81,7 @@ class PopUpController extends Controller
         $data = $request->all();
         $data['active'] = $request->active ? 1 : 0;
 
-        $manager = new ImageManager(new GdDriver());
+        $manager = new ImageManager(new ImagickDriver());
 
         if ($request->hasFile('path_image')) {
             $file = $request->file('path_image');

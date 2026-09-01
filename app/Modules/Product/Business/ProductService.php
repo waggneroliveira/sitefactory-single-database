@@ -164,7 +164,7 @@ class ProductService
 
         $pathUpload = $this->getPathUpload();
 
-        $manager = new ImageManager(new GdDriver());
+        $manager = new ImageManager(new ImagickDriver());
 
         if ($request->hasFile('path_image')) {
 
@@ -249,7 +249,7 @@ class ProductService
 
         $pathUpload = $this->getPathUpload();
 
-        $manager = new ImageManager(new GdDriver());
+        $manager = new ImageManager(new ImagickDriver());
 
         if ($mime === 'image/svg+xml') {
 
@@ -355,7 +355,7 @@ class ProductService
 
         $pathUpload = $this->getPathUpload();
 
-        $manager = new ImageManager(new GdDriver());
+        $manager = new ImageManager(new ImagickDriver());
 
         // Imagem do produto
         if ($request->hasFile('path_image')) {

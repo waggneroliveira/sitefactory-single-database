@@ -90,7 +90,7 @@ class SystemClientController extends Controller
 
 
         $pathUpload = $this->getPathUpload();
-        $manager = new ImageManager(new GdDriver());
+        $manager = new ImageManager(new ImagickDriver());
 
         $data['cnpj'] = !empty($data['cnpj'])
             ? preg_replace('/\D/', '', $data['cnpj'])
@@ -280,7 +280,7 @@ class SystemClientController extends Controller
         ]);
 
         $pathUpload = $this->getPathUpload();
-        $manager = new ImageManager(new GdDriver());
+        $manager = new ImageManager(new ImagickDriver());
 
         DB::beginTransaction();
 

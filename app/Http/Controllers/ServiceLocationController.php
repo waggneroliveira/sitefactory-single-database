@@ -46,7 +46,7 @@ class ServiceLocationController extends Controller
     {
         $data = $request->except(['path_image']);
         $pathUpload = $this->getPathUpload();
-        $manager = new ImageManager(new GdDriver());
+        $manager = new ImageManager(new ImagickDriver());
 
         
         $request->validate([
@@ -115,7 +115,7 @@ class ServiceLocationController extends Controller
     {
         $data = $request->except('path_image');
         $pathUpload = $this->getPathUpload();
-        $manager = new ImageManager(new GdDriver());
+        $manager = new ImageManager(new ImagickDriver());
 
         
         $request->validate([
