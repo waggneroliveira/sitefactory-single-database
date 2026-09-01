@@ -44,6 +44,7 @@ class HomePageService
         $depoiments = Depoiment::active()->sorting()->get();
         $contact = Contact::first();
         $statute = Statute::active()->first();
+        $blogHighlights = Blog::with('category')->active()->highlightOnly()->limit(3)->get();
         $faqs = Faq::active()->sorting()->get();
         $sessaoFaq = SessaoFaq::active()->first();
         $services = ServiceItem::active()->get();
@@ -69,6 +70,7 @@ class HomePageService
         $themeData = $themeManager->theme();
 
         return compact(
+            'blogHighlights',
             'productCategories',
             'products',
             'serviceLocation',

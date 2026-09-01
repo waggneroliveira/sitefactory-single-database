@@ -17,7 +17,6 @@
             name="text"
             class="form-control ck-editor"
             id="textarea-text"
-            rows="5"
         >{!! old('text', $about->text ?? '') !!}</textarea>
     </div>
     <div class="mb-3">
@@ -61,9 +60,6 @@
                             'Bold',
                             'Italic',
                             'Underline',
-                            'Strike',
-                            'Subscript',
-                            'Superscript'
                         ]
                     },
                     {
@@ -71,37 +67,7 @@
                         items: [
                             'NumberedList',
                             'BulletedList',
-                            '-',
-                            'Outdent',
-                            'Indent',
-                            '-',
-                            'Blockquote',
-                            '-',
-                            'JustifyLeft',
-                            'JustifyCenter',
-                            'JustifyRight',
-                            'JustifyBlock'
                         ]
-                    },
-                    {
-                        name: 'links',
-                        items: ['Link', 'Unlink']
-                    },
-                    {
-                        name: 'insert',
-                        items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar']
-                    },
-                    {
-                        name: 'styles',
-                        items: ['Styles', 'Format', 'Font', 'FontSize']
-                    },
-                    {
-                        name: 'colors',
-                        items: ['TextColor', 'BGColor']
-                    },
-                    {
-                        name: 'tools',
-                        items: ['Maximize']
                     }
                 ],
 
@@ -146,3 +112,9 @@
 
     });
 </script>
+
+<style>
+    #cke_textarea-text{
+        width: 100%;
+    }
+</style>

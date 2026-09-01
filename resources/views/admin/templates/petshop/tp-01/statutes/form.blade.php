@@ -122,7 +122,20 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         if (document.getElementById("{{$textareaId}}")) {
-            CKEDITOR.replace("{{$textareaId}}");
+            CKEDITOR.replace("{{$textareaId}}", {
+                allowedContent: true,
+                readOnly: typeof readOnly !== 'undefined' ? readOnly : false,
+                toolbar: [
+                    {
+                        name: 'basicstyles',
+                        items: ['Bold', 'Italic', 'Underline']
+                    },
+                    {
+                        name: 'paragraph',
+                        items: ['NumberedList', 'BulletedList']
+                    }
+                ]
+            });
         }
     });
 </script>

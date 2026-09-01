@@ -18,7 +18,15 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class AboutController extends Controller
 {
-    protected $pathUpload = 'admin/uploads/images/about/';
+    protected function getPathUpload(): string
+    {
+        $themeManager = app(ThemeManager::class);
+
+        $template = $themeManager->current() ?? 'default';
+        $variation = $themeManager->variation() ?? 'default';
+
+        return "admin/uploads/images/templates/{$template}/{$variation}/about/";
+    }
 
     public function index(ThemeManager $themeManager)
     {
@@ -40,46 +48,84 @@ class AboutController extends Controller
     }
     public function store(Request $request)
     {
-        $data = $request->except('path_image');
+        $request->validate([
+            'path_image' => ['nullable','file','image','max:2048'],
+        ]);
+
+        $data = $request->except([
+            'path_image'
+        ]);
+
+        $pathUpload = $this->getPathUpload();
+
         $manager = new ImageManager(GdDriver::class);
 
-        // about desktop
+        // Imagem do About
         if ($request->hasFile('path_image')) {
+
             $file = $request->file('path_image');
+
             $mime = $file->getMimeType();
-            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.webp';
 
             if ($mime === 'image/svg+xml') {
-                Storage::putFileAs($this->pathUpload, $file, $filename);
+
+                $filename = Str::uuid() . '.svg';
+
+                Storage::putFileAs(
+                    $pathUpload,
+                    $file,
+                    $filename
+                );
+
             } else {
-                $image = $manager->read($file)
-                    ->resize(null, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    })
-                    ->toWebp(quality: 95)
+
+                $filename = Str::uuid() . '.avif';
+
+                $image = $manager
+                    ->read($file)
+                    ->toAvif(quality: 90)
                     ->toString();
 
-                Storage::put($this->pathUpload . $filename, $image);
+                Storage::put(
+                    $pathUpload . $filename,
+                    $image
+                );
             }
 
-            $data['path_image'] = $this->pathUpload . $filename;
+            $data['path_image'] = $pathUpload . $filename;
         }
 
         $data['active'] = $request->active ? 1 : 0;
 
         try {
+
             DB::beginTransaction();
+
             About::create($data);
+
             DB::commit();
-            session()->flash('success', __('dashboard.response_item_create'));
+
+            session()->flash(
+                'success',
+                __('dashboard.response_item_create')
+            );
+
         } catch (\Exception $e) {
-            DB::rollback();
-            session()->flash('error', __('dashboard.response_item_error_create'));
+
+            DB::rollBack();
+
+            session()->flash(
+                'error',
+                __('dashboard.response_item_error_create')
+            );
         }
 
-        return redirect()->route('admin.dashboard.about.index');
+        return redirect()
+            ->route('admin.dashboard.about.index');
+
+
     }
+
 
     public function create(ThemeManager $themeManager){
         $settingTheme = (new SettingThemeRepository())->settingTheme();
@@ -131,7 +177,7 @@ class AboutController extends Controller
                         $constraint->aspectRatio();
                         $constraint->upsize();
                     })
-                    ->toWebp(quality: 95)
+                    ->toWebp(quality: 90)
                     ->toString();
 
                 Storage::disk('public')->put($pathUpload . $filename, $image);
@@ -154,52 +200,100 @@ class AboutController extends Controller
 
     public function update(Request $request, About $about)
     {
-        $data = $request->except('path_image');
+        $request->validate([
+            'path_image' => ['nullable','file','image','max:2048']
+        ]);
+
+        $data = $request->except([
+            'path_image'
+        ]);
+
+        $pathUpload = $this->getPathUpload();
+
         $manager = new ImageManager(GdDriver::class);
 
-        // about desktop
+        // About image
         if ($request->hasFile('path_image')) {
+
             $file = $request->file('path_image');
+
             $mime = $file->getMimeType();
-            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.webp';
 
             if ($mime === 'image/svg+xml') {
-                Storage::putFileAs($this->pathUpload, $file, $filename);
+
+                $filename = Str::uuid() . '.svg';
+
+                Storage::putFileAs(
+                    $pathUpload,
+                    $file,
+                    $filename
+                );
+
             } else {
-                $image = $manager->read($file)
-                    ->resize(null, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    })
-                    ->toWebp(quality: 95)
+
+                $filename = Str::uuid() . '.avif';
+
+                $image = $manager
+                    ->read($file)
+                    ->toAvif(quality: 90)
                     ->toString();
 
-                Storage::put($this->pathUpload . $filename, $image);
+                Storage::put(
+                    $pathUpload . $filename,
+                    $image
+                );
             }
 
-            Storage::delete(isset($about->path_image)??$about->path_image);
-            $data['path_image'] = $this->pathUpload . $filename;
+            // Remove a imagem antiga somente após salvar a nova
+            if (!empty($about->path_image)) {
+                Storage::delete($about->path_image);
+            }
+
+            $data['path_image'] = $pathUpload . $filename;
         }
 
-        if (isset($request->delete_path_image)) {
-            Storage::delete(isset($about->path_image)??$about->path_image);
+        // Remove imagem somente quando não houver novo upload
+        if (
+            $request->filled('delete_path_image') &&
+            !$request->hasFile('path_image')
+        ) {
+
+            if (!empty($about->path_image)) {
+                Storage::delete($about->path_image);
+            }
+
             $data['path_image'] = null;
         }
 
         $data['active'] = $request->active ? 1 : 0;
 
         try {
+
             DB::beginTransaction();
+
             $about->fill($data)->save();
+
             DB::commit();
-            session()->flash('success', __('dashboard.response_item_update'));
+
+            session()->flash(
+                'success',
+                __('dashboard.response_item_update')
+            );
+
         } catch (\Exception $e) {
+
             DB::rollBack();
-            session()->flash('error', __('dashboard.response_item_error_update'));
+
+            session()->flash(
+                'error',
+                __('dashboard.response_item_error_update')
+            );
         }
 
         return redirect()->route('admin.dashboard.about.index');
+
     }
+
 
     public function destroy(About $about)
     {
