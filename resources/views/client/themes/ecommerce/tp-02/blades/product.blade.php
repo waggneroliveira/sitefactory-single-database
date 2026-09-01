@@ -13,7 +13,7 @@
             <div class="row g-4 mt-102">
                 @if ($product->galleries->count())
                     <!-- GALERIA -->
-                    <div class="step-actions mt-4 d-flex justify-content-start mb-3 col-12">
+                    <div class="step-actions mt-5 d-flex justify-content-start mb-0 col-12">
                         <a href="{{route('products')}}" class="rounded-2 py-2 px-4 font-changa bg-green bg-button-two color-button-two font-16 font-medium text-decoration-none hover-zoom" rel="noopener noreferrer">
 
                             <svg width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -24,7 +24,7 @@
                             Voltar
                         </a>
                     </div>
-                    <div class="col-lg-5">
+                    <div class="col-lg-5 mt-5">
                         <div class="product-gallery p-0 col-12 col-lg-11">
                             <!-- Removido o h-100 do wrapper para evitar conflito de altura relativa -->
                             <div class="custom-gallery-carousel position-relative">
