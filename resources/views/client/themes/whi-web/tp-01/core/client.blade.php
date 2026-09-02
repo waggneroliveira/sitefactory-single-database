@@ -410,16 +410,19 @@
                         <div class="col-6">
                             <ul class="list-unstyled">
                                 <li><a href="{{route('index')}}" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Início</a></li>
-                                <li><a href="{{route('index')}}#about" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Quem Somos</a></li>
+                                <li><a href="{{route('index')}}#why_sec" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Como funciona</a></li>
                                 <li><a href="{{route('index')}}#services" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Serviços</a></li>
+                                <li><a href="{{route('index')}}#plans" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Planos</a></li>
                             </ul>
                         </div>
 
                         <div class="col-6">
                             <ul class="list-unstyled">
+                                <li><a href="{{route('index')}}#feature_sec" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Vantagens</a></li>
+                                <li><a href="{{route('index')}}#templates" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Templates</a></li>
                                 <li><a href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Depoimentos</a></li>
                                 <li><a href="{{ request()->routeIs('index') ? '#faq' : route('index') . '#faq' }}" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">FAQ</a></li>
-                                <li><a href="{{route('index')}}#contato" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Contato</a></li>
+                                <li><a href="{{route('index')}}#contact_sec" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Contato</a></li>
                             </ul>
                         </div>
                     </div>

@@ -409,7 +409,7 @@
     </section>
     <!-- Service Section End -->
 
-    <section class="tpl-modal-sec">
+    <section id="templates" class="tpl-modal-sec">
       <div class="container">
         <!-- Div de topo (Sem tag header para não colidir) -->
         <div class="tpl-header-block">
@@ -646,100 +646,102 @@
       </section>
     @endif
 
-    <section class="pricing-section" id="plans">
-      <div class="container">
-        
-        <!-- Cabeçalho -->
-        <div class="row justify-content-center text-center">
-          <div class="col-lg-8">
-            <span class="pricing-badge">Planos e Preços</span>
-            <h2 class="pricing-title">Escolha o plano ideal para escalar o seu negócio</h2>
-            <p class="pricing-subtitle">Transparência total. Sem taxas escondidas, altere ou cancele quando quiser.</p>
-            
-            <!-- Toggle Mensal / Anual (Desabilitado) -->
-            <div class="pricing-toggle-wrapper flex-wrap opacity-75 opacity-100-hover">
-              <span class="toggle-label text-muted" id="label-monthly" style="cursor: not-allowed;">Cobrança Mensal</span>
-              <div class="form-check form-switch p-0 m-0">
-                <input 
-                  class="form-check-input pricing-switch" 
-                  type="checkbox" 
-                  id="pricingToggle"
-                  aria-labelledby="label-monthly label-yearly"
-                  checked 
-                  disabled
-                >
+    @if (isset($contractedPlans) && $contractedPlans->count())
+      <section class="pricing-section" id="plans">
+        <div class="container">
+          
+          <!-- Cabeçalho -->
+          <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+              <span class="pricing-badge">Planos e Preços</span>
+              <h2 class="pricing-title">Escolha o plano ideal para escalar o seu negócio</h2>
+              <p class="pricing-subtitle">Transparência total. Sem taxas escondidas, altere ou cancele quando quiser.</p>
+              
+              <!-- Toggle Mensal / Anual (Desabilitado) -->
+              <div class="pricing-toggle-wrapper flex-wrap opacity-75 opacity-100-hover">
+                <span class="toggle-label text-muted" id="label-monthly" style="cursor: not-allowed;">Cobrança Mensal</span>
+                <div class="form-check form-switch p-0 m-0">
+                  <input 
+                    class="form-check-input pricing-switch" 
+                    type="checkbox" 
+                    id="pricingToggle"
+                    aria-labelledby="label-monthly label-yearly"
+                    checked 
+                    disabled
+                  >
+                </div>
+                <span class="toggle-label active" id="label-yearly" style="cursor: default;">
+                  Cobrança Anual
+                  <span class="discount-badge d-none">-20% OFF</span>
+                </span>
               </div>
-              <span class="toggle-label active" id="label-yearly" style="cursor: default;">
-                Cobrança Anual
-                <span class="discount-badge d-none">-20% OFF</span>
-              </span>
             </div>
           </div>
-        </div>
 
-        <!-- Cards de Planos -->
-        <div class="row g-4 align-items-stretch justify-content-center">
+          <!-- Cards de Planos -->
+          <div class="row g-4 align-items-stretch justify-content-center">
 
-          @foreach($contractedPlans as $plan)
-              @php
-                  $phone = preg_replace('/\D/', '', $contact->whatsapp);
-                  
-                  // 1. Converte entidades HTML (&aacute;, &eacute;, etc.) de volta para caracteres acentuados
-                  $textDecodificado = html_entity_decode($plan->text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-                  
-                  // 2. Extrai os itens <li> e formata como tópicos com hífem
-                  $featuresLimpo = str_replace(["\r", "\n"], '', $textDecodificado);
-                  $featuresLimpo = str_replace('<li>', "\n- ", str_replace('</li>', '', $featuresLimpo));
-                  $featuresLimpo = strip_tags($featuresLimpo); // Remove a tag <ul> restante
-
-                  // 3. Converte também eventuais acentos no nome do plano
-                  $nomePlano = html_entity_decode($plan->name, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-
-                  // 4. Monta a mensagem final sem caracteres estranhos
-                  $textoMensagem = "*WHI WEB | Suporte ao Cliente*". "\n\n"
-                                ."Olá! Tenho interesse no plano *" . $nomePlano . "* (R$ " . number_format($plan->price, 2, ',', '.') . "/mês).\n\n"
-                                . "*Recursos incluídos:*" . $featuresLimpo . "\n\n"
-                                . "Gostaria de obter mais informações sobre como assinar.";
-                                
-                  $mensagemUrl = urlencode($textoMensagem);
-                  $precoMensal = number_format((float) $plan->monthly_price, 2, ',', '.');
-                  $precoAnual = number_format((float) $plan->price, 2, ',', '.');
-              @endphp
-
-              <div class="col-lg-4 col-md-6">
-                <div class="plan-card {{ $plan->popular == 1 ? 'popular' : '' }}">
-                  @if ($plan->popular == 1)                  
-                    <span class="popular-badge">Mais Popular</span>
-                  @endif
-                  
-                  <div>
-                    <h3 class="plan-name">{{ $plan->name }}</h3>
-                    <div class="plan-description">{{ $plan->description }}</div>
+            @foreach($contractedPlans as $plan)
+                @php
+                    $phone = preg_replace('/\D/', '', $contact->whatsapp);
                     
-                    <div class="plan-price-wrapper">
-                      <span class="currency">R$</span>
-                      <span class="amount" data-monthly="{{ $precoMensal }}" data-yearly="{{ $precoAnual }}">{{ $precoAnual }}</span>
-                      <span class="period">/mês</span>
+                    // 1. Converte entidades HTML (&aacute;, &eacute;, etc.) de volta para caracteres acentuados
+                    $textDecodificado = html_entity_decode($plan->text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                    
+                    // 2. Extrai os itens <li> e formata como tópicos com hífem
+                    $featuresLimpo = str_replace(["\r", "\n"], '', $textDecodificado);
+                    $featuresLimpo = str_replace('<li>', "\n- ", str_replace('</li>', '', $featuresLimpo));
+                    $featuresLimpo = strip_tags($featuresLimpo); // Remove a tag <ul> restante
+
+                    // 3. Converte também eventuais acentos no nome do plano
+                    $nomePlano = html_entity_decode($plan->name, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+                    // 4. Monta a mensagem final sem caracteres estranhos
+                    $textoMensagem = "*WHI WEB | Suporte ao Cliente*". "\n\n"
+                                  ."Olá! Tenho interesse no plano *" . $nomePlano . "* (R$ " . number_format($plan->price, 2, ',', '.') . "/mês).\n\n"
+                                  . "*Recursos incluídos:*" . $featuresLimpo . "\n\n"
+                                  . "Gostaria de obter mais informações sobre como assinar.";
+                                  
+                    $mensagemUrl = urlencode($textoMensagem);
+                    $precoMensal = number_format((float) $plan->monthly_price, 2, ',', '.');
+                    $precoAnual = number_format((float) $plan->price, 2, ',', '.');
+                @endphp
+
+                <div class="col-lg-4 col-md-6">
+                  <div class="plan-card {{ $plan->popular == 1 ? 'popular' : '' }}">
+                    @if ($plan->popular == 1)                  
+                      <span class="popular-badge">Mais Popular</span>
+                    @endif
+                    
+                    <div>
+                      <h3 class="plan-name">{{ $plan->name }}</h3>
+                      <div class="plan-description">{{ $plan->description }}</div>
+                      
+                      <div class="plan-price-wrapper">
+                        <span class="currency">R$</span>
+                        <span class="amount" data-monthly="{{ $precoMensal }}" data-yearly="{{ $precoAnual }}">{{ $precoAnual }}</span>
+                        <span class="period">/mês</span>
+                      </div>
+
+                      <div class="plan-features">
+                        {!! $plan->text !!}
+                      </div>
                     </div>
 
-                    <div class="plan-features">
-                      {!! $plan->text !!}
-                    </div>
+                    <a href="https://wa.me/55{{ $phone }}?text={{ $mensagemUrl }}" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      class="btn-plan {{ $plan->popular == 1 ? 'btn-plan-primary' : 'btn-plan-outline' }}">
+                      Assinar {{ $plan->name }}
+                    </a>
                   </div>
-
-                  <a href="https://wa.me/55{{ $phone }}?text={{ $mensagemUrl }}" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    class="btn-plan {{ $plan->popular == 1 ? 'btn-plan-primary' : 'btn-plan-outline' }}">
-                    Assinar {{ $plan->name }}
-                  </a>
                 </div>
-              </div>
-          @endforeach
+            @endforeach
 
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    @endif
 
     @if (isset($sessaoFaq) && $sessaoFaq <> null || isset($faqs) && $faqs->count())
       <section class="faq-section" id="faq">
