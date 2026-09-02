@@ -137,7 +137,7 @@
                             @if (isset($product->link) && $product->link <> null)                                
                                 <div class="d-flex flex-wrap justify-content-center justify-content-lg-end mt-3 mt-lg-0 align-items-center col-12 col-lg-6">                               
                                     <div class="w-auto m-auto m-lg-0 mt-3 mt-lg-0 d-flex justify-content-center gap-2 align-items-center btn-header bg-button-two color-button-two rounded-2 py-3 px-3 hover-zoom">       
-                                        <a href="{{$product->link}}" class="font-changa font-16 font-medium text-decoration-none">
+                                        <a href="{{$product->link}}" target="_blank" rel="noopener noreferrer" class="font-changa font-16 font-medium text-decoration-none">
                                             Comprar agora
                                         </a>
                                         <svg class="ms-2" width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
