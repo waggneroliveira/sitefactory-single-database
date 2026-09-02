@@ -563,21 +563,37 @@
                 ))                    
                     <div class="col-lg-2 text-lg-end">
                         <div class="d-flex gap-3 justify-content-lg-end">
-                            @if ($contact->link_insta <> null)                            
-                                <a href="{{$contact->link_insta}}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5">
-                                    <i class="bi bi-instagram"></i>
+                            @if ($contact->link_insta != null)
+                                <a href="{{ $contact->link_insta }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="text-color-footer fs-5"
+                                aria-label="Instagram">
+                                    <i class="bi bi-instagram" aria-hidden="true"></i>
                                 </a>
                             @endif
-                            @if ($contact->link_face <> null)                            
-                                <a href="{{$contact->link_face}}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5">
-                                    <i class="bi bi-facebook"></i>
+
+                            @if ($contact->link_face != null)
+                                <a href="{{ $contact->link_face }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="text-color-footer fs-5"
+                                aria-label="Facebook">
+                                    <i class="bi bi-facebook" aria-hidden="true"></i>
                                 </a>
                             @endif
-                            @if ($contact->link_tik_tok <> null)                            
-                                <a href="{{$contact->link_tik_tok}}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5">
-                                    <i class="bi bi-linkedin"></i>
+
+                            @if ($contact->link_tik_tok != null)
+                                <a href="{{ $contact->link_tik_tok }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="text-color-footer fs-5"
+                                aria-label="TikTok">
+                                    <i class="bi bi-tiktok" aria-hidden="true"></i>
                                 </a>
                             @endif
+
+
                         </div>
                     </div>
                 @endif
