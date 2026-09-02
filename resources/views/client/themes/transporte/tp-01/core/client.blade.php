@@ -459,7 +459,7 @@
                 $logoPath = storage_path('app/public/' . $tenantTheme->path_image_logo_header);
                 $dimensions = file_exists($logoPath) ? @getimagesize($logoPath) : null;
             @endphp
-            <a class="navbar-brand d-flex align-items-center p-0" href="{{route('index')}}">
+            <a class="navbar-brand d-flex align-items-center p-0 m-0" href="{{route('index')}}">
                 <img loading="lazy" src="{{asset('storage/' .$tenantTheme->path_image_logo_header)}}" class="logo-header" alt="{{ $tenantTheme->name }}" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
             </a>
 
