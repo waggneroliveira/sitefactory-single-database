@@ -125,6 +125,11 @@
         }
     </script>
     <div class="mb-3">
+        <label for="link" class="form-label">Link</label>
+        <input type="text" name="link" value="{{isset($product)?$product->link:''}}" class="form-control" id="link" placeholder="Link">
+    </div>
+    
+    <div class="mb-3">
         <label for="description" class="form-label">Breve descrição <span class="text-danger">*</span></label>
         <input type="text" name="description" value="{{isset($product)?$product->description:''}}" class="form-control" id="description" placeholder="Digite uma breve descrição" required>
     </div>
