@@ -230,10 +230,13 @@ return [
                     'slides',
                     'topics',
                     'services',
+                    'benefits',    
                     'gallery',
                     'videos',
                     'about',
-    
+                    'faq_session',
+                    'faq',
+                    'testimonials',
                     'contact',
                     'contact_leads',
                 ],
@@ -369,8 +372,8 @@ return [
                     'faq_session',
                     'faq',
                     'testimonials',
-                    'about', //parametro
-                    'benefits',
+                    'about', 
+                    'benefits',//parametro
                     'videos',
                     'contact',
                 ],

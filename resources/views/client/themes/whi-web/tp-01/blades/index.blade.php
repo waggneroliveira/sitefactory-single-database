@@ -573,115 +573,78 @@
         </div>
       </section>
     @endif
-
-    <section class="testimonials-section" id="review_sec">
-      <div class="container position-relative z-1">
-        
-        <!-- Cabeçalho -->
-        <div class="row justify-content-center text-center mb-5">
-          <div class="col-lg-8" data-aos="fade-up">
-            <span class="testimonials-badge">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              Depoimentos Reais
-            </span>
-            <h2 class="testimonials-title">Transformando a rotina de quem confia no nosso trabalho</h2>
-          </div>
-        </div>
-
-        <!-- Estatísticas de Impacto (Novidade Visual) -->
-        <div class="row metrics-banner align-items-center text-center mb-5" data-aos="fade-up" data-aos-delay="100">
-          <div class="col-6 col-md-3 mb-3 mb-md-0">
-            <div class="metric-number">4.9/5</div>
-            <p class="metric-label">Nota Média dos Clientes</p>
-          </div>
-          <div class="col-6 col-md-3 mb-3 mb-md-0">
-            <div class="metric-number">+10k</div>
-            <p class="metric-label">Entregas Realizadas</p>
-          </div>
-          <div class="col-6 col-md-3">
-            <div class="metric-number">99%</div>
-            <p class="metric-label">Satisfação Garantida</p>
-          </div>
-          <div class="col-6 col-md-3">
-            <div class="metric-number">24/7</div>
-            <p class="metric-label">Suporte Dedicado</p>
-          </div>
-        </div>
-
-        <!-- Slider de Depoimentos (Swiper) -->
-        <div class="swiper testimonialSwiper mb-5" data-aos="fade-up" data-aos-delay="200">
-          <div class="swiper-wrapper py-3">
-
-            <!-- Card 1 -->
-            <div class="swiper-slide">
-              <div class="testimonial-card">
-                <svg class="testimonial-quote-icon" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-                <div class="rating-stars">★★★★★</div>
-                <p class="testimonial-text">
-                  <strong>"Agilidade sem igual!"</strong> O serviço superou minhas expectativas. A entrega chegou muito antes do prazo e o atendimento tirou todas as minhas dúvidas instantaneamente.
-                </p>
-                <div class="author-wrapper">
-                  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="author-avatar" loading="lazy">
-                  <div>
-                    <h3 class="author-name">Beatriz Rossi</h3>
-                    <p class="author-role">Empresária</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="swiper-slide">
-              <div class="testimonial-card">
-                <svg class="testimonial-quote-icon" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-                <div class="rating-stars">★★★★★</div>
-                <p class="testimonial-text">
-                  <strong>"Qualidade Impecável!"</strong> Desde o primeiro contato percebi o profissionalismo. O produto chegou muito bem embalado e a experiência de uso é nota 10.
-                </p>
-                <div class="author-wrapper">
-                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="author-avatar" loading="lazy">
-                  <div>
-                    <h3 class="author-name">Ricardo Mendes</h3>
-                    <p class="author-role">Designer Lead</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="swiper-slide">
-              <div class="testimonial-card">
-                <svg class="testimonial-quote-icon" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-                <div class="rating-stars">★★★★★</div>
-                <p class="testimonial-text">
-                  <strong>"Facilidade e Segurança"</strong> A plataforma é super intuitiva. Resolver as minhas demandas diárias ficou muito mais rápido depois que comecei a usar.
-                </p>
-                <div class="author-wrapper">
-                  <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="author-avatar" loading="lazy">
-                  <div>
-                    <h3 class="author-name">Camila Fernandes</h3>
-                    <p class="author-role">Gerente de Projetos</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- Chamada para Ação CTA -->
-        <div class="btn_block text-center" data-aos="fade-up" data-aos-delay="300">
-            <a href="#plans" class="bg-button-two color-button-two px-3 py-2 rounded-3 ">
-              <span>
-                Começar agora
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+    @if ((isset($sections['testimonial']) && $sections <> null) ||
+      (!empty($depoiments) && count($depoiments) > 0))
+      <section class="testimonials-section" id="review_sec">
+        <div class="container position-relative z-1">
+          
+          <!-- Cabeçalho -->
+          <div class="row justify-content-center text-center mb-5">
+            <div class="col-lg-8" data-aos="fade-up">
+              <span class="testimonials-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                {{ $sections['testimonial']->tag }}
               </span>
-            </a>
+              <h2 class="testimonials-title">{{ $sections['testimonial']->title }}</h2>
+            </div>
+          </div>
+
+          <!-- Estatísticas de Impacto (Novidade Visual) -->
+          @if (isset($benefitTopics) && $benefitTopics->count())
+            <div class="row metrics-banner align-items-center text-center mb-5" data-aos="fade-up" data-aos-delay="100">
+              @foreach($benefitTopics as $parametro)            
+                <div class="col-6 col-md-3 mb-3 mb-md-0">
+                  <div class="metric-number">{{$parametro->number}}</div>
+                  <p class="metric-label">{{$parametro->title}}</p>
+                </div>
+              @endforeach
+            </div>
+          @endif
+
+          <!-- Slider de Depoimentos (Swiper) -->
+          @if (isset($depoiments) && $depoiments->count())
+            <div class="swiper testimonialSwiper mb-5" data-aos="fade-up" data-aos-delay="200">
+              <div class="swiper-wrapper py-3">
+
+                <!-- Card 1 -->
+                @foreach ($depoiments as $depoiment)
+                  <div class="swiper-slide">
+                    <div class="testimonial-card">
+                      <svg class="testimonial-quote-icon" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                      <div class="rating-stars">★★★★★</div>
+                      <div class="testimonial-text">
+                          {!!$depoiment->text!!}
+                      </div>
+                      <div class="author-wrapper">
+                        @if ($depoiment->path_image <> null) 
+                          <img src="{{asset('storage/' . $depoiment->path_image)}}" alt="{{$depoiment->name}}" class="author-avatar" loading="lazy">
+                        @endif
+                        <div>
+                          <h3 class="author-name">{{$depoiment->name}}</h3>
+                          <p class="author-role">{{$depoiment->function}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                @endforeach
+
+              </div>
+            </div>
+          @endif
+
+          <!-- Chamada para Ação CTA -->
+          <div class="btn_block text-center" data-aos="fade-up" data-aos-delay="300">
+              <a href="#plans" class="bg-button-two color-button-two px-3 py-2 rounded-3 ">
+                <span>
+                  Começar agora
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </span>
+              </a>
+          </div>
+
         </div>
-
-      </div>
-    </section>
-
+      </section>
+    @endif
     <section class="pricing-section" id="plans">
       <div class="container">
         
@@ -842,127 +805,66 @@
       </div>
     </section>
 
-    <section class="faq-section" id="faq">
-      <div class="container">
-        
-        <div class="row g-5">
+    @if (isset($sessaoFaq) && $sessaoFaq <> null || isset($faqs) && $faqs->count())
+      <section class="faq-section" id="faq">
+        <div class="container">
           
-          <!-- Coluna da Esquerda: Título + Card de Contato Fixo -->
-          <div class="col-lg-4">
-            <span class="faq-badge">FAQ</span>
-            <h2 class="faq-title">Dúvidas Frequentes</h2>
-            <p class="faq-subtitle mb-4">Encontre respostas rápidas para as principais dúvidas sobre o nosso sistema.</p>
+          <div class="row g-5">
+            
+            @if (isset($sessaoFaq) && $sessaoFaq <> null)
+              @php $isFull = !(isset($faqs) && $faqs->count()); @endphp
 
-            <!-- Card de Suporte Secundário -->
-            <div class="support-card d-none d-lg-block">
-              <div class="support-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              <div class="{{ $isFull ? 'col-lg-12 text-center mx-auto' : 'col-lg-4' }}">
+                <span class="faq-badge">{{$sessaoFaq->tag}}</span>
+                <h2 class="faq-title">{{$sessaoFaq->title}}</h2>
+                <div class="faq-subtitle mb-4">{!!$sessaoFaq->description!!}</div>
+
+                <div class="support-card {{ $isFull ? 'mx-auto' : 'd-none d-lg-block' }}" style="{{ $isFull ? 'max-width: 450px;' : '' }}">
+                  <div class="support-icon {{ $isFull ? 'm-auto mb-2' : 'm-0 mb-2' }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                  </div>
+                  <h3 class="support-title">{{$sessaoFaq->title_box}}</h3>
+                  <div class="support-text">{{$sessaoFaq->description_box}}</div>
+                  <a href="{{$sessaoFaq->link}}" target="_blank" class="btn-faq-cta w-100 justify-content-center">
+                    {{$sessaoFaq->btn_title}}
+                  </a>
+                </div>
               </div>
-              <h3 class="support-title">Ainda tem dúvidas?</h3>
-              <p class="support-text">Nossa equipe de suporte está online para te ajudar com tudo o que precisar.</p>
-              <a href="https://wa.me/" target="_blank" class="btn-faq-cta w-100 justify-content-center">
-                Falar no WhatsApp
-              </a>
-            </div>
+            @endif
+
+            @if (isset($faqs) && $faqs->count())
+              <div class="{{ (isset($sessaoFaq) && $sessaoFaq <> null) ? 'col-lg-8' : 'col-lg-12' }}">
+                <div class="faq-accordion">
+
+                  @foreach($faqs as $faq)                
+                    <div class="faq-card">
+                      <button class="faq-header">
+                        <span>{{$faq->question}}</span>
+                        <span class="faq-toggle-icon">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </span>
+                      </button>
+                      <div class="faq-body">
+                        {!! $faq->answer !!}
+                      </div>
+                    </div>
+                  @endforeach
+
+                </div>
+
+                <div class="text-center mt-5">
+                  <a href="#plans" class="btn-faq-cta">
+                    Começar agora
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                  </a>
+                </div>
+
+              </div>
+            @endif
           </div>
-
-          <!-- Coluna da Direita: Accordion Interativo -->
-          <div class="col-lg-8">
-            <div class="faq-accordion">
-
-              <!-- Item 1 (Ativo por padrão) -->
-              <div class="faq-card active">
-                <button class="faq-header">
-                  <span>Quanto tempo leva para configurar meu sistema?</span>
-                  <span class="faq-toggle-icon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                  </span>
-                </button>
-                <div class="faq-body" style="display: block;">
-                  Em média 2-3 dias úteis. Nós fazemos a configuração inicial completa para que você comece a vender o mais rápido possível.
-                </div>
-              </div>
-
-              <!-- Item 2 -->
-              <div class="faq-card">
-                <button class="faq-header">
-                  <span>Preciso de conhecimento técnico?</span>
-                  <span class="faq-toggle-icon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                  </span>
-                </button>
-                <div class="faq-body">
-                  Não! Desenvolvemos uma plataforma extremamente simples e intuitiva. Se você sabe usar o WhatsApp no dia a dia, conseguirá operar o DeliFast sem dificuldades.
-                </div>
-              </div>
-
-              <!-- Item 3 -->
-              <div class="faq-card">
-                <button class="faq-header">
-                  <span>Como recebo os pedidos dos clientes?</span>
-                  <span class="faq-toggle-icon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                  </span>
-                </button>
-                <div class="faq-body">
-                  Os pedidos chegam diretamente no WhatsApp do seu estabelecimento. Cada pedido é enviado formatado e organizado com os dados do cliente, itens e endereço de entrega.
-                </div>
-              </div>
-
-              <!-- Item 4 -->
-              <div class="faq-card">
-                <button class="faq-header">
-                  <span>Posso cancelar quando quiser?</span>
-                  <span class="faq-toggle-icon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                  </span>
-                </button>
-                <div class="faq-body">
-                  Sim, sem taxas de fidelidade ou burocracia. O cancelamento pode ser efetuado a qualquer momento diretamente pelo seu painel de controle.
-                </div>
-              </div>
-
-              <!-- Item 5 -->
-              <div class="faq-card">
-                <button class="faq-header">
-                  <span>O que acontece se eu não pagar a mensalidade?</span>
-                  <span class="faq-toggle-icon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                  </span>
-                </button>
-                <div class="faq-body">
-                  Seu cardápio ficará temporariamente suspenso, mas todos os seus dados e histórico ficam armazenados de forma segura por até 60 dias. Ao regularizar, o sistema é reativado na hora.
-                </div>
-              </div>
-
-              <!-- Item 6 -->
-              <div class="faq-card">
-                <button class="faq-header">
-                  <span>Vocês oferecem suporte? Como funciona?</span>
-                  <span class="faq-toggle-icon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                  </span>
-                </button>
-                <div class="faq-body">
-                  Sim! Oferecemos suporte humanizado via WhatsApp em horário comercial para tirar dúvidas, realizar alterações e garantir que você aproveite ao máximo o sistema.
-                </div>
-              </div>
-
-            </div>
-
-            <!-- Botão CTA no Mobile / Rodapé -->
-            <div class="text-center mt-5">
-              <a href="#plans" class="btn-faq-cta">
-                Começar agora
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-              </a>
-            </div>
-
-          </div>
-
         </div>
-      </div>
-    </section>
+      </section>
+    @endif
 
     <section class="cta-pro-section" id="contact_sec">
     <!-- Glows de Iluminação em Camadas -->

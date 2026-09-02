@@ -22,6 +22,10 @@ class SessaoFaq extends Model
         'description',
         'path_file',
         'active',
+        'tag',
+        'title_box',
+        'description_box',
+        'link',
     ];
 
      public function scopeActive($query){
