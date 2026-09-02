@@ -180,9 +180,9 @@
                                         </div>
                                     @endif
 
-                                    <h4 class="fw-bold mb-2 {{ $service->path_icon != null ? 'mt-3' : 'mt-1' }}">
+                                    <h3 class="fw-bold mb-2 {{ $service->path_icon != null ? 'mt-3' : 'mt-1' }}">
                                         {{ $service->title }}
-                                    </h4>
+                                    </h3>
 
                                     <p class="text-muted small flex-grow-1">
                                         {{substr(strip_tags($service->description), 0, 100)}}...
@@ -350,9 +350,9 @@
                                 {{$sections['testimonial']->tag}}
                             </span>
         
-                            <h5 class="font-changa font-40 title font-bold text-white text-start mb-3">
+                            <h2 class="font-changa font-40 title font-bold text-white text-start mb-3">
                                 {{$sections['testimonial']->title}}
-                            </h5>
+                            </h2>
                             <p class="font-regular text-white mb-0 font-changa font-18">{{$sections['testimonial']->description}}</p>
                         </div>
                     @endif

@@ -528,10 +528,10 @@
 
                 <!-- Mapa do site -->
                 <div class="col-lg-6 mb-4 mb-0">
-                    <h6 class="font-changa text-color-footer font-16 font-bold mb-3 position-relative d-inline-block font-changa font-16 font-medium">
+                    <div class="font-changa text-color-footer font-16 font-bold mb-3 position-relative d-inline-block font-changa font-16 font-medium">
                         Mapa do Site
                         <span class="d-block bg-yellow mt-1" style="height:3px; width:40px;"></span>
-                    </h6>
+                    </div>
 
                     <div class="row">
                         <div class="col-6">
