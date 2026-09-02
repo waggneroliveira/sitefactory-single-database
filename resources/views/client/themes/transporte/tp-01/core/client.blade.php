@@ -700,5 +700,15 @@
     <script src="{{ asset('build/client/themes/transporte/tp-01/js/default.js') }}" defer></script>
     <script src="{{ asset('build/client/js/default.js') }}" defer></script>
 
+    {{-- Modais alert --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 40
+            });
+        });
+    </script>
 </body>
 </html>
