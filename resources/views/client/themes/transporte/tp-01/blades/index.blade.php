@@ -504,374 +504,597 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 
-            const servicesSwiper = new Swiper('.servicesSwiper', {
-                slidesPerView: 1,
-                spaceBetween: 12,
+            /*
+            * ==========================================================
+            * CONFIGURAÇÃO GERAL
+            * ==========================================================
+            */
 
-                navigation: {
-                    nextEl: '.swiper-button-next-custom',
-                    prevEl: '.swiper-button-prev-custom',
-                },
+            const hasSwiper = typeof Swiper !== 'undefined';
+            const hasBootstrap = typeof bootstrap !== 'undefined';
 
-                breakpoints: {
-                    576: {
-                        slidesPerView: 2,
-                        spaceBetween: 12
+
+            /*
+            * ==========================================================
+            * SWIPER - SERVIÇOS
+            * ==========================================================
+            */
+
+            const servicesSwiper = document.querySelector('.servicesSwiper');
+
+            if (hasSwiper && servicesSwiper) {
+
+                new Swiper(servicesSwiper, {
+                    slidesPerView: 1,
+                    spaceBetween: 12,
+
+                    navigation: {
+                        nextEl: '.swiper-button-next-custom',
+                        prevEl: '.swiper-button-prev-custom'
                     },
 
-                    992: {
-                        slidesPerView: 4,
-                        spaceBetween: 12
+                    breakpoints: {
+                        576: {
+                            slidesPerView: 2,
+                            spaceBetween: 12
+                        },
+
+                        992: {
+                            slidesPerView: 4,
+                            spaceBetween: 12
+                        }
                     }
-                }
-            });
+                });
+
+            }
+
+
+            /*
+            * ==========================================================
+            * SWIPER - BLOG
+            * ==========================================================
+            */
+
+            const blogSwiper = document.querySelector('.blog-swiper');
+
+            if (hasSwiper && blogSwiper) {
+
+                new Swiper(blogSwiper, {
+                    spaceBetween: 24,
+
+                    pagination: {
+                        el: '.swiper-pagination-blog',
+                        clickable: true
+                    },
+
+                    breakpoints: {
+                        0: {
+                            slidesPerView: 1.3
+                        },
+
+                        576: {
+                            slidesPerView: 2
+                        },
+
+                        992: {
+                            slidesPerView: 4,
+                            allowTouchMove: false
+                        }
+                    }
+                });
+
+            }
+
+
+            /*
+            * ==========================================================
+            * SWIPER - DEPOIMENTOS
+            * ==========================================================
+            */
+
+            const testimonialSwiper = document.querySelector('.testimonial-swiper');
+
+            if (hasSwiper && testimonialSwiper) {
+
+                new Swiper(testimonialSwiper, {
+                    loop: true,
+                    spaceBetween: 24,
+
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true
+                    },
+
+                    breakpoints: {
+                        0: {
+                            slidesPerView: 1
+                        },
+
+                        768: {
+                            slidesPerView: 1
+                        }
+                    }
+                });
+
+            }
+
+
+            /*
+            * ==========================================================
+            * MODAL DE SERVIÇOS - serviceModal
+            * ==========================================================
+            */
 
             const serviceModal = document.getElementById('serviceModal');
 
-            serviceModal.addEventListener('show.bs.modal', function (event) {
+            if (serviceModal && hasBootstrap) {
 
-                const button = event.relatedTarget;
+                serviceModal.addEventListener('show.bs.modal', function (event) {
 
-                const title = button.dataset.title;
-                const icon = button.dataset.icon;
-                const description = button.dataset.description;
+                    const button = event.relatedTarget;
 
-                document.getElementById('serviceModalLabel').textContent = title;
+                    if (!button) {
+                        return;
+                    }
 
-                document.getElementById('serviceModalDescription').textContent = description;
+                    const title =
+                        button.dataset.title || 'Serviço';
 
-                const modalIcon = document.getElementById('serviceModalIcon');
+                    const icon =
+                        button.dataset.icon || '';
 
-                modalIcon.className = 'bi fs-5 ' + icon;
-            });
+                    const description =
+                        button.dataset.description || '';
 
-        });
-    </script>
+                    const modalTitle =
+                        document.getElementById('serviceModalLabel');
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            new Swiper('.blog-swiper', {
-                spaceBetween: 24,
-                pagination: {
-                el: '.swiper-pagination-blog',
-                clickable: true,
-                },
-                breakpoints: {
-                0: {
-                    slidesPerView: 1.3,
-                },
-                576: {
-                    slidesPerView: 2,
-                },
-                992: {
-                    slidesPerView: 4,
-                    allowTouchMove: false,
-                }
-                }
-            });
-        });
+                    const modalDescription =
+                        document.getElementById('serviceModalDescription');
 
-        document.addEventListener('DOMContentLoaded', function () {
-            new Swiper('.testimonial-swiper', {
-                loop: true,
-                spaceBetween: 24,
-                pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-                },
-                breakpoints: {
-                0: {
-                    slidesPerView: 1,
-                },
-                768: {
-                    slidesPerView: 1,
-                }
-                }
-            });
-        });
+                    const modalIcon =
+                        document.getElementById('serviceModalIcon');
 
-    </script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-
-        const modalServico = document.getElementById('modalServico');
-
-        if (!modalServico) {
-            return;
-        }
-
-        /*
-         * ABRIR MODAL
-         */
-        modalServico.addEventListener('show.bs.modal', function (event) {
-
-            const serviceCard = event.relatedTarget;
-
-            if (!serviceCard) {
-                return;
-            }
-
-            const titulo = serviceCard.dataset.servicoTitulo || 'Serviço';
-            const descricao = serviceCard.dataset.servicoDesc || '';
-            const link = serviceCard.dataset.servicoLink || '';
-            const scroll = serviceCard.dataset.servicoScroll || '';
-            const icon = serviceCard.dataset.servicoIcon || '';
-
-            const modalTitulo = modalServico.querySelector('#modalTitulo');
-            const modalDescricao = modalServico.querySelector('#modalDescricao');
-            const modalSolicitar = modalServico.querySelector('#modalSolicitar');
-            const modalIcon = modalServico.querySelector('#modalIcon');
-
-            /*
-             * TÍTULO E DESCRIÇÃO
-             */
-            if (modalTitulo) {
-                modalTitulo.textContent = titulo;
-            }
-
-            if (modalDescricao) {
-                modalDescricao.innerHTML = descricao;
-            }
-
-            /*
-             * ÍCONE / IMAGEM
-             */
-            if (modalIcon) {
-
-                if (icon) {
-
-                    modalIcon.src = icon;
-                    modalIcon.alt = titulo;
-                    modalIcon.classList.remove('d-none');
-
-                } else {
-
-                    modalIcon.src = '';
-                    modalIcon.alt = '';
-                    modalIcon.classList.add('d-none');
-
-                }
-            }
-
-            /*
-             * RESET DO BOTÃO
-             */
-            if (!modalSolicitar) {
-                return;
-            }
-
-            modalSolicitar.classList.add('d-none');
-            modalSolicitar.href = '#';
-            modalSolicitar.removeAttribute('target');
-            modalSolicitar.removeAttribute('rel');
-            modalSolicitar.onclick = null;
-
-            /*
-             * LINK EXTERNO
-             */
-            if (link) {
-
-                modalSolicitar.href = link;
-                modalSolicitar.target = '_blank';
-                modalSolicitar.rel = 'noopener noreferrer';
-
-                modalSolicitar.classList.remove('d-none');
-
-            /*
-             * SCROLL PARA SEÇÃO
-             */
-            } else if (scroll) {
-
-                modalSolicitar.href = '#' + scroll;
-
-                modalSolicitar.removeAttribute('target');
-                modalSolicitar.removeAttribute('rel');
-
-                modalSolicitar.classList.remove('d-none');
-
-                modalSolicitar.onclick = function (e) {
-
-                    e.preventDefault();
-
-                    const modalInstance = bootstrap.Modal.getInstance(modalServico);
 
                     /*
-                     * Fecha o modal primeiro
-                     */
-                    if (modalInstance) {
+                    * TÍTULO
+                    */
 
-                        modalServico.addEventListener(
-                            'hidden.bs.modal',
-                            function () {
+                    if (modalTitle) {
+                        modalTitle.textContent = title;
+                    }
 
-                                /*
-                                 * Aguarda o Bootstrap finalizar
-                                 * completamente o fechamento do modal.
-                                 */
-                                setTimeout(function () {
 
-                                    const target =
-                                        document.getElementById(scroll);
+                    /*
+                    * DESCRIÇÃO
+                    */
 
-                                    if (target) {
+                    if (modalDescription) {
+                        modalDescription.textContent = description;
+                    }
 
-                                        target.scrollIntoView({
-                                            behavior: 'smooth',
-                                            block: 'start'
-                                        });
 
-                                    }
+                    /*
+                    * ÍCONE
+                    */
 
-                                }, 150);
-
-                            },
-                            { once: true }
-                        );
-
-                        modalInstance.hide();
-
-                    } else {
+                    if (modalIcon) {
 
                         /*
-                         * Fallback caso a instância do modal
-                         * não esteja disponível.
-                         */
-                        setTimeout(function () {
+                        * Remove classes de ícone anteriores
+                        */
+                        modalIcon.className = '';
 
-                            const target =
-                                document.getElementById(scroll);
+                        /*
+                        * Adiciona as classes padrão
+                        */
+                        modalIcon.classList.add('bi', 'fs-5');
 
-                            if (target) {
+                        /*
+                        * Adiciona o ícone informado
+                        */
+                        if (icon) {
+                            modalIcon.classList.add(...icon.split(' '));
+                        }
+
+                    }
+
+                });
+
+            }
+
+
+            /*
+            * ==========================================================
+            * MODAL DE SERVIÇOS - modalServico
+            * ==========================================================
+            */
+
+            const modalServico = document.getElementById('modalServico');
+
+            if (modalServico && hasBootstrap) {
+
+                /*
+                * ------------------------------------------------------
+                * ABRIR MODAL
+                * ------------------------------------------------------
+                */
+
+                modalServico.addEventListener('show.bs.modal', function (event) {
+
+                    const serviceCard = event.relatedTarget;
+
+                    if (!serviceCard) {
+                        return;
+                    }
+
+
+                    /*
+                    * DADOS DO SERVIÇO
+                    */
+
+                    const titulo =
+                        serviceCard.dataset.servicoTitulo || 'Serviço';
+
+                    const descricao =
+                        serviceCard.dataset.servicoDesc || '';
+
+                    const link =
+                        serviceCard.dataset.servicoLink || '';
+
+                    const scroll =
+                        serviceCard.dataset.servicoScroll || '';
+
+                    const icon =
+                        serviceCard.dataset.servicoIcon || '';
+
+
+                    /*
+                    * ELEMENTOS DO MODAL
+                    */
+
+                    const modalTitulo =
+                        modalServico.querySelector('#modalTitulo');
+
+                    const modalDescricao =
+                        modalServico.querySelector('#modalDescricao');
+
+                    const modalSolicitar =
+                        modalServico.querySelector('#modalSolicitar');
+
+                    const modalIcon =
+                        modalServico.querySelector('#modalIcon');
+
+
+                    /*
+                    * --------------------------------------------------
+                    * TÍTULO
+                    * --------------------------------------------------
+                    */
+
+                    if (modalTitulo) {
+                        modalTitulo.textContent = titulo;
+                    }
+
+
+                    /*
+                    * --------------------------------------------------
+                    * DESCRIÇÃO
+                    * --------------------------------------------------
+                    */
+
+                    if (modalDescricao) {
+                        modalDescricao.innerHTML = descricao;
+                    }
+
+
+                    /*
+                    * --------------------------------------------------
+                    * ÍCONE / IMAGEM
+                    * --------------------------------------------------
+                    */
+
+                    if (modalIcon) {
+
+                        if (icon) {
+
+                            modalIcon.src = icon;
+                            modalIcon.alt = titulo;
+                            modalIcon.classList.remove('d-none');
+
+                        } else {
+
+                            modalIcon.removeAttribute('src');
+                            modalIcon.alt = '';
+                            modalIcon.classList.add('d-none');
+
+                        }
+
+                    }
+
+
+                    /*
+                    * --------------------------------------------------
+                    * BOTÃO
+                    * --------------------------------------------------
+                    */
+
+                    if (!modalSolicitar) {
+                        return;
+                    }
+
+
+                    /*
+                    * RESET DO BOTÃO
+                    */
+
+                    modalSolicitar.classList.add('d-none');
+                    modalSolicitar.href = '#';
+
+                    modalSolicitar.removeAttribute('target');
+                    modalSolicitar.removeAttribute('rel');
+
+                    modalSolicitar.onclick = null;
+
+
+                    /*
+                    * --------------------------------------------------
+                    * LINK EXTERNO
+                    * --------------------------------------------------
+                    */
+
+                    if (link) {
+
+                        modalSolicitar.href = link;
+                        modalSolicitar.target = '_blank';
+                        modalSolicitar.rel = 'noopener noreferrer';
+
+                        modalSolicitar.classList.remove('d-none');
+
+                        return;
+                    }
+
+
+                    /*
+                    * --------------------------------------------------
+                    * SCROLL PARA SEÇÃO
+                    * --------------------------------------------------
+                    */
+
+                    if (scroll) {
+
+                        modalSolicitar.href = '#' + scroll;
+                        modalSolicitar.classList.remove('d-none');
+
+
+                        modalSolicitar.onclick = function (event) {
+
+                            event.preventDefault();
+
+
+                            /*
+                            * Verifica se o Bootstrap possui
+                            * a instância atual do modal.
+                            */
+
+                            const modalInstance =
+                                bootstrap.Modal.getInstance(modalServico);
+
+
+                            /*
+                            * Função responsável pelo scroll
+                            */
+
+                            const scrollToTarget = function () {
+
+                                const target =
+                                    document.getElementById(scroll);
+
+                                if (!target) {
+                                    return;
+                                }
 
                                 target.scrollIntoView({
                                     behavior: 'smooth',
                                     block: 'start'
                                 });
 
+                            };
+
+
+                            /*
+                            * Fecha o modal antes do scroll
+                            */
+
+                            if (modalInstance) {
+
+                                modalServico.addEventListener(
+                                    'hidden.bs.modal',
+                                    scrollToTarget,
+                                    { once: true }
+                                );
+
+                                modalInstance.hide();
+
+                            } else {
+
+                                setTimeout(scrollToTarget, 150);
+
                             }
 
-                        }, 150);
+                        };
+
+                        return;
+                    }
+
+
+                    /*
+                    * --------------------------------------------------
+                    * SEM AÇÃO
+                    * --------------------------------------------------
+                    */
+
+                    modalSolicitar.classList.add('d-none');
+                    modalSolicitar.href = '#';
+
+                });
+
+
+                /*
+                * ------------------------------------------------------
+                * MODAL FECHADO
+                * ------------------------------------------------------
+                */
+
+                modalServico.addEventListener('hidden.bs.modal', function () {
+
+                    /*
+                    * Remove o foco do elemento ativo
+                    */
+
+                    if (
+                        document.activeElement &&
+                        typeof document.activeElement.blur === 'function'
+                    ) {
+                        document.activeElement.blur();
+                    }
+
+
+                    /*
+                    * Elementos
+                    */
+
+                    const modalSolicitar =
+                        modalServico.querySelector('#modalSolicitar');
+
+                    const modalIcon =
+                        modalServico.querySelector('#modalIcon');
+
+
+                    /*
+                    * RESET DO BOTÃO
+                    */
+
+                    if (modalSolicitar) {
+
+                        modalSolicitar.href = '#';
+
+                        modalSolicitar.removeAttribute('target');
+                        modalSolicitar.removeAttribute('rel');
+
+                        modalSolicitar.classList.add('d-none');
+
+                        modalSolicitar.onclick = null;
 
                     }
 
-                };
+
+                    /*
+                    * RESET DO ÍCONE
+                    */
+
+                    if (modalIcon) {
+
+                        modalIcon.removeAttribute('src');
+                        modalIcon.alt = '';
+
+                        modalIcon.classList.add('d-none');
+
+                    }
+
+                });
+
+            }
+
 
             /*
-             * NENHUMA AÇÃO
-             */
-            } else {
+            * ==========================================================
+            * MÁSCARA DE TELEFONE
+            * ==========================================================
+            */
 
-                modalSolicitar.href = '#';
-                modalSolicitar.removeAttribute('target');
-                modalSolicitar.removeAttribute('rel');
+            const phoneInput =
+                document.querySelector('#phone');
 
-                modalSolicitar.classList.add('d-none');
+
+            if (
+                phoneInput &&
+                !phoneInput.dataset.masked
+            ) {
+
+                phoneInput.addEventListener('input', function (event) {
+
+                    let value =
+                        event.target.value.replace(/\D/g, '');
+
+
+                    /*
+                    * Permite apagar o campo completamente
+                    */
+
+                    if (!value) {
+
+                        event.target.value = '';
+
+                        return;
+                    }
+
+
+                    /*
+                    * Força o DDD 71
+                    */
+
+                    if (!value.startsWith('71')) {
+                        value = '71' + value;
+                    }
+
+
+                    /*
+                    * Limita a 11 dígitos
+                    */
+
+                    value = value.slice(0, 11);
+
+
+                    /*
+                    * Monta a máscara
+                    *
+                    * (71) 9 9999-9999
+                    */
+
+                    let formatted =
+                        '(' + value.slice(0, 2) + ')';
+
+
+                    if (value.length > 2) {
+                        formatted += ' ' + value.slice(2, 3);
+                    }
+
+
+                    if (value.length > 3) {
+                        formatted += ' ' + value.slice(3, 7);
+                    }
+
+
+                    if (value.length > 7) {
+                        formatted += '-' + value.slice(7);
+                    }
+
+
+                    event.target.value = formatted;
+
+                });
+
+
+                /*
+                * Evita registrar o listener novamente
+                */
+
+                phoneInput.dataset.masked = 'true';
+
             }
 
         });
+    </script>
 
-        /*
-         * MODAL FECHADO
-         */
-        modalServico.addEventListener('hidden.bs.modal', function () {
-
-            /*
-             * Remove o foco do elemento ativo
-             */
-            document.activeElement?.blur();
-
-            const modalSolicitar =
-                modalServico.querySelector('#modalSolicitar');
-
-            const modalIcon =
-                modalServico.querySelector('#modalIcon');
-
-            /*
-             * RESET DO BOTÃO
-             */
-            if (modalSolicitar) {
-
-                modalSolicitar.href = '#';
-                modalSolicitar.removeAttribute('target');
-                modalSolicitar.removeAttribute('rel');
-                modalSolicitar.classList.add('d-none');
-                modalSolicitar.onclick = null;
-
-            }
-
-            /*
-             * RESET DO ÍCONE
-             */
-            if (modalIcon) {
-
-                modalIcon.src = '';
-                modalIcon.alt = '';
-                modalIcon.classList.add('d-none');
-
-            }
-
-        });
-
-        /*
-         * MÁSCARA TELEFONE
-         */
-        const phoneInput = document.querySelector("#phone");
-
-        if (phoneInput && !phoneInput.dataset.masked) {
-
-            phoneInput.addEventListener("input", function (e) {
-
-                let t = e.target.value.replace(/\D/g, "");
-
-                /*
-                 * Permite apagar completamente o campo
-                 */
-                if (!t) {
-
-                    e.target.value = "";
-
-                    return;
-                }
-
-                /*
-                 * Força o DDD 71
-                 */
-                if (!t.startsWith("71")) {
-                    t = "71" + t;
-                }
-
-                /*
-                 * Limita a 11 dígitos
-                 */
-                t = t.slice(0, 11);
-
-                /*
-                 * Máscara:
-                 * (71) 9 9999-9999
-                 */
-                let formatado =
-                    "(" + t.slice(0, 2) + ")";
-
-                if (t.length > 2) {
-                    formatado += " " + t.slice(2, 3);
-                }
-
-                if (t.length > 3) {
-                    formatado += " " + t.slice(3, 7);
-                }
-
-                if (t.length > 7) {
-                    formatado += "-" + t.slice(7);
-                }
-
-                e.target.value = formatado;
-
-            });
-
-            phoneInput.dataset.masked = "true";
-        }
-
-    });
-</script>
 @endsection
