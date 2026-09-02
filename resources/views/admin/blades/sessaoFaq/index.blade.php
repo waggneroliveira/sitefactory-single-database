@@ -73,7 +73,10 @@
                                                     </th>
                                                     {{-- <th>Link</th> --}}
                                                     <th>Título</th>
-                                                    <th>Imagem</th>
+                                                    <th>Tag</th>
+                                                    @if (isset($sessaoFaq->path_file) && $sessaoFaq->path_file <> null)                                                        
+                                                        <th>Imagem</th>
+                                                    @endif
                                                     <th>Status</th>
                                                     <th style="width: 85px;">Ações</th>
                                                 </tr>
@@ -86,14 +89,13 @@
                                                         <label><input data-index="" name="btnSelectItem" class="btnSelectItem" type="checkbox" value=""></label>
                                                     </td>
                                                     <td>{{$sessaoFaq->title}}</td>
+                                                    <td>{{$sessaoFaq->tag}}</td>
+                                                    @if (isset($sessaoFaq->path_file) && $sessaoFaq->path_file <> null)
                                                     <td class="table-sessaoFaq text-start">
-                                                        @if ($sessaoFaq->path_file)
-                                                            <img src="{{ asset('storage/'.$sessaoFaq->path_file) }}" alt="table-sessaoFaq" class="me-2 rounded-circle" style="width: 40px; height: 40px;">
-                                                            @else      
-                                                            <img src="{{asset('build/admin/images/sessaoFaqs/sessaoFaq-3.jpg')}}" alt="table-sessaoFaq" class="me-2 rounded-circle">
-                                                        @endif
+                                                        <img src="{{ asset('storage/'.$sessaoFaq->path_file) }}" alt="table-sessaoFaq" class="me-2 rounded-circle" style="width: 40px; height: 40px;">
                                                     </td> 
-                                                    <td>
+                                                    @endif
+                                                    <td class="text-start">
                                                         @switch($sessaoFaq->active)
                                                             @case(0) <span class="badge bg-danger">Inativo</span> @break
                                                             @case(1) <span class="badge bg-success">Ativo</span> @break

@@ -233,7 +233,9 @@ return [
                     'gallery',
                     'videos',
                     'about',
-    
+                    'faq_session',
+                    'faq',
+                    'testimonials',
                     'contact',
                     'contact_leads',
                 ],
