@@ -119,7 +119,7 @@ class SessaoFaqController extends Controller
         $manager = new ImageManager(new ImagickDriver());
 
         $request->validate([
-            'path_file' => ['nullable', 'file', 'image', 'max:248'],
+            'path_file' => ['nullable', 'file', 'image', 'max:2048'],
         ]);
 
         if ($request->hasFile('path_file')) {
