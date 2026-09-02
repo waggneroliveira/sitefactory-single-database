@@ -134,16 +134,18 @@
                                 </div>
                             </div> 
 
-                            <div class="d-flex flex-wrap justify-content-center justify-content-lg-end mt-3 mt-lg-0 align-items-center col-12 col-lg-6">                               
-                                <div class="w-auto m-auto m-lg-0 mt-3 mt-lg-0 d-flex justify-content-center gap-2 align-items-center btn-header bg-button-two color-button-two rounded-2 py-3 px-3 hover-zoom">       
-                                    <a href="#" class="font-changa font-16 font-medium text-decoration-none">
-                                        Comprar agora
-                                    </a>
-                                    <svg class="ms-2" width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M5.77699 8.90909L5.01136 8.15341L8.16335 5.00142H0V3.90767H8.16335L5.01136 0.765624L5.77699 -7.15256e-07L10.2315 4.45454L5.77699 8.90909Z" fill="var(--color-button-two)"/>
-                                    </svg>
-                                </div>
-                            </div>                                                       
+                            @if (isset($product->link) && $product->link <> null)                                
+                                <div class="d-flex flex-wrap justify-content-center justify-content-lg-end mt-3 mt-lg-0 align-items-center col-12 col-lg-6">                               
+                                    <div class="w-auto m-auto m-lg-0 mt-3 mt-lg-0 d-flex justify-content-center gap-2 align-items-center btn-header bg-button-two color-button-two rounded-2 py-3 px-3 hover-zoom">       
+                                        <a href="{{$product->link}}" class="font-changa font-16 font-medium text-decoration-none">
+                                            Comprar agora
+                                        </a>
+                                        <svg class="ms-2" width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5.77699 8.90909L5.01136 8.15341L8.16335 5.00142H0V3.90767H8.16335L5.01136 0.765624L5.77699 -7.15256e-07L10.2315 4.45454L5.77699 8.90909Z" fill="var(--color-button-two)"/>
+                                        </svg>
+                                    </div>
+                                </div>                                                       
+                            @endif
                         </div>
                     </div>
                 </div>
