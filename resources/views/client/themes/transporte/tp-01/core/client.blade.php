@@ -288,7 +288,6 @@
     <link rel="preload" href="{{ asset('build/client/bootstrap-icons/bootstrap-icons.css') }}" as="style" onload="this.rel='stylesheet'">
 
     <link href="{{ asset('build/client/themes/transporte/tp-01/css/style.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('build/client/themes/transporte/tp-01/css/responsivo.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('build/client/css/default.css') }}" rel="stylesheet" type="text/css">
 
 

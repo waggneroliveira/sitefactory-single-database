@@ -229,7 +229,6 @@ return [
                 'home' => [
                     'slides',
                     'topics',
-                    'services',
                     'benefits',    
                     'gallery',
                     'videos',

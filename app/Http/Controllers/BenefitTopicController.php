@@ -17,7 +17,16 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class BenefitTopicController extends Controller
 {
-    protected $pathUpload = 'admin/uploads/images/benefitTopic/';
+
+    protected function getPathUpload(): string
+    {
+        $themeManager = app(ThemeManager::class);
+
+        $template = $themeManager->current() ?? 'default';
+        $variation = $themeManager->variation() ?? 'default';
+
+        return "admin/uploads/images/templates/{$template}/{$variation}/benefitTopic/";
+    }
     public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
@@ -34,100 +43,186 @@ class BenefitTopicController extends Controller
         return view('admin.blades.benefitTopic.index', compact('benefitTopics', 'theme', 'themeData'));
     }
 
-
     public function store(Request $request)
     {
         $data = $request->except('path_image');
+        $pathUpload = $this->getPathUpload();
         $manager = new ImageManager(new ImagickDriver());
 
         $request->validate([
-            'path_image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif']
+            'path_image' => [
+                'nullable',
+                'file',
+                'image',
+                'max:2048'
+            ]
         ]);
 
-        // benefitTopic desktop
         if ($request->hasFile('path_image')) {
+
             $file = $request->file('path_image');
+
             $mime = $file->getMimeType();
-            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.webp';
 
             if ($mime === 'image/svg+xml') {
-                Storage::putFileAs($this->pathUpload, $file, $filename);
+
+                $filename = pathinfo(
+                    $file->getClientOriginalName(),
+                    PATHINFO_FILENAME
+                ) . '.svg';
+
+                Storage::putFileAs(
+                    $pathUpload,
+                    $file,
+                    $filename
+                );
+
             } else {
-                $image = $manager->read($file)
-                    ->resize(null, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    })
-                    ->toWebp(quality: 95)
+
+                $filename = pathinfo(
+                    $file->getClientOriginalName(),
+                    PATHINFO_FILENAME
+                ) . '.avif';
+
+                $image = $manager
+                    ->read($file)
+                    ->toAvif(quality: 80)
                     ->toString();
 
-                Storage::put($this->pathUpload . $filename, $image);
+                Storage::put(
+                    $pathUpload . $filename,
+                    $image
+                );
             }
 
-            $data['path_image'] = $this->pathUpload . $filename;
+            $data['path_image'] = $pathUpload . $filename;
         }
 
         $data['active'] = $request->active ? 1 : 0;
 
         try {
+
             DB::beginTransaction();
-            BenefitTopic::create($data);
+                BenefitTopic::create($data);
             DB::commit();
-            session()->flash('success', __('dashboard.response_item_create'));
+
+            session()->flash(
+                'success',
+                __('dashboard.response_item_create')
+            );
+
         } catch (\Exception $e) {
-            DB::rollback();
-            Alert::error('Erro', __('dashboard.response_item_error_create'));
+
+            DB::rollBack();
+
+            Alert::error(
+                'Erro',
+                __('dashboard.response_item_error_create')
+            );
         }
 
         return redirect()->back();
     }
 
     public function update(Request $request, BenefitTopic $benefitTopic)
-        {
+    {
         $data = $request->except('path_image');
+
+        $pathUpload = $this->getPathUpload();
+
         $manager = new ImageManager(new ImagickDriver());
 
         $request->validate([
-            'path_image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif']
+            'path_image' => [
+                'nullable',
+                'file',
+                'image',
+                'max:2048'
+            ]
         ]);
+
         $data['active'] = $request->active ? 1 : 0;
-        // benefitTopic desktop
+
         if ($request->hasFile('path_image')) {
+
             $file = $request->file('path_image');
             $mime = $file->getMimeType();
-            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.webp';
 
             if ($mime === 'image/svg+xml') {
-                Storage::putFileAs($this->pathUpload, $file, $filename);
+
+                $filename = pathinfo(
+                    $file->getClientOriginalName(),
+                    PATHINFO_FILENAME
+                ) . '.svg';
+
+                Storage::putFileAs(
+                    $pathUpload,
+                    $file,
+                    $filename
+                );
+
             } else {
-                $image = $manager->read($file)
-                    ->resize(null, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    })
-                    ->toWebp(quality: 95)
+
+                $filename = pathinfo(
+                    $file->getClientOriginalName(),
+                    PATHINFO_FILENAME
+                ) . '.avif';
+
+                $image = $manager
+                    ->read($file)
+                    ->toAvif(quality: 80)
                     ->toString();
 
-                Storage::put($this->pathUpload . $filename, $image);
+                Storage::put(
+                    $pathUpload . $filename,
+                    $image
+                );
             }
 
-            Storage::delete(isset($benefitTopic->path_image)??$benefitTopic->path_image);
-            $data['path_image'] = $this->pathUpload . $filename;
+            if ($benefitTopic->path_image) {
+
+                Storage::delete(
+                    $benefitTopic->path_image
+                );
+            }
+
+            $data['path_image'] = $pathUpload . $filename;
         }
 
-        if (isset($request->delete_path_image)) {
-            Storage::delete(isset($benefitTopic->path_image)??$benefitTopic->path_image);
+        if ($request->boolean('delete_path_image')) {
+
+            if ($benefitTopic->path_image) {
+
+                Storage::delete(
+                    $benefitTopic->path_image
+                );
+            }
+
             $data['path_image'] = null;
         }
+
         try {
+
             DB::beginTransaction();
                 $benefitTopic->fill($data)->save();
             DB::commit();
-            session()->flash('success', __('dashboard.response_item_update'));
+
+            session()->flash(
+                'success',
+                __('dashboard.response_item_update')
+            );
+
             return redirect()->back();
+
         } catch (\Exception $e) {
-            DB::rollback();
-            Alert::error('error', __('dashboard.response_item_error_update'));
+
+            DB::rollBack();
+
+            Alert::error(
+                'Erro',
+                __('dashboard.response_item_error_update')
+            );
+
             return redirect()->back();
         }
     }
