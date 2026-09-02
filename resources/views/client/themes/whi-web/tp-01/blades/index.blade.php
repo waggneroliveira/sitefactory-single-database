@@ -573,73 +573,78 @@
         </div>
       </section>
     @endif
-
-    <section class="testimonials-section" id="review_sec">
-      <div class="container position-relative z-1">
-        
-        <!-- Cabeçalho -->
-        <div class="row justify-content-center text-center mb-5">
-          <div class="col-lg-8" data-aos="fade-up">
-            <span class="testimonials-badge">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              Depoimentos Reais
-            </span>
-            <h2 class="testimonials-title">Transformando a rotina de quem confia no nosso trabalho</h2>
-          </div>
-        </div>
-
-        <!-- Estatísticas de Impacto (Novidade Visual) -->
-        <div class="row metrics-banner align-items-center text-center mb-5" data-aos="fade-up" data-aos-delay="100">
-          @foreach($benefitTopics as $parametro)            
-            <div class="col-6 col-md-3 mb-3 mb-md-0">
-              <div class="metric-number">{{$parametro->number}}</div>
-              <p class="metric-label">{{$parametro->title}}</p>
+    @if ((isset($sections['testimonial']) && $sections <> null) ||
+      (!empty($depoiments) && count($depoiments) > 0))
+      <section class="testimonials-section" id="review_sec">
+        <div class="container position-relative z-1">
+          
+          <!-- Cabeçalho -->
+          <div class="row justify-content-center text-center mb-5">
+            <div class="col-lg-8" data-aos="fade-up">
+              <span class="testimonials-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                {{ $sections['testimonial']->tag }}
+              </span>
+              <h2 class="testimonials-title">{{ $sections['testimonial']->title }}</h2>
             </div>
-          @endforeach
-        </div>
+          </div>
 
-        <!-- Slider de Depoimentos (Swiper) -->
-        <div class="swiper testimonialSwiper mb-5" data-aos="fade-up" data-aos-delay="200">
-          <div class="swiper-wrapper py-3">
+          <!-- Estatísticas de Impacto (Novidade Visual) -->
+          @if (isset($benefitTopics) && $benefitTopics->count())
+            <div class="row metrics-banner align-items-center text-center mb-5" data-aos="fade-up" data-aos-delay="100">
+              @foreach($benefitTopics as $parametro)            
+                <div class="col-6 col-md-3 mb-3 mb-md-0">
+                  <div class="metric-number">{{$parametro->number}}</div>
+                  <p class="metric-label">{{$parametro->title}}</p>
+                </div>
+              @endforeach
+            </div>
+          @endif
 
-            <!-- Card 1 -->
-            @foreach ($depoiments as $depoiment)
-              <div class="swiper-slide">
-                <div class="testimonial-card">
-                  <svg class="testimonial-quote-icon" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-                  <div class="rating-stars">★★★★★</div>
-                  <div class="testimonial-text">
-                      {!!$depoiment->text!!}
-                  </div>
-                  <div class="author-wrapper">
-                    @if ($depoiment->path_image <> null) 
-                      <img src="{{asset('storage/' . $depoiment->path_image)}}" alt="{{$depoiment->name}}" class="author-avatar" loading="lazy">
-                    @endif
-                    <div>
-                      <h3 class="author-name">{{$depoiment->name}}</h3>
-                      <p class="author-role">{{$depoiment->function}}</p>
+          <!-- Slider de Depoimentos (Swiper) -->
+          @if (isset($depoiments) && $depoiments->count())
+            <div class="swiper testimonialSwiper mb-5" data-aos="fade-up" data-aos-delay="200">
+              <div class="swiper-wrapper py-3">
+
+                <!-- Card 1 -->
+                @foreach ($depoiments as $depoiment)
+                  <div class="swiper-slide">
+                    <div class="testimonial-card">
+                      <svg class="testimonial-quote-icon" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                      <div class="rating-stars">★★★★★</div>
+                      <div class="testimonial-text">
+                          {!!$depoiment->text!!}
+                      </div>
+                      <div class="author-wrapper">
+                        @if ($depoiment->path_image <> null) 
+                          <img src="{{asset('storage/' . $depoiment->path_image)}}" alt="{{$depoiment->name}}" class="author-avatar" loading="lazy">
+                        @endif
+                        <div>
+                          <h3 class="author-name">{{$depoiment->name}}</h3>
+                          <p class="author-role">{{$depoiment->function}}</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                @endforeach
+
               </div>
-            @endforeach
+            </div>
+          @endif
 
+          <!-- Chamada para Ação CTA -->
+          <div class="btn_block text-center" data-aos="fade-up" data-aos-delay="300">
+              <a href="#plans" class="bg-button-two color-button-two px-3 py-2 rounded-3 ">
+                <span>
+                  Começar agora
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </span>
+              </a>
           </div>
+
         </div>
-
-        <!-- Chamada para Ação CTA -->
-        <div class="btn_block text-center" data-aos="fade-up" data-aos-delay="300">
-            <a href="#plans" class="bg-button-two color-button-two px-3 py-2 rounded-3 ">
-              <span>
-                Começar agora
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-              </span>
-            </a>
-        </div>
-
-      </div>
-    </section>
-
+      </section>
+    @endif
     <section class="pricing-section" id="plans">
       <div class="container">
         

@@ -19,6 +19,7 @@ use App\Models\PopUp;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductGallery;
+use App\Models\Report;
 use App\Models\ServiceItem;
 use App\Models\ServiceLocation;
 use App\Models\ServiceSection;
@@ -62,6 +63,7 @@ class HomePageService
             ->limit(4)
             ->get();
         $products = Product::sorting()->active()->get();
+        $reports = Report::active()->get();
 
         $popUp = PopUp::active()->first();
 
@@ -70,6 +72,7 @@ class HomePageService
         $themeData = $themeManager->theme();
 
         return compact(
+            'reports',
             'blogHighlights',
             'productCategories',
             'products',
