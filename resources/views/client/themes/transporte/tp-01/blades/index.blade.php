@@ -350,9 +350,9 @@
                                 {{$sections['testimonial']->tag}}
                             </span>
         
-                            <h3 class="font-changa font-40 title font-bold text-white text-start mb-3">
+                            <h4 class="font-changa font-40 title font-bold text-white text-start mb-3">
                                 {{$sections['testimonial']->title}}
-                            </h3>
+                            </h4>
                             <p class="font-regular text-white mb-0 font-changa font-18">{{$sections['testimonial']->description}}</p>
                         </div>
                     @endif
@@ -410,9 +410,9 @@
                                 Cobertura
                             </span>
 
-                            <h3 class="about-title text-start font-changa font-40 font-bold text-dark my-3 position-relative">                            
+                            <h4 class="about-title text-start font-changa font-40 font-bold text-dark my-3 position-relative">                            
                                 {{$serviceLocation->title}}
-                            </h3>
+                            </h4>
                         </div>
                         
                         <!-- BAHIA -->
