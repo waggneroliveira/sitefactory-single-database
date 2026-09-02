@@ -280,9 +280,6 @@
 
     <link href="{{ asset('build/client/lgpd/style.css') }}" rel="stylesheet" type="text/css">
 
-    <!-- SweetAlert2 CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
     <link href="{{ asset('build/client/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
 
     <link rel="preload" href="{{ asset('build/client/bootstrap-icons/bootstrap-icons.css') }}" as="style" onload="this.rel='stylesheet'">
@@ -459,12 +456,12 @@
         <nav class="navbar navbar-expand-lg navbar-light container py-2 px-3 px-lg-0">            
             <!-- Logo -->
             <a class="navbar-brand d-flex align-items-center p-0" href="{{route('index')}}">
-                <img src="{{asset('storage/' .$tenantTheme->path_image_logo_header)}}" class="logo-header" alt="{{ config('app.name') }}" height="65">
+                <img loading="lazy" src="{{asset('storage/' .$tenantTheme->path_image_logo_header)}}" class="logo-header" alt="{{ config('app.name') }}" height="65">
             </a>
 
             <!-- Toggle mobile -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false"  aria-label="Abrir menu de navegação">
+                <span class="navbar-toggler-icon" aria-hidden="true"></span>
             </button>
 
             <!-- Menu -->
@@ -518,7 +515,7 @@
 
                 <!-- Logo + botão -->
                 <div class="col-lg-4 mb-4 mb-lg-0">
-                    <img src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ config('app.name') }}" height="65">
+                    <img loading="lazy" src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ config('app.name') }}" height="65">
                     @if ($tenantTheme->link <> null)                        
                         <div class="mt-3 mt-lg-5">
                             <a href="{{ $tenantTheme->link }}" target="_blank" rel="noopener noreferrer" class="bg-button-two color-button-two px-4 py-2 font-changa font-16 font-medium text-decoration-none hover-zoom">
@@ -663,14 +660,14 @@
                         <div class="d-flex justify-content-center justify-content-lg-end align-items-center gap-3">
                             <a href="http://whiweb.com.br/" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
                                 <span class="font-13">Sistema</span>
-                                <img src="{{asset('build/client/themes/default/images/whi-web.png')}}" title="Whi Web" alt="WHI Web" height="50" class="logo-system">
+                                <img loading="lazy" src="{{asset('build/client/themes/default/images/whi-web.png')}}" title="Whi Web" alt="WHI Web" height="50" class="logo-system">
                             </a>
 
                             <span class="text-color-footer opacity-50">|</span>
 
                             <a href="https://www.whi.dev.br/" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
                                 <span class="font-13">Desenvolvido por</span>
-                                <img src="{{asset('build/client/themes/default/images/whi.png')}}" title="Agência WHI" alt="WHI" height="25" class="logo-system">
+                                <img loading="lazy" src="{{asset('build/client/themes/default/images/whi.png')}}" title="Agência WHI" alt="WHI" height="25" class="logo-system">
                             </a>
                         </div>
                     </div>
@@ -693,16 +690,15 @@
 
     <a href="#" id="scroll-top" class="scroll-top bg-scroll d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-    
-    <script src="https://cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-    <!-- SweetAlert2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('build/client/bootstrap/js/bootstrap.bundle.js') }}"></script>
-    <script src="{{ asset('build/client/lgpd/script.js') }}"></script>
-    <script src="{{ asset('build/client/themes/transporte/tp-01/js/default.js') }}"></script>
-    <script src="{{ asset('build/client/js/default.js') }}"></script>
+    {{-- Scripts externos --}}
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js" defer></script>
+
+    {{-- Scripts do projeto --}}
+    <script src="{{ asset('build/client/bootstrap/js/bootstrap.bundle.js') }}" defer></script>
+    <script src="{{ asset('build/client/lgpd/script.js') }}" defer></script>
+    <script src="{{ asset('build/client/themes/transporte/tp-01/js/default.js') }}" defer></script>
+    <script src="{{ asset('build/client/js/default.js') }}" defer></script>
 
     {{-- Modais alert --}}
     <script>

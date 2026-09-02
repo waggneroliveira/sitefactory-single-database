@@ -163,7 +163,7 @@
 
                                 @if ($service->path_image <> null)                                    
                                     <div class="p-3">
-                                        <img src="{{asset('storage/' . $service->path_image)}}"
+                                        <img loading="lazy" src="{{asset('storage/' . $service->path_image)}}"
                                             class="card-img-top rounded-4"
                                             alt="{{$service->title}}" height="200">
                                     </div>
@@ -173,16 +173,16 @@
                                     @if ($service->path_icon <> null)                                        
                                         <div class="mb-2 position-relative">
                                             <span class="position-absolute icon-service d-inline-flex align-items-center justify-content-center bg-primary-color rounded-3 p-2">
-                                                <img src="{{asset('storage/' . $service->path_icon)}}"
+                                                <img loading="lazy" src="{{asset('storage/' . $service->path_icon)}}"
                                                 class="card-img-top rounded-4"
                                                 alt="{{$service->title}}" height="25">
                                             </span>
                                         </div>
                                     @endif
 
-                                    <h5 class="fw-bold mb-2 {{ $service->path_icon != null ? 'mt-3' : 'mt-1' }}">
+                                    <h4 class="fw-bold mb-2 {{ $service->path_icon != null ? 'mt-3' : 'mt-1' }}">
                                         {{ $service->title }}
-                                    </h5>
+                                    </h4>
 
                                     <p class="text-muted small flex-grow-1">
                                         {{substr(strip_tags($service->description), 0, 100)}}...
@@ -222,7 +222,7 @@
                     <div class="d-flex align-items-center">
 
                         <span class="d-inline-flex align-items-center justify-content-center bg-primary-color rounded-3 p-2 me-2">
-                            <img
+                            <img loading="lazy"
                                 id="modalIcon"
                                 src=""
                                 alt=""
@@ -302,7 +302,7 @@
                             @endif
 
                             <div class="faq-image mt-4">
-                                <img src="{{asset('storage/' . $sessaoFaq->path_file)}}" alt="Entrega" class="img-fluid">
+                                <img loading="lazy" src="{{asset('storage/' . $sessaoFaq->path_file)}}" alt="Entrega" class="img-fluid">
                             </div>
                         </div>
                     @endif
@@ -425,7 +425,7 @@
                     <!-- LISTAS -->
                     <div class="col-12 col-lg-6 mt-0 text-center">
                         <!-- BAHIA -->
-                        <img 
+                        <img loading="lazy"  
                             src="{{asset('storage/' .$serviceLocation->path_image)}}" 
                             alt="Mapa de cobertura"
                             class="img-fluid coverage-map"
