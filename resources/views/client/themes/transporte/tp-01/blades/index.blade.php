@@ -350,9 +350,9 @@
                                 {{$sections['testimonial']->tag}}
                             </span>
         
-                            <h4 class="font-changa font-40 title font-bold text-white text-start mb-3">
+                            <h5 class="font-changa font-40 title font-bold text-white text-start mb-3">
                                 {{$sections['testimonial']->title}}
-                            </h4>
+                            </h5>
                             <p class="font-regular text-white mb-0 font-changa font-18">{{$sections['testimonial']->description}}</p>
                         </div>
                     @endif
