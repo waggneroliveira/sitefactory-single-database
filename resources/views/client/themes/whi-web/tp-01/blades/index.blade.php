@@ -580,7 +580,7 @@
           
           <!-- Cabeçalho -->
           <div class="row justify-content-center text-center mb-5">
-            <div class="col-lg-8" data-aos="fade-up">
+            <div class="col-lg-8">
               <span class="testimonials-badge">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                 {{ $sections['testimonial']->tag }}
@@ -591,7 +591,7 @@
 
           <!-- Estatísticas de Impacto (Novidade Visual) -->
           @if (isset($benefitTopics) && $benefitTopics->count())
-            <div class="row metrics-banner align-items-center text-center mb-5" data-aos="fade-up" data-aos-delay="100">
+            <div class="row metrics-banner align-items-center text-center mb-5">
               @foreach($benefitTopics as $parametro)            
                 <div class="col-6 col-md-3 mb-3 mb-md-0">
                   <div class="metric-number">{{$parametro->number}}</div>
@@ -603,7 +603,7 @@
 
           <!-- Slider de Depoimentos (Swiper) -->
           @if (isset($depoiments) && $depoiments->count())
-            <div class="swiper testimonialSwiper mb-5" data-aos="fade-up" data-aos-delay="200">
+            <div class="swiper testimonialSwiper mb-5">
               <div class="swiper-wrapper py-3">
 
                 <!-- Card 1 -->
@@ -633,7 +633,7 @@
           @endif
 
           <!-- Chamada para Ação CTA -->
-          <div class="btn_block text-center" data-aos="fade-up" data-aos-delay="300">
+          <div class="btn_block text-center">
               <a href="#plans" class="bg-button-two color-button-two px-3 py-2 rounded-3 ">
                 <span>
                   Começar agora
