@@ -590,22 +590,12 @@
 
         <!-- Estatísticas de Impacto (Novidade Visual) -->
         <div class="row metrics-banner align-items-center text-center mb-5" data-aos="fade-up" data-aos-delay="100">
-          <div class="col-6 col-md-3 mb-3 mb-md-0">
-            <div class="metric-number">4.9/5</div>
-            <p class="metric-label">Nota Média dos Clientes</p>
-          </div>
-          <div class="col-6 col-md-3 mb-3 mb-md-0">
-            <div class="metric-number">+10k</div>
-            <p class="metric-label">Entregas Realizadas</p>
-          </div>
-          <div class="col-6 col-md-3">
-            <div class="metric-number">99%</div>
-            <p class="metric-label">Satisfação Garantida</p>
-          </div>
-          <div class="col-6 col-md-3">
-            <div class="metric-number">24/7</div>
-            <p class="metric-label">Suporte Dedicado</p>
-          </div>
+          @foreach($benefitTopics as $parametro)            
+            <div class="col-6 col-md-3 mb-3 mb-md-0">
+              <div class="metric-number">{{$parametro->number}}</div>
+              <p class="metric-label">{{$parametro->title}}</p>
+            </div>
+          @endforeach
         </div>
 
         <!-- Slider de Depoimentos (Swiper) -->
@@ -613,58 +603,26 @@
           <div class="swiper-wrapper py-3">
 
             <!-- Card 1 -->
-            <div class="swiper-slide">
-              <div class="testimonial-card">
-                <svg class="testimonial-quote-icon" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-                <div class="rating-stars">★★★★★</div>
-                <p class="testimonial-text">
-                  <strong>"Agilidade sem igual!"</strong> O serviço superou minhas expectativas. A entrega chegou muito antes do prazo e o atendimento tirou todas as minhas dúvidas instantaneamente.
-                </p>
-                <div class="author-wrapper">
-                  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="author-avatar" loading="lazy">
-                  <div>
-                    <h3 class="author-name">Beatriz Rossi</h3>
-                    <p class="author-role">Empresária</p>
+            @foreach ($depoiments as $depoiment)
+              <div class="swiper-slide">
+                <div class="testimonial-card">
+                  <svg class="testimonial-quote-icon" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                  <div class="rating-stars">★★★★★</div>
+                  <div class="testimonial-text">
+                      {!!$depoiment->text!!}
+                  </div>
+                  <div class="author-wrapper">
+                    @if ($depoiment->path_image <> null) 
+                      <img src="{{asset('storage/' . $depoiment->path_image)}}" alt="{{$depoiment->name}}" class="author-avatar" loading="lazy">
+                    @endif
+                    <div>
+                      <h3 class="author-name">{{$depoiment->name}}</h3>
+                      <p class="author-role">{{$depoiment->function}}</p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="swiper-slide">
-              <div class="testimonial-card">
-                <svg class="testimonial-quote-icon" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-                <div class="rating-stars">★★★★★</div>
-                <p class="testimonial-text">
-                  <strong>"Qualidade Impecável!"</strong> Desde o primeiro contato percebi o profissionalismo. O produto chegou muito bem embalado e a experiência de uso é nota 10.
-                </p>
-                <div class="author-wrapper">
-                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="author-avatar" loading="lazy">
-                  <div>
-                    <h3 class="author-name">Ricardo Mendes</h3>
-                    <p class="author-role">Designer Lead</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="swiper-slide">
-              <div class="testimonial-card">
-                <svg class="testimonial-quote-icon" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-                <div class="rating-stars">★★★★★</div>
-                <p class="testimonial-text">
-                  <strong>"Facilidade e Segurança"</strong> A plataforma é super intuitiva. Resolver as minhas demandas diárias ficou muito mais rápido depois que comecei a usar.
-                </p>
-                <div class="author-wrapper">
-                  <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="author-avatar" loading="lazy">
-                  <div>
-                    <h3 class="author-name">Camila Fernandes</h3>
-                    <p class="author-role">Gerente de Projetos</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            @endforeach
 
           </div>
         </div>
@@ -842,64 +800,66 @@
       </div>
     </section>
 
-    <section class="faq-section" id="faq">
-      <div class="container">
-        
-        <div class="row g-5">
+    @if (isset($sessaoFaq) && $sessaoFaq <> null || isset($faqs) && $faqs->count())
+      <section class="faq-section" id="faq">
+        <div class="container">
           
-          @if (isset($sessaoFaq) && $sessaoFaq <> null)
-            @php $isFull = !(isset($faqs) && $faqs->count()); @endphp
+          <div class="row g-5">
+            
+            @if (isset($sessaoFaq) && $sessaoFaq <> null)
+              @php $isFull = !(isset($faqs) && $faqs->count()); @endphp
 
-            <div class="{{ $isFull ? 'col-lg-12 text-center mx-auto' : 'col-lg-4' }}">
-              <span class="faq-badge">{{$sessaoFaq->tag}}</span>
-              <h2 class="faq-title">{{$sessaoFaq->title}}</h2>
-              <div class="faq-subtitle mb-4">{!!$sessaoFaq->description!!}</div>
+              <div class="{{ $isFull ? 'col-lg-12 text-center mx-auto' : 'col-lg-4' }}">
+                <span class="faq-badge">{{$sessaoFaq->tag}}</span>
+                <h2 class="faq-title">{{$sessaoFaq->title}}</h2>
+                <div class="faq-subtitle mb-4">{!!$sessaoFaq->description!!}</div>
 
-              <div class="support-card {{ $isFull ? 'mx-auto' : 'd-none d-lg-block' }}" style="{{ $isFull ? 'max-width: 450px;' : '' }}">
-                <div class="support-icon {{ $isFull ? 'm-auto mb-2' : 'm-0' }}">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                </div>
-                <h3 class="support-title">{{$sessaoFaq->title_box}}</h3>
-                <div class="support-text">{{$sessaoFaq->description_box}}</div>
-                <a href="{{$sessaoFaq->link}}" target="_blank" class="btn-faq-cta w-100 justify-content-center">
-                  {{$sessaoFaq->btn_title}}
-                </a>
-              </div>
-            </div>
-          @endif
-
-          @if (isset($faqs) && $faqs->count())
-            <div class="{{ (isset($sessaoFaq) && $sessaoFaq <> null) ? 'col-lg-8' : 'col-lg-12' }}">
-              <div class="faq-accordion">
-
-                @foreach($faqs as $faq)                
-                  <div class="faq-card">
-                    <button class="faq-header">
-                      <span>{{$faq->question}}</span>
-                      <span class="faq-toggle-icon">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                      </span>
-                    </button>
-                    <div class="faq-body">
-                      {!! $faq->answer !!}
-                    </div>
+                <div class="support-card {{ $isFull ? 'mx-auto' : 'd-none d-lg-block' }}" style="{{ $isFull ? 'max-width: 450px;' : '' }}">
+                  <div class="support-icon {{ $isFull ? 'm-auto mb-2' : 'm-0 mb-2' }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                   </div>
-                @endforeach
+                  <h3 class="support-title">{{$sessaoFaq->title_box}}</h3>
+                  <div class="support-text">{{$sessaoFaq->description_box}}</div>
+                  <a href="{{$sessaoFaq->link}}" target="_blank" class="btn-faq-cta w-100 justify-content-center">
+                    {{$sessaoFaq->btn_title}}
+                  </a>
+                </div>
+              </div>
+            @endif
+
+            @if (isset($faqs) && $faqs->count())
+              <div class="{{ (isset($sessaoFaq) && $sessaoFaq <> null) ? 'col-lg-8' : 'col-lg-12' }}">
+                <div class="faq-accordion">
+
+                  @foreach($faqs as $faq)                
+                    <div class="faq-card">
+                      <button class="faq-header">
+                        <span>{{$faq->question}}</span>
+                        <span class="faq-toggle-icon">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </span>
+                      </button>
+                      <div class="faq-body">
+                        {!! $faq->answer !!}
+                      </div>
+                    </div>
+                  @endforeach
+
+                </div>
+
+                <div class="text-center mt-5">
+                  <a href="#plans" class="btn-faq-cta">
+                    Começar agora
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                  </a>
+                </div>
 
               </div>
-
-              <div class="text-center mt-5">
-                <a href="#plans" class="btn-faq-cta">
-                  Começar agora
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-                </a>
-              </div>
-
-            </div>
-          @endif
+            @endif
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    @endif
 
     <section class="cta-pro-section" id="contact_sec">
     <!-- Glows de Iluminação em Camadas -->
