@@ -866,88 +866,98 @@
       </section>
     @endif
 
-    <section class="cta-pro-section" id="contact_sec">
-    <!-- Glows de Iluminação em Camadas -->
-    <div class="cta-glow-1"></div>
-    <div class="cta-glow-2"></div>
+    @if (isset($contact) && $contact <> null)
+      <section class="cta-pro-section" id="contact_sec">
+        <!-- Glows de Iluminação em Camadas -->
+        <div class="cta-glow-1"></div>
+        <div class="cta-glow-2"></div>
 
-    <div class="container">
-      <div class="cta-glass-card p-3 p-lg-4">
-        <div class="row align-items-center">
-          
-          <!-- Conteúdo Principal -->
-          <div class="col-lg-6 mb-4 mb-lg-0">
-            <div class="cta-status-badge">
-              <span class="status-dot"></span>
-              Equipe Online Agora
-            </div>
-            <h2 class="cta-title">Vamos impulsionar o seu projeto?</h2>
-            <p class="cta-subtitle">Escolha o canal de sua preferência ou selecione o assunto abaixo para iniciarmos seu atendimento imediato.</p>
-
-            <!-- Seletor de Assuntos (Interativo) -->
-            <div class="cta-topics-label">Sobre o que deseja falar?</div>
-            <div class="cta-topics-group justify-content-center justify-content-lg-start">
-              <span class="topic-chip active" data-subject="Orçamento & Prazos">Orçamento</span>
-              <span class="topic-chip" data-subject="Dúvidas Técnicas">Dúvidas Técnicas</span>
-              <span class="topic-chip" data-subject="Contratar Plano">Contratar Plano</span>
-              <span class="topic-chip" data-subject="Suporte">Suporte</span>
-            </div>
-          </div>
-
-          <!-- Canais Rápidos de Contato -->
-          <div class="col-lg-6">
-            <div class="d-flex flex-column gap-3">
-
-              <!-- Canal 1: WhatsApp Direto -->
-              <div class="contact-channel-card justify-content-start justify-content-lg-between p-2 p-lg-4">
-                <div class="channel-info">
-                  <div class="channel-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                  </div>
-                  <div class="channel-details">
-                    <div class="h4">Atendimento Telefônico / WhatsApp</div>
-                    <p class="d-flex justify-content-start">(71) 99276-8360</p>
-                  </div>
+        <div class="container">
+          <div class="cta-glass-card p-3 p-lg-4">
+            <div class="row align-items-center">
+              
+              <!-- Conteúdo Principal -->
+              <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="cta-status-badge">
+                  <span class="status-dot"></span>
+                  Equipe Online Agora
                 </div>
-                <div class="d-flex gap-2 w-100-mobile">
-                  <button class="btn-channel-action" onclick="copyToClipboard('(71) 99276-8360', 'Telefone copiado!')" title="Copiar Número">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-                  </button>
-                  <a href="https://wa.me/5571992768360?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20Orçamento%20%26%20Prazos" id="whatsapp-btn" target="_blank" class="btn-channel-action btn-channel-primary">
-                    Conversar
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                  </a>
+                <h2 class="cta-title">{{$contact->name_section}}</h2>
+                <div class="cta-subtitle">{!!$contact->text!!}</div>
+
+                <!-- Seletor de Assuntos (Interativo) -->
+                <div class="cta-topics-label">Sobre o que deseja falar?</div>
+                <div class="cta-topics-group justify-content-center justify-content-lg-start">
+                  <span class="topic-chip active" data-subject="Orçamento & Prazos">Orçamento</span>
+                  <span class="topic-chip" data-subject="Dúvidas Técnicas">Dúvidas Técnicas</span>
+                  <span class="topic-chip" data-subject="Contratar Plano">Contratar Plano</span>
+                  <span class="topic-chip" data-subject="Suporte">Suporte</span>
                 </div>
               </div>
 
-              <!-- Canal 2: E-mail -->
-              <div class="contact-channel-card justify-content-start justify-content-lg-between p-2 p-lg-4">
-                <div class="channel-info">
-                  <div class="channel-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                  </div>
-                  <div class="channel-details">
-                    <div class="h4">Envie uma mensagem por e-mail</div>
-                    <p class="d-flex justify-content-star">atendimento@whi.dev.br</p>
-                  </div>
-                </div>
-                <div class="d-flex gap-2 w-100-mobile">
-                  <button class="btn-channel-action" onclick="copyToClipboard('atendimento@whi.dev.br', 'E-mail copiado!')" title="Copiar E-mail">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-                  </button>
-                  <a href="mailto:atendimento@whi.dev.br" class="btn-channel-action">
-                    Escrever
-                  </a>
+              <!-- Canais Rápidos de Contato -->
+              <div class="col-lg-6">
+                <div class="d-flex flex-column gap-3">
+
+                  <!-- Canal 1: WhatsApp Direto -->
+                  @if(isset($contact) && $contact->whatsapp <> null)
+                    @php
+                        $phone = preg_replace('/\D/', '', $contact->whatsapp);
+                        $mensagem = "Olá! Encontrei seu site e gostaria de conhecer mais sobre os planos disponíveis.%0A";
+                    @endphp
+                    <div class="contact-channel-card justify-content-start justify-content-lg-between p-2 p-lg-4">
+                      <div class="channel-info">
+                        <div class="channel-icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        </div>
+                        <div class="channel-details">
+                          <div class="h4">Atendimento Telefônico / WhatsApp</div>
+                          <p class="d-flex justify-content-start">{{$contact->whatsapp}}</p>
+                        </div>
+                      </div>
+                      <div class="d-flex gap-2 w-100-mobile">
+                        <button class="btn-channel-action" onclick="copyToClipboard('{{$contact->whatsapp}}', 'Telefone copiado!')" title="Copiar Número">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                        </button>
+                        <a href="https://wa.me/55{{ $phone }}?text={{ $mensagem }}" id="whatsapp-btn" target="_blank" class="btn-channel-action btn-channel-primary">
+                          Conversar
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        </a>
+                      </div>
+                    </div>
+                  @endif
+
+                  <!-- Canal 2: E-mail -->
+                  @if (isset($contact->name_one) && $contact->name_one <> null)                  
+                    <div class="contact-channel-card justify-content-start justify-content-lg-between p-2 p-lg-4">
+                      <div class="channel-info">
+                        <div class="channel-icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                        </div>
+                        <div class="channel-details">
+                          <div class="h4">Envie uma mensagem por e-mail</div>
+                          <p class="d-flex justify-content-star">{{$contact->name_one}}</p>
+                        </div>
+                      </div>
+                      <div class="d-flex gap-2 w-100-mobile">
+                        <button class="btn-channel-action" onclick="copyToClipboard('{{$contact->name_one}}', 'E-mail copiado!')" title="Copiar E-mail">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                        </button>
+                        <a href="mailto:{{$contact->name_one}}" class="btn-channel-action">
+                          Escrever
+                        </a>
+                      </div>
+                    </div>
+                  @endif
+
                 </div>
               </div>
 
             </div>
           </div>
-
         </div>
-      </div>
-    </div>
-    </section>
+      </section>
+    @endif
 
     <!-- Toast de Notificação -->
     <div id="cta-toast" class="cta-toast">
