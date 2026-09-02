@@ -292,7 +292,7 @@
                 <div class="col-md-6">
                     <div class="inner_block dark_bg rotate_right">
                         <div class="img">
-                            <img src="{{asset('build/client/images/themes/whi-web/benefit-1.avif')}}" alt="image" loading="lazy" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
+                            <img src="{{asset('build/client/images/themes/whi-web/benefit-1.png')}}" alt="image" loading="lazy" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
                         </div>
                     </div>
                 </div>
@@ -344,7 +344,7 @@
                 <div class="col-md-6">
                     <div class="inner_block">
                         <div class="img">
-                            <img src="{{asset('build/client/images/themes/whi-web/benefit-2.avif')}}" alt="image" loading="lazy" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
+                            <img src="{{asset('build/client/images/themes/whi-web/benefit-2.png')}}" alt="image" loading="lazy" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
                         </div>
                     </div>
                 </div>
@@ -398,7 +398,7 @@
                 <div class="col-md-6">
                     <div class="inner_block dark_bg rotate_right">
                         <div class="img">
-                            <img src="{{asset('build/client/images/themes/whi-web/benefit-3.avif')}}" alt="image" loading="lazy" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
+                            <img src="{{asset('build/client/images/themes/whi-web/benefit-3.png')}}" alt="image" loading="lazy" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
                         </div>
                     </div>
                 </div>
