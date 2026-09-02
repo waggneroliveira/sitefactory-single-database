@@ -11,6 +11,9 @@ class Plan extends Model
         'name',
         'slug',
         'price',
+        'monthly_price',
+        'description',
+        'text',
         'active',
     ];
 
@@ -19,6 +22,10 @@ class Plan extends Model
         'active' => 'boolean',
     ];
 
+    public function scopeActive($query){
+        return $query->where('active', 1);
+    }
+    
     public function moduleLimits(): HasMany
     {
         return $this->hasMany(

@@ -645,6 +645,7 @@
         </div>
       </section>
     @endif
+
     <section class="pricing-section" id="plans">
       <div class="container">
         
@@ -655,20 +656,22 @@
             <h2 class="pricing-title">Escolha o plano ideal para escalar o seu negócio</h2>
             <p class="pricing-subtitle">Transparência total. Sem taxas escondidas, altere ou cancele quando quiser.</p>
             
-            <!-- Toggle Mensal / Anual -->
-            <div class="pricing-toggle-wrapper flex-wrap">
-              <span class="toggle-label active" id="label-monthly">Cobrança Mensal</span>
+            <!-- Toggle Mensal / Anual (Desabilitado) -->
+            <div class="pricing-toggle-wrapper flex-wrap opacity-75 opacity-100-hover">
+              <span class="toggle-label text-muted" id="label-monthly" style="cursor: not-allowed;">Cobrança Mensal</span>
               <div class="form-check form-switch p-0 m-0">
                 <input 
                   class="form-check-input pricing-switch" 
                   type="checkbox" 
                   id="pricingToggle"
                   aria-labelledby="label-monthly label-yearly"
+                  checked 
+                  disabled
                 >
               </div>
-              <span class="toggle-label" id="label-yearly">
+              <span class="toggle-label active" id="label-yearly" style="cursor: default;">
                 Cobrança Anual
-                <span class="discount-badge">-20% OFF</span>
+                <span class="discount-badge d-none">-20% OFF</span>
               </span>
             </div>
           </div>
@@ -676,130 +679,63 @@
 
         <!-- Cards de Planos -->
         <div class="row g-4 align-items-stretch justify-content-center">
-          
-          <!-- PLANO 1: START -->
-          <div class="col-lg-4 col-md-6">
-            <div class="plan-card">
-              <div>
-                <h3 class="plan-name">Start</h3>
-                <p class="plan-description">Perfeito para quem está começando e precisa das ferramentas essenciais.</p>
-                
-                <div class="plan-price-wrapper">
-                  <span class="currency">R$</span>
-                  <span class="amount" data-monthly="49" data-yearly="39">49</span>
-                  <span class="period">/mês</span>
+
+          @foreach($contractedPlans as $plan)
+              @php
+                  $phone = preg_replace('/\D/', '', $contact->whatsapp);
+                  
+                  // 1. Converte entidades HTML (&aacute;, &eacute;, etc.) de volta para caracteres acentuados
+                  $textDecodificado = html_entity_decode($plan->text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                  
+                  // 2. Extrai os itens <li> e formata como tópicos com hífem
+                  $featuresLimpo = str_replace(["\r", "\n"], '', $textDecodificado);
+                  $featuresLimpo = str_replace('<li>', "\n- ", str_replace('</li>', '', $featuresLimpo));
+                  $featuresLimpo = strip_tags($featuresLimpo); // Remove a tag <ul> restante
+
+                  // 3. Converte também eventuais acentos no nome do plano
+                  $nomePlano = html_entity_decode($plan->name, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+                  // 4. Monta a mensagem final sem caracteres estranhos
+                  $textoMensagem = "*WHI WEB | Suporte ao Cliente*". "\n\n"
+                                ."Olá! Tenho interesse no plano *" . $nomePlano . "* (R$ " . number_format($plan->price, 2, ',', '.') . "/mês).\n\n"
+                                . "*Recursos incluídos:*" . $featuresLimpo . "\n\n"
+                                . "Gostaria de obter mais informações sobre como assinar.";
+                                
+                  $mensagemUrl = urlencode($textoMensagem);
+                  $precoMensal = number_format((float) $plan->monthly_price, 2, ',', '.');
+                  $precoAnual = number_format((float) $plan->price, 2, ',', '.');
+              @endphp
+
+              <div class="col-lg-4 col-md-6">
+                <div class="plan-card {{ $plan->popular == 1 ? 'popular' : '' }}">
+                  @if ($plan->popular == 1)                  
+                    <span class="popular-badge">Mais Popular</span>
+                  @endif
+                  
+                  <div>
+                    <h3 class="plan-name">{{ $plan->name }}</h3>
+                    <div class="plan-description">{{ $plan->description }}</div>
+                    
+                    <div class="plan-price-wrapper">
+                      <span class="currency">R$</span>
+                      <span class="amount" data-monthly="{{ $precoMensal }}" data-yearly="{{ $precoAnual }}">{{ $precoAnual }}</span>
+                      <span class="period">/mês</span>
+                    </div>
+
+                    <div class="plan-features">
+                      {!! $plan->text !!}
+                    </div>
+                  </div>
+
+                  <a href="https://wa.me/55{{ $phone }}?text={{ $mensagemUrl }}" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    class="btn-plan {{ $plan->popular == 1 ? 'btn-plan-primary' : 'btn-plan-outline' }}">
+                    Assinar {{ $plan->name }}
+                  </a>
                 </div>
-
-                <ul class="plan-features">
-                  <li>
-                    <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
-                    Até 3 projetos ativos
-                  </li>
-                  <li>
-                    <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
-                    Suporte via e-mail (24h)
-                  </li>
-                  <li>
-                    <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
-                    Acesso à comunidade básica
-                  </li>
-                  <li class="feature-disabled">
-                    <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
-                    Relatórios avançados
-                  </li>
-                  <li class="feature-disabled">
-                    <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
-                    Gerente de conta dedicado
-                  </li>
-                </ul>
               </div>
-
-              <a href="#" class="btn-plan btn-plan-outline">Começar com Start</a>
-            </div>
-          </div>
-
-          <!-- PLANO 2: PRO (Mais Popular) -->
-          <div class="col-lg-4 col-md-6">
-            <div class="plan-card popular">
-              <span class="popular-badge">Mais Popular</span>
-              <div>
-                <h3 class="plan-name">Pro</h3>
-                <p class="plan-description">A solução completa para empresas em crescimento que buscam performance.</p>
-                
-                <div class="plan-price-wrapper">
-                  <span class="currency">R$</span>
-                  <span class="amount" data-monthly="99" data-yearly="79">99</span>
-                  <span class="period">/mês</span>
-                </div>
-
-                <ul class="plan-features">
-                  <li>
-                    <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
-                    Projetos ilimitados
-                  </li>
-                  <li>
-                    <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
-                    Suporte prioritário via WhatsApp
-                  </li>
-                  <li>
-                    <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
-                    Acesso completo a todas as ferramentas
-                  </li>
-                  <li>
-                    <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
-                    Relatórios e métricas avançadas
-                  </li>
-                  <li class="feature-disabled">
-                    <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
-                    Gerente de conta dedicado
-                  </li>
-                </ul>
-              </div>
-
-              <a href="#" class="btn-plan btn-plan-primary">Testar Pro Grátis</a>
-            </div>
-          </div>
-
-          <!-- PLANO 3: PREMIUM -->
-          <div class="col-lg-4 col-md-6">
-            <div class="plan-card">
-              <div>
-                <h3 class="plan-name">Premium</h3>
-                <p class="plan-description">Atendimento VIP e infraestrutura personalizada para grandes operações.</p>
-                
-                <div class="plan-price-wrapper">
-                  <span class="currency">R$</span>
-                  <span class="amount" data-monthly="199" data-yearly="159">199</span>
-                  <span class="period">/mês</span>
-                </div>
-
-                <ul class="plan-features">
-                  <li>
-                    <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
-                    Tudo do Plano Pro incluído
-                  </li>
-                  <li>
-                    <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
-                    Gerente de conta dedicado 24/7
-                  </li>
-                  <li>
-                    <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
-                    API de integração exclusiva
-                  </li>
-                  <li>
-                    <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
-                    Treinamento de equipe personalizado
-                  </li>
-                  <li>
-                    <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
-                    SLA de atendimento de 30min
-                  </li>
-                </ul>
-              </div>
-
-              <a href="#" class="btn-plan btn-plan-outline">Falar com Consultor</a>
-            </div>
-          </div>
+          @endforeach
 
         </div>
       </div>

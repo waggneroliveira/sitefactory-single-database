@@ -119,7 +119,7 @@
                                                 </th>
 
                                                 <th>
-                                                    Preço
+                                                    Preço Anual
                                                 </th>
 
                                                 <th>
@@ -188,7 +188,7 @@
 
                                                         <strong>
                                                             R$
-                                                            {{ number_format($plan->price, 2, ',', '.') }}
+                                                            {{ number_format($plan->monthly_price, 2, ',', '.') }}
                                                         </strong>
 
                                                     </td>

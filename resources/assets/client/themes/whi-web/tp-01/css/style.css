@@ -2664,7 +2664,9 @@ footer .bottom_footer .developer_text a {
     color: #777777;
     font-weight: 500;
 }
-.plan-features {
+
+.plan-features ul{
+    padding: 0;
     list-style: none;
     padding: 0;
     margin: 0 0 32px 0;
@@ -2679,7 +2681,8 @@ footer .bottom_footer .developer_text a {
     align-items: center;
     gap: 12px;
 }
-.feature-icon {
+.plan-features li::before {
+    content: '✓';
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -2690,6 +2693,7 @@ footer .bottom_footer .developer_text a {
     justify-content: center;
     flex-shrink: 0;
 }
+
 .feature-icon svg {
     width: 12px;
     height: 12px;
@@ -2699,6 +2703,7 @@ footer .bottom_footer .developer_text a {
     color: #aaa;
     text-decoration: line-through;
 }
+
 .feature-disabled .feature-icon {
     background-color: #f0f0f0;
     color: #aaa;

@@ -1,5 +1,8 @@
+@php
+    $textareaId = $textareaId ?? 'text' . (isset($plan->id) ? $plan->id : '');
+@endphp
 <div class="row g-3">
-    <div class="mb-3 col-12 col-lg-4">
+    <div class="mb-3 col-12 col-lg-6">
         <label for="name{{ isset($plan->id) ? $plan->id : '' }}" class="form-label">
             Nome do plano
         </label>
@@ -21,35 +24,37 @@
         @enderror
     </div>
 
-    <div class="mb-3 col-12 col-lg-4">
-        <label for="slug{{ isset($plan->id) ? $plan->id : '' }}" class="form-label">
-            Slug
+    <div class="mb-3 col-12 col-lg-3">
+        <label for="price{{ isset($plan->id) ? $plan->id : '' }}" class="form-label">
+            Preço mensal
         </label>
 
-        <input
-            type="text"
-            name="slug"
-            readonly
-            class="form-control @error('slug') is-invalid @enderror"
-            id="slug{{ isset($plan->id) ? $plan->id : '' }}"
-            value="{{ old('slug', isset($plan) ? $plan->slug : '') }}"
-            placeholder="Ex.: plano-profissional"
-        >
+        <div class="input-group">
+            <span class="input-group-text">R$</span>
 
-        <small class="text-muted">
-            Identificador interno do plano.
-        </small>
+            <input
+                type="number"
+                name="monthly_price"
+                disabled
+                class="form-control @error('monthly_price') is-invalid @enderror"
+                id="monthly_price{{ isset($plan->id) ? $plan->id : '' }}"
+                value="{{ old('monthly_price', isset($plan) ? $plan->monthly_price : '0.00') }}"
+                placeholder="0,00"
+                min="0"
+                step="0.01"
+            >
+        </div>
 
-        @error('slug')
+        @error('price')
             <div class="invalid-feedback">
                 {{ $message }}
             </div>
         @enderror
     </div>
 
-    <div class="mb-3 col-12 col-lg-4">
+    <div class="mb-3 col-12 col-lg-3">
         <label for="price{{ isset($plan->id) ? $plan->id : '' }}" class="form-label">
-            Preço mensal
+            Preço anual
         </label>
 
         <div class="input-group">
@@ -67,16 +72,27 @@
             >
         </div>
 
-        @error('price')
+        @error('monthly_price')
             <div class="invalid-feedback">
                 {{ $message }}
             </div>
         @enderror
     </div>
 
+    <div class="mb-3 col-12 col-lg-12">
+        <label for="description" class="form-label">Breve descrição </label>
+        <input type="text" name="description" class="form-control" id="description{{isset($plan->id)?$plan->id:''}}" value="{{isset($plan)?$plan->description:''}}" placeholder="Breve descrição">
+    </div>
+
+    <div class="mb-3 col-12 col-lg-12">
+        <label for="{{$textareaId}}" class="form-label text-white">Texto</label>
+        <textarea name="text" id="{{$textareaId}}" placeholder="Texto" class="col-12" rows="10">
+            {!!isset($plan->text)?$plan->text: ''!!}
+        </textarea>
+    </div>
 </div>
 
-<div class="mb-3 col-12">
+<div class="mb-1 col-12">
     <div class="form-check">
         <input
             name="active"
@@ -89,6 +105,22 @@
 
         <label class="form-check-label" for="active{{ isset($plan->id) ? $plan->id : '' }}">
             Plano ativo?
+        </label>
+    </div>
+</div>
+<div class="mb-3 col-12">
+    <div class="form-check">
+        <input
+            name="popular"
+            value="1"
+            type="checkbox"
+            class="form-check-input"
+            id="popular{{ isset($plan->id) ? $plan->id : '' }}"
+            {{ old('popular', isset($plan) ? $plan->popular : true) ? 'checked' : '' }}
+        >
+
+        <label class="form-check-label" for="popular{{ isset($plan->id) ? $plan->id : '' }}">
+            Plano popular?
         </label>
     </div>
 </div>
@@ -138,3 +170,32 @@
     @endforeach
 </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const textareaId = "{{$textareaId}}";
+
+        if (document.getElementById(textareaId)) {
+            CKEDITOR.replace(textareaId, {
+                toolbar: [
+                                        {
+                        name: 'basicstyles',
+                        items: [
+                            'Bold',
+                            'Italic',
+                            'Underline',
+                            'Strike',
+                        ]
+                    },
+                    {
+                        name: 'paragraph',
+                        items: [
+                            'NumberedList',
+                            'BulletedList',
+                        ]
+                    },
+                ],
+                height: 200
+            });
+        }
+    });
+</script>

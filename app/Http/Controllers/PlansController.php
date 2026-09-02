@@ -54,11 +54,30 @@ class PlansController extends Controller
 
             'price' => [
                 'nullable',
-                'numeric',
+                'string',
+                'min:0',
+            ],
+            'monthly_price' => [
+                'nullable',
+                'string',
+                'min:0',
+            ],
+            'description' => [
+                'nullable',
+                'string',
+                'min:0',
+            ],
+            'text' => [
+                'nullable',
+                'string',
                 'min:0',
             ],
 
             'active' => [
+                'nullable',
+                'boolean',
+            ],
+            'popular' => [
                 'nullable',
                 'boolean',
             ],
@@ -80,12 +99,13 @@ class PlansController extends Controller
 
             $plan = Plan::create([
                 'name' => $validated['name'],
-
                 'slug' => Str::slug($validated['name']),
-
                 'price' => $validated['price'] ?? 0,
-
+                'monthly_price' => $validated['monthly_price'] ?? 0,
+                'description' => $validated['description'],
+                'text' => $validated['text'],
                 'active' => $request->boolean('active', true),
+                'popular' => $request->boolean('popular', true),
             ]);
 
 
@@ -141,6 +161,7 @@ class PlansController extends Controller
      * Atualiza um plano.
      */
     public function update(Request $request, Plan $plan) {
+        
         $validated = $request->validate([
             'name' => [
                 'required',
@@ -150,11 +171,30 @@ class PlansController extends Controller
 
             'price' => [
                 'nullable',
-                'numeric',
+                'string',
+                'min:0',
+            ],
+            'monthly_price' => [
+                'nullable',
+                'string',
+                'min:0',
+            ],
+            'description' => [
+                'nullable',
+                'string',
+                'min:0',
+            ],
+            'text' => [
+                'nullable',
+                'string',
                 'min:0',
             ],
 
             'active' => [
+                'nullable',
+                'boolean',
+            ],
+            'popular' => [
                 'nullable',
                 'boolean',
             ],
@@ -180,12 +220,13 @@ class PlansController extends Controller
 
             $plan->update([
                 'name' => $validated['name'],
-
                 'slug' => Str::slug($validated['name']),
-
                 'price' => $validated['price'] ?? 0,
-
+                'monthly_price' => $validated['monthly_price'] ?? 0,
+                'description' => $validated['description'],
+                'text' => $validated['text'],
                 'active' => $request->boolean('active'),
+                'popular' => $request->boolean('popular', true),
             ]);
 
 

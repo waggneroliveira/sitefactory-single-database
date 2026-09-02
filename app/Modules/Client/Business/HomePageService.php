@@ -13,6 +13,7 @@ use App\Models\Event;
 use App\Models\Faq;
 use App\Models\Letsgo;
 use App\Models\Partner;
+use App\Models\Plan;
 use App\Models\PlanNetwork;
 use App\Models\PlanNetworkCategory;
 use App\Models\PopUp;
@@ -64,7 +65,7 @@ class HomePageService
             ->get();
         $products = Product::sorting()->active()->get();
         $reports = Report::active()->get();
-
+        $contractedPlans = Plan::active()->get();
         $popUp = PopUp::active()->first();
 
         $tenantTheme = Tenant::current();
@@ -72,6 +73,7 @@ class HomePageService
         $themeData = $themeManager->theme();
 
         return compact(
+            'contractedPlans',
             'reports',
             'blogHighlights',
             'productCategories',
