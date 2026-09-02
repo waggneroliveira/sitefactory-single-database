@@ -410,9 +410,9 @@
                                 Cobertura
                             </span>
 
-                            <h4 class="about-title text-start font-changa font-40 font-bold text-dark my-3 position-relative">                            
+                            <h3 class="about-title text-start font-changa font-40 font-bold text-dark my-3 position-relative">                            
                                 {{$serviceLocation->title}}
-                            </h4>
+                            </h3>
                         </div>
                         
                         <!-- BAHIA -->
