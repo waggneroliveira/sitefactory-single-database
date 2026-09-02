@@ -373,7 +373,7 @@
                                             </div>
         
                                             <div class="author">
-                                                <h5 class="text-dark font-changa font-24 title font-medium mb-0 mt-3">{{$depoiment->name}}</h5>
+                                                <div class="text-dark font-changa font-24 title font-medium mb-0 mt-3">{{$depoiment->name}}</div>
                                                 <span class="text-dark font-changa font-16 font-regular">{{$depoiment->function}}</span>
                                             </div>
 
