@@ -455,8 +455,12 @@
     <header class="shadow-sm bg-header">
         <nav class="navbar navbar-expand-lg navbar-light container py-2 px-3 px-lg-0">            
             <!-- Logo -->
+            @php
+                $logoPath = storage_path('app/public/' . $tenantTheme->path_image_logo_header);
+                $dimensions = file_exists($logoPath) ? @getimagesize($logoPath) : null;
+            @endphp
             <a class="navbar-brand d-flex align-items-center p-0" href="{{route('index')}}">
-                <img loading="lazy" src="{{asset('storage/' .$tenantTheme->path_image_logo_header)}}" class="logo-header" alt="{{ config('app.name') }}" height="65">
+                <img loading="lazy" src="{{asset('storage/' .$tenantTheme->path_image_logo_header)}}" class="logo-header" alt="{{ $tenantTheme->name }}" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
             </a>
 
             <!-- Toggle mobile -->
@@ -515,7 +519,11 @@
 
                 <!-- Logo + botão -->
                 <div class="col-lg-4 mb-4 mb-lg-0">
-                    <img loading="lazy" src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ config('app.name') }}" height="65">
+                    @php
+                        $logoPath = storage_path('app/public/' . $tenantTheme->path_image_logo_footer);
+                        $dimensions = file_exists($logoPath) ? @getimagesize($logoPath) : null;
+                    @endphp
+                    <img loading="lazy" src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ $tenantTheme->name }}" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
                     @if ($tenantTheme->link <> null)                        
                         <div class="mt-3 mt-lg-5">
                             <a href="{{ $tenantTheme->link }}" target="_blank" rel="noopener noreferrer" class="bg-button-two color-button-two px-4 py-2 font-changa font-16 font-medium text-decoration-none hover-zoom">
