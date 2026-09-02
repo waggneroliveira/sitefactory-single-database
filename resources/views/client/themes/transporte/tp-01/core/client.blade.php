@@ -700,57 +700,5 @@
     <script src="{{ asset('build/client/themes/transporte/tp-01/js/default.js') }}" defer></script>
     <script src="{{ asset('build/client/js/default.js') }}" defer></script>
 
-    {{-- Modais alert --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            AOS.init({
-                duration: 800,
-                once: true,
-                offset: 40
-            });
-
-            let successMessage = @json(session('success'));
-            let errorMessage = @json(session('error'));
-
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timerProgressBar: true,
-                timer: 3000,
-                didOpen: (toast) => {
-
-                    toast.addEventListener('mouseenter', Swal.stopTimer);
-                    toast.addEventListener('mouseleave', Swal.resumeTimer);
-
-                }
-            });
-
-            if (successMessage) {
-
-                Toast.fire({
-                    icon: 'success',
-                    title: successMessage,
-                    background: '#f0fdf4',
-                    color: '#166534',
-                    iconColor: '#22c55e'
-                });
-
-            }
-
-            if (errorMessage) {
-
-                Toast.fire({
-                    icon: 'error',
-                    title: errorMessage,
-                    background: '#fef2f2',
-                    color: '#991b1b',
-                    iconColor: '#ef4444'
-                });
-
-            }
-
-        });
-    </script>
 </body>
 </html>
