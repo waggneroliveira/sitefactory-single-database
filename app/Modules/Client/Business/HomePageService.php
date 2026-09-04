@@ -3,6 +3,7 @@
 namespace App\Modules\Client\Business;
 
 use App\Models\About;
+use App\Models\Advantage;
 use App\Models\Announcement;
 use App\Models\BenefitTopic;
 use App\Models\Blog;
@@ -67,12 +68,14 @@ class HomePageService
         $reports = Report::active()->get();
         $contractedPlans = Plan::active()->get();
         $popUp = PopUp::active()->first();
+        $advantages = Advantage::active()->get();
 
         $tenantTheme = Tenant::current();
         $theme = $themeManager;
         $themeData = $themeManager->theme();
 
         return compact(
+            'advantages',
             'contractedPlans',
             'reports',
             'blogHighlights',

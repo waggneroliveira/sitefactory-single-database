@@ -261,6 +261,7 @@ return [
         ],
 
         'limits' => [
+            'advantage' => 3,
             'slides' => 1,
             'topics' => 4,
             'services' => 6,

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AdvantageController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\AuditActivityController;
 use App\Http\Controllers\Auth\AuthController;
@@ -265,6 +266,14 @@ Route::prefix('painel/')->group(function () {
         ->name('admin.dashboard.direction.destroySelected');
         Route::post('representantes/sorting', [DirectionController::class, 'sorting'])
         ->name('admin.dashboard.direction.sorting');
+        //ADVANTAGE
+        Route::resource('vantagens', AdvantageController::class)
+        ->names('admin.dashboard.advantage')
+        ->parameters(['vantagens'=>'advantage']);
+        Route::post('vantagens/delete', [AdvantageController::class, 'destroySelected'])
+        ->name('admin.dashboard.advantage.destroySelected');
+        Route::post('vantagens/sorting', [AdvantageController::class, 'sorting'])
+        ->name('admin.dashboard.advantage.sorting');
         //VIDEO
         Route::resource('videos', VideoController::class)
         ->names('admin.dashboard.video')

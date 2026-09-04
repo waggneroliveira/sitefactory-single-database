@@ -244,165 +244,98 @@
                 <h2 class="trhee-step text-white">O que você ganha com<br> a <span>WHI Web</span></h2>
             </div>     
 
-            <div class="row service_blocks flex-row-reverse">                
-                <div class="col-md-6">
-                    <div class="service_text right_side">
+            @foreach($advantages as $advantage)
+                @php
+                    // Verifica se a iteração é par ou ímpar para alternar os lados do layout
+                    $isEven = $loop->iteration % 2 === 0;
+                @endphp
 
-                        <span class="title_badge">Para você</span>
-                        <h3 class="text-white">Design profissional para o seu negócio</h3>
-                        <p class="text-white">Tenha acesso a layouts pensados para diferentes tipos de negócios, com uma estrutura moderna e pronta para apresentar sua empresa.</p>
+                <div class="row service_blocks {{ !$isEven ? 'flex-row-reverse' : '' }} {{ $loop->last ? 'no_bottom_padding' : '' }}">
+                    
+                    <!-- Coluna de Texto -->
+                    <div class="col-md-6">
+                        <div class="service_text {{ !$isEven ? 'right_side' : '' }}">
 
-                        <ul class="design_block py-3 px-0">
-                            <li class="d-flex gap-2 justify-content-start align-items-center">
-                                <i class="bi bi-check-circle"></i>
-                                Layouts criados para diferentes segmentos
-                            </li>
-                            <li class="d-flex gap-2 justify-content-start align-items-center">
-                                <i class="bi bi-check-circle"></i>
-                                Design moderno e profissional
-                            </li>
-                            <li class="d-flex gap-2 justify-content-start align-items-center">
-                                <i class="bi bi-check-circle"></i>
-                                Estrutura pensada para destacar seu negócio
-                            </li>
-                            <li class="d-flex gap-2 justify-content-start align-items-center">
-                                <i class="bi bi-check-circle"></i>
-                                Experiência otimizada para seus visitantes
-                            </li>
-                            <li class="d-flex gap-2 justify-content-start align-items-center">
-                                <i class="bi bi-check-circle"></i>
-                                Responsividade em celulares, tablets e computadores
-                            </li>
-                            <li class="d-flex gap-2 justify-content-start align-items-center">
-                                <i class="bi bi-check-circle"></i>
-                                Atualizações contínuas nos modelos disponíveis
-                            </li>
-                        </ul>
-                        <div class="btn_block">
-                            <a href="#plans" class="bg-button-two color-button-two px-3 py-2 rounded-3">
-                              <span>
-                                Começar agora
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-                              </span> 
-                            </a>
+                            @if(!empty($advantage->tag))
+                                <span class="title_badge">{{ $advantage->tag }}</span>
+                            @endif
+
+                            <h3 class="text-white">{{ $advantage->title }}</h3>
+                            <p class="text-white">{{ $advantage->description }}</p>
+
+                            @if(!empty($advantage->text))
+                              @php
+                                  $content = $advantage->text;
+                                  // Verifica se o texto vindo do CMS contém tags <ul> ou <li>
+                                  $hasListTags = preg_match('/<\/?(ul|li)[^>]*>/i', $content);
+                              @endphp
+
+                              @if($hasListTags)
+                                  {{-- Caso o CMS envie HTML com <ul>/<li> (Editor WYSIWYG) --}}
+                                  @php
+                                      // Adiciona a classe do seu layout à tag <ul>
+                                      $formattedHtml = preg_replace('/<ul([^>]*)>/i', '<ul$1 class="design_block py-3 px-0">', $content);
+                                      
+                                      // Adiciona os ícones e as classes Bootstrap às tags <li>
+                                      $formattedHtml = preg_replace(
+                                          '/<li([^>]*)>(.*?)<\/li>/is', 
+                                          '<li$1 class="d-flex gap-2 justify-content-start align-items-center"><i class="bi bi-check-circle"></i> $2</li>', 
+                                          $formattedHtml
+                                      );
+                                  @endphp
+
+                                  {!! $formattedHtml !!}
+
+                                  @else
+                                      {{-- Caso seja texto simples digitado linha por linha --}}
+                                      @php
+                                          $items = array_filter(array_map('trim', explode("\n", $content)));
+                                      @endphp
+
+                                      @if(!empty($items))
+                                          <ul class="design_block py-3 px-0">
+                                              @foreach($items as $item)
+                                                  <li class="d-flex gap-2 justify-content-start align-items-center">
+                                                      <i class="bi bi-check-circle"></i>
+                                                      {{ $item }}
+                                                  </li>
+                                              @endforeach
+                                          </ul>
+                                      @endif
+                                  @endif
+                              @endif
+
+                            <div class="btn_block">
+                                <a href="{{ $advantage->button_url ?? '#plans' }}" class="bg-button-two color-button-two px-3 py-2 rounded-3">
+                                    <span>
+                                        {{ $advantage->button_text ?? 'Começar agora' }}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5">
+                                            <path d="M5 12h14"></path>
+                                            <path d="m12 5 7 7-7 7"></path>
+                                        </svg>
+                                    </span> 
+                                </a>
+                            </div>
+
                         </div>
                     </div>
-                </div>                
 
-                <div class="col-md-6">
-                    <div class="inner_block dark_bg rotate_right">
-                        <div class="img">
-                            <img src="{{asset('build/client/images/themes/whi-web/benefit-1.png')}}" alt="image" loading="lazy" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
+                    <!-- Coluna de Imagem -->
+                    <div class="col-md-6">
+                        <div class="inner_block {{ !$isEven ? 'dark_bg rotate_right' : '' }}">
+                            <div class="img">
+                                <img src="{{ asset('storage/' . $advantage->path_image) }}" 
+                                    alt="{{ $advantage->title }}" 
+                                    loading="lazy" 
+                                    width="{{ $dimensions[0] ?? 200 }}" 
+                                    height="{{ $dimensions[1] ?? 60 }}" 
+                                    style="max-width:100%;height:auto;">
+                            </div>
                         </div>
                     </div>
+
                 </div>
-            </div>
-
-            <div class="row service_blocks no_bottom_padding">
-                <div class="col-md-6">
-                  <div class="service_text">
-                    <span class="title_badge">Para seu cliente</span>
-                    <h3 class="text-white">Uma experiência melhor para quem visita</h3>
-                    <p class="text-white">Ofereça um site organizado, rápido e adaptado para facilitar a navegação e apresentar sua empresa com clareza.</p>
-
-                    <ul class="design_block py-3 px-0">
-                        <li class="d-flex gap-2 justify-content-start align-items-center">
-                            <i class="bi bi-check-circle"></i>
-                            Navega por uma estrutura clara e intuitiva
-                        </li>
-                        <li class="d-flex gap-2 justify-content-start align-items-center">
-                            <i class="bi bi-check-circle"></i>
-                            Encontra informações importantes com facilidade
-                        </li>
-                        <li class="d-flex gap-2 justify-content-start align-items-center">
-                            <i class="bi bi-check-circle"></i>
-                            Acessa o site de qualquer dispositivo
-                        </li>
-                        <li class="d-flex gap-2 justify-content-start align-items-center">
-                            <i class="bi bi-check-circle"></i>
-                            Conhece melhor seus produtos e serviços
-                        </li>
-                        <li class="d-flex gap-2 justify-content-start align-items-center">
-                            <i class="bi bi-check-circle"></i>
-                            Entra em contato de forma rápida
-                        </li>
-                        <li class="d-flex gap-2 justify-content-start align-items-center">
-                            <i class="bi bi-check-circle"></i>
-                            Percebe mais profissionalismo na sua presença online
-                        </li>
-                    </ul>
-
-                    <a href="#plans" 
-                    class="bg-button-two color-button-two px-3 py-2 rounded-3">
-                    <span>
-                      Começar agora
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-                    </span> 
-                    </a>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="inner_block">
-                        <div class="img">
-                            <img src="{{asset('build/client/images/themes/whi-web/benefit-2.png')}}" alt="image" loading="lazy" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row service_blocks flex-row-reverse">
-                <div class="col-md-6">
-                    <div class="service_text right_side">
-
-                        <span class="title_badge">Para seu negócio</span>
-                        <h3 class="text-white">Tenha autonomia para cuidar do seu site</h3>
-                        <p class="text-white">Gerencie o conteúdo da sua presença digital em um só lugar, sem depender de alterações feitas por terceiros.</p>
-
-                        <ul class="design_block py-3 px-0">
-                            <li class="d-flex gap-2 justify-content-start align-items-center">
-                                <i class="bi bi-check-circle"></i>
-                                Gerencie todo o conteúdo pelo seu painel
-                            </li>
-                            <li class="d-flex gap-2 justify-content-start align-items-center">
-                                <i class="bi bi-check-circle"></i>
-                                Atualize informações sempre que necessário
-                            </li>
-                            <li class="d-flex gap-2 justify-content-start align-items-center">
-                                <i class="bi bi-check-circle"></i>
-                                Controle imagens, textos e informações da empresa
-                            </li>
-                            <li class="d-flex gap-2 justify-content-start align-items-center">
-                                <i class="bi bi-check-circle"></i>
-                                Economize tempo com uma gestão mais simples
-                            </li>
-                            <li class="d-flex gap-2 justify-content-start align-items-center">
-                                <i class="bi bi-check-circle"></i>
-                                Mantenha seu site sempre atualizado
-                            </li>
-                            <li class="d-flex gap-2 justify-content-start align-items-center">
-                                <i class="bi bi-check-circle"></i>
-                                Tenha mais autonomia sobre sua presença digital
-                            </li>
-                        </ul>
-                        <div class="btn_block">
-                            <a href="#plans" 
-                            class="bg-button-two color-button-two px-3 py-2 rounded-3">
-                            <span>
-                              Começar agora
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-                            </span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="inner_block dark_bg rotate_right">
-                        <div class="img">
-                            <img src="{{asset('build/client/images/themes/whi-web/benefit-3.png')}}" alt="image" loading="lazy" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
 
         <div class="blure_shape bg-secondary-color bs_1"> </div> 

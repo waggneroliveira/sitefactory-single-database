@@ -242,6 +242,14 @@
                     ])
                 @endif
 
+                @if (in_array('advantage', $homeModules, true) && ($isSuper || $user->can('vantagens.visualizar')))
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.advantage.index'),
+                        'icon' => 'mdi-help-circle',
+                        'title' => 'Vantagens'
+                    ])
+                @endif
+
                 @if (in_array('benefits', $homeModules, true) && ($isSuper || $user->can('parametro.visualizar')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.benefitTopic.index'),

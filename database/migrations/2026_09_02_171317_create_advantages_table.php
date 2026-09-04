@@ -13,12 +13,16 @@ return new class extends Migration
     {
         Schema::create('advantages', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')
+            ->constrained('tenants')
+            ->cascadeOnDelete();
             $table->string('tag')->nullable();
             $table->string('title')->nullable();
             $table->string('description')->nullable();
             $table->string('path_image')->nullable();
             $table->text('text')->nullable();
             $table->integer('sorting')->default(0);
+            $table->boolean('active')->default(0);
             $table->timestamps();
         });
     }
