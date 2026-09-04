@@ -16,7 +16,7 @@ class AdvantageController extends Controller
         $template = $themeManager->current() ?? 'default';
         $variation = $themeManager->variation() ?? 'default';
 
-        return "admin/uploads/images/templates/{$template}/{$variation}/benefitTopic/";
+        return "admin/uploads/images/templates/{$template}/{$variation}/advantage/";
     }
     public function index(ThemeManager $themeManager)
     {
@@ -24,7 +24,7 @@ class AdvantageController extends Controller
 
         // 'slides' → é o módulo definido no template_modules.php.
         // 'slide.visualizar' → é a permissão definida no module_permissions.php.
-        $check = checkPermission('testimonials', 'depoimento.visualizar', $settingTheme);
+        $check = checkPermission('advantage', 'vantagens.visualizar', $settingTheme);
         if ($check !== true) {
             return $check; // retorna view 403
         }
@@ -33,7 +33,7 @@ class AdvantageController extends Controller
         $theme = $themeManager;
         $themeData = $themeManager->theme();
 
-        return view('admin.blades.depoiment.index', compact('advantages', 'theme', 'themeData'));
+        return view('admin.blades.advantage.index', compact('advantages', 'theme', 'themeData'));
     }
 
     public function store(Request $request)
