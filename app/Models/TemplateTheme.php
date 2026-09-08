@@ -16,9 +16,12 @@ class TemplateTheme extends Model
         'preview',
         'active',
         'template_variation',
+        'highlights',
+        'technology',
     ];
 
     protected $casts = [
+        'preview' => 'array',
         'active' => 'boolean',
     ];
 }

@@ -40,6 +40,7 @@ use App\Http\Controllers\SettingThemeController;
 use App\Http\Controllers\SlideController;
 use App\Http\Controllers\StatuteController;
 use App\Http\Controllers\SystemClientController;
+use App\Http\Controllers\TemplateThemeController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\VideoController;
@@ -399,6 +400,10 @@ Route::prefix('painel/')->group(function () {
         // SETTINGS THEME
         Route::post('setting', [SettingThemeController::class, 'setting'])->name('admin.dashboard.settingTheme'); 
         Route::post('setting/update', [SettingThemeController::class, 'settingUpdate'])->name('admin.dashboard.settingThemeUpdate'); 
+
+        Route::resource('template', TemplateThemeController::class)
+        ->names('admin.dashboard.templateTheme')
+        ->parameters(['template'=>'templateTheme']);
 
         Route::resource('theme-setting', TenantController::class)
         ->names('admin.dashboard.tenant')

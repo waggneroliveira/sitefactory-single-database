@@ -773,6 +773,12 @@
             <div class="row g-2">
 
                 @include('admin.components.dashboard-card', [
+                    'route' => route('admin.dashboard.templateTheme.index'),
+                    'icon' => 'mdi-google-analytics',
+                    'title' => 'Temas'
+                ])
+
+                @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.seoGoogle.index'),
                     'icon' => 'mdi-google-analytics',
                     'title' => 'Seo Google'
