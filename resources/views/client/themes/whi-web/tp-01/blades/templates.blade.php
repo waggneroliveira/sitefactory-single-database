@@ -244,72 +244,29 @@
 
         <!-- Template Cards Grid -->
         <section class="row g-4">
-            @php
-                $templates = $templates ?? [
-                    (object)[
-                        'id' => 1,
-                        'title' => 'SaaS Dashboard Pro',
-                        'category' => 'SaaS & Admin',
-                        'image' => 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
-                        'pages_count' => 8,
-                        'price' => 'Grátis',
-                        'badge' => 'Popular'
-                    ],
-                    (object)[
-                        'id' => 2,
-                        'title' => 'E-Commerce Storefront Kit',
-                        'category' => 'E-commerce',
-                        'image' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
-                        'pages_count' => 12,
-                        'price' => 'R$ 49',
-                        'badge' => 'Pro'
-                    ],
-                    (object)[
-                        'id' => 3,
-                        'title' => 'Minimalist Portfolio UI',
-                        'category' => 'Portfólio',
-                        'image' => 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80',
-                        'pages_count' => 5,
-                        'price' => 'Grátis',
-                        'badge' => null
-                    ],
-                    (object)[
-                        'id' => 4,
-                        'title' => 'Fintech Analytics Suite',
-                        'category' => 'SaaS & Admin',
-                        'image' => 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80',
-                        'pages_count' => 15,
-                        'price' => 'R$ 79',
-                        'badge' => 'Novo'
-                    ],
-                    (object)[
-                        'id' => 5,
-                        'title' => 'Startup Hero Landing Page',
-                        'category' => 'Landing Pages',
-                        'image' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
-                        'pages_count' => 4,
-                        'price' => 'Grátis',
-                        'badge' => null
-                    ],
-                    (object)[
-                        'id' => 6,
-                        'title' => 'CRM Enterprise Manager',
-                        'category' => 'SaaS & Admin',
-                        'image' => 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
-                        'pages_count' => 10,
-                        'price' => 'R$ 59',
-                        'badge' => 'Pro'
-                    ],
-                ];
-            @endphp
 
-            @foreach($templates as $item)
+            @foreach($templateThemes as $item)   
+                @php
+                    $preview = $item['preview'] ?? null;
+
+                    if (is_string($preview)) {
+                        $previews = json_decode($preview, true) ?? [];
+                    } elseif (is_array($preview)) {
+                        $previews = $preview;
+                    } else {
+                        $previews = [];
+                    }
+
+                    $previewImage = $previews[0] ?? null;
+                    $countPreviews = count($previews);
+                @endphp
+
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="template-card h-100 d-flex flex-column">
                         
                         <!-- Preview Image & Hover Actions -->
                         <div class="card-img-wrapper">
-                            <img src="{{ $item->image }}" alt="{{ $item->title }}">
+                            <img src="{{ asset('storage') .'/'. $previewImage }}" alt="{{ $item->name }}" loading="lazy" >
                             
                             <div class="card-overlay">
                                 <a href="#" class="btn btn-brand btn-sm rounded-3 px-3 py-2 fw-semibold text-xs d-flex align-items-center gap-2">
@@ -321,14 +278,14 @@
                             <!-- Top Badges -->
                             <div class="position-absolute top-0 start-0 m-3">
                                 <span class="badge badge-category rounded-2 px-2 py-1 text-uppercase">
-                                    {{ $item->category }}
+                                    {{ $item->name }}
                                 </span>
                             </div>
 
-                            @if($item->badge)
+                            @if($item->layout_type)
                                 <div class="position-absolute top-0 end-0 m-3">
                                     <span class="badge bg-primary rounded-2 px-2 py-1 text-uppercase shadow" style="background-color: var(--brand-500) !important; font-size: 10px;">
-                                        {{ $item->badge }}
+                                        {{ $item->layout_type }}
                                     </span>
                                 </div>
                             @endif
@@ -339,17 +296,17 @@
                             <div>
                                 <h3 class="fs-6 fw-bold text-white mb-2">
                                     <a href="#" class="text-white text-decoration-none hover-brand">
-                                        {{ $item->title }}
+                                        {{ $item->name }}
                                     </a>
                                 </h3>
                                 <div class="d-flex align-items-center gap-3 text-secondary" style="font-size: 0.75rem;">
                                     <span class="d-flex align-items-center gap-1">
                                         <i data-lucide="layers" style="width: 14px; height: 14px;"></i>
-                                        {{ $item->pages_count }} Páginas PNG
+                                        {{ $countPreviews }} Páginas PNG
                                     </span>
                                     <span class="d-flex align-items-center gap-1">
                                         <i data-lucide="code-2" style="width: 14px; height: 14px;"></i>
-                                        Blade + BS5
+                                        {{ strtoupper($item->technology ?? '') }}
                                     </span>
                                 </div>
                             </div>
@@ -359,7 +316,7 @@
                                 <span class="fw-bold text-white fs-6">
                                     {{ $item->price }}
                                 </span>
-                                <a href="#" class="text-decoration-none fw-semibold d-flex align-items-center gap-1" style="color: var(--brand-500); font-size: 0.75rem;">
+                                <a href="{{route('template', ['slug' => $item->slug])}}" class="text-decoration-none fw-semibold d-flex align-items-center gap-1" style="color: var(--brand-500); font-size: 0.75rem;">
                                     <span>Acessar</span>
                                     <i data-lucide="chevron-right" style="width: 14px; height: 14px;"></i>
                                 </a>

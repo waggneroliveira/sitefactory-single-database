@@ -19,9 +19,10 @@ INFORMAÇÕES DO TEMPLATE
             </label>
 
             <input
+                name="name"
                 type="text"
                 class="form-control"
-                value="{{ $templateTheme->name ?? '' }}"
+                value="{{ isset($templateTheme) ? $templateTheme->name ?? '' : '' }}"
 
             >
 
@@ -32,16 +33,29 @@ INFORMAÇÕES DO TEMPLATE
     <div class="col-12 col-lg-4 mt-1">
         <div class="mb-0">
 
-            <label class="form-label">
+            <label for="layout_type" class="form-label">
                 Tipo de Layout
             </label>
 
-            <input
-                type="text"
-                class="form-control"
-                value="{{ isset($templateTheme ) ? ucfirst($templateTheme->layout_type) : ''}}"
-
+            <select
+                name="layout_type"
+                id="layout_type"
+                class="form-select"
             >
+                <option
+                    value="onepage"
+                    {{ old('layout_type', $templateTheme->layout_type ?? 'onepage') === 'onepage' ? 'selected' : '' }}
+                >
+                    One Page
+                </option>
+
+                <option
+                    value="multipage"
+                    {{ old('layout_type', $templateTheme->layout_type ?? 'onepage') === 'multipage' ? 'selected' : '' }}
+                >
+                    Multi Page
+                </option>
+            </select>
 
         </div>
     </div>
@@ -55,6 +69,7 @@ INFORMAÇÕES DO TEMPLATE
             </label>
 
             <input
+                name="template_variation"
                 type="text"
                 class="form-control"
                 value="{{ isset($templateTheme)?$templateTheme->template_variation ?? '' : '' }}"

@@ -14,6 +14,7 @@ class TemplateTheme extends Model
         'slug',
         'name',
         'preview',
+        'layout_type',
         'active',
         'template_variation',
         'highlights',
@@ -24,4 +25,7 @@ class TemplateTheme extends Model
         'preview' => 'array',
         'active' => 'boolean',
     ];
+    public function scopeActive($query){
+        return $query->where('active', 1);
+    }
 }

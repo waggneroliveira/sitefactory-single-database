@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TemplateTheme;
 use App\Repositories\SettingThemeRepository;
 use App\Services\ThemeManager;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -290,7 +291,7 @@ class TemplateThemeController extends Controller
             | Atualizar registro
             |--------------------------------------------------------------------------
             */
-
+            // dd($data);
             $templateTheme
                 ->fill($data)
                 ->save();

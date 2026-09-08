@@ -25,6 +25,7 @@ use App\Modules\Client\Presentation\Controllers\DocumentationController;
 use App\Modules\Client\Presentation\Controllers\EventPageController;
 use App\Modules\Client\Presentation\Controllers\HomePageController;
 use App\Modules\Client\Presentation\Controllers\ProductPageController;
+use App\Modules\Client\Presentation\Controllers\TemplatePageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Spatie\Multitenancy\Http\Middleware\NeedsTenant;
@@ -46,13 +47,16 @@ Route::middleware([NeedsTenant::class])->group(function () {
     Route::get('/', [HomePageController::class, 'index'])
         ->name('index');
 
-    Route::get('/templates', function () {
-            return view('client.themes.whi-web.tp-01.blades.templates');
-        })->name('templates');
+    Route::get('templates', [TemplatePageController::class, 'templateAll'])
+        ->name('templates');
 
-    Route::get('/template', function () {
-            return view('client.themes.whi-web.tp-01.blades.template');
-        })->name('template');
+    Route::get('template/{slug}', [TemplatePageController::class, 'templateInner'])
+        ->name('template');
+
+
+    // Route::get('/template', function () {
+    //         return view('client.themes.whi-web.tp-01.blades.template');
+    //     })->name('template');
 
     Route::get('/produto', function () {
             return view('client.themes.ecommerce.tp-01.blades.product');
