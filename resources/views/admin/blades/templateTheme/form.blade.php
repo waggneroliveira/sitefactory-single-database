@@ -11,6 +11,41 @@ INFORMAÇÕES DO TEMPLATE
     </div>
 
     {{-- NOME --}}
+    <div class="col-12 col-lg-5 mt-1">
+        <div class="mb-0">
+
+            <label class="form-label">
+                Título do Template
+            </label>
+
+            <input
+                name="title"
+                type="text"
+                class="form-control"
+                value="{{ isset($templateTheme) ? $templateTheme->title ?? '' : '' }}"
+
+            >
+
+        </div>
+    </div>
+    <div class="col-12 col-lg-7 mt-1">
+        <div class="mb-0">
+
+            <label class="form-label">
+                Descrição do Template
+            </label>
+
+            <input
+                name="description"
+                type="text"
+                class="form-control"
+                value="{{ isset($templateTheme) ? $templateTheme->description ?? '' : '' }}"
+
+            >
+
+        </div>
+    </div>
+
     <div class="col-12 col-lg-4 mt-1">
         <div class="mb-0">
 

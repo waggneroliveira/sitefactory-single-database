@@ -66,15 +66,19 @@
                                 <div class="tpl-card-body">
                                     <div>
                                         <span class="tpl-category">{{ $themeName }}</span>
-                                        <div class="d-flex align-items-center gap-3 text-secondary" style="font-size: 0.75rem;">
-                                            <span class="d-flex align-items-center gap-1">
-                                                <i data-lucide="layers" style="width: 14px; height: 14px;"></i>
-                                                {{ $countPreviews }} Páginas PNG
-                                            </span>
-                                            <span class="d-flex align-items-center gap-1">
-                                                <i data-lucide="code-2" style="width: 14px; height: 14px;"></i>
-                                                {{ strtoupper(is_object($templateTheme) ? ($templateTheme->technology ?? '') : ($templateTheme['technology'] ?? '')) }}
-                                            </span>
+                                        <div class="d-flex align-items-center gap-2 text-secondary" style="font-size: 0.75rem;">
+                                            @if ($countPreviews)                                                
+                                                <span class="d-flex align-items-center gap-1">
+                                                    <i data-lucide="layers" style="width: 14px; height: 14px;"></i>
+                                                    {{ $countPreviews }} Páginas PNG
+                                                </span>
+                                            @endif
+                                            @if ($templateTheme->technology <> null)                                                
+                                                <span class="d-flex align-items-center gap-1">
+                                                    <i data-lucide="code-2" style="width: 14px; height: 14px;"></i>
+                                                    {{ strtoupper(is_object($templateTheme) ? ($templateTheme->technology ?? '') : ($templateTheme['technology'] ?? '')) }}
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="tpl-arrow"><i class="bi bi-arrow-up-right"></i></div>
@@ -83,35 +87,114 @@
                         </div>
                     @endforeach
                 </div>
+                @if($templateThemes->hasPages())
+                <div class="d-flex justify-content-center align-items-center flex-column">  
+                    <div class="d-flex justify-content-center mt-5">
+                        {{ $templateThemes->links('pagination::bootstrap-5') }}
+                    </div>                  
+                    <div class="mt-3">
+                        <p class="pagination-info">
+                            Exibindo
+                            <span class="fw-semibold">{{ $templateThemes->firstItem() }}</span>
+                            a
+                            <span class="fw-semibold">{{ $templateThemes->lastItem() }}</span>
+                            de
+                            <span class="results-count">{{ $templateThemes->total() }}</span>
+                            resultados
+                        </p>
+                    </div>                    
+                </div>
+                @endif
             </div>
         </section>
     </div>
 
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const filterButtons = document.querySelectorAll('#theme-filters button');
-            const cards = document.querySelectorAll('.js-card-item');
+    <style>
+        .d-none.flex-sm-fill.d-sm-flex.align-items-sm-center.justify-content-sm-between p{
+            display: none;
+        }
+        .pagination-info {
+    color: #64748b !important;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin: 0;
+    letter-spacing: 0.01em;
+}
 
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function () {
-                    const selectedSlug = this.getAttribute('data-slug');
+.pagination-info .fw-semibold {
+    color: #e2e8f0;
+    font-weight: 600 !important;
+}
 
-                    // Alterna a classe 'active' nos botões
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
+.pagination-info .results-count {
+    color: var(--secondary-color);
+}
 
-                    // Exibe ou esconde os cards com base no slug
-                    cards.forEach(card => {
-                        const cardSlug = card.getAttribute('data-slug');
+.pagination {
+    gap: 8px;
+    margin: 0;
+}
 
-                        if (selectedSlug === 'all' || (cardSlug && cardSlug.includes(selectedSlug))) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-                });
-            });
-        });
-    </script> --}}
+.pagination .page-item .page-link {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px !important;
+    background: rgba(255, 255, 255, 0.04);
+    color: #94a3b8;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    box-shadow: none;
+}
+
+.pagination .page-item .page-link:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.16);
+    transform: translateY(-2px);
+}
+
+.pagination .page-item.active .page-link {
+    color: #10131C;
+    background: var(--secondary-color);
+    border-color: var(--secondary-color);
+    box-shadow: 0 6px 20px rgba(203, 255, 77, 0.15);
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #475569;
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.04);
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.pagination .page-link:focus {
+    box-shadow: 0 0 0 3px rgba(203, 255, 77, 0.12);
+    outline: none;
+}
+
+.pagination .page-item:first-child .page-link,
+.pagination .page-item:last-child .page-link {
+    font-size: 1rem;
+}
+
+@media (max-width: 575.98px) {
+    .pagination {
+        gap: 5px;
+    }
+
+    .pagination .page-item .page-link {
+        width: 36px;
+        height: 36px;
+        font-size: 0.8rem;
+        border-radius: 8px !important;
+    }
+}
+    </style>
 @endsection

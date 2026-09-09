@@ -228,119 +228,121 @@
     </section>
     <!-- why us new section end -->
 
-    <!-- Service Section Start -->
-    <section class="row_am service_section position-relative overflow-hidden" id="feature_sec">
-        <!-- background blure shapes -->       
-        <div class="blure_shape bg-secondary-color bs_2"> </div>
+    @if (isset($advantages) && $advantages->count())
+      <!-- Service Section Start -->
+      <section class="row_am service_section position-relative overflow-hidden" id="feature_sec">
+          <!-- background blure shapes -->       
+          <div class="blure_shape bg-secondary-color bs_2"> </div>
 
-        <div class="container position-relative">
-            @php
-                $logoPath = storage_path('app/public/' . $tenantTheme->path_image_logo_header);
-                $dimensions = file_exists($logoPath) ? @getimagesize($logoPath) : null;
-            @endphp
-            <!-- section title -->
-            <div class="section_title">
-                <span class="title_badge text-white">VANTAGENS</span>
-                <h2 class="trhee-step text-white">O que você ganha com<br> a <span>WHI Web</span></h2>
-            </div>     
+          <div class="container position-relative">
+              @php
+                  $logoPath = storage_path('app/public/' . $tenantTheme->path_image_logo_header);
+                  $dimensions = file_exists($logoPath) ? @getimagesize($logoPath) : null;
+              @endphp
+              <!-- section title -->
+              <div class="section_title">
+                  <span class="title_badge text-white">VANTAGENS</span>
+                  <h2 class="trhee-step text-white">O que você ganha com<br> a <span>WHI Web</span></h2>
+              </div>     
 
-            @foreach($advantages as $advantage)
-                @php
-                    // Verifica se a iteração é par ou ímpar para alternar os lados do layout
-                    $isEven = $loop->iteration % 2 === 0;
-                @endphp
+              @foreach($advantages as $advantage)
+                  @php
+                      // Verifica se a iteração é par ou ímpar para alternar os lados do layout
+                      $isEven = $loop->iteration % 2 === 0;
+                  @endphp
 
-                <div class="row service_blocks {{ !$isEven ? 'flex-row-reverse' : '' }} {{ $loop->last ? 'no_bottom_padding' : '' }}">
-                    
-                    <!-- Coluna de Texto -->
-                    <div class="col-md-6">
-                        <div class="service_text {{ !$isEven ? 'right_side' : '' }}">
+                  <div class="row service_blocks {{ !$isEven ? 'flex-row-reverse' : '' }} {{ $loop->last ? 'no_bottom_padding' : '' }}">
+                      
+                      <!-- Coluna de Texto -->
+                      <div class="col-md-6">
+                          <div class="service_text {{ !$isEven ? 'right_side' : '' }}">
 
-                            @if(!empty($advantage->tag))
-                                <span class="title_badge">{{ $advantage->tag }}</span>
-                            @endif
-
-                            <h3 class="text-white">{{ $advantage->title }}</h3>
-                            <p class="text-white">{{ $advantage->description }}</p>
-
-                            @if(!empty($advantage->text))
-                              @php
-                                  $content = $advantage->text;
-                                  // Verifica se o texto vindo do CMS contém tags <ul> ou <li>
-                                  $hasListTags = preg_match('/<\/?(ul|li)[^>]*>/i', $content);
-                              @endphp
-
-                              @if($hasListTags)
-                                  {{-- Caso o CMS envie HTML com <ul>/<li> (Editor WYSIWYG) --}}
-                                  @php
-                                      // Adiciona a classe do seu layout à tag <ul>
-                                      $formattedHtml = preg_replace('/<ul([^>]*)>/i', '<ul$1 class="design_block py-3 px-0">', $content);
-                                      
-                                      // Adiciona os ícones e as classes Bootstrap às tags <li>
-                                      $formattedHtml = preg_replace(
-                                          '/<li([^>]*)>(.*?)<\/li>/is', 
-                                          '<li$1 class="d-flex gap-2 justify-content-start align-items-center"><i class="bi bi-check-circle"></i> $2</li>', 
-                                          $formattedHtml
-                                      );
-                                  @endphp
-
-                                  {!! $formattedHtml !!}
-
-                                  @else
-                                      {{-- Caso seja texto simples digitado linha por linha --}}
-                                      @php
-                                          $items = array_filter(array_map('trim', explode("\n", $content)));
-                                      @endphp
-
-                                      @if(!empty($items))
-                                          <ul class="design_block py-3 px-0">
-                                              @foreach($items as $item)
-                                                  <li class="d-flex gap-2 justify-content-start align-items-center">
-                                                      <i class="bi bi-check-circle"></i>
-                                                      {{ $item }}
-                                                  </li>
-                                              @endforeach
-                                          </ul>
-                                      @endif
-                                  @endif
+                              @if(!empty($advantage->tag))
+                                  <span class="title_badge">{{ $advantage->tag }}</span>
                               @endif
 
-                            <div class="btn_block">
-                                <a href="{{ $advantage->button_url ?? '#plans' }}" class="bg-button-two color-button-two px-3 py-2 rounded-3">
-                                    <span>
-                                        {{ $advantage->button_text ?? 'Começar agora' }}
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5">
-                                            <path d="M5 12h14"></path>
-                                            <path d="m12 5 7 7-7 7"></path>
-                                        </svg>
-                                    </span> 
-                                </a>
-                            </div>
+                              <h3 class="text-white">{{ $advantage->title }}</h3>
+                              <p class="text-white">{{ $advantage->description }}</p>
 
-                        </div>
-                    </div>
+                              @if(!empty($advantage->text))
+                                @php
+                                    $content = $advantage->text;
+                                    // Verifica se o texto vindo do CMS contém tags <ul> ou <li>
+                                    $hasListTags = preg_match('/<\/?(ul|li)[^>]*>/i', $content);
+                                @endphp
 
-                    <!-- Coluna de Imagem -->
-                    <div class="col-md-6">
-                        <div class="inner_block {{ !$isEven ? 'dark_bg rotate_right' : '' }}">
-                            <div class="img">
-                                <img src="{{ asset('storage/' . $advantage->path_image) }}" 
-                                    alt="{{ $advantage->title }}" 
-                                    loading="lazy" 
-                                    width="{{ $dimensions[0] ?? 200 }}" 
-                                    height="{{ $dimensions[1] ?? 60 }}" 
-                                    style="max-width:100%;height:auto;">
-                            </div>
-                        </div>
-                    </div>
+                                @if($hasListTags)
+                                    {{-- Caso o CMS envie HTML com <ul>/<li> (Editor WYSIWYG) --}}
+                                    @php
+                                        // Adiciona a classe do seu layout à tag <ul>
+                                        $formattedHtml = preg_replace('/<ul([^>]*)>/i', '<ul$1 class="design_block py-3 px-0">', $content);
+                                        
+                                        // Adiciona os ícones e as classes Bootstrap às tags <li>
+                                        $formattedHtml = preg_replace(
+                                            '/<li([^>]*)>(.*?)<\/li>/is', 
+                                            '<li$1 class="d-flex gap-2 justify-content-start align-items-center"><i class="bi bi-check-circle"></i> $2</li>', 
+                                            $formattedHtml
+                                        );
+                                    @endphp
 
-                </div>
-            @endforeach
-        </div>
+                                    {!! $formattedHtml !!}
 
-        <div class="blure_shape bg-secondary-color bs_1"> </div> 
-    </section>
-    <!-- Service Section End -->
+                                    @else
+                                        {{-- Caso seja texto simples digitado linha por linha --}}
+                                        @php
+                                            $items = array_filter(array_map('trim', explode("\n", $content)));
+                                        @endphp
+
+                                        @if(!empty($items))
+                                            <ul class="design_block py-3 px-0">
+                                                @foreach($items as $item)
+                                                    <li class="d-flex gap-2 justify-content-start align-items-center">
+                                                        <i class="bi bi-check-circle"></i>
+                                                        {{ $item }}
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+                                    @endif
+                                @endif
+
+                              <div class="btn_block">
+                                  <a href="{{ $advantage->button_url ?? '#plans' }}" class="bg-button-two color-button-two px-3 py-2 rounded-3">
+                                      <span>
+                                          {{ $advantage->button_text ?? 'Começar agora' }}
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5">
+                                              <path d="M5 12h14"></path>
+                                              <path d="m12 5 7 7-7 7"></path>
+                                          </svg>
+                                      </span> 
+                                  </a>
+                              </div>
+
+                          </div>
+                      </div>
+
+                      <!-- Coluna de Imagem -->
+                      <div class="col-md-6">
+                          <div class="inner_block {{ !$isEven ? 'dark_bg rotate_right' : '' }}">
+                              <div class="img">
+                                  <img src="{{ asset('storage/' . $advantage->path_image) }}" 
+                                      alt="{{ $advantage->title }}" 
+                                      loading="lazy" 
+                                      width="{{ $dimensions[0] ?? 200 }}" 
+                                      height="{{ $dimensions[1] ?? 60 }}" 
+                                      style="max-width:100%;height:auto;">
+                              </div>
+                          </div>
+                      </div>
+
+                  </div>
+              @endforeach
+          </div>
+
+          <div class="blure_shape bg-secondary-color bs_1"> </div> 
+      </section>
+      <!-- Service Section End -->
+    @endif
 
     <section id="templates" class="tpl-modal-sec">
       <div class="container">
@@ -355,9 +357,11 @@
 
           <div class="tpl-header-right">
             <p>Escolha uma estrutura profissional e passe o mouse sobre os cards para navegar no modelo completo.</p>
+            <a href="{{ route('templates') }}">
             <div class="tpl-scroll-hint">
-              Deslize para ver mais <i class="bi bi-arrow-right"></i>
-            </div>
+                Ver todos os templates<i class="bi bi-arrow-right"></i>
+              </div>
+            </a>
           </div>
         </div>
 
@@ -388,21 +392,25 @@
               <div class="tpl-preview">
                 <img src="{{ asset('storage') .'/'. $previewImage }}" alt="{{ $templateTheme->name }}" loading="lazy">
                 <div class="tpl-overlay">
-                  <a href="#" class="tpl-btn-preview bg-secondary">Ver Demo <i class="bi bi-arrow-up-right"></i></a>
+                  <a href="{{ route('template', ['slug' => $templateTheme->slug]) }}" class="tpl-btn-preview bg-secondary"><i data-lucide="eye" style="width: 14px; height: 14px;"></i> Ver Detalhe</a>
                 </div>
               </div>
               <div class="tpl-card-body">
                 <div>
                     <span class="tpl-category">{{ is_object($templateTheme) ? $templateTheme->name : $templateTheme['name'] }}</span>
-                    <div class="d-flex align-items-center gap-3 text-secondary" style="font-size: 0.75rem;">
-                        <span class="d-flex align-items-center gap-1">
-                            <i data-lucide="layers" style="width: 14px; height: 14px;"></i>
-                            {{ $countPreviews }} Páginas PNG
-                        </span>
-                        <span class="d-flex align-items-center gap-1">
-                            <i data-lucide="code-2" style="width: 14px; height: 14px;"></i>
-                            {{ strtoupper($templateTheme->technology ?? '') }}
-                        </span>
+                    <div class="d-flex align-items-center gap-2 text-secondary" style="font-size: 0.75rem;">
+                        @if ($countPreviews )                          
+                          <span class="d-flex align-items-center gap-1">
+                              <i data-lucide="layers" style="width: 14px; height: 14px;"></i>
+                              {{ $countPreviews }} Páginas PNG
+                          </span>
+                        @endif
+                        @if ($templateTheme->technology <> null)                          
+                          <span class="d-flex align-items-center gap-1">
+                              <i data-lucide="code-2" style="width: 14px; height: 14px;"></i>
+                              {{ strtoupper($templateTheme->technology ?? '') }}
+                          </span>
+                        @endif
                     </div>
                 </div>
                 <div class="tpl-arrow"><i class="bi bi-arrow-up-right"></i></div>
@@ -699,104 +707,5 @@
         </div>
       </section>
     @endif
-
-    @if (isset($contact) && $contact <> null)
-      <section class="cta-pro-section" id="contact_sec">
-        <!-- Glows de Iluminação em Camadas -->
-        <div class="cta-glow-1"></div>
-        <div class="cta-glow-2"></div>
-
-        <div class="container">
-          <div class="cta-glass-card p-3 p-lg-4">
-            <div class="row align-items-center">
-              
-              <!-- Conteúdo Principal -->
-              <div class="col-lg-6 mb-4 mb-lg-0">
-                <div class="cta-status-badge">
-                  <span class="status-dot"></span>
-                  Equipe Online Agora
-                </div>
-                <h2 class="cta-title">{{$contact->name_section}}</h2>
-                <div class="cta-subtitle">{!!$contact->text!!}</div>
-
-                <!-- Seletor de Assuntos (Interativo) -->
-                <div class="cta-topics-label">Sobre o que deseja falar?</div>
-                <div class="cta-topics-group justify-content-center justify-content-lg-start">
-                  <span class="topic-chip active" data-subject="Orçamento & Prazos">Orçamento</span>
-                  <span class="topic-chip" data-subject="Dúvidas Técnicas">Dúvidas Técnicas</span>
-                  <span class="topic-chip" data-subject="Contratar Plano">Contratar Plano</span>
-                  <span class="topic-chip" data-subject="Suporte">Suporte</span>
-                </div>
-              </div>
-
-              <!-- Canais Rápidos de Contato -->
-              <div class="col-lg-6">
-                <div class="d-flex flex-column gap-3">
-
-                  <!-- Canal 1: WhatsApp Direto -->
-                  @if(isset($contact) && $contact->whatsapp <> null)
-                    @php
-                        $phone = preg_replace('/\D/', '', $contact->whatsapp);
-                        $mensagem = "Olá! Encontrei seu site e gostaria de conhecer mais sobre os planos disponíveis.%0A";
-                    @endphp
-                    <div class="contact-channel-card justify-content-start justify-content-lg-between p-2 p-lg-4">
-                      <div class="channel-info">
-                        <div class="channel-icon">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                        </div>
-                        <div class="channel-details">
-                          <div class="h4">Atendimento Telefônico / WhatsApp</div>
-                          <p class="d-flex justify-content-start">{{$contact->whatsapp}}</p>
-                        </div>
-                      </div>
-                      <div class="d-flex gap-2 w-100-mobile">
-                        <button class="btn-channel-action" onclick="copyToClipboard('{{$contact->whatsapp}}', 'Telefone copiado!')" title="Copiar Número">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-                        </button>
-                        <a href="https://wa.me/55{{ $phone }}?text={{ $mensagem }}" id="whatsapp-btn" target="_blank" class="btn-channel-action btn-channel-primary">
-                          Conversar
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                        </a>
-                      </div>
-                    </div>
-                  @endif
-
-                  <!-- Canal 2: E-mail -->
-                  @if (isset($contact->name_one) && $contact->name_one <> null)                  
-                    <div class="contact-channel-card justify-content-start justify-content-lg-between p-2 p-lg-4">
-                      <div class="channel-info">
-                        <div class="channel-icon">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                        </div>
-                        <div class="channel-details">
-                          <div class="h4">Envie uma mensagem por e-mail</div>
-                          <p class="d-flex justify-content-star">{{$contact->name_one}}</p>
-                        </div>
-                      </div>
-                      <div class="d-flex gap-2 w-100-mobile">
-                        <button class="btn-channel-action" onclick="copyToClipboard('{{$contact->name_one}}', 'E-mail copiado!')" title="Copiar E-mail">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-                        </button>
-                        <a href="mailto:{{$contact->name_one}}" class="btn-channel-action">
-                          Escrever
-                        </a>
-                      </div>
-                    </div>
-                  @endif
-
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </section>
-    @endif
-
-    <!-- Toast de Notificação -->
-    <div id="cta-toast" class="cta-toast">
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-      <span id="toast-message">Copiado com sucesso!</span>
-    </div>
 
 @endsection

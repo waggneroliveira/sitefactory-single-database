@@ -21,7 +21,7 @@ class TemplatePageService
             $templateThemes = $templateThemes->where('name', 'like', '%' . $search . '%');
         }
 
-        $templateThemes = $templateThemes->get();
+        $templateThemes = $templateThemes->paginate('6');
 
         $uniqueThemes = TemplateTheme::active()
             ->distinct()

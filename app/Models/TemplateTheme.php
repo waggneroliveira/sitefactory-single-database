@@ -19,6 +19,8 @@ class TemplateTheme extends Model
         'template_variation',
         'highlights',
         'technology',
+        'title',
+        'description',
     ];
 
     protected $casts = [

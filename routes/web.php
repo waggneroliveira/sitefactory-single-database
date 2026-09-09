@@ -176,58 +176,15 @@ Route::middleware([NeedsTenant::class])->group(function () {
 // View Composer
 // =============================
 
-View::composer('client.core.client', function ($view) {
-
-    $blogCategories = BlogCategory::whereHas('blogs')
-        ->active()
-        ->sorting()
-        ->limit(10)
-        ->get();
-
-
-    $announcements = Announcement::select(
-        'exhibition',
-        'link',
-        'path_image',
-        'active',
-        'sorting',
-    )
-    ->whereIn('exhibition', ['mobile', 'horizontal'])
-    ->active()
-    ->sorting()
-    ->get();
-
+View::composer('client.themes.whi-web.tp-01.core.client', function ($view) {
 
     $contact = Contact::first();
 
-    $abouts = About::active()
-        ->sorting()
-        ->get();
-
-
-    $directions = Direction::active()
-        ->sorting()
-        ->count();
-
-
-    $benefitTopics = BenefitTopic::active()
-        ->sorting()
-        ->count();
-
-
-    $report = Report::active()
-        ->count();
 
     $seoGoogle = SeoGoogle::first();
     
     return $view->with([
-        'blogCategories' => $blogCategories,
-        'announcements' => $announcements,
         'contact' => $contact,
-        'directions' => $directions,
-        'benefitTopics' => $benefitTopics,
-        'report' => $report,
-        'abouts' => $abouts,
         'seoGoogle' => $seoGoogle,
     ]);
 
