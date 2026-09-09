@@ -22,8 +22,13 @@ class TemplatePageService
         }
 
         $templateThemes = $templateThemes->get();
+
+        $uniqueThemes = TemplateTheme::active()
+            ->distinct()
+            ->pluck('name', 'slug')
+            ->toArray();
   
-        return compact('templateThemes', 'theme', 'themeData', 'tenantTheme');
+        return compact('templateThemes', 'uniqueThemes', 'theme', 'themeData', 'tenantTheme');
     }
 
     public function getInnerData($slug = null, ThemeManager $themeManager): array

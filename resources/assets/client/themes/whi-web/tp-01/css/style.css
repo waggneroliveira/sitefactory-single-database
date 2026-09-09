@@ -3587,6 +3587,34 @@ footer .bottom_footer .developer_text a {
 #why_sec .why_data_block, #why_sec .why_us_new_img, #why_sec .section_title, #why_sec img[src*='tablet.png'], #why_sec img[src*='phone-login.png'] {
     will-change: transform, opacity;
 }
+/* Garantir que o modal fique acima de tudo */
+.modal {
+    z-index: 99999 !important;
+}
+
+.modal-backdrop {
+    z-index: 99998 !important;
+}
+
+.modal-dialog {
+    z-index: 99999 !important;
+}
+
+/* Se houver algum elemento com position: relative que esteja criando um novo contexto de empilhamento */
+.modal.fade .modal-dialog {
+    transform: none !important;
+}
+
+/* Garantir que o modal não seja afetado por overflow de elementos pais */
+body.modal-open {
+    overflow: hidden !important;
+    padding-right: 0 !important;
+}
+
+.modal-open .modal {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+}
 :root {
     --primery-gradient: linear-gradient(to right, #fb6c04 0%, #FFA733 60%, #FFB347 100%);
     --primery: #fb6c04;

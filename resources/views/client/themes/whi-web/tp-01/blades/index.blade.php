@@ -393,8 +393,17 @@
               </div>
               <div class="tpl-card-body">
                 <div>
-                  <span class="tpl-category">{{ $templateTheme->name }}</span>
-                  <h3 class="tpl-title">Moderno e Acolhedor</h3>
+                    <span class="tpl-category">{{ is_object($templateTheme) ? $templateTheme->name : $templateTheme['name'] }}</span>
+                    <div class="d-flex align-items-center gap-3 text-secondary" style="font-size: 0.75rem;">
+                        <span class="d-flex align-items-center gap-1">
+                            <i data-lucide="layers" style="width: 14px; height: 14px;"></i>
+                            {{ $countPreviews }} Páginas PNG
+                        </span>
+                        <span class="d-flex align-items-center gap-1">
+                            <i data-lucide="code-2" style="width: 14px; height: 14px;"></i>
+                            {{ strtoupper($templateTheme->technology ?? '') }}
+                        </span>
+                    </div>
                 </div>
                 <div class="tpl-arrow"><i class="bi bi-arrow-up-right"></i></div>
               </div>

@@ -177,10 +177,215 @@
     <link href="{{ asset('build/client/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link rel="preload" href="{{ asset('build/client/bootstrap-icons/bootstrap-icons.css') }}" as="style" onload="this.rel='stylesheet'">
 
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script type="application/ld+json">{!! json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}</script>
 </head>
 
 <body>
+    <style>        
+        .tpl-modal-sec.templates {
+            background: transparent !important;
+        }
+        .tpl-modal-sec.templates .tpl-card {
+            min-width: inherit !important;
+            max-width: inherit !important;
+        }
+        ::selection {
+            background-color: var(--brand-500);
+            color: #ffffff;
+        }
+
+        /* Glassmorphism Navigation */
+        .glass-panel {
+            background: rgba(18, 24, 36, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Custom Buttons */
+        .btn-brand {
+            background-color: var(--brand-600);
+            color: #ffffff;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.2);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn-brand:hover {
+            background-color: var(--brand-500);
+            color: #ffffff;
+        }
+
+        /* Cards - Ajustado para não travar a opacidade em 0 via CSS */
+        .js-card-item {
+            will-change: transform, opacity;
+        }
+
+        .template-card {
+            background-color: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .template-card:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        .card-img-wrapper {
+            position: relative;
+            aspect-ratio: 16 / 9;
+            background-color: #020617;
+            overflow: hidden;
+        }
+
+        .card-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+            transition: transform 0.5s ease;
+        }
+
+        .template-card:hover .card-img-wrapper img {
+            transform: scale(1.05);
+        }
+
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.6);
+            backdrop-filter: blur(2px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .template-card:hover .card-overlay {
+            opacity: 1;
+        }
+
+        /* Badges */
+        .badge-category {
+            background-color: rgba(15, 23, 42, 0.8);
+            color: #cbd5e1;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            font-size: 10px;
+        }
+
+        .badge-pill-custom {
+            background-color: var(--dark-card);
+            color: #94a3b8;
+            border: 1px solid var(--dark-border);
+            border-radius: 50rem;
+            padding: 0.375rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .badge-pill-custom:hover {
+            border-color: #475569;
+            color: #ffffff;
+        }
+
+        .badge-pill-custom.active {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #FFF;
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .hero-section {
+            opacity: 0;
+            transform: translateY(24px);
+        }
+    </style>
+
+    <!-- GSAP Animations -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Inicializa os ícones Lucide
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+
+            // Animação do Hero
+            gsap.to('.hero-section', {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: 'power3.out'
+            });
+
+            const filterButtons = document.querySelectorAll('#theme-filters button');
+            const cards = document.querySelectorAll('.js-card-item');
+
+            // Função para animar apenas os cards visíveis instantaneamente
+            function animateVisibleCards() {
+                const visibleCards = Array.from(cards).filter(card => card.style.display !== 'none');
+                
+                if (visibleCards.length === 0) return;
+
+                // Cancela animações antigas
+                gsap.killTweensOf(visibleCards);
+
+                // Prepara estado inicial antes da animação
+                gsap.set(visibleCards, { opacity: 0, y: 20 });
+                
+                // Executa a animação imediatamente na viewport atual
+                gsap.to(visibleCards, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.4,
+                    stagger: 0.05,
+                    ease: 'power2.out',
+                    clearProps: 'transform' // Garante que não trava posições após a animação
+                });
+
+                // Se o ScrollTrigger estiver ativo na página, força a atualização do layout
+                if (typeof ScrollTrigger !== 'undefined') {
+                    ScrollTrigger.refresh();
+                }
+            }
+
+            // Executa a animação inicial
+            animateVisibleCards();
+
+            // Evento de clique nos botões de filtro
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const selectedSlug = this.getAttribute('data-slug');
+
+                    // Alterna a classe 'active'
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Exibe/oculta os cards
+                    cards.forEach(card => {
+                        const cardSlug = card.getAttribute('data-slug');
+
+                        if (selectedSlug === 'all' || (cardSlug && cardSlug.includes(selectedSlug))) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+
+                    // Anima os cards filtrados imediatamente
+                    animateVisibleCards();
+                });
+            });
+        });
+    </script>
 
     <div id="organization" hidden></div>
 
@@ -477,42 +682,6 @@
                         @endif
                     </div>
 
-                    <!-- Modal Política de Privacidade -->
-                    <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="privacyModalLabel">Política de Privacidade</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                                </div>
-                                <div class="modal-body">
-                                    {!! $tenantTheme->privacy_policy !!}
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Modal Termos de Uso -->
-                    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="termsModalLabel">Termos de Uso</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                                </div>
-                                <div class="modal-body">
-                                    {!! $tenantTheme->terms_of_use !!}
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="col-12 col-lg-4 m-0 p-0">
                         <div class="d-flex justify-content-center justify-content-lg-end align-items-center gap-3">
                             <a href="http://whiweb.com.br/" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
@@ -545,6 +714,42 @@
         </div>
     </footer>
 
+    <!-- Modal Política de Privacidade -->
+    <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="privacyModalLabel">Política de Privacidade</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    {!! $tenantTheme->privacy_policy !!}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Termos de Uso -->
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="termsModalLabel">Termos de Uso</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    {!! $tenantTheme->terms_of_use !!}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const currentYear = new Date().getFullYear();
@@ -569,10 +774,13 @@
     <script defer src="{{ asset('build/client/js/default.js') }}"></script>
 
     @php
-        $slide = $slides->first();
+        if (isset($slide)) {
+            
+            $slide = $slides->first();
+        }
     @endphp
 
-    @if ($slide)
+    @if (isset($slide))
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const typedStrings = @json($slide->typed ?? '')
@@ -599,5 +807,6 @@
             });
         </script>
     @endif
+
 </body>
 </html>
