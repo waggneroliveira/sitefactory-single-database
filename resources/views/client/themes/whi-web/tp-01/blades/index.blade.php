@@ -365,87 +365,41 @@
         <div class="tpl-scroll-track">
 
           <!-- Item 1 -->
-          <article class="tpl-card">
-            <div class="tpl-card-topbar">
-              <div class="tpl-dots"><span></span><span></span><span></span></div>
-              <span class="tpl-tag">Popular</span>
-            </div>
-            <div class="tpl-preview">
-              <img src="https://halothemes.net/cdn/shop/files/petcity-theme.jpg" onerror="this.src='https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=800&q=80'" alt="Petshop" loading="lazy">
-              <div class="tpl-overlay">
-                <a href="#" class="tpl-btn-preview bg-secondary">Ver Demo <i class="bi bi-arrow-up-right"></i></a>
-              </div>
-            </div>
-            <div class="tpl-card-body">
-              <div>
-                <span class="tpl-category">Petshop</span>
-                <h3 class="tpl-title">Moderno e Acolhedor</h3>
-              </div>
-              <div class="tpl-arrow"><i class="bi bi-arrow-up-right"></i></div>
-            </div>
-          </article>
+          @foreach($templateThemes as $templateTheme)
+            @php
+                $preview = $templateTheme['preview'] ?? null;
 
-          <!-- Item 2 -->
-          <article class="tpl-card">
-            <div class="tpl-card-topbar">
-              <div class="tpl-dots"><span></span><span></span><span></span></div>
-              <span class="tpl-tag">Destaque</span>
-            </div>
-            <div class="tpl-preview">
-              <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/7b3e7c176553645.64c7c4c7e7a6f9.png" onerror="this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80'" alt="Restaurante" loading="lazy">
-              <div class="tpl-overlay">
-                <a href="#" class="tpl-btn-preview">Ver Demo <i class="bi bi-arrow-up-right"></i></a>
-              </div>
-            </div>
-            <div class="tpl-card-body">
-              <div>
-                <span class="tpl-category">Restaurante</span>
-                <h3 class="tpl-title">Elegante e Convidativo</h3>
-              </div>
-              <div class="tpl-arrow"><i class="bi bi-arrow-up-right"></i></div>
-            </div>
-          </article>
+                if (is_string($preview)) {
+                    $previews = json_decode($preview, true) ?? [];
+                } elseif (is_array($preview)) {
+                    $previews = $preview;
+                } else {
+                    $previews = [];
+                }
 
-          <!-- Item 3 -->
-          <article class="tpl-card">
-            <div class="tpl-card-topbar">
-              <div class="tpl-dots"><span></span><span></span><span></span></div>
-            </div>
-            <div class="tpl-preview">
-              <img src="https://y4pdgnepgswqffpt.public.blob.vercel-storage.com/templates/52439/servexa-UBoXqFa1RHZGFrlhyXS8hvp8hA4fKN" alt="Serviços" loading="lazy">
-              <div class="tpl-overlay">
-                <a href="#" class="tpl-btn-preview">Ver Demo <i class="bi bi-arrow-up-right"></i></a>
+                $previewImage = $previews[0] ?? null;
+                $countPreviews = count($previews);
+            @endphp
+            <article class="tpl-card">
+              <div class="tpl-card-topbar">
+                <div class="tpl-dots"><span></span><span></span><span></span></div>
+                <span class="tpl-tag">{{ $templateTheme->layout_type }}</span>
               </div>
-            </div>
-            <div class="tpl-card-body">
-              <div>
-                <span class="tpl-category">Serviços</span>
-                <h3 class="tpl-title">Clean e Profissional</h3>
+              <div class="tpl-preview">
+                <img src="{{ asset('storage') .'/'. $previewImage }}" alt="{{ $templateTheme->name }}" loading="lazy">
+                <div class="tpl-overlay">
+                  <a href="#" class="tpl-btn-preview bg-secondary">Ver Demo <i class="bi bi-arrow-up-right"></i></a>
+                </div>
               </div>
-              <div class="tpl-arrow"><i class="bi bi-arrow-up-right"></i></div>
-            </div>
-          </article>
-
-          <!-- Item 4 -->
-          <article class="tpl-card">
-            <div class="tpl-card-topbar">
-              <div class="tpl-dots"><span></span><span></span><span></span></div>
-              <span class="tpl-tag">Novo</span>
-            </div>
-            <div class="tpl-preview">
-              <img src="https://www.yola.com/ws/media-library/0a36e7e121e846f3a45f539f5f88a90e/27c5bb58f4394abeb3d85fc6c41574db.jpeg" alt="Empresas" loading="lazy">
-              <div class="tpl-overlay">
-                <a href="#" class="tpl-btn-preview">Ver Demo <i class="bi bi-arrow-up-right"></i></a>
+              <div class="tpl-card-body">
+                <div>
+                  <span class="tpl-category">{{ $templateTheme->name }}</span>
+                  <h3 class="tpl-title">Moderno e Acolhedor</h3>
+                </div>
+                <div class="tpl-arrow"><i class="bi bi-arrow-up-right"></i></div>
               </div>
-            </div>
-            <div class="tpl-card-body">
-              <div>
-                <span class="tpl-category">Empresas</span>
-                <h3 class="tpl-title">Sofisticado e Objetivo</h3>
-              </div>
-              <div class="tpl-arrow"><i class="bi bi-arrow-up-right"></i></div>
-            </div>
-          </article>
+            </article>
+          @endforeach
 
         </div>
 

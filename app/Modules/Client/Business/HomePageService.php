@@ -28,6 +28,7 @@ use App\Models\ServiceSection;
 use App\Models\SessaoFaq;
 use App\Models\Slide;
 use App\Models\Statute;
+use App\Models\TemplateTheme;
 use App\Models\Tenant;
 use App\Models\Topic;
 use App\Models\Video;
@@ -69,12 +70,13 @@ class HomePageService
         $contractedPlans = Plan::active()->get();
         $popUp = PopUp::active()->first();
         $advantages = Advantage::active()->get();
-
+        $templateThemes = TemplateTheme::active()->get();
         $tenantTheme = Tenant::current();
         $theme = $themeManager;
         $themeData = $themeManager->theme();
 
         return compact(
+            'templateThemes',
             'advantages',
             'contractedPlans',
             'reports',
