@@ -22,9 +22,9 @@ class TemplatePageController
         return view($this->theme->view('templates'), $data);
     }
 
-    public function templateInner($slug = null){
-        $data = $this->service->getInnerData($slug, $this->theme);
-
+    public function templateInner($slug = null, $templateVariation = null){
+        $data = $this->service->getInnerData($slug, $templateVariation, $this->theme);
+  
         if (isset($data['view'])) {
             return view($data['view']);
         }

@@ -17,6 +17,7 @@ use App\Models\Contact;
 use App\Models\Direction;
 use App\Models\Report;
 use App\Models\SeoGoogle;
+use App\Models\TemplateTheme;
 use App\Modules\Client\Presentation\Controllers\AboutPageController;
 use App\Modules\Client\Presentation\Controllers\BlogPageController;
 use App\Modules\Client\Presentation\Controllers\ClientController;
@@ -50,7 +51,7 @@ Route::middleware([NeedsTenant::class])->group(function () {
     Route::get('templates', [TemplatePageController::class, 'templateAll'])
         ->name('templates');
 
-    Route::get('template/{slug}', [TemplatePageController::class, 'templateInner'])
+    Route::get('template/{slug}/{templateVariation?}', [TemplatePageController::class, 'templateInner'])
         ->name('template');
 
 
@@ -180,12 +181,17 @@ View::composer('client.themes.whi-web.tp-01.core.client', function ($view) {
 
     $contact = Contact::first();
 
+    $templateThemeInner = TemplateTheme::where('slug', request()->route('slug'))
+    ->when(request()->route('templateVariation'), fn ($query) => $query->where('template_variation', request()->route('templateVariation')))
+    ->active()
+    ->first();
 
     $seoGoogle = SeoGoogle::first();
     
     return $view->with([
         'contact' => $contact,
         'seoGoogle' => $seoGoogle,
+        'templateThemeInner' => $templateThemeInner,
     ]);
 
 });

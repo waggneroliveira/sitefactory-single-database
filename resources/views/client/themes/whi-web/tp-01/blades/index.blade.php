@@ -392,7 +392,7 @@
               <div class="tpl-preview">
                 <img src="{{ asset('storage') .'/'. $previewImage }}" alt="{{ $templateTheme->name }}" loading="lazy">
                 <div class="tpl-overlay">
-                  <a href="{{ route('template', ['slug' => $templateTheme->slug]) }}" class="tpl-btn-preview bg-secondary"><i data-lucide="eye" style="width: 14px; height: 14px;"></i> Ver Detalhe</a>
+                  <a href="{{ route('template', ['slug' => $templateTheme->slug, 'templateVariation' => $templateTheme->template_variation]) }}" class="tpl-btn-preview bg-secondary"><i data-lucide="eye" style="width: 14px; height: 14px;"></i> Ver Detalhe</a>
                 </div>
               </div>
               <div class="tpl-card-body">

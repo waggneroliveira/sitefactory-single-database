@@ -85,7 +85,7 @@
     <title>{{ isset($blogInner) && !empty($blogInner->title) ? $blogInner->title : $seoTitle }}</title>
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
 
-    @if(isset($blogInner))
+    {{-- @if(isset($blogInner))
         @php
             $blogDescription = Str::limit(strip_tags($blogInner->text ?? $seoDescription), 150);
             $blogImage = !empty($blogInner->path_image_thumbnail) ? asset('storage/' . $blogInner->path_image_thumbnail) : $socialImage;
@@ -142,8 +142,102 @@
         @elseif($organizationLogo)
             <meta name="twitter:image" content="{{ $organizationLogo }}">
         @endif
+    @endif --}}
+
+    @if(isset($blogInner))
+
+    @php
+        $blogDescription = Str::limit(strip_tags($blogInner->text ?? $seoDescription), 150);
+        $blogImage = !empty($blogInner->path_image_thumbnail) ? asset('storage/' . $blogInner->path_image_thumbnail) : $socialImage;
+    @endphp
+
+    @if(!empty($blogDescription))
+        <meta name="description" content="{{ $blogDescription }}">
     @endif
 
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{ $blogInner->title ?? $seoTitle }}">
+    <meta property="og:description" content="{{ $blogDescription }}">
+
+    @if($blogImage)
+        <meta property="og:image" content="{{ $blogImage }}">
+    @endif
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ url()->current() }}">
+    <meta name="twitter:title" content="{{ $blogInner->title ?? $seoTitle }}">
+    <meta name="twitter:description" content="{{ $blogDescription }}">
+
+    @if($blogImage)
+        <meta name="twitter:image" content="{{ $blogImage }}">
+    @endif
+
+    @elseif(isset($templateThemeInner))
+
+        @php
+            $templateImage = !empty($templateThemeInner->preview[0])
+                ? asset('storage/' . $templateThemeInner->preview[0])
+                : $socialImage;
+
+            $templateTitle = $templateThemeInner->name ?? $seoTitle;
+            $templateDescription = 'Confira este template no SiteFactory.';        
+        @endphp
+
+        <meta name="description" content="{{ $templateDescription }}">
+
+        <meta property="og:url" content="{{ url()->current() }}">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="{{ $templateTitle }}">
+        <meta property="og:description" content="{{ $templateDescription }}">
+
+        @if($templateImage)
+            <meta property="og:image" content="{{ $templateImage }}">
+        @endif
+
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:url" content="{{ url()->current() }}">
+        <meta name="twitter:title" content="{{ $templateTitle }}">
+        <meta name="twitter:description" content="{{ $templateDescription }}">
+
+        @if($templateImage)
+            <meta name="twitter:image" content="{{ $templateImage }}">
+        @endif
+
+    @else
+
+        @if(!empty($seoDescription))
+            <meta name="description" content="{{ $seoDescription }}">
+        @endif
+
+        @if(!empty($seoKeywords))
+            <meta name="keywords" content="{{ $seoKeywords }}">
+        @endif
+
+        <meta property="og:url" content="{{ url()->current() }}">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="{{ $seoTitle }}">
+        <meta property="og:description" content="{{ $seoDescription }}">
+
+        @if($socialImage)
+            <meta property="og:image" content="{{ $socialImage }}">
+        @elseif($organizationLogo)
+            <meta property="og:image" content="{{ $organizationLogo }}">
+        @endif
+
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:url" content="{{ url()->current() }}">
+        <meta name="twitter:title" content="{{ $seoTitle }}">
+        <meta name="twitter:description" content="{{ $seoDescription }}">
+
+        @if($socialImage)
+            <meta name="twitter:image" content="{{ $socialImage }}">
+        @elseif($organizationLogo)
+            <meta name="twitter:image" content="{{ $organizationLogo }}">
+        @endif
+
+    @endif
+    {{dd($templateThemeInner)}}
     <link rel="canonical" href="{{ url()->current() }}">
     <meta name="copyright" content="Direitos reservados WHI">
     <meta name="author" content="WHI">

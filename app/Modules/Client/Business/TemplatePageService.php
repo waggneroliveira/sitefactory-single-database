@@ -31,24 +31,26 @@ class TemplatePageService
         return compact('templateThemes', 'uniqueThemes', 'theme', 'themeData', 'tenantTheme');
     }
 
-    public function getInnerData($slug = null, ThemeManager $themeManager): array
+    public function getInnerData($slug = null, $templateVariation = null, ThemeManager $themeManager): array
     {
-        if (!$slug) {
-            return ['view' => 'client.errors.404'];
-        }
-
-        $templateThemeInner = TemplateTheme::where('slug', $slug)
+        $templateThemeInner = TemplateTheme::where('slug', $slug)->where('template_variation', $templateVariation)
             ->active()
             ->first();
+
+        if (!$templateThemeInner) {
+            return ['view' => 'client.themes.whi-web.tp-01.errors.404'];
+        }
 
         $tenantTheme = Tenant::current();
         $theme = $themeManager;
         $themeData = $themeManager->theme();
+
         return compact(
-            'templateThemeInner', 
-            'theme', 
+            'templateThemeInner',
+            'theme',
             'themeData',
-            'tenantTheme'
+            'tenantTheme',
+            'templateVariation'
         );
     }
 }

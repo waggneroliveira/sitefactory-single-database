@@ -198,16 +198,21 @@
             <a href="{{ route('templates') }}" class="btn-faq-cta">
                 Voltar
             </a>
+            @if (isset($templateThemeInner) ?? $templateThemeInner->title <> null || isset($templateThemeInner) ?? $templateThemeInner->description)
+                <div>
+                    @if ($templateThemeInner->title <> null)                        
+                        <h1 class="fw-bold text-white fs-2 tracking-tight mb-0">
+                            {{ $templateThemeInner->title }}
+                        </h1>
+                    @endif
 
-            <div>
-                <h1 class="fw-bold text-white fs-2 tracking-tight mb-0">
-                    {{ $templateThemeInner->title }}
-                </h1>
-
-                <p class="text-white-50 mt-2 mb-0 text-base" style="max-width: 672px;">
-                    {{ $templateThemeInner->description }}
-                </p>
-            </div>
+                    @if ($templateThemeInner->description <> null)                        
+                        <p class="text-white-50 mt-2 mb-0 text-base" style="max-width: 672px;">
+                            {{ $templateThemeInner->description }}
+                        </p>
+                    @endif
+                </div>
+            @endif
         </div>
 
         <div class="row g-4 items-start">
@@ -321,7 +326,23 @@
 
             <!-- Right Side: Details & Features Sidebar -->
             <div class="col-12 col-lg-4 d-flex flex-column gap-4 animate-sidebar">
+                @php
+                    $templateUrl = url()->current();
 
+                    $whatsappMessage = 'Olá! Tenho interesse neste template: ' . $templateThemeInner->name
+                        . ' (' . $templateThemeInner->layout_type . ').'
+                        . "\n\n"
+                        . 'Link do template: ' . $templateUrl
+                        . "\n\n"
+                        . 'Gostaria de saber mais sobre valores e contratação.';
+                @endphp
+
+                <a href="https://wa.me/5571982743414?text={{ urlencode($whatsappMessage) }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-faq-cta col-12 col-lg-6 justify-content-center">
+                    Quero esse
+                </a>
                 <!-- Specs Card -->
                 <div class="bg-dark-card rounded-4 p-4 shadow-lg d-flex flex-column gap-4">
 

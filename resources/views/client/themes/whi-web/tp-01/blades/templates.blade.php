@@ -58,7 +58,7 @@
                                 <div class="tpl-preview">
                                     <img src="{{ asset('storage/' . $previewImage) }}" alt="{{ $themeName }}" loading="lazy">
                                     <div class="tpl-overlay">
-                                        <a href="{{ route('template', ['slug' => $themeSlug]) }}" class="tpl-btn-preview bg-secondary">
+                                        <a href="{{ route('template', ['slug' => $themeSlug, 'templateVariation' => $templateTheme->template_variation]) }}" class="tpl-btn-preview bg-secondary">
                                             <i data-lucide="eye" style="width: 14px; height: 14px;"></i> Ver Detalhes 
                                         </a>
                                     </div>
