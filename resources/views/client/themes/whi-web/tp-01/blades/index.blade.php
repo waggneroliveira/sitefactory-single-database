@@ -41,7 +41,11 @@
                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>  
                               </a>
                           @endif
-                          <a href="{{ $contact->whatsapp }}" target="_blank" rel="noopener noreferrer" class="btn d-flex align-items-center btn-outline-light px-lg-5 px-3 py-lg-3 py-1 font-15 font-medium">
+                          @php
+                              $phone = preg_replace('/\D/', '', $contact->whatsapp);
+                              $mensagem = "Olá! Encontrei seu site e gostaria de conhecer mais sobre as condições para serviços avulso.";
+                          @endphp
+                          <a href="https://wa.me/55{{ $phone }}?text={{ $mensagem }}" target="_blank" rel="noopener noreferrer" class="btn d-flex align-items-center btn-outline-light px-lg-5 px-3 py-lg-3 py-1 font-15 font-medium">
                               Serviços avulso
                           </a>
                       </div>
@@ -426,7 +430,11 @@
             <h4>Quer algo 100% exclusivo?</h4>
             <p>Criamos um design personalizado do zero para atender às necessidades específicas do seu negócio.</p>
           </div>
-          <a href="{{ $contact->whatsapp }}" target="_blank" rel="noopener noreferrer" class="tpl-cta-btn">Solicitar Projeto Exclusivo</a>
+          @php
+              $phone = preg_replace('/\D/', '', $contact->whatsapp);
+              $mensagem = "Olá! Encontrei seu site e gostaria de conhecer mais sobre as condições para projetos exclusivos.";
+          @endphp
+          <a href="https://wa.me/55{{ $phone }}?text={{ $mensagem }}" target="_blank" rel="noopener noreferrer" class="tpl-cta-btn">Solicitar Projeto Exclusivo</a>
         </div>
 
       </div>
