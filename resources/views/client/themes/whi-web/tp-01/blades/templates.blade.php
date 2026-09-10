@@ -1,7 +1,7 @@
 @extends($theme->core('client'))
 
 @section('content')
-    <div class="container-xl px-3 px-sm-4 py-5">
+    <div class="container-xl px-3 px-sm-4 mt-4 py-5">
         <!-- Hero & Filter Section -->
         <section class="hero-section mx-auto my-5 col-12 col-lg-8">
             <h1 class="fw-bold text-white text-center display-5 tracking-tight">

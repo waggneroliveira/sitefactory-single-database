@@ -32,7 +32,7 @@
     <!-- Main Content Container -->
     <div class="container-xl px-3 px-sm-4 py-4 mt-5">
         <!-- Hero Title Section -->
-        <div class="animate-hero mt-5 mb-4 col-12 col-lg-8 d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-3">
+        <div class="animate-hero mt-5 mb-4 col-12 col-lg-8 text-center text-lg-start d-flex flex-column flex-md-row align-items-center align-items-ld-end justify-content-center justify-content-lg-between gap-3">
             @if (isset($templateThemeInner) ?? $templateThemeInner->title <> null || isset($templateThemeInner) ?? $templateThemeInner->description)
                 <div>
                     @if ($templateThemeInner->title <> null)                        
