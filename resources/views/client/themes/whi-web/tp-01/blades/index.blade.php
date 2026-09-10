@@ -48,16 +48,16 @@
 
                       <div class="hero-stats">
                           <div class="hero-stats-item">
-                              <div class="number text-white-50">100%</div>
-                              <div class="label">Personalizável</div>
+                              <div class="number text-white-50">Pronto</div>
+                              <div class="label">Templates profissionais</div>
                           </div>
                           <div class="hero-stats-item">
                               <div class="number text-white-50">24/7</div>
                               <div class="label">Seu site online</div>
                           </div>
                           <div class="hero-stats-item">
-                              <div class="number text-white-50">1</div>
-                              <div class="label">Plataforma completa</div>
+                              <div class="number text-white-50">Fácil</div>
+                              <div class="label">Gestão simplificada</div>
                           </div>
                       </div>
                   </div>
