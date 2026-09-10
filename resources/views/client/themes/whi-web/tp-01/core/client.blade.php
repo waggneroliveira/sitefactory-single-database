@@ -800,97 +800,64 @@
     @endif
 
     <script>
-    // Função auxiliar para exibir notificações Toast na tela
-    function showToast(message, type = 'info') {
-        // Procura ou cria o container de toasts
-        let container = document.getElementById('toast-container');
-        if (!container) {
-            container = document.createElement('div');
-            container.id = 'toast-container';
-            container.style.cssText = `
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                z-index: 9999;
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-            `;
-            document.body.appendChild(container);
-        }
+    // Função para exibir a mensagem no seu toast existente
+    function showToast(message) {
+        const toast = document.getElementById('cta-toast');
+        const toastMessage = document.getElementById('toast-message');
 
-        // Cria o elemento do Toast
-        const toast = document.createElement('div');
-        toast.innerText = message;
-        toast.style.cssText = `
-            background-color: #333;
-            color: #fff;
-            padding: 12px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            font-size: 14px;
-            font-family: sans-serif;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-        `;
+        if (!toast || !toastMessage) return;
 
-        container.appendChild(toast);
+        // Atualiza o texto da mensagem
+        toastMessage.textContent = message;
 
-        // Animação de Entrada
-        setTimeout(() => {
-            toast.style.opacity = '1';
-            toast.style.transform = 'translateY(0)';
-        }, 10);
+        // Exibe o toast
+        toast.classList.add('show');
 
-        // Remove o toast após 4 segundos
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            toast.style.transform = 'translateY(20px)';
-            setTimeout(() => toast.remove(), 300);
-        }, 4000);
+        // Esconde o toast após 3.5 segundos
+        clearTimeout(window.toastTimer);
+        window.toastTimer = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3500);
     }
 
-    // Listener do Formulário de Newsletter
+    // Listener do Formulário
     document.addEventListener('DOMContentLoaded', () => {
-        const newsletterForm = document.getElementById('newsletter-form');
+        const form = document.getElementById('newsletter-form');
+        if (!form) return;
 
-        if (newsletterForm) {
-            newsletterForm.addEventListener('submit', async function (event) {
-                event.preventDefault();
+        form.addEventListener('submit', async function (event) {
+            event.preventDefault();
 
-                const form = this;
-                const button = form.querySelector('button[type="submit"]');
-                const csrfInput = form.querySelector('input[name="_token"]');
+            const button = form.querySelector('button[type="submit"]');
+            const tokenInput = form.querySelector('input[name="_token"]');
 
-                if (button) button.disabled = true;
+            if (button) button.disabled = true;
 
-                try {
-                    const response = await fetch(form.action, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': csrfInput ? csrfInput.value : '',
-                            'Accept': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest'
-                        },
-                        body: new FormData(form)
-                    });
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': tokenInput ? tokenInput.value : '',
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: new FormData(form)
+                });
 
-                    const data = await response.json();
+                const data = await response.json();
 
-                    if (response.ok && data.success) {
-                        showToast(data.message || 'Cadastro realizado com sucesso!');
-                        form.reset();
-                    } else {
-                        showToast(data.message ?? 'Não foi possível realizar o cadastro.');
-                    }
-                } catch (error) {
-                    showToast('Ocorreu um erro. Tente novamente.');
-                } finally {
-                    if (button) button.disabled = false;
+                if (response.ok && data.success) {
+                    showToast(data.message || 'Inscrição realizada com sucesso!');
+                    form.reset();
+                } else {
+                    showToast(data.message ?? 'Não foi possível realizar o cadastro.');
                 }
-            });
-        }
+            } catch (error) {
+                showToast('Ocorreu um erro. Tente novamente.');
+            } finally {
+                if (button) button.disabled = false;
+            }
+        });
     });
 </script>
 
