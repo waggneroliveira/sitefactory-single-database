@@ -85,7 +85,8 @@
     <title>{{ isset($blogInner) && !empty($blogInner->title) ? $blogInner->title : $seoTitle }}</title>
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
 
-    {{-- @if(isset($blogInner))
+    @if(isset($blogInner))
+
         @php
             $blogDescription = Str::limit(strip_tags($blogInner->text ?? $seoDescription), 150);
             $blogImage = !empty($blogInner->path_image_thumbnail) ? asset('storage/' . $blogInner->path_image_thumbnail) : $socialImage;
@@ -108,103 +109,43 @@
         <meta name="twitter:url" content="{{ url()->current() }}">
         <meta name="twitter:title" content="{{ $blogInner->title ?? $seoTitle }}">
         <meta name="twitter:description" content="{{ $blogDescription }}">
-
+            
         @if($blogImage)
             <meta name="twitter:image" content="{{ $blogImage }}">
         @endif
-    @else
-        @if(!empty($seoDescription))
-            <meta name="description" content="{{ $seoDescription }}">
-        @endif
 
-        @if(!empty($seoKeywords))
-            <meta name="keywords" content="{{ $seoKeywords }}">
-        @endif
+        @elseif(isset($templateThemeInner))
 
-        <meta property="og:url" content="{{ url()->current() }}">
-        <meta property="og:type" content="website">
-        <meta property="og:title" content="{{ $seoTitle }}">
-        <meta property="og:description" content="{{ $seoDescription }}">
+            @php
+                $templateImage = !empty($templateThemeInner->preview[0])
+                    ? asset('storage/' . $templateThemeInner->preview[0])
+                    : $socialImage;
 
-        @if($socialImage)
-            <meta property="og:image" content="{{ $socialImage }}">
-        @elseif($organizationLogo)
-            <meta property="og:image" content="{{ $organizationLogo }}">
-        @endif
+                $templateTitle = $templateThemeInner->title ?? $seoTitle;
+                $templateDescription = 'Confira este template na plataforma Whi Web.';        
+            @endphp
 
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:url" content="{{ url()->current() }}">
-        <meta name="twitter:title" content="{{ $seoTitle }}">
-        <meta name="twitter:description" content="{{ $seoDescription }}">
+            <meta name="description" content="{{ $templateDescription }}">
 
-        @if($socialImage)
-            <meta name="twitter:image" content="{{ $socialImage }}">
-        @elseif($organizationLogo)
-            <meta name="twitter:image" content="{{ $organizationLogo }}">
-        @endif
-    @endif --}}
+            <meta property="og:url" content="{{ url()->current() }}">
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="{{ $templateTitle }}">
+            <meta property="og:description" content="{{ $templateDescription }}">
 
-    @if(isset($blogInner))
+            @if($templateImage)
+                <meta property="og:image" content="{{ $templateImage }}">
+            @endif
 
-    @php
-        $blogDescription = Str::limit(strip_tags($blogInner->text ?? $seoDescription), 150);
-        $blogImage = !empty($blogInner->path_image_thumbnail) ? asset('storage/' . $blogInner->path_image_thumbnail) : $socialImage;
-    @endphp
+            <meta name="twitter:card" content="summary_large_image">
+            <meta name="twitter:url" content="{{ url()->current() }}">
+            <meta name="twitter:title" content="{{ $templateTitle }}">
+            <meta name="twitter:description" content="{{ $templateDescription }}">
 
-    @if(!empty($blogDescription))
-        <meta name="description" content="{{ $blogDescription }}">
-    @endif
+            @if($templateImage)
+                <meta name="twitter:image" content="{{ $templateImage }}">
+            @endif
 
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:type" content="article">
-    <meta property="og:title" content="{{ $blogInner->title ?? $seoTitle }}">
-    <meta property="og:description" content="{{ $blogDescription }}">
-
-    @if($blogImage)
-        <meta property="og:image" content="{{ $blogImage }}">
-    @endif
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="{{ url()->current() }}">
-    <meta name="twitter:title" content="{{ $blogInner->title ?? $seoTitle }}">
-    <meta name="twitter:description" content="{{ $blogDescription }}">
-
-    @if($blogImage)
-        <meta name="twitter:image" content="{{ $blogImage }}">
-    @endif
-
-    @elseif(isset($templateThemeInner))
-
-        @php
-            $templateImage = !empty($templateThemeInner->preview[0])
-                ? asset('storage/' . $templateThemeInner->preview[0])
-                : $socialImage;
-
-            $templateTitle = $templateThemeInner->name ?? $seoTitle;
-            $templateDescription = 'Confira este template no SiteFactory.';        
-        @endphp
-
-        <meta name="description" content="{{ $templateDescription }}">
-
-        <meta property="og:url" content="{{ url()->current() }}">
-        <meta property="og:type" content="website">
-        <meta property="og:title" content="{{ $templateTitle }}">
-        <meta property="og:description" content="{{ $templateDescription }}">
-
-        @if($templateImage)
-            <meta property="og:image" content="{{ $templateImage }}">
-        @endif
-
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:url" content="{{ url()->current() }}">
-        <meta name="twitter:title" content="{{ $templateTitle }}">
-        <meta name="twitter:description" content="{{ $templateDescription }}">
-
-        @if($templateImage)
-            <meta name="twitter:image" content="{{ $templateImage }}">
-        @endif
-
-    @else
+        @else
 
         @if(!empty($seoDescription))
             <meta name="description" content="{{ $seoDescription }}">

@@ -179,7 +179,6 @@ Route::middleware([NeedsTenant::class])->group(function () {
 // =============================
 
 View::composer('client.themes.whi-web.tp-01.core.client', function ($view) {
-
     $contact = Contact::first();
     $blogInner = Blog::with('category')->where('slug', request()->route('slug'))->first();
     $templateThemeInner = TemplateTheme::where('slug', request()->route('slug'))
