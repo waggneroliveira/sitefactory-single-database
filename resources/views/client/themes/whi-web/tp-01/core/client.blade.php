@@ -122,7 +122,7 @@
                     : $socialImage;
 
                 $templateTitle = $templateThemeInner->title ?? $seoTitle;
-                $templateDescription = 'Confira este template na plataforma Whi Web.';        
+                $templateDescription = $templateThemeInner->description ? $templateThemeInner->description : 'Confira este template na plataforma Whi Web.';        
             @endphp
 
             <meta name="description" content="{{ $templateDescription }}">
