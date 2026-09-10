@@ -2,138 +2,138 @@
 
 @section('content')
     <!-- Banner-Section-Start -->
-    <section class="banner_section" id="home_sec">
-        @foreach ($slides as $slide)
-            <!-- hero bg -->
-            <div id="hero" class="hero_bg">
-                <img src="{{ asset('storage/' . $slide->path_image) }}" alt="image">
-            </div>
+    @if (isset($slides) && $slides->count())
+      <section class="banner_section" id="home_sec">
+          @foreach ($slides as $slide)
+              <!-- hero bg -->
+              <div id="hero" class="hero_bg">
+                  <img src="{{ asset('storage/' . $slide->path_image) }}" alt="image">
+              </div>
 
-            <!-- container start -->
-            <div class="container">
-                <!-- row start -->
-                <div class="row">
-                <div class="col-lg-7 col-md-12">
-                    <!-- banner text -->
-                    <div class="banner_text">
-                        <span class="hero-badge mb-3 d-inline-block secondary-color">
-                            <i class="bi bi-rocket-takeoff me-1"></i> Lançamento 2026
-                        </span>
-                        <!-- typed text -->
-                        <div class="type-wrap">
-                            <!-- add static words/sentences here (i.e. text that you don't want to be removed)-->
-                            <span id="typed" style="white-space:pre;" class="typed secondary-color">
-                            </span>
-                        </div>
-                        <!-- h1 -->
-                        <h1 class="hero-title font-changa font-40 font-bold text-white"> {{$slide->title}} <span class="secondary-color">{{$slide->subtitle}}</span></h1>
-                        <!-- p -->
-                        <div class="description text-white">
-                            {!! $slide->description !!}
-                        </div>
-                    </div>
+              <!-- container start -->
+              <div class="container">
+                  <!-- row start -->
+                  <div class="row">
+                  <div class="col-lg-7 col-md-12">
+                      <!-- banner text -->
+                      <div class="banner_text">
+                          <span class="hero-badge mb-3 d-inline-block secondary-color">
+                              <i class="bi bi-rocket-takeoff me-1"></i> Lançamento 2026
+                          </span>
+                          <!-- typed text -->
+                          <div class="type-wrap">
+                              <!-- add static words/sentences here (i.e. text that you don't want to be removed)-->
+                              <span id="typed" style="white-space:pre;" class="typed secondary-color">
+                              </span>
+                          </div>
+                          <!-- h1 -->
+                          <h1 class="hero-title font-changa font-40 font-bold text-white"> {{$slide->title}} <span class="secondary-color">{{$slide->subtitle}}</span></h1>
+                          <!-- p -->
+                          <div class="description text-white">
+                              {!! $slide->description !!}
+                          </div>
+                      </div>
 
-                    <div class="mt-3 d-flex justify-content-center justify-content-lg-start flex-wrap gap-3">
-                        @if ($slide->link <> null)                                    
-                            <a href="{{$slide->link}}" target="_blank" rel="noopener noreferrer" class="rounded-1 d-flex align-items-center btn-one py-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none">
-                                {{$slide->btn_title}}
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>  
-                            </a>
-                        @endif
-                        <a href="#services" class="btn d-flex align-items-center btn-outline-light px-lg-5 px-3 py-lg-3 py-1 font-15 font-medium">
-                            Serviços avulso
-                        </a>
-                    </div>
+                      <div class="mt-3 d-flex justify-content-center justify-content-lg-start flex-wrap gap-3">
+                          @if ($slide->link <> null)                                    
+                              <a href="{{$slide->link}}" target="_blank" rel="noopener noreferrer" class="rounded-1 d-flex align-items-center btn-one py-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none">
+                                  {{$slide->btn_title}}
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>  
+                              </a>
+                          @endif
+                          <a href="#services" class="btn d-flex align-items-center btn-outline-light px-lg-5 px-3 py-lg-3 py-1 font-15 font-medium">
+                              Serviços avulso
+                          </a>
+                      </div>
 
-                    <div class="hero-stats">
-                        <div class="hero-stats-item">
-                            <div class="number text-white-50">100%</div>
-                            <div class="label">Personalizável</div>
-                        </div>
-                        <div class="hero-stats-item">
-                            <div class="number text-white-50">24/7</div>
-                            <div class="label">Seu site online</div>
-                        </div>
-                        <div class="hero-stats-item">
-                            <div class="number text-white-50">1</div>
-                            <div class="label">Plataforma completa</div>
-                        </div>
-                    </div>
-                </div>
+                      <div class="hero-stats">
+                          <div class="hero-stats-item">
+                              <div class="number text-white-50">100%</div>
+                              <div class="label">Personalizável</div>
+                          </div>
+                          <div class="hero-stats-item">
+                              <div class="number text-white-50">24/7</div>
+                              <div class="label">Seu site online</div>
+                          </div>
+                          <div class="hero-stats-item">
+                              <div class="number text-white-50">1</div>
+                              <div class="label">Plataforma completa</div>
+                          </div>
+                      </div>
+                  </div>
 
-                <!-- banner image start -->
-                <div class="col-lg-5 col-md-12 mt-4 mt-lg-0">
-                    <div class="hero_img">
-                    <img src="{{ asset('storage/' . $slide->path_image_mobile) }}" alt="image">
-                    </div>
-                </div>
-                <!-- banner image end -->
-                <!-- row end -->
-            </div>
-            <!-- container end -->
-        @endforeach
-    </section>
+                  <!-- banner image start -->
+                  <div class="col-lg-5 col-md-12 mt-4 mt-lg-0">
+                      <div class="hero_img">
+                      <img src="{{ asset('storage/' . $slide->path_image_mobile) }}" alt="image">
+                      </div>
+                  </div>
+                  <!-- banner image end -->
+                  <!-- row end -->
+              </div>
+              <!-- container end -->
+          @endforeach
+      </section>
+    @endif
     <!-- Banner-Section-end -->
+    @if ($topics->count() > 0)
+      <!-- How it Works Section Start -->
+      <section class="advance_feature_section white_text" id="how_sec">
+          <div class="af_innner">
 
-    <!-- How it Works Section Start -->
-    <section class="advance_feature_section white_text" id="how_sec">
-        <div class="af_innner">
+              <!-- background blure shapes -->
+              <div class="blure_shape bg-secondary-color bs_1"> </div>
+              <div class="blure_shape bg-secondary-color bs_2"> </div>
 
-            <!-- background blure shapes -->
-            <div class="blure_shape bg-secondary-color bs_1"> </div>
-            <div class="blure_shape bg-secondary-color bs_2"> </div>
+              <!-- container -->
+              <div class="container">
+                  <!-- listing -->
+                  <div class="af_listing">
+                      <!-- row -->
+                      <div class="row">
+                          <!-- collom -->
+                          <div class="col-md-12">
+                              <!-- inner section -->
+                              <div class="row listing_inner align-items-center">
+                                  <!-- blok -->
+                                  @foreach ($topics as $topic)
+                                      <div class="af_block col-lg-3 col-md-6 col-sm-6 p-1">
+                                          <div class="text d-flex justify-content-center gap-3 align-items-start flex-column" style="min-height: 223px;">
+                                              <div class="d-flex justify-content-between align-items-start flex-column mb-2">
+                                                  
+                                                  <a @if($topic->link) href="{{ $topic->link }}" target="_blank" rel="noopener noreferrer" @endif class="topic-item d-block">
+                                                      @if ($topic->path_image)
+                                                          <div class="bg-icon bg-secondary-color">
+                                                              <img src="{{ asset('storage/' . $topic->path_image) }}" height="30" alt="{{ $topic->title }}" class="img-fluid d-block m-auto" loading="lazy">
+                                                          </div>
+                                                      @endif
+                                                  </a>
 
-            @if ($topics->count() > 0)
-                <!-- container -->
-                <div class="container">
-                    <!-- listing -->
-                    <div class="af_listing">
-                        <!-- row -->
-                        <div class="row">
-                            <!-- collom -->
-                            <div class="col-md-12">
-                                <!-- inner section -->
-                                <div class="row listing_inner align-items-center">
-                                    <!-- blok -->
-                                    @foreach ($topics as $topic)
-                                        <div class="af_block col-lg-3 col-md-6 col-sm-6 p-1">
-                                            <div class="text d-flex justify-content-center gap-3 align-items-start flex-column" style="min-height: 223px;">
-                                                <div class="d-flex justify-content-between align-items-start flex-column mb-2">
-                                                    
-                                                    <a @if($topic->link) href="{{ $topic->link }}" target="_blank" rel="noopener noreferrer" @endif class="topic-item d-block">
-                                                        @if ($topic->path_image)
-                                                            <div class="bg-icon bg-secondary-color">
-                                                                <img src="{{ asset('storage/' . $topic->path_image) }}" height="30" alt="{{ $topic->title }}" class="img-fluid d-block m-auto" loading="lazy">
-                                                            </div>
-                                                        @endif
-                                                    </a>
+                                                  <div class="h5 mt-2">{{ $topic->title }}</div>
+                                              </div>
+                                              <p>{{ $topic->description }}</p>
+                                          </div>
+                                      </div>
+                                  @endforeach
+                              </div>
 
-                                                    <div class="h5 mt-2">{{ $topic->title }}</div>
-                                                </div>
-                                                <p>{{ $topic->description }}</p>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
+                          </div>
+                      </div>
+                      <!-- row -->
+                  </div>
+                  <!-- listing -->
 
-                            </div>
-                        </div>
-                        <!-- row -->
-                    </div>
-                    <!-- listing -->
+              </div>            
+          </div>
 
-                </div>
-            @endif
-        </div>
+          <!-- device image -->
+          <div class="device">
+              <img src="{{asset('build/client/images/themes/whi-web/device.png')}}" alt="image" height="250" loading="lazy">
+          </div>
 
-        <!-- device image -->
-        <div class="device">
-            <img src="{{asset('build/client/images/themes/whi-web/device.png')}}" alt="image" height="250" loading="lazy">
-        </div>
-
-    </section>
-    <!-- How it Works Section End -->
-
+      </section>
+      <!-- How it Works Section End -->
+    @endif
     <!-- why us new section start -->
     <section class="why_new_section bg-white position-relative" id="why_sec">
         <!-- inner section start -->
@@ -406,7 +406,7 @@
                           </span>
                         @endif
                         @if ($templateTheme->technology <> null)                          
-                          <span class="d-flex align-items-center gap-1">
+                          <span class="d-flex align-items-center gap-1 d-none">
                               <i data-lucide="code-2" style="width: 14px; height: 14px;"></i>
                               {{ strtoupper($templateTheme->technology ?? '') }}
                           </span>
@@ -477,6 +477,7 @@
         </div>
       </section>
     @endif
+    
     @if ((isset($sections['testimonial']) && $sections <> null) ||
       (!empty($depoiments) && count($depoiments) > 0))
       <section class="testimonials-section" id="review_sec">

@@ -12,6 +12,7 @@ use App\Http\Middleware\AuthClientMiddleware;
 use App\Models\About;
 use App\Models\Announcement;
 use App\Models\BenefitTopic;
+use App\Models\Blog;
 use App\Models\BlogCategory;
 use App\Models\Contact;
 use App\Models\Direction;
@@ -180,7 +181,7 @@ Route::middleware([NeedsTenant::class])->group(function () {
 View::composer('client.themes.whi-web.tp-01.core.client', function ($view) {
 
     $contact = Contact::first();
-
+    $blogInner = Blog::with('category')->where('slug', request()->route('slug'))->first();
     $templateThemeInner = TemplateTheme::where('slug', request()->route('slug'))
     ->when(request()->route('templateVariation'), fn ($query) => $query->where('template_variation', request()->route('templateVariation')))
     ->active()
@@ -191,6 +192,7 @@ View::composer('client.themes.whi-web.tp-01.core.client', function ($view) {
     return $view->with([
         'contact' => $contact,
         'seoGoogle' => $seoGoogle,
+        'blogInner' => $blogInner,
         'templateThemeInner' => $templateThemeInner,
     ]);
 

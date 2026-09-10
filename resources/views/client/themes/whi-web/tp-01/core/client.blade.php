@@ -237,7 +237,7 @@
         @endif
 
     @endif
-    {{dd($templateThemeInner)}}
+    
     <link rel="canonical" href="{{ url()->current() }}">
     <meta name="copyright" content="Direitos reservados WHI">
     <meta name="author" content="WHI">
@@ -277,209 +277,6 @@
 </head>
 
 <body>
-    <style>        
-        .tpl-modal-sec.templates {
-            background: transparent !important;
-        }
-        .tpl-modal-sec.templates .tpl-card {
-            min-width: inherit !important;
-            max-width: inherit !important;
-        }
-        ::selection {
-            background-color: var(--brand-500);
-            color: #ffffff;
-        }
-
-        /* Glassmorphism Navigation */
-        .glass-panel {
-            background: rgba(18, 24, 36, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        /* Custom Buttons */
-        .btn-brand {
-            background-color: var(--brand-600);
-            color: #ffffff;
-            border: none;
-            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.2);
-            transition: all 0.2s ease-in-out;
-        }
-
-        .btn-brand:hover {
-            background-color: var(--brand-500);
-            color: #ffffff;
-        }
-
-        /* Cards - Ajustado para não travar a opacidade em 0 via CSS */
-        .js-card-item {
-            will-change: transform, opacity;
-        }
-
-        .template-card {
-            background-color: var(--dark-card);
-            border: 1px solid var(--dark-border);
-            border-radius: 1rem;
-            overflow: hidden;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .template-card:hover {
-            border-color: rgba(59, 130, 246, 0.5);
-        }
-
-        .card-img-wrapper {
-            position: relative;
-            aspect-ratio: 16 / 9;
-            background-color: #020617;
-            overflow: hidden;
-        }
-
-        .card-img-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: top;
-            transition: transform 0.5s ease;
-        }
-
-        .template-card:hover .card-img-wrapper img {
-            transform: scale(1.05);
-        }
-
-        .card-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(2, 6, 23, 0.6);
-            backdrop-filter: blur(2px);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .template-card:hover .card-overlay {
-            opacity: 1;
-        }
-
-        /* Badges */
-        .badge-category {
-            background-color: rgba(15, 23, 42, 0.8);
-            color: #cbd5e1;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(51, 65, 85, 0.5);
-            font-size: 10px;
-        }
-
-        .badge-pill-custom {
-            background-color: var(--dark-card);
-            color: #94a3b8;
-            border: 1px solid var(--dark-border);
-            border-radius: 50rem;
-            padding: 0.375rem 1rem;
-            font-size: 0.75rem;
-            font-weight: 500;
-            transition: all 0.2s;
-            text-decoration: none;
-            display: inline-block;
-            cursor: pointer;
-        }
-
-        .badge-pill-custom:hover {
-            border-color: #475569;
-            color: #ffffff;
-        }
-
-        .badge-pill-custom.active {
-            background-color: rgba(59, 130, 246, 0.1);
-            color: #FFF;
-            border-color: rgba(59, 130, 246, 0.3);
-        }
-
-        .hero-section {
-            opacity: 0;
-            transform: translateY(24px);
-        }
-    </style>
-
-    <!-- GSAP Animations -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Inicializa os ícones Lucide
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
-
-            // Animação do Hero
-            gsap.to('.hero-section', {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: 'power3.out'
-            });
-
-            const filterButtons = document.querySelectorAll('#theme-filters button');
-            const cards = document.querySelectorAll('.js-card-item');
-
-            // Função para animar apenas os cards visíveis instantaneamente
-            function animateVisibleCards() {
-                const visibleCards = Array.from(cards).filter(card => card.style.display !== 'none');
-                
-                if (visibleCards.length === 0) return;
-
-                // Cancela animações antigas
-                gsap.killTweensOf(visibleCards);
-
-                // Prepara estado inicial antes da animação
-                gsap.set(visibleCards, { opacity: 0, y: 20 });
-                
-                // Executa a animação imediatamente na viewport atual
-                gsap.to(visibleCards, {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.4,
-                    stagger: 0.05,
-                    ease: 'power2.out',
-                    clearProps: 'transform' // Garante que não trava posições após a animação
-                });
-
-                // Se o ScrollTrigger estiver ativo na página, força a atualização do layout
-                if (typeof ScrollTrigger !== 'undefined') {
-                    ScrollTrigger.refresh();
-                }
-            }
-
-            // Executa a animação inicial
-            animateVisibleCards();
-
-            // Evento de clique nos botões de filtro
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function () {
-                    const selectedSlug = this.getAttribute('data-slug');
-
-                    // Alterna a classe 'active'
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-
-                    // Exibe/oculta os cards
-                    cards.forEach(card => {
-                        const cardSlug = card.getAttribute('data-slug');
-
-                        if (selectedSlug === 'all' || (cardSlug && cardSlug.includes(selectedSlug))) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-
-                    // Anima os cards filtrados imediatamente
-                    animateVisibleCards();
-                });
-            });
-        });
-    </script>
 
     <div id="organization" hidden></div>
 
@@ -831,21 +628,22 @@
                     <div class="h5 text-color-footer mb-1 font-changa font-16 font-bold map-footer">Newsletter</div>
                     <div class="news_letter">
                         <p class="text-color-footer font-15">Inscreva-se e seja o primeiro a receber promoções incríveis</p>
-                        <form id="newsletter-form">
+                        
+                        <form id="newsletter-form" action="{{ route('send-newsletter') }}" method="POST">
+                            @csrf
+
                             <div class="form-group">
-                                <input type="email" id="email" name="email" class="form-control" placeholder="Informe seu email" required="">
+                                <input type="email" id="email" name="email" class="form-control" placeholder="Informe seu email" required>
+
                                 <button type="submit" class="btn" aria-label="subscribe">
                                     <i class="bi bi-send-fill"></i>
                                 </button>
                             </div>
-                            
+
                             <label class="text-color-footer font-12 d-flex justify-content-start gap-1 align-items-center mt-2">
-                                <input type="checkbox" id="privacy-policy" required=""> 
+                                <input name="term_privacy" type="checkbox" id="privacy-policy" required>
                                 Concordo com a Política de Privacidade da Whiweb.
                             </label>
-                            
-                            <!-- Mensagem de feedback -->
-                            <div id="newsletter-message" class="mt-2" style="display: none;"></div>
                         </form>
                     </div>
 
@@ -1000,6 +798,42 @@
             });
         </script>
     @endif
+
+    <script>
+        document.getElementById('newsletter-form').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const form = this;
+            const button = form.querySelector('button[type="submit"]');
+
+            button.disabled = true;
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value,
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: new FormData(form)
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    showToast(data.message);
+                    form.reset();
+                } else {
+                    showToast(data.message ?? 'Não foi possível realizar o cadastro.');
+                }
+            } catch (error) {
+                showToast('Ocorreu um erro. Tente novamente.');
+            } finally {
+                button.disabled = false;
+            }
+        });
+    </script>
 
 </body>
 </html>

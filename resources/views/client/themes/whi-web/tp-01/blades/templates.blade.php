@@ -74,7 +74,7 @@
                                                 </span>
                                             @endif
                                             @if ($templateTheme->technology <> null)                                                
-                                                <span class="d-flex align-items-center gap-1">
+                                                <span class="d-flex align-items-center gap-1 d-none">
                                                     <i data-lucide="code-2" style="width: 14px; height: 14px;"></i>
                                                     {{ strtoupper(is_object($templateTheme) ? ($templateTheme->technology ?? '') : ($templateTheme['technology'] ?? '')) }}
                                                 </span>
@@ -108,93 +108,4 @@
             </div>
         </section>
     </div>
-
-    <style>
-        .d-none.flex-sm-fill.d-sm-flex.align-items-sm-center.justify-content-sm-between p{
-            display: none;
-        }
-        .pagination-info {
-    color: #64748b !important;
-    font-size: 0.8rem;
-    font-weight: 500;
-    margin: 0;
-    letter-spacing: 0.01em;
-}
-
-.pagination-info .fw-semibold {
-    color: #e2e8f0;
-    font-weight: 600 !important;
-}
-
-.pagination-info .results-count {
-    color: var(--secondary-color);
-}
-
-.pagination {
-    gap: 8px;
-    margin: 0;
-}
-
-.pagination .page-item .page-link {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 10px !important;
-    background: rgba(255, 255, 255, 0.04);
-    color: #94a3b8;
-    font-size: 0.85rem;
-    font-weight: 600;
-    transition: all 0.25s ease;
-    box-shadow: none;
-}
-
-.pagination .page-item .page-link:hover {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.16);
-    transform: translateY(-2px);
-}
-
-.pagination .page-item.active .page-link {
-    color: #10131C;
-    background: var(--secondary-color);
-    border-color: var(--secondary-color);
-    box-shadow: 0 6px 20px rgba(203, 255, 77, 0.15);
-}
-
-.pagination .page-item.disabled .page-link {
-    color: #475569;
-    background: rgba(255, 255, 255, 0.02);
-    border-color: rgba(255, 255, 255, 0.04);
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.pagination .page-link:focus {
-    box-shadow: 0 0 0 3px rgba(203, 255, 77, 0.12);
-    outline: none;
-}
-
-.pagination .page-item:first-child .page-link,
-.pagination .page-item:last-child .page-link {
-    font-size: 1rem;
-}
-
-@media (max-width: 575.98px) {
-    .pagination {
-        gap: 5px;
-    }
-
-    .pagination .page-item .page-link {
-        width: 36px;
-        height: 36px;
-        font-size: 0.8rem;
-        border-radius: 8px !important;
-    }
-}
-    </style>
 @endsection
