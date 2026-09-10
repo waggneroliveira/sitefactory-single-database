@@ -775,7 +775,7 @@
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.templateTheme.index'),
                     'icon' => 'mdi-google-analytics',
-                    'title' => 'Temas'
+                    'title' => 'Templates'
                 ])
 
                 @include('admin.components.dashboard-card', [

@@ -32,10 +32,7 @@
     <!-- Main Content Container -->
     <div class="container-xl px-3 px-sm-4 py-4 mt-5">
         <!-- Hero Title Section -->
-        <div class="animate-hero mt-5 mb-4 d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-3">
-            <a href="{{ route('templates') }}" class="btn-faq-cta col-4 col-lg-auto justify-content-center">
-                Voltar
-            </a>
+        <div class="animate-hero mt-5 mb-4 col-12 col-lg-8 d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-3">
             @if (isset($templateThemeInner) ?? $templateThemeInner->title <> null || isset($templateThemeInner) ?? $templateThemeInner->description)
                 <div>
                     @if ($templateThemeInner->title <> null)                        
@@ -51,6 +48,10 @@
                     @endif
                 </div>
             @endif
+
+            <a href="{{ route('templates') }}" class="btn-faq-cta py-2 px-5 col-4 col-lg-auto justify-content-center">
+                Voltar
+            </a>            
         </div>
 
         <div class="row g-4 items-start">
