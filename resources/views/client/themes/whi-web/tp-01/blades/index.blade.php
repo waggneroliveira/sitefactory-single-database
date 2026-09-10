@@ -41,7 +41,7 @@
                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>  
                               </a>
                           @endif
-                          <a href="#services" class="btn d-flex align-items-center btn-outline-light px-lg-5 px-3 py-lg-3 py-1 font-15 font-medium">
+                          <a href="{{ $contact->whatsapp }}" target="_blank" rel="noopener noreferrer" class="btn d-flex align-items-center btn-outline-light px-lg-5 px-3 py-lg-3 py-1 font-15 font-medium">
                               Serviços avulso
                           </a>
                       </div>
@@ -426,7 +426,7 @@
             <h4>Quer algo 100% exclusivo?</h4>
             <p>Criamos um design personalizado do zero para atender às necessidades específicas do seu negócio.</p>
           </div>
-          <a href="#" class="tpl-cta-btn">Solicitar Projeto Exclusivo</a>
+          <a href="{{ $contact->whatsapp }}" target="_blank" rel="noopener noreferrer" class="tpl-cta-btn">Solicitar Projeto Exclusivo</a>
         </div>
 
       </div>
@@ -560,7 +560,7 @@
             <div class="col-lg-8">
               <span class="pricing-badge">Planos e Preços</span>
               <h2 class="pricing-title">Escolha o plano ideal para escalar o seu negócio</h2>
-              <p class="pricing-subtitle">Transparência total. Sem taxas escondidas, altere ou cancele quando quiser.</p>
+              <p class="pricing-subtitle">Um serviço completo, com preço transparente, sem taxas escondidas e condições claras de contratação.</p>
               
               <!-- Toggle Mensal / Anual (Desabilitado) -->
               <div class="pricing-toggle-wrapper flex-wrap opacity-75 opacity-100-hover">
