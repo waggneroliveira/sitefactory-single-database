@@ -741,19 +741,44 @@
     @endif
 
     <script>
-        document.getElementById('newsletter-form').addEventListener('submit', async function (event) {
+    // Função para exibir a mensagem no seu toast existente
+    function showToast(message) {
+        const toast = document.getElementById('cta-toast');
+        const toastMessage = document.getElementById('toast-message');
+
+        if (!toast || !toastMessage) return;
+
+        // Atualiza o texto da mensagem
+        toastMessage.textContent = message;
+
+        // Exibe o toast
+        toast.classList.add('show');
+
+        // Esconde o toast após 3.5 segundos
+        clearTimeout(window.toastTimer);
+        window.toastTimer = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3500);
+    }
+
+    // Listener do Formulário
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('newsletter-form');
+        if (!form) return;
+
+        form.addEventListener('submit', async function (event) {
             event.preventDefault();
 
-            const form = this;
             const button = form.querySelector('button[type="submit"]');
+            const tokenInput = form.querySelector('input[name="_token"]');
 
-            button.disabled = true;
+            if (button) button.disabled = true;
 
             try {
                 const response = await fetch(form.action, {
                     method: 'POST',
                     headers: {
-                        'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value,
+                        'X-CSRF-TOKEN': tokenInput ? tokenInput.value : '',
                         'Accept': 'application/json',
                         'X-Requested-With': 'XMLHttpRequest'
                     },
@@ -763,7 +788,7 @@
                 const data = await response.json();
 
                 if (response.ok && data.success) {
-                    showToast(data.message);
+                    showToast(data.message || 'Inscrição realizada com sucesso!');
                     form.reset();
                 } else {
                     showToast(data.message ?? 'Não foi possível realizar o cadastro.');
@@ -771,10 +796,11 @@
             } catch (error) {
                 showToast('Ocorreu um erro. Tente novamente.');
             } finally {
-                button.disabled = false;
+                if (button) button.disabled = false;
             }
         });
-    </script>
+    });
+</script>
 
 </body>
 </html>
