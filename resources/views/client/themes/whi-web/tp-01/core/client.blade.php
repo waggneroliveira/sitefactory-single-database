@@ -800,40 +800,99 @@
     @endif
 
     <script>
-        document.getElementById('newsletter-form').addEventListener('submit', async function (event) {
-            event.preventDefault();
+    // Função auxiliar para exibir notificações Toast na tela
+    function showToast(message, type = 'info') {
+        // Procura ou cria o container de toasts
+        let container = document.getElementById('toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'toast-container';
+            container.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                z-index: 9999;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            `;
+            document.body.appendChild(container);
+        }
 
-            const form = this;
-            const button = form.querySelector('button[type="submit"]');
+        // Cria o elemento do Toast
+        const toast = document.createElement('div');
+        toast.innerText = message;
+        toast.style.cssText = `
+            background-color: #333;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            font-size: 14px;
+            font-family: sans-serif;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        `;
 
-            button.disabled = true;
+        container.appendChild(toast);
 
-            try {
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value,
-                        'Accept': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    body: new FormData(form)
-                });
+        // Animação de Entrada
+        setTimeout(() => {
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateY(0)';
+        }, 10);
 
-                const data = await response.json();
+        // Remove o toast após 4 segundos
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(20px)';
+            setTimeout(() => toast.remove(), 300);
+        }, 4000);
+    }
 
-                if (response.ok && data.success) {
-                    showToast(data.message);
-                    form.reset();
-                } else {
-                    showToast(data.message ?? 'Não foi possível realizar o cadastro.');
+    // Listener do Formulário de Newsletter
+    document.addEventListener('DOMContentLoaded', () => {
+        const newsletterForm = document.getElementById('newsletter-form');
+
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', async function (event) {
+                event.preventDefault();
+
+                const form = this;
+                const button = form.querySelector('button[type="submit"]');
+                const csrfInput = form.querySelector('input[name="_token"]');
+
+                if (button) button.disabled = true;
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfInput ? csrfInput.value : '',
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: new FormData(form)
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok && data.success) {
+                        showToast(data.message || 'Cadastro realizado com sucesso!');
+                        form.reset();
+                    } else {
+                        showToast(data.message ?? 'Não foi possível realizar o cadastro.');
+                    }
+                } catch (error) {
+                    showToast('Ocorreu um erro. Tente novamente.');
+                } finally {
+                    if (button) button.disabled = false;
                 }
-            } catch (error) {
-                showToast('Ocorreu um erro. Tente novamente.');
-            } finally {
-                button.disabled = false;
-            }
-        });
-    </script>
+            });
+        }
+    });
+</script>
 
 </body>
 </html>
