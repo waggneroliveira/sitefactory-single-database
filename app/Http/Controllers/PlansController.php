@@ -225,10 +225,10 @@ class PlansController extends Controller
                 'monthly_price' => $validated['monthly_price'] ?? 0,
                 'description' => $validated['description'],
                 'text' => $validated['text'],
-                'active' => $request->boolean('active'),
+                'active' => $request->boolean('active', true),
                 'popular' => $request->boolean('popular', true),
             ]);
-
+            
 
             /*
             |--------------------------------------------------------------------------

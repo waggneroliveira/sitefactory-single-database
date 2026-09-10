@@ -15,11 +15,13 @@ class Plan extends Model
         'description',
         'text',
         'active',
+        'popular',
     ];
 
     protected $casts = [
         'price' => 'decimal:2',
         'active' => 'boolean',
+        'popular' => 'boolean',
     ];
 
     public function scopeActive($query){
