@@ -45,11 +45,15 @@ class AppServiceProvider extends ServiceProvider
                     ->where('slug', request()->route('slug'))
                     ->first();
             }
+            $templateThemeInner = TemplateTheme::where('slug', request()->route('slug'))
+            ->when(request()->route('templateVariation'), fn ($query) => $query->where('template_variation', request()->route('templateVariation')))
+            ->active()
+            ->first();
 
             $view->with([
                 'seoGoogle' => SeoGoogle::first(),
                 'blogInner' => $blogInner,
-                'templateThemeInner' => TemplateTheme::first(),
+                'templateThemeInner' => $templateThemeInner,
             ]);
         });
     }
