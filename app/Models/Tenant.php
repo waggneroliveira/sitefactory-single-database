@@ -54,6 +54,7 @@ class Tenant extends BaseTenant
         'text_color_footer',
         'cnpj',
         'copyright',
+        'active',
     ];
 
     public function templateTheme()

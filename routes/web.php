@@ -55,11 +55,6 @@ Route::middleware([NeedsTenant::class])->group(function () {
     Route::get('template/{slug}/{templateVariation?}', [TemplatePageController::class, 'templateInner'])
         ->name('template');
 
-
-    // Route::get('/template', function () {
-    //         return view('client.themes.whi-web.tp-01.blades.template');
-    //     })->name('template');
-
     Route::get('/produto', function () {
             return view('client.themes.ecommerce.tp-01.blades.product');
         })->name('prod');

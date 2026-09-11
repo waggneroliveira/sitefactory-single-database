@@ -397,6 +397,36 @@ LOGOS
     </div>
 </div>
 
+@if (isset($tenant))
+    @if (Auth::user()->hasRole('Super'))
+        <div class="row mt-4">
+            <div class="col-12">
+                <h5 class="mb-3 border-bottom pb-2">Status</h5>
+            </div>
+
+            <div class="col-12">
+                <div class="form-check">
+                    <input
+                        name="active"
+                        value="1"
+                        type="checkbox"
+                        class="form-check-input"
+                        id="active{{ $tenant->id }}"
+                        {{ old('active', $tenant->active ?? true) ? 'checked' : '' }}
+                    >
+
+                    <label
+                        class="badge {{ $tenant->active ? 'bg-success' : 'bg-danger' }}"
+                        for="active{{ $tenant->id }}"
+                    >
+                        {{ $tenant->active ? 'Cliente ativo' : 'Cliente inativo' }}
+                    </label>
+                </div>
+            </div>
+        </div>
+    @endif
+@endif
+
 {{-- ============================================================
 LIMITES PERSONALIZADOS
 ============================================================ --}}

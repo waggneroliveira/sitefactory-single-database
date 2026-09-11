@@ -24,6 +24,6 @@ class DashboardController
             return view('admin.dashboard', $data);
         }
 
-        return redirect()->route('admin.dashboard.painel');
+        return redirect()->route('admin.login');
     }
 }

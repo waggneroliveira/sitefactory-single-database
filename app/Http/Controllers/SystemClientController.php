@@ -7,6 +7,7 @@ use App\Models\PlanModuleLimit;
 use App\Models\TemplateTheme;
 use App\Models\Tenant;
 use App\Models\TenantModuleLimit;
+use App\Models\User;
 use App\Repositories\SettingThemeRepository;
 use App\Services\ThemeManager;
 use Illuminate\Http\Request;
@@ -105,6 +106,7 @@ class SystemClientController extends Controller
         if ($data['text_button_two'] == null) {
             $data['text_button_two'] = 'Saiba mais';
         }
+        $data['active'] = $request->boolean('active', true);
 
         DB::beginTransaction();
 
@@ -272,7 +274,7 @@ class SystemClientController extends Controller
         ));
     }
 
-        public function update(Request $request, Tenant $tenant)
+    public function update(Request $request, Tenant $tenant)
     {
         $data = $request->except([
         'path_image_logo_header',
@@ -378,8 +380,13 @@ class SystemClientController extends Controller
             if (empty($data['text_button_two'])) {
                 $data['text_button_two'] = 'Saiba mais';
             }
+            $data['active'] = $request->boolean('active');
 
             $tenant->fill($data)->save();
+
+            User::where('tenant_id', $tenant->id)->update([
+                'active' => $tenant->active,
+            ]);
 
             foreach ($data['limits'] ?? [] as $module => $limit) {
                 if ($limit === null || $limit === '') {
