@@ -50,4 +50,3 @@ return Application::configure(basePath: dirname(__DIR__))
             return $response;
         });
     })->create();
-    
