@@ -28,11 +28,9 @@ use Spatie\Multitenancy\Http\Middleware\NeedsTenant;
 
 require __DIR__ . '/dashboard.php';
 
-
 // =============================
 // Rotas que NÃO precisam tenant
 // =============================
-
 
 // =============================
 // Rotas dos clientes/tenants
