@@ -9,6 +9,7 @@ use App\Http\Controllers\FormIndexController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\SeoGoogleController;
 use App\Http\Middleware\AuthClientMiddleware;
+use App\Http\Middleware\NeedsTenant;
 use App\Models\Blog;
 use App\Models\Contact;
 use App\Models\SeoGoogle;
@@ -24,7 +25,6 @@ use App\Modules\Client\Presentation\Controllers\ProductPageController;
 use App\Modules\Client\Presentation\Controllers\TemplatePageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
-use Spatie\Multitenancy\Http\Middleware\NeedsTenant;
 
 require __DIR__ . '/dashboard.php';
 
