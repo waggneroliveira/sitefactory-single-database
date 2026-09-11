@@ -27,7 +27,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
             if (!view()->exists($view)) {
                 return response()->view(
-                    'client.errors.404',
+                    'client.tenant-error.404',
                     [],
                     404
                 );
