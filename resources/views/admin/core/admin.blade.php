@@ -493,8 +493,6 @@
                                 <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                     @if (Auth::user()->path_image)
                                         <img src="{{asset('storage/'.Auth::user()->path_image)}}" alt="user-image" class="rounded-circle">
-                                        @else
-                                        <img src="{{asset('build/admin/images/users/user-3.jpg')}}" alt="user-image" class="rounded-circle">
                                     @endif
                                     <span class="ms-1 d-none d-md-inline-block">
                                         {{$names = collect(explode(' ', Auth::user()->name))->slice(0, 2)->implode(' ')}} <i class="mdi mdi-chevron-down"></i>
