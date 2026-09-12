@@ -2,6 +2,16 @@
 
 return [
 
+    'administrativo' => [
+        'permission' => 'administrativo',
+        'actions' => [
+            'criar',
+            'editar',
+            'visualizar',
+            'remover',
+        ],
+    ],
+
     'slides' => [
         'permission' => 'slide',
         'actions' => [

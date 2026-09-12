@@ -26,4 +26,10 @@ class DashboardController
 
         return redirect()->route('admin.login');
     }
+    public function administration(): View|RedirectResponse
+    {
+        $data = $this->service->getDashboardData($this->theme);
+
+        return view('admin.administration', $data);
+    }
 }

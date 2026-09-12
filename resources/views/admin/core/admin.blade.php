@@ -352,9 +352,22 @@
                                 <i class="mdi mdi-menu"></i>
                             </button>
                         </div>
-
                         <ul class="topbar-menu d-flex align-items-center">
                             <!-- Fullscreen Button -->
+                            <li class="d-none d-md-inline-block">
+                                <a class="nav-link waves-effect waves-light" href="{{route('admin.dashboard')}}">
+                                    Dashboard
+                                </a>
+                            </li>
+                            @if (Auth::user()->hasRole('Super') || Auth::user()->hasPermissionTo('administrativo.visualizar'))                                
+                                <li class="d-none d-md-inline-block">
+                                    <a class="nav-link waves-effect waves-light" href="{{route('admin.dashboard.administration')}}">
+                                        Gestão da Plataforma
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
+                        <ul class="topbar-menu d-flex align-items-center">
                             <li class="d-none d-md-inline-block">
                                 <a class="nav-link waves-effect waves-light" href="" data-toggle="fullscreen">
                                     <i class="fe-maximize font-22"></i>

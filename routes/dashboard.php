@@ -111,6 +111,8 @@ Route::prefix('painel/')->group(function () {
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
+        Route::get('/dashboard/administration', [DashboardController::class, 'administration'])->name('admin.dashboard.administration');
+
         Route::resource('pop-up', PopUpController::class)
         ->names('admin.dashboard.popUp')
         ->parameters(['pop-up'=>'popUp']);
