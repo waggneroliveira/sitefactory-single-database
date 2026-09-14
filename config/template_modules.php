@@ -244,7 +244,76 @@ return [
         ],
 
         // Adiciona array multipage
-        /*Aqui*/
+        'multipage' => [
+            'tp-01' => [
+                'home' => [
+                    'slides',
+                    'topics',
+                    'statute',
+                    'letsgo',
+                    'faq_session',
+                    'faq',
+                    'testimonials',
+                    'services',
+                ],
+
+                'about' => [
+                    'about',
+                    'benefits',
+                    'mission',
+                    'representatives',
+                    'videos',
+                    'service_locations',
+                ],
+
+                'products' => [
+                    'brands',
+                    'product_categories',
+                    'products',
+                ],
+
+                'contact' => [
+                    'contact',
+                    'contact_leads',
+                    'download_leads',
+                ],
+
+            ],
+            'tp-02' => [
+                'home' => [
+                    'slides',
+                    'topics',
+                    'statute',
+                    'letsgo',
+                    'faq_session',
+                    'faq',
+                    'testimonials',
+                    'services',
+                ],
+
+                'about' => [
+                    'about',
+                    'benefits',
+                    'mission',
+                    'representatives',
+                    'videos',
+                    'service_locations',
+                ],
+
+                'products' => [
+                    'brands',
+                    'product_categories',
+                    'products',
+                ],
+
+                'contact' => [
+                    'contact',
+                    'contact_leads',
+                    'download_leads',
+                ],
+
+            ],
+        ],
 
         'smtp' => [
             'config_smtp',
@@ -261,8 +330,9 @@ return [
         ],
 
         'limits' => [
+            'about' => 1,
             'advantage' => 3,
-            'slides' => 1,
+            'slides' => 4,
             'topics' => 4,
             'services' => 6,
             'gallery' => 3,
