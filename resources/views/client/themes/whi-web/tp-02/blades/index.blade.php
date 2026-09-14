@@ -62,7 +62,7 @@
     @if ($topics->count() > 0)
         <section id="topic" class="topics py-5">
             <div class="container">
-                <div class="row g-4 justify-content-center mt-2">
+                <div class="row g-4 justify-content-center mt-2 col-12 col-lg-10 m-auto">
                     @foreach ($topics as $topic)   
                         <div class="col-6 col-md-4 col-lg-2 topic-col m-auto">
                             <div class="d-flex justify-content-center align-items-center gap-2">
@@ -70,7 +70,7 @@
                                 <circle cx="7.5" cy="7.5" r="7.5" fill="#A93F08"/>
                                 </svg>
     
-                                <h2 class="font-changa font-22 font-semiBold text-center text-grey text-uppercase mb-0">{{$topic->title}}</h2>
+                                <h2 class="font-changa font-20 font-semiBold text-center text-grey text-uppercase mb-0">{{$topic->title}}</h2>
                             </div>
                         </div>
                     @endforeach
@@ -79,51 +79,1147 @@
         </section>
     @endif
     @if (isset($abouts) && $abouts->count())
-        <section class="about mt-4">
-            @foreach($abouts as $about)                
-                <div class="container-fluid">
+        <section class="about mt-4 pb-5">
+            <div class="container">
+                @foreach($abouts as $about)                
                     <div class="row align-items-start justify-content-center">
-                    @if (isset($about->path_image) && $about->path_image <> null)                    
-                        <!-- IMAGEM (fora do container) -->
-                        <div class="col-12 col-lg-5 p-0 about-image">
-                            <img
-                            src="{{asset('storage/'.$about->path_image)}}"
-                            alt="Sobre a Girollato"
-                            class="img-fluid w-100"
-                            loading="lazy"
-                            >
-                        </div>
-                    @endif
-                    <!-- TEXTO (dentro do container) -->
-                    <div class="col-12 col-lg-6 mt-4 mt-lg-0 z-3">
-                        <div class="container position-relative">
-                            <h3 class="about-title font-changa font-50 font-semiBold mb-3 text-grey">
-                                {{$about->title}} <span class="primary-color">{{$about->subtitle}}</span>
-                            </h3>
-
-                            <!-- Conteúdo adicional opcional -->
-                            <div class="description">
-                                {!! $about->text !!}
+                        @if (isset($about->path_image) && $about->path_image <> null)                    
+                            <!-- IMAGEM (fora do container) -->
+                            <div class="col-12 col-lg-5 p-0 about-image text-center">
+                                <img
+                                src="{{asset('storage/'.$about->path_image)}}"
+                                alt="Sobre a Girollato"
+                                class="img-fluid w-auto"
+                                loading="lazy"
+                                >
                             </div>
+                        @endif
+                        <!-- TEXTO (dentro do container) -->
+                        <div class="col-12 col-lg-7 mt-4 mt-lg-0 z-3">
+                            <div class="container position-relative">
+                                <h3 class="about-title font-changa font-50 font-semiBold mb-3 text-grey">
+                                    {{$about->title}} <span class="primary-color">{{$about->subtitle}}</span>
+                                </h3>
 
-                            @if ($about->link <> null)                        
-                                <div class="btn-about my-4 d-flex justify-content-center justify-content-lg-start">
-                                    <a href="{{$about->link}}" class="rounded-pill py-2 px-3 px-lg-5 font-changa bg-button-two color-button-two font-18 font-medium text-decoration-none hover-zoom" rel="noopener noreferrer">
-                                        Saiba mais
-                                        <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-two)"/>
-                                        </svg>
-                                    </a>
+                                <!-- Conteúdo adicional opcional -->
+                                <div class="description">
+                                    {!! $about->text !!}
                                 </div>
-                            @endif
-                        </div>
-                    </div>
 
+                                @if ($about->link <> null)                        
+                                    <div class="btn-about my-4 d-flex justify-content-center justify-content-lg-start">
+                                        <a href="{{$about->link}}" class="rounded-pill py-2 px-3 px-lg-5 font-changa bg-button-one color-button-one font-18 font-medium text-decoration-none hover-zoom" rel="noopener noreferrer">
+                                            Faça parte agora
+                                            <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>                
+                @endforeach
+                <div class="linha-do-tempo">
+                    <div class="row col-12 col-lg-11 m-auto me-lg-4">
+                        <div class="col-lg-6">
+                            <div class="works-main-widget-area">
+                                <div class="text-end">
+                                    <div class="icons">
+                                        <img src="{{asset('build/client/images/themes/whi-web/w-icons8.svg')}}" alt="">
+                                    </div>
+                                </div>
+        
+                                <div class="space70 d-lg-block d-none"></div>
+                                <div class="space30 d-lg-none d-block"></div>
+        
+                                <div class="works8-boxarea">
+                                    <a href="" class="font-changa font-18 text-grey font-semibold">Tailored Strategy</a>
+                                    <div class="space16"></div>
+                                    <p>Our team creates a personalized approach to match the right talent with the right opportunity.</p>
+                                    <h5>02</h5>
+                                </div>
+                            </div>
+                            <div class="works-main-widget-area">
+        
+                                <div class="space70 d-lg-block d-none"></div>
+                                <div class="space30 d-lg-none d-block"></div>
+        
+                                <div class="text-end">
+                                    <div class="icons">
+                                        <img src="{{asset('build/client/images/themes/whi-web/w-icons10.svg')}}" alt="">
+                                    </div>
+                                </div>
+        
+                                <div class="space70 d-lg-block d-none"></div>
+                                <div class="space30 d-lg-none d-block"></div>
+        
+                                <div class="works8-boxarea">
+                                    <a href="" class="font-changa font-18 text-grey font-semibold">Ongoing Support</a>
+                                    <div class="space16"></div>
+                                    <p>Our partnership doesn’t end at placement—we’re here to provide continuous support for long-term success.</p>
+                                    <h5>04</h5>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="col-lg-6">
+                            <div class="space30 d-lg-none d-block"></div>
+        
+                            <div class="works-main-widget-area2">
+                                <div class="works8-boxarea">
+                                    <a href="" class="font-changa font-18 text-grey font-semibold">Tailored Strategy</a>
+                                    <div class="space16"></div>
+                                    <p>Our team creates a personalized approach to match the right talent with the right opportunity.</p>
+                                    <h5>01</h5>
+                                </div>
+        
+                                <div class="space70 d-lg-block d-none"></div>
+                                <div class="space30 d-lg-none d-block"></div>
+                                
+                                <div class="text-start">
+                                    <div class="icons">
+                                        <img src="{{asset('build/client/images/themes/whi-web/w-icons8.svg')}}" alt="">
+                                    </div>
+                                </div>
+        
+                                <div class="space70 d-lg-block d-none"></div>
+                                <div class="space30 d-lg-none d-block"></div>
+                            </div>
+        
+                            <div class="works-main-widget-area2"> 
+                                <div class="works8-boxarea">
+                                    <a href="" class="font-changa font-18 text-grey font-semibold">Ongoing Support</a>
+                                    <div class="space16"></div>
+                                    <p>Our partnership doesn’t end at placement—we’re here to provide continuous support for long-term success.</p>
+                                    <h5>03</h5>
+                                </div>
+        
+                                <div class="space70 d-lg-block d-none"></div>
+                                <div class="space30 d-lg-none d-block"></div>
+        
+                                <div class="text-start">
+                                    <div class="icons">
+                                        <img src="{{asset('build/client/images/themes/whi-web/w-icons10.svg')}}" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            @endforeach
+            </div>
+            <img src="{{asset('build/client/images/themes/whi-web/firula-linha-do-tempo.png')}}" alt="firula linha do tempo" class="position-absolute start-0 bottom-0">
         </section>
     @endif
+
+    <style>
+        .linha-do-tempo{
+            margin-top: -85px;
+        }
+        .space70{
+            height: 70px;
+        }
+        .about {
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .about .works-main-widget-area {
+            position: relative;
+            z-index: 1;
+            margin: 0 70px 0 0;
+        }
+
+        .about .works-main-widget-area::after {
+            position: absolute;
+            content: "";
+            height: 425px;
+            width: 2px;
+            right: -85px;
+            transition: all .4s;
+            background: #F0F0F2;
+            top: -50px;
+        }
+
+        .about .works-main-widget-area:hover .icons {
+            background: #D99400;
+            transition: all .4s;
+            transform: rotateY(-180deg);
+        }
+
+        .about .works-main-widget-area:hover .icons img {
+            filter: brightness(0) invert(1);
+            transition: all .4s;
+        }
+
+        .about .works-main-widget-area:hover .works8-boxarea {
+            background: #D99400;
+            transition: all .4s;
+        }
+
+        .about .works-main-widget-area:hover .works8-boxarea a,
+        .about .works-main-widget-area:hover .works8-boxarea p {
+            color: #FFF;
+            transition: all .4s;
+        }
+
+        .about .works-main-widget-area:hover .works8-boxarea h5 {
+            background: #D99400;
+            color: #FFF;
+        }
+
+        .about .works-main-widget-area .icons {
+            height: 80px;
+            width: 80px;
+            display: inline-block;
+            transition: all .4s;
+            border-radius: 10px;
+            text-align: center;
+            line-height: 80px;
+            background: #F4F4F9;
+        }
+
+        .about .works-main-widget-area .icons img {
+            transition: all .4s;
+        }
+
+        .about .works-main-widget-area .works8-boxarea {
+            position: relative;
+            z-index: 1;
+            background: #F4F4F9;
+            padding: 24px;
+            transition: all .4s;
+            border-radius: 10px;
+        }
+
+        .about .works-main-widget-area .works8-boxarea a {
+            font-family: "Manrope", sans-serif;
+            font-style: normal;
+            line-height: 24px;
+            display: inline-block;
+            transition: all .4s;
+        }
+
+        .about .works-main-widget-area .works8-boxarea p {
+            font-family: "Manrope", sans-serif;
+            font-style: normal;
+            line-height: 24px;
+            transition: all .4s;
+        }
+
+        .about .works-main-widget-area .works8-boxarea h5 {
+            font-family: "Manrope", sans-serif;
+            font-style: normal;
+            height: 40px;
+            width: 40px;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 50%;
+            background: #F4F4F9;
+            position: absolute;
+            top: 50%;
+            right: -100px;
+            margin-top: -20px;
+            transition: all .4s;
+        }
+
+        .about .works-main-widget-area2 {
+            position: relative;
+            z-index: 1;
+            margin: 0 0 0 70px;
+        }
+
+        .about .works-main-widget-area2:hover .icons {
+            background: #D99400;
+            transition: all .4s;
+            transform: rotateY(-180deg);
+        }
+
+        .about .works-main-widget-area2:hover .icons img {
+            filter: brightness(0) invert(1);
+            transition: all .4s;
+        }
+
+        .about .works-main-widget-area2:hover .works8-boxarea {
+            background: #D99400;
+            transition: all .4s;
+        }
+
+        .about .works-main-widget-area2:hover .works8-boxarea a,
+        .about .works-main-widget-area2:hover .works8-boxarea p {
+            color: #FFF;
+            transition: all .4s;
+        }
+
+        .about .works-main-widget-area2:hover .works8-boxarea h5 {
+            background: #D99400;
+            color: #FFF;
+        }
+
+        .about .works-main-widget-area2 .icons {
+            height: 80px;
+            width: 80px;
+            display: inline-block;
+            transition: all .4s;
+            border-radius: 10px;
+            text-align: center;
+            line-height: 80px;
+            background: #F4F4F9;
+        }
+
+        .about .works-main-widget-area2 .icons img {
+            transition: all .4s;
+        }
+
+        .about .works-main-widget-area2 .works8-boxarea {
+            position: relative;
+            z-index: 1;
+            background: #F4F4F9;
+            padding: 24px;
+            transition: all .4s;
+            border-radius: 8px;
+        }
+
+        .about .works-main-widget-area2 .works8-boxarea a {
+            line-height: 24px;
+            display: inline-block;
+            transition: all .4s;
+        }
+
+        .about .works-main-widget-area2 .works8-boxarea p {
+            font-family: "Manrope", sans-serif;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 26px;
+            transition: all .4s;
+        }
+
+        .about .works-main-widget-area2 .works8-boxarea h5 {
+            font-family: "Manrope", sans-serif;
+            font-style: normal;
+
+            height: 40px;
+            width: 40px;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 50%;
+            background: #F4F4F9;
+            position: absolute;
+            top: 50%;
+            left: -100px;
+            margin-top: -20px;
+            transition: all .4s;
+        }
+
+        /* XS */
+        @media (max-width: 767px) {
+            .about .works-main-widget-area,
+            .about .works-main-widget-area2 {
+                margin: 0;
+            }
+
+            .about .works-main-widget-area::after {
+                display: none;
+            }
+
+            .about .works-main-widget-area .works8-boxarea h5,
+            .about .works-main-widget-area2 .works8-boxarea h5 {
+                display: none;
+            }
+        }
+
+        /* MD */
+        @media (min-width: 768px) and (max-width: 991px) {
+            .about .works-main-widget-area::after {
+                display: none;
+            }
+
+            .about .works-main-widget-area .works8-boxarea h5 {
+                right: -60px;
+            }
+
+            .about .works-main-widget-area2 .works8-boxarea h5 {
+                left: -60px;
+            }
+        }
+    </style>
+  
+    <style>
+        .section-container {
+            background-color: #F7F4EF;
+            padding: 60px 0;
+        }
+        .title-highlight {
+        color: #b34a17;
+        }
+
+        /* Botões/Abas dos Pilares */
+        .pillar-card {
+        background-color: transparent;
+        border: 1px solid transparent;
+        border-radius: 12px;
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        color: #4a4a4a;
+        width: 100%;
+        text-align: left;
+        }
+
+        .pillar-card:hover {
+        background-color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Estado Ativo do Pilar */
+        .pillar-card.active {
+        background-color: #ffffff;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .pillar-icon-box {
+        width: 44px;
+        height: 44px;
+        background-color: #b34a17;
+        color: #ffffff;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+        }
+
+        /* Conteúdo das Abas */
+        .tab-content-container {
+        margin-top: 40px;
+        }
+
+
+        /* Barra de Progresso Customizada */
+        .progress-label-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .custom-progress {
+        height: 10px;
+        border-radius: 5px;
+        background-color: #e2ded7;
+        overflow: hidden;
+        }
+
+        .custom-progress-bar {
+        background-color: #d9822b;
+        border-radius: 5px;
+        height: 100%;
+        transition: width 0.6s ease;
+        }
+
+        .content-image {
+        width: 100%;
+        height: 320px;
+        object-fit: cover;
+        border-radius: 20px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Animação suave para troca de conteúdo */
+        .tab-pane {
+        display: none;
+        opacity: 0;
+        transition: opacity 0.4s ease-in-out;
+        }
+
+        .tab-pane.active {
+        display: flex;
+        opacity: 1;
+        }
+    </style>
+
+    <section class="section-container position-relative">
+        <div class="container">
+            
+            <!-- Cabeçalho -->
+            <div class="row mb-5 align-items-center">
+                <div class="col-lg-6 mb-3 mb-lg-0">
+                    <h2 class="font-changa font-50 font-bold text-grey">
+                        Conheça os <span class="title-highlight">pilares</span> principais
+                    </h2>
+                </div>
+                <div class="col-lg-6">
+                    <p class="font-changa font-20 font-medium text-grey mb-0">
+                    Somos a integração em educação e mercado de trabalho para superar barreiras de ascensão profissional de pessoas negras no Brasil
+                    </p>
+                </div>
+            </div>
+
+            <!-- Navegação / Seletores (Pilares) -->
+            <div class="row g-3 mb-4 col-12 col-lg-11">
+                <div class="col-md-4 pe-lg-0">
+                    <button class="pillar-card active" onclick="changeTab('educacao', this)">
+                        <div class="pillar-icon-box">
+                            <i class="bi bi-triangle"></i>
+                        </div>
+                        <span class="font-changa font-20 font-medium">Educação</span>
+                    </button>
+                </div>
+
+                <div class="col-md-4 pe-lg-0">
+                    <button class="pillar-card" onclick="changeTab('acessibilidade', this)">
+                        <div class="pillar-icon-box">
+                            <i class="bi bi-grid-fill"></i>
+                        </div>
+                        <span class="font-changa font-20 font-medium">Acessibilidade</span>
+                    </button>
+                </div>
+
+                <div class="col-md-4 pe-lg-0">
+                    <button class="pillar-card" onclick="changeTab('empregabilidade', this)">
+                        <div class="pillar-icon-box">
+                            <i class="bi bi-person"></i>
+                        </div>
+                        <span class="font-changa font-20 font-medium">Empregabilidade</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Conteúdos Dinâmicos -->
+            <div class="tab-content-container col-12 col-lg-11">
+
+                <!-- Aba 1: Educação -->
+                <div id="educacao" class="row align-items-center g-4 tab-pane active">
+                    <div class="col-lg-6">
+                        <h3 class="font-changa font-26 font-bold mb-2">Métricas de alcance</h3>
+                        <p class="font-changa font-15 font-medium text-grey mb-4">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text of the printing and typesetting industry.
+                        </p>
+                        <div class="progress-container me-lg-4">
+                            <div class="progress-label-group font-changa font-14 font-bold text-grey mb-1">
+                                <span>Mulheres Negras formadas</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="custom-progress">
+                                <div class="custom-progress-bar" style="width: 90%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop" alt="Educação" class="content-image">
+                    </div>
+                </div>
+
+                <!-- Aba 2: Acessibilidade -->
+                <div id="acessibilidade" class="row align-items-center g-4 tab-pane">
+                    <div class="col-lg-6">
+                        <h3 class="font-changa font-26 font-bold mb-2">Inclusão Digital e Física</h3>
+                        <p class="font-changa font-15 font-medium text-grey mb-4">
+                            Garantimos que todas as plataformas, cursos e ferramentas sejam acessíveis a pessoas com deficiência e pessoas de regiões com pouca infraestrutura.
+                        </p>
+                        <div class="progress-container me-lg-4">
+                            <div class="progress-label-group font-changa font-14 font-bold text-grey mb-1">
+                                <span>Plataformas Acessíveis</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="custom-progress">
+                                <div class="custom-progress-bar" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=800&auto=format&fit=crop" alt="Acessibilidade" class="content-image">
+                    </div>
+                </div>
+
+                <!-- Aba 3: Empregabilidade -->
+                <div id="empregabilidade" class="row align-items-center g-4 tab-pane">
+                    <div class="col-lg-6">
+                        <h3 class="font-changa font-26 font-bold mb-2">Conexão com o Mercado</h3>
+                        <p class="font-changa font-15 font-medium text-grey mb-4">
+                            Conectamos os talentos com grandes empresas parceiras promovendo contratações inclusivas e oportunidades de liderança contínua.
+                        </p>
+                        <div class="progress-container me-lg-4">
+                            <div class="progress-label-group font-changa font-14 font-bold text-grey mb-1">
+                                <span>Taxa de Contratação</span>
+                                <span>78%</span>
+                            </div>
+                            <div class="custom-progress">
+                                <div class="custom-progress-bar" style="width: 78%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop" alt="Empregabilidade" class="content-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <img src="{{asset('build/client/images/themes/whi-web/firula-pilares.png')}}" alt="firula pilares" class="d-none d-lg-block position-absolute end-0 top-0 w-auto" height="100%">
+    </section>
+
+    <!-- JavaScript para alternar as abas -->
+    <script>
+    function changeTab(tabId, element) {
+        // 1. Remove a classe 'active' de todos os botões de pilares
+        const buttons = document.querySelectorAll('.pillar-card');
+        buttons.forEach(btn => btn.classList.remove('active'));
+
+        // 2. Oculta todo o conteúdo das abas
+        const panes = document.querySelectorAll('.tab-pane');
+        panes.forEach(pane => pane.classList.remove('active'));
+
+        // 3. Ativa o botão clicado
+        element.classList.add('active');
+
+        // 4. Exibe o conteúdo correspondente
+        const targetPane = document.getElementById(tabId);
+        if (targetPane) {
+        targetPane.classList.add('active');
+        }
+    }
+    </script>
+
+    <!-- Our Exhibitions Section Start -->
+    <section class="our-exhibitions position-relative py-5">
+        <div class="container">
+            <div class="row section-row mb-5">
+                <div class="col-xl-12 text-center">
+                    <!-- Section Title Start -->
+                    <div class="section-title section-title-center">
+                        <h2 class="text-anime-style-3 text-white fw-light fs-1" data-cursor="-opaque">
+                            Um projeto,<br><span class="fw-bold">benefícios únicos para você</span>
+                        </h2>
+                        <div class="btn-about my-4 d-flex justify-content-center">
+                            <a href="#" class="rounded-pill py-2 px-3 px-lg-4 font-changa bg-button-one color-button-one font-18 font-medium text-decoration-none hover-zoom" rel="noopener noreferrer">
+                                Faça parte agora
+                                <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Section Title End -->
+                </div>
+            </div>
+
+            <!-- Swiper Carousel Start -->
+            <div class="swiper exhibition-swiper">
+                <div class="swiper-wrapper">
+
+                    <!-- Slide 1 (Texto Topo / Imagem Baixo) -->
+                    <div class="swiper-slide">
+                        <div class="exhibition-item">
+                            <div class="exhibition-item-header">
+                                <div class="icon-box mb-4">
+                                    {{-- <img src="images/icon-exhibition-item-1.svg" alt="Ícone"> --}}
+                                    <svg width="34" height="56" viewBox="0 0 34 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.7012 9.31078C1.7012 -2.10359 32.1395 -2.10359 32.1395 9.31078C32.1395 16.9204 35.9443 32.1395 28.3347 43.5539C24.5299 47.3587 24.5299 54.9683 16.9204 54.9683C9.31078 54.9683 9.31078 47.3587 5.50599 43.5539C-2.10359 32.1395 1.7012 16.9204 1.7012 9.31078Z" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                                    <path d="M11.213 19.7741C12.789 19.7741 14.0666 18.4965 14.0666 16.9205C14.0666 15.3445 12.789 14.0669 11.213 14.0669C9.63697 14.0669 8.35938 15.3445 8.35938 16.9205C8.35938 18.4965 9.63697 19.7741 11.213 19.7741Z" stroke="#E53E3E" stroke-width="1.5" stroke-linecap="round"/>
+                                    <path d="M22.629 19.7741C24.205 19.7741 25.4826 18.4965 25.4826 16.9205C25.4826 15.3445 24.205 14.0669 22.629 14.0669C21.053 14.0669 19.7754 15.3445 19.7754 16.9205C19.7754 18.4965 21.053 19.7741 22.629 19.7741Z" stroke="#E53E3E" stroke-width="1.5" stroke-linecap="round"/>
+                                    <path d="M11.2139 35.9444L16.9211 32.1396L22.6282 35.9444" stroke="#E53E3E" stroke-width="1.5" stroke-linecap="round"/>
+                                    </svg>
+                                </div>
+                                <div class="exhibition-item-content">
+                                    <h3>Educação Acessível</h3>
+                                    <p>Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressão.</p>
+                                </div>
+                            </div>
+                            <div class="exhibition-item-image">
+                                <figure class="image-anime m-0">
+                                    <img src="{{asset('build/client/images/themes/whi-web/exhibition.png')}}" alt="Exposição">
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2 (Imagem Topo / Texto Baixo) -->
+                    <div class="swiper-slide">
+                        <div class="exhibition-item reverse" data-wow-delay="0.2s">
+                            <div class="exhibition-item-image">
+                                <figure class="image-anime m-0">
+                                    <img src="{{asset('build/client/images/themes/whi-web/exhibition.png')}}" alt="Exposição">
+                                </figure>
+                            </div>
+                            <div class="exhibition-item-header">
+                                <div class="icon-box mb-4">
+                                    {{-- <img src="images/icon-exhibition-item-2.svg" alt="Ícone"> --}}
+                                    <svg width="34" height="56" viewBox="0 0 34 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.7012 9.31078C1.7012 -2.10359 32.1395 -2.10359 32.1395 9.31078C32.1395 16.9204 35.9443 32.1395 28.3347 43.5539C24.5299 47.3587 24.5299 54.9683 16.9204 54.9683C9.31078 54.9683 9.31078 47.3587 5.50599 43.5539C-2.10359 32.1395 1.7012 16.9204 1.7012 9.31078Z" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                                    <path d="M11.213 19.7741C12.789 19.7741 14.0666 18.4965 14.0666 16.9205C14.0666 15.3445 12.789 14.0669 11.213 14.0669C9.63697 14.0669 8.35938 15.3445 8.35938 16.9205C8.35938 18.4965 9.63697 19.7741 11.213 19.7741Z" stroke="#E53E3E" stroke-width="1.5" stroke-linecap="round"/>
+                                    <path d="M22.629 19.7741C24.205 19.7741 25.4826 18.4965 25.4826 16.9205C25.4826 15.3445 24.205 14.0669 22.629 14.0669C21.053 14.0669 19.7754 15.3445 19.7754 16.9205C19.7754 18.4965 21.053 19.7741 22.629 19.7741Z" stroke="#E53E3E" stroke-width="1.5" stroke-linecap="round"/>
+                                    <path d="M11.2139 35.9444L16.9211 32.1396L22.6282 35.9444" stroke="#E53E3E" stroke-width="1.5" stroke-linecap="round"/>
+                                    </svg>
+                                </div>
+                                <div class="exhibition-item-content">
+                                    <h3>Oportunidade de Mercado</h3>
+                                    <p>Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressão.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3 (Texto Topo / Imagem Baixo) -->
+                    <div class="swiper-slide">
+                        <div class="exhibition-item" data-wow-delay="0.4s">
+                            <div class="exhibition-item-header">
+                                <div class="icon-box mb-4">
+                                    {{-- <img src="images/icon-exhibition-item-3.svg" alt="Ícone"> --}}
+                                    <svg width="34" height="56" viewBox="0 0 34 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.7012 9.31078C1.7012 -2.10359 32.1395 -2.10359 32.1395 9.31078C32.1395 16.9204 35.9443 32.1395 28.3347 43.5539C24.5299 47.3587 24.5299 54.9683 16.9204 54.9683C9.31078 54.9683 9.31078 47.3587 5.50599 43.5539C-2.10359 32.1395 1.7012 16.9204 1.7012 9.31078Z" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                                    <path d="M11.213 19.7741C12.789 19.7741 14.0666 18.4965 14.0666 16.9205C14.0666 15.3445 12.789 14.0669 11.213 14.0669C9.63697 14.0669 8.35938 15.3445 8.35938 16.9205C8.35938 18.4965 9.63697 19.7741 11.213 19.7741Z" stroke="#E53E3E" stroke-width="1.5" stroke-linecap="round"/>
+                                    <path d="M22.629 19.7741C24.205 19.7741 25.4826 18.4965 25.4826 16.9205C25.4826 15.3445 24.205 14.0669 22.629 14.0669C21.053 14.0669 19.7754 15.3445 19.7754 16.9205C19.7754 18.4965 21.053 19.7741 22.629 19.7741Z" stroke="#E53E3E" stroke-width="1.5" stroke-linecap="round"/>
+                                    <path d="M11.2139 35.9444L16.9211 32.1396L22.6282 35.9444" stroke="#E53E3E" stroke-width="1.5" stroke-linecap="round"/>
+                                    </svg>
+
+                                </div>
+                                <div class="exhibition-item-content">
+                                    <h3>Mentorias Evolutivas</h3>
+                                    <p>Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressão.</p>
+                                </div>
+                            </div>
+                            <div class="exhibition-item-image">
+                                <figure class="image-anime m-0 position-relative">
+                                    <img src="{{asset('build/client/images/themes/whi-web/exhibition.png')}}" alt="Exposição">
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Navegação Swiper (Botões Circulares) -->
+                <div class="swiper-navigation-wrapper mt-5 d-flex justify-content-center gap-3">
+                    <div class="swiper-button-prev-custom">
+                        <i class="bi bi-arrow-left"></i>
+                    </div>
+                    <div class="swiper-button-next-custom">
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- Swiper Carousel End -->
+        </div>
+        <img src="{{asset('build/client/images/themes/whi-web/firula-exhibition-1.png')}}" alt="firula exhibition" class="position-absolute start-0 top-0 w-auto" height="100%">
+    </section>
+    <!-- Our Exhibitions Section End -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Garante que o objeto Swiper existe no escopo global
+            if (typeof Swiper !== 'undefined') {
+                const exhibitionSwiper = new Swiper('.exhibition-swiper', {
+                    slidesPerView: 1,
+                    spaceBetween: 24,
+                    loop: true,
+                    navigation: {
+                        nextEl: '.swiper-button-next-custom',
+                        prevEl: '.swiper-button-prev-custom',
+                    },
+                    breakpoints: {
+                        768: {
+                            slidesPerView: 2,
+                        },
+                        1200: {
+                            slidesPerView: 3,
+                        }
+                    }
+                });
+            } else {
+                console.error('Swiper JS não foi carregado corretamente.');
+            }
+        });
+    </script>
+
+    <style>
+        /* Container Escuro e Estilo Geral */
+        .our-exhibitions {
+            background-color: #230D01;
+            color: #ffffff;
+        }
+
+        .exhibition-swiper {
+            padding: 10px 0 30px;
+        }
+
+        /* Card em formato de pílula arredondada */
+        .exhibition-item {
+            display: flex;
+            flex-direction: column;            
+            overflow: hidden;
+            text-align: center;
+            height: 640px;
+            gap: 10px;
+        }
+
+        .exhibition-item-header:nth-of-type(odd), .exhibition-item-image:nth-of-type(odd){
+            border-radius: 200px 200px 0 0;
+        }
+        .exhibition-item-header:nth-of-type(even), .exhibition-item-image:nth-of-type(even){
+            border-radius: 0 0 200px 200px;
+        }
+        /* Bloco do Conteúdo (Texto e Ícone) */
+        .exhibition-item-header {
+            border: 1px solid rgba(255, 255, 255, 0.15);            
+            padding: 0px 50px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .exhibition-item-header .icon-box img {
+            max-width: 40px;
+            height: auto;
+        }
+
+        .exhibition-item-content h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .exhibition-item-content p {
+            font-size: 0.85rem;
+            color: #b0a8a6;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Bloco da Imagem */
+        .exhibition-item-image {
+            width: 100%;
+            height: 320px;
+            overflow: hidden;
+        }
+
+        .exhibition-item-image img {
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 1 / 0.80;
+            object-fit: cover;
+            display: block;
+            transition: all 0.6s ease-in-out;
+        }
+
+        .exhibition-item:hover .exhibition-item-image figure img{
+            transform: scale(1.05) rotate(2deg);
+        }
+        
+        .image-anime{
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-anime:after{
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 0%;
+            left: 50%;
+            top: 50%;
+            background-color: rgba(255,255,255,.3);
+            transform: translate(-50%,-50%) rotate(-45deg);
+            z-index: 1;
+        }
+
+        .image-anime:hover:after{
+            height: 250%;
+            transition: all 600ms linear;
+            background-color: transparent;
+        }
+
+        /* Estilo do Botão do Carrossel (Navegação Circular) */
+        .swiper-navigation-wrapper .swiper-button-prev-custom,
+        .swiper-navigation-wrapper .swiper-button-next-custom {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .swiper-navigation-wrapper .swiper-button-prev-custom:hover,
+        .swiper-navigation-wrapper .swiper-button-next-custom:hover {
+            border-color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+
+    <!-- Enterprise Solutions Section Start -->
+    <section class="solutions-section py-5">
+        <div class="container">
+            <!-- Section Header -->
+            <div class="row align-items-center mb-5">
+                <div class="col-lg-8">
+                    <span class="sub-title font-changa font-50 font-medium">Uma oportunidade,</span>
+                    <h2 class="main-title font-changa font-50 font-bold mb-0 text-grey">Soluções incríveis para empresas</h2>
+                </div>
+                <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                    <a href="#" class="rounded-pill py-2 px-3 px-lg-4 font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
+                        Faça parte agora 
+                        <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Content Grid with Main Image & Swiper -->
+            <div class="row g-4">
+                <!-- Left Banner Image -->
+                <div class="col-lg-4">
+                    <div class="banner-card">
+                        <img src="{{asset('build/client/images/themes/whi-web/company-banner.png')}}" alt="Parceria de negócios" class="img-fluid">
+                    </div>
+                </div>
+
+                <!-- Right Slider Area -->
+                <div class="col-lg-8">
+                    <div class="swiper solutions-swiper">
+                        <div class="swiper-wrapper">
+
+                            <!-- Slide 1 (Grid de 6 Cards) -->
+                            <div class="swiper-slide">
+                                <div class="row g-3">
+                                    <!-- Card 1 -->
+                                    <div class="col-md-4">
+                                        <div class="feature-card">
+                                            <div class="icon-box">
+                                                <i class="bi bi-people"></i>
+                                            </div>
+                                            <h4 class="font-changa font-18 font-bold">Carreiras Experientes</h4>
+                                            <p class="font-changa font-15 font-medium">é simplesmente uma simulação de texto da indústria tipográfica eé simplesmente uma simulação</p>
+                                        </div>
+                                    </div>
+                                    <!-- Card 2 -->
+                                    <div class="col-md-4">
+                                        <div class="feature-card">
+                                            <div class="icon-box">
+                                                <i class="bi bi-sun"></i>
+                                            </div>
+                                            <h4 class="font-changa font-18 font-bold">Treinamento Básico</h4>
+                                            <p class="font-changa font-15 font-medium">é simplesmente uma simulação de texto da indústria tipográfica eé simplesmente uma simulação</p>
+                                        </div>
+                                    </div>
+                                    <!-- Card 3 -->
+                                    <div class="col-md-4">
+                                        <div class="feature-card">
+                                            <div class="icon-box">
+                                                <i class="bi bi-sun"></i>
+                                            </div>
+                                            <h4 class="font-changa font-18 font-bold">Crescimento Empresarial</h4>
+                                            <p class="font-changa font-15 font-medium">We discuss your business goals, hiringé simplesmente uma simulação de texto d</p>
+                                        </div>
+                                    </div>
+                                    <!-- Card 4 -->
+                                    <div class="col-md-4">
+                                        <div class="feature-card">
+                                            <div class="icon-box">
+                                                <i class="bi bi-globe"></i>
+                                            </div>
+                                            <h4 class="font-changa font-18 font-bold">Triagem Garantida</h4>
+                                            <p class="font-changa font-15 font-medium">é simplesmente uma simulação de texto da indústria tipográfica e é simplesmente uma simulação</p>
+                                        </div>
+                                    </div>
+                                    <!-- Card 5 -->
+                                    <div class="col-md-4">
+                                        <div class="feature-card">
+                                            <div class="icon-box">
+                                                <i class="bi bi-grid-3x3-gap"></i>
+                                            </div>
+                                            <h4 class="font-changa font-18 font-bold">Publicidade no site</h4>
+                                            <p class="font-changa font-15 font-medium">é simplesmente uma simulação de texto da indústria tipográfica eé simplesmente uma simulação</p>
+                                        </div>
+                                    </div>
+                                    <!-- Card 6 -->
+                                    <div class="col-md-4">
+                                        <div class="feature-card">
+                                            <div class="icon-box">
+                                                <i class="bi bi-grid-3x3-gap"></i>
+                                            </div>
+                                            <h4 class="font-changa font-18 font-bold">Contrato sem fidelização</h4>
+                                            <p class="font-changa font-15 font-medium">é simplesmente uma simulação de texto da indústria tipográfica eé simplesmente uma simulação</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="row mt-4">
+                <div class="col-12 d-flex justify-content-end gap-2">
+                    <div class="swiper-button-prev-custom">
+                        <i class="bi bi-chevron-left"></i>
+                    </div>
+                    <div class="swiper-button-next-custom">
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Enterprise Solutions Section End -->
+
+    <style>
+        /* Layout & Cores */
+        .solutions-section {
+            background-color: #EAE6DF;
+            color: #4A4A4A;
+        }
+
+        .sub-title {
+            color: #b34a17;
+        }
+
+        /* Card da Imagem Principal */
+        .banner-card {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            height: 100%;
+            max-height: 558px;
+        }
+
+        .banner-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Cards de Funcionalidade */
+        .feature-card {
+            background-color: #F8F7F5;
+            border-radius: 16px;
+            padding: 24px 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            min-height: 265px;
+        }
+
+        .feature-card .icon-box {
+            width: 42px;
+            height: 42px;
+            background-color: #D98804;
+            color: #FFFFFF;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h4 {
+            color: #2D2D2D;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: #727272;
+            line-height: 1.45;
+            margin: 0;
+        }
+
+
+        /* Efeito Hover nos Cards de Funcionalidade */
+        .feature-card {
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                        box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+                        background-color 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            background-color: #ffffff;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Efeito Hover na Caixa do Ícone */
+        .feature-card .icon-box {
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .feature-card:hover .icon-box {
+            transform: scale(1.08);
+            background-color: #b87303;
+        }
+
+        /* Efeito Hover na Imagem do Banner Lateral */
+        .banner-card {
+            cursor: pointer;
+        }
+
+        .banner-card img {
+            transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .banner-card:hover img {
+            transform: scale(1.04);
+        }
+
+        /* Animação do Selo "H" no Hover da Imagem */
+        .banner-card .badge-icon {
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .banner-card:hover .badge-icon {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* Botões de Navegação Circular */
+        .swiper-button-prev-custom,
+        .swiper-button-next-custom {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1px solid #4A4A4A;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4A4A4A;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .swiper-button-prev-custom:hover,
+        .swiper-button-next-custom:hover {
+            background-color: #4A4A4A;
+            color: #EAE6DF;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof Swiper !== 'undefined') {
+                const solutionsSwiper = new Swiper('.solutions-swiper', {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                    loop: true,
+                    navigation: {
+                        nextEl: '.swiper-button-next-custom',
+                        prevEl: '.swiper-button-prev-custom',
+                    },
+                });
+            }
+        });
+    </script>
 
     @if ($benefitTopics->count())
         <section id="stats-section" class="stats-section py-5 position-relative container-fluid">

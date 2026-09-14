@@ -425,9 +425,6 @@
         .bg-button-two {
             background: var(--bg-button-two);
         }
-        .about li::after{
-            color: var(--primary-color);
-        }
         .bg-grey-light{
             background: #E9E9E9;
         }

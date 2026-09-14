@@ -8,7 +8,12 @@
             <label for="subtitle" class="form-label">Subtitulo</label>
             <input type="text" name="subtitle" class="form-control" id="subtitle{{isset($about->id)?$about->id:''}}" value="{{isset($about)?$about->subtitle:''}}" placeholder="Subtítulo">
         </div>
-    </div>    
+    </div>
+
+    <div class="col-12 col-lg-12 mb-3">
+        <label for="link" class="form-label">Link</label>
+        <input type="text" name="link" class="form-control" id="link{{isset($about->id)?$about->id:''}}" value="{{isset($about)?$about->link:''}}" placeholder="Link">
+    </div>
 
     <div class="mb-3 col-12 d-flex align-items-start flex-column">
         <label for="textarea-text" class="form-label">Texto</label>
@@ -19,6 +24,69 @@
             id="textarea-text"
             rows="5"
         >{!! old('text', $about->text ?? '') !!}</textarea>
+    </div>
+    <div class="card mb-1">
+        <div class="card-header" id="headingTen">
+            <h5 class="m-0 position-relative">
+                <a
+                    class="custom-accordion-title text-reset d-block collapsed"
+                    data-bs-toggle="collapse"
+                    href="#collapseAbout"
+                    aria-expanded="false"
+                    aria-controls="collapseAbout"
+                >
+                    <i class="mdi mdi-help-circle me-1 text-dark"></i>
+                    Como estruturar texto para ficar igual ao layout
+                    <i class="mdi mdi-chevron-down accordion-arrow"></i>
+                </a>
+            </h5>
+        </div>
+
+        <div
+            id="collapseAbout"
+            class="collapse"
+            aria-labelledby="headingAbout"
+            data-bs-parent="#custom-accordion-one"
+        >
+            <div class="card-body">
+                <p>
+                    Para criar os itens desta seção, siga o padrão abaixo:
+                </p>
+
+                <ul>
+                    <li>
+                        <i class="mdi mdi-image me-1"></i>
+                        Adicione a imagem pelo CMS de texto, utilizando o botão de <strong>imagem</strong>.
+                    </li>
+
+                    <li>
+                        <i class="mdi mdi-format-bold me-1"></i>
+                        Informe o título em <strong>negrito</strong> no CMS de texto, utilizando o botão <strong>B</strong>.
+                    </li>
+
+                    <li>
+                        <i class="mdi mdi-format-list-bulleted me-1"></i>
+                        Cada novo item deve ser iniciado em uma nova linha da listagem.
+                    </li>
+
+                    <li>
+                        Na linha seguinte, informe a descrição do item.
+                    </li>
+
+                    <li>
+                        Separe cada item com uma linha em branco.
+                    </li>
+                </ul>
+
+                <p><strong>Exemplo de estrutura no CMS:</strong></p>
+
+                <pre>[image] **Nossa Missão**
+                Lorem ipsum is simply dummy text of the priting and typesetting
+
+                [image] **Nossa Visão**
+                Lorem ipsum is simply dummy text of the priting and typesetting</pre>
+            </div>
+        </div>
     </div>
     <div class="mb-3">
         <div class="form-check">
@@ -62,25 +130,12 @@
                             'Italic',
                             'Underline',
                             'Strike',
-                            'Subscript',
-                            'Superscript'
                         ]
                     },
                     {
                         name: 'paragraph',
                         items: [
-                            'NumberedList',
                             'BulletedList',
-                            '-',
-                            'Outdent',
-                            'Indent',
-                            '-',
-                            'Blockquote',
-                            '-',
-                            'JustifyLeft',
-                            'JustifyCenter',
-                            'JustifyRight',
-                            'JustifyBlock'
                         ]
                     },
                     {
@@ -89,15 +144,7 @@
                     },
                     {
                         name: 'insert',
-                        items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar']
-                    },
-                    {
-                        name: 'styles',
-                        items: ['Styles', 'Format', 'Font', 'FontSize']
-                    },
-                    {
-                        name: 'colors',
-                        items: ['TextColor', 'BGColor']
+                        items: ['Image']
                     },
                     {
                         name: 'tools',
@@ -146,3 +193,14 @@
 
     });
 </script>
+
+<style>
+    #cke_textarea-text{
+        width: 100%;
+    }
+    pre {
+        white-space: pre-line;
+        margin-left: 0;
+        padding-left: 0;
+    }
+</style>
