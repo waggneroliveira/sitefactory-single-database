@@ -1319,6 +1319,9 @@
                     <div class="text-end mt-4 d-flex justify-content-center justify-content-lg-end align-items-center">
                         <a href="{{route('products')}}" class="btn-product bg-button-two color-button-two rounded-pill py-2 px-5 hover-zoom">
                             {{$sections['product']->btn_title}}
+                            <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"></path>
+                            </svg>
                         </a>
                     </div>
                 </div>               
@@ -1327,7 +1330,7 @@
         </section>
     @endif
 
-        <style>
+    <style>
         .user-card {
             display: flex;
             align-items: center;
@@ -1434,38 +1437,43 @@
     @endif
 
     @if (isset($letsgo))
-        <section class="lets-go bg-grey-light py-5">
+        <section class="lets-go pt-5 pb-0 position-relative">
             <div class="container">
-                <div class="row justify-content-center align-items-center">
+                <div class="row justify-content-between align-items-center">
                     @if ($letsgo->path_image <> null)                    
-                        <div class="content-left col-12 col-lg-6">
+                        <div class="content-left col-12 col-lg-3">
                             <img src="{{asset('storage/' . $letsgo->path_image)}}" alt="Carro de entrega" class="w-100">
                         </div>
                     @endif
-                    <div class="content-left col-12 col-lg-6">
-                        <h3 class="about-title font-changa font-50 font-bold primary-color mb-3">
+                    <div class="content-left col-12 col-lg-8">
+                        <h3 class="about-title font-changa font-50 font-bold text-dark mb-3">
                             {{$letsgo->title}}
                         </h3>
                         <p class="color-grey font-changa font-16 font-regular text-center text-lg-start">{{$letsgo->description}}</p>
                         <div class="step-actions gap-3 d-flex mt-4 flex-wrap justify-content-center justify-content-lg-start">
-                            <a href="{{route('about')}}#coverage-section" class="rounded-pill py-2 px-4 hover-zoom btn-hero font-changa color-button-two bg-button-two font-18 font-medium text-decoration-none" rel="noopener noreferrer">
-                                Onde Distribuimos
-                                <svg class="ms-2" width="31" height="13" viewBox="0 0 31 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M24.1708 12.4741L30.4078 6.23712L24.1708 0.000120163L22.4036 1.76727L26.8527 6.23712L22.3828 10.707L24.1708 12.4741Z" fill="var(--color-button-two)"/>
-                                <path d="M0 5H27V7.2H0V5Z" fill="var(--color-button-two)"/>
-                                </svg>
-                            </a>
-                            <a href="{{route('about')}}#team-section" class="rounded-pill py-2 px-4 hover-zoom btn-hero font-changa color-button-two bg-button-two font-18 font-medium text-decoration-none" rel="noopener noreferrer">
-                                Encontrar Representantes
-                                <svg class="ms-2" width="31" height="13" viewBox="0 0 31 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M24.1708 12.4741L30.4078 6.23712L24.1708 0.000120163L22.4036 1.76727L26.8527 6.23712L22.3828 10.707L24.1708 12.4741Z" fill="var(--color-button-two)"/>
-                                <path d="M0 5H27V7.2H0V5Z" fill="var(--color-button-two)"/>
-                                </svg>
-                            </a>
+                            @if (isset($contact) && $contact->link_tik_tok <> nul)                                
+                                <a href="{{ $contact->link_tik_tok }}" class="rounded-pill py-2 px-4 hover-zoom btn-hero font-changa color-button-one bg-button-one font-16 font-medium text-decoration-none" rel="noopener noreferrer">
+                                    Conectar no Linkedin
+                                    <svg class="ms-1" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12.7336 0H1.26641C0.567 0 0 0.567 0 1.26641V12.7336C0 13.433 0.567 14 1.26641 14H12.7336C13.433 14 14 13.433 14 12.7336V1.26641C14 0.567 13.433 0 12.7336 0ZM4.33219 12.0885C4.33219 12.2921 4.1672 12.4571 3.96365 12.4571H2.39484C2.19129 12.4571 2.0263 12.2921 2.0263 12.0885V5.51215C2.0263 5.3086 2.19129 5.14361 2.39484 5.14361H3.96365C4.1672 5.14361 4.33219 5.3086 4.33219 5.51215V12.0885ZM3.17925 4.52369C2.35614 4.52369 1.68887 3.85641 1.68887 3.03331C1.68887 2.2102 2.35614 1.54293 3.17925 1.54293C4.00235 1.54293 4.66962 2.2102 4.66962 3.03331C4.66962 3.85641 4.00239 4.52369 3.17925 4.52369ZM12.5307 12.1182C12.5307 12.3053 12.379 12.4571 12.1919 12.4571H10.5084C10.3213 12.4571 10.1696 12.3053 10.1696 12.1182V9.03352C10.1696 8.57335 10.3046 7.01704 8.967 7.01704C7.9295 7.01704 7.71906 8.08229 7.6768 8.56034V12.1182C7.6768 12.3053 7.52511 12.4571 7.33794 12.4571H5.70976C5.52263 12.4571 5.37091 12.3053 5.37091 12.1182V5.48247C5.37091 5.29534 5.52263 5.14361 5.70976 5.14361H7.33794C7.52507 5.14361 7.6768 5.29534 7.6768 5.48247V6.05621C8.06151 5.47887 8.63324 5.03326 9.85054 5.03326C12.5462 5.03326 12.5307 7.55164 12.5307 8.93537V12.1182Z" fill="var(--color-button-one)"/>
+                                    </svg>
+                                </a>
+                            @endif
+                            @if (isset($contact) && $contact->link_insta <> nul)                                
+                                <a href="{{ $contact->link_insta }}" class="rounded-pill py-2 px-4 hover-zoom btn-hero font-changa color-button-one bg-button-one font-16 font-medium text-decoration-none" rel="noopener noreferrer">
+                                    Seguir no Instagram
+                                    <svg class="ms-1" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.75 0.75H3.75C2.09315 0.75 0.75 2.09315 0.75 3.75V9.75C0.75 11.4069 2.09315 12.75 3.75 12.75H9.75C11.4069 12.75 12.75 11.4069 12.75 9.75V3.75C12.75 2.09315 11.4069 0.75 9.75 0.75Z" stroke="var(--color-button-one)" stroke-width="1.5"/>
+                                    <path d="M6.75 9.25C8.13071 9.25 9.25 8.13071 9.25 6.75C9.25 5.36929 8.13071 4.25 6.75 4.25C5.36929 4.25 4.25 5.36929 4.25 6.75C4.25 8.13071 5.36929 9.25 6.75 9.25Z" stroke="var(--color-button-one)" stroke-width="1.5"/>
+                                    <path d="M10.25 4C10.6642 4 11 3.66421 11 3.25C11 2.83579 10.6642 2.5 10.25 2.5C9.83579 2.5 9.5 2.83579 9.5 3.25C9.5 3.66421 9.83579 4 10.25 4Z" fill="var(--color-button-one)"/>
+                                    </svg>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
+            <img src="{{asset('build/client/images/themes/whi-web/firula-letsgo.png')}}" alt="firula letsgo" class="position-absolute bottom-0 end-0">
         </section>
     @endif
 
