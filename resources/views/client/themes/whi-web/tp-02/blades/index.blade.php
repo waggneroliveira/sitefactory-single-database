@@ -960,13 +960,13 @@
     <section class="solutions-section py-5">
         <div class="container">
             <!-- Section Header -->
-            <div class="row align-items-center mb-5">
+            <div class="row align-items-end mb-5">
                 <div class="col-lg-8">
                     <span class="sub-title font-changa font-50 font-medium">Uma oportunidade,</span>
                     <h2 class="main-title font-changa font-50 font-bold mb-0 text-grey">Soluções incríveis para empresas</h2>
                 </div>
                 <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
-                    <a href="#" class="rounded-pill py-2 px-3 px-lg-4 font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
+                    <a href="#" class="rounded-pill d-table m-auto me-lg-0 py-3 px-3 px-lg-4 font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
                         Faça parte agora 
                         <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"></path>
@@ -1220,6 +1220,74 @@
             }
         });
     </script>
+
+    @if (!empty($sections['product']) || isset($products) && $products->count())
+
+        <section class="products-section py-3 py-lg-5 bg-secondary-color">
+            <div class="container">
+
+                <!-- Header -->
+                <div class="my-5 my-lg-4 d-flex justify-content-center justify-content-lg-between align-items-center flex-wrap">
+                    <div class="col-10">
+                        <div class="about-span primary-color font-changa justify-content-center justify-content-lg-start font-16 font-medium d-flex align-items-center mb-0">
+                            {{$sections['product']->subtitle}} <span class="line-firu"></span>
+                        </div>
+    
+                        <h3 class="about-title text-start font-changa d-flex justify-content-center justify-content-lg-start font-50 font-bold text-white mb-3 position-relative">
+                            {{$sections['product']->title}}
+                        </h3>
+                    </div>
+
+                      <!-- Botão -->
+                    <div class="text-end mt-0 d-flex justify-content-center justify-content-lg-end align-items-center">
+                        <a href="{{route('products')}}" class="btn-product bg-button-two color-button-two rounded-2 py-2 px-4 hover-zoom">
+                            {{$sections['product']->btn_title}}
+                            <svg class="ms-2" width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5.77699 8.90909L5.01136 8.15341L8.16335 5.00142H0V3.90767H8.16335L5.01136 0.765624L5.77699 -7.15256e-07L10.2315 4.45454L5.77699 8.90909Z" fill="var(--color-button-two)"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Filtros -->
+                @if (isset($productCategories) && $productCategories->count())                    
+                    <div class="d-flex justify-content-center justify-content-lg-start gap-2 mb-5 flex-wrap">
+                        <button class="btn-filter font-changa font-18 font-medium primary-color px-4 px-lg-5 py-1 active" data-filter="all">Todos</button>
+                        @foreach ($productCategories as $productCategory)
+                            <button class="btn-filter font-changa font-18 font-medium primary-color px-4 px-lg-5 py-1" data-filter="{{$productCategory->slug}}">{{$productCategory->title}}</button>
+                        @endforeach
+                    </div>
+                @endif
+                
+                <!-- Produtos -->
+                <div class="row g-4 products mb-5">
+                    <!-- Produto -->
+                    @foreach ($products as $product)                
+                        <div class="col-6 col-sm-6 col-lg-3 mb-4 product {{$product->category->slug}}">
+                            <div class="product-card bg-accent-color shadow-sm rounded-3 p-2 p-lg-3 position-relative">
+                                <div class="image position-relative mb-0">
+                                    <img src="{{asset('storage/' . $product->path_image)}}" alt="{{$product->title}}" loading="lazy">
+                                </div>
+                                <div class="pt-3 pb-3 pb-lg-4">
+                                    <h6 class="font-changa font-18 font-semibold text-dark">{{$product->title}}</h6>
+                                    <p class="color-grey font-changa font-16 font-regular mb-0">{{substr(strip_tags($product->description), 0, 70)}}</p>
+                                </div>
+                                <a href="{{ route('client.product', ['category' => $product->category->slug, 'slug' => $product->slug]) }}" class="col-12">
+                                    <span class="bg-button-two color-button-two rounded-2 py-2 py-lg-3 px-2 px-lg-3 btn-view font-changa font-16 font-medium col-9 col-lg-8 d-flex align-items-center justify-content-center">
+                                        Comprar agora
+                                        <svg class="ms-2" width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5.77699 8.90909L5.01136 8.15341L8.16335 5.00142H0V3.90767H8.16335L5.01136 0.765624L5.77699 -7.15256e-07L10.2315 4.45454L5.77699 8.90909Z" fill="var(--color-button-two)"/>
+                                        </svg>
+                                    </span>                                    
+                                </a>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>               
+
+            </div>
+        </section>
+    @endif
 
     @if ($benefitTopics->count())
         <section id="stats-section" class="stats-section py-5 position-relative container-fluid">
