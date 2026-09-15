@@ -703,7 +703,7 @@
             </div>
 
             <!-- Swiper Carousel Start -->
-            <div class="swiper exhibition-swiper">
+            <div class="swiper exhibition-swiper col-12 col-lg-10">
                 <div class="swiper-wrapper">
 
                     <!-- Slide 1 (Texto Topo / Imagem Baixo) -->
@@ -893,7 +893,7 @@
         .exhibition-item-image img {
             width: 100%;
             height: 100%;
-            aspect-ratio: 1 / 0.80;
+            /* aspect-ratio: 1 / 0.80; */
             object-fit: cover;
             display: block;
             transition: all 0.6s ease-in-out;
@@ -1241,7 +1241,7 @@
                                 </div>
                                 <div class="p-3 pb-2">
                                     <h6 class="font-changa font-18 font-semibold text-dark text-start">{{$product->title}}</h6>
-                                    <p class="color-grey font-changa font-16 font-regular mb-0 text-start">{{substr(strip_tags($product->description), 0, 70)}}</p>
+                                    <p class="color-grey font-changa font-16 font-regular mb-0 text-start lh-sm">{{substr(strip_tags($product->description), 0, 70)}}</p>
                                 </div>
                                 <div class="row flex-wrap justify-content-center mt-0">
                                     <div class="btn-group m-auto m-lg-0 col-10 px-0 justify-content-center justify-content-lg-start" role="group">
