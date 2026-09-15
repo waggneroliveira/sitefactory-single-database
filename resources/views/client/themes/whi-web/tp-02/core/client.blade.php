@@ -361,6 +361,9 @@
             /* Copyright */
             --copyright-text: {{ $tenantTheme->copyright ? $tenantTheme->copyright  : '© 2024 Todos os direitos reservados' }};
         }
+        body{
+            background: var(--primary-color);
+        }
         /* ===== CORES (Text Colors) ===== */
         .primary-color {
             color: var(--primary-color);

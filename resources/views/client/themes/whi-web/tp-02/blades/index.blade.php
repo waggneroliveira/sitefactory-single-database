@@ -98,7 +98,7 @@
                         <div class="col-12 col-lg-7 mt-4 mt-lg-0 z-3">
                             <div class="container position-relative">
                                 <h3 class="about-title font-changa font-50 font-semiBold mb-3 text-grey">
-                                    {{$about->title}} <span class="primary-color">{{$about->subtitle}}</span>
+                                    {{$about->title}} <span class="accent-color">{{$about->subtitle}}</span>
                                 </h3>
 
                                 <!-- Conteúdo adicional opcional -->
@@ -450,9 +450,6 @@
             background-color: #F7F4EF;
             padding: 60px 0;
         }
-        .title-highlight {
-        color: #b34a17;
-        }
 
         /* Botões/Abas dos Pilares */
         .pillar-card {
@@ -484,7 +481,6 @@
         .pillar-icon-box {
         width: 44px;
         height: 44px;
-        background-color: #b34a17;
         color: #ffffff;
         border-radius: 8px;
         display: flex;
@@ -548,7 +544,7 @@
             <div class="row mb-5 align-items-center">
                 <div class="col-lg-6 mb-3 mb-lg-0">
                     <h2 class="font-changa font-50 font-bold text-grey">
-                        Conheça os <span class="title-highlight">pilares</span> principais
+                        Conheça os <span class="accent-color">pilares</span> principais
                     </h2>
                 </div>
                 <div class="col-lg-6">
@@ -562,7 +558,7 @@
             <div class="row g-3 mb-4 col-12 col-lg-11">
                 <div class="col-md-4 pe-lg-0">
                     <button class="pillar-card active" onclick="changeTab('educacao', this)">
-                        <div class="pillar-icon-box">
+                        <div class="pillar-icon-box bg-accent-color">
                             <i class="bi bi-triangle"></i>
                         </div>
                         <span class="font-changa font-20 font-medium">Educação</span>
@@ -571,7 +567,7 @@
 
                 <div class="col-md-4 pe-lg-0">
                     <button class="pillar-card" onclick="changeTab('acessibilidade', this)">
-                        <div class="pillar-icon-box">
+                        <div class="pillar-icon-box bg-accent-color">
                             <i class="bi bi-grid-fill"></i>
                         </div>
                         <span class="font-changa font-20 font-medium">Acessibilidade</span>
@@ -580,7 +576,7 @@
 
                 <div class="col-md-4 pe-lg-0">
                     <button class="pillar-card" onclick="changeTab('empregabilidade', this)">
-                        <div class="pillar-icon-box">
+                        <div class="pillar-icon-box bg-accent-color">
                             <i class="bi bi-person"></i>
                         </div>
                         <span class="font-changa font-20 font-medium">Empregabilidade</span>
@@ -684,7 +680,7 @@
     </script>
 
     <!-- Our Exhibitions Section Start -->
-    <section class="our-exhibitions position-relative py-5">
+    <section class="our-exhibitions bg-secondary-color position-relative py-5">
         <div class="container">
             <div class="row section-row mb-5">
                 <div class="col-xl-12 text-center">
@@ -836,10 +832,6 @@
 
     <style>
         /* Container Escuro e Estilo Geral */
-        .our-exhibitions {
-            background-color: #230D01;
-            color: #ffffff;
-        }
 
         .exhibition-swiper {
             padding: 10px 0 30px;
@@ -962,7 +954,7 @@
             <!-- Section Header -->
             <div class="row align-items-end mb-5">
                 <div class="col-lg-8">
-                    <span class="sub-title font-changa font-50 font-medium">Uma oportunidade,</span>
+                    <span class="font-changa font-50 font-medium accent-color">Uma oportunidade,</span>
                     <h2 class="main-title font-changa font-50 font-bold mb-0 text-grey">Soluções incríveis para empresas</h2>
                 </div>
                 <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
@@ -1080,10 +1072,6 @@
         .solutions-section {
             background-color: #EAE6DF;
             color: #4A4A4A;
-        }
-
-        .sub-title {
-            color: #b34a17;
         }
 
         /* Card da Imagem Principal */
@@ -1228,66 +1216,144 @@
 
                 <!-- Header -->
                 <div class="my-5 my-lg-4 d-flex justify-content-center justify-content-lg-between align-items-center flex-wrap">
-                    <div class="col-10">
-                        <div class="about-span primary-color font-changa justify-content-center justify-content-lg-start font-16 font-medium d-flex align-items-center mb-0">
-                            {{$sections['product']->subtitle}} <span class="line-firu"></span>
-                        </div>
-    
-                        <h3 class="about-title text-start font-changa d-flex justify-content-center justify-content-lg-start font-50 font-bold text-white mb-3 position-relative">
+                    <div class="col-12 col-lg-6">                      
+                        <h3 class="about-title text-start font-changa d-flex justify-content-center justify-content-lg-start font-50 font-medium text-white mb-3 position-relative">
                             {{$sections['product']->title}}
                         </h3>
                     </div>
 
                       <!-- Botão -->
-                    <div class="text-end mt-0 d-flex justify-content-center justify-content-lg-end align-items-center">
-                        <a href="{{route('products')}}" class="btn-product bg-button-two color-button-two rounded-2 py-2 px-4 hover-zoom">
-                            {{$sections['product']->btn_title}}
-                            <svg class="ms-2" width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5.77699 8.90909L5.01136 8.15341L8.16335 5.00142H0V3.90767H8.16335L5.01136 0.765624L5.77699 -7.15256e-07L10.2315 4.45454L5.77699 8.90909Z" fill="var(--color-button-two)"/>
-                            </svg>
-                        </a>
+                    <div class="col-12 col-lg-6">
+                        <div class="about-span primary-color font-20 font-changa justify-content-center justify-content-lg-start font-16 font-medium d-flex align-items-center mb-0">
+                            {{$sections['product']->description}} <span class="line-firu"></span>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Filtros -->
-                @if (isset($productCategories) && $productCategories->count())                    
-                    <div class="d-flex justify-content-center justify-content-lg-start gap-2 mb-5 flex-wrap">
-                        <button class="btn-filter font-changa font-18 font-medium primary-color px-4 px-lg-5 py-1 active" data-filter="all">Todos</button>
-                        @foreach ($productCategories as $productCategory)
-                            <button class="btn-filter font-changa font-18 font-medium primary-color px-4 px-lg-5 py-1" data-filter="{{$productCategory->slug}}">{{$productCategory->title}}</button>
-                        @endforeach
-                    </div>
-                @endif
                 
                 <!-- Produtos -->
-                <div class="row g-4 products mb-5">
+                <div class="row g-4 products mt-5">
                     <!-- Produto -->
                     @foreach ($products as $product)                
                         <div class="col-6 col-sm-6 col-lg-3 mb-4 product {{$product->category->slug}}">
-                            <div class="product-card bg-accent-color shadow-sm rounded-3 p-2 p-lg-3 position-relative">
+                            <div class="product-card bg-primary-color shadow-sm rounded-3 p-0 position-relative">
                                 <div class="image position-relative mb-0">
                                     <img src="{{asset('storage/' . $product->path_image)}}" alt="{{$product->title}}" loading="lazy">
                                 </div>
-                                <div class="pt-3 pb-3 pb-lg-4">
-                                    <h6 class="font-changa font-18 font-semibold text-dark">{{$product->title}}</h6>
-                                    <p class="color-grey font-changa font-16 font-regular mb-0">{{substr(strip_tags($product->description), 0, 70)}}</p>
+                                <div class="p-3 pb-2">
+                                    <h6 class="font-changa font-18 font-semibold text-dark text-start">{{$product->title}}</h6>
+                                    <p class="color-grey font-changa font-16 font-regular mb-0 text-start">{{substr(strip_tags($product->description), 0, 70)}}</p>
                                 </div>
-                                <a href="{{ route('client.product', ['category' => $product->category->slug, 'slug' => $product->slug]) }}" class="col-12">
-                                    <span class="bg-button-two color-button-two rounded-2 py-2 py-lg-3 px-2 px-lg-3 btn-view font-changa font-16 font-medium col-9 col-lg-8 d-flex align-items-center justify-content-center">
-                                        Comprar agora
-                                        <svg class="ms-2" width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M5.77699 8.90909L5.01136 8.15341L8.16335 5.00142H0V3.90767H8.16335L5.01136 0.765624L5.77699 -7.15256e-07L10.2315 4.45454L5.77699 8.90909Z" fill="var(--color-button-two)"/>
-                                        </svg>
-                                    </span>                                    
-                                </a>
+                                <div class="row flex-wrap justify-content-center mt-0">
+                                    <div class="btn-group m-auto m-lg-0 col-10 px-0 justify-content-center justify-content-lg-start" role="group">
+                                        @php
+                                            if (is_string($product->sizes)) {
+                                                $sizes = json_decode($product->sizes, true);
+                                            } else {
+                                                $sizes = $product->sizes;
+                                            }
+
+                                            // Garante que seja array
+                                            $sizes = is_array($sizes) ? $sizes : [];
+
+                                            // Remove null, '', false etc
+                                            $sizes = collect($sizes)
+                                            ->filter()
+                                            ->values()
+                                            ->toArray();
+                                        @endphp
+
+                                        @if (!empty($sizes))
+                                            @foreach($sizes as $size)
+                                                @php
+                                                    preg_match('/^(\d+(?:[.,]\d+)?)\s*(.*)$/u', trim($size), $matches);
+                                                @endphp
+
+                                                <button class="btn d-flex flex-column text-dark font-changa btn-sm me-2">
+                                                    @if(isset($matches[1]))
+                                                        <span class="fw-bold font-15">{{ $matches[1] }}</span>
+                                                        @if(!empty($matches[2]))
+                                                            <span class="font-12">{{ $matches[2] }}</span>
+                                                        @endif
+                                                    @else
+                                                        {{ $size }}
+                                                    @endif
+                                                </button>
+                                            @endforeach
+                                        @else
+                                            <i class="bi bi-exclamation-circle text-muted me-2"></i>
+                                            <p class="text-dark text-center text-lg-start font-changa font-16 font-medium">
+                                                Não disponível
+                                            </p>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center mt-0">
+                                    <div class="d-flex flex-wrap justify-content-between align-items-center col-10 px-0 pb-3 mt-3">
+                                        <div class="user-card col-7">
+                                            <div class="avatar">
+                                                {{-- <img src="caminho-da-imagem.jpg" alt="Foto do usuário"> --}}
+                                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M17.4107 34.8214C27.0264 34.8214 34.8214 27.0264 34.8214 17.4107C34.8214 7.79504 27.0264 0 17.4107 0C7.79504 0 0 7.79504 0 17.4107C0 27.0264 7.79504 34.8214 17.4107 34.8214Z" fill="#E5E7EB"/>
+                                                <path d="M17.41 17.4104C20.6152 17.4104 23.2136 14.812 23.2136 11.6068C23.2136 8.40157 20.6152 5.80322 17.41 5.80322C14.2048 5.80322 11.6064 8.40157 11.6064 11.6068C11.6064 14.812 14.2048 17.4104 17.41 17.4104Z" fill="#9CA3AF"/>
+                                                <path d="M5.80371 29.0176C5.80371 20.8926 11.6073 20.8926 17.4109 20.8926C23.2144 20.8926 29.018 20.8926 29.018 29.0176H5.80371Z" fill="#9CA3AF"/>
+                                                </svg>
+                                            </div>
+                                            <div class="user-info text-start">
+                                                <h3 class="user-name font-changa font-10 font-bold text-dark mb-0">TAMILES ALVES</h3>
+                                                <span class="user-role font-changa font-10 font-medium text-dark">Professora de Inglês</span>
+                                            </div>
+                                        </div>
+                      
+                                        <a href="{{ route('client.product', ['category' => $product->category->slug, 'slug' => $product->slug]) }}" class="col-4">
+                                            <span class="bg-button-one color-button-one rounded-2 py-2 px-2 btn-view font-changa font-11 font-medium col-12 d-flex align-items-center justify-content-center mb-0">
+                                                Garantir agora
+                                            </span>                                    
+                                        </a>
+                                    </div>
+                                      
+                                </div>
                             </div>
                         </div>
                     @endforeach
+                    
+                    <div class="text-end mt-4 d-flex justify-content-center justify-content-lg-end align-items-center">
+                        <a href="{{route('products')}}" class="btn-product bg-button-two color-button-two rounded-pill py-2 px-5 hover-zoom">
+                            {{$sections['product']->btn_title}}
+                        </a>
+                    </div>
                 </div>               
 
             </div>
         </section>
     @endif
+
+        <style>
+        .user-card {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: sans-serif;
+        }
+
+        .avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0px;
+        }
+    </style> 
 
     @if ($benefitTopics->count())
         <section id="stats-section" class="stats-section py-5 position-relative container-fluid">
@@ -1306,7 +1372,7 @@
                 </div>
             </div>
         </section>
-    @endif
+    @endif   
 
     @if (isset($statute))
         <section class="step-to-step">
@@ -1429,66 +1495,6 @@
                         </div>
                     @endforeach
                 </div>
-            </div>
-        </section>
-    @endif
-
-    @if (isset($products) && $products->count())
-        <section class="products-section py-5">
-            <div class="container">
-
-                <!-- Header -->
-                <div class="text-center mb-4">
-                    <span class="about-subtitle span-product color-yellow font-changa font-16 font-bold d-block mb-2 text-end m-0 z-3 position-relative">
-                        Conheça Aqui!
-                    </span>
-
-                    <h3 class="about-title font-changa font-50 font-bold primary-color mb-3 position-relative">
-                        Nossos <span class="color-grey z-3 position-relative">Produtos</span>
-                    </h3>
-                </div>
-
-                <!-- Filtros -->
-                <div class="d-flex justify-content-center gap-2 mb-5 flex-wrap">
-                    <button class="btn btn-filter text-uppercase font-changa font-18 font-semibold primary-color px-4 py-2 active" data-filter="all">Todos</button>
-                    @foreach ($productCategories as $productCategory)
-                        <button class="btn btn-filter text-uppercase font-changa font-18 font-semibold primary-color px-4 py-2" data-filter="{{$productCategory->slug}}">{{$productCategory->title}}</button>
-                    @endforeach
-                </div>
-                
-                <!-- Produtos -->
-                <div class="row g-4 products">
-                    <!-- Produto -->
-                    @foreach ($products as $product)                
-                        <div class="col-6 col-sm-6 col-lg-3 product {{$product->category->slug}}">
-                            <div class="product-card bg-white shadow-sm rounded-3">
-                                <div class="image position-relative mb-0">
-                                    <img src="{{asset('storage/' . $product->path_image)}}" alt="{{$product->title}}">
-                                </div>
-                                <div class="py-3">
-                                    <h6 class="font-changa font-18 font-semibold primary-color">{{$product->title}}</h6>
-                                    <p class="color-grey font-changa font-16 font-regular mb-0">{{$product->description}}</p>
-                                </div>
-                                <a href="{{ route('client.product', ['category' => $product->category->slug, 'slug' => $product->slug]) }}" class="col-12">
-                                    <span class="bg-button-two color-button-two btn-view font-changa font-16 font-medium col-10 col-lg-5 hover-zoom">Ver Produto</span>
-                                </a>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-
-                <!-- Botão -->
-                <div class="text-end mt-4 d-flex justify-content-center justify-content-lg-end align-items-center">
-                    <a href="{{route('products')}}" class="btn-product bg-button-two color-button-two rounded-pill py-2 px-4 hover-zoom">
-                        Ver todos os produtos
-                        <svg class="ms-2" width="31" height="13" viewBox="0 0 31 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M24.1708 12.4741L30.4078 6.23712L24.1708 0.000120163L22.4036 1.76727L26.8527 6.23712L22.3828 10.707L24.1708 12.4741Z" fill="var(--color-button-two)"></path>
-                        <path d="M0 5H27V7.2H0V5Z" fill="var(--color-button-two)"></path>
-                        </svg>
-                    </a>
-                </div>
-                
-
             </div>
         </section>
     @endif
@@ -1713,26 +1719,5 @@
         });
         });
 
-    </script>
-
-    <script>
-    const buttons = document.querySelectorAll('.btn-filter');
-    const products = document.querySelectorAll('.product');
-
-    buttons.forEach(btn => {
-        btn.addEventListener('click', () => {
-        buttons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        const filter = btn.dataset.filter;
-
-        products.forEach(product => {
-            product.classList.toggle(
-            'd-none',
-            filter !== 'all' && !product.classList.contains(filter)
-            );
-        });
-        });
-    });
     </script>
 @endsection

@@ -11,9 +11,7 @@
  .bt-hover:hover{
     color:  var(--primary-color) !important;
  }
- body{
-    background: #E9E1D7 !important;
- }
+
 /* =========================
    HEADER
 ========================= */
@@ -296,8 +294,6 @@
     transition: .3s;
 }
 .product-card .image{
-    aspect-ratio: 1 / 1;
-    background-color: #cccccc52;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -310,8 +306,9 @@
 
 .product-card img {
     width: 100%;
-    height: 237px;
-    object-fit: contain;
+    height: 174px;
+    object-fit: cover;
+    border-radius: 8px;
 }
 
 .product-card:hover {
