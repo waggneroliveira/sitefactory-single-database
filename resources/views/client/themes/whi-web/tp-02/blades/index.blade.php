@@ -1358,25 +1358,6 @@
         }
     </style> 
 
-    @if ($benefitTopics->count())
-        <section id="stats-section" class="stats-section py-5 position-relative container-fluid">
-            <img src="{{asset('build/client/themes/petshop/tp-01/images/firula-count.svg')}}" alt="Firula" class="position-absolute top-0 left-0 firula-count">
-
-            <div class="container">
-                <div class="row text-center align-items-center g-4">
-                    @foreach ($benefitTopics as $parametro)                
-                        <div class="col-6 col-md-3">
-                            <div class="stat-item">
-                                <h3 class="stat-number font-changa font-bold font-44" data-target="{{$parametro->number}}">0</h3>
-                                <p class="font-changa font-bold font-16 primary-color">{{$parametro->title}}</p>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </section>
-    @endif   
-
     @if (isset($statute))
         <section class="step-to-step">
             <div class="container-fluid px-0">
@@ -1477,87 +1458,83 @@
         </section>
     @endif
 
-    @if (isset($productCategorieHighlights) && $productCategorieHighlights->count())
-        <section class="category-product position-relative">
-            <img src="{{asset('build/client/themes/petshop/tp-01/images/firula-top-product.svg')}}" alt="Firula" class="position-absolute top-0 left-0">
-            <div class="container py-5">
+    @if (isset($directions) && $directions->count())
+        <section id="team-section" class="team-section py-5">
+            <div class="container z-3">
                 <div class="row g-4">
-                    @foreach ($productCategorieHighlights as $productCategory)
-                        <div class="col-12 col-md-4 mb-3 mb-lg-0">
-                            <div class="card p-4 d-flex flex-row justify-content-center align-items-center border-0 rounded-4 bg-secondary-color">
-                                @if ($productCategory->path_image <> null)                                
-                                    <img src="{{asset('storage/' . $productCategory->path_image)}}"
-                                        class="card-img-top rounded"
-                                        alt="{{$productCategory->title}}">
-                                @endif
+                    <!-- Card -->
+                    @foreach ($directions as $representative)    
+                        <div class="col-6 col-sm-6 col-lg-3">
+                            <div class="team-card position-relative">
+                                <div class="team-image bg-white">
+                                    <img src="{{asset('storage/' . $representative->path_image)}}" alt="{{$representative->title}}">
+                                </div>
+                                <div class="team-body shadow-md rounded-2 text-center position-absolute col-11 z-3 bg-white py-2 py-lg-3 px-1 px-lg-3 d-flex justify-content-between align-items-center">
+                                    <div class="d-flex justify-content-start align-items-start flex-column">
+                                        <h6 class="mb-0 font-changa font-semibold font-18 color-green">{{$representative->title}}</h6>
+                                        <small class="color-grey font-changa font-15 font-regular d-block mb-0">{{$representative->function}}</small>
+                                    </div>
+                                    <!-- Botão para disparar o Modal -->
+                                    <button type="button" 
+                                            class="bg-accent-color text-white font-changa font-14 font-regular rounded-2 d-flex justify-content-center align-items-center border-0" 
+                                            style="width: 30px; height:30px cursor: pointer;" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#representativeModal{{$representative->id}}">
+                                        <i class="bi bi-eye"></i>
+                                    </button>                         
+                                </div>
+                            </div>
+                        </div>
 
-                                <div class="card-body text-center">
-                                    <a href="{{ route('products', ['category' => $productCategory->slug]) }}" 
-                                    class="stretched-link text-decoration-none">
-                                        <h5 class="card-title font-changa text-black font-25 font-bold">
-                                            {{$productCategory->title}}
-                                        </h5>
-                                    </a>
+                        <!-- Modal com o Layout da Imagem -->
+                        <div class="modal fade" id="representativeModal{{$representative->id}}" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content border-0 p-4 p-md-5 position-relative" style="background-color: #EAE3D9; border-radius: 16px;">
+                                    
+                                    <!-- Botão Fechar -->
+                                    <button type="button" class="btn-close position-absolute top-0 end-0 m-4 shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                                    <div class="modal-body p-0">
+                                        <div class="row align-items-start g-4 mt-3">
+                                            <!-- Imagem com cantos arredondados -->
+                                            <div class="col-12 col-md-5">
+                                                <img src="{{asset('storage/' . $representative->path_image)}}" 
+                                                    alt="{{$representative->title}}" 
+                                                    class="img-fluid w-100 object-fit-contain" 
+                                                    style="border-radius: 24px; max-height: 300px;">
+                                            </div>
+
+                                            <!-- Conteúdo com Nome, Cargo, Redes e Biografia -->
+                                            <div class="col-12 col-md-7 text-start">
+                                                <div class="d-flex justify-content-between align-items-baseline mb-1">
+                                                    <h2 class="fw-bold mb-0 text-dark" style="font-size: 2rem;">{{$representative->title}}</h2>
+                                                    
+                                                    <!-- Redes Sociais (Ajuste os links conforme seus dados) -->
+                                                    <div class="d-flex gap-2 color-dark fs-5">
+                                                        @if ($representative->instagram <> null)                                                            
+                                                            <a href="{{$representative->instagram}}" class="text-dark"><i class="bi bi-instagram"></i></a>
+                                                        @endif
+                                                        @if ($representative->linkedin <> null)                                                            
+                                                            <a href="{{$representative->linkedin}}" class="text-dark"><i class="bi bi-linkedin"></i></a>
+                                                        @endif
+                                                        @if ($representative->facebook <> null)                                                            
+                                                            <a href="{{$representative->facebook}}" class="text-dark"><i class="bi bi-facebook"></i></a>
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+                                                <div class="text-muted fs-5 mb-3">{{$representative->function}}</div>
+
+                                                <p class="text-secondary lh-base mb-0" style="font-size: 0.95rem;">
+                                                    {!! $representative->description !!}
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
                     @endforeach
-                </div>
-            </div>
-        </section>
-    @endif
-
-    @if (isset($blogHighlights) && $blogHighlights->count())
-        <section class="blog position-relative">
-            <img src="{{asset('build/client/themes/petshop/tp-01/images/firula-blog.svg')}}" alt="Firula blog" class="firula-blog position-absolute top-0 left-0">
-            <div class="container z-3 position-relative">
-                <span class="blog-subtitle color-yellow font-changa font-16 font-bold d-block mb-2 m-auto me-0">
-                    Conheça aqui!
-                </span>
-
-                <h3 class="about-title font-changa font-50 font-bold primary-color mb-3 text-center">
-                    Novidades <span class="color-grey">e artigos</span>
-                </h3>
-
-                <div class="row g-4 mt-5">
-
-                    <div class="swiper blog-swiper">
-                        <div class="swiper-wrapper">
-                            @foreach ($blogHighlights as $blogHighlight)                        
-                                <div class="swiper-slide">
-                                    <article class="post-card">
-                                        <a href="{{route('blog-inner', ['slug' => $blogHighlight->slug])}}">
-                                            <img src="{{asset('storage/' . $blogHighlight->path_image_thumbnail)}}" alt="">
-                                            <div class="post-overlay">
-                                                <h5 class="font-changa font-18 font-bold text-white mb-3">
-                                                    {{$blogHighlight->title}}
-                                                </h5>
-                                                <p class="font-16 font-regular text-white mb-3">
-                                                    {{substr(strip_tags($blogHighlight->text), 0, 100)}}
-                                                </p>
-                                                <span class="date font-16 font-regular text-white">
-                                                    {{ $blogHighlight->date->translatedFormat('d M Y') }}
-                                                </span>
-                                            </div>
-                                        </a>
-                                    </article>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                    <!-- Dots -->
-                    <div class="swiper-pagination-blog mt-4 position-relative d-flex justify-content-center align-items-center"></div>
-
-                </div>
-
-                <!-- Botão -->
-                <div class="step-actions mt-4 d-flex justify-content-center justify-content-lg-end">
-                    <a href="{{route('blogAll')}}" class="rounded-pill px-4 btn font-changa  text-white font-18 font-medium text-decoration-none" rel="noopener noreferrer">
-                        Ver todos os artigos
-                        <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="#0E523E"></path>
-                        </svg>
-                    </a>
                 </div>
             </div>
         </section>

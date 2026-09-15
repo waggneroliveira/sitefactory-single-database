@@ -10,6 +10,7 @@ use App\Models\Blog;
 use App\Models\BlogCategory;
 use App\Models\Contact;
 use App\Models\Depoiment;
+use App\Models\Direction;
 use App\Models\Event;
 use App\Models\Faq;
 use App\Models\Letsgo;
@@ -74,8 +75,10 @@ class HomePageService
         $tenantTheme = Tenant::current();
         $theme = $themeManager;
         $themeData = $themeManager->theme();
+        $directions = Direction::active()->sorting()->get();
 
         return compact(
+            'directions',
             'templateThemes',
             'advantages',
             'contractedPlans',

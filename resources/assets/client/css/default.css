@@ -1,3 +1,23 @@
+.modal {
+    z-index: 99999 !important;
+}
+.modal-backdrop {
+    z-index: 99998 !important;
+}
+.modal-dialog {
+    z-index: 99999 !important;
+}
+.modal.fade .modal-dialog {
+    transform: none !important;
+}
+body.modal-open {
+    overflow: hidden !important;
+    padding-right: 0 !important;
+}
+.modal-open .modal {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+}
 /* =========================
    ROOT VARIABLES
 ========================= */

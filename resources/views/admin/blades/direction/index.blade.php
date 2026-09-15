@@ -52,7 +52,7 @@
                                                                 <form action="{{route('admin.dashboard.direction.store')}}" method="POST" enctype="multipart/form-data">
                                                                     @csrf
 
-                                                                    @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.direction.form", ['direction', 'themeData'])
+                                                                    @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.direction.form", ['textareaId' => 'textarea-create', 'direction', 'themeData'])
  
                                                                     <div class="d-flex justify-content-end gap-2">
                                                                         <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">{{__('dashboard.btn_cancel')}}</button>
@@ -106,7 +106,7 @@
                                                                 <div class="modal-dialog modal-dialog-centered">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header bg-light">
-                                                                            <h4 class="modal-title" id="myCenterModalLabel">Categoria</h4>
+                                                                            <h4 class="modal-title" id="myCenterModalLabel">Editar</h4>
                                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                                                                         </div>
                                                                         <div class="modal-body p-4">

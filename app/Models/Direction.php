@@ -16,6 +16,10 @@ class Direction extends Model
     
     protected $fillable = [
         'title',
+        'function',
+        'instagram',
+        'linkedin',
+        'facebook',
         'description',
         'path_image',
         'active',

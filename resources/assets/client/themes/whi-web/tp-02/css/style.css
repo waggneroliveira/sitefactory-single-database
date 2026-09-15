@@ -444,7 +444,7 @@
     width: 43%;
 }
 .lets-go{
-    border-bottom: 1px solid #E9E1D7;
+    border-bottom: 1px solid #CBC4BB;
 }
 /* =========================
    BLOG 
@@ -749,10 +749,6 @@
 /* =========================
    TEAM
 ========================= */
-.team-section {
-  background: #fff;
-}
-
 .team-card {
   border-radius: 22px;
   overflow: hidden;
@@ -774,11 +770,11 @@
 .team-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .team-body {
-    bottom: 25px;
+    bottom: 15px;
     left: 50%;
     transform: translate(-50%, 0px);
 }
