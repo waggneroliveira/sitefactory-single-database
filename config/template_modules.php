@@ -288,6 +288,7 @@ return [
                     'faq_session',
                     'faq',
                     'testimonials',
+                    'partner',
                     'services',
                 ],
 

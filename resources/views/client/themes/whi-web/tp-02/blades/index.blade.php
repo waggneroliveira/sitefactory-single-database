@@ -1432,7 +1432,7 @@
                         </h3>
                         <p class="color-grey font-changa font-16 font-regular text-center text-lg-start">{{$letsgo->description}}</p>
                         <div class="step-actions gap-3 d-flex mt-4 flex-wrap justify-content-center justify-content-lg-start">
-                            @if (isset($contact) && $contact->link_tik_tok <> nul)                                
+                            @if (isset($contact) && $contact->link_tik_tok <> null)                                
                                 <a href="{{ $contact->link_tik_tok }}" class="rounded-pill py-2 px-4 hover-zoom btn-hero font-changa color-button-one bg-button-one font-16 font-medium text-decoration-none" rel="noopener noreferrer">
                                     Conectar no Linkedin
                                     <svg class="ms-1" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1440,7 +1440,7 @@
                                     </svg>
                                 </a>
                             @endif
-                            @if (isset($contact) && $contact->link_insta <> nul)                                
+                            @if (isset($contact) && $contact->link_insta <> null)                                
                                 <a href="{{ $contact->link_insta }}" class="rounded-pill py-2 px-4 hover-zoom btn-hero font-changa color-button-one bg-button-one font-16 font-medium text-decoration-none" rel="noopener noreferrer">
                                     Seguir no Instagram
                                     <svg class="ms-1" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1542,51 +1542,157 @@
     @endif
 
     @if (isset($depoiments) && $depoiments->count())
-        <section id="depoiment" class="depoiment py-5 position-relative">
-            <img src="{{asset('build/client/themes/petshop/tp-01/images/firula-blog.svg')}}" alt="Firula blog" class="firula-blog position-absolute top-0 left-0">
-            <div class="container z-3 position-relative">
-                <span class="blog-subtitle color-yellow font-changa font-16 font-bold d-block mb-2 m-auto me-0">
-                    Experiência de quem viveu!
-                </span>
+        <section id="depoiment" class="depoiment py-5 position-relative bg-light-custom overflow-hidden">
+            <div class="container-fluid pe-0">
+                <div class="row align-items-center justify-content-end me-0 flex-nowrap">
+                    <!-- Texto Vertical (Left side) -->
+                    <div class="col-2 d-none d-lg-flex justify-content-center align-items-xenter">
+                        <div class="vertical-text-wrapper">
+                            <span class="vertical-text">feedback</span>
+                        </div>
+                    </div>
 
-                <h3 class="about-title font-changa font-50 font-bold primary-color mb-3 text-center">
-                    Depoimentos
-                </h3>
-            </div>
-            <div class="col-11 m-auto me-0">
-                <div class="swiper testimonial-swiper">
-                    <div class="swiper-wrapper">
+                    <!-- Conteúdo Principal -->
+                    <div class="col-12 col-lg-10 ps-3 pe-0">
+                        <div class="mb-4 ps-0 ps-md-0">
+                            <h2 class="text-grey font-change font-50 font-bold mb-1">Veja o relato de quem</h2>
+                            <h2 class="accent-color font-change font-50 font-bold">já faz parte</h2>
+                        </div>
 
-                        <!-- Slide -->
-                        @foreach ($depoiments as $depoiment)                    
-                            <div class="swiper-slide">
-                                <div class="testimonial-card">
-                                    @if ($depoiment->path_image <> null)                                
-                                        <div class="icon mb-3">
-                                            <img src="{{asset('storage/' . $depoiment->path_image)}}" alt="Depoimento-{{$depoiment->id}}">
+                        <div class="swiper testimonial-swiper">
+                            <div class="swiper-wrapper">
+
+                                @foreach ($depoiments as $depoiment)                    
+                                    <div class="swiper-slide">
+                                        <div class="testimonial-card p-4 rounded-3 bg-white position-relative shadow-md">
+                                            <!-- Ícone de Aspas (Top Right) -->
+                                            <div class="quote-icon position-absolute top-0 end-0 m-4">
+                                                <div class="quote-badge">
+                                                    <i class="bi bi-quote"></i> <!-- Ou <img> com seu ícone -->
+                                                </div>
+                                            </div>
+
+                                            <!-- Autor / Informações -->
+                                            <div class="author mb-3">
+                                                <h5 class="author-name font-bold mb-1">{{ $depoiment->name }}</h5>
+                                                <span class="author-role d-block text-muted font-14">{{ $depoiment->function }}</span>
+                                            </div>
+
+                                            <!-- Texto do Depoimento -->
+                                            <div class="text color-grey font-14 text-start">
+                                                {!! $depoiment->text !!}
+                                            </div>
                                         </div>
-                                    @endif
-
-                                    <div class="text color-grey font-changa font-16 font-regular text-start">
-                                        {!!$depoiment->text!!}
                                     </div>
+                                @endforeach
 
-                                    <div class="author">
-                                        <h5 class="primary-color font-changa font-16 font-medium mb-0 mt-3">{{$depoiment->name}}</h5>
-                                        <span class="color-grey font-changa font-16 font-regular">{{$depoiment->function}}</span>
+                            </div>
+
+                            <!-- Navigation Buttons -->
+                            <div class="row mt-4">
+                                <div class="col-11 d-flex justify-content-end gap-2 pe-4">
+                                    <div class="swiper-button-prev-custom">
+                                        <i class="bi bi-chevron-left"></i>
+                                    </div>
+                                    <div class="swiper-button-next-custom">
+                                        <i class="bi bi-chevron-right"></i>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
-
+                        </div>
                     </div>
-
-                    <!-- Dots -->
-                    <div class="swiper-pagination mt-4 position-relative d-flex justify-content-center align-items-center"></div>
                 </div>
             </div>
         </section>
     @endif
+
+    <style>
+        /* Background Geral da Seção */
+        .bg-light-custom {
+            background-color: #f7f5f0;
+        }
+
+        /* Texto Vertical */
+        .vertical-text-wrapper {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+        }
+
+        .vertical-text {
+            font-size: 6.25rem;
+            font-weight: 700;
+            color: transparent;
+            -webkit-text-stroke: 1.5px #D2D2D2;
+            text-transform: lowercase;
+        }
+
+        .author-name {
+            color: #2b2b2b;
+            font-size: 1rem;
+        }
+
+        .author-role {
+            color: #7a7a7a;
+            font-size: 0.85rem;
+        }
+
+        .quote-badge {
+            width: 32px;
+            height: 32px;
+            background-color: #D99400;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        /* Setas de Navegação */
+        .swiper-button-prev-custom,
+        .swiper-button-next-custom {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #4a4a4a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #333;
+            transition: all 0.2s ease;
+        }
+
+        .swiper-button-prev-custom:hover,
+        .swiper-button-next-custom:hover {
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            new Swiper('.testimonial-swiper', {
+                loop: true,
+                spaceBetween: 20,
+                navigation: {
+                    nextEl: '.swiper-button-next-custom',
+                    prevEl: '.swiper-button-prev-custom',
+                },
+                breakpoints: {
+                    0: {
+                        slidesPerView: 1.1,
+                    },
+                    768: {
+                        slidesPerView: 2.1,
+                    },
+                    1200: {
+                        slidesPerView: 3.2,
+                    }
+                }
+            });
+        });
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -1611,27 +1717,278 @@
         });
         });
 
-        document.addEventListener('DOMContentLoaded', function () {
-        new Swiper('.testimonial-swiper', {
-            loop: true,
-            spaceBetween: 24,
-            pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-            },
-            breakpoints: {
-            0: {
-                slidesPerView: 1.2,
-            },
-            768: {
-                slidesPerView: 2,
-            },
-            1200: {
-                slidesPerView: 2.5,
-            }
-            }
-        });
-        });
 
     </script>
+
+    @if (!empty($partners))
+        <section class="partners-section py-5 bg-white my-3">
+            <div class="container mb-4">
+                <!-- Cabeçalho (Número + Textos) -->
+                <div class="d-flex align-items-center justify-content-center flex-wrap gap-3 text-center text-md-start">
+                    <div class="counter-badge d-flex align-items-center">
+                        <span class="number-outlined font-change font-86 font-regular">250</span>
+                        <span class="plus-sign">+</span>
+                    </div>
+                    <div class="text-content">
+                        <p class="subtitle-text mb-0 font-change font-30 font-regular">Envolvidos já se credenciaram ao nosso projeto.</p>
+                        <h3 class="title-bold mb-0 font-change font-38 font-semibold">Agora é sua vez</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carrossel Infinito (Estilo Timeline Continuous) -->
+            <div class="swiper partners-swiper overflow-hidden mt-5">
+                <div class="swiper-wrapper ease-linear-wrapper">
+                    @foreach ($partners as $partner)
+                        <div class="swiper-slide d-flex justify-content-center align-items-center">
+                            <div class="partner-card border-0 d-flex justify-content-center align-items-center">
+                                @if (isset($partner->path_image) && $partner->path_image <> null)
+                                    <img src="{{ asset('storage/'.$partner->path_image) }}" alt="Logo do parceiro" loading="lazy" class="partner-logo"/>
+                                @endif
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    @endif
+
+    <style>
+        /* Estilos do Cabeçalho */
+        .number-outlined {
+            line-height: 1;
+            color: transparent;
+            -webkit-text-stroke: 2px #D99400;
+            font-family: inherit;
+        }
+
+        .plus-sign {
+            font-size: 8.5rem;
+            font-weight: 900;
+            color: #d88900;
+            line-height: 1;
+            margin-right: 10px;
+            margin-top: 50px;
+        }
+
+        .subtitle-text {
+            color: #d88900;
+        }
+
+        .title-bold {
+            color: #d88900;
+        }
+
+        /* Logos dos Parceiros */
+        .partner-logo {
+            max-height: 48px;
+            width: auto;
+            object-fit: contain;
+            filter: opacity(0.85);
+            transition: filter 0.3s ease;
+        }
+
+        .partner-logo:hover {
+            filter: opacity(1);
+        }
+
+        /* Ajuste do Swiper para Movimento Contínuo Fluido */
+        .partners-swiper .ease-linear-wrapper {
+            transition-timing-function: linear !important;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            new Swiper('.partners-swiper', {
+                loop: true,
+                loopAdditionalSlides: 5, // Duplica os slides na fila para não dar "tranco" ou parar
+                freeMode: {
+                    enabled: true,
+                    momentum: false,
+                },
+                slidesPerView: 3,
+                spaceBetween: 30,
+                speed: 4000, // Velocidade do deslizamento
+                autoplay: {
+                    delay: 0,
+                    disableOnInteraction: true, // Para o carrossel assim que o usuário clicar/interagir
+                    pauseOnMouseEnter: false,   // Altere para true se quiser que pare apenas ao passar o mouse
+                },
+                breakpoints: {
+                    576: {
+                        slidesPerView: 4,
+                        spaceBetween: 40,
+                    },
+                    768: {
+                        slidesPerView: 6,
+                        spaceBetween: 50,
+                    },
+                    1200: {
+                        slidesPerView: 8,
+                        spaceBetween: 60,
+                    }
+                }
+            });
+        });
+    </script>
+
+    <section class="contact mb-0 mt-4">
+        <div class="container py-5">
+            <div class="row">
+                @if (isset($contact))
+                    <!-- Infos -->
+                    <div class="col-12 col-lg-5">
+                        <span class="about-subtitle faq-eyebrow color-yellow font-changa font-16 font-bold d-block mb-2 text-end m-0 z-3 position-relative">Fale Conosco</span>
+                        <h2 class="faq-title font-changa font-50 font-bold color-green mt-2 mb-3">{{$contact->name_section}}</h2>
+                        <p class="faq-text color-grey font-changa font-16 font-regular text-center text-lg-start">
+                            {{$contact->text}}
+                        </p>
+        
+                        <ul class="list-unstyled">
+                            <li class="d-flex mb-3">
+                                <div class="me-3 text-success fs-4">
+                                    <i class="bi bi-geo-alt-fill primary-color"></i>
+                                </div>
+                                <div>
+                                    <span class="color-green font-changa font-16 font-semibold">Endereço</span>
+                                    <p class="color-grey font-changa font-16 font-regular col-12 col-lg-10">
+                                        {{$contact->address_one}}
+                                    </p>
+                                </div>
+                            </li>
+        
+                            <li class="d-flex mb-3">
+                                <div class="me-3 text-success fs-4">
+                                    <i class="bi bi-telephone-fill primary-color"></i>
+                                </div>
+                                <div>
+                                    <span class="color-green font-changa font-16 font-semibold">Telefone</span>
+                                    <p class="color-grey font-changa font-16 font-regular">{{$contact->phone_one}}</p>
+                                </div>
+                            </li>
+        
+                            <li class="d-flex">
+                                <div class="me-3 text-success fs-4">
+                                    <i class="bi bi-envelope-fill primary-color"></i>
+                                </div>
+                                <div>
+                                    <span class="color-green font-changa font-16 font-semibold">E-mail</span>
+                                    <p class="color-grey font-changa font-16 font-regular">{{$contact->name_one}}</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                @endif
+                
+                <div class="col-lg-7">
+                    <!-- Formulário e Mapa -->
+                    <div class="row g-4 mt-4">
+                        <div class="col-12">
+                            <form id="contactForm">
+                                @csrf
+                                <div class="row g-3">
+                                    <div class="col-md-12">
+                                        <input type="text" required id="nome" name="name" class="poppins-regular font-15 text-color form-control" placeholder="Nome Completo">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="email" required id="email" name="email" class="poppins-regular font-15 text-color form-control" placeholder="E-mail">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" required id="phone" name="phone" class="poppins-regular font-15 text-color form-control" placeholder="Whatsapp para contato">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <input type="text" required id="subject" name="subject" class="poppins-regular font-15 text-color form-control" placeholder="Assunto">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <textarea id="text" required name="text" class="form-control poppins-regular font-15 text-color" rows="4" placeholder="Digite aqui...."></textarea>
+                                    </div>
+                                    <div class="col-12 d-flex align-items-center flex-wrap">
+                                        <div class="form-check me-3">
+                                            <input class="form-check-input" required id="term_privacy" name="term_privacy" type="checkbox" value="1">
+                                            <label class="form-check-label small poppins-regular font-14 text-color" for="privacyCheck">
+                                                Aceito os termos descritos na Política de Privacidade
+                                            </label>
+                                        </div>
+                                        <button type="submit" class="bt-hover border font-changa font-15 bg-button-two color-button-two rounded-3 ms-auto py-2 px-4 hover-zoom">Enviar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Mapa -->
+        @if (isset($contact->maps) && $contact->maps != null) 
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="ratio ratio-21x9 rounded overflow-hidden shadow-sm">
+                        <iframe
+                            src="{{$contact->maps}}"
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        @endif
+    </section>
+    
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#contactForm').on('submit', function(e) {
+            e.preventDefault();
+
+            const formData = $(this).serialize();
+
+            $.ajax({
+                url: '{{ route("send-contact") }}',
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire({
+                            title: 'Sucesso!',
+                            text: response.message,
+                            icon: 'success',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    }
+                    $('#contactForm')[0].reset();
+                },
+                error: function(xhr) {
+                    if (xhr.status === 422) {
+                        const errors = xhr.responseJSON.errors;
+                        let errorMessages = '';
+                        for (let field in errors) {
+                            errorMessages += errors[field][0] + '\n';
+                        }
+
+                        if (typeof Swal !== 'undefined') {
+                            Swal.fire({
+                                title: 'Erro',
+                                text: errorMessages,
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    } else {
+                        if (typeof Swal !== 'undefined') {
+                            Swal.fire({
+                                title: 'Erro',
+                                text: 'Ocorreu um erro ao enviar a mensagem. Por favor, tente novamente.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    }
+                }
+            });
+        });
+    });
+</script>
 @endsection

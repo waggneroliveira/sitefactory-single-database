@@ -633,17 +633,16 @@
 }
 .testimonial-card {
     background: #fff;
+    border: 1px solid #f0eee9;
     border-radius: 20px;
     padding: 40px 30px;
     height: 100%;
     position: relative;
     box-shadow: 0 10px 30px rgba(0,0,0,.05);
     text-align: left;
-    min-height: 320px;
+    min-height: 180px;
 }
-.author{
-    border-top: 1px solid #E9E9E9;
-}
+
 .testimonial-swiper .swiper-pagination-bullet{
     background: var(--primary-color);
     opacity: 1;   
