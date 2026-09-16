@@ -33,6 +33,7 @@ class Product extends Model
         'btn_title',
         'active',
         'sorting',
+        'link_type',
     ];
 
     public function category(){

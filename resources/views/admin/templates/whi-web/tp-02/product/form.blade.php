@@ -108,18 +108,42 @@
             wrapper.appendChild(div)
         }
     </script>
-
-    <div class="mb-3">
-        <label for="link" class="form-label">Link</label>
-
-        <div class="input-group">
-            <select id="link_type" class="form-select" style="max-width: 180px;">
-                <option value="internal">Página interna</option>
-                <option value="external">Nova aba</option>
+    <div class="row mb-3">
+        <div class="col-4">
+            <label for="link_type" class="form-label">Direcionamento da página</label>
+    
+            <select name="link_type" id="link_type" class="form-select">
+                <option value="internal" {{ old('link_type', $product->link_type ?? 'internal') === 'internal' ? 'selected' : '' }}>
+                    Página interna
+                </option>
+    
+                <option value="external" {{ old('link_type', $product->link_type ?? 'internal') === 'external' ? 'selected' : '' }}>
+                    Nova aba
+                </option>
             </select>
-
-            <input type="text" name="link" value="{{ isset($product) ? $product->link : '' }}" class="form-control" id="link" placeholder="Link">
         </div>
+
+        <div class="col-8">
+            <div id="external-link">
+                <label for="link" class="form-label">Link</label>
+        
+                <input
+                    type="text"
+                    name="link"
+                    value="{{ old('link', $product->link ?? '') }}"
+                    class="form-control"
+                    id="link"
+                    placeholder="https://..."
+                >
+            </div>
+        </div>
+
+        <div class="mt-2" id="internal-message">
+            <div class="alert alert-info mb-0">
+                <i class="bi bi-info-circle me-1"></i>
+                O sistema irá direcionar automaticamente para a página interna deste produto.
+            </div>
+        </div>  
     </div>
     
     <div class="mb-3">
@@ -225,6 +249,29 @@
             CKEDITOR.replace(element.id, getEditorConfig(true));
         });
 
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const linkType = document.getElementById('link_type');
+        const internalMessage = document.getElementById('internal-message');
+        const externalLink = document.getElementById('external-link');
+        const link = document.getElementById('link');
+
+        function toggleLinkType() {
+            const isExternal = linkType.value === 'external';
+
+            internalMessage.style.display = isExternal ? 'none' : 'block';
+            externalLink.style.display = isExternal ? 'block' : 'none';
+
+            link.disabled = !isExternal;
+            link.required = isExternal;
+        }
+
+        linkType.addEventListener('change', toggleLinkType);
+
+        toggleLinkType();
     });
 </script>
 

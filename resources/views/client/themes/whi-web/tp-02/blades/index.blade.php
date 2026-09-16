@@ -735,10 +735,25 @@
                                             </div>
                                         </div>
                       
-                                        <a href="{{ $product->link }}" target="_blank" rel="noopener noreferrer" class="col-4">
+                                        @php
+                                            $isExternal = $product->link_type === 'external';
+
+                                            $href = $isExternal
+                                                ? $product->link
+                                                : route('client.product', [
+                                                    'category' => $product->category->slug,
+                                                    'slug' => $product->slug
+                                                ]);
+                                        @endphp
+
+                                        <a href="{{ $href }}"
+                                        class="col-4"
+                                        @if($isExternal) target="_blank" rel="noopener noreferrer" @endif>
+
                                             <span class="bg-button-one color-button-one rounded-2 py-2 px-2 btn-view font-changa font-11 font-medium col-12 d-flex align-items-center justify-content-center mb-0">
                                                 Garantir agora
-                                            </span>                                    
+                                            </span>
+
                                         </a>
                                     </div>
                                       
