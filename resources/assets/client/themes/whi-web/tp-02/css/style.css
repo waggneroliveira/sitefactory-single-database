@@ -1,16 +1,6 @@
-.bg-grey-light{
-    background: var(--text-color-light);
-}
 .bg-grey-medium{
-    background: var(--text-color-medium);
+    background-color: #F7F4EF !important;
 }
-.color-grey{
-    color: var(--text-color);
-}
-
- .bt-hover:hover{
-    color:  var(--primary-color) !important;
- }
 
 /* =========================
    HEADER
@@ -105,6 +95,325 @@
 /* =========================
    ABOUT
 ========================= */
+.linha-do-tempo{
+    margin-top: -85px;
+}
+.space70{
+    height: 70px;
+}
+.about {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.about .works-main-widget-area {
+    position: relative;
+    z-index: 1;
+    margin: 0 70px 0 0;
+}
+
+.about .works-main-widget-area::after {
+    position: absolute;
+    content: "";
+    height: 425px;
+    width: 2px;
+    right: -85px;
+    transition: all .4s;
+    background: #F0F0F2;
+    top: -50px;
+}
+
+.about .works-main-widget-area:hover .icons {
+    background: #D99400;
+    transition: all .4s;
+    transform: rotateY(-180deg);
+}
+
+.about .works-main-widget-area:hover .icons img {
+    filter: brightness(0) invert(1);
+    transition: all .4s;
+}
+
+.about .works-main-widget-area:hover .works8-boxarea {
+    background: #D99400;
+    transition: all .4s;
+}
+
+.about .works-main-widget-area:hover .works8-boxarea a,
+.about .works-main-widget-area:hover .works8-boxarea p {
+    color: #FFF;
+    transition: all .4s;
+}
+
+.about .works-main-widget-area:hover .works8-boxarea h5 {
+    background: #D99400;
+    color: #FFF;
+}
+
+.about .works-main-widget-area .icons {
+    height: 80px;
+    width: 80px;
+    display: inline-block;
+    transition: all .4s;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 80px;
+    background: #F4F4F9;
+}
+
+.about .works-main-widget-area .icons img {
+    transition: all .4s;
+}
+
+.about .works-main-widget-area .works8-boxarea {
+    position: relative;
+    z-index: 1;
+    background: #F4F4F9;
+    padding: 24px;
+    transition: all .4s;
+    border-radius: 10px;
+}
+
+.about .works-main-widget-area .works8-boxarea a {
+    font-family: "Manrope", sans-serif;
+    font-style: normal;
+    line-height: 24px;
+    display: inline-block;
+    transition: all .4s;
+}
+
+.about .works-main-widget-area .works8-boxarea p {
+    font-family: "Manrope", sans-serif;
+    font-style: normal;
+    line-height: 24px;
+    transition: all .4s;
+}
+
+.about .works-main-widget-area .works8-boxarea h5 {
+    font-family: "Manrope", sans-serif;
+    font-style: normal;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    background: #F4F4F9;
+    position: absolute;
+    top: 50%;
+    right: -100px;
+    margin-top: -20px;
+    transition: all .4s;
+}
+
+.about .works-main-widget-area2 {
+    position: relative;
+    z-index: 1;
+    margin: 0 0 0 70px;
+}
+
+.about .works-main-widget-area2:hover .icons {
+    background: #D99400;
+    transition: all .4s;
+    transform: rotateY(-180deg);
+}
+
+.about .works-main-widget-area2:hover .icons img {
+    filter: brightness(0) invert(1);
+    transition: all .4s;
+}
+
+.about .works-main-widget-area2:hover .works8-boxarea {
+    background: #D99400;
+    transition: all .4s;
+}
+
+.about .works-main-widget-area2:hover .works8-boxarea a,
+.about .works-main-widget-area2:hover .works8-boxarea p {
+    color: #FFF;
+    transition: all .4s;
+}
+
+.about .works-main-widget-area2:hover .works8-boxarea h5 {
+    background: #D99400;
+    color: #FFF;
+}
+
+.about .works-main-widget-area2 .icons {
+    height: 80px;
+    width: 80px;
+    display: inline-block;
+    transition: all .4s;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 80px;
+    background: #F4F4F9;
+}
+
+.about .works-main-widget-area2 .icons img {
+    transition: all .4s;
+}
+
+.about .works-main-widget-area2 .works8-boxarea {
+    position: relative;
+    z-index: 1;
+    background: #F4F4F9;
+    padding: 24px;
+    transition: all .4s;
+    border-radius: 8px;
+}
+
+.about .works-main-widget-area2 .works8-boxarea a {
+    line-height: 24px;
+    display: inline-block;
+    transition: all .4s;
+}
+
+.about .works-main-widget-area2 .works8-boxarea p {
+    font-family: "Manrope", sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 26px;
+    transition: all .4s;
+}
+
+.about .works-main-widget-area2 .works8-boxarea h5 {
+    font-family: "Manrope", sans-serif;
+    font-style: normal;
+
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    background: #F4F4F9;
+    position: absolute;
+    top: 50%;
+    left: -100px;
+    margin-top: -20px;
+    transition: all .4s;
+}
+
+/* XS */
+@media (max-width: 767px) {
+    .about .works-main-widget-area,
+    .about .works-main-widget-area2 {
+        margin: 0;
+    }
+
+    .about .works-main-widget-area::after {
+        display: none;
+    }
+
+    .about .works-main-widget-area .works8-boxarea h5,
+    .about .works-main-widget-area2 .works8-boxarea h5 {
+        display: none;
+    }
+}
+
+/* MD */
+@media (min-width: 768px) and (max-width: 991px) {
+    .about .works-main-widget-area::after {
+        display: none;
+    }
+
+    .about .works-main-widget-area .works8-boxarea h5 {
+        right: -60px;
+    }
+
+    .about .works-main-widget-area2 .works8-boxarea h5 {
+        left: -60px;
+    }
+}
+.section-container {
+    background-color: #F7F4EF;
+    padding: 60px 0;
+}
+
+/* Botões/Abas dos Pilares */
+.pillar-card {
+background-color: transparent;
+border: 1px solid transparent;
+border-radius: 12px;
+padding: 16px 24px;
+display: flex;
+align-items: center;
+gap: 16px;
+cursor: pointer;
+transition: all 0.3s ease;
+font-weight: 600;
+color: #4a4a4a;
+width: 100%;
+text-align: left;
+}
+
+.pillar-card:hover {
+background-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Estado Ativo do Pilar */
+.pillar-card.active {
+background-color: #ffffff;
+box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.pillar-icon-box {
+width: 44px;
+height: 44px;
+color: #ffffff;
+border-radius: 8px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 1.2rem;
+flex-shrink: 0;
+}
+
+/* Conteúdo das Abas */
+.tab-content-container {
+margin-top: 40px;
+}
+
+
+/* Barra de Progresso Customizada */
+.progress-label-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.custom-progress {
+height: 10px;
+border-radius: 5px;
+background-color: #e2ded7;
+overflow: hidden;
+}
+
+.custom-progress-bar {
+background-color: #d9822b;
+border-radius: 5px;
+height: 100%;
+transition: width 0.6s ease;
+}
+
+.content-image {
+width: 100%;
+height: 320px;
+object-fit: cover;
+border-radius: 20px;
+box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Animação suave para troca de conteúdo */
+.tab-pane {
+display: none;
+opacity: 0;
+transition: opacity 0.4s ease-in-out;
+}
+
+.tab-pane.active {
+display: flex;
+opacity: 1;
+}
 .banner-inner{
     background-image: var(--banner-bg);
     background-position: center;
@@ -172,9 +481,7 @@
 .mb-0.color-grey.font-changa.font-16.font-semibold.col-11.ms-3{
     line-height: 23px;
 }
-.about-subtitle{
-    border-bottom: 1px solid var(--secondary-color);
-}
+
 .firula-count{
     width: 175px;
     top: -4px !important;
@@ -269,8 +576,275 @@
 }
 
 /* =========================
+   Exhibition
+========================= */
+.exhibition-swiper {
+    padding: 10px 0 30px;
+}
+
+/* Card em formato de pílula arredondada */
+.exhibition-item {
+    display: flex;
+    flex-direction: column;            
+    overflow: hidden;
+    text-align: center;
+    height: 640px;
+    gap: 10px;
+}
+
+.exhibition-item-header:nth-of-type(odd), .exhibition-item-image:nth-of-type(odd){
+    border-radius: 200px 200px 0 0;
+}
+.exhibition-item-header:nth-of-type(even), .exhibition-item-image:nth-of-type(even){
+    border-radius: 0 0 200px 200px;
+}
+/* Bloco do Conteúdo (Texto e Ícone) */
+.exhibition-item-header {
+    border: 1px solid rgba(255, 255, 255, 0.15);            
+    padding: 0px 50px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.exhibition-item-header .icon-box img {
+    max-width: 40px;
+    height: auto;
+}
+
+.exhibition-item-content h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 12px;
+}
+
+.exhibition-item-content p {
+    font-size: 0.85rem;
+    color: #b0a8a6;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Bloco da Imagem */
+.exhibition-item-image {
+    width: 100%;
+    height: 320px;
+    overflow: hidden;
+}
+
+.exhibition-item-image img {
+    width: 100%;
+    height: 100%;
+    /* aspect-ratio: 1 / 0.80; */
+    object-fit: cover;
+    display: block;
+    transition: all 0.6s ease-in-out;
+}
+
+.exhibition-item:hover .exhibition-item-image figure img{
+    transform: scale(1.05) rotate(2deg);
+}
+
+.image-anime{
+    position: relative;
+    overflow: hidden;
+}
+
+.image-anime:after{
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 0%;
+    left: 50%;
+    top: 50%;
+    background-color: rgba(255,255,255,.3);
+    transform: translate(-50%,-50%) rotate(-45deg);
+    z-index: 1;
+}
+
+.image-anime:hover:after{
+    height: 250%;
+    transition: all 600ms linear;
+    background-color: transparent;
+}
+
+/* Estilo do Botão do Carrossel (Navegação Circular) */
+.swiper-navigation-wrapper .swiper-button-prev-custom,
+.swiper-navigation-wrapper .swiper-button-next-custom {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.swiper-navigation-wrapper .swiper-button-prev-custom:hover,
+.swiper-navigation-wrapper .swiper-button-next-custom:hover {
+    border-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* =========================
+   SOLUTIONS
+========================= */
+.solutions-section {
+    background-color: #EAE6DF;
+    color: #4A4A4A;
+}
+
+/* Card da Imagem Principal */
+.banner-card {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    height: 100%;
+    max-height: 558px;
+}
+
+.banner-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Cards de Funcionalidade */
+.feature-card {
+    background-color: #F8F7F5;
+    border-radius: 16px;
+    padding: 24px 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 265px;
+}
+
+.feature-card .icon-box {
+    width: 42px;
+    height: 42px;
+    background-color: #D98804;
+    color: #FFFFFF;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.feature-card h4 {
+    color: #2D2D2D;
+    margin-bottom: 12px;
+}
+
+.feature-card p {
+    color: #727272;
+    line-height: 1.45;
+    margin: 0;
+}
+
+
+/* Efeito Hover nos Cards de Funcionalidade */
+.feature-card {
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+                background-color 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-6px);
+    background-color: #ffffff;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Efeito Hover na Caixa do Ícone */
+.feature-card .icon-box {
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.feature-card:hover .icon-box {
+    transform: scale(1.08);
+    background-color: #b87303;
+}
+
+/* Efeito Hover na Imagem do Banner Lateral */
+.banner-card {
+    cursor: pointer;
+}
+
+.banner-card img {
+    transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.banner-card:hover img {
+    transform: scale(1.04);
+}
+
+/* Animação do Selo "H" no Hover da Imagem */
+.banner-card .badge-icon {
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.banner-card:hover .badge-icon {
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* Botões de Navegação Circular */
+.swiper-button-prev-custom,
+.swiper-button-next-custom {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid #4A4A4A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4A4A4A;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.swiper-button-prev-custom:hover,
+.swiper-button-next-custom:hover {
+    background-color: #4A4A4A;
+    color: #EAE6DF;
+}
+/* =========================
    CATEGORY PRODUCT
 ========================= */
+.user-card {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: sans-serif;
+}
+
+.avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+}
 
 .products-section {
   background: #f9f9f9;
@@ -440,9 +1014,7 @@
     object-fit: cover;
     width: 80px;
 }
-.about-subtitle.span-product{
-    width: 43%;
-}
+
 .lets-go{
     border-bottom: 1px solid #CBC4BB;
 }
@@ -591,9 +1163,6 @@
 
 .faq-section {
   background: #f4f4f2;
-}
-.about-subtitle{
-    width: 87%;
 }
 
 /* ACCORDION */

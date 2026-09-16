@@ -72,7 +72,9 @@
 
                     <div class="mb-2 text-center text-lg-start ">
                         <span class="font-changa font-12 bg-button-two color-button-two px-2 rounded-0 font-medium">{{$product->category->title}}</span>
-                        <span class="font-changa font-12 bg-button-two color-button-two px-2 rounded-0 font-medium">{{$product->brand->title}}</span>
+                        @if ($product->brand <> null)                            
+                            <span class="font-changa font-12 bg-button-two color-button-two px-2 rounded-0 font-medium">{{$product->brand->title}}</span>
+                        @endif
                     </div>
 
                     <p class="color-grey text-center text-lg-start font-changa font-16 font-regular">

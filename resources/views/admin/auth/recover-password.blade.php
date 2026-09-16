@@ -6,19 +6,19 @@
                 <div class="col-md-8 col-lg-6 col-xl-4">
                     <div class="card" style="border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.08);">
 
-                        <div class="card-body p-4 p-xl-5">
+                        <div class="card-body p-3 px-xl-4">
                             
                             <div class="text-center">
                                 <div class="auth-brand">
                                     <a href="https://www.whi.dev.br/" target="_blank" class="logo logo-dark text-center">
                                         <span class="logo-lg">
-                                            <img src="{{asset('build/admin/images/whi-black-horizontal.png')}}" alt="Logo WHI" height="80">
+                                            <img src="{{asset('build/admin/images/whi-black-horizontal.png')}}" alt="Logo WHI" height="50">
                                         </span>
                                     </a>
                 
                                     <a href="https://www.whi.dev.br/" target="_blank" class="logo logo-light text-center">
                                         <span class="logo-lg">
-                                            <img src="{{asset('build/admin/images/whi-green-horizontal.png')}}" alt="Logo WHI" height="80">
+                                            <img src="{{asset('build/admin/images/whi-green-horizontal.png')}}" alt="Logo WHI" height="50">
                                         </span>
                                     </a>
                                 </div>

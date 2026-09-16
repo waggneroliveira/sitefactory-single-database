@@ -14,7 +14,7 @@
             <aside class="filter-aside">
                 <!-- Categorias -->
                 @if (isset($productCategories) && $productCategories->count())                    
-                    <div class="filter-box mb-4 bg-grey-light rounded-4 overflow-hidden">
+                    <div class="filter-box mb-4 bg-white rounded-4 overflow-hidden">
                         <div class="filter-title filter-toggle bg-grey-medium d-flex justify-content-center align-items-center py-1">
                             <i class="bi bi-list"></i>
                             <span class="font-changa font-20 font-semibold color-green ms-2">Categorias</span>
@@ -31,7 +31,7 @@
 
                 <!-- Marcas -->
                 @if (isset($brands) && $brands->count())                    
-                    <div class="filter-box mb-4 bg-grey-light rounded-4 overflow-hidden">
+                    <div class="filter-box mb-4 bg-white rounded-4 overflow-hidden">
                         <div class="filter-title filter-toggle bg-grey-medium d-flex justify-content-center align-items-center py-1">
                             <i class="bi bi-list"></i>
                             <span class="font-changa font-20 font-semibold color-green ms-2">Marcas</span>
@@ -74,7 +74,7 @@
                                     placeholder="Pesquisar..."
                                 >
                             </form>
-                            <div class="bg-button-two color-button-two px-2 py-1 rounded-3">
+                            <div class="bg-button-one color-button-one px-2 py-1 rounded-3">
                                 <i class="bi bi-search search-icon text-white font-20"></i>
                             </div>
                         </div>
@@ -83,7 +83,7 @@
 
                 <!-- Produtos -->
                 <div id="products-container" class="row g-4 products mt-4">
-                    @include('client.themes.petshop.tp-01.includes.products')
+                    @include('client.themes.whi-web.tp-02.includes.products')
                 </div>
             </div>
         @endif

@@ -302,7 +302,6 @@ return [
                 ],
 
                 'products' => [
-                    'brands',
                     'product_categories',
                     'products',
                 ],

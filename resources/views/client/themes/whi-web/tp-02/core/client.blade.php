@@ -678,7 +678,7 @@
         @yield('content') 
     </main>
 
-    <footer class="bg-footer text-white pt-5 pb-3">
+    <footer class="bg-footer pt-3 pt-lg-5 pb-3">
         <div class="container">
 
             <!-- Linha principal -->
@@ -686,11 +686,14 @@
 
                 <!-- Logo + botão -->
                 <div class="col-lg-4 mb-4 mb-lg-0">
-                    <img src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ config('app.name') }}" height="40">
-
+                    @php
+                        $logoPath = storage_path('app/public/' . $tenantTheme->path_image_logo_footer);
+                        $dimensions = file_exists($logoPath) ? @getimagesize($logoPath) : null;
+                    @endphp
+                    <img loading="lazy" src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ $tenantTheme->name }}" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
                     @if ($tenantTheme->link <> null)                        
                         <div class="mt-3 mt-lg-5">
-                            <a href="{{ $tenantTheme->link }}" target="_blank" rel="noopener noreferrer" class="bg-button-one color-button-one px-4 py-2 font-changa font-16 font-medium text-decoration-none hover-zoom">
+                            <a href="{{ $tenantTheme->link }}" target="_blank" rel="noopener noreferrer" class="bg-button-two color-button-two px-4 py-2 font-changa font-16 font-medium text-decoration-none hover-zoom">
                                 {{$tenantTheme->btn_title}}
                                 <i class="bi bi-arrow-right"></i>
                             </a>
@@ -699,20 +702,18 @@
                 </div>
 
                 <!-- Mapa do site -->
-                <div class="col-lg-6 mb-4 mb-lg-0">
-                    <h6 class="font-changa text-color-footer font-16 font-bold mb-3 position-relative d-inline-block font-changa font-16 font-medium">
+                <div class="col-lg-6 mb-4 mb-0">
+                    <div class="font-changa text-color-footer font-16 font-bold mb-3 position-relative d-inline-block font-changa font-16 font-medium">
                         Mapa do Site
                         <span class="d-block bg-yellow mt-1" style="height:3px; width:40px;"></span>
-                    </h6>
+                    </div>
 
                     <div class="row">
                         <div class="col-6">
                             <ul class="list-unstyled">
                                 <li><a href="{{route('index')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Início</a></li>
-                                <li><a href="{{route('about')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Quem Somos</a></li>
-                                <li><a href="{{ request()->routeIs('index') ? '#stats-section' : route('index') . '#stats-section' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Diferenciais</a></li>
-                                <li><a href="{{route('blogAll')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Blog</a></li>
-                                <li><a href="{{route('products')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Produtos</a></li>
+                                <li><a href="{{route('index')}}#about" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Quem Somos</a></li>
+                                <li><a href="{{route('index')}}#services" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Serviços</a></li>
                             </ul>
                         </div>
 
@@ -720,7 +721,7 @@
                             <ul class="list-unstyled">
                                 <li><a href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Depoimentos</a></li>
                                 <li><a href="{{ request()->routeIs('index') ? '#faq' : route('index') . '#faq' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">FAQ</a></li>
-                                <li><a href="{{route('contact')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Contato</a></li>
+                                <li><a href="{{route('index')}}#contato" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Contato</a></li>
                             </ul>
                         </div>
                     </div>
@@ -734,21 +735,37 @@
                 ))                    
                     <div class="col-lg-2 text-lg-end">
                         <div class="d-flex gap-3 justify-content-lg-end">
-                            @if ($contact->link_insta <> null)                            
-                                <a href="{{$contact->link_insta}}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5">
-                                    <i class="bi bi-instagram"></i>
+                            @if ($contact->link_insta != null)
+                                <a href="{{ $contact->link_insta }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="text-color-footer fs-5"
+                                aria-label="Instagram">
+                                    <i class="bi bi-instagram" aria-hidden="true"></i>
                                 </a>
                             @endif
-                            @if ($contact->link_face <> null)                            
-                                <a href="{{$contact->link_face}}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5">
-                                    <i class="bi bi-facebook"></i>
+
+                            @if ($contact->link_face != null)
+                                <a href="{{ $contact->link_face }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="text-color-footer fs-5"
+                                aria-label="Facebook">
+                                    <i class="bi bi-facebook" aria-hidden="true"></i>
                                 </a>
                             @endif
-                            @if ($contact->link_tik_tok <> null)                            
-                                <a href="{{$contact->link_tik_tok}}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5">
-                                    <i class="bi bi-linkedin"></i>
+
+                            @if ($contact->link_tik_tok != null)
+                                <a href="{{ $contact->link_tik_tok }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="text-color-footer fs-5"
+                                aria-label="LinkedIn">
+                                    <i class="bi bi-linkedin" aria-hidden="true"></i>
                                 </a>
                             @endif
+
+
                         </div>
                     </div>
                 @endif
@@ -756,28 +773,91 @@
             </div>
 
             <!-- Linha inferior -->
-            <hr class="border-light opacity-25 my-4">
+            <hr class="border-light opacity-25 my-0 mb-3 my-lg-4 border-color-footer">
 
             <div class="row align-items-center">
+                @php
+                    $cnpj = !empty($tenantTheme->cnpj) ? preg_replace('/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/', '$1.$2.$3/$4-$5', preg_replace('/\D/', '', $tenantTheme->cnpj)) : '';
+                @endphp
 
-                <div class="col-md-10 small">
-                    <div class="d-flex flex-wrap col-12 font-changa font-16 font-regular text-center text-lg-end justify-content-center justify-content-lg-end">
-                        <p id="footer-text" class="text-color-footer"></p>                        
+                <div class="row align-items-center g-4 m-0">
+                    <div class="col-12 col-lg-5 text-center text-lg-start small text-color-footer m-0 p-0">
+                        <p id="footer-text" class="mb-0 text-color-footer"></p>
                     </div>
 
-                    <script defer>
-                        const currentYeaar = (new Date).getFullYear();
-                        document.getElementById("footer-text").innerHTML = `© ${currentYeaar} <span> {{$tenantTheme->copyright}}
-                    Todos os direitos reservados.</span> <a href="https://policies.google.com/privacy?hl=pt-BR" target="_blank" class="text-color-footer font-semibold">| Política de Privacidade</a>`
-                    </script>
+                    <div class="col-12 col-lg-3 text-center small text-color-footer mt-0">
+                        @if ($tenantTheme->privacy_policy <> null)                            
+                            <a href="#" class="text-color-footer text-decoration-none" data-bs-toggle="modal" data-bs-target="#privacyModal">Política de Privacidade</a>
+                            <span class="mx-1">|</span>
+                        @endif
+                        @if ($tenantTheme->terms_of_use <> null)                            
+                            <a href="#" class="text-color-footer text-decoration-none" data-bs-toggle="modal" data-bs-target="#termsModal">Termos de Uso</a>
+                        @endif
+                    </div>
+
+                    <!-- Modal Política de Privacidade -->
+                    <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="privacyModalLabel">Política de Privacidade</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {!! $tenantTheme->privacy_policy !!}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Termos de Uso -->
+                    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="termsModalLabel">Termos de Uso</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {!! $tenantTheme->terms_of_use !!}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-4 m-0 p-0">
+                        <div class="d-flex justify-content-center justify-content-lg-end align-items-center gap-3">
+                            <a href="http://whiweb.com.br/" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
+                                <span class="font-13">Sistema</span>
+                                <img loading="lazy" src="{{asset('build/client/themes/default/images/whi-web.png')}}" title="Whi Web" alt="WHI Web" height="50" class="logo-system">
+                            </a>
+
+                            <span class="text-color-footer opacity-50">|</span>
+
+                            <a href="https://www.whi.dev.br/" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
+                                <span class="font-13">Desenvolvido por</span>
+                                <img loading="lazy" src="{{asset('build/client/themes/default/images/whi.png')}}" title="Agência WHI" alt="WHI" height="25" class="logo-system">
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="col-12 col-md-2 text-center text-md-end mt-3 mt-md-0">
-                    <a href="http://www.whi.dev.br" target="_blank" rel="noopener noreferrer">
-                        <img src="{{asset('build/client/themes/whi-web/tp-02/images/whi.svg')}}" alt="Agência WHI" style="height:35px;">
-                    </a>
-                </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const currentYear = new Date().getFullYear();
+                        const footerText = document.getElementById('footer-text');
 
+                        if (footerText) {
+                            footerText.innerHTML = `© ${currentYear} <span>{{ $tenantTheme->copyright }} - Todos os direitos reservados{{ $cnpj ? ' | ' . $cnpj : '' }}.</span>`;
+                        }
+                    });
+                </script>
             </div>
 
         </div>

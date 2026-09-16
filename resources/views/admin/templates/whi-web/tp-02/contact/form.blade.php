@@ -9,30 +9,21 @@
             <h4 class="page-title">Informações da sessão</h4>
             <div class="card card-body">
                 <div class="row g-3">
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-md-6">
                         <label for="name_section" class="form-label">Nome da sessão</label>
                         <input type="text" name="name_section" class="form-control" id="name_section"
                             value="{{ $contact->name_section ?? '' }}" placeholder="Nome da sessão">
                     </div>
-                    <div class="col-12 col-md-8">
+                    <div class="col-12 col-md-6">
+                        <label for="link_x" class="form-label">Subtitulo</label>
+                        <input type="text" name="link_x" class="form-control" id="link_x"
+                            value="{{ $contact->link_x ?? '' }}" placeholder="Subtitulo">
+                    </div>
+                    <div class="col-12">
                         <label for="text" class="form-label">Texto</label>
                         <input type="text" name="text" class="form-control" id="text"
                             value="{{ $contact->text ?? '' }}" placeholder="Texto">
-                    </div>
-                    <div class="col-12">
-                        <label for="maps" class="form-label">Link mapa</label>
-                        <input type="text" name="maps" class="form-control" id="maps"
-                        value="{{ $contact->maps ?? '' }}" placeholder="Mapa">
-                        <div class="instructions">
-                            <h5>Como usar:</h5>
-                            <ol>
-                                <li>Vá ao Google Maps e encontre o local desejado</li>
-                                <li>Clique no botão "Compartilhar" e depois em "Incorporar um mapa"</li>
-                                <li>Selecione e copie todo o código iframe</li>
-                                <li>Cole o código no campo acima - o link será extraído automaticamente</li>
-                            </ol>
-                        </div>
-                    </div>
+                    </div>                  
                 </div>
             </div>
         </div>
@@ -54,12 +45,6 @@
                             value="{{ $contact->link_insta ?? '' }}" placeholder="Link Instagram">
                     </div>
                     {{-- <div class="col-12 col-md-6">
-                        <label for="link_x" class="form-label">Link X</label>
-                        <input type="text" name="link_x" class="form-control" id="link_x"
-                            value="{{ $contact->link_x ?? '' }}" placeholder="Link X">
-                    </div>
-
-                    <div class="col-12 col-md-6">
                         <label for="link_youtube" class="form-label">Link Youtube</label>
                         <input type="text" name="link_youtube" class="form-control" id="link_youtube"
                             value="{{ $contact->link_youtube ?? '' }}" placeholder="Link Youtube">
@@ -93,16 +78,6 @@
                     <label for="phone_one" class="form-label">Telefone</label>
                     <input type="text" name="phone_one" class="form-control" id="phone_one"
                         value="{{ isset($contact)?$contact->phone_one:'' }}" placeholder="Telefone">
-                </div>
-                <div class="mb-3 col-lg-4">
-                    <label for="opening_hours_two" class="form-label">Horário de funcionamento</label>
-                    <input type="text" name="opening_hours_two" class="form-control" id="opening_hours_two"
-                        value="{{ isset($contact)?$contact->opening_hours_two:'' }}" placeholder="Horário de funcionamento">
-                </div>
-                <div class="col-12">
-                    <label for="address_one" class="form-label">Endereço</label>
-                    <input type="text" name="address_one" class="form-control" id="address_one"
-                        value="{{ isset($contact)?$contact->address_one:'' }}" placeholder="Endereço">
                 </div>
             </div> 
         </div>

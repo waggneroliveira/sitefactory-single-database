@@ -1,6 +1,6 @@
 <div class="col-12 col-lg-6">
     <div class="row">
-        <div class="mb-3 col-12 col-lg-6 d-flex align-items-start flex-column">
+        <div class="mb-3 col-12 col-lg-12 d-flex align-items-start flex-column">
             <label for="category-select" class="form-label">Categoria(s) <span class="text-danger">*</span></label>
             @php
                 $currentCategory = isset($product) ? $product->product_category_id : null;
@@ -11,22 +11,6 @@
                 @foreach ($productCategory as $categoryValue => $categoryLabel)
                     <option value="{{ $categoryValue }}" {{ $categoryValue == $currentCategory ? 'selected' : '' }}>
                         {{ $categoryLabel }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-        
-        <div class="mb-3 col-6 d-flex align-items-start flex-column">
-            <label for="brand-select" class="form-label">Marca(s) <span class="text-danger">*</span></label>
-            @php
-                $currentBrand = isset($product) ? $product->brand_id : null;
-            @endphp
-
-            <select name="brand_id" class="form-select" id="brand-select" required>
-                <option value="" disabled selected>Selecione a Marca</option>
-                @foreach ($productBrand as $brandValue => $brandLabel)
-                    <option value="{{ $brandValue }}" {{ $brandValue == $currentBrand ? 'selected' : '' }}>
-                        {{ $brandLabel }}
                     </option>
                 @endforeach
             </select>
@@ -124,9 +108,18 @@
             wrapper.appendChild(div)
         }
     </script>
+
     <div class="mb-3">
         <label for="link" class="form-label">Link</label>
-        <input type="text" name="link" value="{{isset($product)?$product->link:''}}" class="form-control" id="link" placeholder="Link">
+
+        <div class="input-group">
+            <select id="link_type" class="form-select" style="max-width: 180px;">
+                <option value="internal">Página interna</option>
+                <option value="external">Nova aba</option>
+            </select>
+
+            <input type="text" name="link" value="{{ isset($product) ? $product->link : '' }}" class="form-control" id="link" placeholder="Link">
+        </div>
     </div>
     
     <div class="mb-3">
@@ -185,26 +178,11 @@
                             'Bold',
                             'Italic',
                             'Underline',
-                            'Strike',
-                            'Subscript',
-                            'Superscript'
-                        ]
-                    },
-                    {
-                        name: 'paragraph',
-                        items: [
-                            'NumberedList',
-                            'BulletedList',
-                            'JustifyBlock'
                         ]
                     },
                     {
                         name: 'links',
                         items: ['Link', 'Unlink']
-                    },
-                    {
-                        name: 'insert',
-                        items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar']
                     },
                 ],
 
@@ -249,3 +227,9 @@
 
     });
 </script>
+
+<style>
+    #cke_textarea-text{
+        width: 100%;
+    }
+</style>

@@ -2,6 +2,7 @@
 
 namespace App\Modules\Client\Presentation\Controllers;
 
+use App\Models\Tenant;
 use App\Modules\Client\Business\ProductPageService;
 use App\Services\ThemeManager;
 use Illuminate\Http\Request;
@@ -29,10 +30,11 @@ class ProductPageController
 
     public function productView($category = null, $slug = null, ThemeManager $theme)
     {
+        $tenantTheme = Tenant::current();
         $data = $this->service->getProductViewData($category, $slug, $theme);
 
         if (isset($data['view'])) {
-            return view($data['view']);
+            return $data['view']->with('theme', $theme)->with('tenantTheme', $tenantTheme);
         }
         
         return view($theme->view('product'), $data);

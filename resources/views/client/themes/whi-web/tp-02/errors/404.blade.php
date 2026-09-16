@@ -1,4 +1,4 @@
-@extends('client.core.client')
+@extends($theme->core('client'))
 @section('content')
     <style>
         #footer{
@@ -35,7 +35,7 @@
             
             <!-- Botão de ação -->
             <div class="d-grid gap-2 d-md-flex justify-content-center">
-                <a href="{{route('index')}}" class="text-white py-2 px-3 poppins-medium rounded-3 background-red d-flex justify-content-start gap-2 align-items-center">
+                <a href="{{route('index')}}" class="text-white py-2 px-3 poppins-medium rounded-3 bg-button-one color-button-one d-flex justify-content-start gap-2 align-items-center">
                     <i class="bi bi-house-fill me-2 d-flex justify-content-center align-items-center"></i>Voltar para o Início
                 </a>
             </div>

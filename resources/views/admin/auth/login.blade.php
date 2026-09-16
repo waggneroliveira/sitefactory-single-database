@@ -6,24 +6,24 @@
                 <div class="col-md-8 col-lg-6 col-xl-4">
                     <div class="card" style="border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.08);">
 
-                        <div class="card-body py-3 p-xl-4">
+                        <div class="card-body py-3 px-xl-4">
                             
                             <div class="text-center">
-                                <div class="auth-brand">
+                                <div class="auth-brand mb-0">
                                     <a href="https://www.whi.dev.br/" target="_blank" class="logo logo-dark text-center">
                                         <span class="logo-lg">
-                                            <img src="{{asset('build/admin/images/whi-green-horizontal.png')}}" alt="Logo WHI" height="90">
+                                            <img src="{{asset('build/admin/images/whi-green-horizontal.png')}}" alt="Logo WHI" height="50">
                                         </span>
                                     </a>
                 
                                     <a href="https://www.whi.dev.br/" target="_blank" class="logo logo-light text-center">
                                         <span class="logo-lg">
-                                            <img src="{{asset('build/admin/images/whi-green-horizontal.png')}}" alt="Logo WHI" height="90">
+                                            <img src="{{asset('build/admin/images/whi-green-horizontal.png')}}" alt="Logo WHI" height="50">
                                         </span>
                                     </a>                                    
                                 </div>
                                 <h5 class="fw-bold mt-3 mb-1">Acessar conta</h5>
-                                <p class="text-muted small mb-4">Informe seus dados para continuar</p>
+                                <p class="text-muted small mb-3">Informe seus dados para continuar</p>
                             </div>
 
                             <form action="{{route('admin.user.authenticate')}}" method="POST">

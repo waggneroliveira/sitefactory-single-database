@@ -212,331 +212,6 @@
         </section>
     @endif
 
-    <style>
-        .linha-do-tempo{
-            margin-top: -85px;
-        }
-        .space70{
-            height: 70px;
-        }
-        .about {
-            position: relative;
-            z-index: 1;
-            overflow: hidden;
-        }
-
-        .about .works-main-widget-area {
-            position: relative;
-            z-index: 1;
-            margin: 0 70px 0 0;
-        }
-
-        .about .works-main-widget-area::after {
-            position: absolute;
-            content: "";
-            height: 425px;
-            width: 2px;
-            right: -85px;
-            transition: all .4s;
-            background: #F0F0F2;
-            top: -50px;
-        }
-
-        .about .works-main-widget-area:hover .icons {
-            background: #D99400;
-            transition: all .4s;
-            transform: rotateY(-180deg);
-        }
-
-        .about .works-main-widget-area:hover .icons img {
-            filter: brightness(0) invert(1);
-            transition: all .4s;
-        }
-
-        .about .works-main-widget-area:hover .works8-boxarea {
-            background: #D99400;
-            transition: all .4s;
-        }
-
-        .about .works-main-widget-area:hover .works8-boxarea a,
-        .about .works-main-widget-area:hover .works8-boxarea p {
-            color: #FFF;
-            transition: all .4s;
-        }
-
-        .about .works-main-widget-area:hover .works8-boxarea h5 {
-            background: #D99400;
-            color: #FFF;
-        }
-
-        .about .works-main-widget-area .icons {
-            height: 80px;
-            width: 80px;
-            display: inline-block;
-            transition: all .4s;
-            border-radius: 10px;
-            text-align: center;
-            line-height: 80px;
-            background: #F4F4F9;
-        }
-
-        .about .works-main-widget-area .icons img {
-            transition: all .4s;
-        }
-
-        .about .works-main-widget-area .works8-boxarea {
-            position: relative;
-            z-index: 1;
-            background: #F4F4F9;
-            padding: 24px;
-            transition: all .4s;
-            border-radius: 10px;
-        }
-
-        .about .works-main-widget-area .works8-boxarea a {
-            font-family: "Manrope", sans-serif;
-            font-style: normal;
-            line-height: 24px;
-            display: inline-block;
-            transition: all .4s;
-        }
-
-        .about .works-main-widget-area .works8-boxarea p {
-            font-family: "Manrope", sans-serif;
-            font-style: normal;
-            line-height: 24px;
-            transition: all .4s;
-        }
-
-        .about .works-main-widget-area .works8-boxarea h5 {
-            font-family: "Manrope", sans-serif;
-            font-style: normal;
-            height: 40px;
-            width: 40px;
-            text-align: center;
-            line-height: 40px;
-            border-radius: 50%;
-            background: #F4F4F9;
-            position: absolute;
-            top: 50%;
-            right: -100px;
-            margin-top: -20px;
-            transition: all .4s;
-        }
-
-        .about .works-main-widget-area2 {
-            position: relative;
-            z-index: 1;
-            margin: 0 0 0 70px;
-        }
-
-        .about .works-main-widget-area2:hover .icons {
-            background: #D99400;
-            transition: all .4s;
-            transform: rotateY(-180deg);
-        }
-
-        .about .works-main-widget-area2:hover .icons img {
-            filter: brightness(0) invert(1);
-            transition: all .4s;
-        }
-
-        .about .works-main-widget-area2:hover .works8-boxarea {
-            background: #D99400;
-            transition: all .4s;
-        }
-
-        .about .works-main-widget-area2:hover .works8-boxarea a,
-        .about .works-main-widget-area2:hover .works8-boxarea p {
-            color: #FFF;
-            transition: all .4s;
-        }
-
-        .about .works-main-widget-area2:hover .works8-boxarea h5 {
-            background: #D99400;
-            color: #FFF;
-        }
-
-        .about .works-main-widget-area2 .icons {
-            height: 80px;
-            width: 80px;
-            display: inline-block;
-            transition: all .4s;
-            border-radius: 10px;
-            text-align: center;
-            line-height: 80px;
-            background: #F4F4F9;
-        }
-
-        .about .works-main-widget-area2 .icons img {
-            transition: all .4s;
-        }
-
-        .about .works-main-widget-area2 .works8-boxarea {
-            position: relative;
-            z-index: 1;
-            background: #F4F4F9;
-            padding: 24px;
-            transition: all .4s;
-            border-radius: 8px;
-        }
-
-        .about .works-main-widget-area2 .works8-boxarea a {
-            line-height: 24px;
-            display: inline-block;
-            transition: all .4s;
-        }
-
-        .about .works-main-widget-area2 .works8-boxarea p {
-            font-family: "Manrope", sans-serif;
-            font-style: normal;
-            font-weight: 500;
-            line-height: 26px;
-            transition: all .4s;
-        }
-
-        .about .works-main-widget-area2 .works8-boxarea h5 {
-            font-family: "Manrope", sans-serif;
-            font-style: normal;
-
-            height: 40px;
-            width: 40px;
-            text-align: center;
-            line-height: 40px;
-            border-radius: 50%;
-            background: #F4F4F9;
-            position: absolute;
-            top: 50%;
-            left: -100px;
-            margin-top: -20px;
-            transition: all .4s;
-        }
-
-        /* XS */
-        @media (max-width: 767px) {
-            .about .works-main-widget-area,
-            .about .works-main-widget-area2 {
-                margin: 0;
-            }
-
-            .about .works-main-widget-area::after {
-                display: none;
-            }
-
-            .about .works-main-widget-area .works8-boxarea h5,
-            .about .works-main-widget-area2 .works8-boxarea h5 {
-                display: none;
-            }
-        }
-
-        /* MD */
-        @media (min-width: 768px) and (max-width: 991px) {
-            .about .works-main-widget-area::after {
-                display: none;
-            }
-
-            .about .works-main-widget-area .works8-boxarea h5 {
-                right: -60px;
-            }
-
-            .about .works-main-widget-area2 .works8-boxarea h5 {
-                left: -60px;
-            }
-        }
-    </style>
-  
-    <style>
-        .section-container {
-            background-color: #F7F4EF;
-            padding: 60px 0;
-        }
-
-        /* Botões/Abas dos Pilares */
-        .pillar-card {
-        background-color: transparent;
-        border: 1px solid transparent;
-        border-radius: 12px;
-        padding: 16px 24px;
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-weight: 600;
-        color: #4a4a4a;
-        width: 100%;
-        text-align: left;
-        }
-
-        .pillar-card:hover {
-        background-color: rgba(255, 255, 255, 0.6);
-        }
-
-        /* Estado Ativo do Pilar */
-        .pillar-card.active {
-        background-color: #ffffff;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .pillar-icon-box {
-        width: 44px;
-        height: 44px;
-        color: #ffffff;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-        flex-shrink: 0;
-        }
-
-        /* Conteúdo das Abas */
-        .tab-content-container {
-        margin-top: 40px;
-        }
-
-
-        /* Barra de Progresso Customizada */
-        .progress-label-group {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .custom-progress {
-        height: 10px;
-        border-radius: 5px;
-        background-color: #e2ded7;
-        overflow: hidden;
-        }
-
-        .custom-progress-bar {
-        background-color: #d9822b;
-        border-radius: 5px;
-        height: 100%;
-        transition: width 0.6s ease;
-        }
-
-        .content-image {
-        width: 100%;
-        height: 320px;
-        object-fit: cover;
-        border-radius: 20px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-        }
-
-        /* Animação suave para troca de conteúdo */
-        .tab-pane {
-        display: none;
-        opacity: 0;
-        transition: opacity 0.4s ease-in-out;
-        }
-
-        .tab-pane.active {
-        display: flex;
-        opacity: 1;
-        }
-    </style>
-
     <section class="section-container position-relative">
         <div class="container">
             
@@ -830,124 +505,6 @@
         });
     </script>
 
-    <style>
-        /* Container Escuro e Estilo Geral */
-
-        .exhibition-swiper {
-            padding: 10px 0 30px;
-        }
-
-        /* Card em formato de pílula arredondada */
-        .exhibition-item {
-            display: flex;
-            flex-direction: column;            
-            overflow: hidden;
-            text-align: center;
-            height: 640px;
-            gap: 10px;
-        }
-
-        .exhibition-item-header:nth-of-type(odd), .exhibition-item-image:nth-of-type(odd){
-            border-radius: 200px 200px 0 0;
-        }
-        .exhibition-item-header:nth-of-type(even), .exhibition-item-image:nth-of-type(even){
-            border-radius: 0 0 200px 200px;
-        }
-        /* Bloco do Conteúdo (Texto e Ícone) */
-        .exhibition-item-header {
-            border: 1px solid rgba(255, 255, 255, 0.15);            
-            padding: 0px 50px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .exhibition-item-header .icon-box img {
-            max-width: 40px;
-            height: auto;
-        }
-
-        .exhibition-item-content h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #ffffff;
-            margin-bottom: 12px;
-        }
-
-        .exhibition-item-content p {
-            font-size: 0.85rem;
-            color: #b0a8a6;
-            line-height: 1.5;
-            margin: 0;
-        }
-
-        /* Bloco da Imagem */
-        .exhibition-item-image {
-            width: 100%;
-            height: 320px;
-            overflow: hidden;
-        }
-
-        .exhibition-item-image img {
-            width: 100%;
-            height: 100%;
-            /* aspect-ratio: 1 / 0.80; */
-            object-fit: cover;
-            display: block;
-            transition: all 0.6s ease-in-out;
-        }
-
-        .exhibition-item:hover .exhibition-item-image figure img{
-            transform: scale(1.05) rotate(2deg);
-        }
-        
-        .image-anime{
-            position: relative;
-            overflow: hidden;
-        }
-
-        .image-anime:after{
-            content: "";
-            position: absolute;
-            width: 200%;
-            height: 0%;
-            left: 50%;
-            top: 50%;
-            background-color: rgba(255,255,255,.3);
-            transform: translate(-50%,-50%) rotate(-45deg);
-            z-index: 1;
-        }
-
-        .image-anime:hover:after{
-            height: 250%;
-            transition: all 600ms linear;
-            background-color: transparent;
-        }
-
-        /* Estilo do Botão do Carrossel (Navegação Circular) */
-        .swiper-navigation-wrapper .swiper-button-prev-custom,
-        .swiper-navigation-wrapper .swiper-button-next-custom {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffffff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .swiper-navigation-wrapper .swiper-button-prev-custom:hover,
-        .swiper-navigation-wrapper .swiper-button-next-custom:hover {
-            border-color: #ffffff;
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-    </style>
-
     <!-- Enterprise Solutions Section Start -->
     <section class="solutions-section py-5">
         <div class="container">
@@ -1067,132 +624,6 @@
     </section>
     <!-- Enterprise Solutions Section End -->
 
-    <style>
-        /* Layout & Cores */
-        .solutions-section {
-            background-color: #EAE6DF;
-            color: #4A4A4A;
-        }
-
-        /* Card da Imagem Principal */
-        .banner-card {
-            position: relative;
-            border-radius: 24px;
-            overflow: hidden;
-            height: 100%;
-            max-height: 558px;
-        }
-
-        .banner-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* Cards de Funcionalidade */
-        .feature-card {
-            background-color: #F8F7F5;
-            border-radius: 16px;
-            padding: 24px 20px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            min-height: 265px;
-        }
-
-        .feature-card .icon-box {
-            width: 42px;
-            height: 42px;
-            background-color: #D98804;
-            color: #FFFFFF;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-        }
-
-        .feature-card h4 {
-            color: #2D2D2D;
-            margin-bottom: 12px;
-        }
-
-        .feature-card p {
-            color: #727272;
-            line-height: 1.45;
-            margin: 0;
-        }
-
-
-        /* Efeito Hover nos Cards de Funcionalidade */
-        .feature-card {
-            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
-                        box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
-                        background-color 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-6px);
-            background-color: #ffffff;
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
-        }
-
-        /* Efeito Hover na Caixa do Ícone */
-        .feature-card .icon-box {
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-
-        .feature-card:hover .icon-box {
-            transform: scale(1.08);
-            background-color: #b87303;
-        }
-
-        /* Efeito Hover na Imagem do Banner Lateral */
-        .banner-card {
-            cursor: pointer;
-        }
-
-        .banner-card img {
-            transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-
-        .banner-card:hover img {
-            transform: scale(1.04);
-        }
-
-        /* Animação do Selo "H" no Hover da Imagem */
-        .banner-card .badge-icon {
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .banner-card:hover .badge-icon {
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        /* Botões de Navegação Circular */
-        .swiper-button-prev-custom,
-        .swiper-button-next-custom {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            border: 1px solid #4A4A4A;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #4A4A4A;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .swiper-button-prev-custom:hover,
-        .swiper-button-next-custom:hover {
-            background-color: #4A4A4A;
-            color: #EAE6DF;
-        }
-    </style>
-
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             if (typeof Swiper !== 'undefined') {
@@ -1235,7 +666,7 @@
                     <!-- Produto -->
                     @foreach ($products as $product)                
                         <div class="col-6 col-sm-6 col-lg-3 mb-4 product {{$product->category->slug}}">
-                            <div class="product-card bg-primary-color shadow-sm rounded-3 p-0 position-relative">
+                            <div class="product-card bg-white shadow-sm rounded-3 p-0 position-relative">
                                 <div class="image position-relative mb-0">
                                     <img src="{{asset('storage/' . $product->path_image)}}" alt="{{$product->title}}" loading="lazy">
                                 </div>
@@ -1304,7 +735,7 @@
                                             </div>
                                         </div>
                       
-                                        <a href="{{ route('client.product', ['category' => $product->category->slug, 'slug' => $product->slug]) }}" class="col-4">
+                                        <a href="{{ $product->link }}" target="_blank" rel="noopener noreferrer" class="col-4">
                                             <span class="bg-button-one color-button-one rounded-2 py-2 px-2 btn-view font-changa font-11 font-medium col-12 d-flex align-items-center justify-content-center mb-0">
                                                 Garantir agora
                                             </span>                                    
@@ -1329,34 +760,6 @@
             </div>
         </section>
     @endif
-
-    <style>
-        .user-card {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-family: sans-serif;
-        }
-
-        .avatar {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            overflow: hidden;
-        }
-
-        .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .user-info {
-            display: flex;
-            flex-direction: column;
-            gap: 0px;
-        }
-    </style> 
 
     @if (isset($statute))
         <section class="step-to-step">
@@ -1476,7 +879,7 @@
                                     </div>
                                     <!-- Botão para disparar o Modal -->
                                     <button type="button" 
-                                            class="bg-accent-color text-white font-changa font-14 font-regular rounded-2 d-flex justify-content-center align-items-center border-0" 
+                                            class="color-button-one bg-button-one font-changa font-14 font-regular rounded-2 d-flex justify-content-center align-items-center border-0" 
                                             style="width: 30px; height:30px cursor: pointer;" 
                                             data-bs-toggle="modal" 
                                             data-bs-target="#representativeModal{{$representative->id}}">
@@ -1833,48 +1236,33 @@
         });
     </script>
 
-    <section class="contact mb-0 mt-4">
+    <section class="contact my-0 bg-white">
         <div class="container py-5">
             <div class="row">
                 @if (isset($contact))
                     <!-- Infos -->
                     <div class="col-12 col-lg-5">
-                        <span class="about-subtitle faq-eyebrow color-yellow font-changa font-16 font-bold d-block mb-2 text-end m-0 z-3 position-relative">Fale Conosco</span>
-                        <h2 class="faq-title font-changa font-50 font-bold color-green mt-2 mb-3">{{$contact->name_section}}</h2>
-                        <p class="faq-text color-grey font-changa font-16 font-regular text-center text-lg-start">
+                        <h2 class="faq-title font-changa font-50 font-bold text-grey mt-2 mb-3">{{$contact->name_section}} <span class="accent-color">{{$contact->link_x}}</span></h2>
+                        <p class="col-12 col-lg-8 faq-text color-grey font-changa font-16 font-regular text-center text-lg-start">
                             {{$contact->text}}
                         </p>
         
-                        <ul class="list-unstyled">
-                            <li class="d-flex mb-3">
-                                <div class="me-3 text-success fs-4">
-                                    <i class="bi bi-geo-alt-fill primary-color"></i>
+                        <ul class="list-unstyled">        
+                            <li class="d-flex mb-3 align-items-center">
+                                <div class="d-flex justify-content-center align-items-center me-3 text-success font-14 bg-accent-color rounded-pill" style="width: 30px; height: 30px;">
+                                    <i class="bi bi-telephone-fill text-white"></i>
                                 </div>
                                 <div>
-                                    <span class="color-green font-changa font-16 font-semibold">Endereço</span>
-                                    <p class="color-grey font-changa font-16 font-regular col-12 col-lg-10">
-                                        {{$contact->address_one}}
-                                    </p>
+                                    <p class="color-grey font-changa font-16 font-regular mb-0">{{$contact->phone_one}}</p>
                                 </div>
                             </li>
         
-                            <li class="d-flex mb-3">
-                                <div class="me-3 text-success fs-4">
-                                    <i class="bi bi-telephone-fill primary-color"></i>
+                            <li class="d-flex align-items-center">
+                                <div class="d-flex justify-content-center align-items-center me-3 text-success font-14 bg-accent-color rounded-pill" style="width: 30px; height: 30px;">
+                                    <i class="bi bi-envelope-fill text-white"></i>
                                 </div>
                                 <div>
-                                    <span class="color-green font-changa font-16 font-semibold">Telefone</span>
-                                    <p class="color-grey font-changa font-16 font-regular">{{$contact->phone_one}}</p>
-                                </div>
-                            </li>
-        
-                            <li class="d-flex">
-                                <div class="me-3 text-success fs-4">
-                                    <i class="bi bi-envelope-fill primary-color"></i>
-                                </div>
-                                <div>
-                                    <span class="color-green font-changa font-16 font-semibold">E-mail</span>
-                                    <p class="color-grey font-changa font-16 font-regular">{{$contact->name_one}}</p>
+                                    <p class="color-grey font-changa font-16 font-regular mb-0">{{$contact->name_one}}</p>
                                 </div>
                             </li>
                         </ul>
@@ -1888,17 +1276,26 @@
                             <form id="contactForm">
                                 @csrf
                                 <div class="row g-3">
-                                    <div class="col-md-12">
+                                    <div class="col-md-12 mt-0">
                                         <input type="text" required id="nome" name="name" class="poppins-regular font-15 text-color form-control" placeholder="Nome Completo">
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         <input type="email" required id="email" name="email" class="poppins-regular font-15 text-color form-control" placeholder="E-mail">
                                     </div>
-                                    <div class="col-md-6">
-                                        <input type="text" required id="phone" name="phone" class="poppins-regular font-15 text-color form-control" placeholder="Whatsapp para contato">
+                                    <div class="col-md-3">
+                                        <input type="text" required id="phone_whatsapp" name="phone" class="poppins-regular font-15 text-color form-control" placeholder="Whatsapp">
                                     </div>
-                                    <div class="col-md-12">
-                                        <input type="text" required id="subject" name="subject" class="poppins-regular font-15 text-color form-control" placeholder="Assunto">
+                                    <div class="col-md-4">
+                                        <select
+                                            required
+                                            id="subject"
+                                            name="subject"
+                                            class="poppins-regular font-15 text-color form-select"
+                                        >
+                                            <option value="" selected disabled>Selecione uma opção</option>
+                                            <option value="pessoa-fisica">Pessoa Física</option>
+                                            <option value="empresa">Empresa</option>
+                                        </select>
                                     </div>
                                     <div class="col-md-12">
                                         <textarea id="text" required name="text" class="form-control poppins-regular font-15 text-color" rows="4" placeholder="Digite aqui...."></textarea>
@@ -1910,7 +1307,12 @@
                                                 Aceito os termos descritos na Política de Privacidade
                                             </label>
                                         </div>
-                                        <button type="submit" class="bt-hover border font-changa font-15 bg-button-two color-button-two rounded-3 ms-auto py-2 px-4 hover-zoom">Enviar</button>
+                                        <button type="submit" class="bt-hover border font-changa font-15 bg-button-one color-button-one rounded-pill ms-auto py-2 px-5 hover-zoom">
+                                            Enviar
+                                            <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"></path>
+                                            </svg>
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -1919,76 +1321,113 @@
                 </div>
             </div>
         </div>
-        <!-- Mapa -->
-        @if (isset($contact->maps) && $contact->maps != null) 
-            <div class="row mt-5">
-                <div class="col-12">
-                    <div class="ratio ratio-21x9 rounded overflow-hidden shadow-sm">
-                        <iframe
-                            src="{{$contact->maps}}"
-                            loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
-                    </div>
-                </div>
-            </div>
-        @endif
-    </section>
-    
+    </section>    
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#contactForm').on('submit', function(e) {
-            e.preventDefault();
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#contactForm').on('submit', function(e) {
+                e.preventDefault();
 
-            const formData = $(this).serialize();
+                const formData = $(this).serialize();
 
-            $.ajax({
-                url: '{{ route("send-contact") }}',
-                type: 'POST',
-                data: formData,
-                success: function(response) {
-                    if (typeof Swal !== 'undefined') {
-                        Swal.fire({
-                            title: 'Sucesso!',
-                            text: response.message,
-                            icon: 'success',
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
-                    }
-                    $('#contactForm')[0].reset();
-                },
-                error: function(xhr) {
-                    if (xhr.status === 422) {
-                        const errors = xhr.responseJSON.errors;
-                        let errorMessages = '';
-                        for (let field in errors) {
-                            errorMessages += errors[field][0] + '\n';
-                        }
-
+                $.ajax({
+                    url: '{{ route("send-contact") }}',
+                    type: 'POST',
+                    data: formData,
+                    success: function(response) {
                         if (typeof Swal !== 'undefined') {
                             Swal.fire({
-                                title: 'Erro',
-                                text: errorMessages,
-                                icon: 'error',
-                                confirmButtonText: 'OK'
+                                title: 'Sucesso!',
+                                text: response.message,
+                                icon: 'success',
+                                timer: 2000,
+                                showConfirmButton: false
                             });
                         }
-                    } else {
-                        if (typeof Swal !== 'undefined') {
-                            Swal.fire({
-                                title: 'Erro',
-                                text: 'Ocorreu um erro ao enviar a mensagem. Por favor, tente novamente.',
-                                icon: 'error',
-                                confirmButtonText: 'OK'
-                            });
+                        $('#contactForm')[0].reset();
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 422) {
+                            const errors = xhr.responseJSON.errors;
+                            let errorMessages = '';
+                            for (let field in errors) {
+                                errorMessages += errors[field][0] + '\n';
+                            }
+
+                            if (typeof Swal !== 'undefined') {
+                                Swal.fire({
+                                    title: 'Erro',
+                                    text: errorMessages,
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                        } else {
+                            if (typeof Swal !== 'undefined') {
+                                Swal.fire({
+                                    title: 'Erro',
+                                    text: 'Ocorreu um erro ao enviar a mensagem. Por favor, tente novamente.',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
                         }
                     }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const phoneInput = document.getElementById('phone_whatsapp');
+
+            // 1. Verificação de segurança (se o ID não existir, encerra)
+            if (!phoneInput) return;
+
+            // 2. Aplicação da máscara dinâmica durante a digitação
+            phoneInput.addEventListener('input', function (e) {
+                let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não é número
+
+                if (value.length > 11) {
+                    value = value.slice(0, 11); // Limita a 11 dígitos
+                }
+
+                // Formatação em tempo real
+                if (value.length > 10) {
+                    // (11) 99999-9999
+                    value = value.replace(/^(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3');
+                } else if (value.length > 6) {
+                    // (11) 9999-9999 (ou em digitação)
+                    value = value.replace(/^(\d{2})(\d{4,5})(\d{0,4})$/, '($1) $2-$3');
+                } else if (value.length > 2) {
+                    // (11) 9999...
+                    value = value.replace(/^(\d{2})(\d{0,5})$/, '($1) $2');
+                } else if (value.length > 0) {
+                    // (11...
+                    value = value.replace(/^(\d{0,2})$/, '($1');
+                }
+
+                e.target.value = value;
+            });
+
+            // 3. Validação do campo
+            phoneInput.addEventListener('blur', function (e) {
+                const rawDigits = e.target.value.replace(/\D/g, '');
+
+                // Zera o erro customizado para não travar o formulário
+                e.target.setCustomValidity('');
+
+                // Se estiver preenchido mas incompleto (menos de 10 dígitos)
+                if (rawDigits.length > 0 && rawDigits.length < 10) {
+                    e.target.classList.add('is-invalid');
+                    e.target.setCustomValidity('Digite um número de WhatsApp válido com DDD.');
+                    e.target.reportValidity(); // Dispara o balão nativo do HTML5
+                } else {
+                    e.target.classList.remove('is-invalid');
                 }
             });
         });
-    });
-</script>
+    </script>
 @endsection
