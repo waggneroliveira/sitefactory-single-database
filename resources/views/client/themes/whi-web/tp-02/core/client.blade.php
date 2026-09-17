@@ -309,30 +309,184 @@
 
     @include('client/themes/whi-web/tp-02/includes/lgpd/lgpd')
 
-     @if (isset($contact) && $contact->phone_one <> null)
+     @if (isset($contact) && $contact->whatsapp <> null)
         @php
             // Remove caracteres não numéricos do telefone
-            $phone = preg_replace('/\D/', '', $contact->phone_one);
+            $phone = preg_replace('/\D/', '', $contact->whatsapp);
 
             // Monta mensagem com ícones e quebras de linha
             $mensagem = "Olá! Encontrei seu site e gostaria de conhecer mais sobre os planos disponíveis.%0A";
         @endphp
 
-        <a
-            href="https://wa.me/55{{ $phone }}?text={{ $mensagem }}"
-            class="whatsapp-float"
-            aria-label="Fale conosco no WhatsApp"
-            target="_blank"
-            rel="noopener noreferrer"
-            >
-            <!-- Ícone SVG do WhatsApp -->
-            <svg viewBox="0 0 32 32" aria-hidden="true">
-                <path d="M19.11 17.27c-.23-.12-1.37-.67-1.58-.75-.21-.08-.36-.12-.52.12-.16.23-.6.74-.74.89-.14.15-.27.17-.5.06-.23-.12-.97-.36-1.85-1.12-.68-.6-1.14-1.34-1.27-1.57-.13-.23-.01-.35.1-.47.1-.1.23-.27.35-.4.12-.13.16-.23.24-.39.08-.16.04-.3-.02-.42-.06-.12-.52-1.25-.71-1.72-.19-.46-.38-.4-.52-.4h-.45c-.16 0-.42.06-.64.3-.22.23-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.69 2.58 4.1 3.61.57.25 1.01.4 1.35.52.57.18 1.1.16 1.52.1.46-.07 1.37-.56 1.57-1.1.19-.54.19-1 .13-1.1-.06-.1-.21-.16-.44-.27zM16 3.2c-7.06 0-12.8 5.73-12.8 12.8 0 2.26.61 4.36 1.67 6.17L3.2 28.8l6.78-1.6c1.74.95 3.74 1.5 5.87 1.5 7.07 0 12.8-5.73 12.8-12.8S23.07 3.2 16 3.2zm0 22.94c-1.98 0-3.81-.58-5.35-1.57l-.38-.24-4.02.95.95-3.92-.25-.4a10.58 10.58 0 0 1-1.64-5.62c0-5.86 4.77-10.62 10.63-10.62S26.62 9.38 26.62 15.24 21.86 26.14 16 26.14z"/>
-            </svg>
-        </a>
+        <!-- Container do WhatsApp Flutuante com ID para GSAP -->
+        <div id="whatsapp-floating-container" class="wa-float-wrapper">
+            <!-- Tooltip / Balão de Mensagem Impactante -->
+            <div class="wa-tooltip">
+                <span class="wa-tooltip-status"></span>
+                <div class="wa-tooltip-text">
+                    <strong>Precisa de ajuda?</strong>
+                    <small>Fale conosco no WhatsApp</small>
+                </div>
+            </div>
+
+            <!-- Botão Principal -->
+            <a href="https://wa.me/55{{ $phone }}?text={{ $mensagem }}" 
+            class="wa-float-btn" 
+            aria-label="Fale conosco no WhatsApp" 
+            target="_blank" 
+            rel="noopener noreferrer">
+            
+                <!-- Anel de Pulso / Efeito de Onda -->
+                <span class="wa-pulse-ring"></span>
+                <span class="wa-pulse-ring delay"></span>
+
+                <!-- Ícone SVG -->
+                <svg class="wa-icon" viewBox="0 0 32 32" aria-hidden="true">
+                    <path d="M19.11 17.27c-.23-.12-1.37-.67-1.58-.75-.21-.08-.36-.12-.52.12-.16.23-.6.74-.74.89-.14.15-.27.17-.5.06-.23-.12-.97-.36-1.85-1.12-.68-.6-1.14-1.34-1.27-1.57-.13-.23-.01-.35.1-.47.1-.1.23-.27.35-.4.12-.13.16-.23.24-.39.08-.16.04-.3-.02-.42-.06-.12-.52-1.25-.71-1.72-.19-.46-.38-.4-.52-.4h-.45c-.16 0-.42.06-.64.3-.22.23-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.69 2.58 4.1 3.61.57.25 1.01.4 1.35.52.57.18 1.1.16 1.52.1.46-.07 1.37-.56 1.57-1.1.19-.54.19-1 .13-1.1-.06-.1-.21-.16-.44-.27zM16 3.2c-7.06 0-12.8 5.73-12.8 12.8 0 2.26.61 4.36 1.67 6.17L3.2 28.8l6.78-1.6c1.74.95 3.74 1.5 5.87 1.5 7.07 0 12.8-5.73 12.8-12.8S23.07 3.2 16 3.2zm0 22.94c-1.98 0-3.81-.58-5.35-1.57l-.38-.24-4.02.95.95-3.92-.25-.4a10.58 10.58 0 0 1-1.64-5.62c0-5.86 4.77-10.62 10.63-10.62S26.62 9.38 26.62 15.24 21.86 26.14 16 26.14z"/>
+                </svg>
+
+                <!-- Selo de Notificação "1" -->
+                <span class="wa-badge">1</span>
+            </a>
+        </div>
     @endif
 
     <style>
+        /* Container Posição Fixa */
+        .wa-float-wrapper {
+            position: fixed;
+            bottom: 75px;
+            right: 30px;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        /* Tooltip / Balão de Fala */
+        .wa-tooltip {
+            background: #ffffff;
+            color: #1a1a1a;
+            padding: 10px 16px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            pointer-events: none;
+            transform-origin: right center;
+            border: 1px solid rgba(37, 211, 102, 0.2);
+        }
+
+        .wa-tooltip-status {
+            width: 9px;
+            height: 9px;
+            background-color: #25d366;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px #25d366;
+        }
+
+        .wa-tooltip-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .wa-tooltip-text strong {
+            font-size: 13px;
+            color: #111827;
+        }
+
+        .wa-tooltip-text small {
+            font-size: 11px;
+            color: #6b7280;
+        }
+
+        /* Botão Flutuante Principal */
+        .wa-float-btn {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.4);
+            cursor: pointer;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .wa-float-btn:hover {
+            box-shadow: 0 15px 30px rgba(37, 211, 102, 0.6);
+        }
+
+        /* Ícone SVG */
+        .wa-icon {
+            width: 32px;
+            height: 32px;
+            fill: #ffffff;
+            z-index: 2;
+        }
+
+        /* Anéis de Pulso Dinâmicos */
+        .wa-pulse-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba(37, 211, 102, 0.5);
+            z-index: 0;
+            animation: waPulse 2.5s infinite ease-out;
+        }
+
+        .wa-pulse-ring.delay {
+            animation-delay: 1.25s;
+        }
+
+        @keyframes waPulse {
+            0% {
+                transform: scale(0.95);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1.6);
+                opacity: 0;
+            }
+        }
+
+        /* Selo Vermelho de Notificação */
+        .wa-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background-color: #ef4444;
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: bold;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #ffffff;
+            z-index: 3;
+        }
+
+        /* Ajuste Responsivo para Dispositivos Móveis */
+        @media (max-width: 768px) {
+            .wa-float-wrapper {
+                bottom: 20px;
+                right: 20px;
+            }
+            .wa-tooltip {
+                display: none; /* Oculta a caixa de texto em telas muito pequenas para não poluir */
+            }
+        }
         :root {
             /* Cores Gerais */
             --primary-color: {{ $tenantTheme->primary_color ? $tenantTheme->primary_color : '#10513D' }};
@@ -924,6 +1078,71 @@
 
             }
 
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (typeof gsap === "undefined") return;
+
+            const waContainer = document.querySelector("#whatsapp-floating-container");
+            if (!waContainer) return;
+
+            const waBtn = waContainer.querySelector(".wa-float-btn");
+            const waIcon = waContainer.querySelector(".wa-icon");
+            const waTooltip = waContainer.querySelector(".wa-tooltip");
+            const waBadge = waContainer.querySelector(".wa-badge");
+
+            // Timeline de Entrada Principal
+            const tlEntry = gsap.timeline({ defaults: { ease: "back.out(1.7)", duration: 0.8 } });
+
+            tlEntry
+                // Surge do canto inferior direito com escala
+                .from(waContainer, {
+                    scale: 0,
+                    opacity: 0,
+                    y: 40,
+                    delay: 1 // Aguarda 1s após carregar a página
+                })
+                // Entrada do Balão de Notificação com efeito Spring
+                .from(waTooltip, {
+                    x: 30,
+                    opacity: 0,
+                    scale: 0.8,
+                    duration: 0.6
+                }, "-=0.3")
+                // Animação de Surgimento do Badge
+                .from(waBadge, {
+                    scale: 0,
+                    duration: 0.4
+                }, "-=0.4");
+
+            // Animação Periódica no Ícone para Chamar Atenção (A cada 6 segundos)
+            gsap.to(waIcon, {
+                rotation: 15,
+                duration: 0.1,
+                repeat: 5,
+                yoyo: true,
+                repeatDelay: 6,
+                ease: "power1.inOut"
+            });
+
+            // Interatividade ao Passar o Mouse (Hover)
+            waBtn.addEventListener("mouseenter", () => {
+                gsap.to(waBtn, { scale: 1.1, duration: 0.3, ease: "power2.out" });
+                gsap.to(waIcon, { scale: 1.15, rotate: -10, duration: 0.3, ease: "power2.out" });
+                if (waTooltip) {
+                    gsap.to(waTooltip, { x: -5, duration: 0.3, ease: "power2.out" });
+                }
+            });
+
+            waBtn.addEventListener("mouseleave", () => {
+                gsap.to(waBtn, { scale: 1, duration: 0.3, ease: "power2.out" });
+                gsap.to(waIcon, { scale: 1, rotate: 0, duration: 0.3, ease: "power2.out" });
+                if (waTooltip) {
+                    gsap.to(waTooltip, { x: 0, duration: 0.3, ease: "power2.out" });
+                }
+            });
         });
     </script>
 </body>
