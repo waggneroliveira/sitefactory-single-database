@@ -53,7 +53,9 @@ class HomePageService
         $faqs = Faq::active()->sorting()->get();
         $sessaoFaq = SessaoFaq::active()->first();
         $services = ServiceItem::active()->get();
-        $sections = ServiceSection::active()->whereIn('section', ['testimonial', 'service', 'gallery', 'planNetwork', 'product'])->get()->keyBy('section');
+        $sections = ServiceSection::active()->whereIn('section', [
+        'testimonial', 'service', 'gallery', 'planNetwork', 'product',
+        'pilar', 'advantages_persona', 'advantages_enterprise', 'partners', 'banner_inner',])->get()->keyBy('section');
         $galleries = ProductGallery::get();
         $serviceLocation = ServiceLocation::active()->first();
         $benefitTopics = BenefitTopic::active()->sorting()->get();
@@ -69,15 +71,22 @@ class HomePageService
         $products = Product::sorting()->active()->get();
         $reports = Report::active()->get();
         $contractedPlans = Plan::active()->get();
-        $popUp = PopUp::active()->first();
-        $advantages = Advantage::active()->get();
+        $popUp = PopUp::active()->first();        
         $templateThemes = TemplateTheme::active()->get();
         $tenantTheme = Tenant::current();
         $theme = $themeManager;
         $themeData = $themeManager->theme();
         $directions = Direction::active()->sorting()->get();
+        $advantages = Advantage::active()
+        ->sorting()
+        ->get();
+        $benefits = $advantages->groupBy('for_you');
+        $benefitForPersonas = $benefits->get('persona', collect());
+        $benefitForEnterprises = $benefits->get('enterprise', collect());
 
         return compact(
+            'benefitForPersonas',
+            'benefitForEnterprises',
             'directions',
             'templateThemes',
             'advantages',

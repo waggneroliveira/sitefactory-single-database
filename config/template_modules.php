@@ -284,6 +284,7 @@ return [
                     'slides',
                     'topics',
                     'statute',
+                    'advantage',
                     'letsgo',
                     'faq_session',
                     'faq',
@@ -331,7 +332,7 @@ return [
 
         'limits' => [
             'about' => 1,
-            'advantage' => 3,
+            'advantage' => 30,
             'slides' => 4,
             'topics' => 4,
             'services' => 6,

@@ -26,7 +26,7 @@
                             <div class="card-body">
                                 <div class="row mb-2">
                                     <div class="col-12 d-flex justify-between">
-                                        <div class="col-6">
+                                        <div class="col-4">
                                             @if (Auth::user()->hasPermissionTo('vantagens.visualizar') &&
                                             Auth::user()->hasPermissionTo('vantagens.remover') ||
                                             Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
@@ -34,7 +34,185 @@
                                                 <button id="btSubmitDelete" data-route="{{route('admin.dashboard.advantage.destroySelected')}}" type="button" class="btSubmitDelete btn btn-danger" style="display: none;">{{__('dashboard.btn_delete_all')}}</button>
                                             @endif
                                         </div>
-                                        <div class="col-6 d-flex justify-content-end">
+                                        <div class="col-8 d-flex justify-content-end">
+                                            @if (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can(['vantagens.visualizar', 'vantagens.criar']))
+
+                                                {{-- Vantagens para Pessoas --}}
+                                                @if (empty($serviceSection['advantages_persona']))
+
+                                                    <button type="button" class="me-2 btn btn-secondary text-black waves-effect waves-light"
+                                                            data-bs-toggle="modal" data-bs-target="#serviceItem-section-create-persona">
+                                                        <i class="mdi mdi-plus-circle me-1"></i> Informações da sessão - Pessoas
+                                                    </button>
+
+                                                    <div class="modal fade" id="serviceItem-section-create-persona" tabindex="-1" role="dialog" aria-hidden="true">
+                                                        <div class="serviceItem modal-dialog modal-dialog-centered" style="max-width: 1260px;">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header bg-light">
+                                                                    <h4 class="modal-title">{{ __('dashboard.btn_create') }} - Sessão Pessoas</h4>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                                                                </div>
+
+                                                                <div class="modal-body p-4">
+                                                                    <form action="{{ route('admin.dashboard.serviceSection.store') }}" method="POST" enctype="multipart/form-data">
+                                                                        @csrf
+
+                                                                        @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.advantageSection.form", [
+                                                                            'textareaId' => 'textarea-create-persona',
+                                                                            'serviceSection',
+                                                                            'serviceItem',
+                                                                            'themeData',
+                                                                            'forYou' => 'persona'
+                                                                        ])
+
+                                                                        <div class="d-flex justify-content-end gap-2">
+                                                                            <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">
+                                                                                {{ __('dashboard.btn_cancel') }}
+                                                                            </button>
+                                                                            <button type="submit" class="btn btn-primary text-black waves-effect waves-light">
+                                                                                {{ __('dashboard.btn_create') }}
+                                                                            </button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                @else
+
+                                                    <button type="button" class="me-2 btn btn-secondary text-black waves-effect waves-light"
+                                                            data-bs-toggle="modal" data-bs-target="#serviceItem-section-edit-persona">
+                                                        <i class="mdi mdi-pencil me-1"></i> Informações da sessão - Pessoas
+                                                    </button>
+
+                                                    <div class="modal fade" id="serviceItem-section-edit-persona" tabindex="-1" role="dialog" aria-hidden="true">
+                                                        <div class="serviceItem modal-dialog modal-dialog-centered" style="max-width: 1260px;">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header bg-light">
+                                                                    <h4 class="modal-title">{{ __('dashboard.btn_edit') }} - Sessão Pessoas</h4>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                                                                </div>
+
+                                                                <div class="modal-body p-4">
+                                                                    <form action="{{ route('admin.dashboard.serviceSection.update', ['serviceSection' => $serviceSection['advantages_persona']['id']]) }}"
+                                                                        method="POST" enctype="multipart/form-data">
+                                                                        @csrf
+                                                                        @method('PUT')
+
+                                                                        @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.advantageSection.form", [
+                                                                            'serviceSection',
+                                                                            'serviceItem',
+                                                                            'themeData',
+                                                                            'forYou' => 'persona'
+                                                                        ])
+
+                                                                        <div class="d-flex justify-content-end gap-2">
+                                                                            <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">
+                                                                                {{ __('dashboard.btn_cancel') }}
+                                                                            </button>
+                                                                            <button type="submit" class="btn btn-primary text-black waves-effect waves-light">
+                                                                                {{ __('dashboard.btn_update') }}
+                                                                            </button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                @endif
+
+
+                                                {{-- Vantagens para Empresas --}}
+                                                @if (empty($serviceSection['advantages_enterprise']))
+
+                                                    <button type="button" class="me-2 btn btn-secondary text-black waves-effect waves-light"
+                                                            data-bs-toggle="modal" data-bs-target="#serviceItem-section-create-enterprise">
+                                                        <i class="mdi mdi-plus-circle me-1"></i> Informações da sessão - Empresas
+                                                    </button>
+
+                                                    <div class="modal fade" id="serviceItem-section-create-enterprise" tabindex="-1" role="dialog" aria-hidden="true">
+                                                        <div class="serviceItem modal-dialog modal-dialog-centered" style="max-width: 1260px;">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header bg-light">
+                                                                    <h4 class="modal-title">{{ __('dashboard.btn_create') }} - Sessão Empresas</h4>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                                                                </div>
+
+                                                                <div class="modal-body p-4">
+                                                                    <form action="{{ route('admin.dashboard.serviceSection.store') }}" method="POST" enctype="multipart/form-data">
+                                                                        @csrf
+
+                                                                        @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.advantageSection.form", [
+                                                                            'textareaId' => 'textarea-create-enterprise',
+                                                                            'serviceSection',
+                                                                            'serviceItem',
+                                                                            'themeData',
+                                                                            'forYou' => 'enterprise'
+                                                                        ])
+
+                                                                        <div class="d-flex justify-content-end gap-2">
+                                                                            <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">
+                                                                                {{ __('dashboard.btn_cancel') }}
+                                                                            </button>
+                                                                            <button type="submit" class="btn btn-primary text-black waves-effect waves-light">
+                                                                                {{ __('dashboard.btn_create') }}
+                                                                            </button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                @else
+
+                                                    <button type="button" class="me-2 btn btn-secondary text-black waves-effect waves-light"
+                                                            data-bs-toggle="modal" data-bs-target="#serviceItem-section-edit-enterprise">
+                                                        <i class="mdi mdi-pencil me-1"></i> Informações da sessão - Empresas
+                                                    </button>
+
+                                                    <div class="modal fade" id="serviceItem-section-edit-enterprise" tabindex="-1" role="dialog" aria-hidden="true">
+                                                        <div class="serviceItem modal-dialog modal-dialog-centered" style="max-width: 1260px;">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header bg-light">
+                                                                    <h4 class="modal-title">{{ __('dashboard.btn_edit') }} - Sessão Empresas</h4>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                                                                </div>
+
+                                                                <div class="modal-body p-4">
+                                                                    <form action="{{ route('admin.dashboard.serviceSection.update', ['serviceSection' => $serviceSection['advantages_enterprise']['id']]) }}"
+                                                                        method="POST" enctype="multipart/form-data">
+                                                                        @csrf
+                                                                        @method('PUT')
+
+                                                                        @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.advantageSection.form", [
+                                                                            'serviceSection',
+                                                                            'serviceItem',
+                                                                            'themeData',
+                                                                            'forYou' => 'enterprise'
+                                                                        ])
+
+                                                                        <div class="d-flex justify-content-end gap-2">
+                                                                            <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">
+                                                                                {{ __('dashboard.btn_cancel') }}
+                                                                            </button>
+                                                                            <button type="submit" class="btn btn-primary text-black waves-effect waves-light">
+                                                                                {{ __('dashboard.btn_update') }}
+                                                                            </button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                @endif
+
+                                            @endif
+
+
                                             @if (Auth::user()->hasPermissionTo('vantagens.visualizar') &&
                                             Auth::user()->hasPermissionTo('vantagens.criar') ||
                                             Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
@@ -119,7 +297,7 @@
                                                         Auth::user()->hasRole('Super'))
                                                             <button data-bs-toggle="modal" data-bs-target="#advantage-edit-{{$advantage->id}}" class="tabledit-edit-button btn btn-primary text-black" style="padding: 2px 8px;width: 30px"><span class="mdi mdi-pencil"></span></button>
                                                             <div class="modal fade" id="advantage-edit-{{$advantage->id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                                                <div class="advantage modal-dialog modal-dialog-centered">
+                                                                <div class="advantage modal-dialog modal-dialog-centered" style="max-width: 1280px;">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header bg-light">
                                                                             <h4 class="modal-title" id="myCenterModalLabel">{{__('dashboard.btn_edit')}}</h4>

@@ -19,6 +19,8 @@ class Advantage extends Model
         'title',
         'text',
         'path_image',
+        'path_icon',
+        'for_you',
         'active',
         'sorting',
     ];

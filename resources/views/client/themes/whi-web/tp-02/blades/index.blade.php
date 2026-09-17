@@ -336,109 +336,75 @@
     <!-- Our Exhibitions Section Start -->
     <section id="our-exhibitions" class="our-exhibitions bg-secondary-color position-relative py-5">
         <div class="container">
-            <div class="row section-row mb-5">
-                <div class="col-xl-12 text-center">
-                    <!-- Section Title Start -->
-                    <div class="section-title section-title-center">
-                        <h2 class="text-anime-style-3 text-white fw-light fs-1" data-cursor="-opaque">
-                            Um projeto,<br><span class="fw-bold">benefícios únicos para você</span>
-                        </h2>
-                        <div class="btn-about my-4 d-flex justify-content-center">
-                            <a href="#" class="rounded-pill py-2 px-3 px-lg-4 font-changa bg-button-one color-button-one font-18 font-medium text-decoration-none hover-zoom" rel="noopener noreferrer">
-                                Faça parte agora
-                                <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"></path>
-                                </svg>
-                            </a>
+            @if ((isset($sections['advantages_persona']) && $sections <> null))
+                <div class="row section-row mb-5">
+                    <div class="col-xl-12 text-center">
+                        <!-- Section Title Start -->
+                        <div class="section-title section-title-center">
+                            <h2 class="text-anime-style-3 text-white fw-light fs-1" data-cursor="-opaque">
+                                {{ $sections['advantages_persona']->title }}<br><span class="fw-bold">{{ $sections['advantages_persona']->subtitle }}</span>
+                            </h2>
+                            @if ($sections['advantages_persona']->link)                                
+                                <div class="btn-about my-4 d-flex justify-content-center">
+                                    <a href="{{ $sections['advantages_persona']->link }}" target="_blank" rel="noopener noreferrer" class="rounded-pill py-2 px-3 px-lg-4 font-changa bg-button-one color-button-one font-18 font-medium text-decoration-none hover-zoom" rel="noopener noreferrer">
+                                        {{ $sections['advantages_persona']->btn_title }}
+                                        <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            @endif
                         </div>
+                        <!-- Section Title End -->
                     </div>
-                    <!-- Section Title End -->
                 </div>
-            </div>
+            @endif
 
             <!-- Swiper Carousel Start -->
             <div class="swiper exhibition-swiper col-12 col-lg-10">
                 <div class="swiper-wrapper">
+                    @foreach($benefitForPersonas as $index => $benefit)
+                        <div class="swiper-slide">
+                            <div class="exhibition-item {{ $index % 2 !== 0 ? 'reverse' : '' }}" data-wow-delay="{{ $index * 0.2 }}s">
 
-                    <!-- Slide 1 (Texto Topo / Imagem Baixo) -->
-                    <div class="swiper-slide">
-                        <div class="exhibition-item">
-                            <div class="exhibition-item-header">
-                                <div class="icon-box mb-4">
-                                    {{-- <img src="images/icon-exhibition-item-1.svg" alt="Ícone"> --}}
-                                    <svg width="34" height="56" viewBox="0 0 34 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1.7012 9.31078C1.7012 -2.10359 32.1395 -2.10359 32.1395 9.31078C32.1395 16.9204 35.9443 32.1395 28.3347 43.5539C24.5299 47.3587 24.5299 54.9683 16.9204 54.9683C9.31078 54.9683 9.31078 47.3587 5.50599 43.5539C-2.10359 32.1395 1.7012 16.9204 1.7012 9.31078Z" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-                                    <path d="M11.213 19.7741C12.789 19.7741 14.0666 18.4965 14.0666 16.9205C14.0666 15.3445 12.789 14.0669 11.213 14.0669C9.63697 14.0669 8.35938 15.3445 8.35938 16.9205C8.35938 18.4965 9.63697 19.7741 11.213 19.7741Z" stroke="#E53E3E" stroke-width="1.5" stroke-linecap="round"/>
-                                    <path d="M22.629 19.7741C24.205 19.7741 25.4826 18.4965 25.4826 16.9205C25.4826 15.3445 24.205 14.0669 22.629 14.0669C21.053 14.0669 19.7754 15.3445 19.7754 16.9205C19.7754 18.4965 21.053 19.7741 22.629 19.7741Z" stroke="#E53E3E" stroke-width="1.5" stroke-linecap="round"/>
-                                    <path d="M11.2139 35.9444L16.9211 32.1396L22.6282 35.9444" stroke="#E53E3E" stroke-width="1.5" stroke-linecap="round"/>
-                                    </svg>
+                                @if($index % 2 !== 0)
+                                    {{-- Imagem no topo --}}
+                                    <div class="exhibition-item-image">
+                                        <figure class="image-anime m-0">
+                                            @if(!empty($benefit->path_image))
+                                                <img src="{{ url('storage/' . $benefit->path_image) }}" alt="{{ $benefit->title }}">
+                                            @endif
+                                        </figure>
+                                    </div>
+                                @endif
+
+                                <div class="exhibition-item-header bg-secondary-color">
+                                    <div class="icon-box mb-4">
+                                        @if(!empty($benefit->path_icon))
+                                            <img src="{{ url('storage/' . $benefit->path_icon) }}" alt="{{ $benefit->title }}">
+                                        @endif
+                                    </div>
+
+                                    <div class="exhibition-item-content">
+                                        <h3>{{ $benefit->title }}</h3>
+                                        <p>{!! $benefit->text !!}</p>
+                                    </div>
                                 </div>
-                                <div class="exhibition-item-content">
-                                    <h3>Educação Acessível</h3>
-                                    <p>Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressão.</p>
-                                </div>
-                            </div>
-                            <div class="exhibition-item-image">
-                                <figure class="image-anime m-0">
-                                    <img src="{{asset('build/client/images/themes/whi-web/exhibition.png')}}" alt="Exposição">
-                                </figure>
+
+                                @if($index % 2 === 0)
+                                    {{-- Imagem embaixo --}}
+                                    <div class="exhibition-item-image">
+                                        <figure class="image-anime m-0">
+                                            @if(!empty($benefit->path_image))
+                                                <img src="{{ url('storage/' . $benefit->path_image) }}" alt="{{ $benefit->title }}">
+                                            @endif
+                                        </figure>
+                                    </div>
+                                @endif
+
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Slide 2 (Imagem Topo / Texto Baixo) -->
-                    <div class="swiper-slide">
-                        <div class="exhibition-item reverse" data-wow-delay="0.2s">
-                            <div class="exhibition-item-image">
-                                <figure class="image-anime m-0">
-                                    <img src="{{asset('build/client/images/themes/whi-web/exhibition.png')}}" alt="Exposição">
-                                </figure>
-                            </div>
-                            <div class="exhibition-item-header">
-                                <div class="icon-box mb-4">
-                                    {{-- <img src="images/icon-exhibition-item-2.svg" alt="Ícone"> --}}
-                                    <svg width="34" height="56" viewBox="0 0 34 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1.7012 9.31078C1.7012 -2.10359 32.1395 -2.10359 32.1395 9.31078C32.1395 16.9204 35.9443 32.1395 28.3347 43.5539C24.5299 47.3587 24.5299 54.9683 16.9204 54.9683C9.31078 54.9683 9.31078 47.3587 5.50599 43.5539C-2.10359 32.1395 1.7012 16.9204 1.7012 9.31078Z" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-                                    <path d="M11.213 19.7741C12.789 19.7741 14.0666 18.4965 14.0666 16.9205C14.0666 15.3445 12.789 14.0669 11.213 14.0669C9.63697 14.0669 8.35938 15.3445 8.35938 16.9205C8.35938 18.4965 9.63697 19.7741 11.213 19.7741Z" stroke="#E53E3E" stroke-width="1.5" stroke-linecap="round"/>
-                                    <path d="M22.629 19.7741C24.205 19.7741 25.4826 18.4965 25.4826 16.9205C25.4826 15.3445 24.205 14.0669 22.629 14.0669C21.053 14.0669 19.7754 15.3445 19.7754 16.9205C19.7754 18.4965 21.053 19.7741 22.629 19.7741Z" stroke="#E53E3E" stroke-width="1.5" stroke-linecap="round"/>
-                                    <path d="M11.2139 35.9444L16.9211 32.1396L22.6282 35.9444" stroke="#E53E3E" stroke-width="1.5" stroke-linecap="round"/>
-                                    </svg>
-                                </div>
-                                <div class="exhibition-item-content">
-                                    <h3>Oportunidade de Mercado</h3>
-                                    <p>Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressão.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Slide 3 (Texto Topo / Imagem Baixo) -->
-                    <div class="swiper-slide">
-                        <div class="exhibition-item" data-wow-delay="0.4s">
-                            <div class="exhibition-item-header">
-                                <div class="icon-box mb-4">
-                                    {{-- <img src="images/icon-exhibition-item-3.svg" alt="Ícone"> --}}
-                                    <svg width="34" height="56" viewBox="0 0 34 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1.7012 9.31078C1.7012 -2.10359 32.1395 -2.10359 32.1395 9.31078C32.1395 16.9204 35.9443 32.1395 28.3347 43.5539C24.5299 47.3587 24.5299 54.9683 16.9204 54.9683C9.31078 54.9683 9.31078 47.3587 5.50599 43.5539C-2.10359 32.1395 1.7012 16.9204 1.7012 9.31078Z" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-                                    <path d="M11.213 19.7741C12.789 19.7741 14.0666 18.4965 14.0666 16.9205C14.0666 15.3445 12.789 14.0669 11.213 14.0669C9.63697 14.0669 8.35938 15.3445 8.35938 16.9205C8.35938 18.4965 9.63697 19.7741 11.213 19.7741Z" stroke="#E53E3E" stroke-width="1.5" stroke-linecap="round"/>
-                                    <path d="M22.629 19.7741C24.205 19.7741 25.4826 18.4965 25.4826 16.9205C25.4826 15.3445 24.205 14.0669 22.629 14.0669C21.053 14.0669 19.7754 15.3445 19.7754 16.9205C19.7754 18.4965 21.053 19.7741 22.629 19.7741Z" stroke="#E53E3E" stroke-width="1.5" stroke-linecap="round"/>
-                                    <path d="M11.2139 35.9444L16.9211 32.1396L22.6282 35.9444" stroke="#E53E3E" stroke-width="1.5" stroke-linecap="round"/>
-                                    </svg>
-
-                                </div>
-                                <div class="exhibition-item-content">
-                                    <h3>Mentorias Evolutivas</h3>
-                                    <p>Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressão.</p>
-                                </div>
-                            </div>
-                            <div class="exhibition-item-image">
-                                <figure class="image-anime m-0 position-relative">
-                                    <img src="{{asset('build/client/images/themes/whi-web/exhibition.png')}}" alt="Exposição">
-                                </figure>
-                            </div>
-                        </div>
-                    </div>
-
+                    @endforeach
                 </div>
 
                 <!-- Navegação Swiper (Botões Circulares) -->
@@ -487,122 +453,110 @@
     <!-- Enterprise Solutions Section Start -->
     <section id="solutions-section" class="solutions-section py-5">
         <div class="container">
-            <!-- Section Header -->
-            <div class="row align-items-end mb-5">
-                <div class="col-lg-8">
-                    <span class="font-changa font-50 font-medium accent-color">Uma oportunidade,</span>
-                    <h2 class="main-title font-changa font-50 font-bold mb-0 text-grey">Soluções incríveis para empresas</h2>
+            <svg class="firula-svg" width="810" height="54" viewBox="0 0 810 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_4758_2798)">
+            <path d="M0.03125 25.1997H324.031" stroke="url(#paint0_linear_4758_2798)" stroke-width="1.8"/>
+            <path opacity="0.6" d="M45.0312 18H306.031" stroke="url(#paint1_linear_4758_2798)" stroke-dasharray="4 4"/>
+            <path d="M405.031 25.1997C405.031 -6.30029 369.031 -6.30029 369.031 25.1997C369.031 56.6997 405.031 56.6997 405.031 25.1997ZM405.031 25.1997C405.031 56.6997 441.031 56.6997 441.031 25.1997C441.031 -6.30029 405.031 -6.30029 405.031 25.1997Z" stroke="#E5A00D" stroke-width="2"/>
+            <path d="M405.031 25.1997C405.031 7.19971 382.531 7.19971 382.531 25.1997C382.531 43.1997 405.031 43.1997 405.031 25.1997ZM405.031 25.1997C405.031 43.1997 427.531 43.1997 427.531 25.1997C427.531 7.19971 405.031 7.19971 405.031 25.1997Z" stroke="#C1440E" stroke-width="1.2"/>
+            <path d="M369.032 28.8001C371.02 28.8001 372.632 27.1883 372.632 25.2001C372.632 23.2119 371.02 21.6001 369.032 21.6001C367.043 21.6001 365.432 23.2119 365.432 25.2001C365.432 27.1883 367.043 28.8001 369.032 28.8001Z" fill="#C1440E"/>
+            <path d="M441.032 28.8001C443.02 28.8001 444.632 27.1883 444.632 25.2001C444.632 23.2119 443.02 21.6001 441.032 21.6001C439.043 21.6001 437.432 23.2119 437.432 25.2001C437.432 27.1883 439.043 28.8001 441.032 28.8001Z" fill="#124330"/>
+            <path d="M405.032 3.5999C407.02 3.5999 408.632 1.98813 408.632 -9.77516e-05C408.632 -1.98832 407.02 -3.6001 405.032 -3.6001C403.043 -3.6001 401.432 -1.98832 401.432 -9.77516e-05C401.432 1.98813 403.043 3.5999 405.032 3.5999Z" fill="#E5A00D"/>
+            <path d="M405.032 53.9998C407.02 53.9998 408.632 52.388 408.632 50.3998C408.632 48.4116 407.02 46.7998 405.032 46.7998C403.043 46.7998 401.432 48.4116 401.432 50.3998C401.432 52.388 403.043 53.9998 405.032 53.9998Z" fill="#231815"/>
+            <path d="M486.031 25.1997H810.031" stroke="url(#paint2_linear_4758_2798)" stroke-width="1.8"/>
+            <path opacity="0.6" d="M504.031 18H765.031" stroke="url(#paint3_linear_4758_2798)" stroke-dasharray="4 4"/>
+            </g>
+            <defs>
+            <linearGradient id="paint0_linear_4758_2798" x1="0.03125" y1="25.1997" x2="324.031" y2="25.1997" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#C1440E" stop-opacity="0"/>
+            <stop offset="0.5" stop-color="#C1440E" stop-opacity="0.8"/>
+            <stop offset="1" stop-color="#E5A00D"/>
+            </linearGradient>
+            <linearGradient id="paint1_linear_4758_2798" x1="45.0312" y1="18" x2="306.031" y2="18" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#C1440E" stop-opacity="0"/>
+            <stop offset="0.5" stop-color="#C1440E" stop-opacity="0.8"/>
+            <stop offset="1" stop-color="#E5A00D"/>
+            </linearGradient>
+            <linearGradient id="paint2_linear_4758_2798" x1="486.031" y1="25.1997" x2="810.031" y2="25.1997" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#E5A00D"/>
+            <stop offset="0.5" stop-color="#124330" stop-opacity="0.8"/>
+            <stop offset="1" stop-color="#124330" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="paint3_linear_4758_2798" x1="504.031" y1="18" x2="765.031" y2="18" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#E5A00D"/>
+            <stop offset="0.5" stop-color="#124330" stop-opacity="0.8"/>
+            <stop offset="1" stop-color="#124330" stop-opacity="0"/>
+            </linearGradient>
+            <clipPath id="clip0_4758_2798">
+            <rect width="810" height="54" fill="white"/>
+            </clipPath>
+            </defs>
+            </svg>
+
+            @if ((isset($sections['advantages_enterprise']) && $sections <> null))
+                <!-- Section Header -->
+                <div class="row align-items-end mt-3 mb-5">
+                    <div class="col-12 col-lg-8">
+                        <span class="font-changa font-50 font-medium accent-color">{{ $sections['advantages_enterprise']->title }}</span>
+                        <h2 class="main-title font-changa font-50 font-bold mb-0 text-grey">{{ $sections['advantages_enterprise']->subtitle }}</h2>
+                    </div>
+                    @if ($sections['advantages_enterprise']->link <> null)                        
+                        <div class="col-12 col-lg-4 text-lg-end mt-3 mt-lg-0">
+                            <a href="{{ $sections['advantages_enterprise']->link }}" target="_blank" rel="noopener noreferrer" class="rounded-pill d-table m-auto me-lg-0 py-2 px-3 px-lg-4 font-changa bg-button-one color-button-one font-18 font-medium text-decoration-none hover-zoom">
+                                {{ $sections['advantages_enterprise']->btn_title }}
+                                <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    @endif
                 </div>
-                <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
-                    <a href="#" class="rounded-pill d-table m-auto me-lg-0 py-2 py-lg-3 px-3 px-lg-4 font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
-                        Faça parte agora 
-                        <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"></path>
-                        </svg>
-                    </a>
-                </div>
-            </div>
+            @endif
 
             <!-- Content Grid with Main Image & Swiper -->
+            @php
+                $enterpriseImage = $sections['advantages_enterprise']->path_image ?? null;
+            @endphp
+
             <div class="row g-4">
-                <!-- Left Banner Image -->
-                <div class="col-lg-4">
-                    <div class="banner-card">
-                        <img src="{{asset('build/client/images/themes/whi-web/company-banner.png')}}" alt="Parceria de negócios" class="img-fluid">
+                @if (!empty($enterpriseImage))
+                    <!-- Left Banner Image -->
+                    <div class="col-lg-4">
+                        <div class="banner-card">
+                            <img src="{{ asset('storage/' . $enterpriseImage) }}" alt="Parceria de negócios" class="img-fluid">
+                        </div>
                     </div>
-                </div>
+                @endif
 
                 <!-- Right Slider Area -->
-                <div class="col-lg-8">
+                <div class="{{ !empty($enterpriseImage) ? 'col-lg-8' : 'col-lg-12' }}">
                     <div class="swiper solutions-swiper">
                         <div class="swiper-wrapper">
+                            @foreach($benefitForEnterprises->chunk(6) as $benefits)
+                                <div class="swiper-slide">
+                                    <div class="row g-3">
+                                        @foreach($benefits as $benefit)
+                                            <div class="col-md-4">
+                                                <div class="feature-card">
+                                                    <div class="icon-box">
+                                                        @if(!empty($benefit->path_icon))
+                                                            <img src="{{ url('storage/' . $benefit->path_icon) }}" alt="{{ $benefit->title }}">
+                                                        @endif
+                                                    </div>
 
-                            <!-- Slide 1 (Grid de 6 Cards) -->
-                            <div class="swiper-slide">
-                                <div class="row g-3">
-                                    <!-- Card 1 -->
-                                    <div class="col-md-4">
-                                        <div class="feature-card">
-                                            <div class="icon-box">
-                                                <i class="bi bi-people"></i>
-                                            </div>
-                                            <h4 class="font-changa font-18 font-bold">Carreiras Experientes</h4>
-                                            <p class="font-changa font-15 font-medium">é simplesmente uma simulação de texto da indústria tipográfica e é simplesmente uma simulação</p>
-                                        </div>
-                                    </div>
+                                                    <h4 class="font-changa font-18 font-bold">
+                                                        {{ $benefit->title }}
+                                                    </h4>
 
-                                    <!-- Card 2 -->
-                                    <div class="col-md-4">
-                                        <div class="feature-card">
-                                            <div class="icon-box">
-                                                <i class="bi bi-sun"></i>
+                                                    <p class="font-changa font-15 font-medium">
+                                                        {!! $benefit->text !!}
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <h4 class="font-changa font-18 font-bold">Treinamento Básico</h4>
-                                            <p class="font-changa font-15 font-medium">é simplesmente uma simulação de texto da indústria tipográfica e é simplesmente uma simulação</p>
-                                        </div>
-                                    </div>
-
-                                    <!-- Card 3 -->
-                                    <div class="col-md-4">
-                                        <div class="feature-card">
-                                            <div class="icon-box">
-                                                <i class="bi bi-sun"></i>
-                                            </div>
-                                            <h4 class="font-changa font-18 font-bold">Crescimento Empresarial</h4>
-                                            <p class="font-changa font-15 font-medium">We discuss your business goals, hiring é simplesmente uma simulação de texto</p>
-                                        </div>
-                                    </div>
-
-                                    <!-- Card 4 -->
-                                    <div class="col-md-4">
-                                        <div class="feature-card">
-                                            <div class="icon-box">
-                                                <i class="bi bi-globe"></i>
-                                            </div>
-                                            <h4 class="font-changa font-18 font-bold">Triagem Garantida</h4>
-                                            <p class="font-changa font-15 font-medium">é simplesmente uma simulação de texto da indústria tipográfica e é simplesmente uma simulação</p>
-                                        </div>
-                                    </div>
-
-                                    <!-- Card 5 -->
-                                    <div class="col-md-4">
-                                        <div class="feature-card">
-                                            <div class="icon-box">
-                                                <i class="bi bi-grid-3x3-gap"></i>
-                                            </div>
-                                            <h4 class="font-changa font-18 font-bold">Publicidade no site</h4>
-                                            <p class="font-changa font-15 font-medium">é simplesmente uma simulação de texto da indústria tipográfica e é simplesmente uma simulação</p>
-                                        </div>
-                                    </div>
-
-                                    <!-- Card 6 -->
-                                    <div class="col-md-4">
-                                        <div class="feature-card">
-                                            <div class="icon-box">
-                                                <i class="bi bi-grid-3x3-gap"></i>
-                                            </div>
-                                            <h4 class="font-changa font-18 font-bold">Contrato sem fidelização</h4>
-                                            <p class="font-changa font-15 font-medium">é simplesmente uma simulação de texto da indústria tipográfica e é simplesmente uma simulação</p>
-                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="swiper-slide">
-                                <div class="row g-3">
-                                    <!-- Card 7 -->
-                                    <div class="col-md-4">
-                                        <div class="feature-card">
-                                            <div class="icon-box">
-                                                <i class="bi bi-grid-3x3-gap"></i>
-                                            </div>
-                                            <h4 class="font-changa font-18 font-bold">Contrato sem fidelização 01</h4>
-                                            <p class="font-changa font-15 font-medium">é simplesmente uma simulação de texto da indústria tipográfica e é simplesmente uma simulação</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -922,10 +876,12 @@
 
                     <!-- Conteúdo Principal -->
                     <div class="col-12 col-lg-10 ps-3 pe-0">
-                        <div class="mb-4 ps-0 ps-md-0">
-                            <h2 class="text-grey font-change font-50 font-bold mb-1">Veja o relato de quem</h2>
-                            <h2 class="accent-color font-change font-50 font-bold">já faz parte</h2>
-                        </div>
+                        @if ((isset($sections['testimonial']) && $sections <> null))
+                            <div class="mb-4 ps-0 ps-md-0">
+                                <h2 class="text-grey font-change font-50 font-bold mb-1">{{$sections['testimonial']->title}}</h2>
+                                <h2 class="accent-color font-change font-50 font-bold">{{$sections['testimonial']->subtitle}}</h2>
+                            </div>
+                        @endif
 
                         <div class="swiper testimonial-swiper">
                             <div class="swiper-wrapper">
@@ -1027,17 +983,19 @@
     @if (!empty($partners))
         <section class="partners-section py-5 bg-white my-3">
             <div class="container mb-4">
-                <!-- Cabeçalho (Número + Textos) -->
-                <div class="d-flex align-items-center justify-content-center flex-wrap gap-3 text-center text-md-start">
-                    <div class="counter-badge d-flex align-items-center">
-                        <span class="number-outlined font-change font-86 font-regular">250</span>
-                        <span class="plus-sign">+</span>
+                @if ((isset($sections['partners']) && $sections <> null))
+                    <!-- Cabeçalho (Número + Textos) -->
+                    <div class="d-flex align-items-center justify-content-center flex-wrap gap-3 text-center text-md-start">
+                        <div class="counter-badge d-flex align-items-center">
+                            <span class="number-outlined font-change font-86 font-regular">{{$sections['partners']->tag}}</span>
+                            <span class="plus-sign">+</span>
+                        </div>
+                        <div class="text-content">
+                            <p class="subtitle-text mb-0 font-change font-30 font-regular">{{$sections['partners']->title}}</p>
+                            <h3 class="title-bold mb-0 font-change font-38 font-semibold">{{$sections['partners']->subtitle}}</h3>
+                        </div>
                     </div>
-                    <div class="text-content">
-                        <p class="subtitle-text mb-0 font-change font-30 font-regular">Envolvidos já se credenciaram ao nosso projeto.</p>
-                        <h3 class="title-bold mb-0 font-change font-38 font-semibold">Agora é sua vez</h3>
-                    </div>
-                </div>
+                @endif
             </div>
 
             <!-- Carrossel Infinito (Estilo Timeline Continuous) -->

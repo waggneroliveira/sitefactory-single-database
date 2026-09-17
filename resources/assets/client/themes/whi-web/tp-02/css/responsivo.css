@@ -1,7 +1,9 @@
 @media (min-width: 1160px) {
-    .font-md,
-    .navbar-expand-lg .navbar-nav .nav-link {
+    .font-md {
         font-size: 1.125rem !important;
+    }
+    .navbar-expand-lg .navbar-nav .nav-link {
+        font-size: 0.983rem !important;
     }
 }
 
@@ -55,6 +57,9 @@
     }
 }
 @media (max-width: 768px) {
+    .solutions-section .firula-svg{
+        width: 100%;
+    }
     .video-play-btn {
     width: 70px;
     height: 70px;

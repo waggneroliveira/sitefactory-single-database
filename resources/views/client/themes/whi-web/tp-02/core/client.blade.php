@@ -511,7 +511,7 @@
 
                 <!-- Botão -->
                 <div class="d-flex justify-content-center gap-2 align-items-center btn-header bg-button-one rounded-pill py-2 px-3 px-lg-3 px-xl-4 hover-zoom">
-                    <a class="font-changa font-15 font-medium text-decoration-none color-button-one font-md">
+                    <a class="font-changa font-15 font-medium text-decoration-none color-button-one">
                         {{ $tenantTheme->btn_title_header }}
                     </a>
 
@@ -709,23 +709,23 @@
                 <div class="col-lg-6 mb-4 mb-0">
                     <div class="font-changa text-color-footer font-16 font-bold mb-3 position-relative d-inline-block font-changa font-16 font-medium">
                         Mapa do Site
-                        <span class="d-block bg-yellow mt-1" style="height:3px; width:40px;"></span>
+                        <span class="d-block bg-accent-color mt-1" style="height:3px; width:40px;"></span>
                     </div>
 
                     <div class="row">
                         <div class="col-6">
                             <ul class="list-unstyled">
-                                <li><a href="{{route('index')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Início</a></li>
-                                <li><a href="{{route('index')}}#about" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Quem Somos</a></li>
-                                <li><a href="{{route('index')}}#services" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Serviços</a></li>
+                                <li><a href="{{ request()->routeIs('index') ? '#about-us' : route('index') . '#about-us' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Quem Somos</a></li>
+                                <li><a href="{{ request()->routeIs('index') ? '#pilar' : route('index') . '#pilar' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Pilares</a></li>
+                                <li><a href="{{ request()->routeIs('index') ? '#our-exhibitions' : route('index') . '#our-exhibitions' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Para você</a></li>
                             </ul>
                         </div>
 
                         <div class="col-6">
                             <ul class="list-unstyled">
+                                <li><a href="{{ request()->routeIs('index') ? '#solutions-section' : route('index') . '#solutions-section' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Para empresas</a></li>
                                 <li><a href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Depoimentos</a></li>
-                                <li><a href="{{ request()->routeIs('index') ? '#faq' : route('index') . '#faq' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">FAQ</a></li>
-                                <li><a href="{{route('index')}}#contato" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Contato</a></li>
+                                <li><a href="{{ request()->routeIs('index') ? '#contact' : route('index') . '#contact' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Contato</a></li>
                             </ul>
                         </div>
                     </div>

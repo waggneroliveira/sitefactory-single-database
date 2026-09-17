@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Partner;
+use App\Models\ServiceSection;
 use App\Repositories\SettingThemeRepository;
 use App\Services\ThemeManager;
 use Illuminate\Http\Request;
@@ -36,11 +37,14 @@ class PartnerController extends Controller
         if ($check !== true) {
             return $check; // retorna view 403
         }
+        $serviceSection = ServiceSection::whereIn('section', ['partners'])
+        ->get()
+        ->keyBy('section');
         $partners = Partner::sorting()->get();
         $theme = $themeManager;
         $themeData = $themeManager->theme();
 
-        return view('admin.blades.partner.index', compact('partners', 'theme', 'themeData'));
+        return view('admin.blades.partner.index', compact('serviceSection', 'partners', 'theme', 'themeData'));
     }
 
 
