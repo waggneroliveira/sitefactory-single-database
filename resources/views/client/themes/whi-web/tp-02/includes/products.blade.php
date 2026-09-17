@@ -17,14 +17,14 @@
     </div>
 @else
     @foreach ($products as $product)
-        <div class="col-6 col-lg-4 mb-4 product">
+        <div class="col-6 col-lg-4 mb-2 mb-lg-3 product">
             <div class="product-card bg-white shadow-sm rounded-3 p-0 position-relative">
                 <div class="image position-relative mb-0">
                     <img src="{{asset('storage/' . $product->path_image)}}" alt="{{$product->title}}" loading="lazy">
                 </div>
-                <div class="p-3 pb-2">
+                <div class="p-2 p-lg-3 pb-2">
                     <h6 class="font-changa font-18 font-semibold text-dark text-start">{{$product->title}}</h6>
-                    <p class="color-grey font-changa font-16 font-regular mb-0 text-start lh-sm">{{substr(strip_tags($product->description), 0, 70)}}</p>
+                    <p class="color-grey font-changa font-16 font-regular mb-0 text-start lh-sm">{{substr(strip_tags($product->description), 0, 50)}}...</p>
                 </div>
                 <div class="row flex-wrap justify-content-center mt-0">
                     <div class="btn-group m-auto m-lg-0 col-10 px-0 justify-content-center justify-content-lg-start" role="group">
@@ -49,13 +49,26 @@
                             @foreach($sizes as $size)
                                 @php
                                     preg_match('/^(\d+(?:[.,]\d+)?)\s*(.*)$/u', trim($size), $matches);
+
+                                    $unit = strtolower(trim($matches[2] ?? ''));
+
+                                    $icon = match (true) {
+                                        str_contains($unit, 'hora') => 'bi bi-clock',
+                                        str_contains($unit, 'semana') => 'bi bi-calendar-week',
+                                        str_contains($unit, 'vídeo'), str_contains($unit, 'video') => 'bi bi-play-btn',
+                                        default => 'bi bi-info-circle',
+                                    };
                                 @endphp
 
                                 <button class="btn d-flex flex-column text-dark font-changa btn-sm me-2">
                                     @if(isset($matches[1]))
                                         <span class="fw-bold font-15">{{ $matches[1] }}</span>
+
                                         @if(!empty($matches[2]))
-                                            <span class="font-12">{{ $matches[2] }}</span>
+                                            <span class="font-12 size-unit">
+                                                <span class="d-none d-md-inline">{{ $matches[2] }}</span>
+                                                <i class="{{ $icon }} d-inline d-md-none"></i>
+                                            </span>
                                         @endif
                                     @else
                                         {{ $size }}
@@ -71,8 +84,8 @@
                     </div>
                 </div>
                 <div class="row justify-content-center mt-0">
-                    <div class="d-flex flex-wrap justify-content-between align-items-center col-10 px-0 pb-3 mt-3">
-                        <div class="user-card col-7">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center col-10 px-0 pb-2 pb-lg-3 mt-2 mt-lg-3">
+                        <div class="user-card col-12 col-lg-7 mb-2 mb-lg-0">
                             <div class="avatar">
                                 {{-- <img src="caminho-da-imagem.jpg" alt="Foto do usuário"> --}}
                                 <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -86,7 +99,7 @@
                                 <span class="user-role font-changa font-10 font-medium text-dark">Professora de Inglês</span>
                             </div>
                         </div>
-                        
+        
                         @php
                             $isExternal = $product->link_type === 'external';
 
@@ -98,9 +111,7 @@
                                 ]);
                         @endphp
 
-                        <a href="{{ $href }}"
-                        class="col-4"
-                        @if($isExternal) target="_blank" rel="noopener noreferrer" @endif>
+                        <a href="{{ $href }}" class="col-12 col-lg-4" @if($isExternal) target="_blank" rel="noopener noreferrer" @endif>
 
                             <span class="bg-button-one color-button-one rounded-2 py-2 px-2 btn-view font-changa font-11 font-medium col-12 d-flex align-items-center justify-content-center mb-0">
                                 Garantir agora

@@ -269,8 +269,6 @@
     BIBLIOTECAS CSS
     ============================================================ --}}
 
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"></noscript>
 
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"></noscript>
@@ -299,6 +297,9 @@
     <script type="application/ld+json">
     {!! json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js" defer></script>
 </head>
 
 <body>
@@ -480,7 +481,7 @@
 
             <!-- Menu -->
             <div class="collapse navbar-collapse" id="mainNavbar">
-                <ul class="navbar-nav mx-auto m-auto mb-2 mb-lg-0 gap-lg-3">
+                <ul class="navbar-nav mx-auto m-auto mb-2 mb-lg-0 gap-lg-2">
                     <li class="nav-item">
                         <a class="nav-link font-changa font-18 p-1 font-semibold font-header text-color-header active" href="{{route('index')}}">
                             <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -489,25 +490,28 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{route('about')}}">Sobre Nós</a>
+                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header font-md" href="{{ request()->routeIs('index') ? '#about-us' : route('index') . '#about-us' }}">Sobre Nós</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}">Depoimentos</a>
+                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header font-md" href="{{ request()->routeIs('index') ? '#pilar' : route('index') . '#pilar' }}">Pilares</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{ request()->routeIs('about') ? '#team-section' : route('about') . '#team-section' }}">Representantes</a>
+                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header font-md" href="{{ request()->routeIs('index') ? '#our-exhibitions' : route('index') . '#our-exhibitions' }}">Para você</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{route('products')}}">Produtos</a>
+                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header font-md" href="{{ request()->routeIs('index') ? '#solutions-section' : route('index') . '#solutions-section' }}">Para empresas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{route('contact')}}">Contato</a>
+                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header font-md" href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}">Depoimentos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header font-md" href="{{ request()->routeIs('index') ? '#contact' : route('index') . '#contact' }}">Contato</a>
                     </li>
                 </ul>
 
                 <!-- Botão -->
-                <div class="d-flex justify-content-center gap-2 align-items-center btn-header bg-button-one rounded-pill py-2 px-4 hover-zoom">
-                    <a class="font-changa font-15 font-medium text-decoration-none color-button-one">
+                <div class="d-flex justify-content-center gap-2 align-items-center btn-header bg-button-one rounded-pill py-2 px-3 px-lg-3 px-xl-4 hover-zoom">
+                    <a class="font-changa font-15 font-medium text-decoration-none color-button-one font-md">
                         {{ $tenantTheme->btn_title_header }}
                     </a>
 
@@ -864,15 +868,15 @@
     </footer>
 
     <a href="#" id="scroll-top" class="scroll-top bg-scroll d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-    
+     
     <script src="https://cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('build/client/bootstrap/js/bootstrap.bundle.js') }}"></script>
     <script src="{{ asset('build/client/lgpd/script.js') }}"></script>
     <script src="{{ asset('build/client/themes/whi-web/tp-02/js/default.js') }}"></script>
+    <script src="{{ asset('build/client/themes/whi-web/tp-02/js/gsap-efect.js') }}"></script>
     <script src="{{ asset('build/client/js/default.js') }}"></script>
 
     {{-- Modais alert --}}

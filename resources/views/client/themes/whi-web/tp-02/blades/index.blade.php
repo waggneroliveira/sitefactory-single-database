@@ -2,70 +2,71 @@
 @section('content')
     @if (isset($slides) && $slides->count() > 0)
         <section class="hero">
-        <div class="swiper main-swiper">
+            <div class="swiper main-swiper">
 
-            <div class="swiper-wrapper">
-                @foreach ($slides as $slide)
-                    <!-- Slide -->
-                    <div class="swiper-slide">
-                        <div class="hero-slide">
+                <div class="swiper-wrapper">
+                    @foreach ($slides as $slide)
+                        <!-- Slide -->
+                        <div class="swiper-slide">
+                            <div class="hero-slide">
 
-                        <!-- Imagem full -->
-                        <div class="hero-bg">
-                            <picture>
-                                <source srcset="{{ asset('storage/' . $slide->path_image_mobile) }}" media="(max-width: 530px)">
-                                <img src="{{ asset('storage/' . $slide->path_image) }}" alt="Distribuição PET" title="Distribuição PET">
-                            </picture>
-                        </div>
+                            <!-- Imagem full -->
+                            <div class="hero-bg">
+                                <picture>
+                                    <source srcset="{{ asset('storage/' . $slide->path_image_mobile) }}" media="(max-width: 530px)">
+                                    <img src="{{ asset('storage/' . $slide->path_image) }}" alt="Distribuição PET" title="Distribuição PET">
+                                </picture>
+                            </div>
 
-                        <!-- Conteúdo -->
-                        <div class="hero-content mt-5 mt-lg-0">
-                            <div class="container">
-                            <div class="row">
-                                <div class="col-lg-6">
+                            <!-- Conteúdo -->
+                            <div class="hero-content mt-0 align-items-center">
+                                <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-6">
 
-                                    <span class="hero-subtitle font-changa font-15 font-regular">
-                                        {!!$slide->description!!}
-                                    </span>
+                                        <h1 class="hero-title font-changa font-50 font-bold mb-3">
+                                            {{$slide->title}}
+                                        </h1>
 
-                                    <h1 class="hero-title font-changa font-50 font-bold">
-                                        {{$slide->title}}
-                                    </h1>
+                                        <span class="hero-subtitle font-changa font-15 font-regular">
+                                            {!!$slide->description!!}
+                                        </span>
 
-                                    <div class="hero-actions d-flex">
-                                        @if ($slide->link <> null)                                    
-                                            <a href="{{$slide->link}}" target="_blank" rel="noopener noreferrer" class="btn-one rounded-pill py-2 px-3 px-lg-4 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
-                                                {{$slide->btn_title}}
-                                                <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"/>
-                                                </svg>
-                                            </a>
-                                        @endif
+
+                                        <div class="hero-actions d-flex mt-4">
+                                            @if ($slide->link <> null)                                    
+                                                <a href="{{$slide->link}}" target="_blank" rel="noopener noreferrer" class="btn-one rounded-pill py-2 px-3 px-lg-4 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
+                                                    {{$slide->btn_title}}
+                                                    <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"/>
+                                                    </svg>
+                                                </a>
+                                            @endif
+                                        </div>
+
                                     </div>
-
+                                </div>
                                 </div>
                             </div>
+
                             </div>
                         </div>
+                    @endforeach
 
-                        </div>
-                    </div>
-                @endforeach
+                </div>
 
+                <!-- Paginação -->
+                <div class="swiper-pagination news"></div>
             </div>
-
-            <!-- Paginação -->
-            <div class="swiper-pagination news"></div>
-        </div>
         </section>
     @endif
     @if ($topics->count() > 0)
-        <section id="topic" class="topics py-5">
+        <section id="topic" class="topics py-3 py-lg-5">
             <div class="container">
                 <div class="row g-4 justify-content-center mt-2 col-12 col-lg-10 m-auto">
                     @foreach ($topics as $topic)   
                         <div class="col-6 col-md-4 col-lg-2 topic-col m-auto">
-                            <div class="d-flex justify-content-center align-items-center gap-2">
+                            <div class="d-flex justify-content-center align-items-center gap-2 mb-2 mb-lg-0">
                                 <svg class="col-1" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="7.5" cy="7.5" r="7.5" fill="#A93F08"/>
                                 </svg>
@@ -79,7 +80,7 @@
         </section>
     @endif
     @if (isset($abouts) && $abouts->count())
-        <section class="about mt-4 pb-5">
+        <section id="about-us" class="about mt-4 pb-5">
             <div class="container">
                 @foreach($abouts as $about)                
                     <div class="row align-items-start justify-content-center">
@@ -97,7 +98,7 @@
                         <!-- TEXTO (dentro do container) -->
                         <div class="col-12 col-lg-7 mt-4 mt-lg-0 z-3">
                             <div class="container position-relative">
-                                <h3 class="about-title font-changa font-50 font-semiBold mb-3 text-grey">
+                                <h3 class="about-title font-changa font-50 font-semiBold mb-3 text-grey text-start">
                                     {{$about->title}} <span class="accent-color">{{$about->subtitle}}</span>
                                 </h3>
 
@@ -133,7 +134,7 @@
                                 <div class="space70 d-lg-block d-none"></div>
                                 <div class="space30 d-lg-none d-block"></div>
         
-                                <div class="works8-boxarea">
+                                <div class="works8-boxarea my-3 my-lg-0">
                                     <a href="" class="font-changa font-18 text-grey font-semibold">Tailored Strategy</a>
                                     <div class="space16"></div>
                                     <p>Our team creates a personalized approach to match the right talent with the right opportunity.</p>
@@ -154,7 +155,7 @@
                                 <div class="space70 d-lg-block d-none"></div>
                                 <div class="space30 d-lg-none d-block"></div>
         
-                                <div class="works8-boxarea">
+                                <div class="works8-boxarea my-3 my-lg-0">
                                     <a href="" class="font-changa font-18 text-grey font-semibold">Ongoing Support</a>
                                     <div class="space16"></div>
                                     <p>Our partnership doesn’t end at placement—we’re here to provide continuous support for long-term success.</p>
@@ -167,7 +168,7 @@
                             <div class="space30 d-lg-none d-block"></div>
         
                             <div class="works-main-widget-area2">
-                                <div class="works8-boxarea">
+                                <div class="works8-boxarea my-3 my-lg-0">
                                     <a href="" class="font-changa font-18 text-grey font-semibold">Tailored Strategy</a>
                                     <div class="space16"></div>
                                     <p>Our team creates a personalized approach to match the right talent with the right opportunity.</p>
@@ -188,7 +189,7 @@
                             </div>
         
                             <div class="works-main-widget-area2"> 
-                                <div class="works8-boxarea">
+                                <div class="works8-boxarea my-3 my-lg-0">
                                     <a href="" class="font-changa font-18 text-grey font-semibold">Ongoing Support</a>
                                     <div class="space16"></div>
                                     <p>Our partnership doesn’t end at placement—we’re here to provide continuous support for long-term success.</p>
@@ -212,7 +213,7 @@
         </section>
     @endif
 
-    <section class="section-container position-relative">
+    <section id="pilar" class="section-container position-relative">
         <div class="container">
             
             <!-- Cabeçalho -->
@@ -332,30 +333,8 @@
         <img src="{{asset('build/client/images/themes/whi-web/firula-pilares.png')}}" alt="firula pilares" class="d-none d-lg-block position-absolute end-0 top-0 w-auto" height="100%">
     </section>
 
-    <!-- JavaScript para alternar as abas -->
-    <script>
-    function changeTab(tabId, element) {
-        // 1. Remove a classe 'active' de todos os botões de pilares
-        const buttons = document.querySelectorAll('.pillar-card');
-        buttons.forEach(btn => btn.classList.remove('active'));
-
-        // 2. Oculta todo o conteúdo das abas
-        const panes = document.querySelectorAll('.tab-pane');
-        panes.forEach(pane => pane.classList.remove('active'));
-
-        // 3. Ativa o botão clicado
-        element.classList.add('active');
-
-        // 4. Exibe o conteúdo correspondente
-        const targetPane = document.getElementById(tabId);
-        if (targetPane) {
-        targetPane.classList.add('active');
-        }
-    }
-    </script>
-
     <!-- Our Exhibitions Section Start -->
-    <section class="our-exhibitions bg-secondary-color position-relative py-5">
+    <section id="our-exhibitions" class="our-exhibitions bg-secondary-color position-relative py-5">
         <div class="container">
             <div class="row section-row mb-5">
                 <div class="col-xl-12 text-center">
@@ -506,7 +485,7 @@
     </script>
 
     <!-- Enterprise Solutions Section Start -->
-    <section class="solutions-section py-5">
+    <section id="solutions-section" class="solutions-section py-5">
         <div class="container">
             <!-- Section Header -->
             <div class="row align-items-end mb-5">
@@ -515,7 +494,7 @@
                     <h2 class="main-title font-changa font-50 font-bold mb-0 text-grey">Soluções incríveis para empresas</h2>
                 </div>
                 <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
-                    <a href="#" class="rounded-pill d-table m-auto me-lg-0 py-3 px-3 px-lg-4 font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
+                    <a href="#" class="rounded-pill d-table m-auto me-lg-0 py-2 py-lg-3 px-3 px-lg-4 font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
                         Faça parte agora 
                         <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"></path>
@@ -548,9 +527,10 @@
                                                 <i class="bi bi-people"></i>
                                             </div>
                                             <h4 class="font-changa font-18 font-bold">Carreiras Experientes</h4>
-                                            <p class="font-changa font-15 font-medium">é simplesmente uma simulação de texto da indústria tipográfica eé simplesmente uma simulação</p>
+                                            <p class="font-changa font-15 font-medium">é simplesmente uma simulação de texto da indústria tipográfica e é simplesmente uma simulação</p>
                                         </div>
                                     </div>
+
                                     <!-- Card 2 -->
                                     <div class="col-md-4">
                                         <div class="feature-card">
@@ -558,9 +538,10 @@
                                                 <i class="bi bi-sun"></i>
                                             </div>
                                             <h4 class="font-changa font-18 font-bold">Treinamento Básico</h4>
-                                            <p class="font-changa font-15 font-medium">é simplesmente uma simulação de texto da indústria tipográfica eé simplesmente uma simulação</p>
+                                            <p class="font-changa font-15 font-medium">é simplesmente uma simulação de texto da indústria tipográfica e é simplesmente uma simulação</p>
                                         </div>
                                     </div>
+
                                     <!-- Card 3 -->
                                     <div class="col-md-4">
                                         <div class="feature-card">
@@ -568,9 +549,10 @@
                                                 <i class="bi bi-sun"></i>
                                             </div>
                                             <h4 class="font-changa font-18 font-bold">Crescimento Empresarial</h4>
-                                            <p class="font-changa font-15 font-medium">We discuss your business goals, hiringé simplesmente uma simulação de texto d</p>
+                                            <p class="font-changa font-15 font-medium">We discuss your business goals, hiring é simplesmente uma simulação de texto</p>
                                         </div>
                                     </div>
+
                                     <!-- Card 4 -->
                                     <div class="col-md-4">
                                         <div class="feature-card">
@@ -581,6 +563,7 @@
                                             <p class="font-changa font-15 font-medium">é simplesmente uma simulação de texto da indústria tipográfica e é simplesmente uma simulação</p>
                                         </div>
                                     </div>
+
                                     <!-- Card 5 -->
                                     <div class="col-md-4">
                                         <div class="feature-card">
@@ -588,9 +571,10 @@
                                                 <i class="bi bi-grid-3x3-gap"></i>
                                             </div>
                                             <h4 class="font-changa font-18 font-bold">Publicidade no site</h4>
-                                            <p class="font-changa font-15 font-medium">é simplesmente uma simulação de texto da indústria tipográfica eé simplesmente uma simulação</p>
+                                            <p class="font-changa font-15 font-medium">é simplesmente uma simulação de texto da indústria tipográfica e é simplesmente uma simulação</p>
                                         </div>
                                     </div>
+
                                     <!-- Card 6 -->
                                     <div class="col-md-4">
                                         <div class="feature-card">
@@ -598,7 +582,22 @@
                                                 <i class="bi bi-grid-3x3-gap"></i>
                                             </div>
                                             <h4 class="font-changa font-18 font-bold">Contrato sem fidelização</h4>
-                                            <p class="font-changa font-15 font-medium">é simplesmente uma simulação de texto da indústria tipográfica eé simplesmente uma simulação</p>
+                                            <p class="font-changa font-15 font-medium">é simplesmente uma simulação de texto da indústria tipográfica e é simplesmente uma simulação</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <div class="row g-3">
+                                    <!-- Card 7 -->
+                                    <div class="col-md-4">
+                                        <div class="feature-card">
+                                            <div class="icon-box">
+                                                <i class="bi bi-grid-3x3-gap"></i>
+                                            </div>
+                                            <h4 class="font-changa font-18 font-bold">Contrato sem fidelização 01</h4>
+                                            <p class="font-changa font-15 font-medium">é simplesmente uma simulação de texto da indústria tipográfica e é simplesmente uma simulação</p>
                                         </div>
                                     </div>
                                 </div>
@@ -641,7 +640,6 @@
     </script>
 
     @if (!empty($sections['product']) || isset($products) && $products->count())
-
         <section class="products-section py-3 py-lg-5 bg-secondary-color">
             <div class="container">
 
@@ -662,17 +660,17 @@
                 </div>
                 
                 <!-- Produtos -->
-                <div class="row g-4 products mt-5">
+                <div class="row g-4 products w-mobile mt-5">
                     <!-- Produto -->
                     @foreach ($products as $product)                
-                        <div class="col-6 col-sm-6 col-lg-3 mb-4 product {{$product->category->slug}}">
+                        <div class="col-6 col-sm-6 col-lg-4 col-xl-3 mb-2 mb-lg-3 product {{$product->category->slug}}">
                             <div class="product-card bg-white shadow-sm rounded-3 p-0 position-relative">
                                 <div class="image position-relative mb-0">
                                     <img src="{{asset('storage/' . $product->path_image)}}" alt="{{$product->title}}" loading="lazy">
                                 </div>
-                                <div class="p-3 pb-2">
+                                <div class="p-2 p-lg-3 pb-2">
                                     <h6 class="font-changa font-18 font-semibold text-dark text-start">{{$product->title}}</h6>
-                                    <p class="color-grey font-changa font-16 font-regular mb-0 text-start lh-sm">{{substr(strip_tags($product->description), 0, 70)}}</p>
+                                    <p class="color-grey font-changa font-16 font-regular mb-0 text-start lh-sm">{{substr(strip_tags($product->description), 0, 50)}}...</p>
                                 </div>
                                 <div class="row flex-wrap justify-content-center mt-0">
                                     <div class="btn-group m-auto m-lg-0 col-10 px-0 justify-content-center justify-content-lg-start" role="group">
@@ -697,13 +695,26 @@
                                             @foreach($sizes as $size)
                                                 @php
                                                     preg_match('/^(\d+(?:[.,]\d+)?)\s*(.*)$/u', trim($size), $matches);
+
+                                                    $unit = strtolower(trim($matches[2] ?? ''));
+
+                                                    $icon = match (true) {
+                                                        str_contains($unit, 'hora') => 'bi bi-clock',
+                                                        str_contains($unit, 'semana') => 'bi bi-calendar-week',
+                                                        str_contains($unit, 'vídeo'), str_contains($unit, 'video') => 'bi bi-play-btn',
+                                                        default => 'bi bi-info-circle',
+                                                    };
                                                 @endphp
 
                                                 <button class="btn d-flex flex-column text-dark font-changa btn-sm me-2">
                                                     @if(isset($matches[1]))
                                                         <span class="fw-bold font-15">{{ $matches[1] }}</span>
+
                                                         @if(!empty($matches[2]))
-                                                            <span class="font-12">{{ $matches[2] }}</span>
+                                                            <span class="font-12 size-unit">
+                                                                <span class="d-none d-md-inline">{{ $matches[2] }}</span>
+                                                                <i class="{{ $icon }} d-inline d-md-none"></i>
+                                                            </span>
                                                         @endif
                                                     @else
                                                         {{ $size }}
@@ -719,8 +730,8 @@
                                     </div>
                                 </div>
                                 <div class="row justify-content-center mt-0">
-                                    <div class="d-flex flex-wrap justify-content-between align-items-center col-10 px-0 pb-3 mt-3">
-                                        <div class="user-card col-7">
+                                    <div class="d-flex flex-wrap justify-content-between align-items-center col-10 px-0 pb-2 pb-lg-3 mt-2 mt-lg-3">
+                                        <div class="user-card col-12 col-lg-7 mb-2 mb-lg-0">
                                             <div class="avatar">
                                                 {{-- <img src="caminho-da-imagem.jpg" alt="Foto do usuário"> --}}
                                                 <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -746,11 +757,9 @@
                                                 ]);
                                         @endphp
 
-                                        <a href="{{ $href }}"
-                                        class="col-4"
-                                        @if($isExternal) target="_blank" rel="noopener noreferrer" @endif>
+                                        <a href="{{ $href }}" class="col-12 col-lg-4 col-xl-5" @if($isExternal) target="_blank" rel="noopener noreferrer" @endif>
 
-                                            <span class="bg-button-one color-button-one rounded-2 py-2 px-2 btn-view font-changa font-11 font-medium col-12 d-flex align-items-center justify-content-center mb-0">
+                                            <span class="bg-button-one color-button-one rounded-2 py-2 px-2 btn-view font-changa font-11 font-medium col-12 col-lg-11 m-auto me-lg-0 d-flex align-items-center justify-content-center mb-0">
                                                 Garantir agora
                                             </span>
 
@@ -776,65 +785,6 @@
         </section>
     @endif
 
-    @if (isset($statute))
-        <section class="step-to-step">
-            <div class="container-fluid px-0">
-                <div class="row">
-                    <div class="left-content col-12 col-lg-6 bg-secondary-color z-3 d-flex flex-column align-items-end justify-content-center py-5">
-                        @if (isset($statute) && $statute->path_file <> null)                    
-                            <div class="image position-relative">
-                                <img src="{{asset('storage/' . $statute->path_file)}}" alt="Passo a passo" class="w-100 step-image">
-
-                                <img src="{{asset('build/client/themes/petshop/tp-01/images/icon-step.png')}}" alt="Icone" class="w-100 icon-step position-absolute">
-                            </div>
-                        @endif
-            
-                        @if (isset($statute) && $statute->text_atend || isset($statute) && $statute->phone)                    
-                            <div class="description col-12 col-lg-7 text-center text-lg-end px-0 px-lg-4">
-                                @if ($statute->text_atend <> null)                            
-                                    <p class="font-changa font-28 font-bold">{{$statute->text_atend}}</p>
-                                @endif
-                                @if ($statute->phone <> null)                            
-                                    <span class="text-white font-changa font-28 font-medium">
-                                        <svg class="me-2" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M13 0C11.2057 0 9.52148 0.338541 7.94727 1.01562C6.35612 1.69271 4.97233 2.61947 3.7959 3.7959C2.61947 4.97233 1.69271 6.35612 1.01562 7.94727C0.338542 9.52148 0 11.2057 0 13C0 14.7943 0.338542 16.4785 1.01562 18.0527C1.69271 19.6439 2.61947 21.0277 3.7959 22.2041C4.97233 23.3805 6.35612 24.3073 7.94727 24.9844C9.52148 25.6615 11.2057 26 13 26C13.8971 26 14.7689 25.9154 15.6152 25.7461C16.4616 25.5599 17.2741 25.3018 18.0527 24.9717C18.8314 24.6416 19.5677 24.248 20.2617 23.791C20.9557 23.3171 21.599 22.7839 22.1914 22.1914C22.2422 22.1406 22.2803 22.0856 22.3057 22.0264C22.3311 21.9671 22.3438 21.8952 22.3438 21.8105C22.3438 21.6582 22.293 21.5312 22.1914 21.4297C22.0898 21.3281 21.9629 21.2773 21.8105 21.2773C21.7259 21.2773 21.654 21.29 21.5947 21.3154C21.5355 21.3408 21.4805 21.3789 21.4297 21.4297C20.888 21.9714 20.2956 22.4538 19.6523 22.877C19.026 23.3171 18.3574 23.6852 17.6465 23.9814C16.9355 24.2777 16.1908 24.5104 15.4121 24.6797C14.6335 24.832 13.8294 24.9082 13 24.9082C11.3581 24.9082 9.80925 24.5951 8.35352 23.9688C6.91471 23.3594 5.65365 22.513 4.57031 21.4297C3.48698 20.3464 2.64062 19.0853 2.03125 17.6465C1.40495 16.1908 1.0918 14.6419 1.0918 13C1.0918 11.3581 1.40495 9.80924 2.03125 8.35352C2.64062 6.91471 3.48698 5.65365 4.57031 4.57031C5.65365 3.48698 6.91471 2.64062 8.35352 2.03125C9.80925 1.40495 11.3581 1.0918 13 1.0918C14.6419 1.0918 16.1908 1.40495 17.6465 2.03125C19.0853 2.64062 20.3464 3.48698 21.4297 4.57031C22.513 5.65365 23.3594 6.91471 23.9688 8.35352C24.5951 9.80924 24.9082 11.3581 24.9082 13V14.625C24.9082 15.3698 24.6458 16.0088 24.1211 16.542C23.5964 17.0752 22.9616 17.3418 22.2168 17.3418H20.5918V16.5293C20.5918 16.1569 20.4606 15.8438 20.1982 15.5898C19.9359 15.3359 19.6185 15.209 19.2461 15.209C18.7721 15.209 18.3151 15.1709 17.875 15.0947C17.4349 15.0186 17.0033 14.9128 16.5801 14.7773H16.6309C16.5801 14.7604 16.5166 14.7477 16.4404 14.7393C16.3643 14.7308 16.2923 14.7266 16.2246 14.7266C16.0553 14.7266 15.8945 14.7562 15.7422 14.8154C15.5898 14.8747 15.4544 14.9551 15.3359 15.0566L13.7363 16.2754C12.873 15.8353 12.1029 15.2767 11.4258 14.5996C10.7487 13.9225 10.1901 13.1608 9.75 12.3145L9.72461 12.2637L10.8926 10.7148C11.0111 10.5964 11.1042 10.4567 11.1719 10.2959C11.2396 10.1351 11.2734 9.96159 11.2734 9.77539C11.2734 9.69076 11.2692 9.61458 11.2607 9.54688C11.2523 9.47917 11.2396 9.41146 11.2227 9.34375V9.36914C11.0872 8.97982 10.9814 8.56087 10.9053 8.1123C10.8291 7.66374 10.791 7.21094 10.791 6.75391C10.791 6.75391 10.791 6.74967 10.791 6.74121C10.791 6.73275 10.791 6.72852 10.791 6.72852C10.791 6.37305 10.6641 6.06413 10.4102 5.80176C10.1562 5.53939 9.8431 5.4082 9.4707 5.4082H6.75391C6.38151 5.4082 6.06413 5.53939 5.80176 5.80176C5.53939 6.06413 5.4082 6.37305 5.4082 6.72852C5.4082 8.64128 5.77214 10.444 6.5 12.1367C7.22786 13.8125 8.2181 15.2767 9.4707 16.5293C10.7233 17.7819 12.1875 18.7721 13.8633 19.5C15.556 20.2279 17.3503 20.5918 19.2461 20.5918C19.6185 20.5918 19.9359 20.4606 20.1982 20.1982C20.4606 19.9359 20.5918 19.627 20.5918 19.2715V18.4082H22.2168C23.2663 18.4082 24.1592 18.04 24.8955 17.3037C25.6318 16.5674 26 15.6745 26 14.625V13C26 11.2057 25.6615 9.52148 24.9844 7.94727C24.2904 6.37305 23.3551 4.99772 22.1787 3.82129C21.0023 2.64486 19.627 1.70963 18.0527 1.01562C16.4785 0.338541 14.7943 0 13 0ZM19.5 19.2715C19.5 19.3223 19.4746 19.373 19.4238 19.4238C19.373 19.4746 19.3138 19.5 19.2461 19.5C17.4857 19.5 15.8353 19.1615 14.2949 18.4844C12.7546 17.8242 11.4046 16.9144 10.2451 15.7549C9.08561 14.5954 8.17578 13.2454 7.51562 11.7051C6.83854 10.1647 6.5 8.51432 6.5 6.75391V6.72852C6.5 6.67773 6.52539 6.62695 6.57617 6.57617C6.62695 6.52539 6.6862 6.5 6.75391 6.5H9.4707C9.53841 6.5 9.59766 6.52539 9.64844 6.57617C9.69922 6.62695 9.72461 6.67773 9.72461 6.72852C9.72461 6.74544 9.72461 6.75391 9.72461 6.75391C9.72461 7.27865 9.76693 7.79492 9.85156 8.30273C9.9362 8.81055 10.0547 9.29297 10.207 9.75L10.1816 9.69922C10.1986 9.71615 10.2028 9.75423 10.1943 9.81348C10.1859 9.87272 10.1478 9.9362 10.0801 10.0039L8.6582 11.8828C8.62435 11.9336 8.59896 11.9886 8.58203 12.0479C8.5651 12.1071 8.55664 12.1621 8.55664 12.2129C8.55664 12.2637 8.56087 12.3102 8.56934 12.3525C8.5778 12.3949 8.5905 12.4329 8.60742 12.4668C9.13216 13.5501 9.81348 14.5107 10.6514 15.3486C11.4893 16.1865 12.4329 16.8594 13.4824 17.3672L13.5332 17.3926C13.5671 17.4095 13.6051 17.4222 13.6475 17.4307C13.6898 17.4391 13.7363 17.4434 13.7871 17.4434C13.8548 17.4434 13.9141 17.4349 13.9648 17.418C14.0156 17.401 14.0664 17.3757 14.1172 17.3418L16.0469 15.8691C16.0807 15.8522 16.1104 15.8353 16.1357 15.8184C16.1611 15.8014 16.1908 15.793 16.2246 15.793C16.2415 15.793 16.2542 15.7972 16.2627 15.8057C16.2712 15.8141 16.2839 15.8184 16.3008 15.8184C16.7409 15.9707 17.2106 16.085 17.71 16.1611C18.2093 16.2373 18.7214 16.2754 19.2461 16.2754C19.2461 16.2754 19.2503 16.2754 19.2588 16.2754C19.2673 16.2754 19.2715 16.2754 19.2715 16.2754C19.3392 16.2923 19.3942 16.3219 19.4365 16.3643C19.4788 16.4066 19.5 16.4616 19.5 16.5293V19.2461V19.2715Z" fill="#FFF"/>
-                                        </svg>
-                                        {{$statute->phone}}
-                                    </span>
-                                @endif
-                            </div>
-                        @endif
-                    </div>
-                    @if (isset($statute) && $statute->title || isset($statute) && $statute->subtitle || isset($statute) && $statute->description || isset($statute) && $statute->btn_number)
-                        <div class="right-content col-11 m-auto col-lg-6 py-5 px-2 px-md-4 px-lg-5">
-                            <span class="about-subtitle color-yellow font-changa font-16 font-bold d-block mb-2">
-                                Passo a passo
-                            </span>
-                
-                            <h3 class="about-title font-changa font-50 font-semibold primary-color mb-3">
-                                {{$statute->title}} <span class="color-grey">{{$statute->subtitle}}</span>
-                            </h3>
-
-                            <div class="list-unstyled list-step mt-4 position-relative">
-                                {!!$statute->description!!}
-                            </div>
-                            @if ($statute->btn_number <> null)                    
-                                <div class="step-actions mt-4 d-flex justify-content-center justify-content-lg-start">
-                                    <a href="{{$statute->btn_number}}" target="_blank" rel="noopener noreferrer" class="rounded-pill py-2 px-3 px-lg-5 font-changa bg-button-two color-button-two font-18 font-medium text-decoration-none hover-zoom" rel="noopener noreferrer">
-                                        {{$statute->btn_title}}
-                                        <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-two)"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            @endif
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </section>
-    @endif
-
     @if (isset($letsgo))
         <section class="lets-go pt-5 pb-0 position-relative">
             <div class="container">
@@ -844,7 +794,7 @@
                             <img src="{{asset('storage/' . $letsgo->path_image)}}" alt="Carro de entrega" class="w-100">
                         </div>
                     @endif
-                    <div class="content-left col-12 col-lg-8">
+                    <div class="content-left col-12 col-lg-8 mt-3 mt-lg-0">
                         <h3 class="about-title font-changa font-50 font-bold text-dark mb-3">
                             {{$letsgo->title}}
                         </h3>
@@ -882,7 +832,7 @@
                 <div class="row g-4">
                     <!-- Card -->
                     @foreach ($directions as $representative)    
-                        <div class="col-6 col-sm-6 col-lg-3">
+                        <div class="col-6 col-sm-6 col-lg-4 col-xl-3">
                             <div class="team-card position-relative">
                                 <div class="team-image bg-white">
                                     <img src="{{asset('storage/' . $representative->path_image)}}" alt="{{$representative->title}}">
@@ -1024,70 +974,6 @@
         </section>
     @endif
 
-    <style>
-        /* Background Geral da Seção */
-        .bg-light-custom {
-            background-color: #f7f5f0;
-        }
-
-        /* Texto Vertical */
-        .vertical-text-wrapper {
-            writing-mode: vertical-rl;
-            transform: rotate(180deg);
-        }
-
-        .vertical-text {
-            font-size: 6.25rem;
-            font-weight: 700;
-            color: transparent;
-            -webkit-text-stroke: 1.5px #D2D2D2;
-            text-transform: lowercase;
-        }
-
-        .author-name {
-            color: #2b2b2b;
-            font-size: 1rem;
-        }
-
-        .author-role {
-            color: #7a7a7a;
-            font-size: 0.85rem;
-        }
-
-        .quote-badge {
-            width: 32px;
-            height: 32px;
-            background-color: #D99400;
-            color: #fff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-        }
-
-        /* Setas de Navegação */
-        .swiper-button-prev-custom,
-        .swiper-button-next-custom {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 1px solid #4a4a4a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: #333;
-            transition: all 0.2s ease;
-        }
-
-        .swiper-button-prev-custom:hover,
-        .swiper-button-next-custom:hover {
-            background-color: #333;
-            color: #fff;
-        }
-    </style>
-
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             new Swiper('.testimonial-swiper', {
@@ -1171,51 +1057,6 @@
         </section>
     @endif
 
-    <style>
-        /* Estilos do Cabeçalho */
-        .number-outlined {
-            line-height: 1;
-            color: transparent;
-            -webkit-text-stroke: 2px #D99400;
-            font-family: inherit;
-        }
-
-        .plus-sign {
-            font-size: 8.5rem;
-            font-weight: 900;
-            color: #d88900;
-            line-height: 1;
-            margin-right: 10px;
-            margin-top: 50px;
-        }
-
-        .subtitle-text {
-            color: #d88900;
-        }
-
-        .title-bold {
-            color: #d88900;
-        }
-
-        /* Logos dos Parceiros */
-        .partner-logo {
-            max-height: 48px;
-            width: auto;
-            object-fit: contain;
-            filter: opacity(0.85);
-            transition: filter 0.3s ease;
-        }
-
-        .partner-logo:hover {
-            filter: opacity(1);
-        }
-
-        /* Ajuste do Swiper para Movimento Contínuo Fluido */
-        .partners-swiper .ease-linear-wrapper {
-            transition-timing-function: linear !important;
-        }
-    </style>
-
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             new Swiper('.partners-swiper', {
@@ -1251,14 +1092,14 @@
         });
     </script>
 
-    <section class="contact my-0 bg-white">
+    <section id="contact" class="contact my-0 bg-white">
         <div class="container py-5">
             <div class="row">
                 @if (isset($contact))
                     <!-- Infos -->
                     <div class="col-12 col-lg-5">
-                        <h2 class="faq-title font-changa font-50 font-bold text-grey mt-2 mb-3">{{$contact->name_section}} <span class="accent-color">{{$contact->link_x}}</span></h2>
-                        <p class="col-12 col-lg-8 faq-text color-grey font-changa font-16 font-regular text-center text-lg-start">
+                        <h2 class="faq-title font-changa font-50 font-bold text-grey mt-2 mb-3 text-start">{{$contact->name_section}} <span class="accent-color">{{$contact->link_x}}</span></h2>
+                        <p class="col-12 col-lg-8 faq-text color-grey font-changa font-16 font-regular text-start">
                             {{$contact->text}}
                         </p>
         
@@ -1445,4 +1286,5 @@
             });
         });
     </script>
+
 @endsection

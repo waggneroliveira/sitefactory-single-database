@@ -11,11 +11,6 @@
         </div>
 
         <div class="mb-3">
-            <label for="subtitle" class="form-label">Subtítulo </label>
-            <input type="text" name="subtitle" class="form-control" id="subtitle{{isset($slide->id)?$slide->id:''}}" value="{{isset($slide)?$slide->subtitle:''}}" placeholder="Subtítulo">
-        </div>
-
-        <div class="mb-3">
             <label for="btn_title" class="form-label">Título botão </label>
             <input type="text" name="btn_title" class="form-control" id="btn_title{{isset($slide->id)?$slide->id:''}}" value="{{isset($slide)?$slide->btn_title:''}}" placeholder="Título botão">
         </div>

@@ -1,10 +1,168 @@
+.hero-bg img,
+.hero-title,
+.hero-subtitle,
+.hero-actions {
+will-change: transform, opacity, filter;
+/* Garante que o CSS não tentes fazer transição junto com o GSAP */
+transition: none !important; 
+}
+
+.hero-bg {
+overflow: hidden;
+background-color: #000; /* Evita fundo branco durante a transição do desfoque */
+}
+
+.hero-bg img {
+will-change: transform, filter;
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+#topic .topic-col {
+    will-change: transform, opacity;
+}
+/* Evita sobressaltos e otimiza a GPU */
+.about-image img,
+.about-title,
+.description,
+.btn-about,
+.works8-boxarea,
+.icons,
+.about > img.position-absolute {
+will-change: transform, opacity;
+}
+
+/* Garante estouro zero de layout durante a animação */
+.about {
+overflow: hidden;
+position: relative;
+}
+/* Transição fluida para as abas */
+.tab-content-container {
+position: relative;
+min-height: 380px; /* Evita que a seção encolha na troca de aba */
+}
+
+.tab-pane {
+display: none;
+opacity: 0;
+}
+
+.tab-pane.active {
+display: flex !important;
+opacity: 1;
+}
+
+.pillar-card,
+.content-image,
+.custom-progress-bar {
+will-change: transform, opacity, width;
+}
+/* Background Geral da Seção */
+.bg-light-custom {
+    background-color: #f7f5f0;
+}
+
+/* Texto Vertical */
+.vertical-text-wrapper {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+}
+
+.vertical-text {
+    font-size: 6.25rem;
+    font-weight: 700;
+    color: transparent;
+    -webkit-text-stroke: 1.5px #D2D2D2;
+    text-transform: lowercase;
+}
+
+.author-name {
+    color: #2b2b2b;
+    font-size: 1rem;
+}
+
+.author-role {
+    color: #7a7a7a;
+    font-size: 0.85rem;
+}
+
+.quote-badge {
+    width: 32px;
+    height: 32px;
+    background-color: #D99400;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+/* Setas de Navegação */
+.swiper-button-prev-custom,
+.swiper-button-next-custom {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #4a4a4a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #333;
+    transition: all 0.2s ease;
+}
+
+.swiper-button-prev-custom:hover,
+.swiper-button-next-custom:hover {
+    background-color: #333;
+    color: #fff;
+}
 .bg-grey-medium{
     background-color: #F7F4EF !important;
 }
+.number-outlined {
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 2px #D99400;
+    font-family: inherit;
+}
 
-/* =========================
-   HEADER
-========================= */
+.plus-sign {
+    font-size: 8.5rem;
+    font-weight: 900;
+    color: #d88900;
+    line-height: 1;
+    margin-right: 10px;
+    margin-top: 50px;
+}
+
+.subtitle-text {
+    color: #d88900;
+}
+
+.title-bold {
+    color: #d88900;
+}
+
+/* Logos dos Parceiros */
+.partner-logo {
+    max-height: 48px;
+    width: auto;
+    object-fit: contain;
+    filter: opacity(0.85);
+    transition: filter 0.3s ease;
+}
+
+.partner-logo:hover {
+    filter: opacity(1);
+}
+
+/* Ajuste do Swiper para Movimento Contínuo Fluido */
+.partners-swiper .ease-linear-wrapper {
+    transition-timing-function: linear !important;
+}
 
 /* =========================
    HERO
@@ -28,9 +186,10 @@
 }
 
 .hero-bg img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
 }
 
 .hero-content {
@@ -96,7 +255,7 @@
    ABOUT
 ========================= */
 .linha-do-tempo{
-    margin-top: -85px;
+    margin-top: -115px;
 }
 .space70{
     height: 70px;
@@ -296,6 +455,22 @@
 
 /* XS */
 @media (max-width: 767px) {
+    .counter-badge {
+        margin-top: -45px;
+    }
+    .plus-sign{
+        font-size: 6rem !important;
+    }
+    .number-outlined{
+        font-size: 4rem !important;
+    }
+    .subtitle-text{
+        font-size: 1.5rem !important;
+        line-height: 28px;
+    }
+    .title-bold{
+        font-size: 1.7rem !important;
+    }
     .about .works-main-widget-area,
     .about .works-main-widget-area2 {
         margin: 0;
@@ -465,8 +640,8 @@ opacity: 1;
     font-weight: 600;
     position: relative;
     list-style: none;
-    margin-bottom: 15px;
-    line-height: 1.6;
+    margin-bottom: 0px;
+    line-height: 1.3;
     overflow: hidden;
 }
 
@@ -864,7 +1039,7 @@ opacity: 1;
 .product-card {
     border-radius: 16px;
     text-align: center;
-    height: 100%;
+    height: auto;
     transition: .3s;
 }
 .product-card .image{

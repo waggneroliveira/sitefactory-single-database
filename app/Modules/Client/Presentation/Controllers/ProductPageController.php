@@ -30,7 +30,6 @@ class ProductPageController
     public function productView($category = null, $slug = null, ThemeManager $theme)
     {
         $tenantTheme = Tenant::current();
-
         $data = $this->service->getProductViewData($category, $slug, $theme);
 
         // Se o service já definiu uma view de erro/fallback
