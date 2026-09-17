@@ -15,6 +15,10 @@ class BlogPageService
 {
     public function getIndexData(Request $request, $category = null, ThemeManager $themeManager): array
     {
+        $tenantTheme = Tenant::current();
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+
         $search = $request->input('search');
         $blogCategories = BlogCategory::whereHas('blogs')->active()->sorting()->get();
 
@@ -46,17 +50,18 @@ class BlogPageService
             ->get();
 
         $popUp = PopUp::active()->first();
-        $tenantTheme = Tenant::current();
-        $theme = $themeManager;
-        $themeData = $themeManager->theme();
-
+       
         return compact('blogCategories', 'blogAll', 'blogSeeAlso', 'popUp', 'tenantTheme','theme', 'themeData');
     }
 
     public function getInnerData($slug = null, ThemeManager $themeManager): array
     {
+        $tenantTheme = Tenant::current();
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+
         if (!$slug) {
-            return ['view' => 'client.errors.404'];
+            return ['view' => view($theme->error('404'))];
         }
 
         $blogInner = Blog::with(['category'])
@@ -67,7 +72,7 @@ class BlogPageService
             ->first();
 
         if (!$blogInner) {
-            return ['view' => 'client.errors.404'];
+            return ['view' => view($theme->error('404'))];
         }
 
         $blogRelacionados = Blog::whereHas('category', function ($query) use ($blogInner) {
@@ -116,9 +121,7 @@ class BlogPageService
             ->get();
 
         $contact = Contact::first();
-        $tenantTheme = Tenant::current();
-        $theme = $themeManager;
-        $themeData = $themeManager->theme();
+
         return compact(
             'contact',
             'viewMores',

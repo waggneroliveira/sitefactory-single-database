@@ -6,12 +6,18 @@ use App\Models\Contact;
 use App\Models\Event;
 use App\Models\Holidays;
 use App\Models\Report;
+use App\Models\Tenant;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
 
 class EventPageService
 {
-    public function getPageData(Request $request): array
+    public function getPageData(Request $request, ThemeManager $themeManager): array
     {
+        $tenantTheme = Tenant::current();
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+
         $report = Report::active()->first();
         $contact = Contact::first();
         $eventId = $request->query('event_id');
