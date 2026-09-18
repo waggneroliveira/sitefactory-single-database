@@ -534,28 +534,37 @@ document.addEventListener("DOMContentLoaded", () => {
  * ANIMAÇÃO INTERNA DA ABA (TEXTOS, IMAGEM E BARRA)
  * ------------------------------------------------------------- */
 function animatePaneContent(pane) {
+
     if (!pane) return;
 
     const title = pane.querySelector('h3');
     const desc = pane.querySelector('p');
-    const progressContainer = pane.querySelector('.progress-container');
-    const progressBar = pane.querySelector('.custom-progress-bar');
+    const progressContainers = pane.querySelectorAll('.progress-container');
+    const progressBars = pane.querySelectorAll('.custom-progress-bar');
     const img = pane.querySelector('.content-image');
 
-    // Recupera o valor da barra (ex: style="width: 90%")
-    const targetWidth = progressBar ? progressBar.style.width : "0%";
+    const tl = gsap.timeline({
+        defaults: {
+            ease: "power3.out"
+        }
+    });
 
-    if (progressBar) gsap.set(progressBar, { width: "0%" });
-
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-
-    const textElements = [title, desc, progressContainer].filter(Boolean);
+    const textElements = [title, desc].filter(Boolean);
 
     if (textElements.length > 0) {
         tl.fromTo(
             textElements,
             { y: 30, opacity: 0 },
             { y: 0, opacity: 1, duration: 0.8, stagger: 0.1 }
+        );
+    }
+
+    if (progressContainers.length > 0) {
+        tl.fromTo(
+            progressContainers,
+            { y: 20, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.6, stagger: 0.15 },
+            "-=0.5"
         );
     }
 
@@ -568,15 +577,26 @@ function animatePaneContent(pane) {
         );
     }
 
-    if (progressBar) {
-        tl.to(progressBar, {
-            width: targetWidth,
-            duration: 1.2,
-            ease: "power2.out"
-        }, "-=0.8");
-    }
-}
+    progressBars.forEach((progressBar, index) => {
 
+        const targetWidth = progressBar.style.width || "0%";
+
+        gsap.set(progressBar, {
+            width: "0%"
+        });
+
+        tl.to(
+            progressBar,
+            {
+                width: targetWidth,
+                duration: 1.2,
+                ease: "power2.out"
+            },
+            index === 0 ? "-=0.4" : "-=0.9"
+        );
+
+    });
+}
 /* -------------------------------------------------------------
  * FUNÇÃO DE TROCA DE ABAS (changeTab)
  * ------------------------------------------------------------- */

@@ -52,6 +52,26 @@ return [
         ],
     ],
 
+    'lineOfTime' => [
+        'permission' => 'linha do tempo',
+        'actions' => [
+            'criar',
+            'editar',
+            'visualizar',
+            'remover',
+        ],
+    ],
+
+    'impactSection' => [
+        'permission' => 'Destaques',
+        'actions' => [
+            'criar',
+            'editar',
+            'visualizar',
+            'remover',
+        ],
+    ],
+
     'faq_session' => [
         'permission' => 'sesssao faq',
         'actions' => [

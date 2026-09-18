@@ -13,7 +13,9 @@ use App\Models\Depoiment;
 use App\Models\Direction;
 use App\Models\Event;
 use App\Models\Faq;
+use App\Models\ImpactSection;
 use App\Models\Letsgo;
+use App\Models\LineOfTime;
 use App\Models\Partner;
 use App\Models\Plan;
 use App\Models\PlanNetwork;
@@ -83,8 +85,12 @@ class HomePageService
         $benefits = $advantages->groupBy('for_you');
         $benefitForPersonas = $benefits->get('persona', collect());
         $benefitForEnterprises = $benefits->get('enterprise', collect());
+        $lineOfTimes = LineOfTime::active()->get();
+        $impactSections = ImpactSection::with('metrics')->active()->get();
 
         return compact(
+            'impactSections',
+            'lineOfTimes',
             'benefitForPersonas',
             'benefitForEnterprises',
             'directions',

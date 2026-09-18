@@ -254,11 +254,23 @@ will-change: transform, opacity, width;
 /* =========================
    ABOUT
 ========================= */
+.works-main-widget-area:nth-of-type(1) .space50{
+    display: none !important;
+}
+.works-main-widget-area:nth-of-type(1) .space50.one{
+    display: block !important;
+}
 .linha-do-tempo{
     margin-top: -115px;
 }
-.space70{
-    height: 70px;
+.space50{
+    height: 50px;
+}
+.space20{
+    height: 20px;
+}
+.space16{
+    height: 16px;
 }
 .about {
     position: relative;
@@ -275,7 +287,7 @@ will-change: transform, opacity, width;
 .about .works-main-widget-area::after {
     position: absolute;
     content: "";
-    height: 425px;
+    height: 100vh;
     width: 2px;
     right: -85px;
     transition: all .4s;
@@ -323,13 +335,15 @@ will-change: transform, opacity, width;
 
 .about .works-main-widget-area .icons img {
     transition: all .4s;
+    width: 45px;
+    height: auto;
 }
 
 .about .works-main-widget-area .works8-boxarea {
     position: relative;
     z-index: 1;
     background: #F4F4F9;
-    padding: 24px;
+    padding: 15px 20px;
     transition: all .4s;
     border-radius: 10px;
 }
@@ -345,8 +359,9 @@ will-change: transform, opacity, width;
 .about .works-main-widget-area .works8-boxarea p {
     font-family: "Manrope", sans-serif;
     font-style: normal;
-    line-height: 24px;
+    line-height: 23px;
     transition: all .4s;
+    font-size: 0.883rem;
 }
 
 .about .works-main-widget-area .works8-boxarea h5 {
@@ -411,18 +426,22 @@ will-change: transform, opacity, width;
 
 .about .works-main-widget-area2 .icons img {
     transition: all .4s;
+    width: 45px;
+    height: auto;
 }
 
 .about .works-main-widget-area2 .works8-boxarea {
     position: relative;
     z-index: 1;
     background: #F4F4F9;
-    padding: 24px;
+    padding: 15px 20px;
     transition: all .4s;
     border-radius: 8px;
 }
 
 .about .works-main-widget-area2 .works8-boxarea a {
+    font-family: "Manrope", sans-serif;
+    font-style: normal;
     line-height: 24px;
     display: inline-block;
     transition: all .4s;
@@ -432,8 +451,9 @@ will-change: transform, opacity, width;
     font-family: "Manrope", sans-serif;
     font-style: normal;
     font-weight: 500;
-    line-height: 26px;
+    line-height: 23px;
     transition: all .4s;
+    font-size: 0.883rem;
 }
 
 .about .works-main-widget-area2 .works8-boxarea h5 {

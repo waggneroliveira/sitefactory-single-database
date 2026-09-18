@@ -6,21 +6,34 @@ use App\Services\ActivityLogService;
 use App\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class LineOfTime extends Model
+class ImpactSection extends Model
 {
-     use Notifiable, HasFactory, LogsActivity, BelongsToTenant;
+    use Notifiable, HasFactory, LogsActivity, BelongsToTenant;
     
     protected $fillable = [
         'title',
-        'text',
+        'icon',
+        'content_title',
+        'content_text',
         'path_image',
-        'active',
         'sorting',
+        'active',
     ];
+
+    protected $casts = [
+        'active' => 'boolean',
+    ];
+
+    public function metrics(): HasMany
+    {
+        return $this->hasMany(ImpactSectionMetric::class)
+            ->orderBy('sorting');
+    }
 
     public function scopeActive($query){
         return $query->where('active', 1);

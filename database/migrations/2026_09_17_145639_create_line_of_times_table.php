@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('line_of_times', function (Blueprint $table) {
             $table->id();
+            $table->string('title')->nullable();
+            $table->text('text')->nullable();
+            $table->boolean('active')->default(0);
+            $table->integer('sorting')->default(0);
+            $table->string('path_image')->nullable();
             $table->timestamps();
         });
     }

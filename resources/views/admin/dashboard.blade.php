@@ -194,6 +194,22 @@
                     ])
                 @endif
 
+                @if (in_array('impactSection', $homeModules, true) && ($isSuper || $user->can('destaques.visualizar')))
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.impactSection.index'),
+                        'icon' => 'mdi-alert-circle',
+                        'title' => 'Destaques'
+                    ])
+                @endif
+
+                @if (in_array('lineOfTime', $homeModules, true) && ($isSuper || $user->can('linha do tempo.visualizar')))
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.lineOfTime.index'),
+                        'icon' => 'mdi-alert-circle',
+                        'title' => 'Linha do tempo'
+                    ])
+                @endif
+
                 @if (in_array('faq_session', $homeModules, true) && ($isSuper || $user->can('sesssao faq.visualizar')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.sessaoFaq.index'),

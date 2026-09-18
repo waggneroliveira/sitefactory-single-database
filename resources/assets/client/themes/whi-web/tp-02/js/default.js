@@ -33,21 +33,40 @@
      BOTÃO VOLTAR AO TOPO
   ========================== */
   const scrollTopBtn = document.querySelector(".scroll-top");
+  const footer = document.querySelector("footer");
 
   if (scrollTopBtn) {
-    scrollTopBtn.addEventListener("click", function (e) {
-      e.preventDefault();
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    });
 
-    document.addEventListener("scroll", function () {
-      window.scrollY > 100
-        ? scrollTopBtn.classList.add("active")
-        : scrollTopBtn.classList.remove("active");
-    });
+      scrollTopBtn.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+          });
+      });
+
+      document.addEventListener("scroll", function () {
+
+          const scrollY = window.scrollY;
+          const windowHeight = window.innerHeight;
+
+          if (scrollY > 100) {
+              scrollTopBtn.classList.add("active");
+          } else {
+              scrollTopBtn.classList.remove("active");
+          }
+
+          if (footer) {
+              const footerTop = footer.getBoundingClientRect().top;
+
+              if (footerTop <= windowHeight) {
+                  scrollTopBtn.style.bottom = "160px";
+              } else {
+                  scrollTopBtn.style.bottom = "";
+              }
+          }
+      });
   }
 
   /* ==========================

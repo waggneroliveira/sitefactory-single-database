@@ -52,7 +52,6 @@ class LetsgoController extends Controller
 
         $data = $request->except([
             'path_image',
-            'path_file'
         ]);
 
         $pathUpload = $this->getPathUpload();

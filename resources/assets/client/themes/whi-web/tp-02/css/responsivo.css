@@ -1,9 +1,9 @@
 @media (min-width: 1160px) {
-    .font-md {
-        font-size: 1.125rem !important;
-    }
     .navbar-expand-lg .navbar-nav .nav-link {
         font-size: 0.983rem !important;
+    }
+    .navbar-expand-lg .navbar-nav .nav-link.font-md {
+        font-size: 1.125rem !important;
     }
 }
 
@@ -57,6 +57,9 @@
     }
 }
 @media (max-width: 768px) {
+    .works-main-widget-area:nth-of-type(1) .space50.one{
+        display: none !important;
+    }
     .solutions-section .firula-svg{
         width: 100%;
     }
@@ -91,6 +94,18 @@
     }
 }
 @media (max-width: 530px) {
+    .content-left .tamiles{
+        height: 320px !important;
+    }
+    h2.font-24{
+        font-size: 1.5rem !important;
+    }
+    p, p.font-16, .text-secondary.lh-base{
+        font-size: 0.938rem !important;
+    }
+    .about-image img{
+        height: 470px;
+    }
     #products-title{
         font-size: 1.4rem;
     }

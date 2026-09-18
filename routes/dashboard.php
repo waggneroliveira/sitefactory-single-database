@@ -19,7 +19,10 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FormIndexController;
 use App\Http\Controllers\GalleryImageController;
+use App\Http\Controllers\ImpactSectionController;
+use App\Http\Controllers\ImpactSectionMetricController;
 use App\Http\Controllers\LetsgoController;
+use App\Http\Controllers\LineOfTimeController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\PlanNetworkCategoryController;
@@ -205,6 +208,18 @@ Route::prefix('painel/')->group(function () {
         Route::resource('sessao-lets-go', LetsgoController::class)
         ->names('admin.dashboard.letsgo')
         ->parameters(['sessao-lets-go'=>'letsgo']);
+        //ImpactSection
+        Route::resource('destaques', ImpactSectionController::class)
+        ->names('admin.dashboard.impactSection')
+        ->parameters(['destaques'=>'impactSection']);
+        //ImpactSectionMetric
+        Route::resource('metricas', ImpactSectionMetricController::class)
+        ->names('admin.dashboard.impactSectionMetric')
+        ->parameters(['metricas'=>'impactSectionMetric']);
+        //lineOfTime
+        Route::resource('linha-do-tempo', LineOfTimeController::class)
+        ->names('admin.dashboard.lineOfTime')
+        ->parameters(['linha-do-tempo'=>'lineOfTime']);
         //ONDE ATENDEMOS
         Route::resource('onde-atendemos', ServiceLocationController::class)
         ->names('admin.dashboard.serviceLocation')

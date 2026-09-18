@@ -81,7 +81,7 @@
     @endif
     @if (isset($abouts) && $abouts->count())
         <section id="about-us" class="about mt-4 pb-5">
-            <div class="container">
+            <div class="container p-0">
                 @foreach($abouts as $about)                
                     <div class="row align-items-start justify-content-center">
                         @if (isset($about->path_image) && $about->path_image <> null)                    
@@ -123,89 +123,79 @@
                 @endforeach
                 <div class="linha-do-tempo">
                     <div class="row col-12 col-lg-11 m-auto me-lg-4">
+
                         <div class="col-lg-6">
-                            <div class="works-main-widget-area">
-                                <div class="text-end">
-                                    <div class="icons">
-                                        <img src="{{asset('build/client/images/themes/whi-web/w-icons8.svg')}}" alt="">
+                            @foreach($lineOfTimes as $index => $lineOfTime)
+                                @if($index % 2 === 1)
+                                    <div class="works-main-widget-area">
+                                        
+                                        <div class="space50 d-lg-block d-none"></div>
+                                        <div class="space20 d-lg-none d-block"></div>
+
+                                        <div class="text-end">
+                                            <div class="icons">
+                                                <img src="{{ asset('storage/' .$lineOfTime->path_image) }}" alt="{{ $lineOfTime->title }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="space50 one d-lg-block d-none"></div>
+                                        <div class="space20 d-lg-none d-block"></div>
+
+                                        <div class="works8-boxarea">
+                                            <a href="" class="font-changa font-18 text-grey font-semibold">
+                                                {{ $lineOfTime->title }}
+                                            </a>
+
+                                            <div class="space16"></div>
+
+                                            <p class="mb-0">{{ $lineOfTime->text }}</p>
+
+                                            <h5>{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</h5>
+                                        </div>
+
                                     </div>
-                                </div>
-        
-                                <div class="space70 d-lg-block d-none"></div>
-                                <div class="space30 d-lg-none d-block"></div>
-        
-                                <div class="works8-boxarea my-3 my-lg-0">
-                                    <a href="" class="font-changa font-18 text-grey font-semibold">Tailored Strategy</a>
-                                    <div class="space16"></div>
-                                    <p>Our team creates a personalized approach to match the right talent with the right opportunity.</p>
-                                    <h5>02</h5>
-                                </div>
-                            </div>
-                            <div class="works-main-widget-area">
-        
-                                <div class="space70 d-lg-block d-none"></div>
-                                <div class="space30 d-lg-none d-block"></div>
-        
-                                <div class="text-end">
-                                    <div class="icons">
-                                        <img src="{{asset('build/client/images/themes/whi-web/w-icons10.svg')}}" alt="">
-                                    </div>
-                                </div>
-        
-                                <div class="space70 d-lg-block d-none"></div>
-                                <div class="space30 d-lg-none d-block"></div>
-        
-                                <div class="works8-boxarea my-3 my-lg-0">
-                                    <a href="" class="font-changa font-18 text-grey font-semibold">Ongoing Support</a>
-                                    <div class="space16"></div>
-                                    <p>Our partnership doesn’t end at placement—we’re here to provide continuous support for long-term success.</p>
-                                    <h5>04</h5>
-                                </div>
-                            </div>
+                                @endif
+                            @endforeach
                         </div>
-        
+
                         <div class="col-lg-6">
-                            <div class="space30 d-lg-none d-block"></div>
-        
-                            <div class="works-main-widget-area2">
-                                <div class="works8-boxarea my-3 my-lg-0">
-                                    <a href="" class="font-changa font-18 text-grey font-semibold">Tailored Strategy</a>
-                                    <div class="space16"></div>
-                                    <p>Our team creates a personalized approach to match the right talent with the right opportunity.</p>
-                                    <h5>01</h5>
-                                </div>
-        
-                                <div class="space70 d-lg-block d-none"></div>
-                                <div class="space30 d-lg-none d-block"></div>
-                                
-                                <div class="text-start">
-                                    <div class="icons">
-                                        <img src="{{asset('build/client/images/themes/whi-web/w-icons8.svg')}}" alt="">
+
+                            <div class="space20 d-lg-none d-block"></div>
+
+                            @foreach($lineOfTimes as $index => $lineOfTime)
+                                @if($index % 2 === 0)
+                                    <div class="works-main-widget-area2">
+
+                                        <div class="works8-boxarea">
+                                            <a href="" class="font-changa font-18 text-grey font-semibold">
+                                                {{ $lineOfTime->title }}
+                                            </a>
+
+                                            <div class="space16"></div>
+
+                                            <p class="mb-0">{{ $lineOfTime->text }}</p>
+
+                                            <h5>{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</h5>
+                                        </div>
+
+                                        <div class="space50 d-lg-block d-none"></div>
+                                        <div class="space20 d-lg-none d-block"></div>
+
+                                        <div class="text-start">
+                                            <div class="icons">
+                                                <img src="{{ asset('storage/' .$lineOfTime->path_image) }}" alt="{{ $lineOfTime->title }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="space50 d-lg-block d-none"></div>
+                                        <div class="space20 d-lg-none d-block"></div>
+
                                     </div>
-                                </div>
-        
-                                <div class="space70 d-lg-block d-none"></div>
-                                <div class="space30 d-lg-none d-block"></div>
-                            </div>
-        
-                            <div class="works-main-widget-area2"> 
-                                <div class="works8-boxarea my-3 my-lg-0">
-                                    <a href="" class="font-changa font-18 text-grey font-semibold">Ongoing Support</a>
-                                    <div class="space16"></div>
-                                    <p>Our partnership doesn’t end at placement—we’re here to provide continuous support for long-term success.</p>
-                                    <h5>03</h5>
-                                </div>
-        
-                                <div class="space70 d-lg-block d-none"></div>
-                                <div class="space30 d-lg-none d-block"></div>
-        
-                                <div class="text-start">
-                                    <div class="icons">
-                                        <img src="{{asset('build/client/images/themes/whi-web/w-icons10.svg')}}" alt="">
-                                    </div>
-                                </div>
-                            </div>
+                                @endif
+                            @endforeach
+
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -213,125 +203,124 @@
         </section>
     @endif
 
-    <section id="pilar" class="section-container position-relative">
-        <div class="container">
-            
-            <!-- Cabeçalho -->
-            <div class="row mb-5 align-items-center">
-                <div class="col-lg-6 mb-3 mb-lg-0">
-                    <h2 class="font-changa font-50 font-bold text-grey">
-                        Conheça os <span class="accent-color">pilares</span> principais
-                    </h2>
+    @if($impactSections->isNotEmpty())
+        <section id="pilar" class="section-container position-relative">
+
+            <div class="container">
+
+                <!-- Cabeçalho -->
+                <div class="row mb-5 align-items-center">
+                    <div class="col-lg-6 mb-3 mb-lg-0">
+                        <h2 class="font-changa font-50 font-bold text-grey">
+                            Conheça os <span class="accent-color">pilares</span> principais
+                        </h2>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <p class="font-changa font-20 font-medium text-grey mb-0">
+                            Somos a integração em educação e mercado de trabalho para superar barreiras de ascensão profissional de pessoas negras no Brasil
+                        </p>
+                    </div>
                 </div>
-                <div class="col-lg-6">
-                    <p class="font-changa font-20 font-medium text-grey mb-0">
-                    Somos a integração em educação e mercado de trabalho para superar barreiras de ascensão profissional de pessoas negras no Brasil
-                    </p>
+
+                <!-- Navegação / Seletores -->
+                <div class="row g-3 mb-4 col-12 col-lg-11">
+                    @foreach($impactSections as $index => $impactSection)
+                        <div class="col-md-4 pe-lg-0">
+                            <button
+                                type="button"
+                                class="pillar-card {{ $index === 0 ? 'active' : '' }}"
+                                onclick="changeTab('impact-section-{{ $impactSection->id }}', this)"
+                            >
+                                <div class="pillar-icon-box bg-accent-color">
+                                    @if(!empty($impactSection->path_icon))
+                                        <img
+                                            src="{{ asset('storage/' . $impactSection->path_icon) }}"
+                                            alt="{{ $impactSection->title }}"
+                                            class="img-fluid"
+                                        >
+                                    @else
+                                        <i class="bi bi-bar-chart-fill"></i>
+                                    @endif
+                                </div>
+
+                                <span class="font-changa font-20 font-medium">
+                                    {{ $impactSection->title }}
+                                </span>
+                            </button>
+                        </div>
+                    @endforeach
                 </div>
+
+                <!-- Conteúdos Dinâmicos -->
+                <div class="tab-content-container col-12 col-lg-11">
+
+                    @foreach($impactSections as $index => $impactSection)
+                        <div
+                            id="impact-section-{{ $impactSection->id }}"
+                            class="row align-items-center g-4 tab-pane {{ $index === 0 ? 'active' : '' }}"
+                        >
+
+                            <div class="col-lg-6">
+
+                                @if(!empty($impactSection->content_title))
+                                    <h3 class="font-changa font-26 font-bold mb-2">
+                                        {{ $impactSection->content_title }}
+                                    </h3>
+                                @endif
+
+                                @if(!empty($impactSection->content_text))
+                                    <p class="font-changa font-15 font-medium text-grey mb-4">
+                                        {!! $impactSection->content_text !!}
+                                    </p>
+                                @endif
+
+                                @if($impactSection->metrics->isNotEmpty())
+                                    @foreach($impactSection->metrics as $metric)
+                                        <div class="progress-container me-lg-4 mb-3">
+                                            <div class="progress-label-group font-changa font-14 font-bold text-grey mb-1">
+                                                <span>{{ $metric->title }}</span>
+                                                <span>{{ rtrim(rtrim(number_format((float) str_replace(',', '.', $metric->value), 2, '.', ''), '0'), '.') }}%</span>
+                                            </div>
+
+                                            <div class="custom-progress">
+                                                <div
+                                                    class="custom-progress-bar"
+                                                    style="width: {{ min((float) str_replace(',', '.', $metric->value), 100) }}%;"
+                                                ></div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+
+                            </div>
+
+                            <div class="col-lg-6">
+                                @if(!empty($impactSection->path_image))
+                                    <img
+                                        src="{{ asset('storage/' . $impactSection->path_image) }}"
+                                        alt="{{ $impactSection->content_title ?: $impactSection->title }}"
+                                        class="content-image"
+                                    >
+                                @endif
+                            </div>
+
+                        </div>
+                    @endforeach
+
+                </div>
+
             </div>
 
-            <!-- Navegação / Seletores (Pilares) -->
-            <div class="row g-3 mb-4 col-12 col-lg-11">
-                <div class="col-md-4 pe-lg-0">
-                    <button class="pillar-card active" onclick="changeTab('educacao', this)">
-                        <div class="pillar-icon-box bg-accent-color">
-                            <i class="bi bi-triangle"></i>
-                        </div>
-                        <span class="font-changa font-20 font-medium">Educação</span>
-                    </button>
-                </div>
+            <img
+                src="{{ asset('build/client/images/themes/whi-web/firula-pilares.png') }}"
+                alt="firula pilares"
+                class="d-none d-lg-block position-absolute end-0 top-0 w-auto"
+                height="100%"
+            >
 
-                <div class="col-md-4 pe-lg-0">
-                    <button class="pillar-card" onclick="changeTab('acessibilidade', this)">
-                        <div class="pillar-icon-box bg-accent-color">
-                            <i class="bi bi-grid-fill"></i>
-                        </div>
-                        <span class="font-changa font-20 font-medium">Acessibilidade</span>
-                    </button>
-                </div>
-
-                <div class="col-md-4 pe-lg-0">
-                    <button class="pillar-card" onclick="changeTab('empregabilidade', this)">
-                        <div class="pillar-icon-box bg-accent-color">
-                            <i class="bi bi-person"></i>
-                        </div>
-                        <span class="font-changa font-20 font-medium">Empregabilidade</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Conteúdos Dinâmicos -->
-            <div class="tab-content-container col-12 col-lg-11">
-
-                <!-- Aba 1: Educação -->
-                <div id="educacao" class="row align-items-center g-4 tab-pane active">
-                    <div class="col-lg-6">
-                        <h3 class="font-changa font-26 font-bold mb-2">Métricas de alcance</h3>
-                        <p class="font-changa font-15 font-medium text-grey mb-4">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text of the printing and typesetting industry.
-                        </p>
-                        <div class="progress-container me-lg-4">
-                            <div class="progress-label-group font-changa font-14 font-bold text-grey mb-1">
-                                <span>Mulheres Negras formadas</span>
-                                <span>90%</span>
-                            </div>
-                            <div class="custom-progress">
-                                <div class="custom-progress-bar" style="width: 90%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop" alt="Educação" class="content-image">
-                    </div>
-                </div>
-
-                <!-- Aba 2: Acessibilidade -->
-                <div id="acessibilidade" class="row align-items-center g-4 tab-pane">
-                    <div class="col-lg-6">
-                        <h3 class="font-changa font-26 font-bold mb-2">Inclusão Digital e Física</h3>
-                        <p class="font-changa font-15 font-medium text-grey mb-4">
-                            Garantimos que todas as plataformas, cursos e ferramentas sejam acessíveis a pessoas com deficiência e pessoas de regiões com pouca infraestrutura.
-                        </p>
-                        <div class="progress-container me-lg-4">
-                            <div class="progress-label-group font-changa font-14 font-bold text-grey mb-1">
-                                <span>Plataformas Acessíveis</span>
-                                <span>85%</span>
-                            </div>
-                            <div class="custom-progress">
-                                <div class="custom-progress-bar" style="width: 85%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=800&auto=format&fit=crop" alt="Acessibilidade" class="content-image">
-                    </div>
-                </div>
-
-                <!-- Aba 3: Empregabilidade -->
-                <div id="empregabilidade" class="row align-items-center g-4 tab-pane">
-                    <div class="col-lg-6">
-                        <h3 class="font-changa font-26 font-bold mb-2">Conexão com o Mercado</h3>
-                        <p class="font-changa font-15 font-medium text-grey mb-4">
-                            Conectamos os talentos com grandes empresas parceiras promovendo contratações inclusivas e oportunidades de liderança contínua.
-                        </p>
-                        <div class="progress-container me-lg-4">
-                            <div class="progress-label-group font-changa font-14 font-bold text-grey mb-1">
-                                <span>Taxa de Contratação</span>
-                                <span>78%</span>
-                            </div>
-                            <div class="custom-progress">
-                                <div class="custom-progress-bar" style="width: 78%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop" alt="Empregabilidade" class="content-image">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <img src="{{asset('build/client/images/themes/whi-web/firula-pilares.png')}}" alt="firula pilares" class="d-none d-lg-block position-absolute end-0 top-0 w-auto" height="100%">
-    </section>
+        </section>
+    @endif
 
     <!-- Our Exhibitions Section Start -->
     <section id="our-exhibitions" class="our-exhibitions bg-secondary-color position-relative py-5">
@@ -361,7 +350,7 @@
             @endif
 
             <!-- Swiper Carousel Start -->
-            <div class="swiper exhibition-swiper col-12 col-lg-10">
+            <div class="swiper exhibition-swiper col-11 col-lg-10">
                 <div class="swiper-wrapper">
                     @foreach($benefitForPersonas as $index => $benefit)
                         <div class="swiper-slide">
@@ -502,7 +491,7 @@
                     </div>
                     @if ($sections['advantages_enterprise']->link <> null)                        
                         <div class="col-12 col-lg-4 text-lg-end mt-3 mt-lg-0">
-                            <a href="{{ $sections['advantages_enterprise']->link }}" target="_blank" rel="noopener noreferrer" class="rounded-pill d-table m-auto me-lg-0 py-2 px-3 px-lg-4 font-changa bg-button-one color-button-one font-18 font-medium text-decoration-none hover-zoom">
+                            <a href="{{ $sections['advantages_enterprise']->link }}" target="_blank" rel="noopener noreferrer" class="rounded-pill d-table m-auto ms-0 me-lg-0 py-2 px-3 px-lg-4 font-changa bg-button-one color-button-one font-18 font-medium text-decoration-none hover-zoom">
                                 {{ $sections['advantages_enterprise']->btn_title }}
                                 <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"></path>
@@ -742,10 +731,10 @@
     @if (isset($letsgo))
         <section class="lets-go pt-5 pb-0 position-relative">
             <div class="container">
-                <div class="row justify-content-between align-items-center">
+                <div class="row flex-column-reverse flex-md-row justify-content-between align-items-center">
                     @if ($letsgo->path_image <> null)                    
-                        <div class="content-left col-12 col-lg-3">
-                            <img src="{{asset('storage/' . $letsgo->path_image)}}" alt="Carro de entrega" class="w-100">
+                        <div class="content-left text-center col-12 col-lg-3 mt-3 mt-lg-0">
+                            <img src="{{asset('storage/' . $letsgo->path_image)}}" alt="Tamiles Alves" class="w-auto tamiles" height="470">
                         </div>
                     @endif
                     <div class="content-left col-12 col-lg-8 mt-3 mt-lg-0">
@@ -753,9 +742,9 @@
                             {{$letsgo->title}}
                         </h3>
                         <p class="color-grey font-changa font-16 font-regular text-center text-lg-start">{{$letsgo->description}}</p>
-                        <div class="step-actions gap-3 d-flex mt-4 flex-wrap justify-content-center justify-content-lg-start">
+                        <div class="step-actions gap-2 d-flex mt-4 justify-content-center justify-content-lg-start">
                             @if (isset($contact) && $contact->link_tik_tok <> null)                                
-                                <a href="{{ $contact->link_tik_tok }}" class="rounded-pill py-2 px-4 hover-zoom btn-hero font-changa color-button-one bg-button-one font-16 font-medium text-decoration-none" rel="noopener noreferrer">
+                                <a href="{{ $contact->link_tik_tok }}" class="col-6 col-lg-4 text-center rounded-pill py-2 px-2 px-lg-4 hover-zoom btn-hero font-changa color-button-one bg-button-one font-16 font-medium text-decoration-none" rel="noopener noreferrer">
                                     Conectar no Linkedin
                                     <svg class="ms-1" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M12.7336 0H1.26641C0.567 0 0 0.567 0 1.26641V12.7336C0 13.433 0.567 14 1.26641 14H12.7336C13.433 14 14 13.433 14 12.7336V1.26641C14 0.567 13.433 0 12.7336 0ZM4.33219 12.0885C4.33219 12.2921 4.1672 12.4571 3.96365 12.4571H2.39484C2.19129 12.4571 2.0263 12.2921 2.0263 12.0885V5.51215C2.0263 5.3086 2.19129 5.14361 2.39484 5.14361H3.96365C4.1672 5.14361 4.33219 5.3086 4.33219 5.51215V12.0885ZM3.17925 4.52369C2.35614 4.52369 1.68887 3.85641 1.68887 3.03331C1.68887 2.2102 2.35614 1.54293 3.17925 1.54293C4.00235 1.54293 4.66962 2.2102 4.66962 3.03331C4.66962 3.85641 4.00239 4.52369 3.17925 4.52369ZM12.5307 12.1182C12.5307 12.3053 12.379 12.4571 12.1919 12.4571H10.5084C10.3213 12.4571 10.1696 12.3053 10.1696 12.1182V9.03352C10.1696 8.57335 10.3046 7.01704 8.967 7.01704C7.9295 7.01704 7.71906 8.08229 7.6768 8.56034V12.1182C7.6768 12.3053 7.52511 12.4571 7.33794 12.4571H5.70976C5.52263 12.4571 5.37091 12.3053 5.37091 12.1182V5.48247C5.37091 5.29534 5.52263 5.14361 5.70976 5.14361H7.33794C7.52507 5.14361 7.6768 5.29534 7.6768 5.48247V6.05621C8.06151 5.47887 8.63324 5.03326 9.85054 5.03326C12.5462 5.03326 12.5307 7.55164 12.5307 8.93537V12.1182Z" fill="var(--color-button-one)"/>
@@ -763,7 +752,7 @@
                                 </a>
                             @endif
                             @if (isset($contact) && $contact->link_insta <> null)                                
-                                <a href="{{ $contact->link_insta }}" class="rounded-pill py-2 px-4 hover-zoom btn-hero font-changa color-button-one bg-button-one font-16 font-medium text-decoration-none" rel="noopener noreferrer">
+                                <a href="{{ $contact->link_insta }}" class="col-6 col-lg-4 text-center rounded-pill py-2 px-2 px-lg-4 hover-zoom btn-hero font-changa color-button-one bg-button-one font-16 font-medium text-decoration-none" rel="noopener noreferrer">
                                     Seguir no Instagram
                                     <svg class="ms-1" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M9.75 0.75H3.75C2.09315 0.75 0.75 2.09315 0.75 3.75V9.75C0.75 11.4069 2.09315 12.75 3.75 12.75H9.75C11.4069 12.75 12.75 11.4069 12.75 9.75V3.75C12.75 2.09315 11.4069 0.75 9.75 0.75Z" stroke="var(--color-button-one)" stroke-width="1.5"/>
@@ -783,7 +772,7 @@
     @if (isset($directions) && $directions->count())
         <section id="team-section" class="team-section py-5">
             <div class="container z-3">
-                <div class="row g-4">
+                <div class="row g-4 w-mobile">
                     <!-- Card -->
                     @foreach ($directions as $representative)    
                         <div class="col-6 col-sm-6 col-lg-4 col-xl-3">
@@ -814,7 +803,7 @@
                                 <div class="modal-content border-0 p-4 p-md-5 position-relative" style="background-color: #EAE3D9; border-radius: 16px;">
                                     
                                     <!-- Botão Fechar -->
-                                    <button type="button" class="btn-close position-absolute top-0 end-0 m-4 shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <button type="button" class="btn-close position-absolute top-0 end-0 m-4 shadow-none" style="z-index: 99;" data-bs-dismiss="modal" aria-label="Close"></button>
 
                                     <div class="modal-body p-0">
                                         <div class="row align-items-start g-4 mt-0">
@@ -829,7 +818,7 @@
                                             <!-- Conteúdo com Nome, Cargo, Redes e Biografia -->
                                             <div class="col-12 col-md-7 text-start">
                                                 <div class="d-flex justify-content-between align-items-baseline mb-0">
-                                                    <h2 class="fw-bold mb-0 text-dark" style="font-size: 2rem;">{{$representative->title}}</h2>
+                                                    <h2 class="fw-bold mb-0 text-dark font-24" style="font-size: 2rem;">{{$representative->title}}</h2>
                                                     
                                                     <!-- Redes Sociais (Ajuste os links conforme seus dados) -->
                                                     <div class="d-flex gap-2 color-dark fs-5">

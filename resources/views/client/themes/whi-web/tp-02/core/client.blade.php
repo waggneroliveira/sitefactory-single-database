@@ -480,7 +480,6 @@
         /* Ajuste Responsivo para Dispositivos Móveis */
         @media (max-width: 768px) {
             .wa-float-wrapper {
-                bottom: 20px;
                 right: 20px;
             }
             .wa-tooltip {
