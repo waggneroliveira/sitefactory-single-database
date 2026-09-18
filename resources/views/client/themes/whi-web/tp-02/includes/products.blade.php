@@ -84,21 +84,32 @@
                     </div>
                 </div>
                 <div class="row justify-content-center mt-0">
-                    <div class="d-flex flex-wrap justify-content-between align-items-center col-10 px-0 pb-2 pb-lg-3 mt-2 mt-lg-3">
-                        <div class="user-card col-12 col-lg-7 mb-2 mb-lg-0">
-                            <div class="avatar">
-                                {{-- <img src="caminho-da-imagem.jpg" alt="Foto do usuário"> --}}
-                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M17.4107 34.8214C27.0264 34.8214 34.8214 27.0264 34.8214 17.4107C34.8214 7.79504 27.0264 0 17.4107 0C7.79504 0 0 7.79504 0 17.4107C0 27.0264 7.79504 34.8214 17.4107 34.8214Z" fill="#E5E7EB"/>
-                                <path d="M17.41 17.4104C20.6152 17.4104 23.2136 14.812 23.2136 11.6068C23.2136 8.40157 20.6152 5.80322 17.41 5.80322C14.2048 5.80322 11.6064 8.40157 11.6064 11.6068C11.6064 14.812 14.2048 17.4104 17.41 17.4104Z" fill="#9CA3AF"/>
-                                <path d="M5.80371 29.0176C5.80371 20.8926 11.6073 20.8926 17.4109 20.8926C23.2144 20.8926 29.018 20.8926 29.018 29.0176H5.80371Z" fill="#9CA3AF"/>
-                                </svg>
+                    <div class="d-flex flex-wrap {{$product->name <> null || $product->function <> null || $product->path_file <> null ? 'justify-content-between' : 'justify-content-center'}}  align-items-center col-10 px-0 pb-2 pb-lg-3 mt-2 mt-lg-3">
+                        @if ($product->name <> null || $product->function <> null || $product->path_file <> null)
+                            <div class="user-card col-12 col-lg-7 mb-2 mb-lg-0">
+                                <div class="avatar">
+                                    @if ($product->path_file <> null)
+                                        <img src="{{asset('storage/' .$product->path_file)}}" alt="{{$product->name}}" loading="lazy">
+                                    @else                                                    
+                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M17.4107 34.8214C27.0264 34.8214 34.8214 27.0264 34.8214 17.4107C34.8214 7.79504 27.0264 0 17.4107 0C7.79504 0 0 7.79504 0 17.4107C0 27.0264 7.79504 34.8214 17.4107 34.8214Z" fill="#E5E7EB"/>
+                                        <path d="M17.41 17.4104C20.6152 17.4104 23.2136 14.812 23.2136 11.6068C23.2136 8.40157 20.6152 5.80322 17.41 5.80322C14.2048 5.80322 11.6064 8.40157 11.6064 11.6068C11.6064 14.812 14.2048 17.4104 17.41 17.4104Z" fill="#9CA3AF"/>
+                                        <path d="M5.80371 29.0176C5.80371 20.8926 11.6073 20.8926 17.4109 20.8926C23.2144 20.8926 29.018 20.8926 29.018 29.0176H5.80371Z" fill="#9CA3AF"/>
+                                        </svg>
+                                    @endif
+                                </div>
+                                @if ($product->name || $product->function)                                                
+                                    <div class="user-info text-start">
+                                        @if ($product->name <> null)                                                        
+                                            <h3 class="user-name font-changa font-10 font-bold text-dark mb-0">{{$product->name}}</h3>
+                                        @endif
+                                        @if ($product->function <> null)                                                        
+                                            <span class="user-role font-changa font-10 font-medium text-dark">{{$product->function}}</span>
+                                        @endif
+                                    </div>
+                                @endif
                             </div>
-                            <div class="user-info text-start">
-                                <h3 class="user-name font-changa font-10 font-bold text-dark mb-0">TAMILES ALVES</h3>
-                                <span class="user-role font-changa font-10 font-medium text-dark">Professora de Inglês</span>
-                            </div>
-                        </div>
+                        @endif
         
                         @php
                             $isExternal = $product->link_type === 'external';
@@ -111,10 +122,10 @@
                                 ]);
                         @endphp
 
-                        <a href="{{ $href }}" class="col-12 col-lg-4" @if($isExternal) target="_blank" rel="noopener noreferrer" @endif>
+                        <a href="{{ $href }}" class="col-12 col-lg-4 col-xl-5" @if($isExternal) target="_blank" rel="noopener noreferrer" @endif>
 
-                            <span class="bg-button-one color-button-one rounded-2 py-2 px-2 btn-view font-changa font-11 font-medium col-12 d-flex align-items-center justify-content-center mb-0">
-                                Garantir agora
+                            <span class="bg-button-one color-button-one rounded-2 py-2 px-2 btn-view font-changa font-11 font-medium col-12 col-lg-11 {{$product->name <> null || $product->function <> null || $product->path_file <> null ? 'm-auto me-lg-0' : 'm-auto'}} d-flex align-items-center justify-content-center mb-0">
+                                {{$product->btn_title}}
                             </span>
 
                         </a>
