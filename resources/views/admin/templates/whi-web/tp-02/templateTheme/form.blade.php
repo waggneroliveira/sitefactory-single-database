@@ -333,36 +333,10 @@ RODAPÉ
         </div>
     </div>
 
-    <div class="col-12 col-lg-4">
-        <div class="mb-3">
-            <label class="form-label">Título Botão</label>
-            <input type="text" name="btn_title" class="form-control" value="{{ old('btn_title', $tenant->btn_title ?? '') }}">
-        </div>
-    </div>
-
-    <div class="col-12 col-lg-8">
-        <div class="mb-3">
-            <label class="form-label">Link Botão</label>
-            <input type="text" name="link" class="form-control" value="{{ old('link', $tenant->link ?? '') }}">
-        </div>
-    </div>
-
-    <div class="col-lg-4">
+    <div class="col-lg-12">
         <div class="mb-3">
             <label for="copyright" class="form-label">Copyright</label>
             <input type="text" name="copyright" class="form-control" id="copyright" value="{{ old('copyright', $tenant->copyright ?? '') }}" placeholder="Ex.: © 2026 Minha Empresa">
-        </div>
-    </div>
-    <div class="col-12 col-lg-5">
-        <div class="mb-3">
-            <label class="form-label">Descrição</label>
-            <input type="text" name="description" class="form-control" value="{{ old('description', $tenant->description ?? '') }}">
-        </div>
-    </div>
-    <div class="col-12 col-lg-3">
-        <div class="mb-3">
-            <label class="form-label">CNPJ</label>
-            <input type="text" id="cnpj" name="cnpj" class="form-control" value="{{ old('cnpj', $tenant->cnpj ?? '') }}">
         </div>
     </div>
 </div>

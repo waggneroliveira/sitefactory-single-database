@@ -489,7 +489,7 @@
         <nav class="navbar navbar-expand-lg navbar-light container py-3 px-3 px-lg-0">            
             <!-- Logo -->
             <a class="navbar-brand d-flex align-items-center" href="{{route('index')}}">
-                <img src="{{asset('storage/' .$tenantTheme->path_image_logo_header)}}" alt="{{ config('app.name') }}" height="65">
+                <img src="{{asset('storage/' .$tenantTheme->path_image_logo_header)}}" alt="{{ config('app.name') }}" height="65" loading="lazy">
             </a>
 
             <!-- Toggle mobile -->
@@ -542,160 +542,6 @@
         </nav>
     </header>
 
-    <div class="modal fade" id="modalDownloadFicha" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <form id="formDownloadFicha">
-                    @csrf
-
-                    <div class="modal-header flex-column">
-                        <div class="d-flex justify-content-end col-12">
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                        </div>
-                        <img src="{{asset('build/client/themes/whi-web/tp-02/images/girollato-footer.svg')}}" alt="{{ config('app.name') }}" height="40">
-                        <h5 class="modal-title text-white font-changa font-20 font-medium mt-3">Preencha o formulário para baixar o arquivo</h5>
-                    </div>
-
-                    <div class="modal-body">
-
-                        <div class="mb-3">
-                            <label class="form-label text-white font-changa font-15 font-regular">Nome</label>
-                            <input type="text" name="name" class="form-control" required>
-                        </div>
-
-                        <div class="row">
-                            <div class="mb-3 col-12 col-lg-6">
-                                <label class="form-label text-white font-changa font-15 font-regular">CNPJ</label>
-                                <input type="text" inputmode="numeric" name="cnpj" id="cnpj" class="form-control" required>
-                            </div>
-    
-                            <div class="mb-3 col-12 col-lg-6">
-                                <label class="form-label text-white font-changa font-15 font-regular">Telefone</label>
-                                <input type="text" inputmode="numeric" name="phone" id="phone" class="form-control" required>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="submit" class="btn bg-yellow border">
-                            Baixar arquivo
-                        </button>
-                    </div>
-
-                </form>
-
-            </div>
-        </div>
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-
-            const modal = new bootstrap.Modal(document.getElementById('modalDownloadFicha'));
-            const form = document.getElementById('formDownloadFicha');
-
-            let currentFile = null;
-
-            document.querySelectorAll('.btn-download-ficha').forEach(button => {
-
-                button.addEventListener('click', function(e){
-
-                    e.preventDefault();
-
-                    currentFile = this.getAttribute('href');
-
-                    modal.show();
-
-                });
-
-            });
-
-            form.addEventListener('submit', function(e){
-
-                e.preventDefault();
-
-                const formData = new FormData(form);
-
-                fetch("{{ route('download.ficha.store') }}", {
-                    method: "POST",
-                    headers: {
-                        "X-CSRF-TOKEN": document.querySelector('input[name=_token]').value
-                    },
-                    body: formData
-                })
-                .then(res => res.json())
-                .then(res => {
-
-                    if(res.success){
-
-                        modal.hide();
-
-                        // FORÇA DOWNLOAD
-                        const link = document.createElement('a');
-                        link.href = currentFile;
-                        link.setAttribute('download', '');
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-
-                        form.reset();
-
-                    }
-
-                });
-
-            });
-
-        });
-
-        // mascara CNPJ
-        function maskCNPJ(value) {
-
-            value = value.replace(/\D/g, '');
-
-            value = value.replace(/^(\d{2})(\d)/, '$1.$2');
-            value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
-            value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
-            value = value.replace(/(\d{4})(\d)/, '$1-$2');
-
-            return value.substring(0, 18);
-        }
-
-
-        // mascara celular
-        function maskPhone(value) {
-
-            value = value.replace(/\D/g, '');
-
-            value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
-            value = value.replace(/(\d{5})(\d)/, '$1-$2');
-
-            return value.substring(0, 15);
-        }
-
-
-        // aplicar máscaras
-        document.addEventListener('DOMContentLoaded', function () {
-
-            const cnpj = document.getElementById('cnpj');
-            const phone = document.getElementById('phone');
-
-            if(cnpj){
-                cnpj.addEventListener('input', function(){
-                    this.value = maskCNPJ(this.value);
-                });
-            }
-
-            if(phone){
-                phone.addEventListener('input', function(){
-                    this.value = maskPhone(this.value);
-                });
-            }
-
-        });
-    </script>
-
     <main>
         @yield('content') 
     </main>
@@ -713,14 +559,6 @@
                         $dimensions = file_exists($logoPath) ? @getimagesize($logoPath) : null;
                     @endphp
                     <img loading="lazy" src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ $tenantTheme->name }}" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
-                    @if ($tenantTheme->link <> null)                        
-                        <div class="mt-3 mt-lg-5">
-                            <a href="{{ $tenantTheme->link }}" target="_blank" rel="noopener noreferrer" class="bg-button-two color-button-two px-4 py-2 font-changa font-16 font-medium text-decoration-none hover-zoom">
-                                {{$tenantTheme->btn_title}}
-                                <i class="bi bi-arrow-right"></i>
-                            </a>
-                        </div>
-                    @endif
                 </div>
 
                 <!-- Mapa do site -->
@@ -887,22 +725,24 @@
 
     <a href="#" id="scroll-top" class="scroll-top bg-scroll d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
      
-    <script src="https://cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-    <!-- SweetAlert2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('build/client/bootstrap/js/bootstrap.bundle.js') }}"></script>
-    <script src="{{ asset('build/client/lgpd/script.js') }}"></script>
-    <script src="{{ asset('build/client/themes/whi-web/tp-02/js/default.js') }}"></script>
-    <script src="{{ asset('build/client/themes/whi-web/tp-02/js/gsap-efect.js') }}"></script>
-    <script src="{{ asset('build/client/js/default.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+
+    <script src="{{ asset('build/client/bootstrap/js/bootstrap.bundle.js') }}" defer></script>
+    <script src="{{ asset('build/client/lgpd/script.js') }}" defer></script>
+    <script src="{{ asset('build/client/themes/whi-web/tp-02/js/default.js') }}" defer></script>
+    <script src="{{ asset('build/client/themes/whi-web/tp-02/js/gsap-efect.js') }}" defer></script>
+    <script src="{{ asset('build/client/js/default.js') }}" defer></script>
 
     {{-- Modais alert --}}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            if (typeof Swal === 'undefined') return;
 
-            let successMessage = @json(session('success'));
-            let errorMessage = @json(session('error'));
+            const successMessage = @json(session('success'));
+            const errorMessage = @json(session('error'));
+
+            if (!successMessage && !errorMessage) return;
 
             const Toast = Swal.mixin({
                 toast: true,
@@ -911,15 +751,12 @@
                 timerProgressBar: true,
                 timer: 3000,
                 didOpen: (toast) => {
-
                     toast.addEventListener('mouseenter', Swal.stopTimer);
                     toast.addEventListener('mouseleave', Swal.resumeTimer);
-
                 }
             });
 
             if (successMessage) {
-
                 Toast.fire({
                     icon: 'success',
                     title: successMessage,
@@ -927,11 +764,9 @@
                     color: '#166534',
                     iconColor: '#22c55e'
                 });
-
             }
 
             if (errorMessage) {
-
                 Toast.fire({
                     icon: 'error',
                     title: errorMessage,
@@ -939,72 +774,111 @@
                     color: '#991b1b',
                     iconColor: '#ef4444'
                 });
-
             }
-
         });
     </script>
 
+    {{-- WhatsApp --}}
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            if (typeof gsap === "undefined") return;
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof gsap === 'undefined') return;
 
-            const waContainer = document.querySelector("#whatsapp-floating-container");
+            const waContainer = document.querySelector('#whatsapp-floating-container');
+
             if (!waContainer) return;
 
-            const waBtn = waContainer.querySelector(".wa-float-btn");
-            const waIcon = waContainer.querySelector(".wa-icon");
-            const waTooltip = waContainer.querySelector(".wa-tooltip");
-            const waBadge = waContainer.querySelector(".wa-badge");
+            const waBtn = waContainer.querySelector('.wa-float-btn');
+            const waIcon = waContainer.querySelector('.wa-icon');
+            const waTooltip = waContainer.querySelector('.wa-tooltip');
+            const waBadge = waContainer.querySelector('.wa-badge');
 
-            // Timeline de Entrada Principal
-            const tlEntry = gsap.timeline({ defaults: { ease: "back.out(1.7)", duration: 0.8 } });
+            if (!waBtn || !waIcon) return;
 
-            tlEntry
-                // Surge do canto inferior direito com escala
-                .from(waContainer, {
-                    scale: 0,
-                    opacity: 0,
-                    y: 40,
-                    delay: 1 // Aguarda 1s após carregar a página
-                })
-                // Entrada do Balão de Notificação com efeito Spring
-                .from(waTooltip, {
+            // Entrada principal
+            const tlEntry = gsap.timeline({
+                defaults: {
+                    ease: 'back.out(1.7)',
+                    duration: 0.8
+                }
+            });
+
+            tlEntry.from(waContainer, {
+                scale: 0,
+                opacity: 0,
+                y: 40,
+                delay: 1
+            });
+
+            if (waTooltip) {
+                tlEntry.from(waTooltip, {
                     x: 30,
                     opacity: 0,
                     scale: 0.8,
                     duration: 0.6
-                }, "-=0.3")
-                // Animação de Surgimento do Badge
-                .from(waBadge, {
+                }, '-=0.3');
+            }
+
+            if (waBadge) {
+                tlEntry.from(waBadge, {
                     scale: 0,
                     duration: 0.4
-                }, "-=0.4");
+                }, '-=0.4');
+            }
 
-            // Animação Periódica no Ícone para Chamar Atenção (A cada 6 segundos)
+            // Animação periódica do ícone
             gsap.to(waIcon, {
                 rotation: 15,
                 duration: 0.1,
                 repeat: 5,
                 yoyo: true,
                 repeatDelay: 6,
-                ease: "power1.inOut"
+                ease: 'power1.inOut'
             });
 
-            // Interatividade ao Passar o Mouse (Hover)
-            waBtn.addEventListener("mouseenter", () => {
-                gsap.to(waBtn, { scale: 1.1, duration: 0.3, ease: "power2.out" });
-                gsap.to(waIcon, { scale: 1.15, rotate: -10, duration: 0.3, ease: "power2.out" });
+            // Hover
+            waBtn.addEventListener('mouseenter', () => {
+                gsap.to(waBtn, {
+                    scale: 1.1,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+
+                gsap.to(waIcon, {
+                    scale: 1.15,
+                    rotate: -10,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+
                 if (waTooltip) {
-                    gsap.to(waTooltip, { x: -5, duration: 0.3, ease: "power2.out" });
+                    gsap.to(waTooltip, {
+                        x: -5,
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
                 }
             });
 
-            waBtn.addEventListener("mouseleave", () => {
-                gsap.to(waBtn, { scale: 1, duration: 0.3, ease: "power2.out" });
-                gsap.to(waIcon, { scale: 1, rotate: 0, duration: 0.3, ease: "power2.out" });
+            waBtn.addEventListener('mouseleave', () => {
+                gsap.to(waBtn, {
+                    scale: 1,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+
+                gsap.to(waIcon, {
+                    scale: 1,
+                    rotate: 0,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+
                 if (waTooltip) {
-                    gsap.to(waTooltip, { x: 0, duration: 0.3, ease: "power2.out" });
+                    gsap.to(waTooltip, {
+                        x: 0,
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
                 }
             });
         });
