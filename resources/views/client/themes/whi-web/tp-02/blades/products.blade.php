@@ -1,10 +1,10 @@
 @extends($theme->core('client'))
 
 @section('content')
-<div class="banner-inner blog container-fluid d-flex justify-content-center align-items-center flex-column position-relative" style="--banner-bg: url('../images/banner-product.png');">
-   <span class="color-yellow font-changa font-16 font-bold position-relative z-3 text-center">Produtos </span>
-   <h1 class="font-mobi font-changa font-40 font-bold text-white position-relative z-3 mt-2">Catálogo</h1>
-   <p class="font-changa font-15 font-regular text-white position-relative z-3">Confira aqui a seleção dos nossos melhores produtos.</p>
+<div class="banner-inner blog container-fluid d-flex justify-content-center align-items-start flex-column position-relative" style="--banner-bg: url('../images/banner-product.png');">
+    <div class="container">
+        <h1 class="font-mobi font-changa font-40 font-bold text-white position-relative z-3 mt-2">Mentorias exclusivas para VOCÊ</h1>
+    </div>
 </div>
 
 <div class="container">
