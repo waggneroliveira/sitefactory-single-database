@@ -454,7 +454,7 @@
             background: var(--primary-color);
         }
         #lgpd-banner button{
-            background: var(--primary-color);
+            background: var(--bg-button-one);
         }
         .list-service ul li::before {
             color: var(--primary-color);
