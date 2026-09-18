@@ -122,28 +122,23 @@ class ProductService
         $data = $request->all();
 
         $data['active'] = $request->active ? 1 : 0;
-
         $data['slug'] = Str::slug($request->title);
 
         // Formata o campo price
         $valorFormatado = $request->price;
 
         $valorNumerico = str_replace(
-            ['R$', ' ', ' ', "\u{A0}"],
+            ['R$', ' ', "\u{A0}"],
             '',
             $valorFormatado
         );
 
-        $valorNumerico = str_replace(
-            ',',
-            '.',
-            $valorNumerico
-        );
+        $valorNumerico = str_replace(',', '.', $valorNumerico);
 
         $data['price'] = floatval($valorNumerico);
 
+        // Sizes
         if (isset($data['sizes'])) {
-
             $sizes = array_values(
                 array_filter(
                     $request->sizes,
@@ -156,9 +151,7 @@ class ProductService
             $data['sizes'] = !empty($sizes)
                 ? json_encode($sizes)
                 : json_encode([]);
-
         } else {
-
             $data['sizes'] = null;
         }
 
@@ -166,14 +159,16 @@ class ProductService
 
         $manager = new ImageManager(new ImagickDriver());
 
+        /*
+        |--------------------------------------------------------------------------
+        | Imagem do produto
+        |--------------------------------------------------------------------------
+        */
         if ($request->hasFile('path_image')) {
-
             $file = $request->file('path_image');
-
             $mime = $file->getMimeType();
 
             if ($mime === 'image/svg+xml') {
-
                 $filename = Str::uuid() . '.svg';
 
                 Storage::disk('public')->putFileAs(
@@ -181,9 +176,7 @@ class ProductService
                     $file,
                     $filename
                 );
-
             } else {
-
                 $filename = Str::uuid() . '.avif';
 
                 $image = $manager
@@ -200,17 +193,50 @@ class ProductService
             $data['path_image'] = $pathUpload . $filename;
         }
 
+        /*
+        |--------------------------------------------------------------------------
+        | Arquivo / imagem
+        |--------------------------------------------------------------------------
+        */
         if ($request->hasFile('path_file')) {
-
             $file = $request->file('path_file');
+            $mime = $file->getMimeType();
 
-            $filename = Str::uuid() . '.pdf';
+            // SVG
+            if ($mime === 'image/svg+xml') {
+                $filename = Str::uuid() . '.svg';
 
-            Storage::disk('public')->putFileAs(
-                $pathUpload,
-                $file,
-                $filename
-            );
+                Storage::disk('public')->putFileAs(
+                    $pathUpload,
+                    $file,
+                    $filename
+                );
+            }
+            // Qualquer imagem
+            elseif (str_starts_with($mime, 'image/')) {
+                $filename = Str::uuid() . '.avif';
+
+                $image = $manager
+                    ->read($file)
+                    ->toAvif(quality: 90)
+                    ->toString();
+
+                Storage::disk('public')->put(
+                    $pathUpload . $filename,
+                    $image
+                );
+            }
+            // Outros arquivos
+            else {
+                $extension = $file->getClientOriginalExtension();
+                $filename = Str::uuid() . '.' . $extension;
+
+                Storage::disk('public')->putFileAs(
+                    $pathUpload,
+                    $file,
+                    $filename
+                );
+            }
 
             $data['path_file'] = $pathUpload . $filename;
         }
@@ -218,21 +244,17 @@ class ProductService
         DB::beginTransaction();
 
         try {
-
             $product = Product::create($data);
 
             DB::commit();
 
             return $product;
-
         } catch (\Exception $e) {
-
             DB::rollBack();
 
             throw $e;
         }
     }
-
 
     public function uploadImageCkeditor(Request $request): array
     {
@@ -293,48 +315,23 @@ class ProductService
         $data = $request->all();
 
         $data['active'] = $request->active ? 1 : 0;
-
         $data['slug'] = Str::slug($request->title);
 
         // Formata o campo price
         $valorFormatado = $request->price;
 
         $valorNumerico = str_replace(
-            ['R$', ' ', ' ', "\u{A0}"],
+            ['R$', ' ', "\u{A0}"],
             '',
             $valorFormatado
         );
 
-        $valorNumerico = str_replace(
-            ',',
-            '.',
-            $valorNumerico
-        );
+        $valorNumerico = str_replace(',', '.', $valorNumerico);
 
         $data['price'] = floatval($valorNumerico);
 
-        $request->validate([
-            'sizes' => 'array|nullable',
-            'sizes.*' => 'string|max:50|nullable',
-
-            'path_image' => [
-                'nullable',
-                'file',
-                'image',
-                'max:2048',
-                'mimes:jpg,jpeg,png,gif,webp,svg'
-            ],
-
-            'path_file' => [
-                'nullable',
-                'file',
-                'mimes:pdf',
-                'max:3072'
-            ],
-        ]);
-
+        // Sizes
         if (isset($data['sizes'])) {
-
             $sizes = array_values(
                 array_filter(
                     $request->sizes,
@@ -347,9 +344,7 @@ class ProductService
             $data['sizes'] = !empty($sizes)
                 ? json_encode($sizes)
                 : json_encode([]);
-
         } else {
-
             $data['sizes'] = null;
         }
 
@@ -357,15 +352,16 @@ class ProductService
 
         $manager = new ImageManager(new ImagickDriver());
 
-        // Imagem do produto
+        /*
+        |--------------------------------------------------------------------------
+        | Imagem do produto
+        |--------------------------------------------------------------------------
+        */
         if ($request->hasFile('path_image')) {
-
             $file = $request->file('path_image');
-
             $mime = $file->getMimeType();
 
             if ($mime === 'image/svg+xml') {
-
                 $filename = Str::uuid() . '.svg';
 
                 Storage::disk('public')->putFileAs(
@@ -373,9 +369,7 @@ class ProductService
                     $file,
                     $filename
                 );
-
             } else {
-
                 $filename = Str::uuid() . '.avif';
 
                 $image = $manager
@@ -390,7 +384,6 @@ class ProductService
             }
 
             if (!empty($product->path_image)) {
-
                 Storage::disk('public')->delete(
                     $product->path_image
                 );
@@ -399,14 +392,16 @@ class ProductService
             $data['path_image'] = $pathUpload . $filename;
         }
 
-        // Remover imagem
+        /*
+        |--------------------------------------------------------------------------
+        | Remover imagem do produto
+        |--------------------------------------------------------------------------
+        */
         if (
             $request->has('delete_path_image') &&
             !$request->hasFile('path_image')
         ) {
-
             if (!empty($product->path_image)) {
-
                 Storage::disk('public')->delete(
                     $product->path_image
                 );
@@ -415,37 +410,77 @@ class ProductService
             $data['path_image'] = null;
         }
 
-        // Arquivo PDF
+        /*
+        |--------------------------------------------------------------------------
+        | Arquivo / imagem
+        |--------------------------------------------------------------------------
+        */
         if ($request->hasFile('path_file')) {
-
             $file = $request->file('path_file');
+            $mime = $file->getMimeType();
 
-            $filename = Str::uuid() . '.pdf';
+            /*
+            * Se for SVG, mantém SVG.
+            */
+            if ($mime === 'image/svg+xml') {
+                $filename = Str::uuid() . '.svg';
 
+                Storage::disk('public')->putFileAs(
+                    $pathUpload,
+                    $file,
+                    $filename
+                );
+            }
+            /*
+            * Se for imagem, converte para AVIF.
+            */
+            elseif (str_starts_with($mime, 'image/')) {
+                $filename = Str::uuid() . '.avif';
+
+                $image = $manager
+                    ->read($file)
+                    ->toAvif(quality: 90)
+                    ->toString();
+
+                Storage::disk('public')->put(
+                    $pathUpload . $filename,
+                    $image
+                );
+            }
+            /*
+            * Se não for imagem, mantém o arquivo original.
+            */
+            else {
+                $extension = $file->getClientOriginalExtension();
+                $filename = Str::uuid() . '.' . $extension;
+
+                Storage::disk('public')->putFileAs(
+                    $pathUpload,
+                    $file,
+                    $filename
+                );
+            }
+
+            // Remove arquivo anterior
             if (!empty($product->path_file)) {
-
                 Storage::disk('public')->delete(
                     $product->path_file
                 );
             }
 
-            Storage::disk('public')->putFileAs(
-                $pathUpload,
-                $file,
-                $filename
-            );
-
             $data['path_file'] = $pathUpload . $filename;
         }
 
-        // Remover PDF
+        /*
+        |--------------------------------------------------------------------------
+        | Remover arquivo / imagem
+        |--------------------------------------------------------------------------
+        */
         if (
             $request->has('delete_path_file') &&
             !$request->hasFile('path_file')
         ) {
-
             if (!empty($product->path_file)) {
-
                 Storage::disk('public')->delete(
                     $product->path_file
                 );
@@ -457,20 +492,16 @@ class ProductService
         DB::beginTransaction();
 
         try {
-
             $product->fill($data)->save();
 
             DB::commit();
 
             return $product;
-
         } catch (\Exception $e) {
-
             DB::rollBack();
 
             throw $e;
         }
-
     }
 
     public function delete(Product $product): void

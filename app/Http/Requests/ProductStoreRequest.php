@@ -30,7 +30,7 @@ class ProductStoreRequest extends FormRequest
             'sizes'   => 'array|nullable',
             'sizes.*' => 'string|max:50|nullable',
             'path_image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpg,jpeg,png,gif'],
-            'path_file' => ['nullable', 'file', 'mimes:pdf', 'max:3072'],
+            'path_file' => ['nullable', 'file', 'max:3072'],
             'active' => 'boolean',
             'sorting' => ['nullable', 'integer'],
         ];

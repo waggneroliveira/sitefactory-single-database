@@ -529,7 +529,7 @@
 
                 <!-- Botão -->
                 <div class="d-flex justify-content-center gap-2 align-items-center btn-header bg-button-one rounded-pill py-2 px-3 px-lg-3 px-xl-4 hover-zoom">
-                    <a class="font-changa font-15 font-medium text-decoration-none color-button-one">
+                    <a href="{{$tenantTheme->link_header}}" target="_blank" rel="noopener noreferrer" class="font-changa font-15 font-medium text-decoration-none color-button-one">
                         {{ $tenantTheme->btn_title_header }}
                     </a>
 

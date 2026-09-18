@@ -14,7 +14,7 @@
                             <div class="hero-bg">
                                 <picture>
                                     <source srcset="{{ asset('storage/' . $slide->path_image_mobile) }}" media="(max-width: 530px)">
-                                    <img src="{{ asset('storage/' . $slide->path_image) }}" alt="Distribuição PET" title="Distribuição PET">
+                                    <img src="{{ asset('storage/' . $slide->path_image) }}" alt="{{$slide->title}}" title="{{$slide->title}}">
                                 </picture>
                             </div>
 
@@ -134,7 +134,7 @@
 
                                         <div class="text-end">
                                             <div class="icons">
-                                                <img src="{{ asset('storage/' .$lineOfTime->path_image) }}" alt="{{ $lineOfTime->title }}">
+                                                <img src="{{ asset('storage/' .$lineOfTime->path_image) }}" alt="{{ $lineOfTime->title }}" loading="lazy">
                                             </div>
                                         </div>
 
@@ -183,7 +183,7 @@
 
                                         <div class="text-start">
                                             <div class="icons">
-                                                <img src="{{ asset('storage/' .$lineOfTime->path_image) }}" alt="{{ $lineOfTime->title }}">
+                                                <img src="{{ asset('storage/' .$lineOfTime->path_image) }}" alt="{{ $lineOfTime->title }}" loading="lazy">
                                             </div>
                                         </div>
 
@@ -199,7 +199,7 @@
                     </div>
                 </div>
             </div>
-            <img src="{{asset('build/client/images/themes/whi-web/firula-linha-do-tempo.png')}}" alt="firula linha do tempo" class="position-absolute start-0 bottom-0">
+            <img src="{{asset('build/client/images/themes/whi-web/firula-linha-do-tempo.png')}}" alt="firula linha do tempo" class="position-absolute start-0 bottom-0" loading="lazy">
         </section>
     @endif
 
@@ -238,6 +238,7 @@
                                             src="{{ asset('storage/' . $impactSection->path_icon) }}"
                                             alt="{{ $impactSection->title }}"
                                             class="img-fluid"
+                                            loading="lazy"
                                         >
                                     @else
                                         <i class="bi bi-bar-chart-fill"></i>
@@ -301,6 +302,7 @@
                                         src="{{ asset('storage/' . $impactSection->path_image) }}"
                                         alt="{{ $impactSection->content_title ?: $impactSection->title }}"
                                         class="content-image"
+                                        loading="lazy"
                                     >
                                 @endif
                             </div>
@@ -317,6 +319,7 @@
                 alt="firula pilares"
                 class="d-none d-lg-block position-absolute end-0 top-0 w-auto"
                 height="100%"
+                loading="lazy"
             >
 
         </section>
@@ -361,7 +364,7 @@
                                     <div class="exhibition-item-image">
                                         <figure class="image-anime m-0">
                                             @if(!empty($benefit->path_image))
-                                                <img src="{{ url('storage/' . $benefit->path_image) }}" alt="{{ $benefit->title }}">
+                                                <img src="{{ url('storage/' . $benefit->path_image) }}" alt="{{ $benefit->title }}" loading="lazy">
                                             @endif
                                         </figure>
                                     </div>
@@ -370,13 +373,13 @@
                                 <div class="exhibition-item-header bg-secondary-color">
                                     <div class="icon-box mb-4">
                                         @if(!empty($benefit->path_icon))
-                                            <img src="{{ url('storage/' . $benefit->path_icon) }}" alt="{{ $benefit->title }}">
+                                            <img src="{{ url('storage/' . $benefit->path_icon) }}" alt="{{ $benefit->title }}" loading="lazy">
                                         @endif
                                     </div>
 
                                     <div class="exhibition-item-content">
                                         <h3>{{ $benefit->title }}</h3>
-                                        <p>{!! $benefit->text !!}</p>
+                                        <div>{!! $benefit->text !!}</div>
                                     </div>
                                 </div>
 
@@ -385,7 +388,7 @@
                                     <div class="exhibition-item-image">
                                         <figure class="image-anime m-0">
                                             @if(!empty($benefit->path_image))
-                                                <img src="{{ url('storage/' . $benefit->path_image) }}" alt="{{ $benefit->title }}">
+                                                <img src="{{ url('storage/' . $benefit->path_image) }}" alt="{{ $benefit->title }}" loading="lazy">
                                             @endif
                                         </figure>
                                     </div>
@@ -408,7 +411,7 @@
             </div>
             <!-- Swiper Carousel End -->
         </div>
-        <img src="{{asset('build/client/images/themes/whi-web/firula-exhibition-1.png')}}" alt="firula exhibition" class="position-absolute start-0 top-0 w-auto" height="100%">
+        <img src="{{asset('build/client/images/themes/whi-web/firula-exhibition-1.png')}}" alt="firula exhibition" class="position-absolute start-0 top-0 w-auto" height="100%" loading="lazy">
     </section>
     <!-- Our Exhibitions Section End -->
 
@@ -490,7 +493,7 @@
                         <h2 class="main-title font-changa font-50 font-bold mb-0 text-grey">{{ $sections['advantages_enterprise']->subtitle }}</h2>
                     </div>
                     @if ($sections['advantages_enterprise']->link <> null)                        
-                        <div class="col-12 col-lg-4 text-lg-end mt-3 mt-lg-0">
+                        <div class="btn-about col-12 col-lg-4 text-lg-end mt-3 mt-lg-0">
                             <a href="{{ $sections['advantages_enterprise']->link }}" target="_blank" rel="noopener noreferrer" class="rounded-pill d-table m-auto ms-0 me-lg-0 py-2 px-3 px-lg-4 font-changa bg-button-one color-button-one font-18 font-medium text-decoration-none hover-zoom">
                                 {{ $sections['advantages_enterprise']->btn_title }}
                                 <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -512,7 +515,7 @@
                     <!-- Left Banner Image -->
                     <div class="col-lg-4">
                         <div class="banner-card">
-                            <img src="{{ asset('storage/' . $enterpriseImage) }}" alt="Parceria de negócios" class="img-fluid">
+                            <img src="{{ asset('storage/' . $enterpriseImage) }}" alt="Parceria de negócios" class="img-fluid" loading="lazy">
                         </div>
                     </div>
                 @endif
@@ -529,7 +532,7 @@
                                                 <div class="feature-card">
                                                     <div class="icon-box">
                                                         @if(!empty($benefit->path_icon))
-                                                            <img src="{{ url('storage/' . $benefit->path_icon) }}" alt="{{ $benefit->title }}">
+                                                            <img src="{{ url('storage/' . $benefit->path_icon) }}" alt="{{ $benefit->title }}" loading="lazy">
                                                         @endif
                                                     </div>
 
@@ -603,19 +606,19 @@
                 </div>
                 
                 <!-- Produtos -->
-                <div class="row g-4 products w-mobile mt-5">
+                <div class="row g-4 products w-mobile mt-5 mb-5 mb-lg-0">
                     <!-- Produto -->
                     @foreach ($products as $product)                
                         <div class="col-6 col-sm-6 col-lg-4 col-xl-3 mb-2 mb-lg-3 product {{$product->category->slug}}">
                             <div class="product-card bg-white shadow-sm rounded-3 p-0 position-relative">
                                 <div class="image position-relative mb-0">
-                                    <img src="{{asset('storage/' . $product->path_image)}}" alt="{{$product->title}}" loading="lazy">
+                                    <img src="{{asset('storage/' . $product->path_image)}}" alt="{{$product->title}}" loading="lazy" loading="lazy">
                                 </div>
-                                <div class="p-2 p-lg-3 pb-2">
+                                <div class="px-2 px-lg-3 pt-2 pt-lg-3 pb-0">
                                     <h6 class="font-changa font-18 font-semibold text-dark text-start">{{$product->title}}</h6>
-                                    <p class="color-grey font-changa font-16 font-regular mb-0 text-start lh-sm">{{substr(strip_tags($product->description), 0, 50)}}...</p>
+                                    <p class="color-grey font-changa font-15 font-regular mb-0 text-start lh-sm border-bottom pb-2">{{substr(strip_tags($product->description), 0, 50)}}...</p>
                                 </div>
-                                <div class="row flex-wrap justify-content-center mt-0">
+                                <div class="row flex-wrap justify-content-center mt-2">
                                     <div class="btn-group m-auto m-lg-0 col-10 px-0 justify-content-center justify-content-lg-start" role="group">
                                         @php
                                             if (is_string($product->sizes)) {
@@ -649,7 +652,7 @@
                                                     };
                                                 @endphp
 
-                                                <button class="btn d-flex flex-column text-dark font-changa btn-sm me-2">
+                                                <button class="btn d-flex flex-column text-dark font-changa btn-sm m-auto p-0">
                                                     @if(isset($matches[1]))
                                                         <span class="fw-bold font-15">{{ $matches[1] }}</span>
 
@@ -673,21 +676,32 @@
                                     </div>
                                 </div>
                                 <div class="row justify-content-center mt-0">
-                                    <div class="d-flex flex-wrap justify-content-between align-items-center col-10 px-0 pb-2 pb-lg-3 mt-2 mt-lg-3">
-                                        <div class="user-card col-12 col-lg-7 mb-2 mb-lg-0">
-                                            <div class="avatar">
-                                                {{-- <img src="caminho-da-imagem.jpg" alt="Foto do usuário"> --}}
-                                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M17.4107 34.8214C27.0264 34.8214 34.8214 27.0264 34.8214 17.4107C34.8214 7.79504 27.0264 0 17.4107 0C7.79504 0 0 7.79504 0 17.4107C0 27.0264 7.79504 34.8214 17.4107 34.8214Z" fill="#E5E7EB"/>
-                                                <path d="M17.41 17.4104C20.6152 17.4104 23.2136 14.812 23.2136 11.6068C23.2136 8.40157 20.6152 5.80322 17.41 5.80322C14.2048 5.80322 11.6064 8.40157 11.6064 11.6068C11.6064 14.812 14.2048 17.4104 17.41 17.4104Z" fill="#9CA3AF"/>
-                                                <path d="M5.80371 29.0176C5.80371 20.8926 11.6073 20.8926 17.4109 20.8926C23.2144 20.8926 29.018 20.8926 29.018 29.0176H5.80371Z" fill="#9CA3AF"/>
-                                                </svg>
+                                    <div class="d-flex flex-wrap {{$product->name <> null || $product->function <> null || $product->path_file <> null ? 'justify-content-between' : 'justify-content-center'}}  align-items-center col-10 px-0 pb-2 pb-lg-3 mt-2 mt-lg-3">
+                                        @if ($product->name <> null || $product->function <> null || $product->path_file <> null)
+                                            <div class="user-card col-12 col-lg-7 mb-2 mb-lg-0">
+                                                <div class="avatar">
+                                                    @if ($product->path_file <> null)
+                                                        <img src="{{asset('storage/' .$product->path_file)}}" alt="{{$product->name}}" loading="lazy">
+                                                    @else                                                    
+                                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M17.4107 34.8214C27.0264 34.8214 34.8214 27.0264 34.8214 17.4107C34.8214 7.79504 27.0264 0 17.4107 0C7.79504 0 0 7.79504 0 17.4107C0 27.0264 7.79504 34.8214 17.4107 34.8214Z" fill="#E5E7EB"/>
+                                                        <path d="M17.41 17.4104C20.6152 17.4104 23.2136 14.812 23.2136 11.6068C23.2136 8.40157 20.6152 5.80322 17.41 5.80322C14.2048 5.80322 11.6064 8.40157 11.6064 11.6068C11.6064 14.812 14.2048 17.4104 17.41 17.4104Z" fill="#9CA3AF"/>
+                                                        <path d="M5.80371 29.0176C5.80371 20.8926 11.6073 20.8926 17.4109 20.8926C23.2144 20.8926 29.018 20.8926 29.018 29.0176H5.80371Z" fill="#9CA3AF"/>
+                                                        </svg>
+                                                    @endif
+                                                </div>
+                                                @if ($product->name || $product->function)                                                
+                                                    <div class="user-info text-start">
+                                                        @if ($product->name <> null)                                                        
+                                                            <h3 class="user-name font-changa font-10 font-bold text-dark mb-0">{{$product->name}}</h3>
+                                                        @endif
+                                                        @if ($product->function <> null)                                                        
+                                                            <span class="user-role font-changa font-10 font-medium text-dark">{{$product->function}}</span>
+                                                        @endif
+                                                    </div>
+                                                @endif
                                             </div>
-                                            <div class="user-info text-start">
-                                                <h3 class="user-name font-changa font-10 font-bold text-dark mb-0">TAMILES ALVES</h3>
-                                                <span class="user-role font-changa font-10 font-medium text-dark">Professora de Inglês</span>
-                                            </div>
-                                        </div>
+                                        @endif
                       
                                         @php
                                             $isExternal = $product->link_type === 'external';
@@ -702,8 +716,8 @@
 
                                         <a href="{{ $href }}" class="col-12 col-lg-4 col-xl-5" @if($isExternal) target="_blank" rel="noopener noreferrer" @endif>
 
-                                            <span class="bg-button-one color-button-one rounded-2 py-2 px-2 btn-view font-changa font-11 font-medium col-12 col-lg-11 m-auto me-lg-0 d-flex align-items-center justify-content-center mb-0">
-                                                Garantir agora
+                                            <span class="bg-button-one color-button-one rounded-2 py-2 px-2 btn-view font-changa font-11 font-medium col-12 col-lg-11 {{$product->name <> null || $product->function <> null || $product->path_file <> null ? 'm-auto me-lg-0' : 'm-auto'}} d-flex align-items-center justify-content-center mb-0">
+                                                {{$product->btn_title}}
                                             </span>
 
                                         </a>
@@ -734,7 +748,7 @@
                 <div class="row flex-column-reverse flex-md-row justify-content-between align-items-center">
                     @if ($letsgo->path_image <> null)                    
                         <div class="content-left text-center col-12 col-lg-3 mt-3 mt-lg-0">
-                            <img src="{{asset('storage/' . $letsgo->path_image)}}" alt="Tamiles Alves" class="w-auto tamiles" height="470">
+                            <img src="{{asset('storage/' . $letsgo->path_image)}}" alt="Tamiles Alves" class="w-auto tamiles" height="470" loading="lazy">
                         </div>
                     @endif
                     <div class="content-left col-12 col-lg-8 mt-3 mt-lg-0">
@@ -765,7 +779,7 @@
                     </div>
                 </div>
             </div>
-            <img src="{{asset('build/client/images/themes/whi-web/firula-letsgo.png')}}" alt="firula letsgo" class="position-absolute bottom-0 end-0">
+            <img src="{{asset('build/client/images/themes/whi-web/firula-letsgo.png')}}" alt="firula letsgo" class="position-absolute bottom-0 end-0" loading="lazy">
         </section>
     @endif
 
@@ -778,7 +792,7 @@
                         <div class="col-6 col-sm-6 col-lg-4 col-xl-3">
                             <div class="team-card position-relative">
                                 <div class="team-image bg-white">
-                                    <img src="{{asset('storage/' . $representative->path_image)}}" alt="{{$representative->title}}">
+                                    <img src="{{asset('storage/' . $representative->path_image)}}" alt="{{$representative->title}}" loading="lazy">
                                 </div>
                                 <div class="team-body shadow-md rounded-2 text-center position-absolute col-11 z-3 bg-white py-2 py-lg-3 px-1 px-lg-3 d-flex justify-content-between align-items-center">
                                     <div class="d-flex justify-content-start align-items-start flex-column">
@@ -812,7 +826,8 @@
                                                 <img src="{{asset('storage/' . $representative->path_image)}}" 
                                                     alt="{{$representative->title}}" 
                                                     class="img-fluid w-100 object-fit-contain" 
-                                                    style="border-radius: 24px; max-height: 300px;">
+                                                    style="border-radius: 24px; max-height: 300px;"
+                                                    loading="lazy">
                                             </div>
 
                                             <!-- Conteúdo com Nome, Cargo, Redes e Biografia -->

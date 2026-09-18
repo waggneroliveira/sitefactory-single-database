@@ -18,12 +18,24 @@
     </div>
 
     <div class="mb-3 col-12 col-lg-12">
-        <label for="title" class="form-label">Título <span class="text-danger">*</span></label>
+        <label for="title" class="form-label">Título da mentoria<span class="text-danger">*</span></label>
         <input type="text" name="title" class="form-control" id="title{{isset($product->id)?$product->id:''}}" value="{{isset($product)?$product->title:''}}" required placeholder="Digite seu nome">
+    </div>
+
+    <div class="row">
+        <div class="mb-3 col-12 col-lg-6">
+            <label for="name" class="form-label">Pessoa responsável</label>
+            <input type="text" name="name" class="form-control" id="name{{isset($product->id)?$product->id:''}}" value="{{isset($product)?$product->name:''}}" placeholder="Pessoa responsável">
+        </div>
+    
+        <div class="mb-3 col-12 col-lg-6">
+            <label for="function" class="form-label">Função do responsável</label>
+            <input type="text" name="function" class="form-control" id="function{{isset($product->id)?$product->id:''}}" value="{{isset($product)?$product->function:''}}" placeholder="Função do responsável">
+        </div>
     </div>
     
     <div class="mb-3 col-12">
-        <label for="sizes" class="form-label">Tamanhos do produto</label>
+        <label for="sizes" class="form-label">Informações da mentoria</label>
         
         <div id="sizes-wrapper" class="mb-3 d-flex">
             @if(isset($product) && $product->sizes)
@@ -147,6 +159,11 @@
     </div>
     
     <div class="mb-3">
+        <label for="btn_title" class="form-label">Título botão </label>
+        <input type="text" name="btn_title" value="{{isset($product)?$product->btn_title:''}}" class="form-control" id="btn_title" placeholder="Título botão">
+    </div>
+
+    <div class="mb-3">
         <label for="description" class="form-label">Breve descrição <span class="text-danger">*</span></label>
         <input type="text" name="description" value="{{isset($product)?$product->description:''}}" class="form-control" id="description" placeholder="Digite uma breve descrição" required>
     </div>
@@ -178,6 +195,15 @@
             <div class="mt-3">
                 <label for="path_image" class="form-label">Imagem de capa</label>
                 <input type="file" name="path_image" accept=".jpg,.jpeg,.png" data-plugins="dropify" data-default-file="{{isset($product)?$product->path_image<>''?url('storage/'.$product->path_image):'':''}}"  />
+                <p class="text-muted text-center mt-2 mb-0">{{__('dashboard.text_img_size')}} <b class="text-danger">2 MB</b>.</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mb-3">
+            <div class="mt-3">
+                <label for="path_file" class="form-label">Foto</label>
+                <input type="file" name="path_file" data-plugins="dropify" data-default-file="{{isset($product)?$product->path_file<>''?url('storage/'.$product->path_file):'':''}}"  />
                 <p class="text-muted text-center mt-2 mb-0">{{__('dashboard.text_img_size')}} <b class="text-danger">2 MB</b>.</p>
             </div>
         </div>
