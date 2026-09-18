@@ -33,7 +33,7 @@ class PartnerController extends Controller
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
         // Verifica permissão para visualizar slides
-        $check = checkPermission('partner', 'topico.visualizar', $settingTheme);
+        $check = checkPermission('partner', 'parceiro.visualizar', $settingTheme);
         if ($check !== true) {
             return $check; // retorna view 403
         }

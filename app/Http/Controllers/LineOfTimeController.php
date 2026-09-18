@@ -30,7 +30,7 @@ class LineOfTimeController extends Controller
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
         // Verifica permissão para visualizar slides
-        $check = checkPermission('lineOfTime', 'sesssao lets go.visualizar', $settingTheme);
+        $check = checkPermission('lineOfTime', 'linha do tempo.visualizar', $settingTheme);
         if ($check !== true) {
             return $check; // retorna view 403
         }

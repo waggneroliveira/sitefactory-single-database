@@ -147,7 +147,7 @@
         </div>
     </div>
 
-    {{-- ============================================================
+   {{-- ============================================================
         HOME
     ============================================================ --}}
     @if ($hasPageModules('home'))
@@ -189,7 +189,7 @@
                 @if (in_array('letsgo', $homeModules, true) && ($isSuper || $user->can('sesssao lets go.visualizar')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.letsgo.index'),
-                        'icon' => 'mdi-alert-circle',
+                        'icon' => 'mdi-rocket-launch',
                         'title' => 'Sessão Lets Go'
                     ])
                 @endif
@@ -197,7 +197,7 @@
                 @if (in_array('impactSection', $homeModules, true) && ($isSuper || $user->can('destaques.visualizar')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.impactSection.index'),
-                        'icon' => 'mdi-alert-circle',
+                        'icon' => 'mdi-star-circle',
                         'title' => 'Destaques'
                     ])
                 @endif
@@ -205,7 +205,7 @@
                 @if (in_array('lineOfTime', $homeModules, true) && ($isSuper || $user->can('linha do tempo.visualizar')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.lineOfTime.index'),
-                        'icon' => 'mdi-alert-circle',
+                        'icon' => 'mdi-timeline-clock',
                         'title' => 'Linha do tempo'
                     ])
                 @endif
@@ -253,7 +253,7 @@
                 @if (in_array('about', $homeModules, true) && ($isSuper || $user->can('sobre nos.visualizar')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.about.index'),
-                        'icon' => 'mdi-help-circle',
+                        'icon' => 'mdi-information-outline',
                         'title' => 'Sobre Nós'
                     ])
                 @endif
@@ -261,7 +261,7 @@
                 @if (in_array('advantage', $homeModules, true) && ($isSuper || $user->can('vantagens.visualizar')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.advantage.index'),
-                        'icon' => 'mdi-help-circle',
+                        'icon' => 'mdi-thumb-up-outline',
                         'title' => 'Vantagens'
                     ])
                 @endif
@@ -269,7 +269,7 @@
                 @if (in_array('benefits', $homeModules, true) && ($isSuper || $user->can('parametro.visualizar')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.benefitTopic.index'),
-                        'icon' => 'mdi-star',
+                        'icon' => 'mdi-tune',
                         'title' => 'Parâmetros'
                     ])
                 @endif
@@ -414,7 +414,7 @@
             <div class="mb-2">
                 <div class="d-flex align-items-center gap-2 mb-2">
                     <span class="badge bg-info bg-opacity-10 text-info p-2">
-                        <i class="mdi mdi-help-circle fs-5"></i>
+                        <i class="mdi mdi-information-outline fs-5"></i>
                     </span>
                     <h5 class="mb-0 fw-semibold">Sobre Nós</h5>
                 </div>
@@ -424,7 +424,7 @@
                     @if (in_array('about', $aboutModules, true) && ($isSuper || $user->can('sobre nos.visualizar')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.about.index'),
-                            'icon' => 'mdi-help-circle',
+                            'icon' => 'mdi-information-outline',
                             'title' => 'Sobre Nós'
                         ])
                     @endif
@@ -432,7 +432,7 @@
                     @if (in_array('benefits', $aboutModules, true) && ($isSuper || $user->can('parametro.visualizar')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.benefitTopic.index'),
-                            'icon' => 'mdi-star',
+                            'icon' => 'mdi-tune',
                             'title' => 'Parâmetros'
                         ])
                     @endif
@@ -821,7 +821,7 @@
     {{-- ============================================================
         FOOTER
     ============================================================ --}}
-    <footer class="footer">
+    <footer class="footer d-none d-lg-flex">
         <div class="container-fluid">
             <div class="row">
 

@@ -27,8 +27,8 @@
                                 <div class="row mb-2">
                                     <div class="col-12 d-flex justify-end">
                                         <div class="col-12 d-flex justify-content-end">
-                                            @if (Auth::user()->can('sesssao lets go.visualizar') &&
-                                            Auth::user()->can('sesssao lets go.criar') ||
+                                            @if (Auth::user()->can('linha do tempo.visualizar') &&
+                                            Auth::user()->can('linha do tempo.criar') ||
                                             Auth::user()->can('usuario.tornar usuario master') || 
                                             Auth::user()->hasRole('Super'))
                                                 @if (isset($lineOfTimes) && $lineOfTimes->count() < $lineOfTimesLimit)
@@ -102,8 +102,8 @@
                                                         @endswitch
                                                     </td>
                                                     <td class="d-flex gap-lg-1 justify-center">
-                                                        @if (Auth::user()->can('sesssao lets go.visualizar') &&
-                                                        Auth::user()->can('sesssao lets go.editar') ||
+                                                        @if (Auth::user()->can('linha do tempo.visualizar') &&
+                                                        Auth::user()->can('linha do tempo.editar') ||
                                                         Auth::user()->can('usuario.tornar usuario master') || 
                                                         Auth::user()->hasRole('Super'))
                                                             <button class="table-edit-button btn btn-primary text-black" data-bs-toggle="modal" data-bs-target="#modal-group-edit-{{$lineOfTime->id}}" style="padding: 2px 8px;width: 30px"><span class="mdi mdi-pencil"></span></button>
@@ -132,8 +132,8 @@
                                                             </div><!-- /.modal -->                                                        
                                                         @endif
 
-                                                        @if (Auth::user()->can('sesssao lets go.visualizar') &&
-                                                        Auth::user()->can('sesssao lets go.remover') ||
+                                                        @if (Auth::user()->can('linha do tempo.visualizar') &&
+                                                        Auth::user()->can('linha do tempo.remover') ||
                                                         Auth::user()->can('usuario.tornar usuario master') || 
                                                         Auth::user()->hasRole('Super'))
                                                             <form action="{{route('admin.dashboard.lineOfTime.destroy',['lineOfTime' => $lineOfTime->id])}}" style="width: 30px" method="POST">

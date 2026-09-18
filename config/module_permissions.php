@@ -63,7 +63,16 @@ return [
     ],
 
     'impactSection' => [
-        'permission' => 'Destaques',
+        'permission' => 'destaques',
+        'actions' => [
+            'criar',
+            'editar',
+            'visualizar',
+            'remover',
+        ],
+    ],
+    'impactSectionMetric' => [
+        'permission' => 'metricas',
         'actions' => [
             'criar',
             'editar',

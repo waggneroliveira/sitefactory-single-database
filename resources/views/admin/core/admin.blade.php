@@ -93,15 +93,15 @@
                         <ul class="menu">
                             <li class="menu-title">Listagem</li>
 
-                            {{-- ============================================================
+{{-- ============================================================
                             HOME
                             ============================================================ --}}
-                            @if ($theme->hasAnyModule(['slides','topics','statute','letsgo','faq_session','faq','testimonials','services']))
+                            @if ($theme->hasAnyModule(['slides','topics','statute','letsgo','impactSection','lineOfTime','faq_session','faq','testimonials','services','gallery','about','advantage','benefits','mission','planNetworkCategory','planNetwork','representatives','videos','service_locations','partner','contact','contact_leads','download_leads']))
                                 <li class="menu-item">
                                     <a href="#menuDashboards" data-bs-toggle="collapse" class="menu-link">
                                         <span class="menu-icon"><i class="mdi mdi-home"></i></span>
                                         <span class="menu-text">Home</span>
-                                        <span class="badge btn-green-whi rounded-pill ms-auto text-dark">{{ collect(['slides','topics','statute','letsgo','faq_session','faq','testimonials','services'])->filter(fn ($module) => $theme->hasModule($module))->count() }}</span>
+                                        <span class="badge btn-green-whi rounded-pill ms-auto text-dark">{{ collect(['slides','topics','statute','letsgo','impactSection','lineOfTime','faq_session','faq','testimonials','services','gallery','about','advantage','benefits','mission','planNetworkCategory','planNetwork','representatives','videos','service_locations','partner','contact','contact_leads','download_leads'])->filter(fn ($module) => $theme->hasModule($module))->count() }}</span>
                                     </a>
                                     <div class="collapse" id="menuDashboards">
                                         <ul class="sub-menu">
@@ -117,6 +117,12 @@
                                             @if ($theme->hasModule('letsgo') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('sesssao lets go.visualizar')))
                                                 <li class="menu-item"><a href="{{ route('admin.dashboard.letsgo.index') }}" class="menu-link"><span class="menu-text">Sessão Lets Go</span></a></li>
                                             @endif
+                                            @if ($theme->hasModule('impactSection') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('destaques.visualizar')))
+                                                <li class="menu-item"><a href="{{ route('admin.dashboard.impactSection.index') }}" class="menu-link"><span class="menu-text">Destaques</span></a></li>
+                                            @endif
+                                            @if ($theme->hasModule('lineOfTime') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('linha do tempo.visualizar')))
+                                                <li class="menu-item"><a href="{{ route('admin.dashboard.lineOfTime.index') }}" class="menu-link"><span class="menu-text">Linha do tempo</span></a></li>
+                                            @endif
                                             @if ($theme->hasModule('faq_session') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('sesssao faq.visualizar')))
                                                 <li class="menu-item"><a href="{{ route('admin.dashboard.sessaoFaq.index') }}" class="menu-link"><span class="menu-text">Sessão FAQ</span></a></li>
                                             @endif
@@ -129,6 +135,49 @@
                                             @if ($theme->hasModule('services') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('depoimento.visualizar')))
                                                 <li class="menu-item"><a href="{{ route('admin.dashboard.serviceItem.index') }}" class="menu-link"><span class="menu-text">Serviços</span></a></li>
                                             @endif
+                                            @if ($theme->hasModule('gallery') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('galeria.visualizar')))
+                                                <li class="menu-item"><a href="{{ route('admin.dashboard.gallery.index') }}" class="menu-link"><span class="menu-text">Galeria</span></a></li>
+                                            @endif
+                                            @if ($theme->hasModule('about') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('sobre nos.visualizar')))
+                                                <li class="menu-item"><a href="{{ route('admin.dashboard.about.index') }}" class="menu-link"><span class="menu-text">Sobre Nós</span></a></li>
+                                            @endif
+                                            @if ($theme->hasModule('advantage') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('vantagens.visualizar')))
+                                                <li class="menu-item"><a href="{{ route('admin.dashboard.advantage.index') }}" class="menu-link"><span class="menu-text">Vantagens</span></a></li>
+                                            @endif
+                                            @if ($theme->hasModule('benefits') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('parametro.visualizar')))
+                                                <li class="menu-item"><a href="{{ route('admin.dashboard.benefitTopic.index') }}" class="menu-link"><span class="menu-text">Parâmetros</span></a></li>
+                                            @endif
+                                            @if ($theme->hasModule('mission') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('missao visao e valores.visualizar')))
+                                                <li class="menu-item"><a href="{{ route('admin.dashboard.report.index') }}" class="menu-link"><span class="menu-text">Missão, Visão e Valores</span></a></li>
+                                            @endif
+                                            @if ($theme->hasModule('planNetworkCategory') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('categorias do plano.visualizar')))
+                                                <li class="menu-item"><a href="{{ route('admin.dashboard.planNetworkCategory.index') }}" class="menu-link"><span class="menu-text">Categorias do Plano</span></a></li>
+                                            @endif
+                                            @if ($theme->hasModule('planNetwork') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('plano.visualizar')))
+                                                <li class="menu-item"><a href="{{ route('admin.dashboard.planNetwork.index') }}" class="menu-link"><span class="menu-text">Planos de Internet</span></a></li>
+                                            @endif
+                                            @if ($theme->hasModule('representatives') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('representantes.visualizar')))
+                                                <li class="menu-item"><a href="{{ route('admin.dashboard.direction.index') }}" class="menu-link"><span class="menu-text">Representantes</span></a></li>
+                                            @endif
+                                            @if ($theme->hasModule('videos') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('video.visualizar')))
+                                                <li class="menu-item"><a href="{{ route('admin.dashboard.video.index') }}" class="menu-link"><span class="menu-text">Vídeos</span></a></li>
+                                            @endif
+                                            @if ($theme->hasModule('service_locations') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('onde atendemos.visualizar')))
+                                                <li class="menu-item"><a href="{{ route('admin.dashboard.serviceLocation.index') }}" class="menu-link"><span class="menu-text">Sessão Onde Atendemos</span></a></li>
+                                            @endif
+
+                                            @if ($theme->hasModule('partner') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('parceiro.visualizar')))
+                                                <li class="menu-item"><a href="{{ route('admin.dashboard.partner.index') }}" class="menu-link"><span class="menu-text">Parceiros</span></a></li>
+                                            @endif
+                                            @if ($theme->hasModule('contact') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('contato.visualizar')))
+                                                <li class="menu-item"><a href="{{ route('admin.dashboard.contact.index') }}" class="menu-link"><span class="menu-text">Contato</span></a></li>
+                                            @endif
+                                            @if ($theme->hasModule('contact_leads') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('lead contato.visualizar')))
+                                                <li class="menu-item"><a href="{{ route('admin.dashboard.formIndex.index') }}" class="menu-link"><span class="menu-text">Lead Contato</span></a></li>
+                                            @endif
+                                            @if ($theme->hasModule('download_leads') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master')))
+                                                <li class="menu-item"><a href="{{ route('admin.dashboard.leadDownload.index') }}" class="menu-link"><span class="menu-text">Lead Download</span></a></li>
+                                            @endif
                                         </ul>
                                     </div>
                                 </li>
@@ -137,12 +186,12 @@
                             {{-- ============================================================
                             SOBRE NÓS
                             ============================================================ --}}
-                            @if ($theme->hasAnyModule(['about','benefits','mission','representatives','videos','service_locations']))
+                            @if ($theme->hasAnyModule(['about','benefits','mission','planNetworkCategory','planNetwork','representatives','videos','service_locations']))
                                 <li class="menu-item">
                                     <a href="#about" data-bs-toggle="collapse" class="menu-link">
-                                        <span class="menu-icon"><i class="mdi mdi-help-circle"></i></span>
+                                        <span class="menu-icon"><i class="mdi mdi-information-outline"></i></span>
                                         <span class="menu-text">Sobre Nós</span>
-                                        <span class="badge btn-green-whi rounded-pill ms-auto text-dark">{{ collect(['about','benefits','mission','representatives','videos','service_locations'])->filter(fn ($module) => $theme->hasModule($module))->count() }}</span>
+                                        <span class="badge btn-green-whi rounded-pill ms-auto text-dark">{{ collect(['about','benefits','mission','planNetworkCategory','planNetwork','representatives','videos','service_locations'])->filter(fn ($module) => $theme->hasModule($module))->count() }}</span>
                                     </a>
                                     <div class="collapse" id="about">
                                         <ul class="sub-menu">
@@ -154,6 +203,12 @@
                                             @endif
                                             @if ($theme->hasModule('mission') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('missao visao e valores.visualizar')))
                                                 <li class="menu-item"><a href="{{ route('admin.dashboard.report.index') }}" class="menu-link"><span class="menu-text">Missão Visão e Valores</span></a></li>
+                                            @endif
+                                            @if ($theme->hasModule('planNetworkCategory') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('categorias do plano.visualizar')))
+                                                <li class="menu-item"><a href="{{ route('admin.dashboard.planNetworkCategory.index') }}" class="menu-link"><span class="menu-text">Categorias do Plano</span></a></li>
+                                            @endif
+                                            @if ($theme->hasModule('planNetwork') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('plano.visualizar')))
+                                                <li class="menu-item"><a href="{{ route('admin.dashboard.planNetwork.index') }}" class="menu-link"><span class="menu-text">Planos de Internet</span></a></li>
                                             @endif
                                             @if ($theme->hasModule('representatives') && (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can('representantes.visualizar')))
                                                 <li class="menu-item"><a href="{{ route('admin.dashboard.direction.index') }}" class="menu-link"><span class="menu-text">Representantes</span></a></li>

@@ -150,127 +150,130 @@
 {{-- ============================================================
     3. INDICADORES / MÉTRICAS
 ============================================================ --}}
+@if (Auth::user()->hasPermissionTo('metricas.visualizar') &&
+Auth::user()->hasPermissionTo('metricas.criar') ||
+Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
+Auth::user()->hasRole('Super'))
+    <div class="mt-4 mb-3">
 
-<div class="mt-4 mb-3">
+        <h5 class="mb-1">
+            Indicadores da seção
+        </h5>
 
-    <h5 class="mb-1">
-        Indicadores da seção
-    </h5>
+        <p class="text-muted mb-3">
+            Cadastre os números ou indicadores que serão exibidos junto ao conteúdo da seção.
+        </p>
 
-    <p class="text-muted mb-3">
-        Cadastre os números ou indicadores que serão exibidos junto ao conteúdo da seção.
-    </p>
+    </div>
 
-</div>
+    <div class="impact-metrics">
 
-<div class="impact-metrics">
+        @if(isset($impactSection) && $impactSection?->metrics)
 
-    @if(isset($impactSection) && $impactSection?->metrics)
+            @foreach($impactSection->metrics as $index => $metric)
 
-        @foreach($impactSection->metrics as $index => $metric)
+                <div class="metric-item border rounded p-3 mb-3">
 
-            <div class="metric-item border rounded p-3 mb-3">
+                    <input
+                        type="hidden"
+                        name="metrics[{{ $index }}][id]"
+                        value="{{ $metric->id }}"
+                    >
 
-                <input
-                    type="hidden"
-                    name="metrics[{{ $index }}][id]"
-                    value="{{ $metric->id }}"
-                >
+                    <div class="row g-3">
 
-                <div class="row g-3">
+                        <div class="col-md-6">
 
-                    <div class="col-md-6">
-
-                        <label class="form-label">
-                            Nome do indicador
-                        </label>
-
-                        <input
-                            type="text"
-                            name="metrics[{{ $index }}][title]"
-                            class="form-control"
-                            value="{{ old("metrics.$index.title", $metric->title) }}"
-                            placeholder="Ex.: Pessoas beneficiadas"
-                        >
-
-                    </div>
-
-                    <div class="col-md-6">
-
-                        <label class="form-label">
-                            Valor do indicador
-                        </label>
-
-                        <input
-                            type="text"
-                            name="metrics[{{ $index }}][value]"
-                            class="form-control"
-                            value="{{ old("metrics.$index.value", $metric->value) }}"
-                            placeholder="Ex.: 80"
-                        >
-
-                    </div>
-
-                    <div class="col-12">
-
-                        <div class="form-check">
-
-                            <input
-                                type="hidden"
-                                name="metrics[{{ $index }}][active]"
-                                value="0"
-                            >
-
-                            <input
-                                type="checkbox"
-                                name="metrics[{{ $index }}][active]"
-                                value="1"
-                                class="form-check-input"
-                                {{ old("metrics.$index.active", $metric->active) ? 'checked' : '' }}
-                            >
-
-                            <label class="form-check-label">
-                                {{ __('dashboard.active') }}?
+                            <label class="form-label">
+                                Nome do indicador
                             </label>
+
+                            <input
+                                type="text"
+                                name="metrics[{{ $index }}][title]"
+                                class="form-control"
+                                value="{{ old("metrics.$index.title", $metric->title) }}"
+                                placeholder="Ex.: Pessoas beneficiadas"
+                            >
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                Valor do indicador
+                            </label>
+
+                            <input
+                                type="text"
+                                name="metrics[{{ $index }}][value]"
+                                class="form-control"
+                                value="{{ old("metrics.$index.value", $metric->value) }}"
+                                placeholder="Ex.: 80"
+                            >
+
+                        </div>
+
+                        <div class="col-12">
+
+                            <div class="form-check">
+
+                                <input
+                                    type="hidden"
+                                    name="metrics[{{ $index }}][active]"
+                                    value="0"
+                                >
+
+                                <input
+                                    type="checkbox"
+                                    name="metrics[{{ $index }}][active]"
+                                    value="1"
+                                    class="form-check-input"
+                                    {{ old("metrics.$index.active", $metric->active) ? 'checked' : '' }}
+                                >
+
+                                <label class="form-check-label">
+                                    {{ __('dashboard.active') }}?
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-12 text-end">
+
+                            <button
+                                type="button"
+                                class="btn btn-sm btn-outline-danger remove-impact-metric"
+                            >
+                                <i class="mdi mdi-delete-outline me-1"></i>
+                                Remover indicador
+                            </button>
 
                         </div>
 
                     </div>
 
-                    <div class="col-12 text-end">
-
-                        <button
-                            type="button"
-                            class="btn btn-sm btn-outline-danger remove-impact-metric"
-                        >
-                            <i class="mdi mdi-delete-outline me-1"></i>
-                            Remover indicador
-                        </button>
-
-                    </div>
-
                 </div>
 
-            </div>
+            @endforeach
 
-        @endforeach
+        @endif
 
-    @endif
+    </div>
 
-</div>
+    <div class="d-flex justify-content-end mt-3">
 
-<div class="d-flex justify-content-end mt-3">
+        <button
+            type="button"
+            class="btn btn-outline-primary add-impact-metric"
+        >
+            <i class="mdi mdi-plus me-1"></i>
+            Adicionar indicador
+        </button>
 
-    <button
-        type="button"
-        class="btn btn-outline-primary add-impact-metric"
-    >
-        <i class="mdi mdi-plus me-1"></i>
-        Adicionar indicador
-    </button>
-
-</div>
-
+    </div>
+@endif
 
 {{-- ============================================================
     4. STATUS DO CADASTRO

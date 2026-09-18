@@ -24,11 +24,16 @@
             <div class="row">
 
                 <div class="col-2 mb-2">
+                    @if (Auth::user()->hasPermissionTo('galeria de produtos.visualizar') &&
+                    Auth::user()->hasPermissionTo('galeria de produtos.criar') ||
+                    Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
+                    Auth::user()->hasRole('Super'))
                     <button class="table-edit-button btn btn-primary text-black" data-bs-toggle="modal" data-bs-target="#modal-gellery-edit-{{$product->id}}">
                        {!! !$product->galleries->count() > 0 
                         ? '<i class="mdi mdi-plus-circle me-1"></i> Criar Galeria' 
                         : '<i class="mdi mdi-pencil me-1"></i> Editar Galeria' !!}
                     </button>
+                    @endif
                 </div>
 
                 <div class="modal fade" id="modal-gellery-edit-{{$product->id}}" tabindex="-1" role="dialog" aria-hidden="true">

@@ -31,7 +31,7 @@ class ImpactSectionController extends Controller
 
         $check = checkPermission(
             'impactSection',
-            'sesssao lets go.visualizar',
+            'destaques.visualizar',
             $settingTheme
         );
 

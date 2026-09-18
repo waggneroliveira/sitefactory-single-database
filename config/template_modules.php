@@ -291,18 +291,14 @@ return [
                     'partner',
                     'about',
                     'representatives',
+                    'contact',
+                    'contact_leads',
                 ],
 
                 'products' => [
                     'product_categories',
                     'products',
-                ],
-
-                'contact' => [
-                    'contact',
-                    'contact_leads',
-                ],
-
+                ]
             ],
         ],
 
