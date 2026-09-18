@@ -14,18 +14,13 @@
             <input type="text" name="function" class="form-control" id="function{{isset($depoiment->id)?$depoiment->id:''}}" value="{{isset($depoiment)?$depoiment->function:''}}" placeholder="Função/Cargo">
         </div>
 
-        <div class="mb-3 col-12 col-lg-6">
+        <div class="mb-3 col-12 col-lg-12">
             <label for="{{$textareaId}}" class="form-label text-white">Texto</label>
             <textarea name="text" id="{{$textareaId}}" placeholder="Texto" class="col-12" rows="10">
                 {!!isset($depoiment->text)?$depoiment->text: ''!!}
             </textarea>
         </div>
 
-        <div class="mb-3 col-12 col-lg-6">
-            <label for="path_image" class="form-label">Imagem </label>
-            <input type="file" name="path_image" data-plugins="dropify" data-default-file="{{isset($depoiment)?$depoiment->path_image<>''?url('storage/'.$depoiment->path_image):'':''}}"  />
-            <p class="text-muted text-center mt-2 mb-0">{{__('dashboard.text_img_size')}} <b class="text-danger">2 MB</b>.</p>
-        </div>
         
         <div class="mb-3">
             <div class="form-check">

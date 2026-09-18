@@ -49,16 +49,6 @@
                value="{{ $product?->description ?? '' }}"
                placeholder="Descrição">
     </div>
-    {{-- Link --}}
-    <div class="mb-3 col-lg-12">
-        <label for="link" class="form-label">Link</label>
-        <input type="text"
-               name="link"
-               class="form-control"
-               id="link"
-               value="{{ $product?->link ?? '' }}"
-               placeholder="Link">
-    </div>
 
     {{-- ATIVO --}}
     <div class="mb-3 col-12">

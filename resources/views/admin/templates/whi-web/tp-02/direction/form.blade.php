@@ -22,7 +22,7 @@
     <input type="text" name="facebook" class="form-control" id="facebook{{isset($direction->id)?$direction->id:''}}" value="{{isset($direction)?$direction->facebook:''}}" placeholder="Link facebook">
 </div>
 
-<div class="row mb-3">
+{{-- <div class="row mb-3">
     <div class="col-12 col-lg-7">
         <label for="email" class="form-label">E-mail</label>
         <input type="mail" name="email" class="form-control" id="email{{isset($direction->id)?$direction->id:''}}" value="{{isset($direction)?$direction->email:''}}" placeholder="Digite o e-mail">
@@ -37,7 +37,7 @@
             value="{{isset($direction)?$direction->whatsapp:''}}" 
             placeholder="(11) 91234-5678">
     </div>
-</div>
+</div> --}}
 <div class="mb-3 col-12 col-lg-12">
     <label for="{{$textareaId}}" class="form-label text-white">Texto</label>
     <textarea name="description" id="{{$textareaId}}" placeholder="Texto" class="col-12" rows="10">
