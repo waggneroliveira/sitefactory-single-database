@@ -283,25 +283,14 @@ return [
                 'home' => [
                     'slides',
                     'topics',
-                    'statute',
                     'advantage',
                     'letsgo',
                     'lineOfTime',
-                    'faq_session',
                     'impactSection',
-                    'faq',
                     'testimonials',
                     'partner',
-                    'services',
-                ],
-
-                'about' => [
                     'about',
-                    'benefits',
-                    'mission',
                     'representatives',
-                    'videos',
-                    'service_locations',
                 ],
 
                 'products' => [
@@ -312,7 +301,6 @@ return [
                 'contact' => [
                     'contact',
                     'contact_leads',
-                    'download_leads',
                 ],
 
             ],
