@@ -208,20 +208,22 @@
 
             <div class="container">
 
-                <!-- Cabeçalho -->
-                <div class="row mb-5 align-items-center">
-                    <div class="col-lg-6 mb-3 mb-lg-0">
-                        <h2 class="font-changa font-50 font-bold text-grey">
-                            Conheça os <span class="accent-color">pilares</span> principais
-                        </h2>
-                    </div>
+                @if ((isset($sections['pilar']) && $sections <> null))
+                    <!-- Cabeçalho -->
+                    <div class="row mb-5 align-items-center">
+                        <div class="col-lg-6 mb-3 mb-lg-0">
+                            <h2 class="font-changa font-50 font-bold text-grey">
+                                {{$sections['pilar']->title}} <span class="accent-color">{{$sections['pilar']->tag}}</span> {{$sections['pilar']->subtitle}}
+                            </h2>
+                        </div>
 
-                    <div class="col-lg-6">
-                        <p class="font-changa font-20 font-medium text-grey mb-0">
-                            Somos a integração em educação e mercado de trabalho para superar barreiras de ascensão profissional de pessoas negras no Brasil
-                        </p>
+                        <div class="col-lg-6">
+                            <p class="font-changa font-20 font-medium text-grey mb-0">
+                                {{$sections['pilar']->description}}
+                            </p>
+                        </div>
                     </div>
-                </div>
+                @endif
 
                 <!-- Navegação / Seletores -->
                 <div class="row g-3 mb-4 col-12 col-lg-11">

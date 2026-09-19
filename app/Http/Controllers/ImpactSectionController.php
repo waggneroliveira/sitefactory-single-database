@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ImpactSection;
 use App\Models\ImpactSectionMetric;
+use App\Models\ServiceSection;
 use App\Repositories\SettingThemeRepository;
 use App\Services\ThemeManager;
 use Illuminate\Http\Request;
@@ -39,6 +40,9 @@ class ImpactSectionController extends Controller
             return $check;
         }
 
+        $serviceSection = ServiceSection::whereIn('section', ['pilar'])
+        ->get()
+        ->keyBy('section');
         $impactSections = ImpactSection::with('metrics')->get();
 
         $theme = $themeManager;
@@ -46,6 +50,7 @@ class ImpactSectionController extends Controller
         $impactSectionsLimit = $themeManager->getLimit('impactSection', 0);
 
         return view('admin.blades.impactSection.index', compact(
+            'serviceSection',
             'impactSections',
             'impactSectionsLimit',
             'theme',
