@@ -1,64 +1,7 @@
 @extends($theme->core('client'))
 @section('content')
-    @if (isset($slides) && $slides->count() > 0)
-        <section class="hero">
-        <div class="swiper main-swiper">
+    @includeIf('client/modules/slide/hero-01/tp-01', $slides);
 
-            <div class="swiper-wrapper">
-                @foreach ($slides as $slide)
-                    <!-- Slide -->
-                    <div class="swiper-slide">
-                        <div class="hero-slide">
-
-                            <!-- Imagem full -->
-                            <div class="hero-bg">
-                                <picture>
-                                    <source srcset="{{ asset('storage/' . $slide->path_image_mobile) }}" media="(max-width: 530px)">
-                                    <img src="{{ asset('storage/' . $slide->path_image) }}" alt="Distribuição PET" title="Distribuição PET">
-                                </picture>
-                            </div>
-
-                            <!-- Conteúdo -->
-                            <div class="hero-content mt-0">
-                                <div class="container">
-                                <div class="row">
-                                    <div class="col-lg-6">
-
-                                        <span class="hero-subtitle font-changa font-15 font-regular" data-aos="fade-up" data-aos-delay="200">
-                                            {!!$slide->description!!}
-                                        </span>
-
-                                        <h1 class="hero-title font-changa font-40 font-bold" data-aos="fade-up" data-aos-delay="300">
-                                            {{$slide->title}}
-                                        </h1>
-
-                                        <div class="hero-actions d-flex" data-aos="fade-up" data-aos-delay="400">
-                                            @if ($slide->link <> null)                                    
-                                                <a href="{{$slide->link}}" target="_blank" rel="noopener noreferrer" class="btn-one col-auto py-1 py-lg-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
-                                                    {{$slide->btn_title}}
-                                                    <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"/>
-                                                    </svg>
-                                                </a>
-                                            @endif
-                                        </div>
-
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="overlay"></div>
-                        </div>
-                    </div>
-                @endforeach
-
-            </div>
-
-            <!-- Paginação -->
-            <div class="swiper-pagination news"></div>
-        </div>
-        </section>
-    @endif
 
     @if (isset($about) && $about <> null)
         <section id="about" class="about bg-light">

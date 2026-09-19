@@ -16,6 +16,10 @@ export default defineConfig({
                     dest: 'client'
                 },
                 {
+                    src: 'resources/assets/client/modules/',
+                    dest: 'client'
+                },
+                {
                     src: 'resources/assets/client/themes/',
                     dest: 'client'
                 },
