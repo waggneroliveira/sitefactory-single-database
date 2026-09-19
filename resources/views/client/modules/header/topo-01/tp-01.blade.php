@@ -52,3 +52,27 @@
         </div>
     </nav>
 </header>
+
+<style>
+    .position {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 10;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let e = document.getElementById("header");
+
+        function t() {
+        if (!e) return;
+        let t = window.innerWidth <= 991;
+        t || window.scrollY > 50 ? e.classList.add("bg-header") : e.classList.remove("bg-header")
+        }
+        t(), document.addEventListener("scroll", function() {
+        t(), n && (window.scrollY > 100 ? n.classList.add("active") : n.classList.remove("active"))
+        }), window.addEventListener("resize", t)
+  })
+</script>
