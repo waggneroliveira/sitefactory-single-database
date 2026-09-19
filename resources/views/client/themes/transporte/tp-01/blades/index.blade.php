@@ -1,5 +1,6 @@
 @extends($theme->core('client'))
 @section('content')
+
     @includeIf('client/modules/slide/hero-01/tp-01', $slides);
 
 
