@@ -255,27 +255,19 @@ return [
                     'faq',
                     'testimonials',
                     'services',
-                ],
-
-                'about' => [
+                    'contact',
                     'about',
                     'benefits',
                     'mission',
                     'representatives',
                     'videos',
                     'service_locations',
-                ],
-
-                'products' => [
-                    'brands',
-                    'product_categories',
-                    'products',
-                ],
-
-                'contact' => [
-                    'contact',
                     'contact_leads',
                     'download_leads',
+                ],
+
+                'templates' => [
+                    'templates',
                 ],
 
             ],

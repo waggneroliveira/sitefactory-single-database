@@ -8,6 +8,7 @@ use App\Models\Contact;
 use App\Models\Product;
 use App\Models\SeoGoogle;
 use App\Models\Slide;
+use App\Models\TemplateTheme;
 use App\Models\Topic;
 use App\Services\ThemeManager;
 use Illuminate\Http\Request;
@@ -505,8 +506,9 @@ class SeoGoogleController extends Controller
         | ONEPAGE
         |--------------------------------------------------------------------------
         |
-        | No Onepage, todas as seções estão na home.
-        | Portanto não criamos URLs artificiais para:
+        | No Onepage, todas as seções pertencem à home.
+        |
+        | Portanto, não criamos URLs independentes para:
         |
         | /sobre
         | /contato
@@ -525,9 +527,33 @@ class SeoGoogleController extends Controller
         |--------------------------------------------------------------------------
         | SOBRE
         |--------------------------------------------------------------------------
+        |
+        | IMPORTANTE:
+        |
+        | Usamos hasPage() e não hasModule().
+        |
+        | Se o template tiver:
+        |
+        | 'about' => [
+        |     'about',
+        |     'benefits',
+        |     ...
+        | ]
+        |
+        | então /sobre existe.
+        |
+        | Se tiver:
+        |
+        | 'home' => [
+        |     'about',
+        |     ...
+        | ]
+        |
+        | mas não tiver a chave 'about', então /sobre NÃO existe.
+        |
         */
 
-        if ($this->themeManager->hasModule('about')) {
+        if ($this->themeManager->hasPage('about')) {
             $about = About::query()
                 ->active()
                 ->latest('updated_at')
@@ -545,9 +571,13 @@ class SeoGoogleController extends Controller
         |--------------------------------------------------------------------------
         | CONTATO
         |--------------------------------------------------------------------------
+        |
+        | Só cria /contato se "contact" for uma página real
+        | no template atual.
+        |
         */
 
-        if ($this->themeManager->hasModule('contact')) {
+        if ($this->themeManager->hasPage('contact')) {
             $contact = Contact::query()
                 ->latest('updated_at')
                 ->first();
@@ -564,9 +594,13 @@ class SeoGoogleController extends Controller
         |--------------------------------------------------------------------------
         | BLOG
         |--------------------------------------------------------------------------
+        |
+        | Só cria /blog se "blog" for uma página real
+        | no template atual.
+        |
         */
 
-        if ($this->themeManager->hasModule('blog')) {
+        if ($this->themeManager->hasPage('blog')) {
             $this->addBlogUrls($urls);
         }
 
@@ -574,10 +608,29 @@ class SeoGoogleController extends Controller
         |--------------------------------------------------------------------------
         | PRODUTOS
         |--------------------------------------------------------------------------
+        |
+        | Só cria /produtos se "products" for uma página real
+        | no template atual.
+        |
         */
 
-        if ($this->themeManager->hasModule('products')) {
+        if ($this->themeManager->hasPage('products')) {
             $this->addProductUrls($urls);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | TEMPLATES
+        |--------------------------------------------------------------------------
+        |
+        | Só cria /templates se "templates" for uma página real
+        | no template atual.
+        |
+        */
+
+        
+        if ($this->themeManager->hasPage('templates')) {
+            $this->addTemplatesUrls($urls);
         }
 
         /*
@@ -592,6 +645,34 @@ class SeoGoogleController extends Controller
             ->all();
 
         return $this->renderSitemap($urls);
+    }
+
+    protected function addTemplatesUrls(array &$urls): void
+    {
+        $templates = TemplateTheme::query()
+            ->where('active', 1)
+            ->latest('updated_at')
+            ->get();
+
+        if ($templates->isEmpty()) {
+            return;
+        }
+
+        $urls[] = $this->makeUrl(
+            url('/templates'),
+            $templates->first()->updated_at
+        );
+
+        foreach ($templates as $template) {
+            if (!$template->slug) {
+                continue;
+            }
+
+            $urls[] = $this->makeUrl(
+                url('/template/' . $template->slug . '/' . $template->template_variation),
+                $template->updated_at
+            );
+        }
     }
 
     /**
