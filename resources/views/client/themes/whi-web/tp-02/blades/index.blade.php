@@ -148,7 +148,7 @@
 
                                             <div class="space16"></div>
 
-                                            <p class="mb-0">{{ $lineOfTime->text }}</p>
+                                            <p class="mb-0 h-scroll">{{ $lineOfTime->text }}</p>
 
                                             <h5>{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</h5>
                                         </div>
@@ -173,7 +173,7 @@
 
                                             <div class="space16"></div>
 
-                                            <p class="mb-0">{{ $lineOfTime->text }}</p>
+                                            <p class="mb-0 h-scroll">{{ $lineOfTime->text }}</p>
 
                                             <h5>{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</h5>
                                         </div>

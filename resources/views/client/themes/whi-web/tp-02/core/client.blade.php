@@ -384,7 +384,7 @@
             background: var(--primary-color);
         }
         /* ===== CORES (Text Colors) ===== */
-        .works8-boxarea {
+        .h-scroll {
             overflow-y: auto;
             height: 200px;
             padding-right: 10px;
@@ -392,20 +392,20 @@
             scrollbar-color: rgba(0, 0, 0, .2) transparent;
         }
 
-        .works8-boxarea::-webkit-scrollbar {
+        .h-scroll::-webkit-scrollbar {
             width: 4px;
         }
 
-        .works8-boxarea::-webkit-scrollbar-track {
+        .h-scroll::-webkit-scrollbar-track {
             background: transparent;
         }
 
-        .works8-boxarea::-webkit-scrollbar-thumb {
+        .h-scroll::-webkit-scrollbar-thumb {
             background: rgba(0, 0, 0, .2);
             border-radius: 20px;
         }
 
-        .works8-boxarea::-webkit-scrollbar-thumb:hover {
+        .h-scroll::-webkit-scrollbar-thumb:hover {
             background: rgba(0, 0, 0, .35);
         }
         .primary-color {
