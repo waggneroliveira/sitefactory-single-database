@@ -24,7 +24,7 @@
                                 <div class="row">
                                     <div class="col-lg-6">
 
-                                        <h1 class="hero-title font-changa font-50 font-bold mb-3">
+                                        <h1 class="hero-title font-changa font-45 font-bold mb-3">
                                             {{$slide->title}}
                                         </h1>
 
@@ -98,7 +98,7 @@
                         <!-- TEXTO (dentro do container) -->
                         <div class="col-12 col-lg-7 mt-4 mt-lg-0 z-3">
                             <div class="container position-relative">
-                                <h3 class="about-title font-changa font-50 font-semiBold mb-3 text-grey text-start">
+                                <h3 class="about-title font-changa font-45 font-semiBold mb-3 text-grey text-start">
                                     {{$about->title}} <span class="accent-color">{{$about->subtitle}}</span>
                                 </h3>
 
@@ -212,7 +212,7 @@
                     <!-- Cabeçalho -->
                     <div class="row mb-5 align-items-center">
                         <div class="col-lg-6 mb-3 mb-lg-0">
-                            <h2 class="font-changa font-50 font-bold text-grey">
+                            <h2 class="font-changa font-45 font-bold text-grey">
                                 {{$sections['pilar']->title}} <span class="accent-color">{{$sections['pilar']->tag}}</span> {{$sections['pilar']->subtitle}}
                             </h2>
                         </div>
@@ -594,7 +594,7 @@
                 <!-- Header -->
                 <div class="my-5 my-lg-4 d-flex justify-content-center justify-content-lg-between align-items-center flex-wrap">
                     <div class="col-12 col-lg-6">                      
-                        <h3 class="about-title text-start font-changa d-flex justify-content-center justify-content-lg-start font-50 font-medium text-white mb-3 position-relative">
+                        <h3 class="about-title text-start font-changa d-flex justify-content-center justify-content-lg-start font-45 font-medium text-white mb-3 position-relative">
                             {{$sections['product']->title}}
                         </h3>
                     </div>
@@ -754,7 +754,7 @@
                         </div>
                     @endif
                     <div class="content-left col-12 col-lg-8 mt-3 mt-lg-0">
-                        <h3 class="about-title font-changa font-50 font-bold text-dark mb-3">
+                        <h3 class="about-title font-changa font-45 font-bold text-dark mb-3">
                             {{$letsgo->title}}
                         </h3>
                         <p class="color-grey font-changa font-16 font-regular text-center text-lg-start">{{$letsgo->description}}</p>
@@ -884,8 +884,8 @@
                     <div class="col-12 col-lg-10 ps-3 pe-0">
                         @if ((isset($sections['testimonial']) && $sections <> null))
                             <div class="mb-4 ps-0 ps-md-0">
-                                <h2 class="text-grey font-change font-50 font-bold mb-1">{{$sections['testimonial']->title}}</h2>
-                                <h2 class="accent-color font-change font-50 font-bold">{{$sections['testimonial']->subtitle}}</h2>
+                                <h2 class="text-grey font-change font-45 font-bold mb-1">{{$sections['testimonial']->title}}</h2>
+                                <h2 class="accent-color font-change font-45 font-bold">{{$sections['testimonial']->subtitle}}</h2>
                             </div>
                         @endif
 
@@ -1062,7 +1062,7 @@
                 @if (isset($contact))
                     <!-- Infos -->
                     <div class="col-12 col-lg-5">
-                        <h2 class="faq-title font-changa font-50 font-bold text-grey mt-2 mb-3 text-start">{{$contact->name_section}} <span class="accent-color">{{$contact->link_x}}</span></h2>
+                        <h2 class="faq-title font-changa font-45 font-bold text-grey mt-2 mb-3 text-start">{{$contact->name_section}} <span class="accent-color">{{$contact->link_x}}</span></h2>
                         <p class="col-12 col-lg-8 faq-text color-grey font-changa font-16 font-regular text-start">
                             {{$contact->text}}
                         </p>
