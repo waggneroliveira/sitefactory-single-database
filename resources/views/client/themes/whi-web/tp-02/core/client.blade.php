@@ -392,30 +392,7 @@
             height: 450px;
             border-radius: 20px;
         }
-        .h-scroll {
-            overflow-y: auto;
-            height: 120px;
-            padding-right: 10px;
-            scrollbar-width: thin;
-            scrollbar-color: rgba(0, 0, 0, .2) transparent;
-        }
 
-        .h-scroll::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .h-scroll::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .h-scroll::-webkit-scrollbar-thumb {
-            background: rgba(0, 0, 0, .2);
-            border-radius: 20px;
-        }
-
-        .h-scroll::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 0, 0, .35);
-        }
         .primary-color {
             color: var(--primary-color);
         }
@@ -514,6 +491,32 @@
         }
         .border-color-footer{
             border-color: var(--text-color-footer) !important;
+        }
+        @media (max-width: 560px) {
+            .h-scroll {
+                overflow-y: auto;
+                height: 120px;
+                padding-right: 10px;
+                scrollbar-width: thin;
+                scrollbar-color: rgba(0, 0, 0, .2) transparent;
+            }
+
+            .h-scroll::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            .h-scroll::-webkit-scrollbar-track {
+                background: transparent;
+            }
+
+            .h-scroll::-webkit-scrollbar-thumb {
+                background: rgba(0, 0, 0, .2);
+                border-radius: 20px;
+            }
+
+            .h-scroll::-webkit-scrollbar-thumb:hover {
+                background: rgba(0, 0, 0, .35);
+            }
         }
     </style>
 
