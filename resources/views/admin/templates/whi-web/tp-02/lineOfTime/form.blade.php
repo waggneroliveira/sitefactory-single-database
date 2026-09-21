@@ -1,3 +1,6 @@
+@php
+    $textareaId = $textareaId ?? 'text' . (isset($lineOfTime->id) ? $lineOfTime->id : '');
+@endphp
 <div class="row g-3">
     <div class="mb-3 col-12">
         <label for="title" class="form-label">Título</label>
@@ -11,17 +14,13 @@
         >
     </div>
 </div>
-<div class="row g-3">
+
+<div class="row">    
     <div class="mb-3 col-12">
-        <label for="text" class="form-label">Descrição</label>
-        <input 
-            type="text" 
-            name="text" 
-            class="form-control" 
-            id="text{{ isset($lineOfTime->id) ? $lineOfTime->id : '' }}" 
-            value="{{ isset($lineOfTime) ? $lineOfTime->text : '' }}" 
-            placeholder="Digite seu nome"
-        >
+        <label for="{{$textareaId}}" class="form-label text-muted">Descrição</label>
+        <textarea name="text" id="{{$textareaId}}" placeholder="Texto" class="col-12" rows="10">
+            {!!isset($lineOfTime->text)?$lineOfTime->text: ''!!}
+        </textarea>
     </div>
 </div>
 
@@ -48,3 +47,18 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const textareaId = "{{$textareaId}}";
+
+        if (document.getElementById(textareaId)) {
+            CKEDITOR.replace(textareaId, {
+                toolbar: [
+                    { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline'] },
+                ],
+                height: 200
+            });
+        }
+    });
+</script>
