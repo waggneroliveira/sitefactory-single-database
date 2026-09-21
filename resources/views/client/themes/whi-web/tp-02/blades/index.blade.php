@@ -798,8 +798,8 @@
                                 </div>
                                 <div class="team-body shadow-md rounded-2 text-center position-absolute col-11 z-3 bg-white py-2 py-lg-3 px-1 px-lg-3 d-flex justify-content-between align-items-center">
                                     <div class="d-flex justify-content-start align-items-start flex-column">
-                                        <h6 class="mb-0 font-changa font-semibold font-18 color-green">{{$representative->title}}</h6>
-                                        <small class="color-grey font-changa font-15 font-regular d-block mb-0">{{$representative->function}}</small>
+                                        <h6 class="mb-1 font-changa font-semibold font-18 color-green">{{$representative->title}}</h6>
+                                        <small class="color-grey text-start font-changa font-13 font-regular d-block mb-0">{{$representative->function}}</small>
                                     </div>
                                     <!-- Botão para disparar o Modal -->
                                     <button type="button" 
