@@ -384,7 +384,9 @@
             background: var(--primary-color);
         }
         /* ===== CORES (Text Colors) ===== */
-
+        .feature-card p{
+            font-size: 0.95rem;
+        }
         .primary-color {
             color: var(--primary-color);
         }
