@@ -49,7 +49,7 @@
                                                         <div class="serviceItem modal-dialog modal-dialog-centered" style="max-width: 1260px;">
                                                             <div class="modal-content">
                                                                 <div class="modal-header bg-light">
-                                                                    <h4 class="modal-title">{{ __('dashboard.btn_create') }} - Sessão Pessoas</h4>
+                                                                    <h4 class="modal-title">{{__('dashboard.btn_create')}} - Sessão Pessoas</h4>
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                                                                 </div>
 
@@ -70,7 +70,7 @@
                                                                                 {{ __('dashboard.btn_cancel') }}
                                                                             </button>
                                                                             <button type="submit" class="btn btn-primary text-black waves-effect waves-light">
-                                                                                {{ __('dashboard.btn_create') }}
+                                                                                {{__('dashboard.btn_create')}}
                                                                             </button>
                                                                         </div>
                                                                     </form>
@@ -90,7 +90,7 @@
                                                         <div class="serviceItem modal-dialog modal-dialog-centered" style="max-width: 1260px;">
                                                             <div class="modal-content">
                                                                 <div class="modal-header bg-light">
-                                                                    <h4 class="modal-title">{{ __('dashboard.btn_edit') }} - Sessão Pessoas</h4>
+                                                                    <h4 class="modal-title">{{__('dashboard.btn_save')}} - Sessão Pessoas</h4>
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                                                                 </div>
 
@@ -112,7 +112,7 @@
                                                                                 {{ __('dashboard.btn_cancel') }}
                                                                             </button>
                                                                             <button type="submit" class="btn btn-primary text-black waves-effect waves-light">
-                                                                                {{ __('dashboard.btn_update') }}
+                                                                                {{__('dashboard.btn_save')}}
                                                                             </button>
                                                                         </div>
                                                                     </form>
@@ -136,7 +136,7 @@
                                                         <div class="serviceItem modal-dialog modal-dialog-centered" style="max-width: 1260px;">
                                                             <div class="modal-content">
                                                                 <div class="modal-header bg-light">
-                                                                    <h4 class="modal-title">{{ __('dashboard.btn_create') }} - Sessão Empresas</h4>
+                                                                    <h4 class="modal-title">{{__('dashboard.btn_create')}} - Sessão Empresas</h4>
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                                                                 </div>
 
@@ -154,10 +154,10 @@
 
                                                                         <div class="d-flex justify-content-end gap-2">
                                                                             <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">
-                                                                                {{ __('dashboard.btn_cancel') }}
+                                                                                {{__('dashboard.btn_cancel') }}
                                                                             </button>
                                                                             <button type="submit" class="btn btn-primary text-black waves-effect waves-light">
-                                                                                {{ __('dashboard.btn_create') }}
+                                                                                {{__('dashboard.btn_create')}}
                                                                             </button>
                                                                         </div>
                                                                     </form>
@@ -177,7 +177,7 @@
                                                         <div class="serviceItem modal-dialog modal-dialog-centered" style="max-width: 1260px;">
                                                             <div class="modal-content">
                                                                 <div class="modal-header bg-light">
-                                                                    <h4 class="modal-title">{{ __('dashboard.btn_edit') }} - Sessão Empresas</h4>
+                                                                    <h4 class="modal-title">{{__('dashboard.btn_save')}} - Sessão Empresas</h4>
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                                                                 </div>
 
@@ -199,7 +199,7 @@
                                                                                 {{ __('dashboard.btn_cancel') }}
                                                                             </button>
                                                                             <button type="submit" class="btn btn-primary text-black waves-effect waves-light">
-                                                                                {{ __('dashboard.btn_update') }}
+                                                                                {{__('dashboard.btn_save')}}
                                                                             </button>
                                                                         </div>
                                                                     </form>
@@ -308,7 +308,7 @@
                                                                                 @csrf
                                                                                 @method('PUT')
                                                                                 
-                                                                                @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.advantage.form", ['advantages', 'themeData'])
+                                                                                @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.advantage.form", ['advantages', 'advantage', 'themeData'])
 
                                                                                 <div class="d-flex justify-content-end gap-2">
                                                                                     <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">{{__('dashboard.btn_cancel')}}</button>
