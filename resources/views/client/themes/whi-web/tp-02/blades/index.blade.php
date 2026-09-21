@@ -538,7 +538,7 @@
                                                         @endif
                                                     </div>
 
-                                                    <h4 class="font-changa font-18 font-bold">
+                                                    <h4 class="font-changa font-16 font-bold">
                                                         {{ $benefit->title }}
                                                     </h4>
 
