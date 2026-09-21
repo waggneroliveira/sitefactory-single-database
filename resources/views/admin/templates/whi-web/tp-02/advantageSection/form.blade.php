@@ -1,5 +1,19 @@
 @php
-    $advantage = $serviceSection->get('advantages_' . $forYou);
+    $key = 'advantages_' . $forYou;
+    
+    // Suporta tanto Array quanto Collection/Model
+    if (is_array($serviceSection)) {
+        $advantage = $serviceSection[$key] ?? null;
+    } else {
+        $advantage = is_object($serviceSection) && method_exists($serviceSection, 'get') 
+            ? $serviceSection->get($key) 
+            : ($serviceSection->{$key} ?? null);
+    }
+    
+    // Se $advantage ainda for um array, converte para objeto para manter a sintaxe de objeto
+    if (is_array($advantage)) {
+        $advantage = (object) $advantage;
+    }
 @endphp
 
 <div class="row">
