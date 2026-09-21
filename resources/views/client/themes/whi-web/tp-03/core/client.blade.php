@@ -514,13 +514,10 @@
                         <a class="nav-link font-changa font-18 font-semibold font-header text-color-header font-md" href="{{ request()->routeIs('index') ? '#pilar' : route('index') . '#pilar' }}">Pilares</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header font-md" href="{{ request()->routeIs('index') ? '#our-exhibitions' : route('index') . '#our-exhibitions' }}">Para você</a>
+                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header font-md" href="{{ request()->routeIs('about') ? '#our-exhibitions' : route('about') . '#our-exhibitions' }}">Sobre</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link font-changa font-18 font-semibold font-header text-color-header font-md" href="{{ request()->routeIs('index') ? '#solutions-section' : route('index') . '#solutions-section' }}">Para empresas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header font-md" href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}">Depoimentos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link font-changa font-18 font-semibold font-header text-color-header font-md" href="{{ request()->routeIs('index') ? '#contact' : route('index') . '#contact' }}">Contato</a>
