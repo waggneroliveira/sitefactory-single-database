@@ -835,7 +835,7 @@
                                             <!-- Conteúdo com Nome, Cargo, Redes e Biografia -->
                                             <div class="col-12 col-md-7 text-start">
                                                 <div class="d-flex justify-content-between align-items-baseline mb-0">
-                                                    <h2 class="fw-bold mb-0 text-dark font-24" style="font-size: 2rem;">{{$representative->title}}</h2>
+                                                    <h2 class="fw-bold mb-0 text-dark font-28">{{$representative->title}}</h2>
                                                     
                                                     <!-- Redes Sociais (Ajuste os links conforme seus dados) -->
                                                     <div class="d-flex gap-2 color-dark fs-5">
@@ -851,7 +851,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="text-muted fs-5 mb-3">{{$representative->function}}</div>
+                                                <div class="text-muted font-15 mb-3">{{$representative->function}}</div>
 
                                                 <div class="text-secondary lh-base mb-0" style="font-size: 0.95rem;">
                                                     {!! $representative->description !!}
