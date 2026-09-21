@@ -65,7 +65,7 @@
 
 {{-- IMAGEM --}}
 @if (isset($forYou) && strtolower(trim($forYou)) === 'enterprise')
-    <div class="row" id="image-field{{ $advantage->id ?? '' }}">
+    <div class="row" id="image-field-{{ $forYou }}-{{ $advantage->id ?? 'new' }}">
         <div class="col-12">
             <div class="mt-3">
                 <label for="path_image" class="form-label">
