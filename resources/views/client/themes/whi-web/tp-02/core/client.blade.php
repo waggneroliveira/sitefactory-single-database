@@ -384,6 +384,30 @@
             background: var(--primary-color);
         }
         /* ===== CORES (Text Colors) ===== */
+        .works8-boxarea {
+            overflow-y: auto;
+            height: 200px;
+            padding-right: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, .2) transparent;
+        }
+
+        .works8-boxarea::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .works8-boxarea::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .works8-boxarea::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, .2);
+            border-radius: 20px;
+        }
+
+        .works8-boxarea::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, .35);
+        }
         .primary-color {
             color: var(--primary-color);
         }
@@ -508,7 +532,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header font-md" href="{{ request()->routeIs('index') ? '#about-us' : route('index') . '#about-us' }}">Sobre Nós</a>
+                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header font-md" href="{{ request()->routeIs('index') ? '#about-us' : route('index') . '#about-us' }}">Sobre o Ecossistema</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link font-changa font-18 font-semibold font-header text-color-header font-md" href="{{ request()->routeIs('index') ? '#pilar' : route('index') . '#pilar' }}">Pilares</a>
