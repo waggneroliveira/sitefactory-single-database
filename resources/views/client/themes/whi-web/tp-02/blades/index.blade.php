@@ -247,7 +247,7 @@
                                     @endif
                                 </div>
 
-                                <span class="pilar-title font-changa font-20 font-medium">
+                                <span class="pilar-title font-changa font-16 font-medium">
                                     {{ $impactSection->title }}
                                 </span>
                             </button>

@@ -492,6 +492,9 @@
         .border-color-footer{
             border-color: var(--text-color-footer) !important;
         }
+        .about .works-main-widget-area2:hover .icons img, .about .works-main-widget-area:hover .icons img{
+            filter: inherit;
+        }
         @media (max-width: 560px) {
             .h-scroll {
                 overflow-y: auto;
