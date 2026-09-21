@@ -384,6 +384,11 @@
             background: var(--primary-color);
         }
         /* ===== CORES (Text Colors) ===== */
+        @media (max-width: 575.98px) {
+            .hero-title.font-50{
+                font-size: 1.3rem !important
+            }
+        }
         .feature-card p{
             font-size: 0.95rem;
         }
