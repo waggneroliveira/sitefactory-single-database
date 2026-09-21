@@ -387,6 +387,11 @@
         .linha-do-tempo{
             margin-top: 0;
         }
+        .about-image img{
+            object-fit: contain;
+            height: 450px;
+            border-radius: 20px;
+        }
         .h-scroll {
             overflow-y: auto;
             height: 120px;
