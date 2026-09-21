@@ -338,7 +338,7 @@
                             <h2 class="text-anime-style-3 text-white fw-light fs-1" data-cursor="-opaque">
                                 {{ $sections['advantages_persona']->title }}<br><span class="fw-bold">{{ $sections['advantages_persona']->subtitle }}</span>
                             </h2>
-                            @if ($sections['advantages_persona']->link)                                
+                            @if ($sections['advantages_persona']->link && $sections['advantages_persona']->btn_title)                                
                                 <div class="btn-about my-4 d-flex justify-content-center">
                                     <a href="{{ $sections['advantages_persona']->link }}" target="_blank" rel="noopener noreferrer" class="rounded-pill py-2 px-3 px-lg-4 font-changa bg-button-one color-button-one font-18 font-medium text-decoration-none hover-zoom" rel="noopener noreferrer">
                                         {{ $sections['advantages_persona']->btn_title }}
