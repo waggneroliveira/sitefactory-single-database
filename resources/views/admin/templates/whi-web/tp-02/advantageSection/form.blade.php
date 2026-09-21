@@ -50,7 +50,6 @@
 </div>
 
 {{-- IMAGEM --}}
-{{dd($forYou)}}
 @if ($forYou === 'enterprise')
     <div class="row" id="image-field{{ isset($advantage->id) ? $advantage->id : '' }}">
         <div class="col-12">
