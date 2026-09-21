@@ -141,33 +141,50 @@
     });
 
     //Mascara de telefone
-document.addEventListener("shown.bs.modal", function (event) {
-    // procura o input dentro do modal que abriu
-    const phoneInput = event.target.querySelector("#whatsapp");
+    document.addEventListener("shown.bs.modal", function (event) {
+        const phoneInput = event.target.querySelector("#whatsapp");
 
-    if (phoneInput && !phoneInput.dataset.masked) {
-        phoneInput.addEventListener("input", function (e) {
-            let t = e.target.value.replace(/\D/g, ""); // só dígitos
+        if (phoneInput && !phoneInput.dataset.masked) {
+            phoneInput.addEventListener("input", function (e) {
+                let t = e.target.value.replace(/\D/g, "");
 
-            // força prefixo 71
-            if (!t.startsWith("71")) {
-                t = "71" + t;
-            }
-            if (t.length > 11) t = t.slice(0, 11);
+                // Permite deixar o campo completamente vazio
+                if (t.length === 0) {
+                    e.target.value = "";
+                    return;
+                }
 
-            // aplica máscara (71) 9 9999-9999
-            let formatado = "(" + t.slice(0, 2) + ")";
-            if (t.length > 2) formatado += " " + t.slice(2, 3);
-            if (t.length > 3) formatado += " " + t.slice(3, 7);
-            if (t.length > 7) formatado += "-" + t.slice(7);
+                // Força o prefixo 71 somente quando houver algum número digitado
+                if (!t.startsWith("71")) {
+                    t = "71" + t;
+                }
 
-            e.target.value = formatado;
-        });
+                // Limita a 11 dígitos
+                if (t.length > 11) {
+                    t = t.slice(0, 11);
+                }
 
-        // marca como inicializado para não duplicar listeners
-        phoneInput.dataset.masked = "true";
-    }
-});
+                // Aplica máscara: (71) 9 9999-9999
+                let formatado = "(" + t.slice(0, 2) + ")";
+
+                if (t.length > 2) {
+                    formatado += " " + t.slice(2, 3);
+                }
+
+                if (t.length > 3) {
+                    formatado += " " + t.slice(3, 7);
+                }
+
+                if (t.length > 7) {
+                    formatado += "-" + t.slice(7);
+                }
+
+                e.target.value = formatado;
+            });
+
+            phoneInput.dataset.masked = "true";
+        }
+    });
 </script>
 
 
