@@ -384,14 +384,6 @@
             background: var(--primary-color);
         }
         /* ===== CORES (Text Colors) ===== */
-        .linha-do-tempo{
-            margin-top: 0;
-        }
-        .about-image img{
-            object-fit: contain;
-            height: 450px;
-            border-radius: 20px;
-        }
 
         .primary-color {
             color: var(--primary-color);
@@ -491,35 +483,6 @@
         }
         .border-color-footer{
             border-color: var(--text-color-footer) !important;
-        }
-        .about .works-main-widget-area2:hover .icons img, .about .works-main-widget-area:hover .icons img{
-            filter: inherit;
-        }
-        @media (max-width: 560px) {
-            .h-scroll {
-                overflow-y: auto;
-                height: 120px;
-                padding-right: 10px;
-                scrollbar-width: thin;
-                scrollbar-color: rgba(0, 0, 0, .2) transparent;
-            }
-
-            .h-scroll::-webkit-scrollbar {
-                width: 4px;
-            }
-
-            .h-scroll::-webkit-scrollbar-track {
-                background: transparent;
-            }
-
-            .h-scroll::-webkit-scrollbar-thumb {
-                background: rgba(0, 0, 0, .2);
-                border-radius: 20px;
-            }
-
-            .h-scroll::-webkit-scrollbar-thumb:hover {
-                background: rgba(0, 0, 0, .35);
-            }
         }
     </style>
 

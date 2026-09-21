@@ -373,7 +373,7 @@
                                 @endif
 
                                 <div class="exhibition-item-header bg-secondary-color">
-                                    <div class="icon-box mb-4">
+                                    <div class="icon-box mb-3">
                                         @if(!empty($benefit->path_icon))
                                             <img src="{{ url('storage/' . $benefit->path_icon) }}" alt="{{ $benefit->title }}" loading="lazy">
                                         @endif
@@ -491,11 +491,11 @@
                 <!-- Section Header -->
                 <div class="row align-items-end mt-3 mb-5">
                     <div class="col-12 col-lg-8">
-                        <span class="font-changa font-50 font-medium accent-color">{{ $sections['advantages_enterprise']->title }}</span>
-                        <h2 class="main-title font-changa font-50 font-bold mb-0 text-grey">{{ $sections['advantages_enterprise']->subtitle }}</h2>
+                        <span class="font-changa font-40 font-medium accent-color">{{ $sections['advantages_enterprise']->title }}</span>
+                        <h2 class="main-title font-changa font-40 font-bold mb-0 text-grey">{{ $sections['advantages_enterprise']->subtitle }}</h2>
                     </div>
                     @if ($sections['advantages_enterprise']->link <> null)                        
-                        <div class="btn-about col-12 col-lg-4 text-lg-end mt-3 mt-lg-0">
+                        <div class="btn-about col-12 col-lg-4 mt-3 d-flex justify-content-center justify-content-lg-end">
                             <a href="{{ $sections['advantages_enterprise']->link }}" target="_blank" rel="noopener noreferrer" class="rounded-pill d-table m-auto ms-0 me-lg-0 py-2 px-3 px-lg-4 font-changa bg-button-one color-button-one font-18 font-medium text-decoration-none hover-zoom">
                                 {{ $sections['advantages_enterprise']->btn_title }}
                                 <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
