@@ -50,7 +50,7 @@
 </div>
 
 {{-- IMAGEM --}}
-@if ($forYou === 'enterprise')
+@if (isset($advantage) && $advantage->path_image != null && $forYou === 'enterprise')
     <div class="row" id="image-field{{ isset($advantage->id) ? $advantage->id : '' }}">
         <div class="col-12">
             <div class="mt-3">
