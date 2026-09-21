@@ -24,7 +24,7 @@
                                 <div class="row">
                                     <div class="col-lg-6">
 
-                                        <h1 class="hero-title font-changa font-45 font-bold mb-3">
+                                        <h1 class="hero-title font-changa font-50 font-bold mb-3">
                                             {{$slide->title}}
                                         </h1>
 
