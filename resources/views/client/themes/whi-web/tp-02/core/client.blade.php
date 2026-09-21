@@ -388,6 +388,9 @@
             .hero-title.font-50{
                 font-size: 1.3rem !important
             }
+            .font-45{
+                font-size: 1.8125rem !important;
+            }
         }
         .feature-card p{
             font-size: 0.95rem;
