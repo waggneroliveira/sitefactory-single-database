@@ -384,9 +384,12 @@
             background: var(--primary-color);
         }
         /* ===== CORES (Text Colors) ===== */
+        .linha-do-tempo{
+            margin-top: 0;
+        }
         .h-scroll {
             overflow-y: auto;
-            height: 200px;
+            height: 120px;
             padding-right: 10px;
             scrollbar-width: thin;
             scrollbar-color: rgba(0, 0, 0, .2) transparent;
