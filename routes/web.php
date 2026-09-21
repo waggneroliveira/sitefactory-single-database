@@ -104,6 +104,13 @@ Route::middleware([NeedsTenant::class])->group(function () {
         return view('client.themes.corretora.tp-01.blades.imovel');
     })->name('imovel');
 
+    Route::get('politica-de-privacidade', function () {
+        return view('client.themes.whi-web.tp-03.blades.privacy-of-police');
+    })->name('privacy-police');
+    Route::get('termos-de-uso', function () {
+        return view('client.themes.whi-web.tp-03.blades.use-of-term');
+    })->name('use-term');
+
 
     Route::get('contato', [ContactPageController::class, 'index'])
         ->name('contact');

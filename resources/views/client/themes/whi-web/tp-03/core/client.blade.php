@@ -278,9 +278,6 @@
 
     <link href="{{ asset('build/client/lgpd/style.css') }}" rel="stylesheet" type="text/css">
 
-    <!-- SweetAlert2 CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
     <link href="{{ asset('build/client/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
 
     <link rel="preload" href="{{ asset('build/client/bootstrap-icons/bootstrap-icons.css') }}" as="style" onload="this.rel='stylesheet'">
@@ -414,7 +411,9 @@
         .color-button-two {
             color: var(--color-button-two);
         }
-
+        .border-primary{
+            color: var(--primary-color) !important;
+        }
         /* ===== BACKGROUNDS ===== */
         .bg-primary-color {
             background: var(--primary-color);
@@ -485,56 +484,60 @@
         }
     </style>
 
-    <header class="shadow-sm bg-header">
-        <nav class="navbar navbar-expand-lg navbar-light container py-3 px-3 px-lg-0">            
-            <!-- Logo -->
-            <a class="navbar-brand d-flex align-items-center" href="{{route('index')}}">
-                <img src="{{asset('storage/' .$tenantTheme->path_image_logo_header)}}" alt="{{ config('app.name') }}" height="65" loading="lazy">
+    <header class="shadow-sm bg-header fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-light container py-3 px-3 px-lg-0">
+            <!-- Brand -->
+            <a class="navbar-brand" href="{{route('index')}}">
+                @if ($tenantTheme->path_image_logo_header <> null)
+                    <img src="{{asset('storage/' .$tenantTheme->path_image_logo_header)}}" alt="{{ config('app.name') }}" height="65" loading="lazy">
+                    @else
+                    <div class="d-flex align-items-center">
+                        <div class="brand-icon-wrapper me-2">
+                            <i class="bi bi-tools"></i>
+                        </div>
+                        <div>
+                            <span class="brand-name">Gerar<span>Fácil</span></span>
+                            <small class="brand-tagline d-none d-sm-block">Ferramentas Profissionais</small>
+                        </div>
+                    </div>
+                @endif
             </a>
 
+
             <!-- Toggle mobile -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <!-- Menu -->
-            <div class="collapse navbar-collapse" id="mainNavbar">
-                <ul class="navbar-nav mx-auto m-auto mb-2 mb-lg-0 gap-lg-2">
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 p-1 font-semibold font-header text-color-header active" href="{{route('index')}}">
-                            <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M25.7104 13.5748C26.0965 13.1943 26.0965 12.5817 25.7104 12.2011L13.6222 0.285425C13.2361 -0.0951416 12.6147 -0.0951416 12.2286 0.285425L0.289558 12.054C-0.0965193 12.4346 -0.0965193 13.0472 0.289558 13.4277C0.675635 13.8083 1.29705 13.8083 1.68314 13.4277L1.88771 13.2261V25.0296C1.88771 25.5648 2.32917 26 2.87213 26H9.60635H9.62634H16.3787H16.3987H23.1282C23.6711 26 24.1126 25.5648 24.1126 25.0296V13.3732L24.3171 13.5748C24.5094 13.7644 24.7617 13.8584 25.0139 13.8584C25.2662 13.8584 25.5182 13.7659 25.7104 13.5748ZM15.3926 24.0548H10.6091V17.3744H15.3926V24.0548ZM22.1421 24.0548H17.3614V16.404C17.3614 15.8688 16.9199 15.4337 16.377 15.4337H9.62464C9.08168 15.4337 8.64023 15.8688 8.64023 16.404V24.0548H3.85949V11.2809L12.9284 2.34148L22.1465 11.428V24.0548H22.1421Z" fill="#2E2E2E"/>
-                            </svg>
-                        </a>
+                        <a class="nav-link active" data-category="all"> <i class="bi bi-grid-3x3-gap-fill me-1"></i> Todos </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header font-md" href="{{ request()->routeIs('index') ? '#about-us' : route('index') . '#about-us' }}">Sobre Nós</a>
+                        <a class="nav-link" data-category="calculadoras"> <i class="bi bi-calculator-fill me-1"></i> Calculadoras </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header font-md" href="{{ request()->routeIs('index') ? '#pilar' : route('index') . '#pilar' }}">Pilares</a>
+                        <a class="nav-link" data-category="geradores"> <i class="bi bi-dice-6-fill me-1"></i> Geradores </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header font-md" href="{{ request()->routeIs('about') ? '#our-exhibitions' : route('about') . '#our-exhibitions' }}">Sobre</a>
+                        <a class="nav-link" data-category="validadores"> <i class="bi bi-shield-check-fill me-1"></i> Validadores </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header font-md" href="{{ request()->routeIs('index') ? '#solutions-section' : route('index') . '#solutions-section' }}">Para empresas</a>
+                        <a class="nav-link" data-category="conversores"> <i class="bi bi-arrow-repeat me-1"></i> Conversores </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header font-md" href="{{ request()->routeIs('index') ? '#contact' : route('index') . '#contact' }}">Contato</a>
-                    </li>
+
                 </ul>
 
-                <!-- Botão -->
-                <div class="d-flex justify-content-center gap-2 align-items-center btn-header bg-button-one rounded-pill py-2 px-3 px-lg-3 px-xl-4 hover-zoom">
-                    <a href="{{$tenantTheme->link_header}}" target="_blank" rel="noopener noreferrer" class="font-changa font-15 font-medium text-decoration-none color-button-one">
-                        {{ $tenantTheme->btn_title_header }}
-                    </a>
-
-                    <svg width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1.78794 12.474L8.02494 6.237L1.78794 0L0.02079 1.76715L4.46985 6.237L0 10.7069L1.78794 12.474Z" fill="var(--color-button-one)"/>
-                    </svg>
-
+                <!-- Status Badge -->
+                <div class="status-badge">
+                    <i class="bi bi-wifi-off"></i>
+                    <span>100% Offline</span>
+                    <i class="bi bi-dot"></i>
+                    <span>15+ Tools</span>
                 </div>
+
             </div>
         </nav>
     </header>
@@ -543,94 +546,109 @@
         @yield('content') 
     </main>
 
-    <footer class="bg-footer pt-3 pt-lg-5 pb-3">
+    <footer class="bg-footer text-white pt-5 pb-3">
         <div class="container">
 
             <!-- Linha principal -->
             <div class="row align-items-start">
 
                 <!-- Logo + botão -->
-                <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="col-lg-3 mb-4 mb-lg-0">
+                    {{-- Pegar tamanho/proporção da logo --}}
                     @php
                         $logoPath = storage_path('app/public/' . $tenantTheme->path_image_logo_footer);
                         $dimensions = file_exists($logoPath) ? @getimagesize($logoPath) : null;
                     @endphp
-                    <img loading="lazy" src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ $tenantTheme->name }}" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
+
+                    @if ($tenantTheme->path_image_logo_footer <> null)
+                        <img src="{{ asset('storage/' . $tenantTheme->path_image_logo_footer) }}" alt="{{ $tenantTheme->name }}" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
+                        @else
+                        <a class="footer-title-modern" href="#">
+                            <div class="d-flex align-items-center">
+                                <div class="brand-icon-wrapper me-2">
+                                    <i class="bi bi-tools"></i>
+                                </div>
+                                <div>
+                                    <span class="brand-name">Gerar<span>Fácil</span></span>
+                                    <small class="brand-tagline d-none d-sm-block">Ferramentas Profissionais</small>
+                                </div>
+                            </div>
+                        </a>
+                    @endif
+                    
+                    @if ($tenantTheme->link <> null)                        
+                        <div class="mt-3 mt-lg-5">
+                            <a href="{{ $tenantTheme->link }}" target="_blank" rel="noopener noreferrer" class="bg-button-one color-button-one px-4 py-2 font-changa font-16 font-medium text-decoration-none hover-zoom">
+                                {{$tenantTheme->btn_title}}
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    @endif
                 </div>
 
                 <!-- Mapa do site -->
-                <div class="col-lg-6 mb-4 mb-0">
-                    <div class="font-changa text-color-footer font-16 font-bold mb-3 position-relative d-inline-block font-changa font-16 font-medium">
-                        Mapa do Site
-                        <span class="d-block bg-accent-color mt-1" style="height:3px; width:40px;"></span>
-                    </div>
+                <div class="col-lg-5 mb-4 mb-lg-0">
+                    <h6 class="footer-title-modern text-color-footer ">Ferramentas em Destaque</h6>
 
                     <div class="row">
                         <div class="col-6">
-                            <ul class="list-unstyled">
-                                <li><a href="{{ request()->routeIs('index') ? '#about-us' : route('index') . '#about-us' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Quem Somos</a></li>
-                                <li><a href="{{ request()->routeIs('index') ? '#pilar' : route('index') . '#pilar' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Pilares</a></li>
-                                <li><a href="{{ request()->routeIs('index') ? '#our-exhibitions' : route('index') . '#our-exhibitions' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Para você</a></li>
+                            <ul class="footer-list-modern">
+                                <li><a href="{{route('index')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Calculadora Financiamento</a></li>
+                                <li><a href="{{route('index')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Validador CPF</a></li>
+                                <li><a href="{{route('index')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Gerador de Senhas</a></li>
                             </ul>
+
                         </div>
 
                         <div class="col-6">
-                            <ul class="list-unstyled">
-                                <li><a href="{{ request()->routeIs('index') ? '#solutions-section' : route('index') . '#solutions-section' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Para empresas</a></li>
-                                <li><a href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Depoimentos</a></li>
-                                <li><a href="{{ request()->routeIs('index') ? '#contact' : route('index') . '#contact' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Contato</a></li>
+                            <ul class="footer-list-modern">
+                                <li><a href="{{route('about')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Sobre Nós</a></li>
+                                <li><a href="{{route('privacy-police')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Política de privacidade</a></li>
+                                <li><a href="{{route('use-term')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Termos de uso</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
+                
+                <!-- Coluna 3 - Sobre -->
+                <div class="col-lg-4">
+                    <h6 class="footer-title-modern text-color-footer">Sobre</h6>
+                    <p class="footer-text-modern">
+                    Todas as ferramentas são processadas localmente no seu navegador. Seus dados não são enviados para nossos servidores.
+                    </p>
+                    <!-- Redes sociais -->
+                    @if (isset($contact) && (
+                    $contact->link_insta ||
+                    $contact->link_face ||
+                    $contact->link_tik_tok
+                    ))                    
+                        <div class="col-12 text-lg-end">
+                            <div class="d-flex gap-3 justify-content-lg-end">
+                                @if ($contact->link_insta)
+                                    <a href="{{ $contact->link_insta }}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5" aria-label="Visite nosso Instagram">
+                                        <i class="bi bi-instagram" aria-hidden="true"></i>
+                                    </a>
+                                @endif
 
-                <!-- Redes sociais -->
-                @if (isset($contact) && (
-                $contact->link_insta ||
-                $contact->link_face ||
-                $contact->link_tik_tok
-                ))                    
-                    <div class="col-lg-2 text-lg-end">
-                        <div class="d-flex gap-3 justify-content-lg-end">
-                            @if ($contact->link_insta != null)
-                                <a href="{{ $contact->link_insta }}"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="text-color-footer fs-5"
-                                aria-label="Instagram">
-                                    <i class="bi bi-instagram" aria-hidden="true"></i>
-                                </a>
-                            @endif
+                                @if ($contact->link_face)
+                                    <a href="{{ $contact->link_face }}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5" aria-label="Visite nosso Facebook">
+                                        <i class="bi bi-facebook" aria-hidden="true"></i>
+                                    </a>
+                                @endif
 
-                            @if ($contact->link_face != null)
-                                <a href="{{ $contact->link_face }}"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="text-color-footer fs-5"
-                                aria-label="Facebook">
-                                    <i class="bi bi-facebook" aria-hidden="true"></i>
-                                </a>
-                            @endif
-
-                            @if ($contact->link_tik_tok != null)
-                                <a href="{{ $contact->link_tik_tok }}"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="text-color-footer fs-5"
-                                aria-label="LinkedIn">
-                                    <i class="bi bi-linkedin" aria-hidden="true"></i>
-                                </a>
-                            @endif
-
-
+                                @if ($contact->link_tik_tok)
+                                    <a href="{{ $contact->link_tik_tok }}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5" aria-label="Visite nosso TikTok">
+                                        <i class="bi bi-tiktok" aria-hidden="true"></i>
+                                    </a>
+                                @endif
+                            </div>
                         </div>
-                    </div>
-                @endif
-
+                    @endif
+                </div>
             </div>
 
             <!-- Linha inferior -->
-            <hr class="border-light opacity-25 my-0 mb-3 my-lg-4 border-color-footer">
+            <hr class="border-primary opacity-25 my-4">
 
             <div class="row align-items-center">
                 @php
@@ -639,73 +657,37 @@
 
                 <div class="row align-items-center g-4 m-0">
                     <div class="col-12 col-lg-5 text-center text-lg-start small text-color-footer m-0 p-0">
-                        <p id="footer-text" class="mb-0 text-color-footer"></p>
+                        <p id="footer-text" class="mb-0 text-color-footer font-13"></p>
                     </div>
 
                     <div class="col-12 col-lg-3 text-center small text-color-footer mt-0">
                         @if ($tenantTheme->privacy_policy <> null)                            
-                            <a href="#" class="text-color-footer text-decoration-none" data-bs-toggle="modal" data-bs-target="#privacyModal">Política de Privacidade</a>
-                            <span class="mx-1">|</span>
+                            <a href="#" class="text-color-footer text-decoration-none d-none" data-bs-toggle="modal" data-bs-target="#privacyModal">Política de Privacidade</a>
+                            <span class="mx-1 d-none">|</span>
                         @endif
                         @if ($tenantTheme->terms_of_use <> null)                            
-                            <a href="#" class="text-color-footer text-decoration-none" data-bs-toggle="modal" data-bs-target="#termsModal">Termos de Uso</a>
+                            <a href="#" class="text-color-footer text-decoration-none d-none" data-bs-toggle="modal" data-bs-target="#termsModal">Termos de Uso</a>
                         @endif
-                    </div>
-
-                    <!-- Modal Política de Privacidade -->
-                    <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="privacyModalLabel">Política de Privacidade</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                                </div>
-                                <div class="modal-body">
-                                    {!! $tenantTheme->privacy_policy !!}
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Modal Termos de Uso -->
-                    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="termsModalLabel">Termos de Uso</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                                </div>
-                                <div class="modal-body">
-                                    {!! $tenantTheme->terms_of_use !!}
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="col-12 col-lg-4 m-0 p-0">
                         <div class="d-flex justify-content-center justify-content-lg-end align-items-center gap-3">
                             <a href="http://whiweb.com.br/" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
                                 <span class="font-13">Sistema</span>
-                                <img loading="lazy" src="{{asset('build/client/themes/default/images/whi-web.png')}}" title="Whi Web" alt="WHI Web" height="50" class="logo-system">
+                                <img src="{{asset('build/client/themes/default/images/whi-web.png')}}" title="Whi Web" alt="WHI Web" width="89" height="50" class="logo-system" loading="lazy">
                             </a>
 
                             <span class="text-color-footer opacity-50">|</span>
 
                             <a href="https://www.whi.dev.br/" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
                                 <span class="font-13">Desenvolvido por</span>
-                                <img loading="lazy" src="{{asset('build/client/themes/default/images/whi.png')}}" title="Agência WHI" alt="WHI" height="25" class="logo-system">
+                                <img src="{{asset('build/client/themes/default/images/whi.png')}}" title="Agência WHI" alt="WHI" width="44" height="25" class="logo-system" loading="lazy">
                             </a>
                         </div>
                     </div>
                 </div>
 
-                <script>
+                <script defer>
                     document.addEventListener('DOMContentLoaded', function () {
                         const currentYear = new Date().getFullYear();
                         const footerText = document.getElementById('footer-text');
@@ -722,8 +704,2136 @@
 
     <a href="#" id="scroll-top" class="scroll-top bg-scroll d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
      
+    <script>
+        // ========== AVISO LEGAL ==========
+
+        function avisoLegal(tipo) {
+            if (tipo === 'cpf') {
+                return '<div class="legal-warning"><i class="bi bi-exclamation-triangle-fill me-1"></i> <strong>Aviso Legal:</strong> Este gerador cria números aleatórios APENAS para testes e simulações. Os CPFs gerados NÃO são reais e NÃO correspondem a pessoas físicas existentes. É expressamente proibido usar para fraudes ou se passar por terceiros.</div>';
+            }
+
+            if (tipo === 'cnpj') {
+                return '<div class="legal-warning"><i class="bi bi-exclamation-triangle-fill me-1"></i> <strong>Aviso Legal:</strong> Este gerador cria números aleatórios APENAS para testes. Os CNPJs gerados NÃO são reais e NÃO correspondem a empresas existentes. Uso para fraudes é proibido.</div>';
+            }
+
+            if (tipo === 'cartao') {
+                return '<div class="legal-warning"><i class="bi bi-exclamation-triangle-fill me-1"></i> <strong>Aviso Legal:</strong> Os números de cartão gerados seguem o algoritmo Luhn mas NÃO são cartões reais ativos. Use APENAS para testes de desenvolvimento.</div>';
+            }
+
+            return '';
+        }
+
+
+        // ========== FUNÇÕES UTILITÁRIAS ==========
+
+        function copyClip(text, btn) {
+            navigator.clipboard.writeText(text).then(function () {
+                if (btn) {
+                    var orig = btn.innerHTML;
+
+                    btn.innerHTML = '<i class="bi bi-check-lg"></i> Copiado!';
+
+                    setTimeout(function () {
+                        btn.innerHTML = orig;
+                    }, 1500);
+                }
+            });
+        }
+
+
+        function gerarCPF() {
+
+            function n() {
+                return Math.floor(Math.random() * 10);
+            }
+
+            function calc(d, p) {
+                var s = 0;
+
+                for (var i = 0; i < d.length; i++) {
+                    s += d[i] * (p - i);
+                }
+
+                var r = s % 11;
+
+                return r < 2 ? 0 : 11 - r;
+            }
+
+            var base = [];
+
+            for (var i = 0; i < 9; i++) {
+                base.push(n());
+            }
+
+            var d1 = calc(base, 10);
+            var d2 = calc(base.concat(d1), 11);
+
+            var cpf = base.concat([d1, d2]);
+            var cpfStr = cpf.join('');
+
+            return cpfStr.replace(
+                /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                '$1.$2.$3-$4'
+            );
+        }
+
+
+        function validarCPF(cpfStr) {
+
+            var clean = cpfStr.replace(/\D/g, '');
+
+            if (clean.length !== 11 || /^(\d)\1+$/.test(clean)) {
+                return false;
+            }
+
+            var d = clean.split('').map(Number);
+
+            function calc(digits, p) {
+
+                var s = 0;
+
+                for (var i = 0; i < digits.length; i++) {
+                    s += digits[i] * (p - i);
+                }
+
+                var r = s % 11;
+
+                return r < 2 ? 0 : 11 - r;
+            }
+
+            var d1 = calc(d.slice(0, 9), 10);
+
+            if (d1 !== d[9]) {
+                return false;
+            }
+
+            var d2 = calc(d.slice(0, 10), 11);
+
+            return d2 === d[10];
+        }
+
+
+        function gerarCNPJ() {
+
+            function n(min, max) {
+                return Math.floor(Math.random() * (max - min + 1) + min);
+            }
+
+            var base = [];
+
+            for (var i = 0; i < 8; i++) {
+                base.push(n(0, 9));
+            }
+
+            base.push(0, 0, 0, 1);
+
+            function calc(dig, m) {
+
+                var s = 0;
+                var peso = m;
+
+                for (var i = 0; i < dig.length; i++) {
+
+                    s += dig[i] * peso;
+
+                    peso--;
+
+                    if (peso < 2) {
+                        peso = 9;
+                    }
+                }
+
+                var r = s % 11;
+
+                return r < 2 ? 0 : 11 - r;
+            }
+
+            var d1 = calc(base, 5);
+            var d2 = calc(base.concat([d1]), 6);
+
+            var cnpj = base.concat([d1, d2]);
+            var cnpjStr = cnpj.join('');
+
+            return cnpjStr.replace(
+                /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+                '$1.$2.$3/$4-$5'
+            );
+        }
+
+
+        function gerarCartaoLuhn() {
+
+            var prefixo = '4532';
+            var corpo = '';
+
+            for (var i = 0; i < 12; i++) {
+                corpo += Math.floor(Math.random() * 10);
+            }
+
+            var cartao = prefixo + corpo;
+            var digitos = cartao.split('').map(Number);
+
+            var soma = 0;
+            var alternar = false;
+
+            for (var i = digitos.length - 1; i >= 0; i--) {
+
+                var d = digitos[i];
+
+                if (alternar) {
+                    d *= 2;
+
+                    if (d > 9) {
+                        d -= 9;
+                    }
+                }
+
+                soma += d;
+                alternar = !alternar;
+            }
+
+            var digitoVerif = (10 - (soma % 10)) % 10;
+            var cartaoFinal = cartao + digitoVerif;
+
+            var formatado = cartaoFinal
+                .replace(/(\d{4})/g, '$1 ')
+                .trim();
+
+            return {
+                numero: formatado,
+                validade:
+                    Math.floor(Math.random() * 12) +
+                    1 +
+                    '/' +
+                    (Math.floor(Math.random() * 5) + 25),
+                cvv: Math.floor(Math.random() * 900 + 100)
+            };
+        }
+
+
+        function gerarUUID() {
+
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
+                /[xy]/g,
+                function (c) {
+
+                    var r = Math.random() * 16 | 0;
+                    var v = c == 'x'
+                        ? r
+                        : (r & 0x3 | 0x8);
+
+                    return v.toString(16);
+                }
+            );
+        }
+
+
+        function formatJSON(str) {
+
+            try {
+                return JSON.stringify(
+                    JSON.parse(str),
+                    null,
+                    2
+                );
+            } catch (e) {
+                return '❌ JSON inválido: ' + e.message;
+            }
+        }
+
+
+        function qrUrl(txt) {
+            return 'https://quickchart.io/qr?size=160&text=' +
+                encodeURIComponent(txt);
+        }
+
+
+        function gerarSenhaCustom(tamanho, opts) {
+
+            var chars = '';
+
+            if (opts.minuscula) {
+                chars += 'abcdefghijklmnopqrstuvwxyz';
+            }
+
+            if (opts.maiuscula) {
+                chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            }
+
+            if (opts.numeros) {
+                chars += '0123456789';
+            }
+
+            if (opts.especiais) {
+                chars += '!@#$%^&*()_+[]{}<>?';
+            }
+
+            if (chars === '') {
+                chars = 'abcdefghijklmnopqrstuvwxyz';
+            }
+
+            var pwd = '';
+
+            for (var i = 0; i < tamanho; i++) {
+                pwd += chars[
+                    Math.floor(Math.random() * chars.length)
+                ];
+            }
+
+            return pwd;
+        }
+
+
+        function converterMoeda(valor, de, para) {
+
+            var taxas = {
+                BRL: 1,
+                USD: 0.19,
+                EUR: 0.18,
+                GBP: 0.15,
+                ARS: 75
+            };
+
+            var emBRL = valor / taxas[de];
+
+            return (
+                emBRL * taxas[para]
+            ).toFixed(2);
+        }
+
+
+        function calcFinanciamento(
+            valor,
+            taxaAnual,
+            meses,
+            tipo
+        ) {
+
+            var taxaMensal = taxaAnual / 100 / 12;
+
+            if (tipo === 'price') {
+
+                var prestacao =
+                    valor *
+                    (
+                        taxaMensal *
+                        Math.pow(
+                            1 + taxaMensal,
+                            meses
+                        )
+                    ) /
+                    (
+                        Math.pow(
+                            1 + taxaMensal,
+                            meses
+                        ) - 1
+                    );
+
+                var total = prestacao * meses;
+
+                return {
+                    prestacao: prestacao.toFixed(2),
+                    total: total.toFixed(2),
+                    juros: (total - valor).toFixed(2)
+                };
+
+            } else {
+
+                var amort = valor / meses;
+                var saldo = valor;
+                var totalPago = 0;
+
+                for (var i = 1; i <= meses; i++) {
+
+                    var juros = saldo * taxaMensal;
+                    var prest = amort + juros;
+
+                    totalPago += prest;
+                    saldo -= amort;
+                }
+
+                var primeiraParcela =
+                    amort +
+                    (valor * taxaMensal);
+
+                return {
+                    prestacao: primeiraParcela.toFixed(2),
+                    total: totalPago.toFixed(2),
+                    juros: (totalPago - valor).toFixed(2)
+                };
+            }
+        }
+
+
+        function converterUnidades(val, de, para) {
+
+            var metros = {
+                m: 1,
+                cm: 0.01,
+                mm: 0.001,
+                km: 1000,
+                ft: 0.3048,
+                in: 0.0254
+            };
+
+            var emMetros = val * metros[de];
+
+            return (
+                emMetros / metros[para]
+            ).toFixed(4);
+        }
+
+
+        function descSEO(titulo, texto) {
+
+            return '<div class="descricao-seo">' +
+                '<i class="bi bi-info-circle-fill text-primary me-1"></i> ' +
+                '<strong>Sobre esta ferramenta:</strong> ' +
+                texto +
+                '</div>';
+        }
+
+
+        // ========== RENDER FERRAMENTAS ==========
+
+        function renderTool(toolId) {
+
+            var html = '';
+
+            if (toolId === 'calc-juros') {
+
+                html =
+                    '<div class="tool-header">' +
+                        '<h2><i class="bi bi-percent"></i> Calculadora Juros</h2>' +
+                    '</div>' +
+
+                    '<div class="mb-2">' +
+                        '<label>Capital (R$)</label>' +
+                        '<input type="number" id="capJ" class="form-control" value="1000">' +
+                    '</div>' +
+
+                    '<div class="mb-2">' +
+                        '<label>Taxa % mês</label>' +
+                        '<input type="number" id="taxJ" step="any" class="form-control" value="2">' +
+                    '</div>' +
+
+                    '<div class="mb-2">' +
+                        '<label>Meses</label>' +
+                        '<input type="number" id="mesJ" class="form-control" value="12">' +
+                    '</div>' +
+
+                    '<select id="tipoJ" class="form-select mb-2">' +
+                        '<option value="simples">Simples</option>' +
+                        '<option value="composto">Composto</option>' +
+                    '</select>' +
+
+                    '<button class="btn btn-primary w-100 mb-2" id="calcJBtn">' +
+                        'Calcular' +
+                    '</button>' +
+
+                    '<div id="resJ" class="result-area">Aguardando</div>' +
+
+                    descSEO(
+                        'Juros',
+                        'Simule juros simples/compostos para investimentos e empréstimos.'
+                    );
+            }
+
+            else if (toolId === 'calc-porcentagem') {
+
+                html = `
+                    <div class="tool-header">
+                        <h2>
+                            <i class="bi bi-calculator-fill"></i>
+                            Calculadora de Porcentagem Avançada
+                        </h2>
+                    </div>
+
+                    <p class="text-muted">
+                        Oito operações essenciais: descontos, aumentos, regras de proporção e mais.
+                    </p>
+
+                    <div class="row g-3">
+
+                        <div class="col-12">
+                            <div class="card p-3 shadow-sm border-0 bg-light">
+                                <h6>1️⃣ Quanto é X% de Y?</h6>
+
+                                <div class="row g-2">
+                                    <div class="col-4">
+                                        <input type="number" id="perc1" class="form-control" placeholder="X (%)">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <input type="number" id="total1" class="form-control" placeholder="Y">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <button class="btn btn-sm btn-primary w-100" id="calc1Btn">
+                                            Calcular
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="res1" class="alert alert-info mt-2 small d-none"></div>
+                        </div>
+
+
+                        <div class="col-12">
+                            <div class="card p-3 shadow-sm border-0 bg-light">
+                                <h6>2️⃣ X é qual porcentagem de Y?</h6>
+
+                                <div class="row g-2">
+                                    <div class="col-4">
+                                        <input type="number" id="val2" class="form-control" placeholder="X">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <input type="number" id="tot2" class="form-control" placeholder="Y">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <button class="btn btn-sm btn-primary w-100" id="calc2Btn">
+                                            Calcular
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="res2" class="alert alert-info mt-2 small d-none"></div>
+                        </div>
+
+
+                        <div class="col-12">
+                            <div class="card p-3 shadow-sm border-0 bg-light">
+                                <h6>3️⃣ Valor aumentou de X para Y. Percentual de aumento?</h6>
+
+                                <div class="row g-2">
+                                    <div class="col-4">
+                                        <input type="number" id="ini3" class="form-control" placeholder="Inicial">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <input type="number" id="fim3" class="form-control" placeholder="Final">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <button class="btn btn-sm btn-primary w-100" id="calc3Btn">
+                                            Calcular
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="res3" class="alert alert-info mt-2 small d-none"></div>
+                        </div>
+
+
+                        <div class="col-12">
+                            <div class="card p-3 shadow-sm border-0 bg-light">
+                                <h6>4️⃣ Valor X sobre Y = quantos %?</h6>
+
+                                <div class="row g-2">
+                                    <div class="col-4">
+                                        <input type="number" id="val4" class="form-control" placeholder="Valor X">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <input type="number" id="tot4" class="form-control" placeholder="Valor Y">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <button class="btn btn-sm btn-primary w-100" id="calc4Btn">
+                                            Calcular
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="res4" class="alert alert-info mt-2 small d-none"></div>
+                        </div>
+
+
+                        <div class="col-12">
+                            <div class="card p-3 shadow-sm border-0 bg-light">
+                                <h6>5️⃣ Aumentar valor X em Y%</h6>
+
+                                <div class="row g-2">
+                                    <div class="col-4">
+                                        <input type="number" id="val5" class="form-control" placeholder="Valor">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <input type="number" id="pct5" class="form-control" placeholder="% aumento">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <button class="btn btn-sm btn-primary w-100" id="calc5Btn">
+                                            Calcular
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="res5" class="alert alert-info mt-2 small d-none"></div>
+                        </div>
+
+
+                        <div class="col-12">
+                            <div class="card p-3 shadow-sm border-0 bg-light">
+                                <h6>6️⃣ Diminuir valor X em Y%</h6>
+
+                                <div class="row g-2">
+                                    <div class="col-4">
+                                        <input type="number" id="val6" class="form-control" placeholder="Valor">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <input type="number" id="pct6" class="form-control" placeholder="% desconto">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <button class="btn btn-sm btn-primary w-100" id="calc6Btn">
+                                            Calcular
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="res6" class="alert alert-info mt-2 small d-none"></div>
+                        </div>
+
+
+                        <div class="col-12">
+                            <div class="card p-3 shadow-sm border-0 bg-light">
+                                <h6>7️⃣ Valor inicial aumentou X% e virou Y. Qual era?</h6>
+
+                                <div class="row g-2">
+                                    <div class="col-4">
+                                        <input type="number" id="pct7" class="form-control" placeholder="% aumento">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <input type="number" id="final7" class="form-control" placeholder="Valor final">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <button class="btn btn-sm btn-primary w-100" id="calc7Btn">
+                                            Calcular
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="res7" class="alert alert-info mt-2 small d-none"></div>
+                        </div>
+
+
+                        <div class="col-12">
+                            <div class="card p-3 shadow-sm border-0 bg-light">
+                                <h6>8️⃣ Valor inicial diminuiu X% e resultou em Y. Qual era?</h6>
+
+                                <div class="row g-2">
+                                    <div class="col-4">
+                                        <input type="number" id="pct8" class="form-control" placeholder="% redução">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <input type="number" id="final8" class="form-control" placeholder="Valor final">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <button class="btn btn-sm btn-primary w-100" id="calc8Btn">
+                                            Calcular
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="res8" class="alert alert-info mt-2 small d-none"></div>
+                        </div>
+
+                    </div>
+                ` +
+                descSEO(
+                    'Porcentagem',
+                    '8 tipos de cálculo: percentual de valor, aumento, desconto, regressão e relação numérica. Ferramenta essencial para finanças e comércio.'
+                );
+            }
+
+            else if (toolId === 'calc-financiamento') {
+
+                html =
+                    '<div class="tool-header">' +
+                        '<h2><i class="bi bi-house"></i> Financiamento Price/SAC</h2>' +
+                    '</div>' +
+
+                    '<div>' +
+                        '<label>Valor R$</label>' +
+                        '<input type="number" id="fv" class="form-control" value="100000">' +
+                    '</div>' +
+
+                    '<div>' +
+                        '<label>Taxa anual (%)</label>' +
+                        '<input type="number" id="ftax" step="any" class="form-control" value="10">' +
+                    '</div>' +
+
+                    '<div>' +
+                        '<label>Meses</label>' +
+                        '<input type="number" id="fmes" class="form-control" value="120">' +
+                    '</div>' +
+
+                    '<select id="ftipo" class="form-select my-2">' +
+                        '<option value="price">Tabela Price</option>' +
+                        '<option value="sac">SAC</option>' +
+                    '</select>' +
+
+                    '<button class="btn btn-primary w-100" id="calcFinBtn">' +
+                        'Simular' +
+                    '</button>' +
+
+                    '<div id="resFin" class="result-area mt-2"></div>' +
+
+                    descSEO(
+                        'Financiamento',
+                        'Calcule prestações Price e SAC para imóveis e veículos.'
+                    );
+            }
+
+            else if (toolId === 'format-json') {
+
+                html =
+                    '<div class="tool-header">' +
+                        '<h2><i class="bi bi-braces"></i> Formatador JSON</h2>' +
+                    '</div>' +
+
+                    '<textarea id="jsonInp" rows="5" class="form-control" placeholder=\'{"site":"GerarFácil"}\'></textarea>' +
+
+                    '<button class="btn btn-success mt-2 me-2" id="fmtJson">' +
+                        'Formatar' +
+                    '</button>' +
+
+                    '<button class="btn btn-secondary mt-2" id="clrJson">' +
+                        'Limpar' +
+                    '</button>' +
+
+                    '<pre id="jsonOut" class="result-area mt-2">Aguardando</pre>' +
+
+                    descSEO(
+                        'JSON',
+                        'Valide e formate códigos JSON de forma legível.'
+                    );
+            }
+
+            else if (toolId === 'gerar-cartao') {
+
+                html =
+                    '<div class="tool-header">' +
+                        '<h2><i class="bi bi-credit-card"></i> Gerar Cartão</h2>' +
+                    '</div>' +
+
+                    '<button class="btn btn-primary w-100 mb-2" id="genCardBtn">' +
+                        'Gerar (Luhn válido)' +
+                    '</button>' +
+
+                    '<div id="cardRes" class="result-area">Clique</div>' +
+
+                    descSEO(
+                        'Cartão',
+                        'Gere números de cartão com algoritmo Luhn para testes.'
+                    ) +
+
+                    avisoLegal('cartao');
+            }
+
+            else if (toolId === 'gerar-cpf') {
+
+                html =
+                    '<div class="tool-header">' +
+                        '<h2><i class="bi bi-person-badge"></i> Gerar CPF</h2>' +
+                    '</div>' +
+
+                    '<button class="btn btn-primary w-100 mb-2" id="genCpfBtn">' +
+                        'Gerar CPF Válido' +
+                    '</button>' +
+
+                    '<div class="d-flex justify-content-between align-items-center result-area">' +
+                        '<span id="cpfSpan">---</span>' +
+                        '<button class="btn-copy" id="copyCpfBtn">Copiar</button>' +
+                    '</div>' +
+
+                    descSEO(
+                        'CPF',
+                        'Gere números de CPF com dígitos verificadores reais.'
+                    ) +
+
+                    avisoLegal('cpf');
+            }
+
+            else if (toolId === 'validar-cpf') {
+
+                html =
+                    '<div class="tool-header">' +
+                        '<h2><i class="bi bi-check-circle"></i> Validar CPF</h2>' +
+                    '</div>' +
+
+                    '<input type="text" id="cpfValidar" class="form-control mb-2" placeholder="Digite o CPF (ex: 123.456.789-09)">' +
+
+                    '<button class="btn btn-primary w-100" id="validarCpfBtn">' +
+                        'Validar' +
+                    '</button>' +
+
+                    '<div id="validaRes" class="result-area mt-2">' +
+                        'Aguardando' +
+                    '</div>' +
+
+                    descSEO(
+                        'Validador CPF',
+                        'Verifique se um CPF é verdadeiro com base nos dígitos.'
+                    );
+            }
+
+            else if (toolId === 'gerar-cnpj') {
+
+                html =
+                    '<div class="tool-header">' +
+                        '<h2><i class="bi bi-building"></i> Gerar CNPJ</h2>' +
+                    '</div>' +
+
+                    '<button class="btn btn-primary w-100 mb-2" id="genCnpjBtn">' +
+                        'Gerar CNPJ Válido' +
+                    '</button>' +
+
+                    '<div class="d-flex justify-content-between result-area">' +
+                        '<span id="cnpjSpan">---</span>' +
+                        '<button class="btn-copy" id="copyCnpjBtn">Copiar</button>' +
+                    '</div>' +
+
+                    descSEO(
+                        'CNPJ',
+                        'Gere números de CNPJ aleatórios com validação de dígitos.'
+                    ) +
+
+                    avisoLegal('cnpj');
+            }
+
+            else if (toolId === 'gerar-senhas') {
+
+                html =
+                    '<div class="tool-header">' +
+                        '<h2><i class="bi bi-lock-fill"></i> Gerador Senhas Customizável</h2>' +
+                    '</div>' +
+
+                    '<div>' +
+                        '<label>Tamanho: ' +
+                            '<input type="number" id="senhaLen" value="12" class="form-control w-50 d-inline">' +
+                        '</label>' +
+                    '</div>' +
+
+                    '<div class="my-2 checkbox-group">' +
+
+                        '<label>' +
+                            '<input type="checkbox" id="optMinus" checked> ' +
+                            'Minúsculas (a-z)' +
+                        '</label>' +
+
+                        '<label>' +
+                            '<input type="checkbox" id="optMaius" checked> ' +
+                            'Maiúsculas (A-Z)' +
+                        '</label>' +
+
+                        '<label>' +
+                            '<input type="checkbox" id="optNum" checked> ' +
+                            'Números (0-9)' +
+                        '</label>' +
+
+                        '<label>' +
+                            '<input type="checkbox" id="optEsp" checked> ' +
+                            'Especiais (!@#)' +
+                        '</label>' +
+
+                    '</div>' +
+
+                    '<button class="btn btn-primary w-100 mb-2" id="genSenhaCustomBtn">' +
+                        'Gerar Senha' +
+                    '</button>' +
+
+                    '<div class="d-flex justify-content-between result-area">' +
+                        '<span id="senhaFinal">********</span>' +
+                        '<button class="btn-copy" id="copySenhaCustomBtn">Copiar</button>' +
+                    '</div>' +
+
+                    descSEO(
+                        'Senhas',
+                        'Crie senhas fortes escolhendo quais caracteres incluir.'
+                    );
+            }
+
+            else if (toolId === 'gerar-uuid') {
+
+                html =
+                    '<div class="tool-header">' +
+                        '<h2><i class="bi bi-hash"></i> Gerador UUID</h2>' +
+                    '</div>' +
+
+                    '<button class="btn btn-primary w-100 mb-2" id="genUuidBtn">' +
+                        'Gerar UUID v4' +
+                    '</button>' +
+
+                    '<div class="d-flex justify-content-between result-area">' +
+                        '<span id="uuidSpan">---</span>' +
+                        '<button class="btn-copy" id="copyUuidBtn">Copiar</button>' +
+                    '</div>' +
+
+                    descSEO(
+                        'UUID',
+                        'Identificadores únicos universais para sistemas.'
+                    );
+            }
+
+            else if (toolId === 'conversor-moedas') {
+
+                html =
+                    '<div class="tool-header">' +
+                        '<h2><i class="bi bi-currency-dollar"></i> Conversor Moedas (offline)</h2>' +
+                    '</div>' +
+
+                    '<div>' +
+                        '<label>Valor</label>' +
+                        '<input type="number" id="moedaVal" class="form-control" value="100">' +
+                    '</div>' +
+
+                    '<select id="moedaDe" class="form-select mt-2">' +
+                        '<option value="BRL">Real BRL</option>' +
+                        '<option value="USD">Dólar USD</option>' +
+                        '<option value="EUR">Euro EUR</option>' +
+                        '<option value="GBP">Libra GBP</option>' +
+                        '<option value="ARS">Peso ARS</option>' +
+                    '</select>' +
+
+                    '<select id="moedaPara" class="form-select mt-1">' +
+                        '<option value="USD">Dólar USD</option>' +
+                        '<option value="BRL">Real BRL</option>' +
+                    '</select>' +
+
+                    '<button class="btn btn-primary w-100 mt-2" id="convMoedaBtn">' +
+                        'Converter' +
+                    '</button>' +
+
+                    '<div id="moedaRes" class="result-area mt-2">' +
+                        'Resultado' +
+                    '</div>' +
+
+                    descSEO(
+                        'Moedas',
+                        'Taxas aproximadas offline (valores referenciais).'
+                    );
+            }
+
+            else if (toolId === 'contador-palavras') {
+
+                html =
+                    '<div class="tool-header">' +
+                        '<h2><i class="bi bi-text-paragraph"></i> Contador Palavras/Caracteres</h2>' +
+                    '</div>' +
+
+                    '<textarea id="textoContar" rows="6" class="form-control" placeholder="Digite seu texto aqui..."></textarea>' +
+
+                    '<div id="statsContador" class="result-area mt-2">' +
+                        'Palavras: 0 | Caracteres: 0' +
+                    '</div>' +
+
+                    descSEO(
+                        'Contador',
+                        'Ferramenta para redatores e SEO, conta palavras e caracteres.'
+                    );
+            }
+
+            else if (toolId === 'sorteador-numeros') {
+
+                html =
+                    '<div class="tool-header">' +
+                        '<h2><i class="bi bi-dice-6"></i> Sorteador de Números</h2>' +
+                    '</div>' +
+
+                    '<div class="row">' +
+
+                        '<div class="col-6">' +
+                            '<label>Mínimo</label>' +
+                            '<input type="number" id="minSorte" value="1" class="form-control">' +
+                        '</div>' +
+
+                        '<div class="col-6">' +
+                            '<label>Máximo</label>' +
+                            '<input type="number" id="maxSorte" value="100" class="form-control">' +
+                        '</div>' +
+
+                    '</div>' +
+
+                    '<div class="mt-2">' +
+                        '<label>Quantidade</label>' +
+                        '<input type="number" id="qtdSorte" value="1" class="form-control">' +
+                    '</div>' +
+
+                    '<button class="btn btn-primary w-100 mt-2" id="sortearBtn">' +
+                        'Sortear' +
+                    '</button>' +
+
+                    '<div id="sorteRes" class="result-area mt-2">---</div>' +
+
+                    descSEO(
+                        'Sorteador',
+                        'Sorteie números aleatórios para rifas ou jogos.'
+                    );
+            }
+
+            else if (toolId === 'conversor-unidades') {
+
+                html =
+                    '<div class="tool-header">' +
+                        '<h2><i class="bi bi-rulers"></i> Conversor Unidades (comprimento)</h2>' +
+                    '</div>' +
+
+                    '<input type="number" id="unidVal" class="form-control" placeholder="Valor">' +
+
+                    '<select class="form-select mt-1" id="unidDe">' +
+                        '<option value="m">Metros</option>' +
+                        '<option value="cm">Centímetros</option>' +
+                        '<option value="mm">Milímetros</option>' +
+                        '<option value="km">Quilômetros</option>' +
+                        '<option value="ft">Pés</option>' +
+                        '<option value="in">Polegadas</option>' +
+                    '</select>' +
+
+                    '<select class="form-select mt-1" id="unidPara">' +
+                        '<option value="cm">Centímetros</option>' +
+                        '<option value="m">Metros</option>' +
+                    '</select>' +
+
+                    '<button class="btn btn-primary w-100 mt-2" id="convUnidBtn">' +
+                        'Converter' +
+                    '</button>' +
+
+                    '<div id="unidRes" class="result-area mt-2">---</div>' +
+
+                    descSEO(
+                        'Unidades',
+                        'Converta metros, centímetros, pés e polegadas rapidamente.'
+                    );
+            }
+
+            else if (toolId === 'gerador-qr') {
+
+                html =
+                    '<div class="tool-header">' +
+                        '<h2><i class="bi bi-qr-code"></i> Gerador QR Code</h2>' +
+                    '</div>' +
+
+                    '<input type="text" id="qrTexto" class="form-control mb-2" placeholder="URL ou texto" value="https://GerarFácil.com">' +
+
+                    '<button class="btn btn-primary w-100 mb-2" id="gerarQrBtn">' +
+                        'Gerar QR' +
+                    '</button>' +
+
+                    '<div class="text-center">' +
+                        '<img id="qrImg" style="max-width:150px" class="shadow rounded">' +
+                    '</div>' +
+
+                    descSEO(
+                        'QR Code',
+                        'Códigos QR para links e textos.'
+                    );
+            }
+
+            return '<div>' + html + '</div>';
+        }
+
+
+        // ========== BIND DE EVENTOS ==========
+
+        function bindEvents(toolId) {
+
+            if (toolId === 'calc-juros') {
+
+                var btn = document.getElementById('calcJBtn');
+
+                if (btn) {
+
+                    btn.addEventListener('click', function () {
+
+                        var cap =
+                            parseFloat(
+                                document.getElementById('capJ').value
+                            ) || 0;
+
+                        var taxa =
+                            parseFloat(
+                                document.getElementById('taxJ').value
+                            ) || 0;
+
+                        var mes =
+                            parseInt(
+                                document.getElementById('mesJ').value
+                            ) || 0;
+
+                        var tipo =
+                            document.getElementById('tipoJ').value;
+
+                        var res;
+
+                        if (tipo === 'simples') {
+
+                            res =
+                                cap *
+                                (
+                                    1 +
+                                    (taxa / 100) * mes
+                                );
+
+                        } else {
+
+                            res =
+                                cap *
+                                Math.pow(
+                                    1 + taxa / 100,
+                                    mes
+                                );
+                        }
+
+                        document.getElementById('resJ').innerHTML =
+                            'Montante: R$ ' +
+                            res.toFixed(2) +
+                            '<br>Juros: R$ ' +
+                            (res - cap).toFixed(2);
+                    });
+                }
+            }
+
+            else if (toolId === 'calc-porcentagem') {
+
+                function showResult(id, val) {
+
+                    var el = document.getElementById(id);
+
+                    if (el) {
+                        el.classList.remove('d-none');
+                        el.innerText = val;
+                    }
+                }
+
+
+                var btn1 = document.getElementById('calc1Btn');
+
+                if (btn1) {
+                    btn1.onclick = function () {
+
+                        var a =
+                            parseFloat(
+                                document.getElementById('perc1').value
+                            ) || 0;
+
+                        var b =
+                            parseFloat(
+                                document.getElementById('total1').value
+                            ) || 0;
+
+                        showResult(
+                            'res1',
+                            a + '% de ' + b + ' = ' +
+                            (a * b / 100).toFixed(2)
+                        );
+                    };
+                }
+
+
+                var btn2 = document.getElementById('calc2Btn');
+
+                if (btn2) {
+                    btn2.onclick = function () {
+
+                        var a =
+                            parseFloat(
+                                document.getElementById('val2').value
+                            ) || 0;
+
+                        var b =
+                            parseFloat(
+                                document.getElementById('tot2').value
+                            ) || 0;
+
+                        showResult(
+                            'res2',
+                            a + ' é ' +
+                            (a / b * 100).toFixed(2) +
+                            '% de ' +
+                            b
+                        );
+                    };
+                }
+
+
+                var btn3 = document.getElementById('calc3Btn');
+
+                if (btn3) {
+                    btn3.onclick = function () {
+
+                        var a =
+                            parseFloat(
+                                document.getElementById('ini3').value
+                            ) || 0;
+
+                        var b =
+                            parseFloat(
+                                document.getElementById('fim3').value
+                            ) || 0;
+
+                        showResult(
+                            'res3',
+                            'Aumento de ' +
+                            (((b - a) / a) * 100).toFixed(2) +
+                            '%'
+                        );
+                    };
+                }
+
+
+                var btn4 = document.getElementById('calc4Btn');
+
+                if (btn4) {
+                    btn4.onclick = function () {
+
+                        var a =
+                            parseFloat(
+                                document.getElementById('val4').value
+                            ) || 0;
+
+                        var b =
+                            parseFloat(
+                                document.getElementById('tot4').value
+                            ) || 0;
+
+                        showResult(
+                            'res4',
+                            a + ' sobre ' +
+                            b + ' = ' +
+                            (a / b * 100).toFixed(2) +
+                            '%'
+                        );
+                    };
+                }
+
+
+                var btn5 = document.getElementById('calc5Btn');
+
+                if (btn5) {
+                    btn5.onclick = function () {
+
+                        var a =
+                            parseFloat(
+                                document.getElementById('val5').value
+                            ) || 0;
+
+                        var b =
+                            parseFloat(
+                                document.getElementById('pct5').value
+                            ) || 0;
+
+                        showResult(
+                            'res5',
+                            'Resultado: ' +
+                            (a * (1 + b / 100)).toFixed(2)
+                        );
+                    };
+                }
+
+
+                var btn6 = document.getElementById('calc6Btn');
+
+                if (btn6) {
+                    btn6.onclick = function () {
+
+                        var a =
+                            parseFloat(
+                                document.getElementById('val6').value
+                            ) || 0;
+
+                        var b =
+                            parseFloat(
+                                document.getElementById('pct6').value
+                            ) || 0;
+
+                        showResult(
+                            'res6',
+                            'Resultado: ' +
+                            (a * (1 - b / 100)).toFixed(2)
+                        );
+                    };
+                }
+
+
+                var btn7 = document.getElementById('calc7Btn');
+
+                if (btn7) {
+                    btn7.onclick = function () {
+
+                        var a =
+                            parseFloat(
+                                document.getElementById('pct7').value
+                            ) || 0;
+
+                        var b =
+                            parseFloat(
+                                document.getElementById('final7').value
+                            ) || 0;
+
+                        showResult(
+                            'res7',
+                            'Valor inicial: ' +
+                            (b / (1 + a / 100)).toFixed(2)
+                        );
+                    };
+                }
+
+
+                var btn8 = document.getElementById('calc8Btn');
+
+                if (btn8) {
+                    btn8.onclick = function () {
+
+                        var a =
+                            parseFloat(
+                                document.getElementById('pct8').value
+                            ) || 0;
+
+                        var b =
+                            parseFloat(
+                                document.getElementById('final8').value
+                            ) || 0;
+
+                        showResult(
+                            'res8',
+                            'Valor inicial: ' +
+                            (b / (1 - a / 100)).toFixed(2)
+                        );
+                    };
+                }
+            }
+
+            else if (toolId === 'calc-financiamento') {
+
+                var btnFin =
+                    document.getElementById('calcFinBtn');
+
+                if (btnFin) {
+
+                    btnFin.addEventListener('click', function () {
+
+                        var v =
+                            parseFloat(
+                                document.getElementById('fv').value
+                            ) || 0;
+
+                        var tx =
+                            parseFloat(
+                                document.getElementById('ftax').value
+                            ) || 0;
+
+                        var m =
+                            parseInt(
+                                document.getElementById('fmes').value
+                            ) || 1;
+
+                        var tipo =
+                            document.getElementById('ftipo').value;
+
+                        var res =
+                            calcFinanciamento(
+                                v,
+                                tx,
+                                m,
+                                tipo
+                            );
+
+                        document.getElementById('resFin').innerHTML =
+                            'Parcela ~R$ ' +
+                            res.prestacao +
+                            '<br>Total R$ ' +
+                            res.total +
+                            '<br>Juros R$ ' +
+                            res.juros;
+                    });
+                }
+            }
+
+            else if (toolId === 'format-json') {
+
+                var fmtBtn =
+                    document.getElementById('fmtJson');
+
+                if (fmtBtn) {
+
+                    fmtBtn.onclick = function () {
+
+                        var txt =
+                            document.getElementById('jsonInp').value;
+
+                        document.getElementById('jsonOut').innerText =
+                            formatJSON(txt);
+                    };
+                }
+
+
+                var clrBtn =
+                    document.getElementById('clrJson');
+
+                if (clrBtn) {
+
+                    clrBtn.onclick = function () {
+
+                        document.getElementById('jsonInp').value = '';
+
+                        document.getElementById('jsonOut').innerText =
+                            'Aguardando';
+                    };
+                }
+            }
+
+            else if (toolId === 'gerar-cartao') {
+
+                var cardBtn =
+                    document.getElementById('genCardBtn');
+
+                if (cardBtn) {
+
+                    cardBtn.addEventListener('click', function () {
+
+                        var c = gerarCartaoLuhn();
+
+                        document.getElementById('cardRes').innerHTML =
+                            c.numero +
+                            '<br>Val: ' +
+                            c.validade +
+                            ' CVV: ' +
+                            c.cvv;
+                    });
+                }
+            }
+
+            else if (toolId === 'gerar-cpf') {
+
+                var spanCpf =
+                    document.getElementById('cpfSpan');
+
+                var genCpf =
+                    document.getElementById('genCpfBtn');
+
+                var copyCpf =
+                    document.getElementById('copyCpfBtn');
+
+
+                if (genCpf) {
+
+                    genCpf.onclick = function () {
+
+                        if (spanCpf) {
+                            spanCpf.innerText = gerarCPF();
+                        }
+                    };
+                }
+
+
+                if (copyCpf) {
+
+                    copyCpf.onclick = function () {
+
+                        if (
+                            spanCpf &&
+                            spanCpf.innerText !== '---'
+                        ) {
+                            copyClip(
+                                spanCpf.innerText,
+                                copyCpf
+                            );
+                        }
+                    };
+                }
+
+
+                if (genCpf) {
+                    genCpf.click();
+                }
+            }
+
+            else if (toolId === 'validar-cpf') {
+
+                var valBtn =
+                    document.getElementById('validarCpfBtn');
+
+                if (valBtn) {
+
+                    valBtn.addEventListener('click', function () {
+
+                        var cpf =
+                            document.getElementById('cpfValidar').value;
+
+                        var valido =
+                            validarCPF(cpf);
+
+                        document.getElementById('validaRes').innerHTML =
+                            valido
+                                ? '✅ CPF VÁLIDO!'
+                                : '❌ CPF INVÁLIDO!';
+                    });
+                }
+            }
+
+            else if (toolId === 'gerar-cnpj') {
+
+                var spanCnpj =
+                    document.getElementById('cnpjSpan');
+
+                var genCnpj =
+                    document.getElementById('genCnpjBtn');
+
+                var copyCnpj =
+                    document.getElementById('copyCnpjBtn');
+
+
+                if (genCnpj) {
+
+                    genCnpj.onclick = function () {
+
+                        if (spanCnpj) {
+                            spanCnpj.innerText = gerarCNPJ();
+                        }
+                    };
+                }
+
+
+                if (copyCnpj) {
+
+                    copyCnpj.onclick = function () {
+
+                        if (
+                            spanCnpj &&
+                            spanCnpj.innerText !== '---'
+                        ) {
+                            copyClip(
+                                spanCnpj.innerText,
+                                copyCnpj
+                            );
+                        }
+                    };
+                }
+
+
+                if (genCnpj) {
+                    genCnpj.click();
+                }
+            }
+
+            else if (toolId === 'gerar-senhas') {
+
+                var spanSenha =
+                    document.getElementById('senhaFinal');
+
+                var genSenha =
+                    document.getElementById('genSenhaCustomBtn');
+
+                var copySenha =
+                    document.getElementById('copySenhaCustomBtn');
+
+
+                function atualizarSenha() {
+
+                    var len =
+                        parseInt(
+                            document.getElementById('senhaLen').value
+                        ) || 8;
+
+                    var opts = {
+
+                        minuscula:
+                            document.getElementById('optMinus').checked,
+
+                        maiuscula:
+                            document.getElementById('optMaius').checked,
+
+                        numeros:
+                            document.getElementById('optNum').checked,
+
+                        especiais:
+                            document.getElementById('optEsp').checked
+                    };
+
+                    if (spanSenha) {
+                        spanSenha.innerText =
+                            gerarSenhaCustom(
+                                len,
+                                opts
+                            );
+                    }
+                }
+
+
+                if (genSenha) {
+                    genSenha.onclick = atualizarSenha;
+                }
+
+
+                if (copySenha) {
+
+                    copySenha.onclick = function () {
+
+                        if (spanSenha) {
+                            copyClip(
+                                spanSenha.innerText,
+                                copySenha
+                            );
+                        }
+                    };
+                }
+
+
+                atualizarSenha();
+            }
+
+            else if (toolId === 'gerar-uuid') {
+
+                var spanUuid =
+                    document.getElementById('uuidSpan');
+
+                var genUuid =
+                    document.getElementById('genUuidBtn');
+
+                var copyUuid =
+                    document.getElementById('copyUuidBtn');
+
+
+                if (genUuid) {
+
+                    genUuid.onclick = function () {
+
+                        if (spanUuid) {
+                            spanUuid.innerText =
+                                gerarUUID();
+                        }
+                    };
+                }
+
+
+                if (copyUuid) {
+
+                    copyUuid.onclick = function () {
+
+                        if (spanUuid) {
+                            copyClip(
+                                spanUuid.innerText,
+                                copyUuid
+                            );
+                        }
+                    };
+                }
+
+
+                if (genUuid) {
+                    genUuid.click();
+                }
+            }
+
+            else if (toolId === 'conversor-moedas') {
+
+                var convMoeda =
+                    document.getElementById('convMoedaBtn');
+
+                if (convMoeda) {
+
+                    convMoeda.addEventListener(
+                        'click',
+                        function () {
+
+                            var val =
+                                parseFloat(
+                                    document.getElementById('moedaVal').value
+                                ) || 0;
+
+                            var de =
+                                document.getElementById('moedaDe').value;
+
+                            var para =
+                                document.getElementById('moedaPara').value;
+
+                            var res =
+                                converterMoeda(
+                                    val,
+                                    de,
+                                    para
+                                );
+
+                            document.getElementById('moedaRes').innerHTML =
+                                val +
+                                ' ' +
+                                de +
+                                ' = ' +
+                                res +
+                                ' ' +
+                                para;
+                        }
+                    );
+                }
+            }
+
+            else if (toolId === 'contador-palavras') {
+
+                var textarea =
+                    document.getElementById('textoContar');
+
+
+                function updateContador() {
+
+                    if (!textarea) {
+                        return;
+                    }
+
+                    var txt =
+                        textarea.value;
+
+                    var words =
+                        txt.trim()
+                            ? txt.trim().split(/\s+/).length
+                            : 0;
+
+                    var chars =
+                        txt.length;
+
+                    var semEspacos =
+                        txt.replace(/\s/g, '').length;
+
+                    var stats =
+                        document.getElementById('statsContador');
+
+                    if (stats) {
+
+                        stats.innerHTML =
+                            'Palavras: ' +
+                            words +
+                            ' | Caracteres: ' +
+                            chars +
+                            ' | (sem espaços: ' +
+                            semEspacos +
+                            ')';
+                    }
+                }
+
+
+                if (textarea) {
+                    textarea.addEventListener(
+                        'input',
+                        updateContador
+                    );
+
+                    updateContador();
+                }
+            }
+
+            else if (toolId === 'sorteador-numeros') {
+
+                var sortear =
+                    document.getElementById('sortearBtn');
+
+                if (sortear) {
+
+                    sortear.addEventListener(
+                        'click',
+                        function () {
+
+                            var min =
+                                parseInt(
+                                    document.getElementById('minSorte').value
+                                ) || 0;
+
+                            var max =
+                                parseInt(
+                                    document.getElementById('maxSorte').value
+                                ) || 100;
+
+                            var qtd =
+                                parseInt(
+                                    document.getElementById('qtdSorte').value
+                                ) || 1;
+
+                            var nums = [];
+
+                            for (var i = 0; i < qtd; i++) {
+
+                                nums.push(
+                                    Math.floor(
+                                        Math.random() *
+                                        (max - min + 1) +
+                                        min
+                                    )
+                                );
+                            }
+
+                            document.getElementById('sorteRes').innerHTML =
+                                'Números sorteados: ' +
+                                nums.join(', ');
+                        }
+                    );
+                }
+            }
+
+            else if (toolId === 'conversor-unidades') {
+
+                var convUnid =
+                    document.getElementById('convUnidBtn');
+
+                if (convUnid) {
+
+                    convUnid.addEventListener(
+                        'click',
+                        function () {
+
+                            var val =
+                                parseFloat(
+                                    document.getElementById('unidVal').value
+                                ) || 0;
+
+                            var de =
+                                document.getElementById('unidDe').value;
+
+                            var para =
+                                document.getElementById('unidPara').value;
+
+                            var res =
+                                converterUnidades(
+                                    val,
+                                    de,
+                                    para
+                                );
+
+                            document.getElementById('unidRes').innerHTML =
+                                val +
+                                ' ' +
+                                de +
+                                ' = ' +
+                                res +
+                                ' ' +
+                                para;
+                        }
+                    );
+                }
+            }
+
+            else if (toolId === 'gerador-qr') {
+
+                var genQr =
+                    document.getElementById('gerarQrBtn');
+
+                if (genQr) {
+
+                    genQr.addEventListener(
+                        'click',
+                        function () {
+
+                            var txt =
+                                document.getElementById('qrTexto').value;
+
+                            var qrImg =
+                                document.getElementById('qrImg');
+
+                            if (txt && qrImg) {
+                                qrImg.src = qrUrl(txt);
+                            }
+                        }
+                    );
+                }
+
+
+                if (genQr) {
+                    genQr.click();
+                }
+            }
+        }
+
+
+        // ========== NAVEGAÇÃO ==========
+
+        var contentDiv =
+            document.getElementById('toolContent');
+
+
+        function loadTool(toolId, withFade) {
+
+            // O JS é global e pode estar sendo carregado
+            // em páginas que não possuem o #toolContent.
+            if (!contentDiv) {
+                return;
+            }
+
+            if (withFade !== false) {
+                contentDiv.style.opacity = '0';
+            }
+
+            setTimeout(function () {
+
+                // Verifica novamente caso o elemento tenha
+                // sido removido antes do timeout.
+                if (!contentDiv) {
+                    return;
+                }
+
+                contentDiv.innerHTML =
+                    renderTool(toolId);
+
+                bindEvents(toolId);
+
+                if (withFade !== false) {
+                    contentDiv.style.opacity = '1';
+                }
+
+            }, 130);
+        }
+
+
+        /*
+        * IMPORTANTE:
+        * Todo o código abaixo só é inicializado quando
+        * #toolContent existir na página.
+        *
+        * Dessa forma, o mesmo JS pode ficar no footer
+        * de todas as páginas sem gerar erros em:
+        *
+        * /sobre
+        * /contato
+        * /blog
+        * etc.
+        */
+
+        if (contentDiv) {
+
+
+            // ========== SIDEBAR NAVIGATION ==========
+
+            var navLinks =
+                document.querySelectorAll(
+                    '#toolsNav .nav-link'
+                );
+
+
+            for (var i = 0; i < navLinks.length; i++) {
+
+                navLinks[i].addEventListener(
+                    'click',
+                    function (e) {
+
+                        e.preventDefault();
+
+                        var tool =
+                            this.getAttribute('data-tool');
+
+                        if (tool) {
+
+                            for (
+                                var j = 0;
+                                j < navLinks.length;
+                                j++
+                            ) {
+                                navLinks[j].classList.remove('active');
+                            }
+
+                            this.classList.add('active');
+
+                            loadTool(
+                                tool,
+                                true
+                            );
+                        }
+                    }
+                );
+            }
+
+
+            // ========== HEADER CATEGORY FILTER ==========
+
+            var headerLinks =
+                document.querySelectorAll(
+                    '.navbar-nav .nav-link'
+                );
+
+
+            for (
+                var i = 0;
+                i < headerLinks.length;
+                i++
+            ) {
+
+                headerLinks[i].addEventListener(
+                    'click',
+                    function (e) {
+
+                        var category =
+                            this.getAttribute(
+                                'data-category'
+                            );
+
+                        if (!category) {
+                            return;
+                        }
+
+                        for (
+                            var j = 0;
+                            j < headerLinks.length;
+                            j++
+                        ) {
+                            headerLinks[j].classList.remove(
+                                'active'
+                            );
+                        }
+
+                        this.classList.add('active');
+
+
+                        var sidebarItems =
+                            document.querySelectorAll(
+                                '#toolsNav .tool-item'
+                            );
+
+                        var firstVisible = null;
+
+
+                        for (
+                            var k = 0;
+                            k < sidebarItems.length;
+                            k++
+                        ) {
+
+                            var itemCat =
+                                sidebarItems[k].getAttribute(
+                                    'data-cat'
+                                );
+
+
+                            if (
+                                category === 'all' ||
+                                itemCat === category
+                            ) {
+
+                                sidebarItems[k].style.display =
+                                    'block';
+
+                                if (!firstVisible) {
+                                    firstVisible =
+                                        sidebarItems[k];
+                                }
+
+                            } else {
+
+                                sidebarItems[k].style.display =
+                                    'none';
+                            }
+                        }
+
+
+                        if (
+                            firstVisible &&
+                            category !== 'all'
+                        ) {
+
+                            firstVisible.click();
+
+                        } else if (
+                            category === 'all'
+                        ) {
+
+                            var defaultTool =
+                                document.querySelector(
+                                    '#toolsNav .tool-item[data-tool="calc-juros"]'
+                                );
+
+                            if (defaultTool) {
+                                defaultTool.click();
+                            }
+                        }
+                    }
+                );
+            }
+
+
+            // ========== FOOTER NAVIGATION ==========
+
+            var footerLinks =
+                document.querySelectorAll(
+                    '[data-nav-ferramenta]'
+                );
+
+
+            for (
+                var i = 0;
+                i < footerLinks.length;
+                i++
+            ) {
+
+                footerLinks[i].addEventListener(
+                    'click',
+                    function (e) {
+
+                        e.preventDefault();
+
+                        var tool =
+                            this.getAttribute(
+                                'data-nav-ferramenta'
+                            );
+
+                        if (tool) {
+
+                            loadTool(
+                                tool,
+                                true
+                            );
+
+
+                            for (
+                                var j = 0;
+                                j < navLinks.length;
+                                j++
+                            ) {
+
+                                if (
+                                    navLinks[j].getAttribute(
+                                        'data-tool'
+                                    ) === tool
+                                ) {
+
+                                    navLinks[j].classList.add(
+                                        'active'
+                                    );
+
+                                } else {
+
+                                    navLinks[j].classList.remove(
+                                        'active'
+                                    );
+                                }
+                            }
+                        }
+                    }
+                );
+            }
+
+
+            // ========== FERRAMENTA INICIAL ==========
+
+            loadTool(
+                'calc-juros',
+                false
+            );
+        }
+
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 
     <script src="{{ asset('build/client/bootstrap/js/bootstrap.bundle.js') }}" defer></script>
     <script src="{{ asset('build/client/lgpd/script.js') }}" defer></script>

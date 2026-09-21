@@ -1,15 +1,17 @@
 * {
   font-family: 'Inter', sans-serif;
 }
-
+html,
+body {
+    overflow-x: clip !important;
+}
 body {
   background: linear-gradient(135deg, #f5f7fc 0%, #eef2f6 100%);
-  padding-top: 80px;
+  padding-top: 117px;
 }
 
 /* ==================== NAVBAR ENHANCED ==================== */
 .navbar {
-  background: rgba(255, 255, 255, 0.98) !important;
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   padding: 0.75rem 0;
@@ -411,7 +413,6 @@ body {
 }
 
 .footer-list-modern a {
-  color: #5b6e8c;
   text-decoration: none;
   font-size: 0.85rem;
   transition: all 0.2s ease;
