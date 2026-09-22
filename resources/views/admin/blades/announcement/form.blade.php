@@ -82,7 +82,7 @@
 
 <div class="row">
     {{-- Público do anúncio --}}
-    <div class="mb-3 col-12">
+    <div class="mb-3 col-12 col-lg-6">
         <label for="target-{{ $uid }}" class="form-label">
             Público do anúncio
             <span class="text-danger">*</span>
@@ -103,7 +103,7 @@
     </div>
 
     {{-- Seleção de clientes --}}
-    <div class="mb-3 col-12" id="tenants-container-{{ $uid }}" style="{{ $currentTarget === 'specific' ? '' : 'display: none;' }}">
+    <div class="mb-3 col-12 col-lg-6" id="tenants-container-{{ $uid }}" style="{{ $currentTarget === 'specific' ? '' : 'display: none;' }}">
         <label for="tenant-selector-{{ $uid }}" class="form-label">
             Selecionar clientes
         </label>
