@@ -36,6 +36,20 @@ return new class extends Migration
             if (!Schema::hasColumn('announcements', 'text')) {
                 $table->text('text')->nullable();
             }
+
+            if (!Schema::hasColumn('announcements', 'target')) {
+                $table->enum('target', ['all', 'specific'])->default('specific');
+            }
+
+            if (!Schema::hasColumn('announcements', 'exhibition')) {
+                $table->enum('exhibition', ['mobile', 'horizontal', 'vertical'])
+                    ->nullable()
+                    ->after('display_location');
+            } else {
+                $table->enum('exhibition', ['mobile', 'horizontal', 'vertical'])
+                    ->nullable()
+                    ->change();
+            }
         });
     }
 

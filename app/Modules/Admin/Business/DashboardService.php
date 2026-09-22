@@ -20,21 +20,29 @@ class DashboardService
         $themeData = $themeManager->theme();
         $clients = Tenant::with(['templateTheme', 'plan'])->orderBy('name', 'asc')->paginate(4);
 
-        $now = now();
+        $tenant = Tenant::current();
 
         $announcement = Announcement::query()
         ->where('active', true)
         ->whereIn('display_location', ['panel', 'both'])
-        ->where(function ($query) use ($now) {
-            $query->whereNull('starts_at')
-                ->orWhere('starts_at', '<=', $now);
+        ->where(function ($query) use ($tenant) {
+            $query->where('target', 'all')
+                ->orWhereHas('tenants', function ($query) use ($tenant) {
+                    $query->where('tenants.id', $tenant->id);
+                });
         })
-        ->where(function ($query) use ($now) {
+        ->where(function ($query) {
+            $query->whereNull('starts_at')
+                ->orWhere('starts_at', '<=', now());
+        })
+        ->where(function ($query) {
             $query->whereNull('ends_at')
-                ->orWhere('ends_at', '>=', $now);
+                ->orWhere('ends_at', '>=', now());
         })
         ->latest()
         ->first();
+
+        
 
         return compact('user', 'settingTheme', 'theme', 'themeData', 'clients', 'announcement');
     }

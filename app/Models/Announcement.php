@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Services\ActivityLogService;
-use App\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -12,7 +11,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Announcement extends Model
 {
-    use Notifiable, HasFactory, LogsActivity, BelongsToTenant;
+    use Notifiable, HasFactory, LogsActivity;
     
     protected $fillable = [
         'link',
@@ -22,6 +21,7 @@ class Announcement extends Model
         'path_image_vertical',
         'active',
         'sorting',
+        'target',
         'text',
         'display_location',
         'type',
@@ -49,5 +49,13 @@ class Announcement extends Model
         
         return LogOptions::defaults()
             ->logOnly($activityLogService->getLoggableAttributes());
+    }
+
+    public function tenants()
+    {
+        return $this->belongsToMany(
+            Tenant::class,
+            'announcement_tenants'
+        );
     }
 }

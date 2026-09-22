@@ -1,86 +1,200 @@
 @php
-    $textareaId = $textareaId ?? 'text' . (isset($announcement->id) ? $announcement->id : '');
+    $announcement = $announcement ?? null;
+    $uid = $uid ?? ($announcement?->id ?? 'create');
+    $textareaId = $textareaId ?? 'text' . $uid;
+
+    /*
+    |--------------------------------------------------------------------------
+    | Público
+    |--------------------------------------------------------------------------
+    */
+    $currentTarget = old(
+        'target',
+        $announcement?->target ?? 'all'
+    );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Clientes selecionados
+    |--------------------------------------------------------------------------
+    */
+    $selectedTenantIds = old('tenant_id');
+
+    if ($selectedTenantIds === null) {
+        $selectedTenantIds = $announcement
+            ? $announcement->tenants->pluck('id')->toArray()
+            : [];
+    }
+
+    $selectedTenantIds = array_map(
+        'strval',
+        (array) $selectedTenantIds
+    );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Mapa de clientes selecionados (id => nome) para fallback dos badges
+    |--------------------------------------------------------------------------
+    */
+    $announcementTenants = $announcement?->tenants ?? collect();
+
+    $tenantsMap = collect($tenants ?? [])
+        ->mapWithKeys(fn ($t) => [(string) $t->id => $t->name])
+        ->toArray();
+
+    foreach ($announcementTenants as $t) {
+        $key = (string) $t->id;
+        if (!array_key_exists($key, $tenantsMap)) {
+            $tenantsMap[$key] = $t->name;
+        }
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Tipo
+    |--------------------------------------------------------------------------
+    */
+    $currentType = old(
+        'type',
+        $announcement?->type ?? 'general'
+    );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Local de exibição
+    |--------------------------------------------------------------------------
+    */
+    $currentDisplayLocation = old(
+        'display_location',
+        $announcement?->display_location ?? 'web'
+    );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Tipo de anúncio
+    |--------------------------------------------------------------------------
+    */
+    $currentExhibition = old(
+        'exhibition',
+        $announcement?->exhibition ?? ''
+    );
 @endphp
 
 <div class="row">
-    {{-- Tipo --}}
-    <div class="mb-3 col-md-6 col-12">
-        <label for="type" class="form-label">Tipo <span class="text-danger">*</span></label>
+    {{-- Público do anúncio --}}
+    <div class="mb-3 col-12">
+        <label for="target-{{ $uid }}" class="form-label">
+            Público do anúncio
+            <span class="text-danger">*</span>
+        </label>
 
-        @php
-            $currentType = isset($announcement) ? $announcement->type : 'general';
-        @endphp
-
-        <select name="type" class="form-select" id="type" required>
-            <option value="general" {{ $currentType == 'general' ? 'selected' : '' }}>
-                Geral
+        <select name="target" class="form-select" id="target-{{ $uid }}" required>
+            <option value="all" @selected($currentTarget === 'all')>
+                Todos os clientes
             </option>
-            <option value="maintenance" {{ $currentType == 'maintenance' ? 'selected' : '' }}>
-                Manutenção
-            </option>
-            <option value="update" {{ $currentType == 'update' ? 'selected' : '' }}>
-                Atualização
-            </option>
-            <option value="promotion" {{ $currentType == 'promotion' ? 'selected' : '' }}>
-                Promoção
-            </option>
-            <option value="warning" {{ $currentType == 'warning' ? 'selected' : '' }}>
-                Aviso
+            <option value="specific" @selected($currentTarget === 'specific')>
+                Clientes específicos
             </option>
         </select>
+
+        <small class="text-muted">
+            Defina se o anúncio será exibido para todos os clientes ou apenas para clientes selecionados.
+        </small>
+    </div>
+
+    {{-- Seleção de clientes --}}
+    <div class="mb-3 col-12" id="tenants-container-{{ $uid }}" style="{{ $currentTarget === 'specific' ? '' : 'display: none;' }}">
+        <label for="tenant-selector-{{ $uid }}" class="form-label">
+            Selecionar clientes
+        </label>
+
+        <select id="tenant-selector-{{ $uid }}" class="form-select">
+            <option value="">
+                Selecione um cliente...
+            </option>
+
+            @foreach($tenants as $tenant)
+                <option value="{{ $tenant->id }}" data-name="{{ $tenant->name }}" @disabled(in_array((string) $tenant->id, $selectedTenantIds, true))>
+                    {{ $tenant->name }}
+                </option>
+            @endforeach
+        </select>
+
+        <small class="text-muted">
+            Selecione os clientes que receberão este anúncio.
+        </small>
+
+        {{-- Inputs hidden dos clientes selecionados --}}
+        <div id="selected-tenants-inputs-{{ $uid }}"></div>
+
+        {{-- Lista dos clientes selecionados --}}
+        <div id="selected-tenants-{{ $uid }}" class="d-flex flex-wrap gap-2 mt-3"></div>
     </div>
 
     {{-- Local de exibição --}}
     <div class="mb-3 col-md-6 col-12">
-        <label for="display_location" class="form-label">
-            Local de exibição <span class="text-danger">*</span>
+        <label for="display_location-{{ $uid }}" class="form-label">
+            Local de exibição
+            <span class="text-danger">*</span>
         </label>
 
-        @php
-            $currentDisplayLocation = isset($announcement)
-                ? $announcement->display_location
-                : 'web';
-        @endphp
-
-        <select name="display_location" class="form-select" id="display_location" required>
-            <option value="web" {{ $currentDisplayLocation == 'web' ? 'selected' : '' }}>
+        <select name="display_location" class="form-select" id="display_location-{{ $uid }}" required>
+            <option value="web" @selected($currentDisplayLocation === 'web')>
                 Site
             </option>
-            <option value="panel" {{ $currentDisplayLocation == 'panel' ? 'selected' : '' }}>
+            <option value="panel" @selected($currentDisplayLocation === 'panel')>
                 Painel
             </option>
-            <option value="both" {{ $currentDisplayLocation == 'both' ? 'selected' : '' }}>
+            <option value="both" @selected($currentDisplayLocation === 'both')>
                 Site e Painel
             </option>
         </select>
     </div>
 
-    {{-- Exhibition --}}
-    <div class="mb-3 col-12" id="exhibition-container">
-        <label for="exhibition" class="form-label">
-            Tipo de anúncio <span class="text-danger">*</span>
+    {{-- Tipo (sempre visível) --}}
+    <div class="mb-3 col-md-6 col-12" id="type-container-{{ $uid }}">
+        <label for="type-{{ $uid }}" class="form-label">
+            Tipo
+            <span class="text-danger">*</span>
         </label>
 
-        @php
-            $currentExhibition = isset($announcement)
-                ? $announcement->exhibition
-                : null;
-        @endphp
+        <select name="type" class="form-select" id="type-{{ $uid }}" required>
+            <option value="general" @selected($currentType === 'general')>
+                Geral
+            </option>
+            <option value="maintenance" @selected($currentType === 'maintenance')>
+                Manutenção
+            </option>
+            <option value="update" @selected($currentType === 'update')>
+                Atualização
+            </option>
+            <option value="promotion" @selected($currentType === 'promotion')>
+                Promoção
+            </option>
+            <option value="warning" @selected($currentType === 'warning')>
+                Aviso
+            </option>
+        </select>
+    </div>
 
-        <select name="exhibition" class="form-select" id="exhibition">
-            <option value="" disabled {{ !$currentExhibition ? 'selected' : '' }}>
+    {{-- Tipo de anúncio (exhibition) --}}
+    <div class="mb-3 col-12" id="exhibition-container-{{ $uid }}">
+        <label for="exhibition-{{ $uid }}" class="form-label">
+            Tipo de anúncio
+            <span class="text-danger">*</span>
+        </label>
+
+        <select name="exhibition" class="form-select" id="exhibition-{{ $uid }}">
+            <option value="" @selected(empty($currentExhibition))>
                 Selecione o tipo
             </option>
-
-            <option value="mobile" {{ $currentExhibition == 'mobile' ? 'selected' : '' }}>
+            <option value="mobile" @selected($currentExhibition === 'mobile')>
                 Anúncio Horizontal Mobile (versão para celular)
             </option>
-
-            <option value="horizontal" {{ $currentExhibition == 'horizontal' ? 'selected' : '' }}>
+            <option value="horizontal" @selected($currentExhibition === 'horizontal')>
                 Anúncio Horizontal Desktop (versão para computador)
             </option>
-
-            <option value="vertical" {{ $currentExhibition == 'vertical' ? 'selected' : '' }}>
+            <option value="vertical" @selected($currentExhibition === 'vertical')>
                 Anúncio Vertical
             </option>
         </select>
@@ -88,26 +202,29 @@
         <div class="instructions mt-2">
             <h5>Resoluções recomendadas:</h5>
             <ol>
-                <li>Versão para computador - <b class="text-danger">1137x171px</b></li>
-                <li>Versão para celular - <b class="text-danger">576x111px</b></li>
-                <li>Versão vertical - <b class="text-danger">355x433px</b></li>
+                <li>
+                    Versão para computador -
+                    <b class="text-danger">1137x171px</b>
+                </li>
+                <li>
+                    Versão para celular -
+                    <b class="text-danger">576x111px</b>
+                </li>
+                <li>
+                    Versão vertical -
+                    <b class="text-danger">355x433px</b>
+                </li>
             </ol>
         </div>
     </div>
 
     {{-- Período de exibição --}}
     <div class="mb-3 col-md-6 col-12">
-        <label for="starts_at" class="form-label">
+        <label for="starts_at-{{ $uid }}" class="form-label">
             Início da exibição
         </label>
 
-        <input
-            type="datetime-local"
-            name="starts_at"
-            id="starts_at"
-            class="form-control"
-            value="{{ isset($announcement->starts_at) && $announcement->starts_at ? $announcement->starts_at->format('Y-m-d\TH:i') : '' }}"
-        >
+        <input type="datetime-local" name="starts_at" id="starts_at-{{ $uid }}" class="form-control" value="{{ old('starts_at', $announcement?->starts_at?->format('Y-m-d\TH\:i') ?? '') }}">
 
         <small class="text-muted">
             Deixe vazio para exibir imediatamente.
@@ -115,17 +232,11 @@
     </div>
 
     <div class="mb-3 col-md-6 col-12">
-        <label for="ends_at" class="form-label">
+        <label for="ends_at-{{ $uid }}" class="form-label">
             Fim da exibição
         </label>
 
-        <input
-            type="datetime-local"
-            name="ends_at"
-            id="ends_at"
-            class="form-control"
-            value="{{ isset($announcement->ends_at) && $announcement->ends_at ? $announcement->ends_at->format('Y-m-d\TH:i') : '' }}"
-        >
+        <input type="datetime-local" name="ends_at" id="ends_at-{{ $uid }}" class="form-control" value="{{ old('ends_at', $announcement?->ends_at?->format('Y-m-d\TH\:i') ?? '') }}">
 
         <small class="text-muted">
             Deixe vazio para não definir uma data de término.
@@ -134,16 +245,11 @@
 
     {{-- Link --}}
     <div class="col-12 mb-3">
-        <label for="link" class="form-label">Link</label>
+        <label for="link-{{ $uid }}" class="form-label">
+            Link
+        </label>
 
-        <input
-            type="text"
-            name="link"
-            class="form-control"
-            id="link{{ isset($announcement->id) ? $announcement->id : '' }}"
-            value="{{ isset($announcement) ? $announcement->link : '' }}"
-            placeholder="Link"
-        >
+        <input type="text" name="link" class="form-control" id="link-{{ $uid }}" value="{{ old('link', $announcement?->link ?? '') }}" placeholder="Link">
     </div>
 
     {{-- Texto --}}
@@ -152,27 +258,17 @@
             Texto
         </label>
 
-        <textarea
-            name="text"
-            id="{{ $textareaId }}"
-            placeholder="Texto"
-            class="col-12"
-            rows="10"
-        >{!! isset($announcement->text) ? $announcement->text : '' !!}</textarea>
+        <textarea name="text" id="{{ $textareaId }}" placeholder="Texto" class="col-12" rows="10">{!! old('text', $announcement?->text ?? '') !!}</textarea>
     </div>
 
     {{-- Imagem --}}
     <div class="col-12 mb-3">
-        <label for="path_image" class="form-label">
-            Imagem <span class="text-danger">*</span>
+        <label for="path_image-{{ $uid }}" class="form-label">
+            Imagem
+            <span class="text-danger">*</span>
         </label>
 
-        <input
-            type="file"
-            name="path_image"
-            data-plugins="dropify"
-            data-default-file="{{ isset($announcement) ? ($announcement->path_image != '' ? url('storage/' . $announcement->path_image) : '') : '' }}"
-        />
+        <input type="file" name="path_image" id="path_image-{{ $uid }}" data-plugins="dropify" data-default-file="{{ $announcement?->path_image ? url('storage/' . $announcement->path_image) : '' }}" />
 
         <p class="text-muted text-center mt-2 mb-0">
             {{ __('dashboard.text_img_size') }}
@@ -183,56 +279,273 @@
     {{-- Ativo --}}
     <div class="col-12 mb-3">
         <div class="form-check">
-            <input
-                name="active"
-                {{ isset($announcement->active) && $announcement->active == 1 ? 'checked' : '' }}
-                type="checkbox"
-                class="form-check-input"
-                id="invalidCheck{{ isset($announcement->id) ? $announcement->id : '' }}"
-            />
+            <input name="active" value="1" type="checkbox" class="form-check-input" id="invalidCheck-{{ $uid }}" @checked(old('active', $announcement?->active ?? false))>
 
-            <label
-                class="form-check-label"
-                for="invalidCheck{{ isset($announcement->id) ? $announcement->id : '' }}"
-            >
+            <label class="form-check-label" for="invalidCheck-{{ $uid }}">
                 {{ __('dashboard.active') }}?
             </label>
         </div>
     </div>
 </div>
 
+<style>
+    .selected-tenant-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        background: #f1f3f5;
+        border: 1px solid #dee2e6;
+        border-radius: 20px;
+        font-size: 14px;
+    }
+
+    .selected-tenant-badge button {
+        border: 0;
+        background: transparent;
+        padding: 0;
+        margin: 0;
+        color: #dc3545;
+        cursor: pointer;
+        line-height: 1;
+    }
+
+    .selected-tenant-badge button:hover {
+        color: #a71d2a;
+    }
+</style>
+
 <script>
-        document.addEventListener('DOMContentLoaded', function () {
-        const displayLocation = document.getElementById('display_location');
-        const exhibitionContainer = document.getElementById('exhibition-container');
-        const exhibition = document.getElementById('exhibition');
+    (function () {
+        const uid = "{{ $uid }}";
 
-        function toggleExhibition() {
-            const show = displayLocation.value === 'web' || displayLocation.value === 'both';
+        function initAnnouncementForm() {
+            /*
+            |--------------------------------------------------------------------------
+            | Elementos do formulário (escopados por uid)
+            |--------------------------------------------------------------------------
+            */
+            const target = document.getElementById('target-' + uid);
+            const tenantsContainer = document.getElementById('tenants-container-' + uid);
+            const tenantSelector = document.getElementById('tenant-selector-' + uid);
+            const selectedTenants = document.getElementById('selected-tenants-' + uid);
+            const selectedTenantsInputs = document.getElementById('selected-tenants-inputs-' + uid);
 
-            exhibitionContainer.style.display = show ? '' : 'none';
-            exhibition.required = show;
+            const displayLocation = document.getElementById('display_location-' + uid);
+            const typeContainer = document.getElementById('type-container-' + uid);
+            const type = document.getElementById('type-' + uid);
+            const exhibitionContainer = document.getElementById('exhibition-container-' + uid);
+            const exhibition = document.getElementById('exhibition-' + uid);
 
-            if (!show) {
-                exhibition.value = '';
+            /*
+            |--------------------------------------------------------------------------
+            | Se algum elemento essencial não existir, aborta silenciosamente
+            |--------------------------------------------------------------------------
+            */
+            if (!target || !tenantsContainer || !tenantSelector || !selectedTenants || !selectedTenantsInputs) {
+                return;
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Mapa id => nome (inclui clientes já selecionados que não estão em $tenants)
+            |--------------------------------------------------------------------------
+            */
+            const tenantsMap = @json($tenantsMap);
+
+            const selectedTenantIds = new Set(
+                @json($selectedTenantIds)
+            );
+
+            function renderSelectedTenants() {
+                selectedTenants.innerHTML = '';
+                selectedTenantsInputs.innerHTML = '';
+
+                selectedTenantIds.forEach(function (tenantId) {
+                    tenantId = String(tenantId);
+
+                    const option = tenantSelector.querySelector(
+                        `option[value="${tenantId}"]`
+                    );
+
+                    let tenantName = option?.dataset?.name ?? tenantsMap[tenantId] ?? null;
+
+                    if (!tenantName) {
+                        console.warn('Cliente selecionado não encontrado:', tenantId);
+                        return;
+                    }
+
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'tenant_id[]';
+                    input.value = tenantId;
+
+                    selectedTenantsInputs.appendChild(input);
+
+                    const badge = document.createElement('span');
+                    badge.className = 'selected-tenant-badge';
+
+                    badge.innerHTML = `
+                        <span>${tenantName}</span>
+                        <button
+                            type="button"
+                            title="Remover"
+                            data-tenant-id="${tenantId}"
+                        >
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    `;
+
+                    selectedTenants.appendChild(badge);
+
+                    if (option) {
+                        option.disabled = true;
+                    }
+                });
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Selecionar cliente
+            |--------------------------------------------------------------------------
+            */
+            tenantSelector.addEventListener('change', function () {
+                const tenantId = this.value;
+
+                if (!tenantId) {
+                    return;
+                }
+
+                selectedTenantIds.add(String(tenantId));
+                renderSelectedTenants();
+
+                this.value = '';
+            });
+
+            /*
+            |--------------------------------------------------------------------------
+            | Remover cliente
+            |--------------------------------------------------------------------------
+            */
+            selectedTenants.addEventListener('click', function (event) {
+                const button = event.target.closest('[data-tenant-id]');
+
+                if (!button) {
+                    return;
+                }
+
+                const tenantId = String(
+                    button.dataset.tenantId
+                );
+
+                selectedTenantIds.delete(tenantId);
+
+                const option = tenantSelector.querySelector(
+                    `option[value="${tenantId}"]`
+                );
+
+                if (option) {
+                    option.disabled = false;
+                }
+
+                renderSelectedTenants();
+            });
+
+            /*
+            |--------------------------------------------------------------------------
+            | Exibe/oculta seleção de clientes
+            |--------------------------------------------------------------------------
+            */
+            function toggleTenants() {
+                const show = target.value === 'specific';
+
+                tenantsContainer.style.display = show ? '' : 'none';
+            }
+
+            target.addEventListener('change', toggleTenants);
+
+            /*
+            |--------------------------------------------------------------------------
+            | Local de exibição / Tipo / Exhibition
+            |--------------------------------------------------------------------------
+            | Tipo: sempre visível (não depende do local de exibição)
+            | Exhibition: só faz sentido para exibição no site
+            */
+            function toggleWebFields() {
+                const isWeb =
+                    displayLocation.value === 'web' ||
+                    displayLocation.value === 'both';
+
+                /*
+                |--------------------------------------------------------------------------
+                | Tipo — sempre visível
+                |--------------------------------------------------------------------------
+                */
+                typeContainer.style.display = '';
+                type.required = true;
+
+                /*
+                |--------------------------------------------------------------------------
+                | Exhibition — depende do local
+                |--------------------------------------------------------------------------
+                */
+                exhibitionContainer.style.display = isWeb ? '' : 'none';
+                exhibition.required = isWeb;
+
+                if (!isWeb) {
+                    exhibition.value = '';
+                }
+            }
+
+            displayLocation.addEventListener('change', toggleWebFields);
+
+            /*
+            |--------------------------------------------------------------------------
+            | Inicialização
+            |--------------------------------------------------------------------------
+            */
+            renderSelectedTenants();
+            toggleTenants();
+            toggleWebFields();
+
+            /*
+            |--------------------------------------------------------------------------
+            | CKEditor
+            |--------------------------------------------------------------------------
+            */
+            const textareaId = "{{ $textareaId }}";
+
+            if (document.getElementById(textareaId) && typeof CKEDITOR !== 'undefined') {
+                // Evita recriar instância se já existir
+                if (CKEDITOR.instances[textareaId]) {
+                    CKEDITOR.instances[textareaId].destroy(true);
+                }
+
+                CKEDITOR.replace(textareaId, {
+                    toolbar: [
+                        {
+                            name: 'basicstyles',
+                            items: [
+                                'Bold',
+                                'Italic',
+                                'Underline'
+                            ]
+                        }
+                    ],
+                    height: 200
+                });
             }
         }
 
-        displayLocation.addEventListener('change', toggleExhibition);
-
-        toggleExhibition();
-    });
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const textareaId = "{{$textareaId}}";
-
-        if (document.getElementById(textareaId)) {
-            CKEDITOR.replace(textareaId, {
-                toolbar: [
-                    { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline'] },
-                ],
-                height: 200
-            });
+        /*
+        |--------------------------------------------------------------------------
+        | Inicialização
+        |--------------------------------------------------------------------------
+        */
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initAnnouncementForm);
+        } else {
+            initAnnouncementForm();
         }
-    });
+    })();
 </script>

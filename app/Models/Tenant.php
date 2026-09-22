@@ -71,4 +71,9 @@ class Tenant extends BaseTenant
     {
         return $this->belongsTo(Plan::class);
     }
+
+    public function announcements()
+    {
+        return $this->belongsToMany(Announcement::class, 'announcement_tenants');
+    }
 }
