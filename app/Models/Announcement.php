@@ -22,6 +22,17 @@ class Announcement extends Model
         'path_image_vertical',
         'active',
         'sorting',
+        'text',
+        'display_location',
+        'type',
+        'starts_at',
+        'ends_at',
+    ];
+    
+    protected $casts = [
+        'starts_at' => 'datetime',
+        'ends_at' => 'datetime',
+        'active' => 'boolean',
     ];
     public function scopeActive($query)
     {

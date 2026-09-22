@@ -2,39 +2,57 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Helpers\HelperArchive;
 use App\Models\Announcement;
+use App\Repositories\SettingThemeRepository;
+use App\Services\ThemeManager;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Response;
-use RealRashid\SweetAlert\Facades\Alert;
-use App\Repositories\SettingThemeRepository;
-use App\Http\Controllers\Helpers\HelperArchive;
 use Intervention\Image\Drivers\Imagick\Driver as ImagickDriver;
+use Intervention\Image\ImageManager;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AnnouncementController extends Controller
 {
     protected $pathUpload = 'admin/uploads/images/anuncio/';
 
-    public function index()
+    public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
-        if(!Auth::user()->hasRole('Super') && 
-            !Auth::user()->can('usuario.tornar usuario master') &&
-            !Auth::user()->hasPermissionTo('anuncio.visualizar')){
-            return view('admin.error.403', compact('settingTheme'));
+
+        // 'slides' → é o módulo definido no template_modules.php.
+        // 'slide.visualizar' → é a permissão definida no module_permissions.php.
+        $check = checkPermission('announcement', 'anuncios.visualizar', $settingTheme);
+        if ($check !== true) {
+            return $check; // retorna view 403
         }
-        $announcements = Announcement::sorting()->get();
-        
-        return view('admin.blades.announcement.index', compact('announcements'));
+
+        $announcements = Announcement::get();
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+        $aboutLimit = $themeManager->getLimit('about', 0);
+
+        return view('admin.blades.announcement.index', compact('announcements', 'theme', 'themeData', 'aboutLimit'));
     }
 
     public function store(Request $request)
     {
-        $data = $request->all();
+        $data = $request->except([
+            'starts_at',
+            'ends_at',
+        ]);
+
+        $data['starts_at'] = $request->filled('starts_at')
+            ? \Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $request->starts_at)
+            : null;
+
+        $data['ends_at'] = $request->filled('ends_at')
+            ? \Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $request->ends_at)
+            : null;
         $manager = new ImageManager(new ImagickDriver());
 
         // anuncio horizontal
@@ -124,8 +142,18 @@ class AnnouncementController extends Controller
 
     public function update(Request $request, Announcement $announcement)
     {
-        $data = $request->all();
-        $helper = new HelperArchive();
+        $data = $request->except([
+            'starts_at',
+            'ends_at',
+        ]);
+
+        $data['starts_at'] = $request->filled('starts_at')
+            ? \Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $request->starts_at)
+            : null;
+
+        $data['ends_at'] = $request->filled('ends_at')
+            ? \Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $request->ends_at)
+            : null;
         $manager = new ImageManager(new ImagickDriver());
 
         // Anuncio horizontal
