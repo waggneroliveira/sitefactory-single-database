@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Services\ActivityLogService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -15,7 +16,6 @@ class Announcement extends Model
     
     protected $fillable = [
         'link',
-        'exhibition',
         'path_image',
         'path_image_mobile',
         'path_image_vertical',
@@ -56,6 +56,13 @@ class Announcement extends Model
         return $this->belongsToMany(
             Tenant::class,
             'announcement_tenants'
+        );
+    }
+    public function adSlots(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            AdSlot::class,
+            'announcement_ad_slots'
         );
     }
 }

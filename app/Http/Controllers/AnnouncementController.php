@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Helpers\HelperArchive;
+use App\Models\AdSlot;
 use App\Models\Announcement;
 use App\Models\Tenant;
 use App\Repositories\SettingThemeRepository;
@@ -28,20 +29,47 @@ class AnnouncementController extends Controller
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
-        // 'slides' → é o módulo definido no template_modules.php.
-        // 'slide.visualizar' → é a permissão definida no module_permissions.php.
-        $check = checkPermission('announcement', 'anuncios.visualizar', $settingTheme);
+        $check = checkPermission(
+            'announcement',
+            'anuncios.visualizar',
+            $settingTheme
+        );
+
         if ($check !== true) {
-            return $check; // retorna view 403
+            return $check;
         }
 
-        $announcements = Announcement::get();
         $theme = $themeManager;
         $themeData = $themeManager->theme();
-        $aboutLimit = $themeManager->getLimit('about', 0);
+
+        $announcements = Announcement::with([
+            'tenants',
+            'adSlots',
+        ])->get();
+
         $tenants = Tenant::get();
 
-        return view('admin.blades.announcement.index', compact('tenants', 'announcements', 'theme', 'themeData', 'aboutLimit'));
+        $adSlots = AdSlot::where(
+            'template_theme_id',
+            $themeData->id
+        )
+            ->where('active', true)
+            ->orderBy('sorting')
+            ->orderBy('name')
+        ->get();
+
+        $aboutLimit = $themeManager->getLimit('about', 0);
+
+        return view('admin.blades.announcement.index',
+            compact(
+                'tenants',
+                'announcements',
+                'adSlots',
+                'theme',
+                'themeData',
+                'aboutLimit'
+            )
+        );
     }
 
     public function store(Request $request)
@@ -50,9 +78,11 @@ class AnnouncementController extends Controller
             'starts_at',
             'ends_at',
             'tenant_id',
+            'ad_slot_ids',
         ]);
 
         $tenantIds = $request->input('tenant_id', []);
+        $adSlotIds = $request->input('ad_slot_ids', []);
 
         $data['starts_at'] = $request->filled('starts_at')
             ? Carbon::createFromFormat('Y-m-d\TH:i', $request->starts_at)
@@ -85,7 +115,10 @@ class AnnouncementController extends Controller
                     ->toWebp(quality: 95)
                     ->toString();
 
-                Storage::put($this->pathUpload . $filename, $image);
+                Storage::put(
+                    $this->pathUpload . $filename,
+                    $image
+                );
             }
 
             $data['path_image'] = $this->pathUpload . $filename;
@@ -112,7 +145,10 @@ class AnnouncementController extends Controller
                     ->toWebp(quality: 95)
                     ->toString();
 
-                Storage::put($this->pathUpload . $filename, $image);
+                Storage::put(
+                    $this->pathUpload . $filename,
+                    $image
+                );
             }
 
             $data['path_image_mobile'] = $this->pathUpload . $filename;
@@ -139,7 +175,10 @@ class AnnouncementController extends Controller
                     ->toWebp(quality: 95)
                     ->toString();
 
-                Storage::put($this->pathUpload . $filename, $image);
+                Storage::put(
+                    $this->pathUpload . $filename,
+                    $image
+                );
             }
 
             $data['path_image_vertical'] = $this->pathUpload . $filename;
@@ -152,14 +191,17 @@ class AnnouncementController extends Controller
 
             $announcement = Announcement::create($data);
 
+            // Vincula os slots de anúncio ao anúncio.
+            $announcement->adSlots()->sync($adSlotIds);
+
             // Se for para clientes específicos, salva na tabela pivot.
-            // Se for para todos, não precisa ter nenhum registro na pivot.
+            // Se for para todos, remove qualquer vínculo específico.
             if ($announcement->target === 'specific') {
                 $announcement->tenants()->sync($tenantIds);
             } else {
                 $announcement->tenants()->sync([]);
             }
-            // dd($tenantIds, $announcement);
+
             DB::commit();
 
             session()->flash(
@@ -167,7 +209,7 @@ class AnnouncementController extends Controller
                 __('dashboard.response_item_create')
             );
         } catch (Exception $e) {
-            DB::rollback();
+            DB::rollBack();
 
             session()->flash(
                 'error',
@@ -184,9 +226,11 @@ class AnnouncementController extends Controller
             'starts_at',
             'ends_at',
             'tenant_id',
+            'ad_slot_ids',
         ]);
 
         $tenantIds = $request->input('tenant_id', []);
+        $adSlotIds = $request->input('ad_slot_ids', []);
 
         $data['starts_at'] = $request->filled('starts_at')
             ? Carbon::createFromFormat('Y-m-d\TH:i', $request->starts_at)
@@ -219,7 +263,10 @@ class AnnouncementController extends Controller
                     ->toWebp(quality: 95)
                     ->toString();
 
-                Storage::put($this->pathUpload . $filename, $image);
+                Storage::put(
+                    $this->pathUpload . $filename,
+                    $image
+                );
             }
 
             if (!empty($announcement->path_image)) {
@@ -250,7 +297,10 @@ class AnnouncementController extends Controller
                     ->toWebp(quality: 95)
                     ->toString();
 
-                Storage::put($this->pathUpload . $filename, $image);
+                Storage::put(
+                    $this->pathUpload . $filename,
+                    $image
+                );
             }
 
             if (!empty($announcement->path_image_mobile)) {
@@ -290,7 +340,10 @@ class AnnouncementController extends Controller
                     ->toWebp(quality: 95)
                     ->toString();
 
-                Storage::put($this->pathUpload . $filename, $image);
+                Storage::put(
+                    $this->pathUpload . $filename,
+                    $image
+                );
             }
 
             if (!empty($announcement->path_image_vertical)) {
@@ -316,11 +369,14 @@ class AnnouncementController extends Controller
 
             $announcement->fill($data)->save();
 
-            // Atualiza os tenants relacionados
+            // Atualiza os slots vinculados ao anúncio.
+            // O sync() também remove os slots que foram desmarcados.
+            $announcement->adSlots()->sync($adSlotIds);
+
+            // Atualiza os tenants relacionados.
             if ($announcement->target === 'specific') {
                 $announcement->tenants()->sync($tenantIds);
             } else {
-                // Se mudou para "todos", remove os vínculos específicos
                 $announcement->tenants()->sync([]);
             }
 
@@ -330,7 +386,7 @@ class AnnouncementController extends Controller
                 'success',
                 __('dashboard.response_item_update')
             );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
 
             session()->flash(
