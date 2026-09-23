@@ -59,7 +59,7 @@
                         <p><i class="bi bi-megaphone"></i> PUBLICIDADE</p>
                         <div class="ad-placeholder overflow-hidden">
                             <!-- Seu anúncio aqui<br>(Google Ads) -->
-                            @if ($announcement->link <> null && $announcement->path_image <> null)
+                            @if (isset($announcement) && $announcement->link <> null && $announcement->path_image <> null)
                                 <a href="{{$announcement->link}}" target="_blank" rel="noopener noreferrer">
                                     <img
                                         src="{{asset('storage/' . $announcement->path_image)}}"
