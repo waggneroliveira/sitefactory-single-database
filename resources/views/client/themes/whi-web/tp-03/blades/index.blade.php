@@ -55,29 +55,18 @@
                             ><i class="bi bi-qr-code"></i> Gerador QR Code</a
                         >
                     </nav>
-                    <div class="ad-container mt-4">
-                        <p><i class="bi bi-megaphone"></i> PUBLICIDADE</p>
-                        <div class="ad-placeholder overflow-hidden">
-                            <!-- Seu anúncio aqui<br>(Google Ads) -->
-                            @if (isset($announcement) && $announcement->link <> null && $announcement->path_image <> null)
-                                <a href="{{$announcement->link}}" target="_blank" rel="noopener noreferrer">
-                                    <img
-                                        src="{{asset('storage/' . $announcement->path_image)}}"
-                                        class="w-100 h-100"
-                                        alt="Anuncio WHI"
-                                        style="object-fit: cover"
-                                    />
-                                </a>
-                                @elseif($announcement->link == null && $announcement->path_image <> null)
-                                <img
-                                    src="{{asset('storage/' . $announcement->path_image)}}"
-                                    class="w-100 h-100"
-                                    alt="Anuncio WHI"
-                                    style="object-fit: cover"
-                                />
-                            @endif
+                    @if (isset($announcements['sidebar-left'])) 
+                        <div class="ad-container mt-4">
+                            <p><i class="bi bi-megaphone"></i> PUBLICIDADE</p>
+                            <div class="ad-placeholder overflow-hidden">
+                                <!-- Seu anúncio aqui<br>(Google Ads) -->
+                                    @includeIf('client.components.announcement.sidebar-left', [
+                                            'announcement' => $announcements['sidebar-left'] ?? null
+                                        ]
+                                    )
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
 
@@ -90,43 +79,39 @@
                         </div>
                     </div>
                 </div>
-                <div class="ad-container mt-3">
-                    <p><i class="bi bi-google"></i> ANÚNCIO RESPONSIVO</p>
-                    <div class="ad-placeholder overflow-hidden" style="min-height: 100px">
-                        <!-- Espaço para Banner Adsense -->
-                        <a href="https://www.whi.dev.br/lp-delivery/" target="_blank" rel="noopener noreferrer">
-                            <img
-                                src="{{asset('build/client/themes/whi-web/tp-03/images/delifast-hotizontal.png')}}"
-                                class="w-100 h-100"
-                                alt="Anuncio Delifast"
-                                style="object-fit: cover"
-                            />
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3 order-lg-3 order-3">
-                <div class="sidebar-card" style="background: white">
-                    <div class="ad-container mb-3">
-                        <p><i class="bi bi-display"></i> DESTAQUE</p>
-                        <div class="ad-placeholder overflow-hidden" style="min-height: 250px">
-                            <!-- Anúncio 300x250 -->
-                            <a href="https://www.whi.dev.br/lp-delivery/" target="_blank" rel="noopener noreferrer">
-                                <img
-                                    src="{{asset('build/client/themes/whi-web/tp-03/images/delifast-vertical.png')}}"
-                                    class="w-100 h-100"
-                                    alt="Anuncio Delifast"
-                                    style="object-fit: cover" 
-                                />
-                            </a>
+                @if (isset($announcements['center-bottom']))
+                    <div class="ad-container mt-3">
+                        <p><i class="bi bi-google"></i> ANÚNCIO RESPONSIVO</p>
+                        <div class="ad-placeholder overflow-hidden" style="min-height: 100px">
+                            <!-- Espaço para Banner Adsense -->
+                            @includeIf('client.components.announcement.center-bottom',[
+                                    'announcement' => $announcements['center-bottom'] ?? null
+                                ]
+                            )
                         </div>
                     </div>
-                    <div class="mt-3 p-2 bg-light rounded-4 text-center small text-muted">
-                        <i class="bi bi-shield-check text-success"></i> 100% offline<br />Nenhum dado enviado
+                @endif
+            </div>
+            
+            @if (isset($announcements['sidebar-right']))                
+                <div class="col-lg-3 order-lg-3 order-3">
+                    <div class="sidebar-card" style="background: white">
+                        <div class="ad-container mb-3">
+                            <p><i class="bi bi-display"></i> DESTAQUE</p>
+                            <div class="ad-placeholder overflow-hidden" style="min-height: 250px">
+                                <!-- Anúncio 300x250 -->  
+                                @includeIf('client.components.announcement.sidebar-right',[
+                                        'announcement' => $announcements['sidebar-right'] ?? null
+                                    ]
+                                )
+                            </div>
+                        </div>
+                        <div class="mt-3 p-2 bg-light rounded-4 text-center small text-muted">
+                            <i class="bi bi-shield-check text-success"></i> 100% offline<br />Nenhum dado enviado
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
 @endsection

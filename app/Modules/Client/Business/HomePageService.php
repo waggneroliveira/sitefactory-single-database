@@ -3,6 +3,7 @@
 namespace App\Modules\Client\Business;
 
 use App\Models\About;
+use App\Models\AdSlot;
 use App\Models\Advantage;
 use App\Models\Announcement;
 use App\Models\BenefitTopic;
@@ -46,28 +47,70 @@ class HomePageService
         $theme = $themeManager;
         $themeData = $themeManager->theme();
 
-        $announcement = Announcement::query()
-            ->where('active', true)
-            ->where('display_location', 'web')
-            ->where(function ($query) use ($tenantTheme) {
-                $query->where('target', 'all')
-                    ->orWhere(function ($query) use ($tenantTheme) {
-                        $query->where('target', 'specific')
-                            ->whereHas('tenants', function ($query) use ($tenantTheme) {
-                                $query->where('tenants.id', $tenantTheme->id);
+        // $announcement = Announcement::query()
+        //     ->where('active', true)
+        //     ->where('display_location', 'web')
+        //     ->where(function ($query) use ($tenantTheme) {
+        //         $query->where('target', 'all')
+        //             ->orWhere(function ($query) use ($tenantTheme) {
+        //                 $query->where('target', 'specific')
+        //                     ->whereHas('tenants', function ($query) use ($tenantTheme) {
+        //                         $query->where('tenants.id', $tenantTheme->id);
+        //                     });
+        //             });
+        //     })
+        //     ->where(function ($query) {
+        //         $query->whereNull('starts_at')
+        //             ->orWhere('starts_at', '<=', now());
+        //     })
+        //     ->where(function ($query) {
+        //         $query->whereNull('ends_at')
+        //             ->orWhere('ends_at', '>=', now());
+        //     })
+        //     ->latest()
+        // ->first();
+
+        $adSlots = AdSlot::query()
+        ->where('template_theme_id', $themeData->id)
+        ->where('active', true)
+        ->with([
+            'announcements' => function ($query) use ($tenantTheme) {
+                $query
+                    ->where('active', true)
+                    ->whereIn('display_location', ['web', 'both'])
+                    ->where(function ($query) use ($tenantTheme) {
+                        $query
+                            ->where('target', 'all')
+                            ->orWhere(function ($query) use ($tenantTheme) {
+                                $query
+                                    ->where('target', 'specific')
+                                    ->whereHas('tenants', function ($query) use ($tenantTheme) {
+                                        $query->where('tenants.id', $tenantTheme->id);
+                                    });
                             });
-                    });
-            })
-            ->where(function ($query) {
-                $query->whereNull('starts_at')
-                    ->orWhere('starts_at', '<=', now());
-            })
-            ->where(function ($query) {
-                $query->whereNull('ends_at')
-                    ->orWhere('ends_at', '>=', now());
-            })
-            ->latest()
-        ->first();
+                    })
+                    ->where(function ($query) {
+                        $query
+                            ->whereNull('starts_at')
+                            ->orWhere('starts_at', '<=', now());
+                    })
+                    ->where(function ($query) {
+                        $query
+                            ->whereNull('ends_at')
+                            ->orWhere('ends_at', '>=', now());
+                    })
+                    ->latest();
+            },
+        ])
+        ->orderBy('sorting')
+        ->orderBy('name')
+        ->get();
+
+        $announcements = $adSlots->mapWithKeys(function ($adSlot) {
+            return [
+                $adSlot->slug => $adSlot->announcements->first(),
+            ];
+        });
 
 
         $slides = Slide::active()->sorting()->get();
@@ -112,9 +155,9 @@ class HomePageService
         $benefitForEnterprises = $benefits->get('enterprise', collect());
         $lineOfTimes = LineOfTime::active()->get();
         $impactSections = ImpactSection::with('metrics')->active()->get();
-       
+
         return compact(
-            'announcement',
+            'announcements',
             'impactSections',
             'lineOfTimes',
             'benefitForPersonas',
