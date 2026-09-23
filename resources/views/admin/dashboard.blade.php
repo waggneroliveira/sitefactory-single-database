@@ -1191,6 +1191,11 @@
 
     @endif
 
+    @include('admin.components.dashboard-card', [
+        'route' => route('admin.dashboard.adSlot.index'),
+        'icon' => 'mdi-account-multiple',
+        'title' => 'Ad-Slot'
+    ])
 
     {{-- ============================================================
         FOOTER

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AdSlotController;
 use App\Http\Controllers\AdvantageController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\AuditActivityController;
@@ -181,6 +182,10 @@ Route::prefix('painel/')->group(function () {
         ->name('admin.dashboard.announcement.destroySelected');
         Route::post('anuncio/sorting', [AnnouncementController::class, 'sorting'])
         ->name('admin.dashboard.announcement.sorting');
+        //ADSlot
+        Route::resource('adSlot', AdSlotController::class)
+        ->names('admin.dashboard.adSlot')
+        ->parameters(['adSlot'=>'adSlot']);
 
         //BLOG
         Route::resource('blog', BlogController::class)

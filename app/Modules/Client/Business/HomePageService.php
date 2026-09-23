@@ -41,6 +41,34 @@ class HomePageService
 {
     public function getIndexData(ThemeManager $themeManager): array
     {
+        $templateThemes = TemplateTheme::active()->get();
+        $tenantTheme = Tenant::current();
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+
+        $announcement = Announcement::query()
+            ->where('active', true)
+            ->where('display_location', 'web')
+            ->where(function ($query) use ($tenantTheme) {
+                $query->where('target', 'all')
+                    ->orWhere(function ($query) use ($tenantTheme) {
+                        $query->where('target', 'specific')
+                            ->whereHas('tenants', function ($query) use ($tenantTheme) {
+                                $query->where('tenants.id', $tenantTheme->id);
+                            });
+                    });
+            })
+            ->where(function ($query) {
+                $query->whereNull('starts_at')
+                    ->orWhere('starts_at', '<=', now());
+            })
+            ->where(function ($query) {
+                $query->whereNull('ends_at')
+                    ->orWhere('ends_at', '>=', now());
+            })
+            ->latest()
+        ->first();
+
 
         $slides = Slide::active()->sorting()->get();
         $topics = Topic::active()->sorting()->get();
@@ -73,11 +101,8 @@ class HomePageService
         $products = Product::sorting()->active()->get();
         $reports = Report::active()->get();
         $contractedPlans = Plan::active()->get();
-        $popUp = PopUp::active()->first();        
-        $templateThemes = TemplateTheme::active()->get();
-        $tenantTheme = Tenant::current();
-        $theme = $themeManager;
-        $themeData = $themeManager->theme();
+        $popUp = PopUp::active()->first();       
+
         $directions = Direction::active()->sorting()->get();
         $advantages = Advantage::active()
         ->sorting()
@@ -87,31 +112,6 @@ class HomePageService
         $benefitForEnterprises = $benefits->get('enterprise', collect());
         $lineOfTimes = LineOfTime::active()->get();
         $impactSections = ImpactSection::with('metrics')->active()->get();
-
-        $tenant = Tenant::current();
-
-        $announcement = Announcement::query()
-            ->where('active', true)
-            ->where('display_location', 'web')
-            ->where(function ($query) use ($tenant) {
-                $query->where('target', 'all')
-                    ->orWhere(function ($query) use ($tenant) {
-                        $query->where('target', 'specific')
-                            ->whereHas('tenants', function ($query) use ($tenant) {
-                                $query->where('tenants.id', $tenant->id);
-                            });
-                    });
-            })
-            ->where(function ($query) {
-                $query->whereNull('starts_at')
-                    ->orWhere('starts_at', '<=', now());
-            })
-            ->where(function ($query) {
-                $query->whereNull('ends_at')
-                    ->orWhere('ends_at', '>=', now());
-            })
-            ->latest()
-        ->first();
        
         return compact(
             'announcement',
