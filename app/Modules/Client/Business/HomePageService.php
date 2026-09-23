@@ -88,7 +88,33 @@ class HomePageService
         $lineOfTimes = LineOfTime::active()->get();
         $impactSections = ImpactSection::with('metrics')->active()->get();
 
+        $tenant = Tenant::current();
+
+        $announcement = Announcement::query()
+            ->where('active', true)
+            ->where('display_location', 'web')
+            ->where(function ($query) use ($tenant) {
+                $query->where('target', 'all')
+                    ->orWhere(function ($query) use ($tenant) {
+                        $query->where('target', 'specific')
+                            ->whereHas('tenants', function ($query) use ($tenant) {
+                                $query->where('tenants.id', $tenant->id);
+                            });
+                    });
+            })
+            ->where(function ($query) {
+                $query->whereNull('starts_at')
+                    ->orWhere('starts_at', '<=', now());
+            })
+            ->where(function ($query) {
+                $query->whereNull('ends_at')
+                    ->orWhere('ends_at', '>=', now());
+            })
+            ->latest()
+        ->first();
+       
         return compact(
+            'announcement',
             'impactSections',
             'lineOfTimes',
             'benefitForPersonas',

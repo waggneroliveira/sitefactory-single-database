@@ -59,14 +59,23 @@
                         <p><i class="bi bi-megaphone"></i> PUBLICIDADE</p>
                         <div class="ad-placeholder overflow-hidden">
                             <!-- Seu anúncio aqui<br>(Google Ads) -->
-                            <a href="https://www.whi.dev.br/" target="_blank" rel="noopener noreferrer">
+                            @if ($announcement->link <> null && $announcement->path_image <> null)
+                                <a href="{{$announcement->link}}" target="_blank" rel="noopener noreferrer">
+                                    <img
+                                        src="{{asset('storage/' . $announcement->path_image)}}"
+                                        class="w-100 h-100"
+                                        alt="Anuncio WHI"
+                                        style="object-fit: cover"
+                                    />
+                                </a>
+                                @elseif($announcement->link == null && $announcement->path_image <> null)
                                 <img
-                                    src="{{asset('build/client/themes/whi-web/tp-03/images/anuncio-vertical.gif')}}"
+                                    src="{{asset('storage/' . $announcement->path_image)}}"
                                     class="w-100 h-100"
                                     alt="Anuncio WHI"
                                     style="object-fit: cover"
                                 />
-                            </a>
+                            @endif
                         </div>
                     </div>
                 </div>
