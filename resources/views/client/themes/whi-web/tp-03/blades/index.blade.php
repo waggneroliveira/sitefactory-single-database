@@ -1,12 +1,12 @@
 @extends($theme->core('client'))
 @section('content')
     <div class="container pt-0 pb-3">
-        @if (isset($announcements['top-center']))
-            <div class="ad-container mb-3 mb-lg-5 overflow-hidden bg-transparent border-0 m-0 p-0 top-center">
+        @if (isset($announcements['top-center']) && $announcements['top-center']->isNotEmpty())
+            <div class="ad-container mb-3 mb-lg-5 overflow-hidden bg-transparent border-0 m-0 p-0">
                 <div class="ad-placeholder bg-transparent">
                     <!-- Espaço para Banner Adsense -->
-                    @includeIf('client.components.announcement.top-center', [
-                            'announcement' => $announcements['top-center'] ?? null
+                    @includeIf('client.components.announcement.all-announcement', [
+                            'announcements' => $announcements['top-center'] ?? collect()
                         ]
                     )
                 </div>
@@ -111,13 +111,13 @@
                             </button>
                         </div>
                     </div>
-                    @if (isset($announcements['sidebar-left'])) 
-                        <div class="ad-container mt-4">
+                    @if (isset($announcements['sidebar-left']) && $announcements['sidebar-left']->isNotEmpty()) 
+                        <div class="ad-container mt-4 sidebar-left">
                             <p><i class="bi bi-megaphone"></i> PUBLICIDADE</p>
                             <div class="ad-placeholder overflow-hidden">
                                 <!-- Seu anúncio aqui<br>(Google Ads) -->
-                                    @includeIf('client.components.announcement.sidebar-left', [
-                                            'announcement' => $announcements['sidebar-left'] ?? null
+                                    @includeIf('client.components.announcement.all-announcement', [
+                                            'announcements' => $announcements['sidebar-left'] ?? collect()
                                         ]
                                     )
                             </div>
@@ -125,7 +125,7 @@
                     @endif
                 </div>
             </div>
-
+            
             <div class="col-lg-6 order-lg-2 order-2 mt-4">
                 <div class="main-content-card p-4 p-xl-4">
                     <div id="toolContent" class="fade-tool" style="opacity: 1">
@@ -135,12 +135,12 @@
                         </div>
                     </div>
                 </div>
-                @if (isset($announcements['center-bottom']))
-                    <div class="ad-container mt-3 mb-0 bg-transparent border-0 center-bottom">
+                @if (isset($announcements['center-bottom']) && $announcements['center-bottom']->isNotEmpty())
+                    <div class="ad-container mt-3 mb-0 bg-transparent border-0">
                         <div class="ad-placeholder overflow-hidden bg-transparent">
                             <!-- Espaço para Banner Adsense -->
-                            @includeIf('client.components.announcement.center-bottom',[
-                                    'announcement' => $announcements['center-bottom'] ?? null
+                            @includeIf('client.components.announcement.all-announcement',[
+                                    'announcements' => $announcements['center-bottom'] ?? collect()
                                 ]
                             )
                         </div>
@@ -148,15 +148,15 @@
                 @endif
             </div>
             
-            @if (isset($announcements['sidebar-right']))                
+            @if (isset($announcements['sidebar-right']) && $announcements['sidebar-right']->isNotEmpty())                
                 <div class="col-lg-3 order-lg-3 order-3">
                     <div class="sidebar-card" style="background: white">
-                        <div class="ad-container mb-3">
+                        <div class="ad-container mb-3 sidebar-right">
                             <p><i class="bi bi-display"></i> DESTAQUE</p>
                             <div class="ad-placeholder overflow-hidden" style="min-height: 250px">
                                 <!-- Anúncio 300x250 -->  
-                                @includeIf('client.components.announcement.sidebar-right',[
-                                        'announcement' => $announcements['sidebar-right'] ?? null
+                                @includeIf('client.components.announcement.all-announcement',[
+                                        'announcements' => $announcements['sidebar-right'] ?? collect()
                                     ]
                                 )
                             </div>
@@ -190,5 +190,38 @@
             });
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof Swiper === 'undefined') {
+                return;
+            }
 
+            document.querySelectorAll('.announcement-swiper').forEach(function (element) {
+                const slides = element.querySelectorAll('.swiper-slide');
+
+                new Swiper(element, {
+                    effect: 'fade',
+                    fadeEffect: {
+                        crossFade: true,
+                    },
+                    slidesPerView: 1,
+                    spaceBetween: 0,
+                    loop: false,
+
+                    allowTouchMove: false,
+                    simulateTouch: false,
+
+                    autoplay: slides.length > 1 ? {
+                        delay: 7000,
+                        disableOnInteraction: false,
+                    } : false,
+                });
+            });
+        });
+    </script>
+    <style>
+        .swiper-fade .swiper-slide{
+            /* opacity: 1 !important; */
+        }
+    </style>
 @endsection

@@ -27,13 +27,13 @@
                             ><i class="bi bi-envelope-paper"></i> Contato</a
                         >
                     </nav>
-                    @if (isset($announcements['sidebar-left'])) 
-                        <div class="ad-container mt-4">
+                    @if (isset($announcements['sidebar-left']) && $announcements['sidebar-left']->isNotEmpty()) 
+                        <div class="ad-container mt-4 sidebar-left">
                             <p><i class="bi bi-megaphone"></i> PUBLICIDADE</p>
                             <div class="ad-placeholder overflow-hidden">
                                 <!-- Seu anúncio aqui<br>(Google Ads) -->
-                                    @includeIf('client.components.announcement.sidebar-left', [
-                                            'announcement' => $announcements['sidebar-left'] ?? null
+                                    @includeIf('client.components.announcement.all-announcement', [
+                                            'announcements' => $announcements['sidebar-left'] ?? collect()
                                         ]
                                     )
                             </div>
@@ -65,13 +65,13 @@
                     </div>
 
                     <!-- ÁREA PARA ANÚNCIO (dentro do conteúdo) -->
-                    @if (isset($announcements['top-center']))
+                    @if (isset($announcements['top-center']) && $announcements['top-center']->isNotEmpty())
                         <div class="ad-container mb-4 overflow-hidden">
                             <p><i class="bi bi-google"></i> ANÚNCIO</p>
                             <div class="ad-placeholder" style="min-height: 90px">
                                 <!-- Espaço para Banner Adsense -->
-                                @includeIf('client.components.announcement.top-center', [
-                                        'announcement' => $announcements['top-center'] ?? null
+                                @includeIf('client.components.announcement.all-announcement', [
+                                        'announcements' => $announcements['top-center'] ?? collect()
                                     ]
                                 )
                             </div>
@@ -145,13 +145,13 @@
                     <!-- ÁREA PARA ANÚNCIO (dentro do conteúdo) -->
                     <div class="ad-container my-4">                        
                         <p><i class="bi bi-megaphone"></i> PUBLICIDADE</p>
-                        @if (!isset($announcements['center-content'])) 
+                        @if (!isset($announcements['center-content']) && $announcements['center-content']->isNotEmpty()) 
                             <div class="ad-placeholder" style="min-height: 90px">Seu anúncio aqui</div>
                         @else
                             <div class="ad-placeholder overflow-hidden" style="min-height: 90px">
                                 <!-- Seu anúncio aqui<br>(Google Ads) -->
-                                @includeIf('client.components.announcement.center-content', [
-                                        'announcement' => $announcements['center-content'] ?? null
+                                @includeIf('client.components.announcement.all-announcement', [
+                                        'announcements' => $announcements['center-content'] ?? collect()
                                     ]
                                 )
                             </div>
@@ -238,13 +238,13 @@
                 </div>
 
                 <!-- ÁREA PARA ANÚNCIO (abaixo do conteúdo principal) -->
-                @if (isset($announcements['center-bottom']))
+                @if (isset($announcements['center-bottom']) && $announcements['center-bottom']->isNotEmpty())
                     <div class="ad-container mt-3">
                         <p><i class="bi bi-google"></i> ANÚNCIO RESPONSIVO</p>
                         <div class="ad-placeholder overflow-hidden" style="min-height: 100px">
                             <!-- Espaço para Banner Adsense -->
-                            @includeIf('client.components.announcement.center-bottom',[
-                                    'announcement' => $announcements['center-bottom'] ?? null
+                            @includeIf('client.components.announcement.all-announcement',[
+                                    'announcements' => $announcements['center-bottom'] ?? collect()
                                 ]
                             )
                         </div>
@@ -253,15 +253,15 @@
             </div>
 
             <!-- BARRA LATERAL DIREITA COM ANÚNCIO -->
-            @if (isset($announcements['sidebar-right']))                
+            @if (isset($announcements['sidebar-right']) && $announcements['sidebar-right']->isNotEmpty())                
                 <div class="col-lg-3 order-lg-3 order-3">
                     <div class="sidebar-card" style="background: white">
-                        <div class="ad-container mb-3">
+                        <div class="ad-container mb-3 sidebar-right">
                             <p><i class="bi bi-display"></i> DESTAQUE</p>
                             <div class="ad-placeholder overflow-hidden" style="min-height: 250px">
                                 <!-- Anúncio 300x250 -->  
-                                @includeIf('client.components.announcement.sidebar-right',[
-                                        'announcement' => $announcements['sidebar-right'] ?? null
+                                @includeIf('client.components.announcement.all-announcementt',[
+                                        'announcements' => $announcements['sidebar-right'] ?? collect()
                                     ]
                                 )
                             </div>
