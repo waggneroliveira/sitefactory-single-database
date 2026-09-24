@@ -107,8 +107,8 @@
                             </div>
                         </div>
                         <div class="mt-3 p-2 bg-light rounded-4 text-center small text-muted">
-                            <i class="bi bi-shield-check text-success"></i> 100% offline<br />Nenhum dado enviado
-                        </div>
+                            <i class="bi bi-shield-check text-success"></i> Processamento 100% local<br />Seus dados nunca saem
+                            do seu dispositivo                        </div>
                     </div>
                 </div>
             @endif

@@ -27,20 +27,18 @@
                             ><i class="bi bi-envelope-paper"></i> Contato</a
                         >
                     </nav>
-                    <div class="ad-container mt-4">
-                        <p><i class="bi bi-megaphone"></i> PUBLICIDADE</p>
-                        <div class="ad-placeholder overflow-hidden" style="min-height: 200px">
-                            <!-- Seu anúncio aqui<br>(Google Ads) -->
-                            <a href="https://www.whi.dev.br/lp-delivery/" target="_blank" rel="noopener noreferrer">
-                                <img
-                                    src="{{asset('build/client/themes/whi-web/tp-03/images/delifast-vertical.png')}}"
-                                    class="w-100 h-100"
-                                    alt="Anuncio Delifast"
-                                    style="object-fit: cover"
-                                />
-                            </a>
+                    @if (isset($announcements['sidebar-left'])) 
+                        <div class="ad-container mt-4">
+                            <p><i class="bi bi-megaphone"></i> PUBLICIDADE</p>
+                            <div class="ad-placeholder overflow-hidden">
+                                <!-- Seu anúncio aqui<br>(Google Ads) -->
+                                    @includeIf('client.components.announcement.sidebar-left', [
+                                            'announcement' => $announcements['sidebar-left'] ?? null
+                                        ]
+                                    )
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
 
@@ -60,22 +58,22 @@
 
                     <!-- Data de atualização -->
                     <div class="update-date mb-4">
-                        <i class="bi bi-calendar3 me-2"></i> Última atualização: <strong>15 de Maio de 2025</strong>
+                        <i class="bi bi-calendar3 me-2"></i> Última atualização: <strong>24 de Setembro de 2026</strong>
                     </div>
 
                     <!-- ÁREA PARA ANÚNCIO (dentro do conteúdo) -->
-                    <div class="ad-container mb-4 overflow-hidden">
-                        <p><i class="bi bi-google"></i> ANÚNCIO</p>
-                        <div class="ad-placeholder" style="min-height: 90px">
-                            <!-- Espaço para Banner Adsense -->
-                            <img
-                                src="{{asset('build/client/themes/whi-web/tp-03/images/anuncio-horizontal.gif')}}"
-                                class="w-100 h-100"
-                                alt="Anuncio Whi"
-                                style="object-fit: cover"
-                            />
+                    @if (isset($announcements['top-center']))
+                        <div class="ad-container mb-4 overflow-hidden">
+                            <p><i class="bi bi-google"></i> ANÚNCIO</p>
+                            <div class="ad-placeholder" style="min-height: 90px">
+                                <!-- Espaço para Banner Adsense -->
+                                @includeIf('client.components.announcement.top-center', [
+                                        'announcement' => $announcements['top-center'] ?? null
+                                    ]
+                                )
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
                     <!-- Seção 1 - Introdução -->
                     <div class="privacy-section" id="introducao">
@@ -152,10 +150,22 @@
                     </div>
 
                     <!-- ÁREA PARA ANÚNCIO (dentro do conteúdo) -->
-                    <div class="ad-container my-4">
-                        <p><i class="bi bi-megaphone"></i> PUBLICIDADE</p>
-                        <div class="ad-placeholder" style="min-height: 90px">Seu anúncio aqui</div>
-                    </div>
+                    @if (isset($announcements['center-content']))                        
+                        <div class="ad-container my-4">
+                            <p><i class="bi bi-megaphone"></i> PUBLICIDADE</p>
+                            @if (!isset($announcements['center-content'])) 
+                                <div class="ad-placeholder" style="min-height: 90px">Seu anúncio aqui</div>
+                            @else
+                                <div class="ad-placeholder overflow-hidden" style="min-height: 90px">
+                                    <!-- Seu anúncio aqui<br>(Google Ads) -->
+                                    @includeIf('client.components.announcement.center-content', [
+                                            'announcement' => $announcements['center-content'] ?? null
+                                        ]
+                                    )
+                                </div>
+                            @endif
+                        </div>
+                    @endif
 
                     <!-- Seção 4 - Cookies -->
                     <div class="privacy-section" id="cookies">
@@ -262,22 +272,6 @@
                         </p>
                     </div>
 
-                    <!-- ÁREA PARA ANÚNCIO (dentro do conteúdo) -->
-                    <div class="ad-container my-4">
-                        <p><i class="bi bi-display"></i> DESTAQUE</p>
-                        <div class="ad-placeholder overflow-hidden" style="min-height: 120px">
-                            <!-- Anúncio 300x250 -->
-                            <a href="https://www.whi.dev.br/lp-delivery/" target="_blank" rel="noopener noreferrer">
-                                <img
-                                    src="{{asset('build/client/themes/whi-web/tp-03/images/delifast-hotizontal.png')}}"
-                                    class="w-100 h-100"
-                                    alt="Anuncio Delifast"
-                                    style="object-fit: cover"
-                                />
-                            </a>
-                        </div>
-                    </div>
-
                     <!-- Seção 7 - Segurança -->
                     <div class="privacy-section">
                         <h2><i class="bi bi-shield-check me-2"></i> 7. Segurança dos dados</h2>
@@ -376,45 +370,41 @@
                 </div>
 
                 <!-- ÁREA PARA ANÚNCIO (abaixo do conteúdo principal) -->
-                <div class="ad-container mt-3">
-                    <p><i class="bi bi-google"></i> ANÚNCIO RESPONSIVO</p>
-                    <div class="ad-placeholder overflow-hidden" style="min-height: 100px">
-                        <!-- Espaço para Banner Adsense -->
-                        <a href="https://www.whi.dev.br/" target="_blank" rel="noopener noreferrer">
-                            <img
-                                src="{{asset('build/client/themes/whi-web/tp-03/images/anuncio-horizontal.gif')}}"
-                                class="w-100 h-100"
-                                alt="Anuncio WHI"
-                                style="object-fit: cover"
-                            />
-                        </a>
+                @if (isset($announcements['center-bottom']))
+                    <div class="ad-container mt-3">
+                        <p><i class="bi bi-google"></i> ANÚNCIO RESPONSIVO</p>
+                        <div class="ad-placeholder overflow-hidden" style="min-height: 100px">
+                            <!-- Espaço para Banner Adsense -->
+                            @includeIf('client.components.announcement.center-bottom',[
+                                    'announcement' => $announcements['center-bottom'] ?? null
+                                ]
+                            )
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
 
             <!-- BARRA LATERAL DIREITA COM ANÚNCIO -->
-            <div class="col-lg-3 order-lg-3 order-3">
-                <div class="sidebar-card" style="background: white">
-                    <div class="ad-container mb-3">
-                        <p><i class="bi bi-display"></i> DESTAQUE</p>
-                        <div class="ad-placeholder overflow-hidden" style="min-height: 250px">
-                            <!-- Anúncio 300x250 -->
-                            <a href="https://www.whi.dev.br/" target="_blank" rel="noopener noreferrer">
-                                <img
-                                    src="{{asset('build/client/themes/whi-web/tp-03/images/anuncio-vertical.gif')}}"
-                                    class="w-100 h-100"
-                                    alt="Anuncio WHI"
-                                    style="object-fit: cover"
-                                />
-                            </a>
+            @if (isset($announcements['sidebar-right']))  
+                <div class="col-lg-3 order-lg-3 order-3">
+                    <div class="sidebar-card" style="background: white">
+                        <div class="ad-container mb-3">
+                            <p><i class="bi bi-display"></i> DESTAQUE</p>
+                            <div class="ad-placeholder overflow-hidden" style="min-height: 250px">
+                                <!-- Anúncio 300x250 -->  
+                                @includeIf('client.components.announcement.sidebar-right',[
+                                        'announcement' => $announcements['sidebar-right'] ?? null
+                                    ]
+                                )
+                            </div>
+                        </div>
+                        <div class="mt-3 p-2 bg-light rounded-4 text-center small text-muted">
+                            <i class="bi bi-shield-check text-success"></i> Processamento 100% local<br />Seus dados nunca saem
+                            do seu dispositivo
                         </div>
                     </div>
-                    <div class="mt-3 p-2 bg-light rounded-4 text-center small text-muted">
-                        <i class="bi bi-shield-check text-success"></i> Processamento 100% local<br />Seus dados nunca saem
-                        do seu dispositivo
-                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
 @endsection

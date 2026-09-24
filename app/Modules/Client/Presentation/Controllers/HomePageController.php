@@ -57,4 +57,17 @@ class HomePageController
 
         return response()->json(['html' => $html]);
     }
+
+    public function policePrivacy(ThemeManager $theme): View
+    {
+        $data = $this->service->getIndexData($theme);
+
+        return view($theme->view('privacy-of-police'), $data);
+    }
+    public function useTerm(ThemeManager $theme): View
+    {
+        $data = $this->service->getIndexData($theme);
+
+        return view($theme->view('use-of-term'), $data);
+    }
 }
