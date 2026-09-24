@@ -61,7 +61,7 @@
 
                     <!-- Data de atualização -->
                     <div class="update-date mb-4">
-                        <i class="bi bi-calendar3 me-2"></i> Última atualização: <strong>21 de Setembro de 2026</strong>
+                        <i class="bi bi-calendar3 me-2"></i> Última atualização: <strong>24 de Setembro de 2026</strong>
                     </div>
 
                     <!-- ÁREA PARA ANÚNCIO (dentro do conteúdo) -->

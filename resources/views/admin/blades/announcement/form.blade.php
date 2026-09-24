@@ -437,7 +437,7 @@
     </div>
 
     {{-- Imagem --}}
-    <div class="col-12 mb-3">
+    <div class="col-12 col-lg-6 mb-3">
         <label
             for="path_image-{{ $uid }}"
             class="form-label"
@@ -452,6 +452,29 @@
             id="path_image-{{ $uid }}"
             data-plugins="dropify"
             data-default-file="{{ $announcement?->path_image ? url('storage/' . $announcement->path_image) : '' }}"
+        />
+
+        <p class="text-muted text-center mt-2 mb-0">
+            {{ __('dashboard.text_img_size') }}
+            <b class="text-danger">2 MB</b>.
+        </p>
+    </div>
+    
+    <div class="col-12 col-lg-6 mb-3">
+        <label
+            for="path_image_mobile-{{ $uid }}"
+            class="form-label"
+        >
+            Imagem Mobile
+            <span class="text-danger">*</span>
+        </label>
+
+        <input
+            type="file"
+            name="path_image_mobile"
+            id="path_image_mobile-{{ $uid }}"
+            data-plugins="dropify"
+            data-default-file="{{ $announcement?->path_image_mobile ? url('storage/' . $announcement->path_image_mobile) : '' }}"
         />
 
         <p class="text-muted text-center mt-2 mb-0">
