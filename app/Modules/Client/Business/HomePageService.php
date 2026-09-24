@@ -88,7 +88,7 @@ class HomePageService
                 $adSlot->slug => $adSlot->announcements,
             ];
         });
-        // dd($announcements);
+        
         $slides = Slide::active()->sorting()->get();
         $topics = Topic::active()->sorting()->get();
         $abouts = About::active()->get();
