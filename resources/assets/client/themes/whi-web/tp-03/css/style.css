@@ -11,6 +11,15 @@ body {
 }
 
 /* ==================== NAVBAR ENHANCED ==================== */
+.top-center img{
+    width: 100%;
+    max-height: 150px;
+    object-fit: contain;
+}
+.center-bottom img{
+  max-height: 100px;
+  object-fit: contain;
+}
 .navbar {
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
@@ -144,7 +153,7 @@ body {
 /* ==================== SIDEBAR ==================== */
 .sidebar-card {
   background: white;
-  border-radius: 28px;
+  border-radius: 5px;
   box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08);
   padding: 1.2rem 0.8rem;
   position: sticky;
@@ -185,7 +194,7 @@ body {
 .main-content-card,
 .privacy-card {
   background: white;
-  border-radius: 2rem;
+  border-radius: 5px;
   box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.12);
   border: none;
 }

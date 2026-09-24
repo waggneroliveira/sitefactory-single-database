@@ -11,9 +11,7 @@
 
                 <img
                     src="{{ asset('storage/' . $announcement->path_image) }}"
-                    class="w-100 h-100"
                     alt="Anúncio WHI"
-                    style="object-fit: cover"
                 />
             </picture>
         </a>
@@ -28,9 +26,7 @@
 
             <img
                 src="{{ asset('storage/' . $announcement->path_image) }}"
-                class="w-100 h-100"
                 alt="Anúncio WHI"
-                style="object-fit: cover"
             />
         </picture>
     @endif

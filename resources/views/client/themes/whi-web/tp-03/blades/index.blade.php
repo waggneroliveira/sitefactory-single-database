@@ -1,6 +1,18 @@
 @extends($theme->core('client'))
 @section('content')
-    <div class="container py-3">
+    <div class="container pt-0 pb-3">
+        @if (isset($announcements['top-center']))
+            <div class="ad-container mb-3 mb-lg-5 overflow-hidden bg-transparent border-0 m-0 p-0 top-center">
+                <div class="ad-placeholder bg-transparent">
+                    <!-- Espaço para Banner Adsense -->
+                    @includeIf('client.components.announcement.top-center', [
+                            'announcement' => $announcements['top-center'] ?? null
+                        ]
+                    )
+                </div>
+            </div>
+        @endif
+        
         <div class="row g-4">
             <div class="col-lg-3 order-lg-1 order-1">
                 <div class="sidebar-card mb-0">
@@ -114,7 +126,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-6 order-lg-2 order-2 mt-3">
+            <div class="col-lg-6 order-lg-2 order-2 mt-4">
                 <div class="main-content-card p-4 p-xl-4">
                     <div id="toolContent" class="fade-tool" style="opacity: 1">
                         <div class="text-center py-5">
@@ -124,9 +136,8 @@
                     </div>
                 </div>
                 @if (isset($announcements['center-bottom']))
-                    <div class="ad-container mt-3 mb-0">
-                        <p><i class="bi bi-google"></i> ANÚNCIO RESPONSIVO</p>
-                        <div class="ad-placeholder overflow-hidden" style="min-height: 100px">
+                    <div class="ad-container mt-3 mb-0 bg-transparent border-0 center-bottom">
+                        <div class="ad-placeholder overflow-hidden bg-transparent">
                             <!-- Espaço para Banner Adsense -->
                             @includeIf('client.components.announcement.center-bottom',[
                                     'announcement' => $announcements['center-bottom'] ?? null
@@ -179,4 +190,5 @@
             });
         });
     </script>
+
 @endsection
