@@ -61,7 +61,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
-
+use App\Http\Controllers\GoogleSearchConsoleController;
 
 Route::prefix('painel/')->group(function () {
     Route::get('/', function () {
@@ -105,6 +105,28 @@ Route::prefix('painel/')->group(function () {
     /*=====================FINAL REDEFINICAO DE SENHA=========================*/
 
     Route::middleware([Authenticate::class, EnsureTenantForAdmin::class])->group(function(){ 
+
+        if (app()->isLocal()) {
+            Route::middleware(['auth'])
+                ->prefix('dashboard/google/search-console')
+                ->group(function () {
+                    Route::get('/', [
+                        GoogleSearchConsoleController::class,
+                        'index',
+                    ])->name('google.search-console.index');
+
+                    Route::get('/connect', [
+                        GoogleSearchConsoleController::class,
+                        'connect',
+                    ])->name('google.search-console.connect');
+
+                    Route::get('/callback', [
+                        GoogleSearchConsoleController::class,
+                        'callback',
+                    ])->name('google.search-console.callback');
+                });
+        }
+
         Route::get('documentation', function () {
             return view('admin.documentation.introduction');
         })->name('admin.dashboard.documentation.introduction');

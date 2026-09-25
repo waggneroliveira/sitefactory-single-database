@@ -165,7 +165,6 @@ Route::middleware([NeedsTenant::class])->group(function () {
     Route::get('/sitemap.xml', [SeoGoogleController::class, 'sitemap'])->name('seo.sitemap');
 });
 
-
 // =============================
 // View Composer
 // =============================
