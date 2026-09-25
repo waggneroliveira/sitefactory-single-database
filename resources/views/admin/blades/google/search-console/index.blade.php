@@ -26,34 +26,59 @@
     .comparison-card {
         min-height: 100%;
     }
+
+    .metric-info {
+        font-size: 11px;
+        font-weight: 400;
+    }
+
+    .metric-info i {
+        font-size: 10px;
+    }
+
+    .section-info {
+        font-size: 11px;
+        font-weight: 400;
+    }
+
+    .trend-info {
+        font-size: 11px;
+        font-weight: 400;
+    }
 </style>
 
 <div class="scroll" style="overflow-x:hidden; overflow-y:auto; height:635px;">
 
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
-        <div>
-            <h1 class="h4 mb-1">
-                Google Search Console
-            </h1>
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 my-3">
+        <div class="col-12 col-lg-12 d-flex justify-content-between align-items-center">
+            <div class="row col-12 col-lg-10">
+                <h1 class="h4 mb-1 d-flex align-items-center gap-2">
+                    <i class="bi bi-google"></i>
+                    Google Search Console
+                </h1>
+    
+                <p class="text-muted mb-0">
+                    Acompanhe o desempenho orgânico dos sites no Google.
+                </p>
+            </div>
 
-            <p class="text-muted mb-0">
-                Acompanhe o desempenho orgânico dos sites no Google.
-            </p>
+            <a href="{{ route('google.search-console.connect') }}"
+                class="btn btn-primary text-dark"
+            >
+                <i class="bi bi-google me-1"></i>
+                Conectar ao Google
+            </a>
         </div>
 
-        <a
-            href="{{ route('google.search-console.connect') }}"
-            class="btn btn-primary"
-        >
-            <i class="bi bi-google me-1"></i>
-            Conectar ao Google
-        </a>
+        <span class="badge bg-light text-dark border text-wrap text-start p-2" style="line-height: 16px;">
+            <i class="bi bi-info-circle me-1"></i>
+            Os dados apresentados são obtidos diretamente do Google Search Console e organizados pelo WHI WEB para facilitar o acompanhamento do desempenho do site. As consultas consideram o período selecionado e o fuso horário de Brasília (America/Sao_Paulo). Pequenas variações em relação ao painel do Google podem ocorrer devido aos períodos, filtros e critérios de processamento utilizados na consulta.
+        </span>
     </div>
 
     {{-- FILTROS --}}
     <div class="card border-0 shadow-sm mb-4">
         <div class="card-body">
-
             <div class="row align-items-end g-3">
 
                 <div class="col-lg-6">
@@ -102,7 +127,7 @@
                     <button
                         type="button"
                         id="loadSearchConsole"
-                        class="btn btn-primary w-100"
+                        class="btn btn-primary w-100 text-dark"
                     >
                         <i class="bi bi-arrow-repeat me-1"></i>
                         Consultar dados
@@ -110,7 +135,6 @@
                 </div>
 
             </div>
-
         </div>
     </div>
 
@@ -161,9 +185,9 @@
             {{-- CLIQUES --}}
             <div class="col-xl-3 col-md-6">
                 <div class="card h-100">
-                    <div class="card-body">
+                    <div class="card-body d-flex justify-content-center align-items-center py-0 px-3">
 
-                        <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center flex-wrap">
 
                             <div class="flex-grow-1">
 
@@ -178,7 +202,7 @@
                                     0
                                 </h3>
 
-                                <p class="mb-0 text-muted">
+                                <p class="mb-2 text-muted">
                                     Cliques na pesquisa
                                 </p>
 
@@ -190,6 +214,10 @@
                                 </span>
                             </div>
 
+                            <span class="badge bg-light text-secondary metric-info text-wrap text-start col-12">
+                                <i class="bi bi-info-circle me-1"></i>
+                                Total de acessos gerados pelos resultados do Google.
+                            </span>
                         </div>
 
                     </div>
@@ -199,9 +227,9 @@
             {{-- IMPRESSÕES --}}
             <div class="col-xl-3 col-md-6">
                 <div class="card h-100">
-                    <div class="card-body">
+                    <div class="card-body d-flex justify-content-center align-items-center py-0 px-3">
 
-                        <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center flex-wrap">
 
                             <div class="flex-grow-1">
 
@@ -216,10 +244,9 @@
                                     0
                                 </h3>
 
-                                <p class="mb-0 text-muted">
+                                <p class="mb-2 text-muted">
                                     Exibições na pesquisa
                                 </p>
-
                             </div>
 
                             <div class="avatar-sm">
@@ -227,7 +254,10 @@
                                     <i class="ri-eye-line font-24"></i>
                                 </span>
                             </div>
-
+                            <span class="badge bg-light text-secondary metric-info text-wrap text-start col-12">
+                                <i class="bi bi-info-circle me-1"></i>
+                                Quantidade de vezes que uma página apareceu no Google.
+                            </span>
                         </div>
 
                     </div>
@@ -237,9 +267,9 @@
             {{-- CTR --}}
             <div class="col-xl-3 col-md-6">
                 <div class="card h-100">
-                    <div class="card-body">
+                    <div class="card-body d-flex justify-content-center align-items-center py-0 px-3">
 
-                        <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center flex-wrap">
 
                             <div class="flex-grow-1">
 
@@ -254,7 +284,7 @@
                                     0%
                                 </h3>
 
-                                <p class="mb-0 text-muted">
+                                <p class="mb-2 text-muted">
                                     Taxa de cliques
                                 </p>
 
@@ -266,6 +296,11 @@
                                 </span>
                             </div>
 
+                            <span class="badge bg-light text-secondary metric-info col-12">
+                                <i class="bi bi-calculator me-1"></i>
+                                Cliques ÷ impressões × 100.
+                            </span>
+
                         </div>
 
                     </div>
@@ -275,9 +310,9 @@
             {{-- POSIÇÃO --}}
             <div class="col-xl-3 col-md-6">
                 <div class="card h-100">
-                    <div class="card-body">
+                    <div class="card-body d-flex justify-content-center align-items-center py-0 px-3">
 
-                        <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center flex-wrap">
 
                             <div class="flex-grow-1">
 
@@ -292,7 +327,7 @@
                                     0
                                 </h3>
 
-                                <p class="mb-0 text-muted">
+                                <p class="mb-2 text-muted">
                                     Posição nos resultados
                                 </p>
 
@@ -304,6 +339,11 @@
                                 </span>
                             </div>
 
+                            <span class="badge bg-light text-secondary metric-info text-wrap text-start col-12">
+                                <i class="bi bi-info-circle me-1"></i>
+                                Média das posições em que o site apareceu.
+                            </span>
+
                         </div>
 
                     </div>
@@ -314,19 +354,25 @@
 
         {{-- GRÁFICO --}}
         <div class="card border-0 shadow-sm mb-4">
-
             <div class="card-body">
 
                 <div class="d-flex justify-content-between align-items-center mb-4">
 
                     <div>
+
                         <h5 class="mb-1">
                             Desempenho
                         </h5>
 
-                        <p class="text-muted small mb-0">
+                        <p class="text-muted small mb-2">
                             Cliques e impressões por dia.
                         </p>
+
+                        <span class="badge bg-light text-secondary section-info">
+                            <i class="bi bi-info-circle me-1"></i>
+                            Os dados são agrupados por dia dentro do período selecionado.
+                        </span>
+
                     </div>
 
                 </div>
@@ -336,30 +382,38 @@
                 </div>
 
             </div>
-
         </div>
 
         {{-- DESEMPENHO DETALHADO --}}
         <div class="card border-0 shadow-sm mb-4">
-
             <div class="card-body">
 
                 <div class="d-flex justify-content-between align-items-center mb-3">
 
                     <div>
+
                         <h5 class="mb-1">
                             Desempenho detalhado
                         </h5>
 
-                        <p class="text-muted small mb-0">
+                        <p class="text-muted small mb-2">
                             Consulte os principais resultados do período selecionado.
                         </p>
+
+                        <span class="badge bg-light text-secondary section-info">
+                            <i class="bi bi-info-circle me-1"></i>
+                            Os resultados são organizados pelas métricas registradas pelo Google Search Console.
+                        </span>
+
                     </div>
 
                 </div>
 
                 {{-- ABAS --}}
-                <ul class="nav nav-tabs nav-bordered mb-3" role="tablist">
+                <ul
+                    class="nav nav-tabs nav-bordered mb-3"
+                    role="tablist"
+                >
 
                     <li class="nav-item" role="presentation">
                         <button
@@ -424,6 +478,7 @@
                         <div class="d-flex justify-content-between align-items-center mb-3">
 
                             <div>
+
                                 <h6 class="mb-1">
                                     Principais consultas
                                 </h6>
@@ -431,6 +486,7 @@
                                 <p class="text-muted small mb-0">
                                     Termos que geraram tráfego para o site.
                                 </p>
+
                             </div>
 
                             <span class="badge bg-primary-subtle text-primary">
@@ -472,6 +528,7 @@
                         <div class="d-flex justify-content-between align-items-center mb-3">
 
                             <div>
+
                                 <h6 class="mb-1">
                                     Principais páginas
                                 </h6>
@@ -479,6 +536,7 @@
                                 <p class="text-muted small mb-0">
                                     Páginas que receberam tráfego orgânico.
                                 </p>
+
                             </div>
 
                             <span class="badge bg-success-subtle text-success">
@@ -520,6 +578,7 @@
                         <div class="d-flex justify-content-between align-items-center mb-3">
 
                             <div>
+
                                 <h6 class="mb-1">
                                     Dispositivos
                                 </h6>
@@ -527,6 +586,7 @@
                                 <p class="text-muted small mb-0">
                                     Desempenho do site por tipo de dispositivo.
                                 </p>
+
                             </div>
 
                             <span class="badge bg-info-subtle text-info">
@@ -560,12 +620,10 @@
                 </div>
 
             </div>
-
         </div>
 
         {{-- TENDÊNCIAS --}}
         <div class="card border-0 shadow-sm mb-4">
-
             <div class="card-body">
 
                 <div class="mb-4">
@@ -574,9 +632,14 @@
                         Tendências de pesquisa
                     </h5>
 
-                    <p class="text-muted small mb-0">
+                    <p class="text-muted small mb-2">
                         Compare o período atual com o período anterior de mesma duração.
                     </p>
+
+                    <span class="badge bg-light text-secondary section-info">
+                        <i class="bi bi-calculator me-1"></i>
+                        A variação é calculada comparando os cliques do período atual com o período anterior equivalente.
+                    </span>
 
                 </div>
 
@@ -592,13 +655,20 @@
                                 <div class="d-flex justify-content-between align-items-center mb-3">
 
                                     <div>
+
                                         <h5 class="mb-1">
                                             Seu conteúdo
                                         </h5>
 
-                                        <p class="text-muted small mb-0">
+                                        <p class="text-muted small mb-2">
                                             Desempenho das páginas do site.
                                         </p>
+
+                                        <span class="badge bg-light text-secondary trend-info">
+                                            <i class="bi bi-info-circle me-1"></i>
+                                            Superior = mais cliques · Em alta = aumento de cliques · Em baixa = redução de cliques.
+                                        </span>
+
                                     </div>
 
                                     <i class="ri-pages-line fs-4 text-success"></i>
@@ -695,13 +765,20 @@
                                 <div class="d-flex justify-content-between align-items-center mb-3">
 
                                     <div>
+
                                         <h5 class="mb-1">
                                             Consultas que levam ao seu site
                                         </h5>
 
-                                        <p class="text-muted small mb-0">
+                                        <p class="text-muted small mb-2">
                                             Termos que geram tráfego orgânico.
                                         </p>
+
+                                        <span class="badge bg-light text-secondary trend-info">
+                                            <i class="bi bi-info-circle me-1"></i>
+                                            Superior = mais cliques · Em alta = aumento de cliques · Em baixa = redução de cliques.
+                                        </span>
+
                                     </div>
 
                                     <i class="ri-search-line fs-4 text-primary"></i>
@@ -791,7 +868,6 @@
                 </div>
 
             </div>
-
         </div>
 
         {{-- GRÁFICO DE COMPARAÇÃO --}}
@@ -805,9 +881,14 @@
                         Comparativo de tráfego
                     </h5>
 
-                    <p class="text-muted small mb-0">
+                    <p class="text-muted small mb-2">
                         Cliques do período atual comparados ao período anterior.
                     </p>
+
+                    <span class="badge bg-light text-secondary section-info">
+                        <i class="bi bi-calculator me-1"></i>
+                        Compara o volume de cliques entre os dois períodos equivalentes.
+                    </span>
 
                 </div>
 
@@ -829,7 +910,6 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-
     const tenant = document.getElementById('tenant');
     const period = document.getElementById('period');
     const button = document.getElementById('loadSearchConsole');
@@ -850,7 +930,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let comparisonChart = null;
 
     button.addEventListener('click', async function () {
-
         if (!tenant.value) {
             alert('Selecione um site.');
             return;
@@ -867,7 +946,6 @@ document.addEventListener('DOMContentLoaded', function () {
             period.value;
 
         try {
-
             const response = await fetch(url);
             const data = await response.json();
 
@@ -881,23 +959,16 @@ document.addEventListener('DOMContentLoaded', function () {
             renderDashboard(data);
 
         } catch (error) {
-
             console.error(error);
-
             alert(error.message);
-
             empty.classList.remove('d-none');
 
         } finally {
-
             loading.classList.add('d-none');
-
         }
-
     });
 
     function renderDashboard(data) {
-
         const overview = data.overview || {};
 
         metricClicks.textContent = formatNumber(
@@ -929,7 +1000,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function renderChart(rows) {
-
         const canvas = document.getElementById('searchConsoleChart');
 
         if (!canvas) {
@@ -937,27 +1007,21 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         const sortedRows = [...rows].sort(function (a, b) {
-
             return String(a.keys?.[0] || '').localeCompare(
                 String(b.keys?.[0] || '')
             );
-
         });
 
         const labels = sortedRows.map(function (row) {
-
             const date = String(row.keys?.[0] || '');
 
             if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-
                 const [year, month, day] = date.split('-');
 
                 return `${day}/${month}/${year}`;
-
             }
 
             return date;
-
         });
 
         const clicks = sortedRows.map(function (row) {
@@ -973,33 +1037,26 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         chart = new Chart(canvas, {
-
             type: 'line',
 
             data: {
-
                 labels: labels,
 
                 datasets: [
-
                     {
                         label: 'Cliques',
                         data: clicks,
                         tension: 0.3
                     },
-
                     {
                         label: 'Impressões',
                         data: impressions,
                         tension: 0.3
                     }
-
                 ]
-
             },
 
             options: {
-
                 responsive: true,
                 maintainAspectRatio: false,
 
@@ -1009,7 +1066,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
 
                 scales: {
-
                     x: {
                         reverse: false
                     },
@@ -1017,17 +1073,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     y: {
                         beginAtZero: true
                     }
-
                 }
-
             }
-
         });
-
     }
 
     function renderComparisons(comparison) {
-
         const pages = comparison.pages || {};
         const queries = comparison.queries || {};
 
@@ -1081,28 +1132,30 @@ document.addEventListener('DOMContentLoaded', function () {
             pageData,
             queryData
         );
-
     }
 
     function buildComparison(currentRows, previousRows) {
-
         const previousMap = {};
 
         previousRows.forEach(function (row) {
-
             const key = String(row.keys?.[0] || '');
 
-            previousMap[key] = row;
-
+            if (key) {
+                previousMap[key] = row;
+            }
         });
 
         const items = currentRows.map(function (row) {
-
             const key = String(row.keys?.[0] || '');
             const previous = previousMap[key] || {};
 
-            const currentClicks = Number(row.clicks || 0);
-            const previousClicks = Number(previous.clicks || 0);
+            const currentClicks = Number(
+                row.clicks || 0
+            );
+
+            const previousClicks = Number(
+                previous.clicks || 0
+            );
 
             const currentImpressions = Number(
                 row.impressions || 0
@@ -1112,8 +1165,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 previous.impressions || 0
             );
 
-            const currentCtr = Number(row.ctr || 0);
-            const previousCtr = Number(previous.ctr || 0);
+            const currentCtr = Number(
+                row.ctr || 0
+            );
+
+            const previousCtr = Number(
+                previous.ctr || 0
+            );
 
             const currentPosition = Number(
                 row.position || 0
@@ -1126,41 +1184,26 @@ document.addEventListener('DOMContentLoaded', function () {
             let variation = 0;
 
             if (previousClicks > 0) {
-
                 variation =
                     ((currentClicks - previousClicks) /
                     previousClicks) * 100;
 
             } else if (currentClicks > 0) {
-
                 variation = 100;
-
             }
 
             return {
-
                 key: key,
-
                 clicks: currentClicks,
-
                 previousClicks: previousClicks,
-
                 impressions: currentImpressions,
-
                 previousImpressions: previousImpressions,
-
                 ctr: currentCtr,
-
                 previousCtr: previousCtr,
-
                 position: currentPosition,
-
                 previousPosition: previousPosition,
-
                 variation: variation
-
             };
-
         });
 
         const top = [...items]
@@ -1192,7 +1235,6 @@ document.addEventListener('DOMContentLoaded', function () {
             up: up,
             down: down
         };
-
     }
 
     function renderComparisonTable(
@@ -1200,7 +1242,6 @@ document.addEventListener('DOMContentLoaded', function () {
         rows,
         label
     ) {
-
         const element = document.getElementById(elementId);
 
         if (!element) {
@@ -1208,7 +1249,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (!rows.length) {
-
             element.innerHTML = `
                 <div class="text-center text-muted py-4">
                     Nenhum dado disponível.
@@ -1222,9 +1262,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <table class="table table-hover table-centered mb-0">
 
                 <thead>
-
                     <tr>
-
                         <th>
                             ${label}
                         </th>
@@ -1234,11 +1272,13 @@ document.addEventListener('DOMContentLoaded', function () {
                         </th>
 
                         <th class="text-end">
-                            Variação
+                            Impressões
                         </th>
 
+                        <th class="text-end">
+                            Variação
+                        </th>
                     </tr>
-
                 </thead>
 
                 <tbody>
@@ -1281,12 +1321,14 @@ document.addEventListener('DOMContentLoaded', function () {
                                 </td>
 
                                 <td class="text-end">
+                                    ${formatNumber(row.impressions)}
+                                </td>
+
+                                <td class="text-end">
 
                                     <span class="${trendClass} fw-semibold">
-
                                         ${icon}
                                         ${formatVariation(variation)}
-
                                     </span>
 
                                 </td>
@@ -1300,11 +1342,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             </table>
         `;
-
     }
 
     function renderComparisonChart(pageData, queryData) {
-
         const canvas = document.getElementById(
             'comparisonChart'
         );
@@ -1320,6 +1360,7 @@ document.addEventListener('DOMContentLoaded', function () {
             ...pages.map(function (item) {
                 return item.key;
             }),
+
             ...queries.map(function (item) {
                 return item.key;
             })
@@ -1329,6 +1370,7 @@ document.addEventListener('DOMContentLoaded', function () {
             ...pages.map(function (item) {
                 return item.clicks;
             }),
+
             ...queries.map(function (item) {
                 return item.clicks;
             })
@@ -1338,6 +1380,7 @@ document.addEventListener('DOMContentLoaded', function () {
             ...pages.map(function (item) {
                 return item.previousClicks;
             }),
+
             ...queries.map(function (item) {
                 return item.previousClicks;
             })
@@ -1348,52 +1391,49 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         comparisonChart = new Chart(canvas, {
-
             type: 'bar',
 
             data: {
-
                 labels: labels,
 
                 datasets: [
-
                     {
                         label: 'Período atual',
                         data: current
                     },
-
                     {
                         label: 'Período anterior',
                         data: previous
                     }
-
                 ]
-
             },
 
             options: {
-
                 responsive: true,
                 maintainAspectRatio: false,
 
-                scales: {
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                },
 
+                scales: {
+                    x: {
+                        ticks: {
+                            display: false
+                        }
+                    },
                     y: {
                         beginAtZero: true
                     }
-
                 }
-
             }
-
         });
-
     }
 
     function renderQueries(rows) {
-
         if (!rows.length) {
-
             queriesTable.innerHTML = emptyTable(
                 5,
                 'Nenhuma consulta encontrada.'
@@ -1403,7 +1443,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         queriesTable.innerHTML = rows.map(function (row) {
-
             const query = row.keys?.[0] || '-';
 
             return `
@@ -1433,15 +1472,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 </tr>
             `;
-
         }).join('');
-
     }
 
     function renderPages(rows) {
-
         if (!rows.length) {
-
             pagesTable.innerHTML = emptyTable(
                 5,
                 'Nenhuma página encontrada.'
@@ -1451,7 +1486,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         pagesTable.innerHTML = rows.map(function (row) {
-
             const page = row.keys?.[0] || '-';
 
             return `
@@ -1486,15 +1520,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 </tr>
             `;
-
         }).join('');
-
     }
 
     function renderDevices(rows) {
-
         if (!rows.length) {
-
             devicesTable.innerHTML = emptyTable(
                 5,
                 'Nenhum dispositivo encontrado.'
@@ -1504,7 +1534,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         devicesTable.innerHTML = rows.map(function (row) {
-
             const device = row.keys?.[0] || '-';
 
             return `
@@ -1532,27 +1561,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 </tr>
             `;
-
         }).join('');
-
     }
 
     function getDeviceLabel(device) {
-
         const labels = {
-
             desktop: 'Computador',
             mobile: 'Celular',
             tablet: 'Tablet'
-
         };
 
         return labels[String(device).toLowerCase()] || device;
-
     }
 
     function emptyTable(columns, message) {
-
         return `
             <tr>
 
@@ -1565,22 +1587,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
             </tr>
         `;
-
     }
 
     function escapeHtml(value) {
-
         return String(value)
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#039;');
-
     }
 
     function formatNumber(value, decimals = 0) {
-
         return Number(value).toLocaleString(
             'pt-BR',
             {
@@ -1588,11 +1606,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 maximumFractionDigits: decimals
             }
         );
-
     }
 
     function formatPercent(value) {
-
         return (
             Number(value) * 100
         ).toLocaleString(
@@ -1602,11 +1618,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 maximumFractionDigits: 2
             }
         ) + '%';
-
     }
 
     function formatVariation(value) {
-
         const number = Number(value || 0);
 
         return (
@@ -1618,8 +1632,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             ) + '%'
         );
-
     }
-
 });
 </script>
