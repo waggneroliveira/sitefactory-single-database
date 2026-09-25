@@ -47,6 +47,7 @@
         <link href="{{ asset('build/admin/css/app.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('build/admin/js/libs/spectrum-colorpicker2/spectrum.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('build/admin/js/libs/dropzone/min/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('build/admin/js/libs/apexcharts/apexcharts.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('build/admin/js/libs/dropify/css/dropify.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- Icons css -->
         <link href="{{ asset('build/admin/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
@@ -864,6 +865,7 @@
         <script src="{{ asset('build/admin/js/libs/jquery.sortable.min.js') }}"></script>
         <script src="{{ asset('build/admin/js/libs/spectrum-colorpicker2/spectrum.min.js') }}"></script>
         <script src="{{ asset('build/admin/js/libs/dropzone/min/dropzone.min.js') }}"></script>
+        <script src="{{ asset('build/admin/js/libs/apexcharts/apexcharts.min.js') }}"></script>
         <script src="{{ asset('build/admin/js/libs/dropify/js/dropify.min.js') }}"></script>
         <script src="{{ asset('build/admin/js/pages/form-fileuploads.init.js') }}"></script>
         <script src="{{ asset('build/admin/js/main.js') }}"></script>

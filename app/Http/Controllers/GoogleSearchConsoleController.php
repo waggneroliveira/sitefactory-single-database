@@ -76,20 +76,28 @@ class GoogleSearchConsoleController extends Controller
     }
 
     public function performance(
+        Request $request,
         Tenant $tenant,
         SearchConsoleService $service
     ) {
         $searchConsole = $tenant->googleSearchConsole;
-
+     
         if (!$searchConsole || !$searchConsole->active) {
             return response()->json([
                 'message' => 'Google Search Console não configurado para este site.'
             ], 404);
         }
 
+        $days = (int) $request->input('days', 28);
+
+        if (!in_array($days, [7, 28, 90, 180], true)) {
+            $days = 28;
+        }
+
         return response()->json(
             $service->getDashboardData(
-                $searchConsole->property
+                $searchConsole->property,
+                $days
             )
         );
     }
