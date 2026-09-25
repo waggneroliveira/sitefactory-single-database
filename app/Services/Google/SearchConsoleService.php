@@ -138,50 +138,11 @@ class SearchConsoleService
         }
 
         return $response->json('siteEntry', []);
-    }
+    }    
 
-    // public function getPerformance(
-    //     string $property,
-    //     int $days = 28
-    // ): array {
-    //     $endDate = now()
-    //         ->subDay()
-    //         ->toDateString();
-
-    //     $startDate = now()
-    //         ->subDays($days)
-    //         ->toDateString();
-
-    //     $response = Http::withToken(
-    //         $this->getAccessToken()
-    //     )->post(
-    //         'https://www.googleapis.com/webmasters/v3/sites/'
-    //         . rawurlencode($property)
-    //         . '/searchAnalytics/query',
-    //         [
-    //             'startDate' => $startDate,
-    //             'endDate' => $endDate,
-    //             'dimensions' => [
-    //                 'date',
-    //             ],
-    //             'type' => 'web',
-    //             'rowLimit' => 25000,
-    //         ]
-    //     );
-
-    //     if ($response->failed()) {
-    //         throw new RuntimeException(
-    //             'Erro ao consultar desempenho do Search Console: '
-    //             . $response->body()
-    //         );
-    //     }
-
-    //     return $response->json('rows', []);
-    // }
-    
     public function getDashboardData(
-    string $property,
-    int $days = 28
+        string $property,
+        int $days = 28
     ): array {
         $endDate = now()
             ->subDay()
@@ -189,6 +150,14 @@ class SearchConsoleService
 
         $startDate = now()
             ->subDays($days)
+            ->toDateString();
+
+        $previousEndDate = now()
+            ->subDays($days + 1)
+            ->toDateString();
+
+        $previousStartDate = now()
+            ->subDays(($days * 2))
             ->toDateString();
 
         return [
@@ -221,6 +190,48 @@ class SearchConsoleService
                 $startDate,
                 $endDate
             ),
+
+            'comparison' => [
+                'current' => [
+                    'start' => $startDate,
+                    'end' => $endDate,
+                ],
+
+                'previous' => [
+                    'start' => $previousStartDate,
+                    'end' => $previousEndDate,
+                ],
+
+                'queries' => [
+                    'current' => $this->getQueries(
+                        $property,
+                        $startDate,
+                        $endDate,
+                        100
+                    ),
+                    'previous' => $this->getQueries(
+                        $property,
+                        $previousStartDate,
+                        $previousEndDate,
+                        100
+                    ),
+                ],
+
+                'pages' => [
+                    'current' => $this->getPages(
+                        $property,
+                        $startDate,
+                        $endDate,
+                        100
+                    ),
+                    'previous' => $this->getPages(
+                        $property,
+                        $previousStartDate,
+                        $previousEndDate,
+                        100
+                    ),
+                ],
+            ],
         ];
     }
 
@@ -272,32 +283,34 @@ class SearchConsoleService
     }
 
     protected function getQueries(
-    string $property,
-    string $startDate,
-    string $endDate
+        string $property,
+        string $startDate,
+        string $endDate,
+        int $rowLimit = 10
     ): array {
         $response = $this->query(
             $property,
             $startDate,
             $endDate,
             ['query'],
-            10
+            $rowLimit
         );
 
         return $response['rows'] ?? [];
     }
 
     protected function getPages(
-    string $property,
-    string $startDate,
-    string $endDate
+        string $property,
+        string $startDate,
+        string $endDate,
+        int $rowLimit = 10
     ): array {
         $response = $this->query(
             $property,
             $startDate,
             $endDate,
             ['page'],
-            10
+            $rowLimit
         );
 
         return $response['rows'] ?? [];
