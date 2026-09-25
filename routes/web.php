@@ -104,6 +104,11 @@ Route::middleware([NeedsTenant::class])->group(function () {
         return view('client.themes.corretora.tp-01.blades.imovel');
     })->name('imovel');
 
+    Route::get('politica-de-privacidade', [HomePageController::class, 'policePrivacy'])
+        ->name('privacy-police');
+
+    Route::get('termos-de-uso', [HomePageController::class, 'useTerm'])
+        ->name('use-term');
 
     Route::get('contato', [ContactPageController::class, 'index'])
         ->name('contact');

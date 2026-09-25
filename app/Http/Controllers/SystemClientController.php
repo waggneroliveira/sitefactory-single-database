@@ -277,8 +277,10 @@ class SystemClientController extends Controller
     public function update(Request $request, Tenant $tenant)
     {
         $data = $request->except([
-        'path_image_logo_header',
-        'path_image_logo_footer',
+            'path_image_logo_header',
+            'path_image_logo_footer',
+            'delete_path_image_logo_header',
+            'delete_path_image_logo_footer',
         ]);
 
         $pathUpload = $this->getPathUpload();
@@ -287,8 +289,31 @@ class SystemClientController extends Controller
         DB::beginTransaction();
 
         try {
+            /*
+            |--------------------------------------------------------------------------
+            | Remover logo do Header
+            |--------------------------------------------------------------------------
+            */
+
+            if ($request->has('delete_path_image_logo_header')) {
+                if (!empty($tenant->path_image_logo_header)) {
+                    Storage::disk('public')->delete(
+                        $tenant->path_image_logo_header
+                    );
+                }
+
+                $data['path_image_logo_header'] = null;
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Upload logo do Header
+            |--------------------------------------------------------------------------
+            */
+
             if ($request->hasFile('path_image_logo_header')) {
                 $file = $request->file('path_image_logo_header');
+
                 $mime = $file->getMimeType();
                 $extension = strtolower($file->getClientOriginalExtension());
 
@@ -327,8 +352,31 @@ class SystemClientController extends Controller
                 $data['path_image_logo_header'] = $pathUpload . $filename;
             }
 
+            /*
+            |--------------------------------------------------------------------------
+            | Remover logo do Footer
+            |--------------------------------------------------------------------------
+            */
+
+            if ($request->has('delete_path_image_logo_footer')) {
+                if (!empty($tenant->path_image_logo_footer)) {
+                    Storage::disk('public')->delete(
+                        $tenant->path_image_logo_footer
+                    );
+                }
+
+                $data['path_image_logo_footer'] = null;
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Upload logo do Footer
+            |--------------------------------------------------------------------------
+            */
+
             if ($request->hasFile('path_image_logo_footer')) {
                 $file = $request->file('path_image_logo_footer');
+
                 $mime = $file->getMimeType();
                 $extension = strtolower($file->getClientOriginalExtension());
 
@@ -367,6 +415,12 @@ class SystemClientController extends Controller
                 $data['path_image_logo_footer'] = $pathUpload . $filename;
             }
 
+            /*
+            |--------------------------------------------------------------------------
+            | Dados do Tenant
+            |--------------------------------------------------------------------------
+            */
+
             $data['cnpj'] = !empty($data['cnpj'])
                 ? preg_replace('/\D/', '', $data['cnpj'])
                 : null;
@@ -380,13 +434,26 @@ class SystemClientController extends Controller
             if (empty($data['text_button_two'])) {
                 $data['text_button_two'] = 'Saiba mais';
             }
+
             $data['active'] = $request->boolean('active');
 
             $tenant->fill($data)->save();
 
+            /*
+            |--------------------------------------------------------------------------
+            | Atualiza usuários
+            |--------------------------------------------------------------------------
+            */
+
             User::where('tenant_id', $tenant->id)->update([
                 'active' => $tenant->active,
             ]);
+
+            /*
+            |--------------------------------------------------------------------------
+            | Limites dos módulos
+            |--------------------------------------------------------------------------
+            */
 
             foreach ($data['limits'] ?? [] as $module => $limit) {
                 if ($limit === null || $limit === '') {
@@ -409,6 +476,7 @@ class SystemClientController extends Controller
             return redirect()
                 ->route('admin.dashboard.tenants.index')
                 ->with('success', 'Cliente atualizado com sucesso.');
+
         } catch (\Exception $e) {
             DB::rollBack();
 
@@ -419,10 +487,8 @@ class SystemClientController extends Controller
 
             return redirect()->back();
         }
-
     }
 
-    
     public function destroy(Tenant $tenant)
     {
         DB::transaction(function () use ($tenant) {

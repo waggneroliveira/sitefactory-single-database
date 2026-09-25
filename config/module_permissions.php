@@ -140,6 +140,16 @@ return [
             'remover',
         ],
     ],
+
+    'announcement' => [
+        'permission' => 'anuncio',
+        'actions' => [
+            'criar',
+            'editar',
+            'visualizar',
+            'remover',
+        ],
+    ],
     
     'benefits' => [
         'permission' => 'beneficios',

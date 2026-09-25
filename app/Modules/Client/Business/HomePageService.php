@@ -3,6 +3,7 @@
 namespace App\Modules\Client\Business;
 
 use App\Models\About;
+use App\Models\AdSlot;
 use App\Models\Advantage;
 use App\Models\Announcement;
 use App\Models\BenefitTopic;
@@ -41,7 +42,53 @@ class HomePageService
 {
     public function getIndexData(ThemeManager $themeManager): array
     {
+        $templateThemes = TemplateTheme::active()->get();
+        $tenantTheme = Tenant::current();
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
 
+        $adSlots = AdSlot::query()
+            ->where('template_theme_id', $themeData->id)
+            ->where('active', true)
+            ->with([
+                'announcements' => function ($query) use ($tenantTheme) {
+                    $query
+                        ->where('active', true)
+                        ->whereIn('display_location', ['web', 'both'])
+                        ->where(function ($query) use ($tenantTheme) {
+                            $query
+                                ->where('target', 'all')
+                                ->orWhere(function ($query) use ($tenantTheme) {
+                                    $query
+                                        ->where('target', 'specific')
+                                        ->whereHas('tenants', function ($query) use ($tenantTheme) {
+                                            $query->where('tenants.id', $tenantTheme->id);
+                                        });
+                                });
+                        })
+                        ->where(function ($query) {
+                            $query
+                                ->whereNull('starts_at')
+                                ->orWhere('starts_at', '<=', now());
+                        })
+                        ->where(function ($query) {
+                            $query
+                                ->whereNull('ends_at')
+                                ->orWhere('ends_at', '>=', now());
+                        })
+                        ->latest();
+                },
+            ])
+            ->orderBy('sorting')
+            ->orderBy('name')
+            ->get();
+
+        $announcements = $adSlots->mapWithKeys(function ($adSlot) {
+            return [
+                $adSlot->slug => $adSlot->announcements,
+            ];
+        });
+        
         $slides = Slide::active()->sorting()->get();
         $topics = Topic::active()->sorting()->get();
         $abouts = About::active()->get();
@@ -73,11 +120,8 @@ class HomePageService
         $products = Product::sorting()->active()->get();
         $reports = Report::active()->get();
         $contractedPlans = Plan::active()->get();
-        $popUp = PopUp::active()->first();        
-        $templateThemes = TemplateTheme::active()->get();
-        $tenantTheme = Tenant::current();
-        $theme = $themeManager;
-        $themeData = $themeManager->theme();
+        $popUp = PopUp::active()->first();       
+
         $directions = Direction::active()->sorting()->get();
         $advantages = Advantage::active()
         ->sorting()
@@ -89,6 +133,7 @@ class HomePageService
         $impactSections = ImpactSection::with('metrics')->active()->get();
 
         return compact(
+            'announcements',
             'impactSections',
             'lineOfTimes',
             'benefitForPersonas',

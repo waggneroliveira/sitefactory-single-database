@@ -292,6 +292,11 @@ return [
                     'products',
                 ]
             ],
+            'tp-03' => [
+                'home' => [
+                    'announcement',
+                ],
+            ],
         ],
 
         'smtp' => [

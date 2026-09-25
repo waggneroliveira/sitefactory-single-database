@@ -47,7 +47,7 @@
                                             <button type="button" class="btn btn-primary text-black waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#announcement-create"><i class="mdi mdi-plus-circle me-1"></i> {{__('dashboard.btn_create')}}</button>
                                             <!-- Modal -->
                                             <div class="modal fade" id="announcement-create" tabindex="-1" role="dialog" aria-hidden="true">
-                                                <div class="announcement modal-dialog modal-dialog-centered">
+                                                <div class="announcement modal-dialog modal-dialog-centered" style="max-width: 1260px;">
                                                     <div class="modal-content">
                                                         <div class="modal-header bg-light">
                                                             <h4 class="modal-title" id="myCenterModalLabel">{{__('dashboard.btn_create')}}</h4>
@@ -137,7 +137,7 @@
                                                     Auth::user()->can('anuncio.editar')) 
                                                         <button data-bs-toggle="modal" data-bs-target="#announcement-edit-{{$announcement->id}}" class="tabledit-edit-button btn btn-primary text-black" style="padding: 2px 8px;width: 30px"><span class="mdi mdi-pencil"></span></button>
                                                         <div class="modal fade" id="announcement-edit-{{$announcement->id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                                            <div class="announcement modal-dialog modal-dialog-centered">
+                                                            <div class="announcement modal-dialog modal-dialog-centered" style="max-width: 1260px;">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header bg-light">
                                                                         <h4 class="modal-title" id="myCenterModalLabel">{{__('dashboard.btn_edit')}}</h4>

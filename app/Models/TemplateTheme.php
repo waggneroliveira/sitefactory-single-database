@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 
 class TemplateTheme extends Model
@@ -29,5 +30,10 @@ class TemplateTheme extends Model
     ];
     public function scopeActive($query){
         return $query->where('active', 1);
+    }
+
+    public function adSlots(): HasMany
+    {
+        return $this->hasMany(AdSlot::class);
     }
 }
