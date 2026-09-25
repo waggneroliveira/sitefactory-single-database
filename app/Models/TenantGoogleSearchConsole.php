@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TenantGoogleSearchConsole extends Model
 {
-    protected $table = 'tenant_google_search_console';
+    protected $table = 'tenant_google_search_consoles';
 
     protected $fillable = [
         'tenant_id',

@@ -124,6 +124,18 @@ Route::prefix('painel/')->group(function () {
                         GoogleSearchConsoleController::class,
                         'callback',
                     ])->name('google.search-console.callback');
+                    Route::get('/properties', [
+                        GoogleSearchConsoleController::class,
+                        'properties',
+                    ])->name('google.search-console.properties');
+                    // Route::get('/performance', [    
+                    //     GoogleSearchConsoleController::class,
+                    //     'performance',
+                    // ])->name('google.search-console.performance');
+                    Route::get('/performance/{tenant}', [
+                    GoogleSearchConsoleController::class,
+                    'performance',
+                ])->name('google.search-console.performance');
                 });
         }
 

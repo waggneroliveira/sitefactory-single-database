@@ -140,9 +140,48 @@ class SearchConsoleService
         return $response->json('siteEntry', []);
     }
 
-    public function getPerformance(
-        string $property,
-        int $days = 28
+    // public function getPerformance(
+    //     string $property,
+    //     int $days = 28
+    // ): array {
+    //     $endDate = now()
+    //         ->subDay()
+    //         ->toDateString();
+
+    //     $startDate = now()
+    //         ->subDays($days)
+    //         ->toDateString();
+
+    //     $response = Http::withToken(
+    //         $this->getAccessToken()
+    //     )->post(
+    //         'https://www.googleapis.com/webmasters/v3/sites/'
+    //         . rawurlencode($property)
+    //         . '/searchAnalytics/query',
+    //         [
+    //             'startDate' => $startDate,
+    //             'endDate' => $endDate,
+    //             'dimensions' => [
+    //                 'date',
+    //             ],
+    //             'type' => 'web',
+    //             'rowLimit' => 25000,
+    //         ]
+    //     );
+
+    //     if ($response->failed()) {
+    //         throw new RuntimeException(
+    //             'Erro ao consultar desempenho do Search Console: '
+    //             . $response->body()
+    //         );
+    //     }
+
+    //     return $response->json('rows', []);
+    // }
+    
+    public function getDashboardData(
+    string $property,
+    int $days = 28
     ): array {
         $endDate = now()
             ->subDay()
@@ -152,6 +191,140 @@ class SearchConsoleService
             ->subDays($days)
             ->toDateString();
 
+        return [
+            'overview' => $this->getOverview(
+                $property,
+                $startDate,
+                $endDate
+            ),
+
+            'daily' => $this->getDaily(
+                $property,
+                $startDate,
+                $endDate
+            ),
+
+            'queries' => $this->getQueries(
+                $property,
+                $startDate,
+                $endDate
+            ),
+
+            'pages' => $this->getPages(
+                $property,
+                $startDate,
+                $endDate
+            ),
+
+            'devices' => $this->getDevices(
+                $property,
+                $startDate,
+                $endDate
+            ),
+        ];
+    }
+
+    protected function getOverview(
+    string $property,
+    string $startDate,
+    string $endDate
+    ): array {
+        $response = $this->query(
+            $property,
+            $startDate,
+            $endDate
+        );
+
+        $rows = $response['rows'] ?? [];
+
+        if (!$rows) {
+            return [
+                'clicks' => 0,
+                'impressions' => 0,
+                'ctr' => 0,
+                'position' => 0,
+            ];
+        }
+
+        $row = $rows[0];
+
+        return [
+            'clicks' => $row['clicks'] ?? 0,
+            'impressions' => $row['impressions'] ?? 0,
+            'ctr' => $row['ctr'] ?? 0,
+            'position' => $row['position'] ?? 0,
+        ];
+    }
+
+    protected function getDaily(
+    string $property,
+    string $startDate,
+    string $endDate
+    ): array {
+        $response = $this->query(
+            $property,
+            $startDate,
+            $endDate,
+            ['date']
+        );
+
+        return $response['rows'] ?? [];
+    }
+
+    protected function getQueries(
+    string $property,
+    string $startDate,
+    string $endDate
+    ): array {
+        $response = $this->query(
+            $property,
+            $startDate,
+            $endDate,
+            ['query'],
+            10
+        );
+
+        return $response['rows'] ?? [];
+    }
+
+    protected function getPages(
+    string $property,
+    string $startDate,
+    string $endDate
+    ): array {
+        $response = $this->query(
+            $property,
+            $startDate,
+            $endDate,
+            ['page'],
+            10
+        );
+
+        return $response['rows'] ?? [];
+    }
+
+    protected function getDevices(
+    string $property,
+    string $startDate,
+    string $endDate
+    ): array {
+        $response = $this->query(
+            $property,
+            $startDate,
+            $endDate,
+            ['device']
+        );
+
+        return $response['rows'] ?? [];
+    }
+
+    protected function query(
+    string $property,
+    string $startDate,
+    string $endDate,
+    array $dimensions = [],
+    int $rowLimit = 25000
+    ): array {
         $response = Http::withToken(
             $this->getAccessToken()
         )->post(
@@ -161,21 +334,19 @@ class SearchConsoleService
             [
                 'startDate' => $startDate,
                 'endDate' => $endDate,
-                'dimensions' => [
-                    'date',
-                ],
+                'dimensions' => $dimensions,
                 'type' => 'web',
-                'rowLimit' => 25000,
+                'rowLimit' => $rowLimit,
             ]
         );
 
         if ($response->failed()) {
             throw new RuntimeException(
-                'Erro ao consultar desempenho do Search Console: '
+                'Erro ao consultar Search Console: '
                 . $response->body()
             );
         }
 
-        return $response->json('rows', []);
+        return $response->json();
     }
 }

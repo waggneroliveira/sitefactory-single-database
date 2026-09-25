@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\TenantGoogleSearchConsole;
 use App\Models\TenantModuleLimit;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Multitenancy\Models\Tenant as BaseTenant;
 
 class Tenant extends BaseTenant
@@ -75,5 +77,9 @@ class Tenant extends BaseTenant
     public function announcements()
     {
         return $this->belongsToMany(Announcement::class, 'announcement_tenants');
+    }
+    public function googleSearchConsole(): HasOne
+    {
+        return $this->hasOne(TenantGoogleSearchConsole::class);
     }
 }

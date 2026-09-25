@@ -7,6 +7,7 @@ use App\Services\Google\SearchConsoleService;
 use App\Services\ThemeManager;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use App\Models\Tenant;
 
 class GoogleSearchConsoleController extends Controller
 {
@@ -53,5 +54,30 @@ class GoogleSearchConsoleController extends Controller
         return redirect()
             ->route('google.search-console.index')
             ->with('success', 'Google Search Console conectado com sucesso.');
+    }
+
+    public function properties(SearchConsoleService $service) {
+        return response()->json(
+            $service->getProperties()
+        );
+    }
+
+    public function performance(
+        Tenant $tenant,
+        SearchConsoleService $service
+    ) {
+        $searchConsole = $tenant->googleSearchConsole;
+
+        if (!$searchConsole || !$searchConsole->active) {
+            return response()->json([
+                'message' => 'Google Search Console não configurado para este site.'
+            ], 404);
+        }
+
+        return response()->json(
+            $service->getDashboardData(
+                $searchConsole->property
+            )
+        );
     }
 }
