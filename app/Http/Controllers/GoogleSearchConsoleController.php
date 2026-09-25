@@ -11,22 +11,35 @@ use App\Models\Tenant;
 
 class GoogleSearchConsoleController extends Controller
 {
-        public function index(ThemeManager $themeManager)
+    public function index(ThemeManager $themeManager)
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
 
-        // 'slides' → é o módulo definido no template_modules.php.
-        // 'slide.visualizar' → é a permissão definida no module_permissions.php.
-        $check = checkPermission('testimonials', 'depoimento.visualizar', $settingTheme);
+        $check = checkPermission(
+            'testimonials',
+            'depoimento.visualizar',
+            $settingTheme
+        );
+
         if ($check !== true) {
-            return $check; // retorna view 403
+            return $check;
         }
 
         $theme = $themeManager;
         $themeData = $themeManager->theme();
 
-        return view('admin.blades.google.search-console.index', compact('theme', 'themeData'));
-        
+        $tenants = Tenant::query()
+            ->where('active', true)
+            ->orderBy('name')
+            ->get();
+
+        return view('admin.blades.google.search-console.index',
+            compact(
+                'theme',
+                'themeData',
+                'tenants'
+            )
+        );
     }
 
     public function connect(
