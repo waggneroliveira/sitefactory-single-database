@@ -1,16 +1,22 @@
 @extends('admin.core.admin')
 
 @section('content')
+<style>
+    .nav-tabs .nav-link.active{
+        background-color: #cbff4d;
+    }
+    .nav-link{
+        color: #000;    
+    }
+</style>
 
 <div class="scroll" style="overflow-x:hidden; overflow-y:auto; height:635px;">
 
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
-
         <div>
             <h1 class="h4 mb-1">
                 Google Search Console
             </h1>
-
             <p class="text-muted mb-0">
                 Acompanhe o desempenho orgânico dos sites no Google.
             </p>
@@ -23,15 +29,12 @@
             <i class="bi bi-google me-1"></i>
             Conectar ao Google
         </a>
-
     </div>
 
     {{-- FILTROS --}}
     <div class="card border-0 shadow-sm mb-4">
         <div class="card-body">
-
             <div class="row align-items-end g-3">
-
                 <div class="col-lg-6">
                     <label for="tenant" class="form-label">
                         Site
@@ -84,9 +87,7 @@
                         Consultar dados
                     </button>
                 </div>
-
             </div>
-
         </div>
     </div>
 
@@ -108,7 +109,6 @@
         class="card border-0 shadow-sm"
     >
         <div class="card-body text-center py-5">
-
             <div class="mb-3">
                 <i class="bi bi-bar-chart-line fs-1 text-muted"></i>
             </div>
@@ -121,7 +121,6 @@
                 Selecione um site acima para consultar os dados
                 do Google Search Console.
             </p>
-
         </div>
     </div>
 
@@ -138,11 +137,8 @@
             <div class="col-xl-3 col-md-6">
                 <div class="card h-100">
                     <div class="card-body">
-
                         <div class="d-flex align-items-center">
-
                             <div class="flex-grow-1">
-
                                 <h5 class="text-muted fw-normal mt-0 mb-2">
                                     Cliques
                                 </h5>
@@ -157,7 +153,6 @@
                                 <p class="mb-0 text-muted">
                                     Cliques na pesquisa
                                 </p>
-
                             </div>
 
                             <div class="avatar-sm">
@@ -165,9 +160,7 @@
                                     <i class="ri-cursor-line font-24"></i>
                                 </span>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -176,11 +169,8 @@
             <div class="col-xl-3 col-md-6">
                 <div class="card h-100">
                     <div class="card-body">
-
                         <div class="d-flex align-items-center">
-
                             <div class="flex-grow-1">
-
                                 <h5 class="text-muted fw-normal mt-0 mb-2">
                                     Impressões
                                 </h5>
@@ -195,7 +185,6 @@
                                 <p class="mb-0 text-muted">
                                     Exibições na pesquisa
                                 </p>
-
                             </div>
 
                             <div class="avatar-sm">
@@ -203,9 +192,7 @@
                                     <i class="ri-eye-line font-24"></i>
                                 </span>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -214,11 +201,8 @@
             <div class="col-xl-3 col-md-6">
                 <div class="card h-100">
                     <div class="card-body">
-
                         <div class="d-flex align-items-center">
-
                             <div class="flex-grow-1">
-
                                 <h5 class="text-muted fw-normal mt-0 mb-2">
                                     CTR
                                 </h5>
@@ -233,7 +217,6 @@
                                 <p class="mb-0 text-muted">
                                     Taxa de cliques
                                 </p>
-
                             </div>
 
                             <div class="avatar-sm">
@@ -241,9 +224,7 @@
                                     <i class="ri-percent-line font-24"></i>
                                 </span>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -252,11 +233,8 @@
             <div class="col-xl-3 col-md-6">
                 <div class="card h-100">
                     <div class="card-body">
-
                         <div class="d-flex align-items-center">
-
                             <div class="flex-grow-1">
-
                                 <h5 class="text-muted fw-normal mt-0 mb-2">
                                     Posição média
                                 </h5>
@@ -271,7 +249,6 @@
                                 <p class="mb-0 text-muted">
                                     Posição nos resultados
                                 </p>
-
                             </div>
 
                             <div class="avatar-sm">
@@ -279,9 +256,7 @@
                                     <i class="ri-bar-chart-line font-24"></i>
                                 </span>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -290,11 +265,8 @@
 
         {{-- GRÁFICO --}}
         <div class="card border-0 shadow-sm mb-4">
-
             <div class="card-body">
-
                 <div class="d-flex justify-content-between align-items-center mb-4">
-
                     <div>
                         <h5 class="mb-1">
                             Desempenho
@@ -304,33 +276,98 @@
                             Cliques e impressões por dia.
                         </p>
                     </div>
-
                 </div>
 
                 <div style="height:350px;">
                     <canvas id="searchConsoleChart"></canvas>
                 </div>
-
             </div>
-
         </div>
 
-        {{-- CONSULTAS E PÁGINAS --}}
-        <div class="row g-4 mb-4">
+        {{-- CONSULTAS, PÁGINAS E DISPOSITIVOS --}}
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body">
 
-            {{-- CONSULTAS --}}
-            <div class="col-xl-6">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h5 class="mb-1">
+                            Desempenho detalhado
+                        </h5>
 
-                <div class="card border-0 shadow-sm h-100">
+                        <p class="text-muted small mb-0">
+                            Consulte os principais resultados do período selecionado.
+                        </p>
+                    </div>
+                </div>
 
-                    <div class="card-body">
+                {{-- ABAS --}}
+                <ul class="nav nav-tabs nav-bordered mb-3" role="tablist">
 
+                    <li class="nav-item" role="presentation">
+                        <button
+                            class="nav-link  active"
+                            id="queries-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#queriesContent"
+                            type="button"
+                            role="tab"
+                            aria-controls="queriesContent"
+                            aria-selected="true"
+                        >
+                            <i class="ri-search-line me-1"></i>
+                            Principais consultas
+                        </button>
+                    </li>
+
+                    <li class="nav-item" role="presentation">
+                        <button
+                            class="nav-link"
+                            id="pages-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#pagesContent"
+                            type="button"
+                            role="tab"
+                            aria-controls="pagesContent"
+                            aria-selected="false"
+                        >
+                            <i class="ri-pages-line me-1"></i>
+                            Principais páginas
+                        </button>
+                    </li>
+
+                    <li class="nav-item" role="presentation">
+                        <button
+                            class="nav-link"
+                            id="devices-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#devicesContent"
+                            type="button"
+                            role="tab"
+                            aria-controls="devicesContent"
+                            aria-selected="false"
+                        >
+                            <i class="ri-smartphone-line me-1"></i>
+                            Dispositivos
+                        </button>
+                    </li>
+
+                </ul>
+
+                {{-- CONTEÚDO DAS ABAS --}}
+                <div class="tab-content">
+
+                    {{-- CONSULTAS --}}
+                    <div
+                        class="tab-pane fade show active"
+                        id="queriesContent"
+                        role="tabpanel"
+                        aria-labelledby="queries-tab"
+                    >
                         <div class="d-flex justify-content-between align-items-center mb-3">
-
                             <div>
-                                <h5 class="mb-1">
+                                <h6 class="mb-1">
                                     Principais consultas
-                                </h5>
+                                </h6>
 
                                 <p class="text-muted small mb-0">
                                     Termos que geraram tráfego para o site.
@@ -340,55 +377,51 @@
                             <span class="badge bg-primary-subtle text-primary">
                                 Google
                             </span>
-
                         </div>
 
                         <div class="table-responsive">
                             <table class="table table-hover table-centered mb-0">
-
                                 <thead>
                                     <tr>
-                                        <th>Consulta</th>
+                                        <th>
+                                            Consulta
+                                        </th>
+
                                         <th class="text-end">
                                             Cliques
                                         </th>
+
                                         <th class="text-end">
                                             Impressões
                                         </th>
+
                                         <th class="text-end">
                                             CTR
                                         </th>
+
                                         <th class="text-end">
                                             Posição
                                         </th>
                                     </tr>
                                 </thead>
 
-                                <tbody id="queriesTable">
-                                </tbody>
-
+                                <tbody id="queriesTable"></tbody>
                             </table>
                         </div>
-
                     </div>
 
-                </div>
-
-            </div>
-
-            {{-- PÁGINAS --}}
-            <div class="col-xl-6">
-
-                <div class="card border-0 shadow-sm h-100">
-
-                    <div class="card-body">
-
+                    {{-- PÁGINAS --}}
+                    <div
+                        class="tab-pane fade"
+                        id="pagesContent"
+                        role="tabpanel"
+                        aria-labelledby="pages-tab"
+                    >
                         <div class="d-flex justify-content-between align-items-center mb-3">
-
                             <div>
-                                <h5 class="mb-1">
+                                <h6 class="mb-1">
                                     Principais páginas
-                                </h5>
+                                </h6>
 
                                 <p class="text-muted small mb-0">
                                     Páginas que receberam tráfego orgânico.
@@ -398,59 +431,51 @@
                             <span class="badge bg-success-subtle text-success">
                                 Páginas
                             </span>
-
                         </div>
 
                         <div class="table-responsive">
                             <table class="table table-hover table-centered mb-0">
-
                                 <thead>
                                     <tr>
-                                        <th>Página</th>
+                                        <th>
+                                            Página
+                                        </th>
+
                                         <th class="text-end">
                                             Cliques
                                         </th>
+
                                         <th class="text-end">
                                             Impressões
                                         </th>
+
                                         <th class="text-end">
                                             CTR
                                         </th>
+
                                         <th class="text-end">
                                             Posição
                                         </th>
                                     </tr>
                                 </thead>
 
-                                <tbody id="pagesTable">
-                                </tbody>
-
+                                <tbody id="pagesTable"></tbody>
                             </table>
                         </div>
-
                     </div>
 
-                </div>
-
-            </div>
-
-        </div>
-
-        {{-- DISPOSITIVOS --}}
-        <div class="row g-4 mb-4">
-
-            <div class="col-xl-12">
-
-                <div class="card border-0 shadow-sm">
-
-                    <div class="card-body">
-
+                    {{-- DISPOSITIVOS --}}
+                    <div
+                        class="tab-pane fade"
+                        id="devicesContent"
+                        role="tabpanel"
+                        aria-labelledby="devices-tab"
+                    >
                         <div class="d-flex justify-content-between align-items-center mb-3">
-
                             <div>
-                                <h5 class="mb-1">
+                                <h6 class="mb-1">
                                     Dispositivos
-                                </h5>
+                                </h6>
 
                                 <p class="text-muted small mb-0">
                                     Desempenho do site por tipo de dispositivo.
@@ -460,48 +485,45 @@
                             <span class="badge bg-info-subtle text-info">
                                 Dispositivos
                             </span>
-
                         </div>
 
                         <div class="table-responsive">
-
                             <table class="table table-hover table-centered mb-0">
-
                                 <thead>
                                     <tr>
-                                        <th>Dispositivo</th>
+                                        <th>
+                                            Dispositivo
+                                        </th>
+
                                         <th class="text-end">
                                             Cliques
                                         </th>
+
                                         <th class="text-end">
                                             Impressões
                                         </th>
+
                                         <th class="text-end">
                                             CTR
                                         </th>
+
                                         <th class="text-end">
                                             Posição
                                         </th>
                                     </tr>
                                 </thead>
 
-                                <tbody id="devicesTable">
-                                </tbody>
-
+                                <tbody id="devicesTable"></tbody>
                             </table>
-
                         </div>
-
                     </div>
 
                 </div>
 
             </div>
-
         </div>
 
     </div>
-
 </div>
 
 @endsection
@@ -509,13 +531,10 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-
     document.addEventListener('DOMContentLoaded', function () {
-
         const tenant = document.getElementById('tenant');
         const period = document.getElementById('period');
         const button = document.getElementById('loadSearchConsole');
-
         const loading = document.getElementById('searchConsoleLoading');
         const empty = document.getElementById('searchConsoleEmpty');
         const dashboard = document.getElementById('searchConsoleDashboard');
@@ -532,7 +551,6 @@
         let chart = null;
 
         button.addEventListener('click', async function () {
-
             if (!tenant.value) {
                 alert('Selecione um site.');
                 return;
@@ -549,9 +567,7 @@
                 period.value;
 
             try {
-
                 const response = await fetch(url);
-
                 const data = await response.json();
 
                 if (!response.ok) {
@@ -562,25 +578,18 @@
                 }
 
                 renderDashboard(data);
-
             } catch (error) {
-
                 console.error(error);
 
                 alert(error.message);
 
                 empty.classList.remove('d-none');
-
             } finally {
-
                 loading.classList.add('d-none');
-
             }
-
         });
 
         function renderDashboard(data) {
-
             const overview = data.overview || {};
 
             metricClicks.textContent = formatNumber(
@@ -601,36 +610,43 @@
             );
 
             renderChart(data.daily || []);
-
             renderQueries(data.queries || []);
-
             renderPages(data.pages || []);
-
             renderDevices(data.devices || []);
 
             dashboard.classList.remove('d-none');
-
         }
 
         function renderChart(rows) {
-
-            const canvas = document.getElementById(
-                'searchConsoleChart'
-            );
+            const canvas = document.getElementById('searchConsoleChart');
 
             if (!canvas) {
                 return;
             }
 
-            const labels = rows.map(function (row) {
-                return row.keys?.[0] || '';
+            const sortedRows = [...rows].sort(function (a, b) {
+                return String(a.keys?.[0] || '').localeCompare(
+                    String(b.keys?.[0] || '')
+                );
             });
 
-            const clicks = rows.map(function (row) {
+            const labels = sortedRows.map(function (row) {
+                const date = String(row.keys?.[0] || '');
+
+                if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+                    const [year, month, day] = date.split('-');
+
+                    return `${day}/${month}/${year}`;
+                }
+
+                return date;
+            });
+
+            const clicks = sortedRows.map(function (row) {
                 return row.clicks || 0;
             });
 
-            const impressions = rows.map(function (row) {
+            const impressions = sortedRows.map(function (row) {
                 return row.impressions || 0;
             });
 
@@ -639,12 +655,9 @@
             }
 
             chart = new Chart(canvas, {
-
                 type: 'line',
-
                 data: {
                     labels: labels,
-
                     datasets: [
                         {
                             label: 'Cliques',
@@ -658,31 +671,27 @@
                         }
                     ]
                 },
-
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-
                     interaction: {
                         mode: 'index',
                         intersect: false
                     },
-
                     scales: {
+                        x: {
+                            reverse: false
+                        },
                         y: {
                             beginAtZero: true
                         }
                     }
                 }
-
             });
-
         }
 
         function renderQueries(rows) {
-
             if (!rows.length) {
-
                 queriesTable.innerHTML = emptyTable(
                     5,
                     'Nenhuma consulta encontrada.'
@@ -692,7 +701,6 @@
             }
 
             queriesTable.innerHTML = rows.map(function (row) {
-
                 const query = row.keys?.[0] || '-';
 
                 return `
@@ -720,15 +728,11 @@
                         </td>
                     </tr>
                 `;
-
             }).join('');
-
         }
 
         function renderPages(rows) {
-
             if (!rows.length) {
-
                 pagesTable.innerHTML = emptyTable(
                     5,
                     'Nenhuma página encontrada.'
@@ -738,7 +742,6 @@
             }
 
             pagesTable.innerHTML = rows.map(function (row) {
-
                 const page = row.keys?.[0] || '-';
 
                 return `
@@ -769,15 +772,11 @@
                         </td>
                     </tr>
                 `;
-
             }).join('');
-
         }
 
         function renderDevices(rows) {
-
             if (!rows.length) {
-
                 devicesTable.innerHTML = emptyTable(
                     5,
                     'Nenhum dispositivo encontrado.'
@@ -787,7 +786,6 @@
             }
 
             devicesTable.innerHTML = rows.map(function (row) {
-
                 const device = row.keys?.[0] || '-';
 
                 return `
@@ -813,25 +811,20 @@
                         </td>
                     </tr>
                 `;
-
             }).join('');
-
         }
 
         function getDeviceLabel(device) {
-
             const labels = {
-                desktop: 'Desktop',
-                mobile: 'Mobile',
+                desktop: 'Computador',
+                mobile: 'Celular',
                 tablet: 'Tablet'
             };
 
-            return labels[device] || device;
-
+            return labels[String(device).toLowerCase()] || device;
         }
 
         function emptyTable(columns, message) {
-
             return `
                 <tr>
                     <td
@@ -842,22 +835,18 @@
                     </td>
                 </tr>
             `;
-
         }
 
         function escapeHtml(value) {
-
             return String(value)
                 .replace(/&/g, '&amp;')
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;')
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&#039;');
-
         }
 
         function formatNumber(value, decimals = 0) {
-
             return Number(value).toLocaleString(
                 'pt-BR',
                 {
@@ -865,11 +854,9 @@
                     maximumFractionDigits: decimals
                 }
             );
-
         }
 
         function formatPercent(value) {
-
             return (
                 Number(value) * 100
             ).toLocaleString(
@@ -879,9 +866,6 @@
                     maximumFractionDigits: 2
                 }
             ) + '%';
-
         }
-
     });
-
 </script>
