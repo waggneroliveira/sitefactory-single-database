@@ -296,6 +296,15 @@ return [
                 'home' => [
                     'announcement',
                 ],
+                'about_static' => [
+                    'about_static',
+                ],
+                'privacy_police' => [
+                    'privacy_police',
+                ],
+                'use_term' => [
+                    'use_term',
+                ],
             ],
         ],
 

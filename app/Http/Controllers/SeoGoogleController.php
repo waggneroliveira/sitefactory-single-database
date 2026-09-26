@@ -494,6 +494,8 @@ class SeoGoogleController extends Controller
             'download_leads',
             'blog',
             'products',
+            'privacy_police',
+            'user_term',
         ];
 
         $urls[] = $this->makeUrl(
@@ -633,6 +635,18 @@ class SeoGoogleController extends Controller
             $this->addTemplatesUrls($urls);
         }
 
+        if ($this->themeManager->hasPage('about_static')) {
+            $this->addAboutStaticUrls($urls);
+        }
+
+        if ($this->themeManager->hasPage('privacy_police')) {
+            $this->addPrivacyPoliceUrls($urls);
+        }
+
+        if ($this->themeManager->hasPage('use_term')) {
+            $this->addUseTermUrls($urls);
+        }
+
         /*
         |--------------------------------------------------------------------------
         | REMOVE DUPLICADAS
@@ -673,6 +687,26 @@ class SeoGoogleController extends Controller
                 $template->updated_at
             );
         }
+    }
+
+    protected function addAboutStaticUrls(array &$urls): void
+    {
+        $urls[] = $this->makeUrl(
+            url('/sobre-nos')
+        );
+    }
+
+    protected function addUseTermUrls(array &$urls): void
+    {
+        $urls[] = $this->makeUrl(
+            url('/termos-de-uso')
+        );
+    }
+    protected function addPrivacyPoliceUrls(array &$urls): void
+    {
+        $urls[] = $this->makeUrl(
+            url('/politica-de-privacidade')
+        );
     }
 
     /**
