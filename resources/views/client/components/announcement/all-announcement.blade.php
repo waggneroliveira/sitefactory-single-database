@@ -26,7 +26,7 @@
                             src="{{ asset('storage/' . $item->path_image) }}"
                             class="d-block w-100"
                             alt="Anúncio"
-                            loading="lazy"
+                            fetchpriority="high"
                         >
                     </picture>
 
