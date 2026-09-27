@@ -623,7 +623,7 @@
                 
                 <!-- Coluna 3 - Sobre -->
                 <div class="col-lg-4">
-                    <h6 class="footer-title-modern text-color-footer">Sobre</h6>
+                    <div class="footer-title-modern text-color-footer">Sobre</div>
                     <p class="footer-text-modern">
                     Todas as ferramentas são processadas localmente no seu navegador. Seus dados não são enviados para nossos servidores.
                     </p>
