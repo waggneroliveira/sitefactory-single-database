@@ -60,51 +60,53 @@
         </section>
     @endif
 
-    @if (isset($about) && $about <> null)
+    @if (isset($abouts) && $abouts->count())
         <section id="about" class="about bg-light">
             <div class="container-fluid">
-                <div class="row align-items-center justify-content-center">
-                <!-- TEXTO (dentro do container) -->
-                <div class="col-12 col-lg-5 mt-4 mt-md-4 z-3 p-0" data-aos="fade-right" data-aos-delay="100">
-                    <div class="container position-relative">
-                        <span class="rounded-2 col-5 col-lg-4 px-3 m-lg-0 py-2 text-dark text-center font-changa font-16 font-bold d-block badge bg-white shadow-sm">
-                            Quem Somos?
-                        </span>
+                @foreach($abouts as $about)                    
+                    <div class="row align-items-center justify-content-center">
+                        <!-- TEXTO (dentro do container) -->
+                        <div class="col-12 col-lg-5 mt-4 mt-md-4 z-3 p-0" data-aos="fade-right" data-aos-delay="100">
+                            <div class="container position-relative">
+                                <span class="rounded-2 col-5 col-lg-4 px-3 m-lg-0 py-2 text-dark text-center font-changa font-16 font-bold d-block badge bg-white shadow-sm">
+                                    Quem Somos?
+                                </span>
 
-                        <h3 class="about-title font-changa font-40 font-bold mt-2 mt-lg-3 mb-3 text-black text-start">
-                            {{$about->title}} <span class="primary-color">{{$about->subtitle}}</span>
-                        </h3>
+                                <h3 class="about-title font-changa font-40 font-bold mt-2 mt-lg-3 mb-3 text-black text-start">
+                                    {{$about->title}} <span class="primary-color">{{$about->subtitle}}</span>
+                                </h3>
 
-                        <!-- Conteúdo adicional opcional -->
-                        <div class="description">
-                            {!! $about->text !!}
+                                <!-- Conteúdo adicional opcional -->
+                                <div class="description">
+                                    {!! $about->text !!}
+                                </div>
+
+                                @if ($about->link <> null)                        
+                                    <div class="btn-about my-4 d-flex justify-content-center justify-content-lg-start">
+                                        <a href="{{$about->link}}" class="py-1 py-lg-2 px-3 px-lg-5 font-changa bg-button-two color-button-two font-15 font-medium text-decoration-none hover-zoom" rel="noopener noreferrer">
+                                            Conheça
+                                            <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-two)"></path>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
 
-                        @if ($about->link <> null)                        
-                            <div class="btn-about my-4 d-flex justify-content-center justify-content-lg-start">
-                                <a href="{{$about->link}}" class="py-1 py-lg-2 px-3 px-lg-5 font-changa bg-button-two color-button-two font-15 font-medium text-decoration-none hover-zoom" rel="noopener noreferrer">
-                                    Conheça
-                                    <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-two)"></path>
-                                    </svg>
-                                </a>
+                        @if (isset($about->path_image) && $about->path_image <> null)                    
+                            <!-- IMAGEM (fora do container) -->
+                            <div class="col-12 col-lg-6 p-0 about-image" data-aos="fade-left" data-aos-delay="100">
+                                <img
+                                src="{{asset('storage/'.$about->path_image)}}"
+                                alt="Sobre a Girollato"
+                                class="img-fluid w-100"
+                                loading="lazy"
+                                >
                             </div>
                         @endif
                     </div>
-                </div>
-
-                @if (isset($about->path_image) && $about->path_image <> null)                    
-                    <!-- IMAGEM (fora do container) -->
-                    <div class="col-12 col-lg-6 p-0 about-image" data-aos="fade-left" data-aos-delay="100">
-                        <img
-                        src="{{asset('storage/'.$about->path_image)}}"
-                        alt="Sobre a Girollato"
-                        class="img-fluid w-100"
-                        loading="lazy"
-                        >
-                    </div>
-                @endif
-                </div>
+                @endforeach
             </div>
         </section>
     @endif

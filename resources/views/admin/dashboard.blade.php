@@ -608,7 +608,7 @@
                     ])
                 @endif
 
-                @if (in_array('services', $homeModules, true) && ($isSuper || $user->can('servico.visualizar')))
+                @if (in_array('services', $homeModules, true) && ($isSuper || $user->can('servicos.visualizar')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.serviceItem.index'),
                         'icon' => 'mdi-briefcase-outline',
