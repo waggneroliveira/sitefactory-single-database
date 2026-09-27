@@ -302,48 +302,6 @@
 
     @include('client/themes/whi-web/tp-03/includes/lgpd/lgpd')
 
-     @if (isset($contact) && $contact->whatsapp <> null)
-        @php
-            // Remove caracteres não numéricos do telefone
-            $phone = preg_replace('/\D/', '', $contact->whatsapp);
-
-            // Monta mensagem com ícones e quebras de linha
-            $mensagem = "Olá! Encontrei seu site e gostaria de conhecer mais sobre os planos disponíveis.%0A";
-        @endphp
-
-        <!-- Container do WhatsApp Flutuante com ID para GSAP -->
-        <div id="whatsapp-floating-container" class="wa-float-wrapper">
-            <!-- Tooltip / Balão de Mensagem Impactante -->
-            <div class="wa-tooltip">
-                <span class="wa-tooltip-status"></span>
-                <div class="wa-tooltip-text">
-                    <strong>Precisa de ajuda?</strong>
-                    <small>Fale conosco no WhatsApp</small>
-                </div>
-            </div>
-
-            <!-- Botão Principal -->
-            <a href="https://wa.me/55{{ $phone }}?text={{ $mensagem }}" 
-            class="wa-float-btn" 
-            aria-label="Fale conosco no WhatsApp" 
-            target="_blank" 
-            rel="noopener noreferrer">
-            
-                <!-- Anel de Pulso / Efeito de Onda -->
-                <span class="wa-pulse-ring"></span>
-                <span class="wa-pulse-ring delay"></span>
-
-                <!-- Ícone SVG -->
-                <svg class="wa-icon" viewBox="0 0 32 32" aria-hidden="true">
-                    <path d="M19.11 17.27c-.23-.12-1.37-.67-1.58-.75-.21-.08-.36-.12-.52.12-.16.23-.6.74-.74.89-.14.15-.27.17-.5.06-.23-.12-.97-.36-1.85-1.12-.68-.6-1.14-1.34-1.27-1.57-.13-.23-.01-.35.1-.47.1-.1.23-.27.35-.4.12-.13.16-.23.24-.39.08-.16.04-.3-.02-.42-.06-.12-.52-1.25-.71-1.72-.19-.46-.38-.4-.52-.4h-.45c-.16 0-.42.06-.64.3-.22.23-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.69 2.58 4.1 3.61.57.25 1.01.4 1.35.52.57.18 1.1.16 1.52.1.46-.07 1.37-.56 1.57-1.1.19-.54.19-1 .13-1.1-.06-.1-.21-.16-.44-.27zM16 3.2c-7.06 0-12.8 5.73-12.8 12.8 0 2.26.61 4.36 1.67 6.17L3.2 28.8l6.78-1.6c1.74.95 3.74 1.5 5.87 1.5 7.07 0 12.8-5.73 12.8-12.8S23.07 3.2 16 3.2zm0 22.94c-1.98 0-3.81-.58-5.35-1.57l-.38-.24-4.02.95.95-3.92-.25-.4a10.58 10.58 0 0 1-1.64-5.62c0-5.86 4.77-10.62 10.63-10.62S26.62 9.38 26.62 15.24 21.86 26.14 16 26.14z"/>
-                </svg>
-
-                <!-- Selo de Notificação "1" -->
-                <span class="wa-badge">1</span>
-            </a>
-        </div>
-    @endif
-
     <style>
         :root {
             /* Cores Gerais */
@@ -2850,50 +2808,5 @@
     <script src="{{ asset('build/client/lgpd/script.js') }}" defer></script>
     <script src="{{ asset('build/client/themes/whi-web/tp-03/js/default.js') }}" defer></script>
     <script src="{{ asset('build/client/js/default.js') }}" defer></script>
-
-    {{-- Modais alert --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            if (typeof Swal === 'undefined') return;
-
-            const successMessage = @json(session('success'));
-            const errorMessage = @json(session('error'));
-
-            if (!successMessage && !errorMessage) return;
-
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timerProgressBar: true,
-                timer: 3000,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer);
-                    toast.addEventListener('mouseleave', Swal.resumeTimer);
-                }
-            });
-
-            if (successMessage) {
-                Toast.fire({
-                    icon: 'success',
-                    title: successMessage,
-                    background: '#f0fdf4',
-                    color: '#166534',
-                    iconColor: '#22c55e'
-                });
-            }
-
-            if (errorMessage) {
-                Toast.fire({
-                    icon: 'error',
-                    title: errorMessage,
-                    background: '#fef2f2',
-                    color: '#991b1b',
-                    iconColor: '#ef4444'
-                });
-            }
-        });
-    </script>
-
 </body>
 </html>
