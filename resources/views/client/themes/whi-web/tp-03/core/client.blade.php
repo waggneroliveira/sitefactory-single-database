@@ -293,9 +293,6 @@
     <script type="application/ld+json">
     {!! json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js" defer></script>
 </head>
 
 <body>
@@ -2898,110 +2895,5 @@
         });
     </script>
 
-    {{-- WhatsApp --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof gsap === 'undefined') return;
-
-            const waContainer = document.querySelector('#whatsapp-floating-container');
-
-            if (!waContainer) return;
-
-            const waBtn = waContainer.querySelector('.wa-float-btn');
-            const waIcon = waContainer.querySelector('.wa-icon');
-            const waTooltip = waContainer.querySelector('.wa-tooltip');
-            const waBadge = waContainer.querySelector('.wa-badge');
-
-            if (!waBtn || !waIcon) return;
-
-            // Entrada principal
-            const tlEntry = gsap.timeline({
-                defaults: {
-                    ease: 'back.out(1.7)',
-                    duration: 0.8
-                }
-            });
-
-            tlEntry.from(waContainer, {
-                scale: 0,
-                opacity: 0,
-                y: 40,
-                delay: 1
-            });
-
-            if (waTooltip) {
-                tlEntry.from(waTooltip, {
-                    x: 30,
-                    opacity: 0,
-                    scale: 0.8,
-                    duration: 0.6
-                }, '-=0.3');
-            }
-
-            if (waBadge) {
-                tlEntry.from(waBadge, {
-                    scale: 0,
-                    duration: 0.4
-                }, '-=0.4');
-            }
-
-            // Animação periódica do ícone
-            gsap.to(waIcon, {
-                rotation: 15,
-                duration: 0.1,
-                repeat: 5,
-                yoyo: true,
-                repeatDelay: 6,
-                ease: 'power1.inOut'
-            });
-
-            // Hover
-            waBtn.addEventListener('mouseenter', () => {
-                gsap.to(waBtn, {
-                    scale: 1.1,
-                    duration: 0.3,
-                    ease: 'power2.out'
-                });
-
-                gsap.to(waIcon, {
-                    scale: 1.15,
-                    rotate: -10,
-                    duration: 0.3,
-                    ease: 'power2.out'
-                });
-
-                if (waTooltip) {
-                    gsap.to(waTooltip, {
-                        x: -5,
-                        duration: 0.3,
-                        ease: 'power2.out'
-                    });
-                }
-            });
-
-            waBtn.addEventListener('mouseleave', () => {
-                gsap.to(waBtn, {
-                    scale: 1,
-                    duration: 0.3,
-                    ease: 'power2.out'
-                });
-
-                gsap.to(waIcon, {
-                    scale: 1,
-                    rotate: 0,
-                    duration: 0.3,
-                    ease: 'power2.out'
-                });
-
-                if (waTooltip) {
-                    gsap.to(waTooltip, {
-                        x: 0,
-                        duration: 0.3,
-                        ease: 'power2.out'
-                    });
-                }
-            });
-        });
-    </script>
 </body>
 </html>
