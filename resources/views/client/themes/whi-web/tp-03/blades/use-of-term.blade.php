@@ -271,20 +271,18 @@
                 </div>
 
                 <!-- ÁREA PARA ANÚNCIO (abaixo do conteúdo principal) -->
-                <div class="ad-container mt-3">
-                    <p><i class="bi bi-google"></i> ANÚNCIO RESPONSIVO</p>
-                    <div class="ad-placeholder overflow-hidden" style="min-height: 100px">
-                        <!-- Espaço para Banner Adsense -->
-                        <a href="https://www.whi.dev.br/" target="_blank" rel="noopener noreferrer">
-                            <img
-                                src="{{asset('build/client/themes/whi-web/tp-03/images/anuncio-horizontal.gif')}}"
-                                class="w-100 h-100"
-                                alt="Anuncio WHI"
-                                style="object-fit: cover"
-                            />
-                        </a>
+                @if (isset($announcements['center-bottom']) && $announcements['center-bottom']->isNotEmpty())
+                    <div class="ad-container mt-3">
+                        <p><i class="bi bi-google"></i> ANÚNCIO RESPONSIVO</p>
+                        <div class="ad-placeholder overflow-hidden" style="min-height: 100px">
+                            <!-- Espaço para Banner Adsense -->
+                            @includeIf('client.components.announcement.all-announcement',[
+                                    'announcements' => $announcements['center-bottom'] ?? collect()
+                                ]
+                            )
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
 
             <!-- BARRA LATERAL DIREITA COM ANÚNCIO -->

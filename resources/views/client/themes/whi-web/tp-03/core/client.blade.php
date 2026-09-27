@@ -513,31 +513,42 @@
             <div class="collapse navbar-collapse" id="navbarMain">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" data-category="all"> <i class="bi bi-grid-3x3-gap-fill me-1"></i> Todos </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-category="calculadoras"> <i class="bi bi-calculator-fill me-1"></i> Calculadoras </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-category="geradores"> <i class="bi bi-dice-6-fill me-1"></i> Geradores </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-category="validadores"> <i class="bi bi-shield-check-fill me-1"></i> Validadores </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-category="conversores"> <i class="bi bi-arrow-repeat me-1"></i> Conversores </a>
+                        <button type="button" class="nav-link active" data-category="all">
+                            <i class="bi bi-grid-3x3-gap-fill me-1"></i> Todos
+                        </button>
                     </li>
 
+                    <li class="nav-item">
+                        <button type="button" class="nav-link" data-category="calculadoras">
+                            <i class="bi bi-calculator-fill me-1"></i> Calculadoras
+                        </button>
+                    </li>
+
+                    <li class="nav-item">
+                        <button type="button" class="nav-link" data-category="geradores">
+                            <i class="bi bi-dice-6-fill me-1"></i> Geradores
+                        </button>
+                    </li>
+
+                    <li class="nav-item">
+                        <button type="button" class="nav-link" data-category="validadores">
+                            <i class="bi bi-shield-check-fill me-1"></i> Validadores
+                        </button>
+                    </li>
+
+                    <li class="nav-item">
+                        <button type="button" class="nav-link" data-category="conversores">
+                            <i class="bi bi-arrow-repeat me-1"></i> Conversores
+                        </button>
+                    </li>
                 </ul>
 
-                <!-- Status Badge -->
                 <div class="status-badge">
                     <i class="bi bi-wifi-off"></i>
                     <span>100% Offline</span>
                     <i class="bi bi-dot"></i>
                     <span>15+ Tools</span>
                 </div>
-
             </div>
         </nav>
     </header>
@@ -588,7 +599,7 @@
 
                 <!-- Mapa do site -->
                 <div class="col-lg-5 mb-4 mb-lg-0">
-                    <h6 class="footer-title-modern text-color-footer ">Ferramentas em Destaque</h6>
+                    <div class="footer-title-modern text-color-footer">Ferramentas em Destaque</div>
 
                     <div class="row">
                         <div class="col-6">
@@ -1108,30 +1119,33 @@
                     '</div>' +
 
                     '<div class="mb-2">' +
-                        '<label>Capital (R$)</label>' +
+                        '<label for="capJ">Capital (R$)</label>' +
                         '<input type="number" id="capJ" class="form-control" value="1000">' +
                     '</div>' +
 
                     '<div class="mb-2">' +
-                        '<label>Taxa % mês</label>' +
+                        '<label for="taxJ">Taxa % mês</label>' +
                         '<input type="number" id="taxJ" step="any" class="form-control" value="2">' +
                     '</div>' +
 
                     '<div class="mb-2">' +
-                        '<label>Meses</label>' +
+                        '<label for="mesJ">Meses</label>' +
                         '<input type="number" id="mesJ" class="form-control" value="12">' +
                     '</div>' +
 
-                    '<select id="tipoJ" class="form-select mb-2">' +
-                        '<option value="simples">Simples</option>' +
-                        '<option value="composto">Composto</option>' +
-                    '</select>' +
+                    '<div class="mb-2">' +
+                        '<label for="tipoJ">Tipo de juros</label>' +
+                        '<select id="tipoJ" class="form-select">' +
+                            '<option value="simples">Simples</option>' +
+                            '<option value="composto">Composto</option>' +
+                        '</select>' +
+                    '</div>' +
 
-                    '<button class="btn btn-primary w-100 mb-2" id="calcJBtn">' +
+                    '<button type="button" class="btn btn-primary w-100 mb-2" id="calcJBtn">' +
                         'Calcular' +
                     '</button>' +
 
-                    '<div id="resJ" class="result-area">Aguardando</div>' +
+                    '<div id="resJ" class="result-area">Aguardando</div>'
 
                     descSEO(
                         'Juros',
