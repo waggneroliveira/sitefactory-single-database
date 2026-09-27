@@ -98,9 +98,9 @@
                         <!-- TEXTO (dentro do container) -->
                         <div class="col-12 col-lg-7 mt-4 mt-lg-0 z-3">
                             <div class="container position-relative">
-                                <h3 class="about-title font-changa font-45 font-semiBold mb-3 text-grey text-start">
+                                <h2 class="about-title font-changa font-45 font-semiBold mb-3 text-grey text-start">
                                     {{$about->title}} <span class="accent-color">{{$about->subtitle}}</span>
-                                </h3>
+                                </h2>
 
                                 <!-- Conteúdo adicional opcional -->
                                 <div class="description">
@@ -538,9 +538,9 @@
                                                         @endif
                                                     </div>
 
-                                                    <h4 class="font-changa font-16 font-bold">
+                                                    <h5 class="font-changa font-16 font-bold">
                                                         {{ $benefit->title }}
-                                                    </h4>
+                                                    </h5>
 
                                                     <p class="font-changa font-15 font-medium">
                                                         {!! $benefit->text !!}
@@ -617,7 +617,7 @@
                                     <img src="{{asset('storage/' . $product->path_image)}}" alt="{{$product->title}}" loading="lazy" loading="lazy">
                                 </div>
                                 <div class="px-2 px-lg-3 pt-2 pt-lg-3 pb-0">
-                                    <h6 class="font-changa font-18 font-semibold text-dark text-start">{{$product->title}}</h6>
+                                    <div class="font-changa font-18 font-semibold text-dark text-start">{{$product->title}}</div>
                                     <p class="color-grey font-changa font-15 font-regular mb-0 text-start lh-sm border-bottom pb-2">{{substr(strip_tags($product->description), 0, 50)}}...</p>
                                 </div>
                                 <div class="row flex-wrap justify-content-center mt-2">
@@ -798,17 +798,19 @@
                                 </div>
                                 <div class="team-body shadow-md rounded-2 text-center position-absolute col-11 z-3 bg-white py-2 py-lg-3 px-1 px-lg-3 d-flex justify-content-between align-items-center">
                                     <div class="d-flex justify-content-start align-items-start flex-column">
-                                        <h6 class="mb-1 font-changa font-semibold font-18 color-green">{{$representative->title}}</h6>
+                                        <div class="mb-1 font-changa font-semibold font-18 color-green">{{$representative->title}}</div>
                                         <small class="color-grey text-start font-changa font-13 font-regular d-block mb-0">{{$representative->function}}</small>
                                     </div>
                                     <!-- Botão para disparar o Modal -->
-                                    <button type="button" 
-                                            class="color-button-one bg-button-one font-changa font-14 font-regular rounded-2 d-flex justify-content-center align-items-center border-0" 
-                                            style="width: 30px; height:30px cursor: pointer;" 
-                                            data-bs-toggle="modal" 
-                                            data-bs-target="#representativeModal{{$representative->id}}">
-                                        <i class="bi bi-eye"></i>
-                                    </button>                         
+                                    <button type="button"
+                                        class="color-button-one bg-button-one font-changa font-14 font-regular rounded-2 d-flex justify-content-center align-items-center border-0"
+                                        style="width: 30px; height: 30px; cursor: pointer;"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#representativeModal{{ $representative->id }}"
+                                        aria-label="Visualizar representante">
+
+                                        <i class="bi bi-eye" aria-hidden="true"></i>
+                                    </button>                        
                                 </div>
                             </div>
                         </div>
@@ -904,7 +906,7 @@
 
                                             <!-- Autor / Informações -->
                                             <div class="author mb-3">
-                                                <h5 class="author-name font-bold mb-1">{{ $depoiment->name }}</h5>
+                                                <div class="author-name font-bold mb-1">{{ $depoiment->name }}</div>
                                                 <span class="author-role d-block text-muted font-14">{{ $depoiment->function }}</span>
                                             </div>
 
@@ -1106,6 +1108,10 @@
                                         <input type="text" required id="phone_whatsapp" name="phone" class="poppins-regular font-15 text-color form-control" placeholder="Whatsapp">
                                     </div>
                                     <div class="col-md-4">
+                                        <label for="subject" class="visually-hidden">
+                                            Assunto
+                                        </label>
+
                                         <select
                                             required
                                             id="subject"
@@ -1123,7 +1129,7 @@
                                     <div class="col-12 d-flex align-items-center flex-wrap">
                                         <div class="form-check me-3">
                                             <input class="form-check-input" required id="term_privacy" name="term_privacy" type="checkbox" value="1">
-                                            <label class="form-check-label small poppins-regular font-14 text-color" for="privacyCheck">
+                                            <label class="form-check-label small poppins-regular font-14 text-color" for="term_privacy">
                                                 Aceito os termos descritos na Política de Privacidade
                                             </label>
                                         </div>
