@@ -25,6 +25,8 @@
                         <img
                             src="{{ asset('storage/' . $item->path_image) }}"
                             class="d-block w-100"
+                            width="355"
+                            height="433"
                             alt="Anúncio"
                             fetchpriority="high"
                         >
