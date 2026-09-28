@@ -1164,32 +1164,38 @@
 
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.templateTheme.index'),
-                    'icon' => 'mdi-google-analytics',
+                    'icon' => 'mdi-view-grid-outline',
                     'title' => 'Templates'
                 ])
 
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.seoGoogle.index'),
-                    'icon' => 'mdi-google-analytics',
-                    'title' => 'Seo Google'
+                    'icon' => 'mdi-google',
+                    'title' => 'SEO Google'
+                ])
+
+                @include('admin.components.dashboard-card', [
+                    'route' => route('google.search-console.index'),
+                    'icon' => 'mdi-chart-line',
+                    'title' => 'Google Search Console'
                 ])
 
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.plans.index'),
-                    'icon' => 'mdi-credit-card',
+                    'icon' => 'mdi-credit-card-outline',
                     'title' => 'Plano contratado'
                 ])
 
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.tenants.index'),
-                    'icon' => 'mdi-account-multiple',
+                    'icon' => 'mdi-account-multiple-outline',
                     'title' => 'Cliente/Tenant'
                 ])
 
                 @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.adSlot.index'),
-                    'icon' => 'mdi-account-multiple',
-                    'title' => 'Ad-Slot'
+                    'icon' => 'mdi-billboard',
+                    'title' => 'Áreas do anúncio'
                 ])
 
             </div>

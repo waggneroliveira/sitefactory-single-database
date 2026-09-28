@@ -120,6 +120,16 @@ return [
             'remover',
         ],
     ],
+    
+    'googleSearchConsole' => [
+        'permission' => 'google search console',
+        'actions' => [
+            'criar',
+            'editar',
+            'visualizar',
+            'remover',
+        ],
+    ],
 
     'about' => [
         'permission' => 'sobre nos',
