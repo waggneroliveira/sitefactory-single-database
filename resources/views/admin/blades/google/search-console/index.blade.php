@@ -89,7 +89,6 @@
 
 <div class="scroll" style="overflow-x:hidden; overflow-y:auto; height:635px;">
 
-```
 {{-- CABEÇALHO --}}
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 my-3">
 
@@ -140,7 +139,7 @@
 
         <div class="row align-items-end g-3">
 
-            <div class="col-lg-6">
+            <div class="col-lg-4">
 
                 <label for="tenant" class="form-label">
                     Site
@@ -164,7 +163,7 @@
 
             </div>
 
-            <div class="col-lg-3">
+            <div class="col-lg-4">
 
                 <label for="period" class="form-label">
                     Período
@@ -192,15 +191,25 @@
 
             </div>
 
-            <div class="col-lg-3">
+            <div class="col-lg-4 d-flex gap-2">
 
                 <button
                     type="button"
                     id="loadSearchConsole"
-                    class="btn btn-primary w-100 text-dark"
+                    class="btn btn-primary text-dark flex-fill"
                 >
                     <i class="bi bi-arrow-repeat me-1"></i>
-                    Consultar dados
+                    Consultar
+                </button>
+
+                <button
+                    type="button"
+                    id="syncSearchConsole"
+                    class="btn btn-outline-success flex-fill"
+                    title="Atualizar todos os períodos"
+                >
+                    <i class="bi bi-cloud-arrow-down me-1"></i>
+                    Sincronizar
                 </button>
 
             </div>
@@ -1203,6 +1212,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const tenant = document.getElementById('tenant');
     const period = document.getElementById('period');
     const button = document.getElementById('loadSearchConsole');
+    const syncButton = document.getElementById('syncSearchConsole');
 
     const loading = document.getElementById('searchConsoleLoading');
     const empty = document.getElementById('searchConsoleEmpty');
@@ -1294,6 +1304,90 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
 
+    /*
+     * SINCRONIZAÇÃO
+     *
+     * O controller atual já sincroniza:
+     * 7, 28, 90 e 180 dias.
+     *
+     * Portanto, uma única requisição atualiza
+     * todos os períodos.
+     */
+    syncButton.addEventListener('click', async function () {
+
+        if (!tenant.value) {
+            alert('Selecione um site antes de sincronizar.');
+            return;
+        }
+
+        const originalHtml = syncButton.innerHTML;
+
+        syncButton.disabled = true;
+
+        syncButton.innerHTML =
+            '<i class="bi bi-arrow-repeat me-1"></i>' +
+            'Sincronizando...';
+
+        try {
+
+            const response = await fetch(
+                '{{ url('/painel/dashboard/google/search-console/sync') }}/' +
+                tenant.value +
+                '?days=180',
+                {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document
+                            .querySelector('meta[name="csrf-token"]')
+                            .getAttribute('content'),
+
+                        'Accept': 'application/json'
+                    }
+                }
+            );
+
+            const data = await response.json();
+
+            console.log(data);
+
+            if (!response.ok || !data.success) {
+
+                throw new Error(
+                    data.error ||
+                    data.message ||
+                    'Não foi possível sincronizar os dados.'
+                );
+
+            }
+
+            alert(
+                'Dados do Google Search Console sincronizados com sucesso.'
+            );
+
+            /*
+             * Depois da sincronização, consulta novamente
+             * o período atualmente selecionado.
+             */
+            button.click();
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                error.message ||
+                'Erro ao sincronizar os dados do Google Search Console.'
+            );
+
+        } finally {
+
+            syncButton.disabled = false;
+            syncButton.innerHTML = originalHtml;
+
+        }
+
+    });
+
     function renderDashboard(data) {
 
         const overview = data.overview || {};
@@ -1376,7 +1470,18 @@ document.addEventListener('DOMContentLoaded', function () {
         renderPages();
         renderDevices();
 
-        renderComparisons(data.comparison || {});
+        /*
+         * O gráfico comparativo precisa dos agregados
+         * dos dois períodos.
+         *
+         * Passamos diretamente os dados retornados pelo
+         * controller, sem depender de variáveis globais.
+         */
+        renderComparisons(
+            data.comparison || {},
+            overview,
+            previousOverview
+        );
 
         dashboard.classList.remove('d-none');
 
@@ -1569,7 +1674,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
-    function renderComparisons(comparison) {
+    function renderComparisons(
+        comparison,
+        currentOverview,
+        previousOverview
+    ) {
 
         const pages = comparison.pages || {};
         const queries = comparison.queries || {};
@@ -1620,8 +1729,21 @@ document.addEventListener('DOMContentLoaded', function () {
             'Consulta'
         );
 
+        /*
+         * Aqui está a correção principal:
+         *
+         * O gráfico usa os totais reais do controller:
+         *
+         * data.overview
+         * data.previous_overview
+         *
+         * Não usa mais:
+         * window.searchConsoleCurrentOverview
+         * window.searchConsolePreviousOverview
+         */
         renderComparisonChart(
-            comparison
+            currentOverview,
+            previousOverview
         );
 
     }
@@ -1885,7 +2007,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
-    function renderComparisonChart(comparison) {
+    /*
+     * GRÁFICO DE COMPARATIVO
+     *
+     * O título do card informa que o comparativo é
+     * de tráfego, e o próprio card informa que a métrica
+     * utilizada é o volume total de cliques.
+     *
+     * Portanto, o gráfico compara exatamente:
+     *
+     * Período atual     -> overview.clicks
+     * Período anterior  -> previous_overview.clicks
+     */
+    function renderComparisonChart(
+        currentOverview,
+        previousOverview
+    ) {
 
         const canvas =
             document.getElementById('comparisonChart');
@@ -1894,20 +2031,11 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        /*
-         * O gráfico agora usa os totais dos períodos,
-         * e não mistura páginas e consultas.
-         *
-         * Esses valores vêm diretamente de:
-         * overview
-         * previous_overview
-         */
+        const currentClicks =
+            Number(currentOverview?.clicks || 0);
 
-        const currentOverview =
-            window.searchConsoleCurrentOverview || {};
-
-        const previousOverview =
-            window.searchConsolePreviousOverview || {};
+        const previousClicks =
+            Number(previousOverview?.clicks || 0);
 
         if (comparisonChart) {
             comparisonChart.destroy();
@@ -1920,28 +2048,20 @@ document.addEventListener('DOMContentLoaded', function () {
             data: {
 
                 labels: [
-                    'Cliques',
-                    'Impressões'
+                    'Período atual',
+                    'Período anterior'
                 ],
 
                 datasets: [
 
                     {
-                        label: 'Período atual',
+                        label: 'Cliques',
 
                         data: [
-                            Number(currentOverview.clicks || 0),
-                            Number(currentOverview.impressions || 0)
+                            currentClicks,
+                            previousClicks
                         ]
-                    },
 
-                    {
-                        label: 'Período anterior',
-
-                        data: [
-                            Number(previousOverview.clicks || 0),
-                            Number(previousOverview.impressions || 0)
-                        ]
                     }
 
                 ]
@@ -1957,7 +2077,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 plugins: {
 
                     legend: {
-                        display: true
+                        display: false
                     },
 
                     tooltip: {
@@ -1967,8 +2087,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             label: function (context) {
 
                                 return (
-                                    context.dataset.label +
-                                    ': ' +
+                                    'Cliques: ' +
                                     formatNumber(context.raw)
                                 );
 
@@ -1983,7 +2102,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 scales: {
 
                     y: {
-                        beginAtZero: true
+
+                        beginAtZero: true,
+
+                        ticks: {
+
+                            callback: function (value) {
+                                return formatNumber(value);
+                            }
+
+                        }
+
                     }
 
                 }
@@ -2065,7 +2194,8 @@ document.addEventListener('DOMContentLoaded', function () {
             state.perPage;
 
         const end =
-            start + state.perPage;
+            start +
+            state.perPage;
 
         const rows =
             state.rows.slice(start, end);
@@ -2243,6 +2373,7 @@ document.addEventListener('DOMContentLoaded', function () {
             element.innerHTML = '';
 
             return;
+
         }
 
         const totalPages =
@@ -2276,6 +2407,7 @@ document.addEventListener('DOMContentLoaded', function () {
             `;
 
             return;
+
         }
 
         let pages = [];
@@ -2300,7 +2432,9 @@ document.addEventListener('DOMContentLoaded', function () {
             page <= endPage;
             page++
         ) {
+
             pages.push(page);
+
         }
 
         if (currentPage < totalPages - 2) {
@@ -2554,7 +2688,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (
             !/^\d{4}-\d{2}-\d{2}$/.test(date)
         ) {
+
             return date;
+
         }
 
         const [
@@ -2567,18 +2703,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
-    /*
-     * Mantemos os dados dos cards disponíveis para
-     * o gráfico comparativo.
-     */
-    window.searchConsoleCurrentOverview = {};
-    window.searchConsolePreviousOverview = {};
-
-    /*
-     * Intercepta a renderização para armazenar
-     * os agregados antes do gráfico.
-     */
-    const originalRenderDashboard = renderDashboard;
-
 });
+
 </script>
