@@ -140,8 +140,14 @@ Route::prefix('painel/')->group(function () {
                     GoogleSearchConsoleController::class,
                     'sync',
                 ])->name('google.search-console.sync');
+                Route::get(
+                    'google/search-console/ajuda',
+                    [GoogleSearchConsoleController::class, 'help']
+                )->name('google.search-console.help');
             });
         }
+
+        
 
         Route::get('documentation', function () {
             return view('admin.documentation.introduction');

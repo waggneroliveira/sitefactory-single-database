@@ -50,6 +50,31 @@ class GoogleSearchConsoleController extends Controller
         );
     }
 
+    public function help(ThemeManager $themeManager)
+    {
+        $settingTheme = (new SettingThemeRepository())->settingTheme();
+
+        $check = checkPermission(
+            'testimonials',
+            'depoimento.visualizar',
+            $settingTheme
+        );
+
+        if ($check !== true) {
+            return $check;
+        }
+
+        $theme = $themeManager;
+        $themeData = $themeManager->theme();
+
+        return view('admin.blades.google.search-console.help',
+            compact(
+                'theme',
+                'themeData'
+            )
+        );
+    }
+
     public function connect(
         SearchConsoleService $service
     ): RedirectResponse {

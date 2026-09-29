@@ -92,9 +92,9 @@
 {{-- CABEÇALHO --}}
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 my-3">
 
-    <div class="col-12 col-lg-12 d-flex justify-content-between align-items-center">
+    <div class="col-12 col-lg-12 d-flex justify-content-between align-items-center flex-wrap">
 
-        <div class="row col-12 col-lg-10">
+        <div class="row col-12 col-lg-6">
 
             <h1 class="h4 mb-1 d-flex align-items-center gap-2">
                 <i class="bi bi-google"></i>
@@ -107,13 +107,25 @@
 
         </div>
 
-        <a
-            href="{{ route('google.search-console.connect') }}"
-            class="btn btn-primary text-dark"
-        >
-            <i class="bi bi-google me-1"></i>
-            Conectar ao Google
-        </a>
+        <div class="d-flex align-items-center gap-2">
+
+            <a
+                href="{{ route('google.search-console.help') }}"
+                class="btn btn-outline-secondary"
+            >
+                <i class="bi bi-question-circle me-1"></i>
+                Como funciona?
+            </a>
+
+            <a
+                href="{{ route('google.search-console.connect') }}"
+                class="btn btn-primary text-dark"
+            >
+                <i class="bi bi-google me-1"></i>
+                Conectar ao Google
+            </a>
+
+        </div>
 
     </div>
 
