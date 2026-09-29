@@ -16,15 +16,15 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             $table->date('date');
-
             $table->unsignedBigInteger('clicks')->default(0);
             $table->unsignedBigInteger('impressions')->default(0);
             $table->decimal('ctr', 10, 6)->default(0);
             $table->decimal('position', 10, 2)->default(0);
-
             $table->timestamps();
-
-            $table->unique(['tenant_id', 'date']);
+            $table->unique(
+                ['tenant_id', 'date'],
+                'gsc_daily_unique'
+            );
             $table->index(['tenant_id', 'date']);
         });
     }

@@ -110,29 +110,37 @@ Route::prefix('painel/')->group(function () {
             Route::middleware(['auth'])
                 ->prefix('dashboard/google/search-console')
                 ->group(function () {
-                    Route::get('/', [
-                        GoogleSearchConsoleController::class,
-                        'index',
-                    ])->name('google.search-console.index');
 
-                    Route::get('/connect', [
-                        GoogleSearchConsoleController::class,
-                        'connect',
-                    ])->name('google.search-console.connect');
+                Route::get('/', [
+                    GoogleSearchConsoleController::class,
+                    'index',
+                ])->name('google.search-console.index');
 
-                    Route::get('/callback', [
-                        GoogleSearchConsoleController::class,
-                        'callback',
-                    ])->name('google.search-console.callback');
-                    Route::get('/properties', [
-                        GoogleSearchConsoleController::class,
-                        'properties',
-                    ])->name('google.search-console.properties');
-                    Route::get('/performance/{tenant}', [
+                Route::get('/connect', [
+                    GoogleSearchConsoleController::class,
+                    'connect',
+                ])->name('google.search-console.connect');
+
+                Route::get('/callback', [
+                    GoogleSearchConsoleController::class,
+                    'callback',
+                ])->name('google.search-console.callback');
+
+                Route::get('/properties', [
+                    GoogleSearchConsoleController::class,
+                    'properties',
+                ])->name('google.search-console.properties');
+
+                Route::get('/performance/{tenant}', [
                     GoogleSearchConsoleController::class,
                     'performance',
                 ])->name('google.search-console.performance');
-                });
+
+                Route::post('/sync/{tenant}', [
+                    GoogleSearchConsoleController::class,
+                    'sync',
+                ])->name('google.search-console.sync');
+            });
         }
 
         Route::get('documentation', function () {

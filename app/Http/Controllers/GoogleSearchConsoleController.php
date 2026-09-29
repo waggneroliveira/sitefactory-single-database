@@ -8,6 +8,14 @@ use App\Services\ThemeManager;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Tenant;
+use App\Models\GoogleSearchConsoleDaily;
+use App\Models\GoogleSearchConsoleQuery;
+use App\Models\GoogleSearchConsolePage;
+use App\Models\GoogleSearchConsoleDevice;
+use App\Models\GoogleSearchConsolePeriod;
+use Illuminate\Support\Facades\DB;
+use Throwable;
+use Carbon\Carbon;
 
 class GoogleSearchConsoleController extends Controller
 {
@@ -77,14 +85,13 @@ class GoogleSearchConsoleController extends Controller
 
     public function performance(
         Request $request,
-        Tenant $tenant,
-        SearchConsoleService $service
+        Tenant $tenant
     ) {
         $searchConsole = $tenant->googleSearchConsole;
-     
+
         if (!$searchConsole || !$searchConsole->active) {
             return response()->json([
-                'message' => 'Google Search Console não configurado para este site.'
+                'message' => 'Google Search Console não configurado para este site.',
             ], 404);
         }
 
@@ -94,11 +101,441 @@ class GoogleSearchConsoleController extends Controller
             $days = 28;
         }
 
-        return response()->json(
-            $service->getDashboardData(
+        /*
+        * =========================================================
+        * PERÍODO ATUAL
+        * =========================================================
+        */
+
+        $endDate = now()
+            ->subDay()
+            ->toDateString();
+
+        $startDate = now()
+            ->subDays($days)
+            ->toDateString();
+
+        /*
+        * =========================================================
+        * PERÍODO ANTERIOR
+        * =========================================================
+        */
+
+        $previousEndDate = Carbon::parse($startDate)
+            ->subDay()
+            ->toDateString();
+
+        $previousStartDate = Carbon::parse($previousEndDate)
+            ->subDays($days - 1)
+            ->toDateString();
+
+        /*
+        * =========================================================
+        * DAILY
+        * =========================================================
+        */
+
+        $dailyRows = GoogleSearchConsoleDaily::query()
+            ->where('tenant_id', $tenant->id)
+            ->whereBetween('date', [
+                $startDate,
+                $endDate,
+            ])
+            ->orderBy('date')
+            ->get();
+
+        $clicks = $dailyRows->sum('clicks');
+        $impressions = $dailyRows->sum('impressions');
+
+        $ctr = $impressions > 0
+            ? $clicks / $impressions
+            : 0;
+
+        $position = $dailyRows->avg('position') ?? 0;
+
+        $daily = $dailyRows
+            ->map(function ($row) {
+                return [
+                    'keys' => [
+                        $row->date->toDateString(),
+                    ],
+                    'clicks' => (float) $row->clicks,
+                    'impressions' => (float) $row->impressions,
+                    'ctr' => (float) $row->ctr,
+                    'position' => (float) $row->position,
+                ];
+            })
+            ->values();
+
+        /*
+        * =========================================================
+        * CONSULTAS - ATUAL
+        * =========================================================
+        */
+
+        $queries = GoogleSearchConsoleQuery::query()
+            ->where('tenant_id', $tenant->id)
+            ->where('start_date', $startDate)
+            ->where('end_date', $endDate)
+            ->orderByDesc('clicks')
+            ->get()
+            ->map(function ($row) {
+                return [
+                    'keys' => [
+                        $row->query,
+                    ],
+                    'clicks' => (float) $row->clicks,
+                    'impressions' => (float) $row->impressions,
+                    'ctr' => (float) $row->ctr,
+                    'position' => (float) $row->position,
+                ];
+            })
+            ->values();
+
+        /*
+        * =========================================================
+        * PÁGINAS - ATUAL
+        * =========================================================
+        */
+
+        $pages = GoogleSearchConsolePage::query()
+            ->where('tenant_id', $tenant->id)
+            ->where('start_date', $startDate)
+            ->where('end_date', $endDate)
+            ->orderByDesc('clicks')
+            ->get()
+            ->map(function ($row) {
+                return [
+                    'keys' => [
+                        $row->page,
+                    ],
+                    'clicks' => (float) $row->clicks,
+                    'impressions' => (float) $row->impressions,
+                    'ctr' => (float) $row->ctr,
+                    'position' => (float) $row->position,
+                ];
+            })
+            ->values();
+
+        /*
+        * =========================================================
+        * DISPOSITIVOS - ATUAL
+        * =========================================================
+        */
+
+        $devices = GoogleSearchConsoleDevice::query()
+            ->where('tenant_id', $tenant->id)
+            ->where('start_date', $startDate)
+            ->where('end_date', $endDate)
+            ->orderByDesc('clicks')
+            ->get()
+            ->map(function ($row) {
+                return [
+                    'keys' => [
+                        $row->device,
+                    ],
+                    'clicks' => (float) $row->clicks,
+                    'impressions' => (float) $row->impressions,
+                    'ctr' => (float) $row->ctr,
+                    'position' => (float) $row->position,
+                ];
+            })
+            ->values();
+
+        /*
+        * =========================================================
+        * CONSULTAS - ANTERIOR
+        * =========================================================
+        */
+
+        $previousQueries = GoogleSearchConsoleQuery::query()
+            ->where('tenant_id', $tenant->id)
+            ->where('start_date', $previousStartDate)
+            ->where('end_date', $previousEndDate)
+            ->orderByDesc('clicks')
+            ->get()
+            ->map(function ($row) {
+                return [
+                    'keys' => [
+                        $row->query,
+                    ],
+                    'clicks' => (float) $row->clicks,
+                    'impressions' => (float) $row->impressions,
+                    'ctr' => (float) $row->ctr,
+                    'position' => (float) $row->position,
+                ];
+            })
+            ->values();
+
+        /*
+        * =========================================================
+        * PÁGINAS - ANTERIOR
+        * =========================================================
+        */
+
+        $previousPages = GoogleSearchConsolePage::query()
+            ->where('tenant_id', $tenant->id)
+            ->where('start_date', $previousStartDate)
+            ->where('end_date', $previousEndDate)
+            ->orderByDesc('clicks')
+            ->get()
+            ->map(function ($row) {
+                return [
+                    'keys' => [
+                        $row->page,
+                    ],
+                    'clicks' => (float) $row->clicks,
+                    'impressions' => (float) $row->impressions,
+                    'ctr' => (float) $row->ctr,
+                    'position' => (float) $row->position,
+                ];
+            })
+            ->values();
+
+        return response()->json([
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+
+            'previous_start_date' => $previousStartDate,
+            'previous_end_date' => $previousEndDate,
+
+            'overview' => [
+                'clicks' => $clicks,
+                'impressions' => $impressions,
+                'ctr' => $ctr,
+                'position' => $position,
+            ],
+
+            'daily' => $daily,
+
+            'queries' => $queries,
+
+            'pages' => $pages,
+
+            'devices' => $devices,
+
+            'comparison' => [
+                'queries' => [
+                    'current' => $queries,
+                    'previous' => $previousQueries,
+                ],
+
+                'pages' => [
+                    'current' => $pages,
+                    'previous' => $previousPages,
+                ],
+            ],
+        ]);
+    }
+
+    public function sync(
+        Request $request,
+        Tenant $tenant,
+        SearchConsoleService $service
+    ) {
+        $searchConsole = $tenant->googleSearchConsole;
+
+        if (!$searchConsole || !$searchConsole->active) {
+            return response()->json([
+                'message' => 'Google Search Console não configurado para este site.',
+            ], 404);
+        }
+
+        $days = (int) $request->input('days', 28);
+
+        if (!in_array($days, [7, 28, 90, 180], true)) {
+            $days = 28;
+        }
+
+        $currentEndDate = now()
+            ->subDay()
+            ->toDateString();
+
+        $currentStartDate = now()
+            ->subDays($days)
+            ->toDateString();
+
+        $previousEndDate = Carbon::parse($currentStartDate)
+            ->subDay()
+            ->toDateString();
+
+        $previousStartDate = Carbon::parse($previousEndDate)
+            ->subDays($days - 1)
+            ->toDateString();
+
+        try {
+            $currentData = $service->getDashboardDataForPeriod(
                 $searchConsole->property,
-                $days
-            )
+                $currentStartDate,
+                $currentEndDate
+            );
+
+            $previousData = $service->getDashboardDataForPeriod(
+                $searchConsole->property,
+                $previousStartDate,
+                $previousEndDate
+            );
+
+            DB::transaction(function () use (
+                $tenant,
+                $searchConsole,
+                $currentData,
+                $previousData
+            ) {
+                $this->saveSearchConsolePeriod(
+                    $tenant,
+                    $currentData
+                );
+
+                $this->saveSearchConsolePeriod(
+                    $tenant,
+                    $previousData
+                );
+
+                $searchConsole->update([
+                    'last_synced_at' => now(),
+                    'last_sync_status' => 'success',
+                    'last_sync_error' => null,
+                ]);
+            });
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Dados do Google Search Console sincronizados com sucesso.',
+
+                'current' => [
+                    'start_date' => $currentStartDate,
+                    'end_date' => $currentEndDate,
+                ],
+
+                'previous' => [
+                    'start_date' => $previousStartDate,
+                    'end_date' => $previousEndDate,
+                ],
+
+                'last_synced_at' => now()->toISOString(),
+            ]);
+        } catch (Throwable $e) {
+            $searchConsole->update([
+                'last_sync_status' => 'error',
+                'last_sync_error' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Não foi possível sincronizar os dados do Google Search Console.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    protected function saveSearchConsolePeriod(
+        Tenant $tenant,
+        array $data
+    ): void {
+        GoogleSearchConsolePeriod::updateOrCreate(
+            [
+                'tenant_id' => $tenant->id,
+                'start_date' => $data['start_date'],
+                'end_date' => $data['end_date'],
+            ],
+            [
+                'clicks' => $data['overview']['clicks'] ?? 0,
+                'impressions' => $data['overview']['impressions'] ?? 0,
+                'ctr' => $data['overview']['ctr'] ?? 0,
+                'position' => $data['overview']['position'] ?? 0,
+            ]
         );
+        foreach ($data['daily'] ?? [] as $row) {
+            $date = $row['keys'][0] ?? null;
+
+            if (!$date) {
+                continue;
+            }
+
+            GoogleSearchConsoleDaily::updateOrCreate(
+                [
+                    'tenant_id' => $tenant->id,
+                    'date' => $date,
+                ],
+                [
+                    'clicks' => $row['clicks'] ?? 0,
+                    'impressions' => $row['impressions'] ?? 0,
+                    'ctr' => $row['ctr'] ?? 0,
+                    'position' => $row['position'] ?? 0,
+                ]
+            );
+        }
+
+        foreach ($data['queries'] ?? [] as $row) {
+            $query = $row['keys'][0] ?? null;
+
+            if (!$query) {
+                continue;
+            }
+
+            GoogleSearchConsoleQuery::updateOrCreate(
+                [
+                    'tenant_id' => $tenant->id,
+                    'start_date' => $data['start_date'],
+                    'end_date' => $data['end_date'],
+                    'query_hash' => hash('sha256', $query),
+                ],
+                [
+                    'query' => $query,
+                    'clicks' => $row['clicks'] ?? 0,
+                    'impressions' => $row['impressions'] ?? 0,
+                    'ctr' => $row['ctr'] ?? 0,
+                    'position' => $row['position'] ?? 0,
+                ]
+            );
+        }
+
+        foreach ($data['pages'] ?? [] as $row) {
+            $page = $row['keys'][0] ?? null;
+
+            if (!$page) {
+                continue;
+            }
+
+            GoogleSearchConsolePage::updateOrCreate(
+                [
+                    'tenant_id' => $tenant->id,
+                    'start_date' => $data['start_date'],
+                    'end_date' => $data['end_date'],
+                    'page_hash' => hash('sha256', $page),
+                ],
+                [
+                    'page' => $page,
+                    'clicks' => $row['clicks'] ?? 0,
+                    'impressions' => $row['impressions'] ?? 0,
+                    'ctr' => $row['ctr'] ?? 0,
+                    'position' => $row['position'] ?? 0,
+                ]
+            );
+        }
+
+        foreach ($data['devices'] ?? [] as $row) {
+            $device = $row['keys'][0] ?? null;
+
+            if (!$device) {
+                continue;
+            }
+
+            GoogleSearchConsoleDevice::updateOrCreate(
+                [
+                    'tenant_id' => $tenant->id,
+                    'start_date' => $data['start_date'],
+                    'end_date' => $data['end_date'],
+                    'device' => $device,
+                ],
+                [
+                    'clicks' => $row['clicks'] ?? 0,
+                    'impressions' => $row['impressions'] ?? 0,
+                    'ctr' => $row['ctr'] ?? 0,
+                    'position' => $row['position'] ?? 0,
+                ]
+            );
+        }
     }
 }

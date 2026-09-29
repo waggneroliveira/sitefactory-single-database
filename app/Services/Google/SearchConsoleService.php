@@ -140,100 +140,185 @@ class SearchConsoleService
         return $response->json('siteEntry', []);
     }    
 
-    public function getDashboardData(
-        string $property,
-        int $days = 28
-    ): array {
-        $endDate = now()
-            ->subDay()
-            ->toDateString();
+    // public function getDashboardData(
+    //     string $property,
+    //     int $days = 28
+    // ): array {
+    //     $endDate = now()
+    //         ->subDay()
+    //         ->toDateString();
 
-        $startDate = now()
-            ->subDays($days)
-            ->toDateString();
+    //     $startDate = now()
+    //         ->subDays($days)
+    //         ->toDateString();
 
-        $previousEndDate = now()
-            ->subDays($days + 1)
-            ->toDateString();
+    //     $previousEndDate = now()
+    //         ->subDays($days + 1)
+    //         ->toDateString();
 
-        $previousStartDate = now()
-            ->subDays(($days * 2))
-            ->toDateString();
+    //     $previousStartDate = now()
+    //         ->subDays(($days * 2))
+    //         ->toDateString();
 
-        return [
-            'overview' => $this->getOverview(
-                $property,
-                $startDate,
-                $endDate
-            ),
+    //     return [
+    //         'overview' => $this->getOverview(
+    //             $property,
+    //             $startDate,
+    //             $endDate
+    //         ),
 
-            'daily' => $this->getDaily(
-                $property,
-                $startDate,
-                $endDate
-            ),
+    //         'daily' => $this->getDaily(
+    //             $property,
+    //             $startDate,
+    //             $endDate
+    //         ),
 
-            'queries' => $this->getQueries(
-                $property,
-                $startDate,
-                $endDate
-            ),
+    //         'queries' => $this->getQueries(
+    //             $property,
+    //             $startDate,
+    //             $endDate
+    //         ),
 
-            'pages' => $this->getPages(
-                $property,
-                $startDate,
-                $endDate
-            ),
+    //         'pages' => $this->getPages(
+    //             $property,
+    //             $startDate,
+    //             $endDate
+    //         ),
 
-            'devices' => $this->getDevices(
-                $property,
-                $startDate,
-                $endDate
-            ),
+    //         'devices' => $this->getDevices(
+    //             $property,
+    //             $startDate,
+    //             $endDate
+    //         ),
 
-            'comparison' => [
-                'current' => [
-                    'start' => $startDate,
-                    'end' => $endDate,
-                ],
+    //         'comparison' => [
+    //             'current' => [
+    //                 'start' => $startDate,
+    //                 'end' => $endDate,
+    //             ],
 
-                'previous' => [
-                    'start' => $previousStartDate,
-                    'end' => $previousEndDate,
-                ],
+    //             'previous' => [
+    //                 'start' => $previousStartDate,
+    //                 'end' => $previousEndDate,
+    //             ],
 
-                'queries' => [
-                    'current' => $this->getQueries(
-                        $property,
-                        $startDate,
-                        $endDate,
-                        100
-                    ),
-                    'previous' => $this->getQueries(
-                        $property,
-                        $previousStartDate,
-                        $previousEndDate,
-                        100
-                    ),
-                ],
+    //             'queries' => [
+    //                 'current' => $this->getQueries(
+    //                     $property,
+    //                     $startDate,
+    //                     $endDate,
+    //                     100
+    //                 ),
+    //                 'previous' => $this->getQueries(
+    //                     $property,
+    //                     $previousStartDate,
+    //                     $previousEndDate,
+    //                     100
+    //                 ),
+    //             ],
 
-                'pages' => [
-                    'current' => $this->getPages(
-                        $property,
-                        $startDate,
-                        $endDate,
-                        100
-                    ),
-                    'previous' => $this->getPages(
-                        $property,
-                        $previousStartDate,
-                        $previousEndDate,
-                        100
-                    ),
-                ],
-            ],
-        ];
-    }
+    //             'pages' => [
+    //                 'current' => $this->getPages(
+    //                     $property,
+    //                     $startDate,
+    //                     $endDate,
+    //                     100
+    //                 ),
+    //                 'previous' => $this->getPages(
+    //                     $property,
+    //                     $previousStartDate,
+    //                     $previousEndDate,
+    //                     100
+    //                 ),
+    //             ],
+    //         ],
+    //     ];
+    // }
+
+    // public function getDashboardData(string $property, int $days = 28): array
+    // {
+    //     $endDate = now()->subDay()->toDateString();
+    //     $startDate = now()
+    //         ->subDays($days)
+    //         ->toDateString();
+
+    //     return [
+    //         'start_date' => $startDate,
+    //         'end_date' => $endDate,
+
+    //         'daily' => $this->getDaily(
+    //             $property,
+    //             $startDate,
+    //             $endDate
+    //         ),
+
+    //         'queries' => $this->getQueries(
+    //             $property,
+    //             $startDate,
+    //             $endDate
+    //         ),
+
+    //         'pages' => $this->getPages(
+    //             $property,
+    //             $startDate,
+    //             $endDate
+    //         ),
+
+    //         'devices' => $this->getDevices(
+    //             $property,
+    //             $startDate,
+    //             $endDate
+    //         ),
+    //     ];
+    // }
+
+public function getDashboardData(string $property, int $days = 28): array
+{
+    $endDate = now()->subDay()->toDateString();
+    $startDate = now()->subDays($days)->toDateString();
+
+    return $this->getDashboardDataForPeriod(
+        $property,
+        $startDate,
+        $endDate
+    );
+}
+
+public function getDashboardDataForPeriod(
+    string $property,
+    string $startDate,
+    string $endDate
+): array {
+    return [
+        'start_date' => $startDate,
+        'end_date' => $endDate,
+        'overview' => $this->getOverview(
+            $property,
+            $startDate,
+            $endDate
+        ),
+        'daily' => $this->getDaily(
+            $property,
+            $startDate,
+            $endDate
+        ),
+        'queries' => $this->getQueries(
+            $property,
+            $startDate,
+            $endDate
+        ),
+        'pages' => $this->getPages(
+            $property,
+            $startDate,
+            $endDate
+        ),
+        'devices' => $this->getDevices(
+            $property,
+            $startDate,
+            $endDate
+        ),
+    ];
+}
 
     protected function getOverview(
     string $property,
@@ -286,7 +371,7 @@ class SearchConsoleService
         string $property,
         string $startDate,
         string $endDate,
-        int $rowLimit = 10
+        int $rowLimit = 25000
     ): array {
         $response = $this->query(
             $property,
@@ -303,7 +388,7 @@ class SearchConsoleService
         string $property,
         string $startDate,
         string $endDate,
-        int $rowLimit = 10
+        int $rowLimit = 25000
     ): array {
         $response = $this->query(
             $property,
@@ -317,15 +402,18 @@ class SearchConsoleService
     }
 
     protected function getDevices(
-    string $property,
-    string $startDate,
-    string $endDate
-    ): array {
+        string $property,
+        string $startDate,
+        string $endDate,
+        int $rowLimit = 25000
+    ): array
+    {
         $response = $this->query(
             $property,
             $startDate,
             $endDate,
-            ['device']
+            ['device'],
+            $rowLimit
         );
 
         return $response['rows'] ?? [];

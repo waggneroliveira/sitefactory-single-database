@@ -26,6 +26,8 @@ class GoogleSearchConsoleDaily extends Model
 
     protected $casts = [
         'date' => 'date',
+        'clicks' => 'integer',
+        'impressions' => 'integer',
         'ctr' => 'float',
         'position' => 'float',
     ];

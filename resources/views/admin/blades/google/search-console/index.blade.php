@@ -75,7 +75,7 @@
             Os dados apresentados são obtidos diretamente do Google Search Console e organizados pelo WHI WEB para facilitar o acompanhamento do desempenho do site. As consultas consideram o período selecionado e o fuso horário de Brasília (America/Sao_Paulo). Pequenas variações em relação ao painel do Google podem ocorrer devido aos períodos, filtros e critérios de processamento utilizados na consulta.
         </span>
     </div>
-
+    
     {{-- FILTROS --}}
     <div class="card border-0 shadow-sm mb-4">
         <div class="card-body">
@@ -909,729 +909,723 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const tenant = document.getElementById('tenant');
-    const period = document.getElementById('period');
-    const button = document.getElementById('loadSearchConsole');
-    const loading = document.getElementById('searchConsoleLoading');
-    const empty = document.getElementById('searchConsoleEmpty');
-    const dashboard = document.getElementById('searchConsoleDashboard');
+    document.addEventListener('DOMContentLoaded', function () {
+        const tenant = document.getElementById('tenant');
+        const period = document.getElementById('period');
+        const button = document.getElementById('loadSearchConsole');
+        const loading = document.getElementById('searchConsoleLoading');
+        const empty = document.getElementById('searchConsoleEmpty');
+        const dashboard = document.getElementById('searchConsoleDashboard');
 
-    const metricClicks = document.getElementById('metricClicks');
-    const metricImpressions = document.getElementById('metricImpressions');
-    const metricCtr = document.getElementById('metricCtr');
-    const metricPosition = document.getElementById('metricPosition');
+        const metricClicks = document.getElementById('metricClicks');
+        const metricImpressions = document.getElementById('metricImpressions');
+        const metricCtr = document.getElementById('metricCtr');
+        const metricPosition = document.getElementById('metricPosition');
 
-    const queriesTable = document.getElementById('queriesTable');
-    const pagesTable = document.getElementById('pagesTable');
-    const devicesTable = document.getElementById('devicesTable');
+        const queriesTable = document.getElementById('queriesTable');
+        const pagesTable = document.getElementById('pagesTable');
+        const devicesTable = document.getElementById('devicesTable');
 
-    let chart = null;
-    let comparisonChart = null;
+        let chart = null;
+        let comparisonChart = null;
 
-    button.addEventListener('click', async function () {
-        if (!tenant.value) {
-            alert('Selecione um site.');
-            return;
-        }
-
-        loading.classList.remove('d-none');
-        empty.classList.add('d-none');
-        dashboard.classList.add('d-none');
-
-        const url =
-            '{{ url('/painel/dashboard/google/search-console/performance') }}/' +
-            tenant.value +
-            '?days=' +
-            period.value;
-
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(
-                    data.message ||
-                    'Não foi possível consultar o Search Console.'
-                );
+        button.addEventListener('click', async function () {
+            if (!tenant.value) {
+                alert('Selecione um site.');
+                return;
             }
 
-            renderDashboard(data);
+            loading.classList.remove('d-none');
+            empty.classList.add('d-none');
+            dashboard.classList.add('d-none');
 
-        } catch (error) {
-            console.error(error);
-            alert(error.message);
-            empty.classList.remove('d-none');
+            const url =
+                '{{ url('/painel/dashboard/google/search-console/performance') }}/' +
+                tenant.value +
+                '?days=' +
+                period.value;
 
-        } finally {
-            loading.classList.add('d-none');
-        }
-    });
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
 
-    function renderDashboard(data) {
-        const overview = data.overview || {};
+                if (!response.ok) {
+                    throw new Error(
+                        data.message ||
+                        'Não foi possível consultar o Search Console.'
+                    );
+                }
 
-        metricClicks.textContent = formatNumber(
-            overview.clicks || 0
-        );
+                renderDashboard(data);
 
-        metricImpressions.textContent = formatNumber(
-            overview.impressions || 0
-        );
+            } catch (error) {
+                console.error(error);
+                alert(error.message);
+                empty.classList.remove('d-none');
 
-        metricCtr.textContent = formatPercent(
-            overview.ctr || 0
-        );
+            } finally {
+                loading.classList.add('d-none');
+            }
+        });
 
-        metricPosition.textContent = formatNumber(
-            overview.position || 0,
-            1
-        );
+        function renderDashboard(data) {
+            const overview = data.overview || {};
 
-        renderChart(data.daily || []);
-
-        renderQueries(data.queries || []);
-        renderPages(data.pages || []);
-        renderDevices(data.devices || []);
-
-        renderComparisons(data.comparison || {});
-
-        dashboard.classList.remove('d-none');
-    }
-
-    function renderChart(rows) {
-        const canvas = document.getElementById('searchConsoleChart');
-
-        if (!canvas) {
-            return;
-        }
-
-        const sortedRows = [...rows].sort(function (a, b) {
-            return String(a.keys?.[0] || '').localeCompare(
-                String(b.keys?.[0] || '')
+            metricClicks.textContent = formatNumber(
+                overview.clicks || 0
             );
-        });
 
-        const labels = sortedRows.map(function (row) {
-            const date = String(row.keys?.[0] || '');
+            metricImpressions.textContent = formatNumber(
+                overview.impressions || 0
+            );
 
-            if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-                const [year, month, day] = date.split('-');
+            metricCtr.textContent = formatPercent(
+                overview.ctr || 0
+            );
 
-                return `${day}/${month}/${year}`;
-            }
+            metricPosition.textContent = formatNumber(
+                overview.position || 0,
+                1
+            );
 
-            return date;
-        });
+            renderChart(data.daily || []);
 
-        const clicks = sortedRows.map(function (row) {
-            return row.clicks || 0;
-        });
+            renderQueries(data.queries || []);
+            renderPages(data.pages || []);
+            renderDevices(data.devices || []);
 
-        const impressions = sortedRows.map(function (row) {
-            return row.impressions || 0;
-        });
+            renderComparisons(data.comparison || {});
 
-        if (chart) {
-            chart.destroy();
+            dashboard.classList.remove('d-none');
         }
 
-        chart = new Chart(canvas, {
-            type: 'line',
+        function renderChart(rows) {
+            const canvas = document.getElementById('searchConsoleChart');
 
-            data: {
-                labels: labels,
+            if (!canvas) {
+                return;
+            }
 
-                datasets: [
-                    {
-                        label: 'Cliques',
-                        data: clicks,
-                        tension: 0.3
-                    },
-                    {
-                        label: 'Impressões',
-                        data: impressions,
-                        tension: 0.3
-                    }
-                ]
-            },
+            const sortedRows = [...rows].sort(function (a, b) {
+                return String(a.keys?.[0] || '').localeCompare(
+                    String(b.keys?.[0] || '')
+                );
+            });
 
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
+            const labels = sortedRows.map(function (row) {
+                const date = String(row.keys?.[0] || '');
 
-                interaction: {
-                    mode: 'index',
-                    intersect: false
+                if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+                    const [year, month, day] = date.split('-');
+
+                    return `${day}/${month}/${year}`;
+                }
+
+                return date;
+            });
+
+            const clicks = sortedRows.map(function (row) {
+                return row.clicks || 0;
+            });
+
+            const impressions = sortedRows.map(function (row) {
+                return row.impressions || 0;
+            });
+
+            if (chart) {
+                chart.destroy();
+            }
+
+            chart = new Chart(canvas, {
+                type: 'line',
+
+                data: {
+                    labels: labels,
+
+                    datasets: [
+                        {
+                            label: 'Cliques',
+                            data: clicks,
+                            tension: 0.3
+                        },
+                        {
+                            label: 'Impressões',
+                            data: impressions,
+                            tension: 0.3
+                        }
+                    ]
                 },
 
-                scales: {
-                    x: {
-                        reverse: false
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
                     },
 
-                    y: {
-                        beginAtZero: true
+                    scales: {
+                        x: {
+                            reverse: false
+                        },
+
+                        y: {
+                            beginAtZero: true
+                        }
                     }
                 }
-            }
-        });
-    }
+            });
+        }
 
-    function renderComparisons(comparison) {
-        const pages = comparison.pages || {};
-        const queries = comparison.queries || {};
+        function renderComparisons(comparison) {
+            console.log('=== RENDER COMPARISONS ===');
+            console.log('comparison:', comparison);
 
-        const pageData = buildComparison(
-            pages.current || [],
-            pages.previous || []
-        );
+            const pages = comparison.pages || {};
+            const queries = comparison.queries || {};
 
-        const queryData = buildComparison(
-            queries.current || [],
-            queries.previous || []
-        );
+            console.log('pages.current:', pages.current);
+            console.log('pages.previous:', pages.previous);
+            console.log('queries.current:', queries.current);
+            console.log('queries.previous:', queries.previous);
 
-        renderComparisonTable(
-            'pagesTopTable',
-            pageData.top,
-            'Página'
-        );
-
-        renderComparisonTable(
-            'pagesUpTable',
-            pageData.up,
-            'Página'
-        );
-
-        renderComparisonTable(
-            'pagesDownTable',
-            pageData.down,
-            'Página'
-        );
-
-        renderComparisonTable(
-            'queriesTopTable',
-            queryData.top,
-            'Consulta'
-        );
-
-        renderComparisonTable(
-            'queriesUpTable',
-            queryData.up,
-            'Consulta'
-        );
-
-        renderComparisonTable(
-            'queriesDownTable',
-            queryData.down,
-            'Consulta'
-        );
-
-        renderComparisonChart(
-            pageData,
-            queryData
-        );
-    }
-
-    function buildComparison(currentRows, previousRows) {
-        const previousMap = {};
-
-        previousRows.forEach(function (row) {
-            const key = String(row.keys?.[0] || '');
-
-            if (key) {
-                previousMap[key] = row;
-            }
-        });
-
-        const items = currentRows.map(function (row) {
-            const key = String(row.keys?.[0] || '');
-            const previous = previousMap[key] || {};
-
-            const currentClicks = Number(
-                row.clicks || 0
+            const pageData = buildComparison(
+                pages.current || [],
+                pages.previous || []
             );
 
-            const previousClicks = Number(
-                previous.clicks || 0
+            const queryData = buildComparison(
+                queries.current || [],
+                queries.previous || []
             );
 
-            const currentImpressions = Number(
-                row.impressions || 0
+            console.log('pageData:', pageData);
+            console.log('queryData:', queryData);
+
+            renderComparisonTable(
+                'pagesTopTable',
+                pageData.top,
+                'Página'
             );
 
-            const previousImpressions = Number(
-                previous.impressions || 0
+            renderComparisonTable(
+                'pagesUpTable',
+                pageData.up,
+                'Página'
             );
 
-            const currentCtr = Number(
-                row.ctr || 0
+            renderComparisonTable(
+                'pagesDownTable',
+                pageData.down,
+                'Página'
             );
 
-            const previousCtr = Number(
-                previous.ctr || 0
+            renderComparisonTable(
+                'queriesTopTable',
+                queryData.top,
+                'Consulta'
             );
 
-            const currentPosition = Number(
-                row.position || 0
+            renderComparisonTable(
+                'queriesUpTable',
+                queryData.up,
+                'Consulta'
             );
 
-            const previousPosition = Number(
-                previous.position || 0
+            renderComparisonTable(
+                'queriesDownTable',
+                queryData.down,
+                'Consulta'
             );
 
-            let variation = 0;
+            renderComparisonChart(pageData, queryData);
+        }
 
-            if (previousClicks > 0) {
-                variation =
-                    ((currentClicks - previousClicks) /
-                    previousClicks) * 100;
+        function buildComparison(currentRows, previousRows) {
+            const previousMap = {};
 
-            } else if (currentClicks > 0) {
-                variation = 100;
-            }
+            previousRows.forEach(function (row) {
+                const key = String(
+                    row.keys && row.keys[0] ? row.keys[0] : ''
+                );
+
+                if (key) {
+                    previousMap[key] = row;
+                }
+            });
+
+            const items = currentRows.map(function (row) {
+                const key = String(
+                    row.keys && row.keys[0] ? row.keys[0] : ''
+                );
+
+                const previous = previousMap[key] || {};
+
+                const currentClicks = Number(row.clicks || 0);
+                const previousClicks = Number(previous.clicks || 0);
+
+                const currentImpressions = Number(row.impressions || 0);
+                const previousImpressions = Number(previous.impressions || 0);
+
+                const currentCtr = Number(row.ctr || 0);
+                const previousCtr = Number(previous.ctr || 0);
+
+                const currentPosition = Number(row.position || 0);
+                const previousPosition = Number(previous.position || 0);
+
+                let variation = 0;
+
+                if (previousClicks > 0) {
+                    variation =
+                        ((currentClicks - previousClicks) / previousClicks) * 100;
+                } else if (currentClicks > 0) {
+                    variation = 100;
+                }
+
+                return {
+                    key: key,
+                    clicks: currentClicks,
+                    previousClicks: previousClicks,
+                    impressions: currentImpressions,
+                    previousImpressions: previousImpressions,
+                    ctr: currentCtr,
+                    previousCtr: previousCtr,
+                    position: currentPosition,
+                    previousPosition: previousPosition,
+                    variation: variation
+                };
+            });
+
+            const top = items
+                .filter(function (item) {
+                    return item.clicks > 0;
+                })
+                .sort(function (a, b) {
+                    return b.clicks - a.clicks;
+                })
+                .slice(0, 10);
+
+            const up = items
+                .filter(function (item) {
+                    return item.variation > 0;
+                })
+                .sort(function (a, b) {
+                    return b.variation - a.variation;
+                })
+                .slice(0, 10);
+
+            const down = items
+                .filter(function (item) {
+                    return item.variation < 0;
+                })
+                .sort(function (a, b) {
+                    return a.variation - b.variation;
+                })
+                .slice(0, 10);
 
             return {
-                key: key,
-                clicks: currentClicks,
-                previousClicks: previousClicks,
-                impressions: currentImpressions,
-                previousImpressions: previousImpressions,
-                ctr: currentCtr,
-                previousCtr: previousCtr,
-                position: currentPosition,
-                previousPosition: previousPosition,
-                variation: variation
+                top: top,
+                up: up,
+                down: down
             };
-        });
-
-        const top = [...items]
-            .sort(function (a, b) {
-                return b.clicks - a.clicks;
-            })
-            .slice(0, 10);
-
-        const up = [...items]
-            .filter(function (item) {
-                return item.variation > 0;
-            })
-            .sort(function (a, b) {
-                return b.variation - a.variation;
-            })
-            .slice(0, 10);
-
-        const down = [...items]
-            .filter(function (item) {
-                return item.variation < 0;
-            })
-            .sort(function (a, b) {
-                return a.variation - b.variation;
-            })
-            .slice(0, 10);
-
-        return {
-            top: top,
-            up: up,
-            down: down
-        };
-    }
-
-    function renderComparisonTable(
-        elementId,
-        rows,
-        label
-    ) {
-        const element = document.getElementById(elementId);
-
-        if (!element) {
-            return;
         }
 
-        if (!rows.length) {
+        function renderComparisonTable(
+            elementId,
+            rows,
+            label
+        ) {
+            const element = document.getElementById(elementId);
+
+            if (!element) {
+                return;
+            }
+
+            if (!rows.length) {
+                element.innerHTML = `
+                    <div class="text-center text-muted py-4">
+                        Nenhum dado disponível.
+                    </div>
+                `;
+
+                return;
+            }
+
             element.innerHTML = `
-                <div class="text-center text-muted py-4">
-                    Nenhum dado disponível.
-                </div>
+                <table class="table table-hover table-centered mb-0">
+
+                    <thead>
+                        <tr>
+                            <th>
+                                ${label}
+                            </th>
+
+                            <th class="text-end">
+                                Cliques
+                            </th>
+
+                            <th class="text-end">
+                                Impressões
+                            </th>
+
+                            <th class="text-end">
+                                Variação
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        ${rows.map(function (row) {
+
+                            const variation = row.variation;
+
+                            const trendClass =
+                                variation > 0
+                                    ? 'trend-up'
+                                    : variation < 0
+                                        ? 'trend-down'
+                                        : 'trend-neutral';
+
+                            const icon =
+                                variation > 0
+                                    ? '↑'
+                                    : variation < 0
+                                        ? '↓'
+                                        : '—';
+
+                            return `
+                                <tr>
+
+                                    <td>
+
+                                        <div
+                                            class="text-truncate"
+                                            style="max-width:320px;"
+                                            title="${escapeHtml(row.key)}"
+                                        >
+                                            ${escapeHtml(row.key)}
+                                        </div>
+
+                                    </td>
+
+                                    <td class="text-end">
+                                        ${formatNumber(row.clicks)}
+                                    </td>
+
+                                    <td class="text-end">
+                                        ${formatNumber(row.impressions)}
+                                    </td>
+
+                                    <td class="text-end">
+
+                                        <span class="${trendClass} fw-semibold">
+                                            ${icon}
+                                            ${formatVariation(variation)}
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+                            `;
+
+                        }).join('')}
+
+                    </tbody>
+
+                </table>
             `;
-
-            return;
         }
 
-        element.innerHTML = `
-            <table class="table table-hover table-centered mb-0">
+        function renderComparisonChart(pageData, queryData) {
+            const canvas = document.getElementById(
+                'comparisonChart'
+            );
 
-                <thead>
-                    <tr>
-                        <th>
-                            ${label}
-                        </th>
+            if (!canvas) {
+                return;
+            }
 
-                        <th class="text-end">
-                            Cliques
-                        </th>
+            const pages = pageData.top.slice(0, 5);
+            const queries = queryData.top.slice(0, 5);
 
-                        <th class="text-end">
-                            Impressões
-                        </th>
+            const labels = [
+                ...pages.map(function (item) {
+                    return item.key;
+                }),
 
-                        <th class="text-end">
-                            Variação
-                        </th>
-                    </tr>
-                </thead>
+                ...queries.map(function (item) {
+                    return item.key;
+                })
+            ];
 
-                <tbody>
+            const current = [
+                ...pages.map(function (item) {
+                    return item.clicks;
+                }),
 
-                    ${rows.map(function (row) {
+                ...queries.map(function (item) {
+                    return item.clicks;
+                })
+            ];
 
-                        const variation = row.variation;
+            const previous = [
+                ...pages.map(function (item) {
+                    return item.previousClicks;
+                }),
 
-                        const trendClass =
-                            variation > 0
-                                ? 'trend-up'
-                                : variation < 0
-                                    ? 'trend-down'
-                                    : 'trend-neutral';
+                ...queries.map(function (item) {
+                    return item.previousClicks;
+                })
+            ];
 
-                        const icon =
-                            variation > 0
-                                ? '↑'
-                                : variation < 0
-                                    ? '↓'
-                                    : '—';
+            if (comparisonChart) {
+                comparisonChart.destroy();
+            }
 
-                        return `
-                            <tr>
+            comparisonChart = new Chart(canvas, {
+                type: 'bar',
 
-                                <td>
+                data: {
+                    labels: labels,
 
-                                    <div
-                                        class="text-truncate"
-                                        style="max-width:320px;"
-                                        title="${escapeHtml(row.key)}"
-                                    >
-                                        ${escapeHtml(row.key)}
-                                    </div>
-
-                                </td>
-
-                                <td class="text-end">
-                                    ${formatNumber(row.clicks)}
-                                </td>
-
-                                <td class="text-end">
-                                    ${formatNumber(row.impressions)}
-                                </td>
-
-                                <td class="text-end">
-
-                                    <span class="${trendClass} fw-semibold">
-                                        ${icon}
-                                        ${formatVariation(variation)}
-                                    </span>
-
-                                </td>
-
-                            </tr>
-                        `;
-
-                    }).join('')}
-
-                </tbody>
-
-            </table>
-        `;
-    }
-
-    function renderComparisonChart(pageData, queryData) {
-        const canvas = document.getElementById(
-            'comparisonChart'
-        );
-
-        if (!canvas) {
-            return;
-        }
-
-        const pages = pageData.top.slice(0, 5);
-        const queries = queryData.top.slice(0, 5);
-
-        const labels = [
-            ...pages.map(function (item) {
-                return item.key;
-            }),
-
-            ...queries.map(function (item) {
-                return item.key;
-            })
-        ];
-
-        const current = [
-            ...pages.map(function (item) {
-                return item.clicks;
-            }),
-
-            ...queries.map(function (item) {
-                return item.clicks;
-            })
-        ];
-
-        const previous = [
-            ...pages.map(function (item) {
-                return item.previousClicks;
-            }),
-
-            ...queries.map(function (item) {
-                return item.previousClicks;
-            })
-        ];
-
-        if (comparisonChart) {
-            comparisonChart.destroy();
-        }
-
-        comparisonChart = new Chart(canvas, {
-            type: 'bar',
-
-            data: {
-                labels: labels,
-
-                datasets: [
-                    {
-                        label: 'Período atual',
-                        data: current
-                    },
-                    {
-                        label: 'Período anterior',
-                        data: previous
-                    }
-                ]
-            },
-
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-
-                plugins: {
-                    legend: {
-                        display: true
-                    }
+                    datasets: [
+                        {
+                            label: 'Período atual',
+                            data: current
+                        },
+                        {
+                            label: 'Período anterior',
+                            data: previous
+                        }
+                    ]
                 },
 
-                scales: {
-                    x: {
-                        ticks: {
-                            display: false
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+
+                    plugins: {
+                        legend: {
+                            display: true
                         }
                     },
-                    y: {
-                        beginAtZero: true
+
+                    scales: {
+                        x: {
+                            ticks: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            beginAtZero: true
+                        }
                     }
                 }
-            }
-        });
-    }
-
-    function renderQueries(rows) {
-        if (!rows.length) {
-            queriesTable.innerHTML = emptyTable(
-                5,
-                'Nenhuma consulta encontrada.'
-            );
-
-            return;
+            });
         }
 
-        queriesTable.innerHTML = rows.map(function (row) {
-            const query = row.keys?.[0] || '-';
+        function renderQueries(rows) {
+            if (!rows.length) {
+                queriesTable.innerHTML = emptyTable(
+                    5,
+                    'Nenhuma consulta encontrada.'
+                );
 
+                return;
+            }
+
+            queriesTable.innerHTML = rows.map(function (row) {
+                const query = row.keys?.[0] || '-';
+
+                return `
+                    <tr>
+
+                        <td>
+                            <span class="fw-medium">
+                                ${escapeHtml(query)}
+                            </span>
+                        </td>
+
+                        <td class="text-end">
+                            ${formatNumber(row.clicks || 0)}
+                        </td>
+
+                        <td class="text-end">
+                            ${formatNumber(row.impressions || 0)}
+                        </td>
+
+                        <td class="text-end">
+                            ${formatPercent(row.ctr || 0)}
+                        </td>
+
+                        <td class="text-end">
+                            ${formatNumber(row.position || 0, 1)}
+                        </td>
+
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function renderPages(rows) {
+            if (!rows.length) {
+                pagesTable.innerHTML = emptyTable(
+                    5,
+                    'Nenhuma página encontrada.'
+                );
+
+                return;
+            }
+
+            pagesTable.innerHTML = rows.map(function (row) {
+                const page = row.keys?.[0] || '-';
+
+                return `
+                    <tr>
+
+                        <td style="max-width:260px;">
+
+                            <div
+                                class="text-truncate"
+                                title="${escapeHtml(page)}"
+                            >
+                                ${escapeHtml(page)}
+                            </div>
+
+                        </td>
+
+                        <td class="text-end">
+                            ${formatNumber(row.clicks || 0)}
+                        </td>
+
+                        <td class="text-end">
+                            ${formatNumber(row.impressions || 0)}
+                        </td>
+
+                        <td class="text-end">
+                            ${formatPercent(row.ctr || 0)}
+                        </td>
+
+                        <td class="text-end">
+                            ${formatNumber(row.position || 0, 1)}
+                        </td>
+
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function renderDevices(rows) {
+            if (!rows.length) {
+                devicesTable.innerHTML = emptyTable(
+                    5,
+                    'Nenhum dispositivo encontrado.'
+                );
+
+                return;
+            }
+
+            devicesTable.innerHTML = rows.map(function (row) {
+                const device = row.keys?.[0] || '-';
+
+                return `
+                    <tr>
+
+                        <td>
+                            ${getDeviceLabel(device)}
+                        </td>
+
+                        <td class="text-end">
+                            ${formatNumber(row.clicks || 0)}
+                        </td>
+
+                        <td class="text-end">
+                            ${formatNumber(row.impressions || 0)}
+                        </td>
+
+                        <td class="text-end">
+                            ${formatPercent(row.ctr || 0)}
+                        </td>
+
+                        <td class="text-end">
+                            ${formatNumber(row.position || 0, 1)}
+                        </td>
+
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function getDeviceLabel(device) {
+            const labels = {
+                desktop: 'Computador',
+                mobile: 'Celular',
+                tablet: 'Tablet'
+            };
+
+            return labels[String(device).toLowerCase()] || device;
+        }
+
+        function emptyTable(columns, message) {
             return `
                 <tr>
 
-                    <td>
-                        <span class="fw-medium">
-                            ${escapeHtml(query)}
-                        </span>
-                    </td>
-
-                    <td class="text-end">
-                        ${formatNumber(row.clicks || 0)}
-                    </td>
-
-                    <td class="text-end">
-                        ${formatNumber(row.impressions || 0)}
-                    </td>
-
-                    <td class="text-end">
-                        ${formatPercent(row.ctr || 0)}
-                    </td>
-
-                    <td class="text-end">
-                        ${formatNumber(row.position || 0, 1)}
+                    <td
+                        colspan="${columns}"
+                        class="text-center text-muted py-4"
+                    >
+                        ${message}
                     </td>
 
                 </tr>
             `;
-        }).join('');
-    }
-
-    function renderPages(rows) {
-        if (!rows.length) {
-            pagesTable.innerHTML = emptyTable(
-                5,
-                'Nenhuma página encontrada.'
-            );
-
-            return;
         }
 
-        pagesTable.innerHTML = rows.map(function (row) {
-            const page = row.keys?.[0] || '-';
-
-            return `
-                <tr>
-
-                    <td style="max-width:260px;">
-
-                        <div
-                            class="text-truncate"
-                            title="${escapeHtml(page)}"
-                        >
-                            ${escapeHtml(page)}
-                        </div>
-
-                    </td>
-
-                    <td class="text-end">
-                        ${formatNumber(row.clicks || 0)}
-                    </td>
-
-                    <td class="text-end">
-                        ${formatNumber(row.impressions || 0)}
-                    </td>
-
-                    <td class="text-end">
-                        ${formatPercent(row.ctr || 0)}
-                    </td>
-
-                    <td class="text-end">
-                        ${formatNumber(row.position || 0, 1)}
-                    </td>
-
-                </tr>
-            `;
-        }).join('');
-    }
-
-    function renderDevices(rows) {
-        if (!rows.length) {
-            devicesTable.innerHTML = emptyTable(
-                5,
-                'Nenhum dispositivo encontrado.'
-            );
-
-            return;
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
         }
 
-        devicesTable.innerHTML = rows.map(function (row) {
-            const device = row.keys?.[0] || '-';
-
-            return `
-                <tr>
-
-                    <td>
-                        ${getDeviceLabel(device)}
-                    </td>
-
-                    <td class="text-end">
-                        ${formatNumber(row.clicks || 0)}
-                    </td>
-
-                    <td class="text-end">
-                        ${formatNumber(row.impressions || 0)}
-                    </td>
-
-                    <td class="text-end">
-                        ${formatPercent(row.ctr || 0)}
-                    </td>
-
-                    <td class="text-end">
-                        ${formatNumber(row.position || 0, 1)}
-                    </td>
-
-                </tr>
-            `;
-        }).join('');
-    }
-
-    function getDeviceLabel(device) {
-        const labels = {
-            desktop: 'Computador',
-            mobile: 'Celular',
-            tablet: 'Tablet'
-        };
-
-        return labels[String(device).toLowerCase()] || device;
-    }
-
-    function emptyTable(columns, message) {
-        return `
-            <tr>
-
-                <td
-                    colspan="${columns}"
-                    class="text-center text-muted py-4"
-                >
-                    ${message}
-                </td>
-
-            </tr>
-        `;
-    }
-
-    function escapeHtml(value) {
-        return String(value)
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
-    }
-
-    function formatNumber(value, decimals = 0) {
-        return Number(value).toLocaleString(
-            'pt-BR',
-            {
-                minimumFractionDigits: decimals,
-                maximumFractionDigits: decimals
-            }
-        );
-    }
-
-    function formatPercent(value) {
-        return (
-            Number(value) * 100
-        ).toLocaleString(
-            'pt-BR',
-            {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            }
-        ) + '%';
-    }
-
-    function formatVariation(value) {
-        const number = Number(value || 0);
-
-        return (
-            Math.abs(number).toLocaleString(
+        function formatNumber(value, decimals = 0) {
+            return Number(value).toLocaleString(
                 'pt-BR',
                 {
-                    minimumFractionDigits: 1,
-                    maximumFractionDigits: 1
+                    minimumFractionDigits: decimals,
+                    maximumFractionDigits: decimals
                 }
-            ) + '%'
-        );
-    }
-});
+            );
+        }
+
+        function formatPercent(value) {
+            return (
+                Number(value) * 100
+            ).toLocaleString(
+                'pt-BR',
+                {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }
+            ) + '%';
+        }
+
+        function formatVariation(value) {
+            const number = Number(value || 0);
+
+            return (
+                Math.abs(number).toLocaleString(
+                    'pt-BR',
+                    {
+                        minimumFractionDigits: 1,
+                        maximumFractionDigits: 1
+                    }
+                ) + '%'
+            );
+        }
+    });
 </script>

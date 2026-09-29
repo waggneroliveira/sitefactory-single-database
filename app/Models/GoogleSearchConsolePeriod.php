@@ -11,7 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class GoogleSearchConsoleDevice extends Model
+class GoogleSearchConsolePeriod extends Model
 {
     use Notifiable, HasFactory, LogsActivity, BelongsToTenant;
 
@@ -19,7 +19,6 @@ class GoogleSearchConsoleDevice extends Model
         'tenant_id',
         'start_date',
         'end_date',
-        'device',
         'clicks',
         'impressions',
         'ctr',

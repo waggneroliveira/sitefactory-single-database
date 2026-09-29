@@ -15,19 +15,23 @@ return new class extends Migration
                 ->constrained('tenants')
                 ->cascadeOnDelete();
 
-            $table->date('date');
-
-            $table->text('page');
-
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->string('page', 500);
             $table->unsignedBigInteger('clicks')->default(0);
             $table->unsignedBigInteger('impressions')->default(0);
             $table->decimal('ctr', 10, 6)->default(0);
             $table->decimal('position', 10, 2)->default(0);
-
             $table->timestamps();
+            $table->unique(
+                ['tenant_id', 'start_date', 'end_date', 'page'],
+                'gsc_pages_unique'
+            );
 
-            $table->unique(['tenant_id', 'date', 'page']);
-            $table->index(['tenant_id', 'date']);
+            $table->index(
+                ['tenant_id', 'start_date', 'end_date'],
+                'gsc_pages_period_idx'
+            );
         });
     }
 

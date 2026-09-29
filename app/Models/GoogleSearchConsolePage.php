@@ -17,8 +17,10 @@ class GoogleSearchConsolePage extends Model
     
     protected $fillable = [
         'tenant_id',
-        'date',
+        'start_date',
+        'end_date',
         'page',
+        'page_hash',
         'clicks',
         'impressions',
         'ctr',
@@ -26,7 +28,10 @@ class GoogleSearchConsolePage extends Model
     ];
 
     protected $casts = [
-        'date' => 'date',
+        'start_date' => 'date',
+        'end_date' => 'date',
+        'clicks' => 'integer',
+        'impressions' => 'integer',
         'ctr' => 'float',
         'position' => 'float',
     ];

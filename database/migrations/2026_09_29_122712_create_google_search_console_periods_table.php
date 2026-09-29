@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('google_search_console_queries', function (Blueprint $table) {
+        Schema::create('google_search_console_periods', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('tenant_id')
@@ -17,26 +17,27 @@ return new class extends Migration
 
             $table->date('start_date');
             $table->date('end_date');
-            $table->string('query', 500);
+
             $table->unsignedBigInteger('clicks')->default(0);
             $table->unsignedBigInteger('impressions')->default(0);
+
             $table->decimal('ctr', 10, 6)->default(0);
             $table->decimal('position', 10, 2)->default(0);
             $table->timestamps();
             $table->unique(
-                ['tenant_id', 'start_date', 'end_date', 'query'],
-                'gsc_queries_unique'
+                ['tenant_id', 'start_date','end_date'],
+                'gsc_periods_unique'
             );
 
             $table->index(
                 ['tenant_id', 'start_date', 'end_date'],
-                'gsc_queries_period_idx'
+                'gsc_periods_idx'
             );
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('google_search_console_queries');
+        Schema::dropIfExists('google_search_console_periods');
     }
 };
