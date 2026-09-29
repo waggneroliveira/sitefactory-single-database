@@ -1209,7 +1209,6 @@
     </div>
 
 </div>
-```
 
 </div>
 
@@ -1218,1503 +1217,1655 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-
-document.addEventListener('DOMContentLoaded', function () {
-
-    const tenant = document.getElementById('tenant');
-    const period = document.getElementById('period');
-    const button = document.getElementById('loadSearchConsole');
-    const syncButton = document.getElementById('syncSearchConsole');
-
-    const loading = document.getElementById('searchConsoleLoading');
-    const empty = document.getElementById('searchConsoleEmpty');
-    const dashboard = document.getElementById('searchConsoleDashboard');
-
-    const metricClicks = document.getElementById('metricClicks');
-    const metricImpressions = document.getElementById('metricImpressions');
-    const metricCtr = document.getElementById('metricCtr');
-    const metricPosition = document.getElementById('metricPosition');
-
-    const metricClicksVariation = document.getElementById('metricClicksVariation');
-    const metricImpressionsVariation = document.getElementById('metricImpressionsVariation');
-    const metricCtrVariation = document.getElementById('metricCtrVariation');
-    const metricPositionVariation = document.getElementById('metricPositionVariation');
-
-    const currentPeriodLabel = document.getElementById('currentPeriodLabel');
-    const previousPeriodLabel = document.getElementById('previousPeriodLabel');
-
-    const queriesTable = document.getElementById('queriesTable');
-    const pagesTable = document.getElementById('pagesTable');
-    const devicesTable = document.getElementById('devicesTable');
-
-    let chart = null;
-    let comparisonChart = null;
-
-    const tableState = {
-        queries: {
-            rows: [],
-            page: 1,
-            perPage: 20
-        },
-        pages: {
-            rows: [],
-            page: 1,
-            perPage: 20
-        },
-        devices: {
-            rows: [],
-            page: 1,
-            perPage: 10
-        }
-    };
-
-    button.addEventListener('click', async function () {
-
-        if (!tenant.value) {
-            alert('Selecione um site.');
-            return;
-        }
-
-        loading.classList.remove('d-none');
-        empty.classList.add('d-none');
-        dashboard.classList.add('d-none');
-
-        const url =
-            '{{ url('/painel/dashboard/google/search-console/performance') }}/' +
-            tenant.value +
-            '?days=' +
-            period.value;
-
-        try {
-
-            const response = await fetch(url);
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(
-                    data.message ||
-                    'Não foi possível consultar o Search Console.'
-                );
-            }
-
-            renderDashboard(data);
-
-        } catch (error) {
-
-            console.error(error);
-
-            alert(error.message);
-
-            empty.classList.remove('d-none');
-
-        } finally {
-
-            loading.classList.add('d-none');
-
-        }
-
-    });
-
-    /*
-     * SINCRONIZAÇÃO
-     *
-     * O controller atual já sincroniza:
-     * 7, 28, 90 e 180 dias.
-     *
-     * Portanto, uma única requisição atualiza
-     * todos os períodos.
-     */
-    syncButton.addEventListener('click', async function () {
-
-        if (!tenant.value) {
-            alert('Selecione um site antes de sincronizar.');
-            return;
-        }
-
-        const originalHtml = syncButton.innerHTML;
-
-        syncButton.disabled = true;
-
-        syncButton.innerHTML =
-            '<i class="bi bi-arrow-repeat me-1"></i>' +
-            'Sincronizando...';
-
-        try {
-
-            const response = await fetch(
-                '{{ url('/painel/dashboard/google/search-console/sync') }}/' +
-                tenant.value +
-                '?days=180',
-                {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': document
-                            .querySelector('meta[name="csrf-token"]')
-                            .getAttribute('content'),
-
-                        'Accept': 'application/json'
-                    }
-                }
+    document.addEventListener('DOMContentLoaded', function () {
+        function showSearchConsoleMessage(
+            message,
+            title = 'Atenção',
+            type = 'error'
+        ) {
+            const modalElement = document.getElementById(
+                'searchConsoleMessageModal'
             );
 
-            const data = await response.json();
+            const titleElement = document.getElementById(
+                'searchConsoleMessageModalLabel'
+            );
 
-            console.log(data);
+            const bodyElement = document.getElementById(
+                'searchConsoleMessageModalBody'
+            );
 
-            if (!response.ok || !data.success) {
+            const iconElement = document.getElementById(
+                'searchConsoleMessageModalIcon'
+            );
 
-                throw new Error(
-                    data.error ||
-                    data.message ||
-                    'Não foi possível sincronizar os dados.'
+            if (
+                !modalElement ||
+                !titleElement ||
+                !bodyElement ||
+                !iconElement
+            ) {
+                return;
+            }
+
+            const configurations = {
+                error: {
+                    icon: 'bi bi-exclamation-circle-fill',
+                    color: 'text-danger',
+                    background: 'rgba(220, 53, 69, .10)',
+                },
+
+                warning: {
+                    icon: 'bi bi-exclamation-triangle-fill',
+                    color: 'text-warning',
+                    background: 'rgba(255, 193, 7, .15)',
+                },
+
+                success: {
+                    icon: 'bi bi-check-circle-fill',
+                    color: 'text-success',
+                    background: 'rgba(25, 135, 84, .10)',
+                },
+
+                info: {
+                    icon: 'bi bi-info-circle-fill',
+                    color: 'text-primary',
+                    background: 'rgba(13, 110, 253, .10)',
+                },
+            };
+
+            const config = configurations[type] || configurations.error;
+
+            iconElement.style.backgroundColor = config.background;
+
+            iconElement.innerHTML = `
+                <i
+                    class="${config.icon} ${config.color}"
+                    style="font-size: 30px;"
+                ></i>
+            `;
+
+            titleElement.textContent = title;
+            bodyElement.textContent = message;
+
+            const modal = bootstrap.Modal.getOrCreateInstance(
+                modalElement
+            );
+
+            modal.show();
+        }
+
+
+        const tenant = document.getElementById('tenant');
+        const period = document.getElementById('period');
+        const button = document.getElementById('loadSearchConsole');
+        const syncButton = document.getElementById('syncSearchConsole');
+
+        const loading = document.getElementById('searchConsoleLoading');
+        const empty = document.getElementById('searchConsoleEmpty');
+        const dashboard = document.getElementById('searchConsoleDashboard');
+
+        const metricClicks = document.getElementById('metricClicks');
+        const metricImpressions = document.getElementById('metricImpressions');
+        const metricCtr = document.getElementById('metricCtr');
+        const metricPosition = document.getElementById('metricPosition');
+
+        const metricClicksVariation = document.getElementById('metricClicksVariation');
+        const metricImpressionsVariation = document.getElementById('metricImpressionsVariation');
+        const metricCtrVariation = document.getElementById('metricCtrVariation');
+        const metricPositionVariation = document.getElementById('metricPositionVariation');
+
+        const currentPeriodLabel = document.getElementById('currentPeriodLabel');
+        const previousPeriodLabel = document.getElementById('previousPeriodLabel');
+
+        const queriesTable = document.getElementById('queriesTable');
+        const pagesTable = document.getElementById('pagesTable');
+        const devicesTable = document.getElementById('devicesTable');
+
+        let chart = null;
+        let comparisonChart = null;
+
+        const tableState = {
+            queries: {
+                rows: [],
+                page: 1,
+                perPage: 20
+            },
+            pages: {
+                rows: [],
+                page: 1,
+                perPage: 20
+            },
+            devices: {
+                rows: [],
+                page: 1,
+                perPage: 10
+            }
+        };
+
+        button.addEventListener('click', async function () {
+
+            if (!tenant.value) {
+                showSearchConsoleMessage(
+                    'Selecione um site antes de consultar os dados.',
+                    'Site não selecionado'
                 );
+                return;
+            }
+
+            loading.classList.remove('d-none');
+            empty.classList.add('d-none');
+            dashboard.classList.add('d-none');
+
+            const url =
+                '{{ url('/painel/dashboard/google/search-console/performance') }}/' +
+                tenant.value +
+                '?days=' +
+                period.value;
+
+            try {
+
+                const response = await fetch(url);
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(
+                        data.message ||
+                        'Não foi possível consultar o Search Console.'
+                    );
+                }
+
+                renderDashboard(data);
+
+            } catch (error) {
+
+                console.error(error);
+
+                showSearchConsoleMessage(
+                    error.message,
+                    'Não foi possível consultar os dados'
+                );
+
+                empty.classList.remove('d-none');
+
+            } finally {
+
+                loading.classList.add('d-none');
 
             }
 
-            alert(
-                'Dados do Google Search Console sincronizados com sucesso.'
+        });
+
+        /*
+        * SINCRONIZAÇÃO
+        *
+        * O controller atual já sincroniza:
+        * 7, 28, 90 e 180 dias.
+        *
+        * Portanto, uma única requisição atualiza
+        * todos os períodos.
+        */
+        syncButton.addEventListener('click', async function () {
+
+            if (!tenant.value) {
+                showSearchConsoleMessage(
+                    'Selecione um site antes de sincronizar os dados.',
+                    'Site não selecionado'
+                );
+                return;
+            }
+
+            const originalHtml = syncButton.innerHTML;
+
+            syncButton.disabled = true;
+
+            syncButton.innerHTML =
+                '<i class="bi bi-arrow-repeat me-1"></i>' +
+                'Sincronizando...';
+
+            try {
+
+                const response = await fetch(
+                    '{{ url('/painel/dashboard/google/search-console/sync') }}/' +
+                    tenant.value +
+                    '?days=180',
+                    {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document
+                                .querySelector('meta[name="csrf-token"]')
+                                .getAttribute('content'),
+
+                            'Accept': 'application/json'
+                        }
+                    }
+                );
+
+                const data = await response.json();
+
+                console.log(data);
+
+                if (!response.ok || !data.success) {
+
+                    throw new Error(
+                        data.error ||
+                        data.message ||
+                        'Não foi possível sincronizar os dados.'
+                    );
+
+                }
+
+                showSearchConsoleMessage(
+                    'Os dados do Google Search Console foram sincronizados com sucesso.',
+                    'Sincronização concluída'
+                );
+
+                /*
+                * Depois da sincronização, consulta novamente
+                * o período atualmente selecionado.
+                */
+                button.click();
+
+            } catch (error) {
+
+                console.error(error);
+
+                showSearchConsoleMessage(
+                    error.message ||
+                    'Erro ao sincronizar os dados do Google Search Console.',
+                    'Erro na sincronização'
+                );
+
+            } finally {
+
+                syncButton.disabled = false;
+                syncButton.innerHTML = originalHtml;
+
+            }
+
+        });
+
+        function renderDashboard(data) {
+
+            const overview = data.overview || {};
+            const previousOverview = data.previous_overview || {};
+
+            metricClicks.textContent = formatNumber(
+                overview.clicks || 0
+            );
+
+            metricImpressions.textContent = formatNumber(
+                overview.impressions || 0
+            );
+
+            metricCtr.textContent = formatPercent(
+                overview.ctr || 0
+            );
+
+            metricPosition.textContent = formatNumber(
+                overview.position || 0,
+                1
+            );
+
+            renderMetricVariation(
+                metricClicksVariation,
+                overview.clicks,
+                previousOverview.clicks,
+                'Cliques'
+            );
+
+            renderMetricVariation(
+                metricImpressionsVariation,
+                overview.impressions,
+                previousOverview.impressions,
+                'Impressões'
+            );
+
+            renderMetricVariation(
+                metricCtrVariation,
+                overview.ctr,
+                previousOverview.ctr,
+                'CTR',
+                true
+            );
+
+            renderMetricVariation(
+                metricPositionVariation,
+                overview.position,
+                previousOverview.position,
+                'Posição',
+                false,
+                true
+            );
+
+            currentPeriodLabel.innerHTML =
+                '<i class="bi bi-calendar3 me-1"></i>' +
+                'Período atual: ' +
+                formatDate(data.start_date) +
+                ' até ' +
+                formatDate(data.end_date);
+
+            previousPeriodLabel.innerHTML =
+                '<i class="bi bi-arrow-left-right me-1"></i>' +
+                'Período anterior: ' +
+                formatDate(data.previous_start_date) +
+                ' até ' +
+                formatDate(data.previous_end_date);
+
+            renderChart(data.daily || []);
+
+            tableState.queries.rows = data.queries || [];
+            tableState.queries.page = 1;
+
+            tableState.pages.rows = data.pages || [];
+            tableState.pages.page = 1;
+
+            tableState.devices.rows = data.devices || [];
+            tableState.devices.page = 1;
+
+            renderQueries();
+            renderPages();
+            renderDevices();
+
+            /*
+            * O gráfico comparativo precisa dos agregados
+            * dos dois períodos.
+            *
+            * Passamos diretamente os dados retornados pelo
+            * controller, sem depender de variáveis globais.
+            */
+            renderComparisons(
+                data.comparison || {},
+                overview,
+                previousOverview
+            );
+
+            dashboard.classList.remove('d-none');
+
+        }
+
+        function renderMetricVariation(
+            element,
+            current,
+            previous,
+            label,
+            isCtr = false,
+            lowerIsBetter = false
+        ) {
+
+            if (!element) {
+                return;
+            }
+
+            const currentValue = Number(current || 0);
+            const previousValue = Number(previous || 0);
+
+            if (previousValue === 0) {
+
+                if (currentValue === 0) {
+
+                    element.innerHTML =
+                        '<span class="trend-neutral">' +
+                        '— Sem alteração' +
+                        '</span>';
+
+                } else {
+
+                    element.innerHTML =
+                        '<span class="trend-up">' +
+                        '↑ Novo período com dados' +
+                        '</span>';
+
+                }
+
+                return;
+            }
+
+            const variation =
+                ((currentValue - previousValue) / previousValue) * 100;
+
+            let isPositive = variation > 0;
+
+            if (lowerIsBetter) {
+                isPositive = variation < 0;
+            }
+
+            const trendClass =
+                variation === 0
+                    ? 'trend-neutral'
+                    : isPositive
+                        ? 'trend-up'
+                        : 'trend-down';
+
+            const icon =
+                variation === 0
+                    ? '—'
+                    : isPositive
+                        ? '↑'
+                        : '↓';
+
+            element.innerHTML =
+                '<span class="' + trendClass + '">' +
+                icon +
+                ' ' +
+                formatVariation(variation) +
+                ' vs. período anterior' +
+                '</span>';
+
+        }
+
+        function renderChart(rows) {
+
+            const canvas = document.getElementById('searchConsoleChart');
+
+            if (!canvas) {
+                return;
+            }
+
+            const sortedRows = [...rows].sort(function (a, b) {
+
+                return String(
+                    a.keys?.[0] || ''
+                ).localeCompare(
+                    String(b.keys?.[0] || '')
+                );
+
+            });
+
+            const labels = sortedRows.map(function (row) {
+
+                const date = String(
+                    row.keys?.[0] || ''
+                );
+
+                return formatDate(date);
+
+            });
+
+            const clicks = sortedRows.map(function (row) {
+                return Number(row.clicks || 0);
+            });
+
+            const impressions = sortedRows.map(function (row) {
+                return Number(row.impressions || 0);
+            });
+
+            if (chart) {
+                chart.destroy();
+            }
+
+            chart = new Chart(canvas, {
+
+                type: 'line',
+
+                data: {
+
+                    labels: labels,
+
+                    datasets: [
+
+                        {
+                            label: 'Cliques',
+                            data: clicks,
+                            tension: 0.3
+                        },
+
+                        {
+                            label: 'Impressões',
+                            data: impressions,
+                            tension: 0.3
+                        }
+
+                    ]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+
+                    plugins: {
+
+                        tooltip: {
+
+                            callbacks: {
+
+                                label: function (context) {
+
+                                    return (
+                                        context.dataset.label +
+                                        ': ' +
+                                        formatNumber(context.raw)
+                                    );
+
+                                }
+
+                            }
+
+                        }
+
+                    },
+
+                    scales: {
+
+                        x: {
+                            reverse: false
+                        },
+
+                        y: {
+                            beginAtZero: true
+                        }
+
+                    }
+
+                }
+
+            });
+
+        }
+
+        function renderComparisons(
+            comparison,
+            currentOverview,
+            previousOverview
+        ) {
+
+            const pages = comparison.pages || {};
+            const queries = comparison.queries || {};
+
+            const pageData = buildComparison(
+                pages.current || [],
+                pages.previous || []
+            );
+
+            const queryData = buildComparison(
+                queries.current || [],
+                queries.previous || []
+            );
+
+            renderComparisonTable(
+                'pagesTopTable',
+                pageData.top,
+                'Página'
+            );
+
+            renderComparisonTable(
+                'pagesUpTable',
+                pageData.up,
+                'Página'
+            );
+
+            renderComparisonTable(
+                'pagesDownTable',
+                pageData.down,
+                'Página'
+            );
+
+            renderComparisonTable(
+                'queriesTopTable',
+                queryData.top,
+                'Consulta'
+            );
+
+            renderComparisonTable(
+                'queriesUpTable',
+                queryData.up,
+                'Consulta'
+            );
+
+            renderComparisonTable(
+                'queriesDownTable',
+                queryData.down,
+                'Consulta'
             );
 
             /*
-             * Depois da sincronização, consulta novamente
-             * o período atualmente selecionado.
-             */
-            button.click();
-
-        } catch (error) {
-
-            console.error(error);
-
-            alert(
-                error.message ||
-                'Erro ao sincronizar os dados do Google Search Console.'
+            * Aqui está a correção principal:
+            *
+            * O gráfico usa os totais reais do controller:
+            *
+            * data.overview
+            * data.previous_overview
+            *
+            * Não usa mais:
+            * window.searchConsoleCurrentOverview
+            * window.searchConsolePreviousOverview
+            */
+            renderComparisonChart(
+                currentOverview,
+                previousOverview
             );
 
-        } finally {
-
-            syncButton.disabled = false;
-            syncButton.innerHTML = originalHtml;
-
         }
 
-    });
-
-    function renderDashboard(data) {
-
-        const overview = data.overview || {};
-        const previousOverview = data.previous_overview || {};
-
-        metricClicks.textContent = formatNumber(
-            overview.clicks || 0
-        );
-
-        metricImpressions.textContent = formatNumber(
-            overview.impressions || 0
-        );
-
-        metricCtr.textContent = formatPercent(
-            overview.ctr || 0
-        );
-
-        metricPosition.textContent = formatNumber(
-            overview.position || 0,
-            1
-        );
-
-        renderMetricVariation(
-            metricClicksVariation,
-            overview.clicks,
-            previousOverview.clicks,
-            'Cliques'
-        );
-
-        renderMetricVariation(
-            metricImpressionsVariation,
-            overview.impressions,
-            previousOverview.impressions,
-            'Impressões'
-        );
-
-        renderMetricVariation(
-            metricCtrVariation,
-            overview.ctr,
-            previousOverview.ctr,
-            'CTR',
-            true
-        );
-
-        renderMetricVariation(
-            metricPositionVariation,
-            overview.position,
-            previousOverview.position,
-            'Posição',
-            false,
-            true
-        );
-
-        currentPeriodLabel.innerHTML =
-            '<i class="bi bi-calendar3 me-1"></i>' +
-            'Período atual: ' +
-            formatDate(data.start_date) +
-            ' até ' +
-            formatDate(data.end_date);
-
-        previousPeriodLabel.innerHTML =
-            '<i class="bi bi-arrow-left-right me-1"></i>' +
-            'Período anterior: ' +
-            formatDate(data.previous_start_date) +
-            ' até ' +
-            formatDate(data.previous_end_date);
-
-        renderChart(data.daily || []);
-
-        tableState.queries.rows = data.queries || [];
-        tableState.queries.page = 1;
-
-        tableState.pages.rows = data.pages || [];
-        tableState.pages.page = 1;
-
-        tableState.devices.rows = data.devices || [];
-        tableState.devices.page = 1;
-
-        renderQueries();
-        renderPages();
-        renderDevices();
-
-        /*
-         * O gráfico comparativo precisa dos agregados
-         * dos dois períodos.
-         *
-         * Passamos diretamente os dados retornados pelo
-         * controller, sem depender de variáveis globais.
-         */
-        renderComparisons(
-            data.comparison || {},
-            overview,
-            previousOverview
-        );
-
-        dashboard.classList.remove('d-none');
-
-    }
-
-    function renderMetricVariation(
-        element,
-        current,
-        previous,
-        label,
-        isCtr = false,
-        lowerIsBetter = false
-    ) {
+        function buildComparison(currentRows, previousRows) {
 
-        if (!element) {
-            return;
-        }
+            const previousMap = {};
 
-        const currentValue = Number(current || 0);
-        const previousValue = Number(previous || 0);
+            previousRows.forEach(function (row) {
 
-        if (previousValue === 0) {
+                const key = String(
+                    row.keys && row.keys[0]
+                        ? row.keys[0]
+                        : ''
+                );
 
-            if (currentValue === 0) {
+                if (key) {
+                    previousMap[key] = row;
+                }
 
-                element.innerHTML =
-                    '<span class="trend-neutral">' +
-                    '— Sem alteração' +
-                    '</span>';
+            });
 
-            } else {
+            const items = currentRows.map(function (row) {
 
-                element.innerHTML =
-                    '<span class="trend-up">' +
-                    '↑ Novo período com dados' +
-                    '</span>';
+                const key = String(
+                    row.keys && row.keys[0]
+                        ? row.keys[0]
+                        : ''
+                );
 
-            }
+                const previous =
+                    previousMap[key] || {};
 
-            return;
-        }
+                const currentClicks =
+                    Number(row.clicks || 0);
 
-        const variation =
-            ((currentValue - previousValue) / previousValue) * 100;
+                const previousClicks =
+                    Number(previous.clicks || 0);
 
-        let isPositive = variation > 0;
+                const currentImpressions =
+                    Number(row.impressions || 0);
 
-        if (lowerIsBetter) {
-            isPositive = variation < 0;
-        }
+                const previousImpressions =
+                    Number(previous.impressions || 0);
 
-        const trendClass =
-            variation === 0
-                ? 'trend-neutral'
-                : isPositive
-                    ? 'trend-up'
-                    : 'trend-down';
+                const currentCtr =
+                    Number(row.ctr || 0);
 
-        const icon =
-            variation === 0
-                ? '—'
-                : isPositive
-                    ? '↑'
-                    : '↓';
+                const previousCtr =
+                    Number(previous.ctr || 0);
 
-        element.innerHTML =
-            '<span class="' + trendClass + '">' +
-            icon +
-            ' ' +
-            formatVariation(variation) +
-            ' vs. período anterior' +
-            '</span>';
+                const currentPosition =
+                    Number(row.position || 0);
 
-    }
+                const previousPosition =
+                    Number(previous.position || 0);
 
-    function renderChart(rows) {
+                let variation = 0;
 
-        const canvas = document.getElementById('searchConsoleChart');
+                if (previousClicks > 0) {
 
-        if (!canvas) {
-            return;
-        }
+                    variation =
+                        (
+                            (currentClicks - previousClicks) /
+                            previousClicks
+                        ) * 100;
 
-        const sortedRows = [...rows].sort(function (a, b) {
+                } else if (currentClicks > 0) {
 
-            return String(
-                a.keys?.[0] || ''
-            ).localeCompare(
-                String(b.keys?.[0] || '')
-            );
-
-        });
-
-        const labels = sortedRows.map(function (row) {
-
-            const date = String(
-                row.keys?.[0] || ''
-            );
-
-            return formatDate(date);
-
-        });
-
-        const clicks = sortedRows.map(function (row) {
-            return Number(row.clicks || 0);
-        });
-
-        const impressions = sortedRows.map(function (row) {
-            return Number(row.impressions || 0);
-        });
-
-        if (chart) {
-            chart.destroy();
-        }
-
-        chart = new Chart(canvas, {
-
-            type: 'line',
-
-            data: {
-
-                labels: labels,
-
-                datasets: [
-
-                    {
-                        label: 'Cliques',
-                        data: clicks,
-                        tension: 0.3
-                    },
-
-                    {
-                        label: 'Impressões',
-                        data: impressions,
-                        tension: 0.3
-                    }
-
-                ]
-
-            },
-
-            options: {
-
-                responsive: true,
-
-                maintainAspectRatio: false,
-
-                interaction: {
-                    mode: 'index',
-                    intersect: false
-                },
-
-                plugins: {
-
-                    tooltip: {
-
-                        callbacks: {
-
-                            label: function (context) {
-
-                                return (
-                                    context.dataset.label +
-                                    ': ' +
-                                    formatNumber(context.raw)
-                                );
-
-                            }
-
-                        }
-
-                    }
-
-                },
-
-                scales: {
-
-                    x: {
-                        reverse: false
-                    },
-
-                    y: {
-                        beginAtZero: true
-                    }
+                    variation = 100;
 
                 }
 
-            }
+                return {
 
-        });
+                    key: key,
 
-    }
+                    clicks: currentClicks,
 
-    function renderComparisons(
-        comparison,
-        currentOverview,
-        previousOverview
-    ) {
+                    previousClicks: previousClicks,
 
-        const pages = comparison.pages || {};
-        const queries = comparison.queries || {};
+                    impressions: currentImpressions,
 
-        const pageData = buildComparison(
-            pages.current || [],
-            pages.previous || []
-        );
+                    previousImpressions: previousImpressions,
 
-        const queryData = buildComparison(
-            queries.current || [],
-            queries.previous || []
-        );
+                    ctr: currentCtr,
 
-        renderComparisonTable(
-            'pagesTopTable',
-            pageData.top,
-            'Página'
-        );
+                    previousCtr: previousCtr,
 
-        renderComparisonTable(
-            'pagesUpTable',
-            pageData.up,
-            'Página'
-        );
+                    position: currentPosition,
 
-        renderComparisonTable(
-            'pagesDownTable',
-            pageData.down,
-            'Página'
-        );
+                    previousPosition: previousPosition,
 
-        renderComparisonTable(
-            'queriesTopTable',
-            queryData.top,
-            'Consulta'
-        );
+                    variation: variation
 
-        renderComparisonTable(
-            'queriesUpTable',
-            queryData.up,
-            'Consulta'
-        );
+                };
 
-        renderComparisonTable(
-            'queriesDownTable',
-            queryData.down,
-            'Consulta'
-        );
+            });
 
-        /*
-         * Aqui está a correção principal:
-         *
-         * O gráfico usa os totais reais do controller:
-         *
-         * data.overview
-         * data.previous_overview
-         *
-         * Não usa mais:
-         * window.searchConsoleCurrentOverview
-         * window.searchConsolePreviousOverview
-         */
-        renderComparisonChart(
-            currentOverview,
-            previousOverview
-        );
+            const top = items
+                .filter(function (item) {
+                    return item.clicks > 0;
+                })
+                .sort(function (a, b) {
+                    return b.clicks - a.clicks;
+                })
+                .slice(0, 10);
 
-    }
+            const up = items
+                .filter(function (item) {
+                    return (
+                        item.previousClicks > 0 &&
+                        item.variation > 0
+                    );
+                })
+                .sort(function (a, b) {
+                    return b.variation - a.variation;
+                })
+                .slice(0, 10);
 
-    function buildComparison(currentRows, previousRows) {
-
-        const previousMap = {};
-
-        previousRows.forEach(function (row) {
-
-            const key = String(
-                row.keys && row.keys[0]
-                    ? row.keys[0]
-                    : ''
-            );
-
-            if (key) {
-                previousMap[key] = row;
-            }
-
-        });
-
-        const items = currentRows.map(function (row) {
-
-            const key = String(
-                row.keys && row.keys[0]
-                    ? row.keys[0]
-                    : ''
-            );
-
-            const previous =
-                previousMap[key] || {};
-
-            const currentClicks =
-                Number(row.clicks || 0);
-
-            const previousClicks =
-                Number(previous.clicks || 0);
-
-            const currentImpressions =
-                Number(row.impressions || 0);
-
-            const previousImpressions =
-                Number(previous.impressions || 0);
-
-            const currentCtr =
-                Number(row.ctr || 0);
-
-            const previousCtr =
-                Number(previous.ctr || 0);
-
-            const currentPosition =
-                Number(row.position || 0);
-
-            const previousPosition =
-                Number(previous.position || 0);
-
-            let variation = 0;
-
-            if (previousClicks > 0) {
-
-                variation =
-                    (
-                        (currentClicks - previousClicks) /
-                        previousClicks
-                    ) * 100;
-
-            } else if (currentClicks > 0) {
-
-                variation = 100;
-
-            }
+            const down = items
+                .filter(function (item) {
+                    return (
+                        item.previousClicks > 0 &&
+                        item.variation < 0
+                    );
+                })
+                .sort(function (a, b) {
+                    return a.variation - b.variation;
+                })
+                .slice(0, 10);
 
             return {
-
-                key: key,
-
-                clicks: currentClicks,
-
-                previousClicks: previousClicks,
-
-                impressions: currentImpressions,
-
-                previousImpressions: previousImpressions,
-
-                ctr: currentCtr,
-
-                previousCtr: previousCtr,
-
-                position: currentPosition,
-
-                previousPosition: previousPosition,
-
-                variation: variation
-
+                top: top,
+                up: up,
+                down: down
             };
 
-        });
-
-        const top = items
-            .filter(function (item) {
-                return item.clicks > 0;
-            })
-            .sort(function (a, b) {
-                return b.clicks - a.clicks;
-            })
-            .slice(0, 10);
-
-        const up = items
-            .filter(function (item) {
-                return (
-                    item.previousClicks > 0 &&
-                    item.variation > 0
-                );
-            })
-            .sort(function (a, b) {
-                return b.variation - a.variation;
-            })
-            .slice(0, 10);
-
-        const down = items
-            .filter(function (item) {
-                return (
-                    item.previousClicks > 0 &&
-                    item.variation < 0
-                );
-            })
-            .sort(function (a, b) {
-                return a.variation - b.variation;
-            })
-            .slice(0, 10);
-
-        return {
-            top: top,
-            up: up,
-            down: down
-        };
-
-    }
-
-    function renderComparisonTable(
-        elementId,
-        rows,
-        label
-    ) {
-
-        const element =
-            document.getElementById(elementId);
-
-        if (!element) {
-            return;
         }
 
-        if (!rows.length) {
-
-            element.innerHTML = `
-                <div class="text-center text-muted py-4">
-                    Nenhum dado disponível.
-                </div>
-            `;
-
-            return;
-        }
-
-        element.innerHTML = `
-
-            <table class="table table-hover table-centered mb-0">
-
-                <thead>
-
-                    <tr>
-
-                        <th>
-                            ${label}
-                        </th>
-
-                        <th class="text-end">
-                            Cliques
-                        </th>
-
-                        <th class="text-end">
-                            Impressões
-                        </th>
-
-                        <th class="text-end">
-                            Variação
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    ${rows.map(function (row) {
-
-                        const variation =
-                            row.variation;
-
-                        const trendClass =
-                            variation > 0
-                                ? 'trend-up'
-                                : variation < 0
-                                    ? 'trend-down'
-                                    : 'trend-neutral';
-
-                        const icon =
-                            variation > 0
-                                ? '↑'
-                                : variation < 0
-                                    ? '↓'
-                                    : '—';
-
-                        return `
-
-                            <tr>
-
-                                <td>
-
-                                    <div
-                                        class="text-truncate"
-                                        style="max-width:320px;"
-                                        title="${escapeHtml(row.key)}"
-                                    >
-                                        ${escapeHtml(row.key)}
-                                    </div>
-
-                                </td>
-
-                                <td class="text-end">
-                                    ${formatNumber(row.clicks)}
-                                </td>
-
-                                <td class="text-end">
-                                    ${formatNumber(row.impressions)}
-                                </td>
-
-                                <td class="text-end">
-
-                                    <span class="${trendClass} fw-semibold">
-
-                                        ${icon}
-
-                                        ${formatVariation(variation)}
-
-                                    </span>
-
-                                </td>
-
-                            </tr>
-
-                        `;
-
-                    }).join('')}
-
-                </tbody>
-
-            </table>
-
-        `;
-
-    }
-
-    /*
-     * GRÁFICO DE COMPARATIVO
-     *
-     * O título do card informa que o comparativo é
-     * de tráfego, e o próprio card informa que a métrica
-     * utilizada é o volume total de cliques.
-     *
-     * Portanto, o gráfico compara exatamente:
-     *
-     * Período atual     -> overview.clicks
-     * Período anterior  -> previous_overview.clicks
-     */
-    function renderComparisonChart(
-        currentOverview,
-        previousOverview
-    ) {
-
-        const canvas =
-            document.getElementById('comparisonChart');
-
-        if (!canvas) {
-            return;
-        }
-
-        const currentClicks =
-            Number(currentOverview?.clicks || 0);
-
-        const previousClicks =
-            Number(previousOverview?.clicks || 0);
-
-        if (comparisonChart) {
-            comparisonChart.destroy();
-        }
-
-        comparisonChart = new Chart(canvas, {
-
-            type: 'bar',
-
-            data: {
-
-                labels: [
-                    'Período atual',
-                    'Período anterior'
-                ],
-
-                datasets: [
-
-                    {
-                        label: 'Cliques',
-
-                        data: [
-                            currentClicks,
-                            previousClicks
-                        ]
-
-                    }
-
-                ]
-
-            },
-
-            options: {
-
-                responsive: true,
-
-                maintainAspectRatio: false,
-
-                plugins: {
-
-                    legend: {
-                        display: false
-                    },
-
-                    tooltip: {
-
-                        callbacks: {
-
-                            label: function (context) {
-
-                                return (
-                                    'Cliques: ' +
-                                    formatNumber(context.raw)
-                                );
-
-                            }
-
-                        }
-
-                    }
-
-                },
-
-                scales: {
-
-                    y: {
-
-                        beginAtZero: true,
-
-                        ticks: {
-
-                            callback: function (value) {
-                                return formatNumber(value);
-                            }
-
-                        }
-
-                    }
-
-                }
-
-            }
-
-        });
-
-    }
-
-    function renderQueries() {
-
-        renderPaginatedTable(
-            'queries',
-            queriesTable,
-            'queriesPagination'
-        );
-
-    }
-
-    function renderPages() {
-
-        renderPaginatedTable(
-            'pages',
-            pagesTable,
-            'pagesPagination'
-        );
-
-    }
-
-    function renderDevices() {
-
-        renderPaginatedTable(
-            'devices',
-            devicesTable,
-            'devicesPagination'
-        );
-
-    }
-
-    function renderPaginatedTable(
-        type,
-        tableElement,
-        paginationElementId
-    ) {
-
-        const state = tableState[type];
-
-        if (!state.rows.length) {
-
-            tableElement.innerHTML =
-                emptyTable(
-                    5,
-                    getEmptyMessage(type)
-                );
-
-            renderPagination(
-                paginationElementId,
-                0,
-                1,
-                function () {}
-            );
-
-            return;
-        }
-
-        const totalPages =
-            Math.ceil(
-                state.rows.length /
-                state.perPage
-            );
-
-        if (state.page > totalPages) {
-            state.page = totalPages;
-        }
-
-        const start =
-            (state.page - 1) *
-            state.perPage;
-
-        const end =
-            start +
-            state.perPage;
-
-        const rows =
-            state.rows.slice(start, end);
-
-        if (type === 'queries') {
-
-            tableElement.innerHTML =
-                rows.map(renderQueryRow).join('');
-
-        } else if (type === 'pages') {
-
-            tableElement.innerHTML =
-                rows.map(renderPageRow).join('');
-
-        } else {
-
-            tableElement.innerHTML =
-                rows.map(renderDeviceRow).join('');
-
-        }
-
-        renderPagination(
-            paginationElementId,
-            state.rows.length,
-            state.page,
-            function (newPage) {
-
-                state.page = newPage;
-
-                renderPaginatedTable(
-                    type,
-                    tableElement,
-                    paginationElementId
-                );
-
-            },
-            state.perPage
-        );
-
-    }
-
-    function renderQueryRow(row) {
-
-        const query =
-            row.keys?.[0] || '-';
-
-        return `
-
-            <tr>
-
-                <td>
-
-                    <span class="fw-medium">
-                        ${escapeHtml(query)}
-                    </span>
-
-                </td>
-
-                <td class="text-end">
-                    ${formatNumber(row.clicks || 0)}
-                </td>
-
-                <td class="text-end">
-                    ${formatNumber(row.impressions || 0)}
-                </td>
-
-                <td class="text-end">
-                    ${formatPercent(row.ctr || 0)}
-                </td>
-
-                <td class="text-end">
-                    ${formatNumber(row.position || 0, 1)}
-                </td>
-
-            </tr>
-
-        `;
-
-    }
-
-    function renderPageRow(row) {
-
-        const page =
-            row.keys?.[0] || '-';
-
-        return `
-
-            <tr>
-
-                <td style="max-width:360px;">
-
-                    <div
-                        class="text-truncate"
-                        title="${escapeHtml(page)}"
-                    >
-                        ${escapeHtml(page)}
-                    </div>
-
-                </td>
-
-                <td class="text-end">
-                    ${formatNumber(row.clicks || 0)}
-                </td>
-
-                <td class="text-end">
-                    ${formatNumber(row.impressions || 0)}
-                </td>
-
-                <td class="text-end">
-                    ${formatPercent(row.ctr || 0)}
-                </td>
-
-                <td class="text-end">
-                    ${formatNumber(row.position || 0, 1)}
-                </td>
-
-            </tr>
-
-        `;
-
-    }
-
-    function renderDeviceRow(row) {
-
-        const device =
-            row.keys?.[0] || '-';
-
-        return `
-
-            <tr>
-
-                <td>
-                    ${getDeviceLabel(device)}
-                </td>
-
-                <td class="text-end">
-                    ${formatNumber(row.clicks || 0)}
-                </td>
-
-                <td class="text-end">
-                    ${formatNumber(row.impressions || 0)}
-                </td>
-
-                <td class="text-end">
-                    ${formatPercent(row.ctr || 0)}
-                </td>
-
-                <td class="text-end">
-                    ${formatNumber(row.position || 0, 1)}
-                </td>
-
-            </tr>
-
-        `;
-
-    }
-
-    function renderPagination(
-        elementId,
-        totalRows,
-        currentPage,
-        callback,
-        perPage = 20
-    ) {
-
-        const element =
-            document.getElementById(elementId);
-
-        if (!element) {
-            return;
-        }
-
-        if (!totalRows) {
-
-            element.innerHTML = '';
-
-            return;
-
-        }
-
-        const totalPages =
-            Math.ceil(totalRows / perPage);
-
-        const start =
-            ((currentPage - 1) * perPage) + 1;
-
-        const end =
-            Math.min(
-                currentPage * perPage,
-                totalRows
-            );
-
-        if (totalPages <= 1) {
-
-            element.innerHTML = `
-
-                <div class="text-muted pagination-info">
-
-                    Exibindo
-                    <strong>${start}</strong>
-                    -
-                    <strong>${end}</strong>
-                    de
-                    <strong>${totalRows}</strong>
-                    resultados.
-
-                </div>
-
-            `;
-
-            return;
-
-        }
-
-        let pages = [];
-
-        pages.push(1);
-
-        if (currentPage > 3) {
-            pages.push('...');
-        }
-
-        const startPage =
-            Math.max(2, currentPage - 1);
-
-        const endPage =
-            Math.min(
-                totalPages - 1,
-                currentPage + 1
-            );
-
-        for (
-            let page = startPage;
-            page <= endPage;
-            page++
+        function renderComparisonTable(
+            elementId,
+            rows,
+            label
         ) {
 
-            pages.push(page);
+            const element =
+                document.getElementById(elementId);
 
-        }
+            if (!element) {
+                return;
+            }
 
-        if (currentPage < totalPages - 2) {
-            pages.push('...');
-        }
+            if (!rows.length) {
 
-        if (totalPages > 1) {
-            pages.push(totalPages);
-        }
+                element.innerHTML = `
+                    <div class="text-center text-muted py-4">
+                        Nenhum dado disponível.
+                    </div>
+                `;
 
-        element.innerHTML = `
+                return;
+            }
 
-            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+            element.innerHTML = `
 
-                <div class="text-muted pagination-info">
+                <table class="table table-hover table-centered mb-0">
 
-                    Exibindo
-                    <strong>${start}</strong>
-                    -
-                    <strong>${end}</strong>
-                    de
-                    <strong>${totalRows}</strong>
-                    resultados.
+                    <thead>
 
-                </div>
+                        <tr>
 
-                <nav aria-label="Paginação">
+                            <th>
+                                ${label}
+                            </th>
 
-                    <ul class="pagination pagination-sm mb-0">
+                            <th class="text-end">
+                                Cliques
+                            </th>
 
-                        <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                            <th class="text-end">
+                                Impressões
+                            </th>
 
-                            <button
-                                type="button"
-                                class="page-link"
-                                data-page="${currentPage - 1}"
-                            >
-                                Anterior
-                            </button>
+                            <th class="text-end">
+                                Variação
+                            </th>
 
-                        </li>
+                        </tr>
 
-                        ${pages.map(function (page) {
+                    </thead>
 
-                            if (page === '...') {
+                    <tbody>
 
-                                return `
+                        ${rows.map(function (row) {
 
-                                    <li class="page-item disabled">
+                            const variation =
+                                row.variation;
 
-                                        <span class="page-link">
-                                            ...
-                                        </span>
+                            const trendClass =
+                                variation > 0
+                                    ? 'trend-up'
+                                    : variation < 0
+                                        ? 'trend-down'
+                                        : 'trend-neutral';
 
-                                    </li>
-
-                                `;
-
-                            }
+                            const icon =
+                                variation > 0
+                                    ? '↑'
+                                    : variation < 0
+                                        ? '↓'
+                                        : '—';
 
                             return `
 
-                                <li class="page-item ${page === currentPage ? 'active' : ''}">
+                                <tr>
 
-                                    <button
-                                        type="button"
-                                        class="page-link"
-                                        data-page="${page}"
-                                    >
-                                        ${page}
-                                    </button>
+                                    <td>
 
-                                </li>
+                                        <div
+                                            class="text-truncate"
+                                            style="max-width:320px;"
+                                            title="${escapeHtml(row.key)}"
+                                        >
+                                            ${escapeHtml(row.key)}
+                                        </div>
+
+                                    </td>
+
+                                    <td class="text-end">
+                                        ${formatNumber(row.clicks)}
+                                    </td>
+
+                                    <td class="text-end">
+                                        ${formatNumber(row.impressions)}
+                                    </td>
+
+                                    <td class="text-end">
+
+                                        <span class="${trendClass} fw-semibold">
+
+                                            ${icon}
+
+                                            ${formatVariation(variation)}
+
+                                        </span>
+
+                                    </td>
+
+                                </tr>
 
                             `;
 
                         }).join('')}
 
-                        <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+                    </tbody>
 
-                            <button
-                                type="button"
-                                class="page-link"
-                                data-page="${currentPage + 1}"
-                            >
-                                Próxima
-                            </button>
+                </table>
 
-                        </li>
+            `;
 
-                    </ul>
+        }
 
-                </nav>
+        /*
+        * GRÁFICO DE COMPARATIVO
+        *
+        * O título do card informa que o comparativo é
+        * de tráfego, e o próprio card informa que a métrica
+        * utilizada é o volume total de cliques.
+        *
+        * Portanto, o gráfico compara exatamente:
+        *
+        * Período atual     -> overview.clicks
+        * Período anterior  -> previous_overview.clicks
+        */
+        function renderComparisonChart(
+            currentOverview,
+            previousOverview
+        ) {
 
-            </div>
+            const canvas =
+                document.getElementById('comparisonChart');
 
-        `;
+            if (!canvas) {
+                return;
+            }
 
-        element
-            .querySelectorAll('[data-page]')
-            .forEach(function (button) {
+            const currentClicks =
+                Number(currentOverview?.clicks || 0);
 
-                button.addEventListener(
-                    'click',
-                    function () {
+            const previousClicks =
+                Number(previousOverview?.clicks || 0);
 
-                        const page =
-                            Number(
-                                this.dataset.page
-                            );
+            if (comparisonChart) {
+                comparisonChart.destroy();
+            }
 
-                        if (
-                            page >= 1 &&
-                            page <= totalPages &&
-                            page !== currentPage
-                        ) {
+            comparisonChart = new Chart(canvas, {
 
-                            callback(page);
+                type: 'bar',
+
+                data: {
+
+                    labels: [
+                        'Período atual',
+                        'Período anterior'
+                    ],
+
+                    datasets: [
+
+                        {
+                            label: 'Cliques',
+
+                            data: [
+                                currentClicks,
+                                previousClicks
+                            ]
+
+                        }
+
+                    ]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: {
+                            display: false
+                        },
+
+                        tooltip: {
+
+                            callbacks: {
+
+                                label: function (context) {
+
+                                    return (
+                                        'Cliques: ' +
+                                        formatNumber(context.raw)
+                                    );
+
+                                }
+
+                            }
+
+                        }
+
+                    },
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero: true,
+
+                            ticks: {
+
+                                callback: function (value) {
+                                    return formatNumber(value);
+                                }
+
+                            }
 
                         }
 
                     }
-                );
+
+                }
 
             });
 
-    }
-
-    function getEmptyMessage(type) {
-
-        if (type === 'queries') {
-            return 'Nenhuma consulta encontrada.';
         }
 
-        if (type === 'pages') {
-            return 'Nenhuma página encontrada.';
+        function renderQueries() {
+
+            renderPaginatedTable(
+                'queries',
+                queriesTable,
+                'queriesPagination'
+            );
+
         }
 
-        return 'Nenhum dispositivo encontrado.';
+        function renderPages() {
 
-    }
+            renderPaginatedTable(
+                'pages',
+                pagesTable,
+                'pagesPagination'
+            );
 
-    function getDeviceLabel(device) {
+        }
 
-        const labels = {
+        function renderDevices() {
 
-            desktop: 'Computador',
+            renderPaginatedTable(
+                'devices',
+                devicesTable,
+                'devicesPagination'
+            );
 
-            mobile: 'Celular',
+        }
 
-            tablet: 'Tablet'
-
-        };
-
-        return (
-            labels[
-                String(device).toLowerCase()
-            ] || device
-        );
-
-    }
-
-    function emptyTable(columns, message) {
-
-        return `
-
-            <tr>
-
-                <td
-                    colspan="${columns}"
-                    class="text-center text-muted py-4"
-                >
-                    ${message}
-                </td>
-
-            </tr>
-
-        `;
-
-    }
-
-    function escapeHtml(value) {
-
-        return String(value)
-
-            .replace(/&/g, '&amp;')
-
-            .replace(/</g, '&lt;')
-
-            .replace(/>/g, '&gt;')
-
-            .replace(/"/g, '&quot;')
-
-            .replace(/'/g, '&#039;');
-
-    }
-
-    function formatNumber(
-        value,
-        decimals = 0
-    ) {
-
-        return Number(value || 0).toLocaleString(
-            'pt-BR',
-            {
-                minimumFractionDigits: decimals,
-                maximumFractionDigits: decimals
-            }
-        );
-
-    }
-
-    function formatPercent(value) {
-
-        return (
-            Number(value || 0) * 100
-        ).toLocaleString(
-            'pt-BR',
-            {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            }
-        ) + '%';
-
-    }
-
-    function formatVariation(value) {
-
-        const number =
-            Number(value || 0);
-
-        return (
-
-            Math.abs(number).toLocaleString(
-                'pt-BR',
-                {
-                    minimumFractionDigits: 1,
-                    maximumFractionDigits: 1
-                }
-            ) + '%'
-
-        );
-
-    }
-
-    function formatDate(value) {
-
-        const date =
-            String(value || '');
-
-        if (
-            !/^\d{4}-\d{2}-\d{2}$/.test(date)
+        function renderPaginatedTable(
+            type,
+            tableElement,
+            paginationElementId
         ) {
 
-            return date;
+            const state = tableState[type];
+
+            if (!state.rows.length) {
+
+                tableElement.innerHTML =
+                    emptyTable(
+                        5,
+                        getEmptyMessage(type)
+                    );
+
+                renderPagination(
+                    paginationElementId,
+                    0,
+                    1,
+                    function () {}
+                );
+
+                return;
+            }
+
+            const totalPages =
+                Math.ceil(
+                    state.rows.length /
+                    state.perPage
+                );
+
+            if (state.page > totalPages) {
+                state.page = totalPages;
+            }
+
+            const start =
+                (state.page - 1) *
+                state.perPage;
+
+            const end =
+                start +
+                state.perPage;
+
+            const rows =
+                state.rows.slice(start, end);
+
+            if (type === 'queries') {
+
+                tableElement.innerHTML =
+                    rows.map(renderQueryRow).join('');
+
+            } else if (type === 'pages') {
+
+                tableElement.innerHTML =
+                    rows.map(renderPageRow).join('');
+
+            } else {
+
+                tableElement.innerHTML =
+                    rows.map(renderDeviceRow).join('');
+
+            }
+
+            renderPagination(
+                paginationElementId,
+                state.rows.length,
+                state.page,
+                function (newPage) {
+
+                    state.page = newPage;
+
+                    renderPaginatedTable(
+                        type,
+                        tableElement,
+                        paginationElementId
+                    );
+
+                },
+                state.perPage
+            );
 
         }
 
-        const [
-            year,
-            month,
-            day
-        ] = date.split('-');
+        function renderQueryRow(row) {
 
-        return `${day}/${month}/${year}`;
+            const query =
+                row.keys?.[0] || '-';
 
-    }
+            return `
 
-});
+                <tr>
 
+                    <td>
+
+                        <span class="fw-medium">
+                            ${escapeHtml(query)}
+                        </span>
+
+                    </td>
+
+                    <td class="text-end">
+                        ${formatNumber(row.clicks || 0)}
+                    </td>
+
+                    <td class="text-end">
+                        ${formatNumber(row.impressions || 0)}
+                    </td>
+
+                    <td class="text-end">
+                        ${formatPercent(row.ctr || 0)}
+                    </td>
+
+                    <td class="text-end">
+                        ${formatNumber(row.position || 0, 1)}
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+
+        function renderPageRow(row) {
+
+            const page =
+                row.keys?.[0] || '-';
+
+            return `
+
+                <tr>
+
+                    <td style="max-width:360px;">
+
+                        <div
+                            class="text-truncate"
+                            title="${escapeHtml(page)}"
+                        >
+                            ${escapeHtml(page)}
+                        </div>
+
+                    </td>
+
+                    <td class="text-end">
+                        ${formatNumber(row.clicks || 0)}
+                    </td>
+
+                    <td class="text-end">
+                        ${formatNumber(row.impressions || 0)}
+                    </td>
+
+                    <td class="text-end">
+                        ${formatPercent(row.ctr || 0)}
+                    </td>
+
+                    <td class="text-end">
+                        ${formatNumber(row.position || 0, 1)}
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+
+        function renderDeviceRow(row) {
+
+            const device =
+                row.keys?.[0] || '-';
+
+            return `
+
+                <tr>
+
+                    <td>
+                        ${getDeviceLabel(device)}
+                    </td>
+
+                    <td class="text-end">
+                        ${formatNumber(row.clicks || 0)}
+                    </td>
+
+                    <td class="text-end">
+                        ${formatNumber(row.impressions || 0)}
+                    </td>
+
+                    <td class="text-end">
+                        ${formatPercent(row.ctr || 0)}
+                    </td>
+
+                    <td class="text-end">
+                        ${formatNumber(row.position || 0, 1)}
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+
+        function renderPagination(
+            elementId,
+            totalRows,
+            currentPage,
+            callback,
+            perPage = 20
+        ) {
+
+            const element =
+                document.getElementById(elementId);
+
+            if (!element) {
+                return;
+            }
+
+            if (!totalRows) {
+
+                element.innerHTML = '';
+
+                return;
+
+            }
+
+            const totalPages =
+                Math.ceil(totalRows / perPage);
+
+            const start =
+                ((currentPage - 1) * perPage) + 1;
+
+            const end =
+                Math.min(
+                    currentPage * perPage,
+                    totalRows
+                );
+
+            if (totalPages <= 1) {
+
+                element.innerHTML = `
+
+                    <div class="text-muted pagination-info">
+
+                        Exibindo
+                        <strong>${start}</strong>
+                        -
+                        <strong>${end}</strong>
+                        de
+                        <strong>${totalRows}</strong>
+                        resultados.
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+            let pages = [];
+
+            pages.push(1);
+
+            if (currentPage > 3) {
+                pages.push('...');
+            }
+
+            const startPage =
+                Math.max(2, currentPage - 1);
+
+            const endPage =
+                Math.min(
+                    totalPages - 1,
+                    currentPage + 1
+                );
+
+            for (
+                let page = startPage;
+                page <= endPage;
+                page++
+            ) {
+
+                pages.push(page);
+
+            }
+
+            if (currentPage < totalPages - 2) {
+                pages.push('...');
+            }
+
+            if (totalPages > 1) {
+                pages.push(totalPages);
+            }
+
+            element.innerHTML = `
+
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+
+                    <div class="text-muted pagination-info">
+
+                        Exibindo
+                        <strong>${start}</strong>
+                        -
+                        <strong>${end}</strong>
+                        de
+                        <strong>${totalRows}</strong>
+                        resultados.
+
+                    </div>
+
+                    <nav aria-label="Paginação">
+
+                        <ul class="pagination pagination-sm mb-0">
+
+                            <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+
+                                <button
+                                    type="button"
+                                    class="page-link"
+                                    data-page="${currentPage - 1}"
+                                >
+                                    Anterior
+                                </button>
+
+                            </li>
+
+                            ${pages.map(function (page) {
+
+                                if (page === '...') {
+
+                                    return `
+
+                                        <li class="page-item disabled">
+
+                                            <span class="page-link">
+                                                ...
+                                            </span>
+
+                                        </li>
+
+                                    `;
+
+                                }
+
+                                return `
+
+                                    <li class="page-item ${page === currentPage ? 'active' : ''}">
+
+                                        <button
+                                            type="button"
+                                            class="page-link"
+                                            data-page="${page}"
+                                        >
+                                            ${page}
+                                        </button>
+
+                                    </li>
+
+                                `;
+
+                            }).join('')}
+
+                            <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+
+                                <button
+                                    type="button"
+                                    class="page-link"
+                                    data-page="${currentPage + 1}"
+                                >
+                                    Próxima
+                                </button>
+
+                            </li>
+
+                        </ul>
+
+                    </nav>
+
+                </div>
+
+            `;
+
+            element
+                .querySelectorAll('[data-page]')
+                .forEach(function (button) {
+
+                    button.addEventListener(
+                        'click',
+                        function () {
+
+                            const page =
+                                Number(
+                                    this.dataset.page
+                                );
+
+                            if (
+                                page >= 1 &&
+                                page <= totalPages &&
+                                page !== currentPage
+                            ) {
+
+                                callback(page);
+
+                            }
+
+                        }
+                    );
+
+                });
+
+        }
+
+        function getEmptyMessage(type) {
+
+            if (type === 'queries') {
+                return 'Nenhuma consulta encontrada.';
+            }
+
+            if (type === 'pages') {
+                return 'Nenhuma página encontrada.';
+            }
+
+            return 'Nenhum dispositivo encontrado.';
+
+        }
+
+        function getDeviceLabel(device) {
+
+            const labels = {
+
+                desktop: 'Computador',
+
+                mobile: 'Celular',
+
+                tablet: 'Tablet'
+
+            };
+
+            return (
+                labels[
+                    String(device).toLowerCase()
+                ] || device
+            );
+
+        }
+
+        function emptyTable(columns, message) {
+
+            return `
+
+                <tr>
+
+                    <td
+                        colspan="${columns}"
+                        class="text-center text-muted py-4"
+                    >
+                        ${message}
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+
+        function escapeHtml(value) {
+
+            return String(value)
+
+                .replace(/&/g, '&amp;')
+
+                .replace(/</g, '&lt;')
+
+                .replace(/>/g, '&gt;')
+
+                .replace(/"/g, '&quot;')
+
+                .replace(/'/g, '&#039;');
+
+        }
+
+        function formatNumber(
+            value,
+            decimals = 0
+        ) {
+
+            return Number(value || 0).toLocaleString(
+                'pt-BR',
+                {
+                    minimumFractionDigits: decimals,
+                    maximumFractionDigits: decimals
+                }
+            );
+
+        }
+
+        function formatPercent(value) {
+
+            return (
+                Number(value || 0) * 100
+            ).toLocaleString(
+                'pt-BR',
+                {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }
+            ) + '%';
+
+        }
+
+        function formatVariation(value) {
+
+            const number =
+                Number(value || 0);
+
+            return (
+
+                Math.abs(number).toLocaleString(
+                    'pt-BR',
+                    {
+                        minimumFractionDigits: 1,
+                        maximumFractionDigits: 1
+                    }
+                ) + '%'
+
+            );
+
+        }
+
+        function formatDate(value) {
+
+            const date =
+                String(value || '');
+
+            if (
+                !/^\d{4}-\d{2}-\d{2}$/.test(date)
+            ) {
+
+                return date;
+
+            }
+
+            const [
+                year,
+                month,
+                day
+            ] = date.split('-');
+
+            return `${day}/${month}/${year}`;
+
+        }
+
+    });
 </script>
+
+
+{{-- Modal de mensagem do Search Console --}}
+<div class="modal fade"
+    id="searchConsoleMessageModal"
+    tabindex="-1"
+    aria-labelledby="searchConsoleMessageModalLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content border-0 shadow-lg overflow-hidden">
+
+            <div class="modal-header border-0 pb-0">
+                <button
+                    type="button"
+                    class="btn-close ms-auto"
+                    data-bs-dismiss="modal"
+                    aria-label="Fechar"
+                ></button>
+            </div>
+
+            <div class="modal-body text-center px-4 pt-0 pb-4">
+
+                <div
+                    id="searchConsoleMessageModalIcon"
+                    class="d-flex align-items-center justify-content-center mx-auto mb-3 rounded-circle"
+                    style="
+                        width: 64px;
+                        height: 64px;
+                        background-color: rgba(220, 53, 69, .10);
+                    "
+                >
+                    <i
+                        class="bi bi-exclamation-circle-fill text-danger"
+                        style="font-size: 30px;"
+                    ></i>
+                </div>
+
+                <h5
+                    id="searchConsoleMessageModalLabel"
+                    class="fw-semibold mb-2"
+                >
+                    Atenção
+                </h5>
+
+                <p
+                    id="searchConsoleMessageModalBody"
+                    class="text-dark mb-0"
+                    style="line-height: 1.6;"
+                ></p>
+
+            </div>
+
+            <div class="modal-footer border-0 justify-content-center pt-0 pb-4">
+                <button
+                    type="button"
+                    class="btn btn-primary px-4 text-dark"
+                    data-bs-dismiss="modal"
+                >
+                    Entendi
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>

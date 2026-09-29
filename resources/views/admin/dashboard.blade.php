@@ -462,7 +462,7 @@
                             rel="noopener noreferrer"
                             class="btn btn-sm announcement-button"
                         >
-                            Acessar
+                            Saiba mais
                             <i class="bi bi-arrow-up-right ms-1"></i>
                         </a>
                     </div>
