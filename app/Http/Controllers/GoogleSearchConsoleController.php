@@ -101,25 +101,8 @@ class GoogleSearchConsoleController extends Controller
             $days = 28;
         }
 
-        /*
-        * =========================================================
-        * PERÍODO ATUAL
-        * =========================================================
-        */
-
-        $endDate = now()
-            ->subDay()
-            ->toDateString();
-
-        $startDate = now()
-            ->subDays($days)
-            ->toDateString();
-
-        /*
-        * =========================================================
-        * PERÍODO ANTERIOR
-        * =========================================================
-        */
+        $endDate = now()->subDay()->toDateString();
+        $startDate = now()->subDays($days)->toDateString();
 
         $previousEndDate = Carbon::parse($startDate)
             ->subDay()
@@ -130,47 +113,49 @@ class GoogleSearchConsoleController extends Controller
             ->toDateString();
 
         /*
-        * =========================================================
-        * DAILY
-        * =========================================================
+        |--------------------------------------------------------------------------
+        | Períodos
+        |--------------------------------------------------------------------------
+        */
+
+        $currentPeriod = GoogleSearchConsolePeriod::query()
+            ->where('tenant_id', $tenant->id)
+            ->where('start_date', $startDate)
+            ->where('end_date', $endDate)
+            ->first();
+
+        $previousPeriod = GoogleSearchConsolePeriod::query()
+            ->where('tenant_id', $tenant->id)
+            ->where('start_date', $previousStartDate)
+            ->where('end_date', $previousEndDate)
+            ->first();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Desempenho diário
+        |--------------------------------------------------------------------------
         */
 
         $dailyRows = GoogleSearchConsoleDaily::query()
             ->where('tenant_id', $tenant->id)
-            ->whereBetween('date', [
-                $startDate,
-                $endDate,
-            ])
+            ->whereBetween('date', [$startDate, $endDate])
             ->orderBy('date')
             ->get();
 
-        $clicks = $dailyRows->sum('clicks');
-        $impressions = $dailyRows->sum('impressions');
-
-        $ctr = $impressions > 0
-            ? $clicks / $impressions
-            : 0;
-
-        $position = $dailyRows->avg('position') ?? 0;
-
-        $daily = $dailyRows
-            ->map(function ($row) {
-                return [
-                    'keys' => [
-                        $row->date->toDateString(),
-                    ],
-                    'clicks' => (float) $row->clicks,
-                    'impressions' => (float) $row->impressions,
-                    'ctr' => (float) $row->ctr,
-                    'position' => (float) $row->position,
-                ];
-            })
-            ->values();
+        $daily = $dailyRows->map(function ($row) {
+            return [
+                'keys' => [$row->date->toDateString()],
+                'clicks' => (float) $row->clicks,
+                'impressions' => (float) $row->impressions,
+                'ctr' => (float) $row->ctr,
+                'position' => (float) $row->position,
+            ];
+        })->values();
 
         /*
-        * =========================================================
-        * CONSULTAS - ATUAL
-        * =========================================================
+        |--------------------------------------------------------------------------
+        | Consultas
+        |--------------------------------------------------------------------------
         */
 
         $queries = GoogleSearchConsoleQuery::query()
@@ -181,9 +166,7 @@ class GoogleSearchConsoleController extends Controller
             ->get()
             ->map(function ($row) {
                 return [
-                    'keys' => [
-                        $row->query,
-                    ],
+                    'keys' => [$row->query],
                     'clicks' => (float) $row->clicks,
                     'impressions' => (float) $row->impressions,
                     'ctr' => (float) $row->ctr,
@@ -193,9 +176,9 @@ class GoogleSearchConsoleController extends Controller
             ->values();
 
         /*
-        * =========================================================
-        * PÁGINAS - ATUAL
-        * =========================================================
+        |--------------------------------------------------------------------------
+        | Páginas
+        |--------------------------------------------------------------------------
         */
 
         $pages = GoogleSearchConsolePage::query()
@@ -206,9 +189,7 @@ class GoogleSearchConsoleController extends Controller
             ->get()
             ->map(function ($row) {
                 return [
-                    'keys' => [
-                        $row->page,
-                    ],
+                    'keys' => [$row->page],
                     'clicks' => (float) $row->clicks,
                     'impressions' => (float) $row->impressions,
                     'ctr' => (float) $row->ctr,
@@ -218,9 +199,9 @@ class GoogleSearchConsoleController extends Controller
             ->values();
 
         /*
-        * =========================================================
-        * DISPOSITIVOS - ATUAL
-        * =========================================================
+        |--------------------------------------------------------------------------
+        | Dispositivos
+        |--------------------------------------------------------------------------
         */
 
         $devices = GoogleSearchConsoleDevice::query()
@@ -231,9 +212,7 @@ class GoogleSearchConsoleController extends Controller
             ->get()
             ->map(function ($row) {
                 return [
-                    'keys' => [
-                        $row->device,
-                    ],
+                    'keys' => [$row->device],
                     'clicks' => (float) $row->clicks,
                     'impressions' => (float) $row->impressions,
                     'ctr' => (float) $row->ctr,
@@ -243,9 +222,9 @@ class GoogleSearchConsoleController extends Controller
             ->values();
 
         /*
-        * =========================================================
-        * CONSULTAS - ANTERIOR
-        * =========================================================
+        |--------------------------------------------------------------------------
+        | Comparação de consultas
+        |--------------------------------------------------------------------------
         */
 
         $previousQueries = GoogleSearchConsoleQuery::query()
@@ -256,9 +235,7 @@ class GoogleSearchConsoleController extends Controller
             ->get()
             ->map(function ($row) {
                 return [
-                    'keys' => [
-                        $row->query,
-                    ],
+                    'keys' => [$row->query],
                     'clicks' => (float) $row->clicks,
                     'impressions' => (float) $row->impressions,
                     'ctr' => (float) $row->ctr,
@@ -268,9 +245,9 @@ class GoogleSearchConsoleController extends Controller
             ->values();
 
         /*
-        * =========================================================
-        * PÁGINAS - ANTERIOR
-        * =========================================================
+        |--------------------------------------------------------------------------
+        | Comparação de páginas
+        |--------------------------------------------------------------------------
         */
 
         $previousPages = GoogleSearchConsolePage::query()
@@ -281,9 +258,7 @@ class GoogleSearchConsoleController extends Controller
             ->get()
             ->map(function ($row) {
                 return [
-                    'keys' => [
-                        $row->page,
-                    ],
+                    'keys' => [$row->page],
                     'clicks' => (float) $row->clicks,
                     'impressions' => (float) $row->impressions,
                     'ctr' => (float) $row->ctr,
@@ -292,6 +267,26 @@ class GoogleSearchConsoleController extends Controller
             })
             ->values();
 
+        /*
+        |--------------------------------------------------------------------------
+        | Métricas gerais
+        |--------------------------------------------------------------------------
+        */
+
+        $overview = [
+            'clicks' => (float) ($currentPeriod?->clicks ?? 0),
+            'impressions' => (float) ($currentPeriod?->impressions ?? 0),
+            'ctr' => (float) ($currentPeriod?->ctr ?? 0),
+            'position' => (float) ($currentPeriod?->position ?? 0),
+        ];
+
+        $previousOverview = [
+            'clicks' => (float) ($previousPeriod?->clicks ?? 0),
+            'impressions' => (float) ($previousPeriod?->impressions ?? 0),
+            'ctr' => (float) ($previousPeriod?->ctr ?? 0),
+            'position' => (float) ($previousPeriod?->position ?? 0),
+        ];
+
         return response()->json([
             'start_date' => $startDate,
             'end_date' => $endDate,
@@ -299,12 +294,9 @@ class GoogleSearchConsoleController extends Controller
             'previous_start_date' => $previousStartDate,
             'previous_end_date' => $previousEndDate,
 
-            'overview' => [
-                'clicks' => $clicks,
-                'impressions' => $impressions,
-                'ctr' => $ctr,
-                'position' => $position,
-            ],
+            'overview' => $overview,
+
+            'previous_overview' => $previousOverview,
 
             'daily' => $daily,
 
