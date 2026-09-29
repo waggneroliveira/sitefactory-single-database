@@ -320,6 +320,7 @@ class GoogleSearchConsoleController extends Controller
         ]);
     }
 
+
     public function sync(
         Request $request,
         Tenant $tenant,
@@ -333,78 +334,86 @@ class GoogleSearchConsoleController extends Controller
             ], 404);
         }
 
-        $days = (int) $request->input('days', 28);
+        $requestedDays = (int) $request->input('days', 28);
 
-        if (!in_array($days, [7, 28, 90, 180], true)) {
-            $days = 28;
+        if (!in_array($requestedDays, [7, 28, 90, 180], true)) {
+            $requestedDays = 28;
         }
 
-        $currentEndDate = now()
-            ->subDay()
-            ->toDateString();
-
-        $currentStartDate = now()
-            ->subDays($days)
-            ->toDateString();
-
-        $previousEndDate = Carbon::parse($currentStartDate)
-            ->subDay()
-            ->toDateString();
-
-        $previousStartDate = Carbon::parse($previousEndDate)
-            ->subDays($days - 1)
-            ->toDateString();
+        $periods = [7, 28, 90, 180];
 
         try {
-            $currentData = $service->getDashboardDataForPeriod(
-                $searchConsole->property,
-                $currentStartDate,
-                $currentEndDate
-            );
+            $syncedPeriods = [];
 
-            $previousData = $service->getDashboardDataForPeriod(
-                $searchConsole->property,
-                $previousStartDate,
-                $previousEndDate
-            );
+            foreach ($periods as $days) {
+                $currentEndDate = now()
+                    ->subDay()
+                    ->toDateString();
 
-            DB::transaction(function () use (
-                $tenant,
-                $searchConsole,
-                $currentData,
-                $previousData
-            ) {
-                $this->saveSearchConsolePeriod(
-                    $tenant,
-                    $currentData
+                $currentStartDate = now()
+                    ->subDays($days)
+                    ->toDateString();
+
+                $previousEndDate = Carbon::parse($currentStartDate)
+                    ->subDay()
+                    ->toDateString();
+
+                $previousStartDate = Carbon::parse($previousEndDate)
+                    ->subDays($days - 1)
+                    ->toDateString();
+
+                $currentData = $service->getDashboardDataForPeriod(
+                    $searchConsole->property,
+                    $currentStartDate,
+                    $currentEndDate
                 );
 
-                $this->saveSearchConsolePeriod(
+                $previousData = $service->getDashboardDataForPeriod(
+                    $searchConsole->property,
+                    $previousStartDate,
+                    $previousEndDate
+                );
+
+                DB::transaction(function () use (
                     $tenant,
+                    $currentData,
                     $previousData
-                );
+                ) {
+                    $this->saveSearchConsolePeriod(
+                        $tenant,
+                        $currentData
+                    );
 
-                $searchConsole->update([
-                    'last_synced_at' => now(),
-                    'last_sync_status' => 'success',
-                    'last_sync_error' => null,
-                ]);
-            });
+                    $this->saveSearchConsolePeriod(
+                        $tenant,
+                        $previousData
+                    );
+                });
+
+                $syncedPeriods[] = [
+                    'days' => $days,
+                    'current' => [
+                        'start_date' => $currentStartDate,
+                        'end_date' => $currentEndDate,
+                    ],
+                    'previous' => [
+                        'start_date' => $previousStartDate,
+                        'end_date' => $previousEndDate,
+                    ],
+                ];
+            }
+
+            $searchConsole->update([
+                'last_synced_at' => now(),
+                'last_sync_status' => 'success',
+                'last_sync_error' => null,
+            ]);
 
             return response()->json([
                 'success' => true,
                 'message' => 'Dados do Google Search Console sincronizados com sucesso.',
-
-                'current' => [
-                    'start_date' => $currentStartDate,
-                    'end_date' => $currentEndDate,
-                ],
-
-                'previous' => [
-                    'start_date' => $previousStartDate,
-                    'end_date' => $previousEndDate,
-                ],
-
+                'requested_days' => $requestedDays,
+                'periods' => $syncedPeriods,
                 'last_synced_at' => now()->toISOString(),
             ]);
         } catch (Throwable $e) {

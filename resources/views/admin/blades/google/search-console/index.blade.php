@@ -45,856 +45,163 @@
         font-size: 11px;
         font-weight: 400;
     }
+
+    .metric-variation {
+        font-size: 11px;
+        min-height: 18px;
+    }
+
+    .data-table-scroll {
+        max-height: 500px;
+        overflow-y: auto;
+        overflow-x: auto;
+    }
+
+    .data-table-scroll thead th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background: #fff;
+        white-space: nowrap;
+    }
+
+    .pagination-info {
+        font-size: 12px;
+    }
+
+    .comparison-period {
+        font-size: 11px;
+    }
+
+    .trend-table {
+        max-height: 450px;
+        overflow-y: auto;
+        overflow-x: auto;
+    }
+
+    .trend-table thead th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background: #fff;
+    }
 </style>
 
 <div class="scroll" style="overflow-x:hidden; overflow-y:auto; height:635px;">
 
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 my-3">
-        <div class="col-12 col-lg-12 d-flex justify-content-between align-items-center">
-            <div class="row col-12 col-lg-10">
-                <h1 class="h4 mb-1 d-flex align-items-center gap-2">
-                    <i class="bi bi-google"></i>
-                    Google Search Console
-                </h1>
-    
-                <p class="text-muted mb-0">
-                    Acompanhe o desempenho orgânico dos sites no Google.
-                </p>
-            </div>
+```
+{{-- CABEÇALHO --}}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 my-3">
 
-            <a href="{{ route('google.search-console.connect') }}"
-                class="btn btn-primary text-dark"
-            >
-                <i class="bi bi-google me-1"></i>
-                Conectar ao Google
-            </a>
-        </div>
+    <div class="col-12 col-lg-12 d-flex justify-content-between align-items-center">
 
-        <span class="badge bg-light text-dark border text-wrap text-start p-2" style="line-height: 16px;">
-            <i class="bi bi-info-circle me-1"></i>
-            Os dados apresentados são obtidos diretamente do Google Search Console e organizados pelo WHI WEB para facilitar o acompanhamento do desempenho do site. As consultas consideram o período selecionado e o fuso horário de Brasília (America/Sao_Paulo). Pequenas variações em relação ao painel do Google podem ocorrer devido aos períodos, filtros e critérios de processamento utilizados na consulta.
-        </span>
-    </div>
-    
-    {{-- FILTROS --}}
-    <div class="card border-0 shadow-sm mb-4">
-        <div class="card-body">
-            <div class="row align-items-end g-3">
+        <div class="row col-12 col-lg-10">
 
-                <div class="col-lg-6">
-                    <label for="tenant" class="form-label">
-                        Site
-                    </label>
-
-                    <select id="tenant" class="form-select">
-                        <option value="">
-                            Selecione um site
-                        </option>
-
-                        @foreach($tenants as $tenant)
-                            <option value="{{ $tenant->id }}">
-                                {{ $tenant->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="col-lg-3">
-                    <label for="period" class="form-label">
-                        Período
-                    </label>
-
-                    <select id="period" class="form-select">
-                        <option value="7">
-                            Últimos 7 dias
-                        </option>
-
-                        <option value="28" selected>
-                            Últimos 28 dias
-                        </option>
-
-                        <option value="90">
-                            Últimos 3 meses
-                        </option>
-
-                        <option value="180">
-                            Últimos 6 meses
-                        </option>
-                    </select>
-                </div>
-
-                <div class="col-lg-3">
-                    <button
-                        type="button"
-                        id="loadSearchConsole"
-                        class="btn btn-primary w-100 text-dark"
-                    >
-                        <i class="bi bi-arrow-repeat me-1"></i>
-                        Consultar dados
-                    </button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    {{-- LOADING --}}
-    <div
-        id="searchConsoleLoading"
-        class="text-center py-5 d-none"
-    >
-        <div class="spinner-border text-primary mb-3"></div>
-
-        <div class="text-muted">
-            Consultando dados do Google Search Console...
-        </div>
-    </div>
-
-    {{-- ESTADO VAZIO --}}
-    <div
-        id="searchConsoleEmpty"
-        class="card border-0 shadow-sm"
-    >
-        <div class="card-body text-center py-5">
-
-            <div class="mb-3">
-                <i class="bi bi-bar-chart-line fs-1 text-muted"></i>
-            </div>
-
-            <h5 class="mb-2">
-                Selecione um site
-            </h5>
+            <h1 class="h4 mb-1 d-flex align-items-center gap-2">
+                <i class="bi bi-google"></i>
+                Google Search Console
+            </h1>
 
             <p class="text-muted mb-0">
-                Selecione um site acima para consultar os dados
-                do Google Search Console.
+                Acompanhe o desempenho orgânico dos sites no Google.
             </p>
 
         </div>
+
+        <a
+            href="{{ route('google.search-console.connect') }}"
+            class="btn btn-primary text-dark"
+        >
+            <i class="bi bi-google me-1"></i>
+            Conectar ao Google
+        </a>
+
     </div>
 
-    {{-- DASHBOARD --}}
-    <div
-        id="searchConsoleDashboard"
-        class="d-none"
+    <span
+        class="badge bg-light text-dark border text-wrap text-start p-2"
+        style="line-height: 16px;"
     >
+        <i class="bi bi-info-circle me-1"></i>
+        Os dados apresentados são obtidos diretamente do Google Search Console
+        e organizados pelo WHI WEB para facilitar o acompanhamento do desempenho
+        do site. As consultas consideram o período selecionado e o fuso horário
+        de Brasília (America/Sao_Paulo). Pequenas variações em relação ao painel
+        do Google podem ocorrer devido aos períodos, filtros e critérios de
+        processamento utilizados na consulta.
+    </span>
 
-        {{-- MÉTRICAS --}}
-        <div class="row g-3 mb-4">
+</div>
 
-            {{-- CLIQUES --}}
-            <div class="col-xl-3 col-md-6">
-                <div class="card h-100">
-                    <div class="card-body d-flex justify-content-center align-items-center py-0 px-3">
+{{-- FILTROS --}}
+<div class="card border-0 shadow-sm mb-4">
 
-                        <div class="d-flex align-items-center flex-wrap">
+    <div class="card-body">
 
-                            <div class="flex-grow-1">
+        <div class="row align-items-end g-3">
 
-                                <h5 class="text-muted fw-normal mt-0 mb-2">
-                                    Cliques
-                                </h5>
+            <div class="col-lg-6">
 
-                                <h3
-                                    id="metricClicks"
-                                    class="my-1"
-                                >
-                                    0
-                                </h3>
+                <label for="tenant" class="form-label">
+                    Site
+                </label>
 
-                                <p class="mb-2 text-muted">
-                                    Cliques na pesquisa
-                                </p>
+                <select id="tenant" class="form-select">
 
-                            </div>
+                    <option value="">
+                        Selecione um site
+                    </option>
 
-                            <div class="avatar-sm">
-                                <span class="avatar-title bg-primary-subtle text-primary rounded">
-                                    <i class="ri-cursor-line font-24"></i>
-                                </span>
-                            </div>
+                    @foreach($tenants as $tenant)
 
-                            <span class="badge bg-light text-secondary metric-info text-wrap text-start col-12">
-                                <i class="bi bi-info-circle me-1"></i>
-                                Total de acessos gerados pelos resultados do Google.
-                            </span>
-                        </div>
+                        <option value="{{ $tenant->id }}">
+                            {{ $tenant->name }}
+                        </option>
 
-                    </div>
-                </div>
-            </div>
+                    @endforeach
 
-            {{-- IMPRESSÕES --}}
-            <div class="col-xl-3 col-md-6">
-                <div class="card h-100">
-                    <div class="card-body d-flex justify-content-center align-items-center py-0 px-3">
-
-                        <div class="d-flex align-items-center flex-wrap">
-
-                            <div class="flex-grow-1">
-
-                                <h5 class="text-muted fw-normal mt-0 mb-2">
-                                    Impressões
-                                </h5>
-
-                                <h3
-                                    id="metricImpressions"
-                                    class="my-1"
-                                >
-                                    0
-                                </h3>
-
-                                <p class="mb-2 text-muted">
-                                    Exibições na pesquisa
-                                </p>
-                            </div>
-
-                            <div class="avatar-sm">
-                                <span class="avatar-title bg-success-subtle text-success rounded">
-                                    <i class="ri-eye-line font-24"></i>
-                                </span>
-                            </div>
-                            <span class="badge bg-light text-secondary metric-info text-wrap text-start col-12">
-                                <i class="bi bi-info-circle me-1"></i>
-                                Quantidade de vezes que uma página apareceu no Google.
-                            </span>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            {{-- CTR --}}
-            <div class="col-xl-3 col-md-6">
-                <div class="card h-100">
-                    <div class="card-body d-flex justify-content-center align-items-center py-0 px-3">
-
-                        <div class="d-flex align-items-center flex-wrap">
-
-                            <div class="flex-grow-1">
-
-                                <h5 class="text-muted fw-normal mt-0 mb-2">
-                                    CTR
-                                </h5>
-
-                                <h3
-                                    id="metricCtr"
-                                    class="my-1"
-                                >
-                                    0%
-                                </h3>
-
-                                <p class="mb-2 text-muted">
-                                    Taxa de cliques
-                                </p>
-
-                            </div>
-
-                            <div class="avatar-sm">
-                                <span class="avatar-title bg-info-subtle text-info rounded">
-                                    <i class="ri-percent-line font-24"></i>
-                                </span>
-                            </div>
-
-                            <span class="badge bg-light text-secondary metric-info col-12">
-                                <i class="bi bi-calculator me-1"></i>
-                                Cliques ÷ impressões × 100.
-                            </span>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            {{-- POSIÇÃO --}}
-            <div class="col-xl-3 col-md-6">
-                <div class="card h-100">
-                    <div class="card-body d-flex justify-content-center align-items-center py-0 px-3">
-
-                        <div class="d-flex align-items-center flex-wrap">
-
-                            <div class="flex-grow-1">
-
-                                <h5 class="text-muted fw-normal mt-0 mb-2">
-                                    Posição média
-                                </h5>
-
-                                <h3
-                                    id="metricPosition"
-                                    class="my-1"
-                                >
-                                    0
-                                </h3>
-
-                                <p class="mb-2 text-muted">
-                                    Posição nos resultados
-                                </p>
-
-                            </div>
-
-                            <div class="avatar-sm">
-                                <span class="avatar-title bg-warning-subtle text-warning rounded">
-                                    <i class="ri-bar-chart-line font-24"></i>
-                                </span>
-                            </div>
-
-                            <span class="badge bg-light text-secondary metric-info text-wrap text-start col-12">
-                                <i class="bi bi-info-circle me-1"></i>
-                                Média das posições em que o site apareceu.
-                            </span>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        {{-- GRÁFICO --}}
-        <div class="card border-0 shadow-sm mb-4">
-            <div class="card-body">
-
-                <div class="d-flex justify-content-between align-items-center mb-4">
-
-                    <div>
-
-                        <h5 class="mb-1">
-                            Desempenho
-                        </h5>
-
-                        <p class="text-muted small mb-2">
-                            Cliques e impressões por dia.
-                        </p>
-
-                        <span class="badge bg-light text-secondary section-info">
-                            <i class="bi bi-info-circle me-1"></i>
-                            Os dados são agrupados por dia dentro do período selecionado.
-                        </span>
-
-                    </div>
-
-                </div>
-
-                <div style="height:350px;">
-                    <canvas id="searchConsoleChart"></canvas>
-                </div>
+                </select>
 
             </div>
-        </div>
 
-        {{-- DESEMPENHO DETALHADO --}}
-        <div class="card border-0 shadow-sm mb-4">
-            <div class="card-body">
+            <div class="col-lg-3">
 
-                <div class="d-flex justify-content-between align-items-center mb-3">
+                <label for="period" class="form-label">
+                    Período
+                </label>
 
-                    <div>
+                <select id="period" class="form-select">
 
-                        <h5 class="mb-1">
-                            Desempenho detalhado
-                        </h5>
+                    <option value="7">
+                        Últimos 7 dias
+                    </option>
 
-                        <p class="text-muted small mb-2">
-                            Consulte os principais resultados do período selecionado.
-                        </p>
+                    <option value="28" selected>
+                        Últimos 28 dias
+                    </option>
 
-                        <span class="badge bg-light text-secondary section-info">
-                            <i class="bi bi-info-circle me-1"></i>
-                            Os resultados são organizados pelas métricas registradas pelo Google Search Console.
-                        </span>
+                    <option value="90">
+                        Últimos 3 meses
+                    </option>
 
-                    </div>
+                    <option value="180">
+                        Últimos 6 meses
+                    </option>
 
-                </div>
+                </select>
 
-                {{-- ABAS --}}
-                <ul
-                    class="nav nav-tabs nav-bordered mb-3"
-                    role="tablist"
+            </div>
+
+            <div class="col-lg-3">
+
+                <button
+                    type="button"
+                    id="loadSearchConsole"
+                    class="btn btn-primary w-100 text-dark"
                 >
-
-                    <li class="nav-item" role="presentation">
-                        <button
-                            class="nav-link active"
-                            id="queries-tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#queriesContent"
-                            type="button"
-                            role="tab"
-                            aria-controls="queriesContent"
-                            aria-selected="true"
-                        >
-                            <i class="ri-search-line me-1"></i>
-                            Principais consultas
-                        </button>
-                    </li>
-
-                    <li class="nav-item" role="presentation">
-                        <button
-                            class="nav-link"
-                            id="pages-tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#pagesContent"
-                            type="button"
-                            role="tab"
-                            aria-controls="pagesContent"
-                            aria-selected="false"
-                        >
-                            <i class="ri-pages-line me-1"></i>
-                            Principais páginas
-                        </button>
-                    </li>
-
-                    <li class="nav-item" role="presentation">
-                        <button
-                            class="nav-link"
-                            id="devices-tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#devicesContent"
-                            type="button"
-                            role="tab"
-                            aria-controls="devicesContent"
-                            aria-selected="false"
-                        >
-                            <i class="ri-smartphone-line me-1"></i>
-                            Dispositivos
-                        </button>
-                    </li>
-
-                </ul>
-
-                <div class="tab-content">
-
-                    {{-- CONSULTAS --}}
-                    <div
-                        class="tab-pane fade show active"
-                        id="queriesContent"
-                        role="tabpanel"
-                        aria-labelledby="queries-tab"
-                    >
-
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-
-                            <div>
-
-                                <h6 class="mb-1">
-                                    Principais consultas
-                                </h6>
-
-                                <p class="text-muted small mb-0">
-                                    Termos que geraram tráfego para o site.
-                                </p>
-
-                            </div>
-
-                            <span class="badge bg-primary-subtle text-primary">
-                                Google
-                            </span>
-
-                        </div>
-
-                        <div class="table-responsive">
-
-                            <table class="table table-hover table-centered mb-0">
-
-                                <thead>
-                                    <tr>
-                                        <th>Consulta</th>
-                                        <th class="text-end">Cliques</th>
-                                        <th class="text-end">Impressões</th>
-                                        <th class="text-end">CTR</th>
-                                        <th class="text-end">Posição</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody id="queriesTable"></tbody>
-
-                            </table>
-
-                        </div>
-
-                    </div>
-
-                    {{-- PÁGINAS --}}
-                    <div
-                        class="tab-pane fade"
-                        id="pagesContent"
-                        role="tabpanel"
-                        aria-labelledby="pages-tab"
-                    >
-
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-
-                            <div>
-
-                                <h6 class="mb-1">
-                                    Principais páginas
-                                </h6>
-
-                                <p class="text-muted small mb-0">
-                                    Páginas que receberam tráfego orgânico.
-                                </p>
-
-                            </div>
-
-                            <span class="badge bg-success-subtle text-success">
-                                Páginas
-                            </span>
-
-                        </div>
-
-                        <div class="table-responsive">
-
-                            <table class="table table-hover table-centered mb-0">
-
-                                <thead>
-                                    <tr>
-                                        <th>Página</th>
-                                        <th class="text-end">Cliques</th>
-                                        <th class="text-end">Impressões</th>
-                                        <th class="text-end">CTR</th>
-                                        <th class="text-end">Posição</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody id="pagesTable"></tbody>
-
-                            </table>
-
-                        </div>
-
-                    </div>
-
-                    {{-- DISPOSITIVOS --}}
-                    <div
-                        class="tab-pane fade"
-                        id="devicesContent"
-                        role="tabpanel"
-                        aria-labelledby="devices-tab"
-                    >
-
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-
-                            <div>
-
-                                <h6 class="mb-1">
-                                    Dispositivos
-                                </h6>
-
-                                <p class="text-muted small mb-0">
-                                    Desempenho do site por tipo de dispositivo.
-                                </p>
-
-                            </div>
-
-                            <span class="badge bg-info-subtle text-info">
-                                Dispositivos
-                            </span>
-
-                        </div>
-
-                        <div class="table-responsive">
-
-                            <table class="table table-hover table-centered mb-0">
-
-                                <thead>
-                                    <tr>
-                                        <th>Dispositivo</th>
-                                        <th class="text-end">Cliques</th>
-                                        <th class="text-end">Impressões</th>
-                                        <th class="text-end">CTR</th>
-                                        <th class="text-end">Posição</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody id="devicesTable"></tbody>
-
-                            </table>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-
-        {{-- TENDÊNCIAS --}}
-        <div class="card border-0 shadow-sm mb-4">
-            <div class="card-body">
-
-                <div class="mb-4">
-
-                    <h5 class="mb-1">
-                        Tendências de pesquisa
-                    </h5>
-
-                    <p class="text-muted small mb-2">
-                        Compare o período atual com o período anterior de mesma duração.
-                    </p>
-
-                    <span class="badge bg-light text-secondary section-info">
-                        <i class="bi bi-calculator me-1"></i>
-                        A variação é calculada comparando os cliques do período atual com o período anterior equivalente.
-                    </span>
-
-                </div>
-
-                <div class="row g-4">
-
-                    {{-- SEU CONTEÚDO --}}
-                    <div class="col-12 col-lg-12">
-
-                        <div class="card border h-100 comparison-card">
-
-                            <div class="card-body">
-
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-
-                                    <div>
-
-                                        <h5 class="mb-1">
-                                            Seu conteúdo
-                                        </h5>
-
-                                        <p class="text-muted small mb-2">
-                                            Desempenho das páginas do site.
-                                        </p>
-
-                                        <span class="badge bg-light text-secondary trend-info">
-                                            <i class="bi bi-info-circle me-1"></i>
-                                            Superior = mais cliques · Em alta = aumento de cliques · Em baixa = redução de cliques.
-                                        </span>
-
-                                    </div>
-
-                                    <i class="ri-pages-line fs-4 text-success"></i>
-
-                                </div>
-
-                                <ul
-                                    class="nav nav-tabs mb-3"
-                                    role="tablist"
-                                >
-
-                                    <li class="nav-item">
-                                        <button
-                                            class="nav-link active"
-                                            data-bs-toggle="tab"
-                                            data-bs-target="#pagesTop"
-                                            type="button"
-                                        >
-                                            Superior
-                                        </button>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <button
-                                            class="nav-link"
-                                            data-bs-toggle="tab"
-                                            data-bs-target="#pagesUp"
-                                            type="button"
-                                        >
-                                            Em alta
-                                        </button>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <button
-                                            class="nav-link"
-                                            data-bs-toggle="tab"
-                                            data-bs-target="#pagesDown"
-                                            type="button"
-                                        >
-                                            Em baixa
-                                        </button>
-                                    </li>
-
-                                </ul>
-
-                                <div class="tab-content">
-
-                                    <div
-                                        class="tab-pane fade show active"
-                                        id="pagesTop"
-                                    >
-                                        <div
-                                            class="table-responsive"
-                                            id="pagesTopTable"
-                                        ></div>
-                                    </div>
-
-                                    <div
-                                        class="tab-pane fade"
-                                        id="pagesUp"
-                                    >
-                                        <div
-                                            class="table-responsive"
-                                            id="pagesUpTable"
-                                        ></div>
-                                    </div>
-
-                                    <div
-                                        class="tab-pane fade"
-                                        id="pagesDown"
-                                    >
-                                        <div
-                                            class="table-responsive"
-                                            id="pagesDownTable"
-                                        ></div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    {{-- CONSULTAS --}}
-                    <div class="col-12 col-lg-12">
-
-                        <div class="card border h-100 comparison-card">
-
-                            <div class="card-body">
-
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-
-                                    <div>
-
-                                        <h5 class="mb-1">
-                                            Consultas que levam ao seu site
-                                        </h5>
-
-                                        <p class="text-muted small mb-2">
-                                            Termos que geram tráfego orgânico.
-                                        </p>
-
-                                        <span class="badge bg-light text-secondary trend-info">
-                                            <i class="bi bi-info-circle me-1"></i>
-                                            Superior = mais cliques · Em alta = aumento de cliques · Em baixa = redução de cliques.
-                                        </span>
-
-                                    </div>
-
-                                    <i class="ri-search-line fs-4 text-primary"></i>
-
-                                </div>
-
-                                <ul
-                                    class="nav nav-tabs mb-3"
-                                    role="tablist"
-                                >
-
-                                    <li class="nav-item">
-                                        <button
-                                            class="nav-link active"
-                                            data-bs-toggle="tab"
-                                            data-bs-target="#queriesTop"
-                                            type="button"
-                                        >
-                                            Superior
-                                        </button>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <button
-                                            class="nav-link"
-                                            data-bs-toggle="tab"
-                                            data-bs-target="#queriesUp"
-                                            type="button"
-                                        >
-                                            Em alta
-                                        </button>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <button
-                                            class="nav-link"
-                                            data-bs-toggle="tab"
-                                            data-bs-target="#queriesDown"
-                                            type="button"
-                                        >
-                                            Em baixa
-                                        </button>
-                                    </li>
-
-                                </ul>
-
-                                <div class="tab-content">
-
-                                    <div
-                                        class="tab-pane fade show active"
-                                        id="queriesTop"
-                                    >
-                                        <div
-                                            class="table-responsive"
-                                            id="queriesTopTable"
-                                        ></div>
-                                    </div>
-
-                                    <div
-                                        class="tab-pane fade"
-                                        id="queriesUp"
-                                    >
-                                        <div
-                                            class="table-responsive"
-                                            id="queriesUpTable"
-                                        ></div>
-                                    </div>
-
-                                    <div
-                                        class="tab-pane fade"
-                                        id="queriesDown"
-                                    >
-                                        <div
-                                            class="table-responsive"
-                                            id="queriesDownTable"
-                                        ></div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-
-        {{-- GRÁFICO DE COMPARAÇÃO --}}
-        <div class="card border-0 shadow-sm mb-4">
-
-            <div class="card-body">
-
-                <div class="mb-4">
-
-                    <h5 class="mb-1">
-                        Comparativo de tráfego
-                    </h5>
-
-                    <p class="text-muted small mb-2">
-                        Cliques do período atual comparados ao período anterior.
-                    </p>
-
-                    <span class="badge bg-light text-secondary section-info">
-                        <i class="bi bi-calculator me-1"></i>
-                        Compara o volume de cliques entre os dois períodos equivalentes.
-                    </span>
-
-                </div>
-
-                <div style="height:320px;">
-                    <canvas id="comparisonChart"></canvas>
-                </div>
+                    <i class="bi bi-arrow-repeat me-1"></i>
+                    Consultar dados
+                </button>
 
             </div>
 
@@ -904,728 +211,2374 @@
 
 </div>
 
+{{-- LOADING --}}
+<div
+    id="searchConsoleLoading"
+    class="text-center py-5 d-none"
+>
+
+    <div class="spinner-border text-primary mb-3"></div>
+
+    <div class="text-muted">
+        Consultando dados do Google Search Console...
+    </div>
+
+</div>
+
+{{-- ESTADO VAZIO --}}
+<div
+    id="searchConsoleEmpty"
+    class="card border-0 shadow-sm"
+>
+
+    <div class="card-body text-center py-5">
+
+        <div class="mb-3">
+            <i class="bi bi-bar-chart-line fs-1 text-muted"></i>
+        </div>
+
+        <h5 class="mb-2">
+            Selecione um site
+        </h5>
+
+        <p class="text-muted mb-0">
+            Selecione um site acima para consultar os dados
+            do Google Search Console.
+        </p>
+
+    </div>
+
+</div>
+
+{{-- DASHBOARD --}}
+<div
+    id="searchConsoleDashboard"
+    class="d-none"
+>
+
+    {{-- MÉTRICAS --}}
+    <div class="row g-3 mb-4">
+
+        {{-- CLIQUES --}}
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card h-100">
+
+                <div class="card-body d-flex justify-content-center align-items-center py-0 px-3">
+
+                    <div class="d-flex align-items-center flex-wrap w-100">
+
+                        <div class="flex-grow-1">
+
+                            <h5 class="text-muted fw-normal mt-0 mb-2">
+                                Cliques
+                            </h5>
+
+                            <h3
+                                id="metricClicks"
+                                class="my-1"
+                            >
+                                0
+                            </h3>
+
+                            <p class="mb-1 text-muted">
+                                Cliques na pesquisa
+                            </p>
+
+                            <div
+                                id="metricClicksVariation"
+                                class="metric-variation"
+                            ></div>
+
+                        </div>
+
+                        <div class="avatar-sm">
+
+                            <span class="avatar-title bg-primary-subtle text-primary rounded">
+                                <i class="ri-cursor-line font-24"></i>
+                            </span>
+
+                        </div>
+
+                        <span class="badge bg-light text-secondary metric-info text-wrap text-start col-12 mt-2">
+
+                            <i class="bi bi-info-circle me-1"></i>
+
+                            Total de acessos gerados pelos resultados do Google.
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {{-- IMPRESSÕES --}}
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card h-100">
+
+                <div class="card-body d-flex justify-content-center align-items-center py-0 px-3">
+
+                    <div class="d-flex align-items-center flex-wrap w-100">
+
+                        <div class="flex-grow-1">
+
+                            <h5 class="text-muted fw-normal mt-0 mb-2">
+                                Impressões
+                            </h5>
+
+                            <h3
+                                id="metricImpressions"
+                                class="my-1"
+                            >
+                                0
+                            </h3>
+
+                            <p class="mb-1 text-muted">
+                                Exibições na pesquisa
+                            </p>
+
+                            <div
+                                id="metricImpressionsVariation"
+                                class="metric-variation"
+                            ></div>
+
+                        </div>
+
+                        <div class="avatar-sm">
+
+                            <span class="avatar-title bg-success-subtle text-success rounded">
+                                <i class="ri-eye-line font-24"></i>
+                            </span>
+
+                        </div>
+
+                        <span class="badge bg-light text-secondary metric-info text-wrap text-start col-12 mt-2">
+
+                            <i class="bi bi-info-circle me-1"></i>
+
+                            Quantidade de vezes que uma página apareceu no Google.
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {{-- CTR --}}
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card h-100">
+
+                <div class="card-body d-flex justify-content-center align-items-center py-0 px-3">
+
+                    <div class="d-flex align-items-center flex-wrap w-100">
+
+                        <div class="flex-grow-1">
+
+                            <h5 class="text-muted fw-normal mt-0 mb-2">
+                                CTR
+                            </h5>
+
+                            <h3
+                                id="metricCtr"
+                                class="my-1"
+                            >
+                                0%
+                            </h3>
+
+                            <p class="mb-1 text-muted">
+                                Taxa de cliques
+                            </p>
+
+                            <div
+                                id="metricCtrVariation"
+                                class="metric-variation"
+                            ></div>
+
+                        </div>
+
+                        <div class="avatar-sm">
+
+                            <span class="avatar-title bg-info-subtle text-info rounded">
+                                <i class="ri-percent-line font-24"></i>
+                            </span>
+
+                        </div>
+
+                        <span class="badge bg-light text-secondary metric-info text-wrap text-start col-12 mt-2">
+
+                            <i class="bi bi-calculator me-1"></i>
+
+                            Cliques ÷ impressões × 100.
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {{-- POSIÇÃO --}}
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card h-100">
+
+                <div class="card-body d-flex justify-content-center align-items-center py-0 px-3">
+
+                    <div class="d-flex align-items-center flex-wrap w-100">
+
+                        <div class="flex-grow-1">
+
+                            <h5 class="text-muted fw-normal mt-0 mb-2">
+                                Posição média
+                            </h5>
+
+                            <h3
+                                id="metricPosition"
+                                class="my-1"
+                            >
+                                0
+                            </h3>
+
+                            <p class="mb-1 text-muted">
+                                Posição nos resultados
+                            </p>
+
+                            <div
+                                id="metricPositionVariation"
+                                class="metric-variation"
+                            ></div>
+
+                        </div>
+
+                        <div class="avatar-sm">
+
+                            <span class="avatar-title bg-warning-subtle text-warning rounded">
+                                <i class="ri-bar-chart-line font-24"></i>
+                            </span>
+
+                        </div>
+
+                        <span class="badge bg-light text-secondary metric-info text-wrap text-start col-12 mt-2">
+
+                            <i class="bi bi-info-circle me-1"></i>
+
+                            Média das posições em que o site apareceu.
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {{-- INFORMAÇÃO DO PERÍODO --}}
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+
+        <span
+            id="currentPeriodLabel"
+            class="badge bg-light text-secondary"
+        ></span>
+
+        <span
+            id="previousPeriodLabel"
+            class="badge bg-light text-secondary"
+        ></span>
+
+    </div>
+
+    {{-- GRÁFICO --}}
+    <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <div>
+
+                    <h5 class="mb-1">
+                        Desempenho
+                    </h5>
+
+                    <p class="text-muted small mb-2">
+                        Cliques e impressões por dia.
+                    </p>
+
+                    <span class="badge bg-light text-secondary section-info">
+
+                        <i class="bi bi-info-circle me-1"></i>
+
+                        Os dados são agrupados por dia dentro do período selecionado.
+
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div style="height:350px;">
+                <canvas id="searchConsoleChart"></canvas>
+            </div>
+
+        </div>
+
+    </div>
+
+    {{-- DESEMPENHO DETALHADO --}}
+    <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <div>
+
+                    <h5 class="mb-1">
+                        Desempenho detalhado
+                    </h5>
+
+                    <p class="text-muted small mb-2">
+                        Consulte os principais resultados do período selecionado.
+                    </p>
+
+                    <span class="badge bg-light text-secondary section-info">
+
+                        <i class="bi bi-info-circle me-1"></i>
+
+                        Os resultados são organizados pelas métricas registradas pelo Google Search Console.
+
+                    </span>
+
+                </div>
+
+            </div>
+
+            {{-- ABAS --}}
+            <ul
+                class="nav nav-tabs nav-bordered mb-3"
+                role="tablist"
+            >
+
+                <li class="nav-item" role="presentation">
+
+                    <button
+                        class="nav-link active"
+                        id="queries-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#queriesContent"
+                        type="button"
+                        role="tab"
+                        aria-controls="queriesContent"
+                        aria-selected="true"
+                    >
+
+                        <i class="ri-search-line me-1"></i>
+
+                        Principais consultas
+
+                    </button>
+
+                </li>
+
+                <li class="nav-item" role="presentation">
+
+                    <button
+                        class="nav-link"
+                        id="pages-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#pagesContent"
+                        type="button"
+                        role="tab"
+                        aria-controls="pagesContent"
+                        aria-selected="false"
+                    >
+
+                        <i class="ri-pages-line me-1"></i>
+
+                        Principais páginas
+
+                    </button>
+
+                </li>
+
+                <li class="nav-item" role="presentation">
+
+                    <button
+                        class="nav-link"
+                        id="devices-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#devicesContent"
+                        type="button"
+                        role="tab"
+                        aria-controls="devicesContent"
+                        aria-selected="false"
+                    >
+
+                        <i class="ri-smartphone-line me-1"></i>
+
+                        Dispositivos
+
+                    </button>
+
+                </li>
+
+            </ul>
+
+            <div class="tab-content">
+
+                {{-- CONSULTAS --}}
+                <div
+                    class="tab-pane fade show active"
+                    id="queriesContent"
+                    role="tabpanel"
+                    aria-labelledby="queries-tab"
+                >
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+
+                        <div>
+
+                            <h6 class="mb-1">
+                                Principais consultas
+                            </h6>
+
+                            <p class="text-muted small mb-0">
+                                Termos que geraram tráfego para o site.
+                            </p>
+
+                        </div>
+
+                        <span class="badge bg-primary-subtle text-primary">
+                            Google
+                        </span>
+
+                    </div>
+
+                    <div class="table-responsive data-table-scroll">
+
+                        <table class="table table-hover table-centered mb-0">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Consulta
+                                    </th>
+
+                                    <th class="text-end">
+                                        Cliques
+                                    </th>
+
+                                    <th class="text-end">
+                                        Impressões
+                                    </th>
+
+                                    <th class="text-end">
+                                        CTR
+                                    </th>
+
+                                    <th class="text-end">
+                                        Posição
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="queriesTable"></tbody>
+
+                        </table>
+
+                    </div>
+
+                    <div
+                        id="queriesPagination"
+                        class="mt-3"
+                    ></div>
+
+                </div>
+
+                {{-- PÁGINAS --}}
+                <div
+                    class="tab-pane fade"
+                    id="pagesContent"
+                    role="tabpanel"
+                    aria-labelledby="pages-tab"
+                >
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+
+                        <div>
+
+                            <h6 class="mb-1">
+                                Principais páginas
+                            </h6>
+
+                            <p class="text-muted small mb-0">
+                                Páginas que receberam tráfego orgânico.
+                            </p>
+
+                        </div>
+
+                        <span class="badge bg-success-subtle text-success">
+                            Páginas
+                        </span>
+
+                    </div>
+
+                    <div class="table-responsive data-table-scroll">
+
+                        <table class="table table-hover table-centered mb-0">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Página
+                                    </th>
+
+                                    <th class="text-end">
+                                        Cliques
+                                    </th>
+
+                                    <th class="text-end">
+                                        Impressões
+                                    </th>
+
+                                    <th class="text-end">
+                                        CTR
+                                    </th>
+
+                                    <th class="text-end">
+                                        Posição
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="pagesTable"></tbody>
+
+                        </table>
+
+                    </div>
+
+                    <div
+                        id="pagesPagination"
+                        class="mt-3"
+                    ></div>
+
+                </div>
+
+                {{-- DISPOSITIVOS --}}
+                <div
+                    class="tab-pane fade"
+                    id="devicesContent"
+                    role="tabpanel"
+                    aria-labelledby="devices-tab"
+                >
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+
+                        <div>
+
+                            <h6 class="mb-1">
+                                Dispositivos
+                            </h6>
+
+                            <p class="text-muted small mb-0">
+                                Desempenho do site por tipo de dispositivo.
+                            </p>
+
+                        </div>
+
+                        <span class="badge bg-info-subtle text-info">
+                            Dispositivos
+                        </span>
+
+                    </div>
+
+                    <div class="table-responsive data-table-scroll">
+
+                        <table class="table table-hover table-centered mb-0">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Dispositivo
+                                    </th>
+
+                                    <th class="text-end">
+                                        Cliques
+                                    </th>
+
+                                    <th class="text-end">
+                                        Impressões
+                                    </th>
+
+                                    <th class="text-end">
+                                        CTR
+                                    </th>
+
+                                    <th class="text-end">
+                                        Posição
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="devicesTable"></tbody>
+
+                        </table>
+
+                    </div>
+
+                    <div
+                        id="devicesPagination"
+                        class="mt-3"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {{-- TENDÊNCIAS --}}
+    <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <div class="mb-4">
+
+                <h5 class="mb-1">
+                    Tendências de pesquisa
+                </h5>
+
+                <p class="text-muted small mb-2">
+                    Compare o período atual com o período anterior de mesma duração.
+                </p>
+
+                <span class="badge bg-light text-secondary section-info">
+
+                    <i class="bi bi-calculator me-1"></i>
+
+                    A variação é calculada comparando os cliques do período atual
+                    com o período anterior equivalente.
+
+                </span>
+
+            </div>
+
+            <div class="row g-4">
+
+                {{-- PÁGINAS --}}
+                <div class="col-12 col-lg-12">
+
+                    <div class="card border h-100 comparison-card">
+
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                                <div>
+
+                                    <h5 class="mb-1">
+                                        Seu conteúdo
+                                    </h5>
+
+                                    <p class="text-muted small mb-2">
+                                        Desempenho das páginas do site.
+                                    </p>
+
+                                    <span class="badge bg-light text-secondary trend-info">
+
+                                        <i class="bi bi-info-circle me-1"></i>
+
+                                        Superior = mais cliques · Em alta = aumento de cliques ·
+                                        Em baixa = redução de cliques.
+
+                                    </span>
+
+                                </div>
+
+                                <i class="ri-pages-line fs-4 text-success"></i>
+
+                            </div>
+
+                            <ul
+                                class="nav nav-tabs mb-3"
+                                role="tablist"
+                            >
+
+                                <li class="nav-item">
+
+                                    <button
+                                        class="nav-link active"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#pagesTop"
+                                        type="button"
+                                    >
+                                        Superior
+                                    </button>
+
+                                </li>
+
+                                <li class="nav-item">
+
+                                    <button
+                                        class="nav-link"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#pagesUp"
+                                        type="button"
+                                    >
+                                        Em alta
+                                    </button>
+
+                                </li>
+
+                                <li class="nav-item">
+
+                                    <button
+                                        class="nav-link"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#pagesDown"
+                                        type="button"
+                                    >
+                                        Em baixa
+                                    </button>
+
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content">
+
+                                <div
+                                    class="tab-pane fade show active"
+                                    id="pagesTop"
+                                >
+
+                                    <div
+                                        class="table-responsive trend-table"
+                                        id="pagesTopTable"
+                                    ></div>
+
+                                </div>
+
+                                <div
+                                    class="tab-pane fade"
+                                    id="pagesUp"
+                                >
+
+                                    <div
+                                        class="table-responsive trend-table"
+                                        id="pagesUpTable"
+                                    ></div>
+
+                                </div>
+
+                                <div
+                                    class="tab-pane fade"
+                                    id="pagesDown"
+                                >
+
+                                    <div
+                                        class="table-responsive trend-table"
+                                        id="pagesDownTable"
+                                    ></div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {{-- CONSULTAS --}}
+                <div class="col-12 col-lg-12">
+
+                    <div class="card border h-100 comparison-card">
+
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                                <div>
+
+                                    <h5 class="mb-1">
+                                        Consultas que levam ao seu site
+                                    </h5>
+
+                                    <p class="text-muted small mb-2">
+                                        Termos que geram tráfego orgânico.
+                                    </p>
+
+                                    <span class="badge bg-light text-secondary trend-info">
+
+                                        <i class="bi bi-info-circle me-1"></i>
+
+                                        Superior = mais cliques · Em alta = aumento de cliques ·
+                                        Em baixa = redução de cliques.
+
+                                    </span>
+
+                                </div>
+
+                                <i class="ri-search-line fs-4 text-primary"></i>
+
+                            </div>
+
+                            <ul
+                                class="nav nav-tabs mb-3"
+                                role="tablist"
+                            >
+
+                                <li class="nav-item">
+
+                                    <button
+                                        class="nav-link active"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#queriesTop"
+                                        type="button"
+                                    >
+                                        Superior
+                                    </button>
+
+                                </li>
+
+                                <li class="nav-item">
+
+                                    <button
+                                        class="nav-link"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#queriesUp"
+                                        type="button"
+                                    >
+                                        Em alta
+                                    </button>
+
+                                </li>
+
+                                <li class="nav-item">
+
+                                    <button
+                                        class="nav-link"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#queriesDown"
+                                        type="button"
+                                    >
+                                        Em baixa
+                                    </button>
+
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content">
+
+                                <div
+                                    class="tab-pane fade show active"
+                                    id="queriesTop"
+                                >
+
+                                    <div
+                                        class="table-responsive trend-table"
+                                        id="queriesTopTable"
+                                    ></div>
+
+                                </div>
+
+                                <div
+                                    class="tab-pane fade"
+                                    id="queriesUp"
+                                >
+
+                                    <div
+                                        class="table-responsive trend-table"
+                                        id="queriesUpTable"
+                                    ></div>
+
+                                </div>
+
+                                <div
+                                    class="tab-pane fade"
+                                    id="queriesDown"
+                                >
+
+                                    <div
+                                        class="table-responsive trend-table"
+                                        id="queriesDownTable"
+                                    ></div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {{-- GRÁFICO DE COMPARAÇÃO --}}
+    <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <div class="mb-4">
+
+                <h5 class="mb-1">
+                    Comparativo de tráfego
+                </h5>
+
+                <p class="text-muted small mb-2">
+                    Cliques do período atual comparados ao período anterior.
+                </p>
+
+                <span class="badge bg-light text-secondary section-info">
+
+                    <i class="bi bi-calculator me-1"></i>
+
+                    Compara o volume total de cliques entre os dois períodos equivalentes.
+
+                </span>
+
+            </div>
+
+            <div style="height:320px;">
+                <canvas id="comparisonChart"></canvas>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</div>
+
 @endsection
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const tenant = document.getElementById('tenant');
-        const period = document.getElementById('period');
-        const button = document.getElementById('loadSearchConsole');
-        const loading = document.getElementById('searchConsoleLoading');
-        const empty = document.getElementById('searchConsoleEmpty');
-        const dashboard = document.getElementById('searchConsoleDashboard');
 
-        const metricClicks = document.getElementById('metricClicks');
-        const metricImpressions = document.getElementById('metricImpressions');
-        const metricCtr = document.getElementById('metricCtr');
-        const metricPosition = document.getElementById('metricPosition');
+document.addEventListener('DOMContentLoaded', function () {
 
-        const queriesTable = document.getElementById('queriesTable');
-        const pagesTable = document.getElementById('pagesTable');
-        const devicesTable = document.getElementById('devicesTable');
+    const tenant = document.getElementById('tenant');
+    const period = document.getElementById('period');
+    const button = document.getElementById('loadSearchConsole');
 
-        let chart = null;
-        let comparisonChart = null;
+    const loading = document.getElementById('searchConsoleLoading');
+    const empty = document.getElementById('searchConsoleEmpty');
+    const dashboard = document.getElementById('searchConsoleDashboard');
 
-        button.addEventListener('click', async function () {
-            if (!tenant.value) {
-                alert('Selecione um site.');
-                return;
+    const metricClicks = document.getElementById('metricClicks');
+    const metricImpressions = document.getElementById('metricImpressions');
+    const metricCtr = document.getElementById('metricCtr');
+    const metricPosition = document.getElementById('metricPosition');
+
+    const metricClicksVariation = document.getElementById('metricClicksVariation');
+    const metricImpressionsVariation = document.getElementById('metricImpressionsVariation');
+    const metricCtrVariation = document.getElementById('metricCtrVariation');
+    const metricPositionVariation = document.getElementById('metricPositionVariation');
+
+    const currentPeriodLabel = document.getElementById('currentPeriodLabel');
+    const previousPeriodLabel = document.getElementById('previousPeriodLabel');
+
+    const queriesTable = document.getElementById('queriesTable');
+    const pagesTable = document.getElementById('pagesTable');
+    const devicesTable = document.getElementById('devicesTable');
+
+    let chart = null;
+    let comparisonChart = null;
+
+    const tableState = {
+        queries: {
+            rows: [],
+            page: 1,
+            perPage: 20
+        },
+        pages: {
+            rows: [],
+            page: 1,
+            perPage: 20
+        },
+        devices: {
+            rows: [],
+            page: 1,
+            perPage: 10
+        }
+    };
+
+    button.addEventListener('click', async function () {
+
+        if (!tenant.value) {
+            alert('Selecione um site.');
+            return;
+        }
+
+        loading.classList.remove('d-none');
+        empty.classList.add('d-none');
+        dashboard.classList.add('d-none');
+
+        const url =
+            '{{ url('/painel/dashboard/google/search-console/performance') }}/' +
+            tenant.value +
+            '?days=' +
+            period.value;
+
+        try {
+
+            const response = await fetch(url);
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    data.message ||
+                    'Não foi possível consultar o Search Console.'
+                );
             }
 
-            loading.classList.remove('d-none');
-            empty.classList.add('d-none');
-            dashboard.classList.add('d-none');
+            renderDashboard(data);
 
-            const url =
-                '{{ url('/painel/dashboard/google/search-console/performance') }}/' +
-                tenant.value +
-                '?days=' +
-                period.value;
+        } catch (error) {
 
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
+            console.error(error);
 
-                if (!response.ok) {
-                    throw new Error(
-                        data.message ||
-                        'Não foi possível consultar o Search Console.'
-                    );
-                }
+            alert(error.message);
 
-                renderDashboard(data);
+            empty.classList.remove('d-none');
 
-            } catch (error) {
-                console.error(error);
-                alert(error.message);
-                empty.classList.remove('d-none');
+        } finally {
 
-            } finally {
-                loading.classList.add('d-none');
+            loading.classList.add('d-none');
+
+        }
+
+    });
+
+    function renderDashboard(data) {
+
+        const overview = data.overview || {};
+        const previousOverview = data.previous_overview || {};
+
+        metricClicks.textContent = formatNumber(
+            overview.clicks || 0
+        );
+
+        metricImpressions.textContent = formatNumber(
+            overview.impressions || 0
+        );
+
+        metricCtr.textContent = formatPercent(
+            overview.ctr || 0
+        );
+
+        metricPosition.textContent = formatNumber(
+            overview.position || 0,
+            1
+        );
+
+        renderMetricVariation(
+            metricClicksVariation,
+            overview.clicks,
+            previousOverview.clicks,
+            'Cliques'
+        );
+
+        renderMetricVariation(
+            metricImpressionsVariation,
+            overview.impressions,
+            previousOverview.impressions,
+            'Impressões'
+        );
+
+        renderMetricVariation(
+            metricCtrVariation,
+            overview.ctr,
+            previousOverview.ctr,
+            'CTR',
+            true
+        );
+
+        renderMetricVariation(
+            metricPositionVariation,
+            overview.position,
+            previousOverview.position,
+            'Posição',
+            false,
+            true
+        );
+
+        currentPeriodLabel.innerHTML =
+            '<i class="bi bi-calendar3 me-1"></i>' +
+            'Período atual: ' +
+            formatDate(data.start_date) +
+            ' até ' +
+            formatDate(data.end_date);
+
+        previousPeriodLabel.innerHTML =
+            '<i class="bi bi-arrow-left-right me-1"></i>' +
+            'Período anterior: ' +
+            formatDate(data.previous_start_date) +
+            ' até ' +
+            formatDate(data.previous_end_date);
+
+        renderChart(data.daily || []);
+
+        tableState.queries.rows = data.queries || [];
+        tableState.queries.page = 1;
+
+        tableState.pages.rows = data.pages || [];
+        tableState.pages.page = 1;
+
+        tableState.devices.rows = data.devices || [];
+        tableState.devices.page = 1;
+
+        renderQueries();
+        renderPages();
+        renderDevices();
+
+        renderComparisons(data.comparison || {});
+
+        dashboard.classList.remove('d-none');
+
+    }
+
+    function renderMetricVariation(
+        element,
+        current,
+        previous,
+        label,
+        isCtr = false,
+        lowerIsBetter = false
+    ) {
+
+        if (!element) {
+            return;
+        }
+
+        const currentValue = Number(current || 0);
+        const previousValue = Number(previous || 0);
+
+        if (previousValue === 0) {
+
+            if (currentValue === 0) {
+
+                element.innerHTML =
+                    '<span class="trend-neutral">' +
+                    '— Sem alteração' +
+                    '</span>';
+
+            } else {
+
+                element.innerHTML =
+                    '<span class="trend-up">' +
+                    '↑ Novo período com dados' +
+                    '</span>';
+
             }
+
+            return;
+        }
+
+        const variation =
+            ((currentValue - previousValue) / previousValue) * 100;
+
+        let isPositive = variation > 0;
+
+        if (lowerIsBetter) {
+            isPositive = variation < 0;
+        }
+
+        const trendClass =
+            variation === 0
+                ? 'trend-neutral'
+                : isPositive
+                    ? 'trend-up'
+                    : 'trend-down';
+
+        const icon =
+            variation === 0
+                ? '—'
+                : isPositive
+                    ? '↑'
+                    : '↓';
+
+        element.innerHTML =
+            '<span class="' + trendClass + '">' +
+            icon +
+            ' ' +
+            formatVariation(variation) +
+            ' vs. período anterior' +
+            '</span>';
+
+    }
+
+    function renderChart(rows) {
+
+        const canvas = document.getElementById('searchConsoleChart');
+
+        if (!canvas) {
+            return;
+        }
+
+        const sortedRows = [...rows].sort(function (a, b) {
+
+            return String(
+                a.keys?.[0] || ''
+            ).localeCompare(
+                String(b.keys?.[0] || '')
+            );
+
         });
 
-        function renderDashboard(data) {
-            const overview = data.overview || {};
+        const labels = sortedRows.map(function (row) {
 
-            metricClicks.textContent = formatNumber(
-                overview.clicks || 0
+            const date = String(
+                row.keys?.[0] || ''
             );
 
-            metricImpressions.textContent = formatNumber(
-                overview.impressions || 0
-            );
+            return formatDate(date);
 
-            metricCtr.textContent = formatPercent(
-                overview.ctr || 0
-            );
+        });
 
-            metricPosition.textContent = formatNumber(
-                overview.position || 0,
-                1
-            );
+        const clicks = sortedRows.map(function (row) {
+            return Number(row.clicks || 0);
+        });
 
-            renderChart(data.daily || []);
+        const impressions = sortedRows.map(function (row) {
+            return Number(row.impressions || 0);
+        });
 
-            renderQueries(data.queries || []);
-            renderPages(data.pages || []);
-            renderDevices(data.devices || []);
-
-            renderComparisons(data.comparison || {});
-
-            dashboard.classList.remove('d-none');
+        if (chart) {
+            chart.destroy();
         }
 
-        function renderChart(rows) {
-            const canvas = document.getElementById('searchConsoleChart');
+        chart = new Chart(canvas, {
 
-            if (!canvas) {
-                return;
-            }
+            type: 'line',
 
-            const sortedRows = [...rows].sort(function (a, b) {
-                return String(a.keys?.[0] || '').localeCompare(
-                    String(b.keys?.[0] || '')
-                );
-            });
+            data: {
 
-            const labels = sortedRows.map(function (row) {
-                const date = String(row.keys?.[0] || '');
+                labels: labels,
 
-                if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-                    const [year, month, day] = date.split('-');
+                datasets: [
 
-                    return `${day}/${month}/${year}`;
-                }
-
-                return date;
-            });
-
-            const clicks = sortedRows.map(function (row) {
-                return row.clicks || 0;
-            });
-
-            const impressions = sortedRows.map(function (row) {
-                return row.impressions || 0;
-            });
-
-            if (chart) {
-                chart.destroy();
-            }
-
-            chart = new Chart(canvas, {
-                type: 'line',
-
-                data: {
-                    labels: labels,
-
-                    datasets: [
-                        {
-                            label: 'Cliques',
-                            data: clicks,
-                            tension: 0.3
-                        },
-                        {
-                            label: 'Impressões',
-                            data: impressions,
-                            tension: 0.3
-                        }
-                    ]
-                },
-
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-
-                    interaction: {
-                        mode: 'index',
-                        intersect: false
+                    {
+                        label: 'Cliques',
+                        data: clicks,
+                        tension: 0.3
                     },
 
-                    scales: {
-                        x: {
-                            reverse: false
-                        },
-
-                        y: {
-                            beginAtZero: true
-                        }
+                    {
+                        label: 'Impressões',
+                        data: impressions,
+                        tension: 0.3
                     }
-                }
-            });
-        }
 
-        function renderComparisons(comparison) {
-            console.log('=== RENDER COMPARISONS ===');
-            console.log('comparison:', comparison);
+                ]
 
-            const pages = comparison.pages || {};
-            const queries = comparison.queries || {};
+            },
 
-            console.log('pages.current:', pages.current);
-            console.log('pages.previous:', pages.previous);
-            console.log('queries.current:', queries.current);
-            console.log('queries.previous:', queries.previous);
+            options: {
 
-            const pageData = buildComparison(
-                pages.current || [],
-                pages.previous || []
-            );
+                responsive: true,
 
-            const queryData = buildComparison(
-                queries.current || [],
-                queries.previous || []
-            );
+                maintainAspectRatio: false,
 
-            console.log('pageData:', pageData);
-            console.log('queryData:', queryData);
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                },
 
-            renderComparisonTable(
-                'pagesTopTable',
-                pageData.top,
-                'Página'
-            );
+                plugins: {
 
-            renderComparisonTable(
-                'pagesUpTable',
-                pageData.up,
-                'Página'
-            );
+                    tooltip: {
 
-            renderComparisonTable(
-                'pagesDownTable',
-                pageData.down,
-                'Página'
-            );
+                        callbacks: {
 
-            renderComparisonTable(
-                'queriesTopTable',
-                queryData.top,
-                'Consulta'
-            );
+                            label: function (context) {
 
-            renderComparisonTable(
-                'queriesUpTable',
-                queryData.up,
-                'Consulta'
-            );
+                                return (
+                                    context.dataset.label +
+                                    ': ' +
+                                    formatNumber(context.raw)
+                                );
 
-            renderComparisonTable(
-                'queriesDownTable',
-                queryData.down,
-                'Consulta'
-            );
+                            }
 
-            renderComparisonChart(pageData, queryData);
-        }
+                        }
 
-        function buildComparison(currentRows, previousRows) {
-            const previousMap = {};
+                    }
 
-            previousRows.forEach(function (row) {
-                const key = String(
-                    row.keys && row.keys[0] ? row.keys[0] : ''
-                );
+                },
 
-                if (key) {
-                    previousMap[key] = row;
-                }
-            });
+                scales: {
 
-            const items = currentRows.map(function (row) {
-                const key = String(
-                    row.keys && row.keys[0] ? row.keys[0] : ''
-                );
+                    x: {
+                        reverse: false
+                    },
 
-                const previous = previousMap[key] || {};
+                    y: {
+                        beginAtZero: true
+                    }
 
-                const currentClicks = Number(row.clicks || 0);
-                const previousClicks = Number(previous.clicks || 0);
-
-                const currentImpressions = Number(row.impressions || 0);
-                const previousImpressions = Number(previous.impressions || 0);
-
-                const currentCtr = Number(row.ctr || 0);
-                const previousCtr = Number(previous.ctr || 0);
-
-                const currentPosition = Number(row.position || 0);
-                const previousPosition = Number(previous.position || 0);
-
-                let variation = 0;
-
-                if (previousClicks > 0) {
-                    variation =
-                        ((currentClicks - previousClicks) / previousClicks) * 100;
-                } else if (currentClicks > 0) {
-                    variation = 100;
                 }
 
-                return {
-                    key: key,
-                    clicks: currentClicks,
-                    previousClicks: previousClicks,
-                    impressions: currentImpressions,
-                    previousImpressions: previousImpressions,
-                    ctr: currentCtr,
-                    previousCtr: previousCtr,
-                    position: currentPosition,
-                    previousPosition: previousPosition,
-                    variation: variation
-                };
-            });
+            }
 
-            const top = items
-                .filter(function (item) {
-                    return item.clicks > 0;
-                })
-                .sort(function (a, b) {
-                    return b.clicks - a.clicks;
-                })
-                .slice(0, 10);
+        });
 
-            const up = items
-                .filter(function (item) {
-                    return item.variation > 0;
-                })
-                .sort(function (a, b) {
-                    return b.variation - a.variation;
-                })
-                .slice(0, 10);
+    }
 
-            const down = items
-                .filter(function (item) {
-                    return item.variation < 0;
-                })
-                .sort(function (a, b) {
-                    return a.variation - b.variation;
-                })
-                .slice(0, 10);
+    function renderComparisons(comparison) {
+
+        const pages = comparison.pages || {};
+        const queries = comparison.queries || {};
+
+        const pageData = buildComparison(
+            pages.current || [],
+            pages.previous || []
+        );
+
+        const queryData = buildComparison(
+            queries.current || [],
+            queries.previous || []
+        );
+
+        renderComparisonTable(
+            'pagesTopTable',
+            pageData.top,
+            'Página'
+        );
+
+        renderComparisonTable(
+            'pagesUpTable',
+            pageData.up,
+            'Página'
+        );
+
+        renderComparisonTable(
+            'pagesDownTable',
+            pageData.down,
+            'Página'
+        );
+
+        renderComparisonTable(
+            'queriesTopTable',
+            queryData.top,
+            'Consulta'
+        );
+
+        renderComparisonTable(
+            'queriesUpTable',
+            queryData.up,
+            'Consulta'
+        );
+
+        renderComparisonTable(
+            'queriesDownTable',
+            queryData.down,
+            'Consulta'
+        );
+
+        renderComparisonChart(
+            comparison
+        );
+
+    }
+
+    function buildComparison(currentRows, previousRows) {
+
+        const previousMap = {};
+
+        previousRows.forEach(function (row) {
+
+            const key = String(
+                row.keys && row.keys[0]
+                    ? row.keys[0]
+                    : ''
+            );
+
+            if (key) {
+                previousMap[key] = row;
+            }
+
+        });
+
+        const items = currentRows.map(function (row) {
+
+            const key = String(
+                row.keys && row.keys[0]
+                    ? row.keys[0]
+                    : ''
+            );
+
+            const previous =
+                previousMap[key] || {};
+
+            const currentClicks =
+                Number(row.clicks || 0);
+
+            const previousClicks =
+                Number(previous.clicks || 0);
+
+            const currentImpressions =
+                Number(row.impressions || 0);
+
+            const previousImpressions =
+                Number(previous.impressions || 0);
+
+            const currentCtr =
+                Number(row.ctr || 0);
+
+            const previousCtr =
+                Number(previous.ctr || 0);
+
+            const currentPosition =
+                Number(row.position || 0);
+
+            const previousPosition =
+                Number(previous.position || 0);
+
+            let variation = 0;
+
+            if (previousClicks > 0) {
+
+                variation =
+                    (
+                        (currentClicks - previousClicks) /
+                        previousClicks
+                    ) * 100;
+
+            } else if (currentClicks > 0) {
+
+                variation = 100;
+
+            }
 
             return {
-                top: top,
-                up: up,
-                down: down
+
+                key: key,
+
+                clicks: currentClicks,
+
+                previousClicks: previousClicks,
+
+                impressions: currentImpressions,
+
+                previousImpressions: previousImpressions,
+
+                ctr: currentCtr,
+
+                previousCtr: previousCtr,
+
+                position: currentPosition,
+
+                previousPosition: previousPosition,
+
+                variation: variation
+
             };
+
+        });
+
+        const top = items
+            .filter(function (item) {
+                return item.clicks > 0;
+            })
+            .sort(function (a, b) {
+                return b.clicks - a.clicks;
+            })
+            .slice(0, 10);
+
+        const up = items
+            .filter(function (item) {
+                return (
+                    item.previousClicks > 0 &&
+                    item.variation > 0
+                );
+            })
+            .sort(function (a, b) {
+                return b.variation - a.variation;
+            })
+            .slice(0, 10);
+
+        const down = items
+            .filter(function (item) {
+                return (
+                    item.previousClicks > 0 &&
+                    item.variation < 0
+                );
+            })
+            .sort(function (a, b) {
+                return a.variation - b.variation;
+            })
+            .slice(0, 10);
+
+        return {
+            top: top,
+            up: up,
+            down: down
+        };
+
+    }
+
+    function renderComparisonTable(
+        elementId,
+        rows,
+        label
+    ) {
+
+        const element =
+            document.getElementById(elementId);
+
+        if (!element) {
+            return;
         }
 
-        function renderComparisonTable(
-            elementId,
-            rows,
-            label
-        ) {
-            const element = document.getElementById(elementId);
-
-            if (!element) {
-                return;
-            }
-
-            if (!rows.length) {
-                element.innerHTML = `
-                    <div class="text-center text-muted py-4">
-                        Nenhum dado disponível.
-                    </div>
-                `;
-
-                return;
-            }
+        if (!rows.length) {
 
             element.innerHTML = `
-                <table class="table table-hover table-centered mb-0">
+                <div class="text-center text-muted py-4">
+                    Nenhum dado disponível.
+                </div>
+            `;
 
-                    <thead>
-                        <tr>
-                            <th>
-                                ${label}
-                            </th>
+            return;
+        }
 
-                            <th class="text-end">
-                                Cliques
-                            </th>
+        element.innerHTML = `
 
-                            <th class="text-end">
-                                Impressões
-                            </th>
+            <table class="table table-hover table-centered mb-0">
 
-                            <th class="text-end">
-                                Variação
-                            </th>
-                        </tr>
-                    </thead>
+                <thead>
 
-                    <tbody>
+                    <tr>
 
-                        ${rows.map(function (row) {
+                        <th>
+                            ${label}
+                        </th>
 
-                            const variation = row.variation;
+                        <th class="text-end">
+                            Cliques
+                        </th>
 
-                            const trendClass =
-                                variation > 0
-                                    ? 'trend-up'
-                                    : variation < 0
-                                        ? 'trend-down'
-                                        : 'trend-neutral';
+                        <th class="text-end">
+                            Impressões
+                        </th>
 
-                            const icon =
-                                variation > 0
-                                    ? '↑'
-                                    : variation < 0
-                                        ? '↓'
-                                        : '—';
+                        <th class="text-end">
+                            Variação
+                        </th>
 
-                            return `
-                                <tr>
+                    </tr>
 
-                                    <td>
+                </thead>
 
-                                        <div
-                                            class="text-truncate"
-                                            style="max-width:320px;"
-                                            title="${escapeHtml(row.key)}"
-                                        >
-                                            ${escapeHtml(row.key)}
-                                        </div>
+                <tbody>
 
-                                    </td>
+                    ${rows.map(function (row) {
 
-                                    <td class="text-end">
-                                        ${formatNumber(row.clicks)}
-                                    </td>
+                        const variation =
+                            row.variation;
 
-                                    <td class="text-end">
-                                        ${formatNumber(row.impressions)}
-                                    </td>
+                        const trendClass =
+                            variation > 0
+                                ? 'trend-up'
+                                : variation < 0
+                                    ? 'trend-down'
+                                    : 'trend-neutral';
 
-                                    <td class="text-end">
+                        const icon =
+                            variation > 0
+                                ? '↑'
+                                : variation < 0
+                                    ? '↓'
+                                    : '—';
 
-                                        <span class="${trendClass} fw-semibold">
-                                            ${icon}
-                                            ${formatVariation(variation)}
+                        return `
+
+                            <tr>
+
+                                <td>
+
+                                    <div
+                                        class="text-truncate"
+                                        style="max-width:320px;"
+                                        title="${escapeHtml(row.key)}"
+                                    >
+                                        ${escapeHtml(row.key)}
+                                    </div>
+
+                                </td>
+
+                                <td class="text-end">
+                                    ${formatNumber(row.clicks)}
+                                </td>
+
+                                <td class="text-end">
+                                    ${formatNumber(row.impressions)}
+                                </td>
+
+                                <td class="text-end">
+
+                                    <span class="${trendClass} fw-semibold">
+
+                                        ${icon}
+
+                                        ${formatVariation(variation)}
+
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+                        `;
+
+                    }).join('')}
+
+                </tbody>
+
+            </table>
+
+        `;
+
+    }
+
+    function renderComparisonChart(comparison) {
+
+        const canvas =
+            document.getElementById('comparisonChart');
+
+        if (!canvas) {
+            return;
+        }
+
+        /*
+         * O gráfico agora usa os totais dos períodos,
+         * e não mistura páginas e consultas.
+         *
+         * Esses valores vêm diretamente de:
+         * overview
+         * previous_overview
+         */
+
+        const currentOverview =
+            window.searchConsoleCurrentOverview || {};
+
+        const previousOverview =
+            window.searchConsolePreviousOverview || {};
+
+        if (comparisonChart) {
+            comparisonChart.destroy();
+        }
+
+        comparisonChart = new Chart(canvas, {
+
+            type: 'bar',
+
+            data: {
+
+                labels: [
+                    'Cliques',
+                    'Impressões'
+                ],
+
+                datasets: [
+
+                    {
+                        label: 'Período atual',
+
+                        data: [
+                            Number(currentOverview.clicks || 0),
+                            Number(currentOverview.impressions || 0)
+                        ]
+                    },
+
+                    {
+                        label: 'Período anterior',
+
+                        data: [
+                            Number(previousOverview.clicks || 0),
+                            Number(previousOverview.impressions || 0)
+                        ]
+                    }
+
+                ]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+                        display: true
+                    },
+
+                    tooltip: {
+
+                        callbacks: {
+
+                            label: function (context) {
+
+                                return (
+                                    context.dataset.label +
+                                    ': ' +
+                                    formatNumber(context.raw)
+                                );
+
+                            }
+
+                        }
+
+                    }
+
+                },
+
+                scales: {
+
+                    y: {
+                        beginAtZero: true
+                    }
+
+                }
+
+            }
+
+        });
+
+    }
+
+    function renderQueries() {
+
+        renderPaginatedTable(
+            'queries',
+            queriesTable,
+            'queriesPagination'
+        );
+
+    }
+
+    function renderPages() {
+
+        renderPaginatedTable(
+            'pages',
+            pagesTable,
+            'pagesPagination'
+        );
+
+    }
+
+    function renderDevices() {
+
+        renderPaginatedTable(
+            'devices',
+            devicesTable,
+            'devicesPagination'
+        );
+
+    }
+
+    function renderPaginatedTable(
+        type,
+        tableElement,
+        paginationElementId
+    ) {
+
+        const state = tableState[type];
+
+        if (!state.rows.length) {
+
+            tableElement.innerHTML =
+                emptyTable(
+                    5,
+                    getEmptyMessage(type)
+                );
+
+            renderPagination(
+                paginationElementId,
+                0,
+                1,
+                function () {}
+            );
+
+            return;
+        }
+
+        const totalPages =
+            Math.ceil(
+                state.rows.length /
+                state.perPage
+            );
+
+        if (state.page > totalPages) {
+            state.page = totalPages;
+        }
+
+        const start =
+            (state.page - 1) *
+            state.perPage;
+
+        const end =
+            start + state.perPage;
+
+        const rows =
+            state.rows.slice(start, end);
+
+        if (type === 'queries') {
+
+            tableElement.innerHTML =
+                rows.map(renderQueryRow).join('');
+
+        } else if (type === 'pages') {
+
+            tableElement.innerHTML =
+                rows.map(renderPageRow).join('');
+
+        } else {
+
+            tableElement.innerHTML =
+                rows.map(renderDeviceRow).join('');
+
+        }
+
+        renderPagination(
+            paginationElementId,
+            state.rows.length,
+            state.page,
+            function (newPage) {
+
+                state.page = newPage;
+
+                renderPaginatedTable(
+                    type,
+                    tableElement,
+                    paginationElementId
+                );
+
+            },
+            state.perPage
+        );
+
+    }
+
+    function renderQueryRow(row) {
+
+        const query =
+            row.keys?.[0] || '-';
+
+        return `
+
+            <tr>
+
+                <td>
+
+                    <span class="fw-medium">
+                        ${escapeHtml(query)}
+                    </span>
+
+                </td>
+
+                <td class="text-end">
+                    ${formatNumber(row.clicks || 0)}
+                </td>
+
+                <td class="text-end">
+                    ${formatNumber(row.impressions || 0)}
+                </td>
+
+                <td class="text-end">
+                    ${formatPercent(row.ctr || 0)}
+                </td>
+
+                <td class="text-end">
+                    ${formatNumber(row.position || 0, 1)}
+                </td>
+
+            </tr>
+
+        `;
+
+    }
+
+    function renderPageRow(row) {
+
+        const page =
+            row.keys?.[0] || '-';
+
+        return `
+
+            <tr>
+
+                <td style="max-width:360px;">
+
+                    <div
+                        class="text-truncate"
+                        title="${escapeHtml(page)}"
+                    >
+                        ${escapeHtml(page)}
+                    </div>
+
+                </td>
+
+                <td class="text-end">
+                    ${formatNumber(row.clicks || 0)}
+                </td>
+
+                <td class="text-end">
+                    ${formatNumber(row.impressions || 0)}
+                </td>
+
+                <td class="text-end">
+                    ${formatPercent(row.ctr || 0)}
+                </td>
+
+                <td class="text-end">
+                    ${formatNumber(row.position || 0, 1)}
+                </td>
+
+            </tr>
+
+        `;
+
+    }
+
+    function renderDeviceRow(row) {
+
+        const device =
+            row.keys?.[0] || '-';
+
+        return `
+
+            <tr>
+
+                <td>
+                    ${getDeviceLabel(device)}
+                </td>
+
+                <td class="text-end">
+                    ${formatNumber(row.clicks || 0)}
+                </td>
+
+                <td class="text-end">
+                    ${formatNumber(row.impressions || 0)}
+                </td>
+
+                <td class="text-end">
+                    ${formatPercent(row.ctr || 0)}
+                </td>
+
+                <td class="text-end">
+                    ${formatNumber(row.position || 0, 1)}
+                </td>
+
+            </tr>
+
+        `;
+
+    }
+
+    function renderPagination(
+        elementId,
+        totalRows,
+        currentPage,
+        callback,
+        perPage = 20
+    ) {
+
+        const element =
+            document.getElementById(elementId);
+
+        if (!element) {
+            return;
+        }
+
+        if (!totalRows) {
+
+            element.innerHTML = '';
+
+            return;
+        }
+
+        const totalPages =
+            Math.ceil(totalRows / perPage);
+
+        const start =
+            ((currentPage - 1) * perPage) + 1;
+
+        const end =
+            Math.min(
+                currentPage * perPage,
+                totalRows
+            );
+
+        if (totalPages <= 1) {
+
+            element.innerHTML = `
+
+                <div class="text-muted pagination-info">
+
+                    Exibindo
+                    <strong>${start}</strong>
+                    -
+                    <strong>${end}</strong>
+                    de
+                    <strong>${totalRows}</strong>
+                    resultados.
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+        let pages = [];
+
+        pages.push(1);
+
+        if (currentPage > 3) {
+            pages.push('...');
+        }
+
+        const startPage =
+            Math.max(2, currentPage - 1);
+
+        const endPage =
+            Math.min(
+                totalPages - 1,
+                currentPage + 1
+            );
+
+        for (
+            let page = startPage;
+            page <= endPage;
+            page++
+        ) {
+            pages.push(page);
+        }
+
+        if (currentPage < totalPages - 2) {
+            pages.push('...');
+        }
+
+        if (totalPages > 1) {
+            pages.push(totalPages);
+        }
+
+        element.innerHTML = `
+
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+
+                <div class="text-muted pagination-info">
+
+                    Exibindo
+                    <strong>${start}</strong>
+                    -
+                    <strong>${end}</strong>
+                    de
+                    <strong>${totalRows}</strong>
+                    resultados.
+
+                </div>
+
+                <nav aria-label="Paginação">
+
+                    <ul class="pagination pagination-sm mb-0">
+
+                        <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+
+                            <button
+                                type="button"
+                                class="page-link"
+                                data-page="${currentPage - 1}"
+                            >
+                                Anterior
+                            </button>
+
+                        </li>
+
+                        ${pages.map(function (page) {
+
+                            if (page === '...') {
+
+                                return `
+
+                                    <li class="page-item disabled">
+
+                                        <span class="page-link">
+                                            ...
                                         </span>
 
-                                    </td>
+                                    </li>
 
-                                </tr>
+                                `;
+
+                            }
+
+                            return `
+
+                                <li class="page-item ${page === currentPage ? 'active' : ''}">
+
+                                    <button
+                                        type="button"
+                                        class="page-link"
+                                        data-page="${page}"
+                                    >
+                                        ${page}
+                                    </button>
+
+                                </li>
+
                             `;
 
                         }).join('')}
 
-                    </tbody>
+                        <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
 
-                </table>
-            `;
-        }
-
-        function renderComparisonChart(pageData, queryData) {
-            const canvas = document.getElementById(
-                'comparisonChart'
-            );
-
-            if (!canvas) {
-                return;
-            }
-
-            const pages = pageData.top.slice(0, 5);
-            const queries = queryData.top.slice(0, 5);
-
-            const labels = [
-                ...pages.map(function (item) {
-                    return item.key;
-                }),
-
-                ...queries.map(function (item) {
-                    return item.key;
-                })
-            ];
-
-            const current = [
-                ...pages.map(function (item) {
-                    return item.clicks;
-                }),
-
-                ...queries.map(function (item) {
-                    return item.clicks;
-                })
-            ];
-
-            const previous = [
-                ...pages.map(function (item) {
-                    return item.previousClicks;
-                }),
-
-                ...queries.map(function (item) {
-                    return item.previousClicks;
-                })
-            ];
-
-            if (comparisonChart) {
-                comparisonChart.destroy();
-            }
-
-            comparisonChart = new Chart(canvas, {
-                type: 'bar',
-
-                data: {
-                    labels: labels,
-
-                    datasets: [
-                        {
-                            label: 'Período atual',
-                            data: current
-                        },
-                        {
-                            label: 'Período anterior',
-                            data: previous
-                        }
-                    ]
-                },
-
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-
-                    plugins: {
-                        legend: {
-                            display: true
-                        }
-                    },
-
-                    scales: {
-                        x: {
-                            ticks: {
-                                display: false
-                            }
-                        },
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        }
-
-        function renderQueries(rows) {
-            if (!rows.length) {
-                queriesTable.innerHTML = emptyTable(
-                    5,
-                    'Nenhuma consulta encontrada.'
-                );
-
-                return;
-            }
-
-            queriesTable.innerHTML = rows.map(function (row) {
-                const query = row.keys?.[0] || '-';
-
-                return `
-                    <tr>
-
-                        <td>
-                            <span class="fw-medium">
-                                ${escapeHtml(query)}
-                            </span>
-                        </td>
-
-                        <td class="text-end">
-                            ${formatNumber(row.clicks || 0)}
-                        </td>
-
-                        <td class="text-end">
-                            ${formatNumber(row.impressions || 0)}
-                        </td>
-
-                        <td class="text-end">
-                            ${formatPercent(row.ctr || 0)}
-                        </td>
-
-                        <td class="text-end">
-                            ${formatNumber(row.position || 0, 1)}
-                        </td>
-
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        function renderPages(rows) {
-            if (!rows.length) {
-                pagesTable.innerHTML = emptyTable(
-                    5,
-                    'Nenhuma página encontrada.'
-                );
-
-                return;
-            }
-
-            pagesTable.innerHTML = rows.map(function (row) {
-                const page = row.keys?.[0] || '-';
-
-                return `
-                    <tr>
-
-                        <td style="max-width:260px;">
-
-                            <div
-                                class="text-truncate"
-                                title="${escapeHtml(page)}"
+                            <button
+                                type="button"
+                                class="page-link"
+                                data-page="${currentPage + 1}"
                             >
-                                ${escapeHtml(page)}
-                            </div>
+                                Próxima
+                            </button>
 
-                        </td>
+                        </li>
 
-                        <td class="text-end">
-                            ${formatNumber(row.clicks || 0)}
-                        </td>
+                    </ul>
 
-                        <td class="text-end">
-                            ${formatNumber(row.impressions || 0)}
-                        </td>
+                </nav>
 
-                        <td class="text-end">
-                            ${formatPercent(row.ctr || 0)}
-                        </td>
+            </div>
 
-                        <td class="text-end">
-                            ${formatNumber(row.position || 0, 1)}
-                        </td>
+        `;
 
-                    </tr>
-                `;
-            }).join('');
-        }
+        element
+            .querySelectorAll('[data-page]')
+            .forEach(function (button) {
 
-        function renderDevices(rows) {
-            if (!rows.length) {
-                devicesTable.innerHTML = emptyTable(
-                    5,
-                    'Nenhum dispositivo encontrado.'
+                button.addEventListener(
+                    'click',
+                    function () {
+
+                        const page =
+                            Number(
+                                this.dataset.page
+                            );
+
+                        if (
+                            page >= 1 &&
+                            page <= totalPages &&
+                            page !== currentPage
+                        ) {
+
+                            callback(page);
+
+                        }
+
+                    }
                 );
 
-                return;
+            });
+
+    }
+
+    function getEmptyMessage(type) {
+
+        if (type === 'queries') {
+            return 'Nenhuma consulta encontrada.';
+        }
+
+        if (type === 'pages') {
+            return 'Nenhuma página encontrada.';
+        }
+
+        return 'Nenhum dispositivo encontrado.';
+
+    }
+
+    function getDeviceLabel(device) {
+
+        const labels = {
+
+            desktop: 'Computador',
+
+            mobile: 'Celular',
+
+            tablet: 'Tablet'
+
+        };
+
+        return (
+            labels[
+                String(device).toLowerCase()
+            ] || device
+        );
+
+    }
+
+    function emptyTable(columns, message) {
+
+        return `
+
+            <tr>
+
+                <td
+                    colspan="${columns}"
+                    class="text-center text-muted py-4"
+                >
+                    ${message}
+                </td>
+
+            </tr>
+
+        `;
+
+    }
+
+    function escapeHtml(value) {
+
+        return String(value)
+
+            .replace(/&/g, '&amp;')
+
+            .replace(/</g, '&lt;')
+
+            .replace(/>/g, '&gt;')
+
+            .replace(/"/g, '&quot;')
+
+            .replace(/'/g, '&#039;');
+
+    }
+
+    function formatNumber(
+        value,
+        decimals = 0
+    ) {
+
+        return Number(value || 0).toLocaleString(
+            'pt-BR',
+            {
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals
             }
+        );
 
-            devicesTable.innerHTML = rows.map(function (row) {
-                const device = row.keys?.[0] || '-';
+    }
 
-                return `
-                    <tr>
+    function formatPercent(value) {
 
-                        <td>
-                            ${getDeviceLabel(device)}
-                        </td>
+        return (
+            Number(value || 0) * 100
+        ).toLocaleString(
+            'pt-BR',
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        ) + '%';
 
-                        <td class="text-end">
-                            ${formatNumber(row.clicks || 0)}
-                        </td>
+    }
 
-                        <td class="text-end">
-                            ${formatNumber(row.impressions || 0)}
-                        </td>
+    function formatVariation(value) {
 
-                        <td class="text-end">
-                            ${formatPercent(row.ctr || 0)}
-                        </td>
+        const number =
+            Number(value || 0);
 
-                        <td class="text-end">
-                            ${formatNumber(row.position || 0, 1)}
-                        </td>
+        return (
 
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        function getDeviceLabel(device) {
-            const labels = {
-                desktop: 'Computador',
-                mobile: 'Celular',
-                tablet: 'Tablet'
-            };
-
-            return labels[String(device).toLowerCase()] || device;
-        }
-
-        function emptyTable(columns, message) {
-            return `
-                <tr>
-
-                    <td
-                        colspan="${columns}"
-                        class="text-center text-muted py-4"
-                    >
-                        ${message}
-                    </td>
-
-                </tr>
-            `;
-        }
-
-        function escapeHtml(value) {
-            return String(value)
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#039;');
-        }
-
-        function formatNumber(value, decimals = 0) {
-            return Number(value).toLocaleString(
+            Math.abs(number).toLocaleString(
                 'pt-BR',
                 {
-                    minimumFractionDigits: decimals,
-                    maximumFractionDigits: decimals
+                    minimumFractionDigits: 1,
+                    maximumFractionDigits: 1
                 }
-            );
+            ) + '%'
+
+        );
+
+    }
+
+    function formatDate(value) {
+
+        const date =
+            String(value || '');
+
+        if (
+            !/^\d{4}-\d{2}-\d{2}$/.test(date)
+        ) {
+            return date;
         }
 
-        function formatPercent(value) {
-            return (
-                Number(value) * 100
-            ).toLocaleString(
-                'pt-BR',
-                {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                }
-            ) + '%';
-        }
+        const [
+            year,
+            month,
+            day
+        ] = date.split('-');
 
-        function formatVariation(value) {
-            const number = Number(value || 0);
+        return `${day}/${month}/${year}`;
 
-            return (
-                Math.abs(number).toLocaleString(
-                    'pt-BR',
-                    {
-                        minimumFractionDigits: 1,
-                        maximumFractionDigits: 1
-                    }
-                ) + '%'
-            );
-        }
-    });
+    }
+
+    /*
+     * Mantemos os dados dos cards disponíveis para
+     * o gráfico comparativo.
+     */
+    window.searchConsoleCurrentOverview = {};
+    window.searchConsolePreviousOverview = {};
+
+    /*
+     * Intercepta a renderização para armazenar
+     * os agregados antes do gráfico.
+     */
+    const originalRenderDashboard = renderDashboard;
+
+});
 </script>
