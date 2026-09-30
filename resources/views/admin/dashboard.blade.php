@@ -528,7 +528,7 @@
 
             <div class="row g-2">
 
-                @if (in_array('announcement', $homeModules, true) && ($isSuper || $user->can('slide.visualizar')))
+                @if (in_array('announcement', $homeModules, true) && ($isSuper || $user->can('slide.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.announcement.index'),
                         'icon' => 'mdi-image-size-select-actual',
@@ -536,7 +536,7 @@
                     ])
                 @endif
 
-                @if (in_array('slides', $homeModules, true) && ($isSuper || $user->can('slide.visualizar')))
+                @if (in_array('slides', $homeModules, true) && ($isSuper || $user->can('slide.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.slide.index'),
                         'icon' => 'mdi-image-size-select-actual',
@@ -544,7 +544,7 @@
                     ])
                 @endif
 
-                @if (in_array('topics', $homeModules, true) && ($isSuper || $user->can('topico.visualizar')))
+                @if (in_array('topics', $homeModules, true) && ($isSuper || $user->can('topico.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.topic.index'),
                         'icon' => 'mdi-format-list-bulleted',
@@ -552,7 +552,7 @@
                     ])
                 @endif
 
-                @if (in_array('statute', $homeModules, true) && ($isSuper || $user->can('passo a passo.visualizar')))
+                @if (in_array('statute', $homeModules, true) && ($isSuper || $user->can('passo a passo.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.statute.index'),
                         'icon' => 'mdi-file-document',
@@ -560,7 +560,7 @@
                     ])
                 @endif
 
-                @if (in_array('letsgo', $homeModules, true) && ($isSuper || $user->can('sesssao lets go.visualizar')))
+                @if (in_array('letsgo', $homeModules, true) && ($isSuper || $user->can('sesssao lets go.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.letsgo.index'),
                         'icon' => 'mdi-rocket-launch',
@@ -568,7 +568,7 @@
                     ])
                 @endif
 
-                @if (in_array('impactSection', $homeModules, true) && ($isSuper || $user->can('destaques.visualizar')))
+                @if (in_array('impactSection', $homeModules, true) && ($isSuper || $user->can('destaques.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.impactSection.index'),
                         'icon' => 'mdi-star-circle',
@@ -576,7 +576,7 @@
                     ])
                 @endif
 
-                @if (in_array('lineOfTime', $homeModules, true) && ($isSuper || $user->can('linha do tempo.visualizar')))
+                @if (in_array('lineOfTime', $homeModules, true) && ($isSuper || $user->can('linha do tempo.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.lineOfTime.index'),
                         'icon' => 'mdi-timeline-clock',
@@ -584,7 +584,7 @@
                     ])
                 @endif
 
-                @if (in_array('faq_session', $homeModules, true) && ($isSuper || $user->can('sesssao faq.visualizar')))
+                @if (in_array('faq_session', $homeModules, true) && ($isSuper || $user->can('sesssao faq.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.sessaoFaq.index'),
                         'icon' => 'mdi-help-circle',
@@ -592,7 +592,7 @@
                     ])
                 @endif
 
-                @if (in_array('faq', $homeModules, true) && ($isSuper || $user->can('perguntas e respostas.visualizar')))
+                @if (in_array('faq', $homeModules, true) && ($isSuper || $user->can('perguntas e respostas.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.faq.index'),
                         'icon' => 'mdi-comment-question',
@@ -600,7 +600,7 @@
                     ])
                 @endif
 
-                @if (in_array('testimonials', $homeModules, true) && ($isSuper || $user->can('depoimento.visualizar')))
+                @if (in_array('testimonials', $homeModules, true) && ($isSuper || $user->can('depoimento.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.depoiment.index'),
                         'icon' => 'mdi-account-voice',
@@ -608,7 +608,7 @@
                     ])
                 @endif
 
-                @if (in_array('services', $homeModules, true) && ($isSuper || $user->can('servicos.visualizar')))
+                @if (in_array('services', $homeModules, true) && ($isSuper || $user->can('servicos.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.serviceItem.index'),
                         'icon' => 'mdi-briefcase-outline',
@@ -616,7 +616,7 @@
                     ])
                 @endif
 
-                @if (in_array('gallery', $homeModules, true) && ($isSuper || $user->can('galeria.visualizar')))
+                @if (in_array('gallery', $homeModules, true) && ($isSuper || $user->can('galeria.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.gallery.index'),
                         'icon' => 'mdi-image-multiple',
@@ -624,7 +624,7 @@
                     ])
                 @endif
 
-                @if (in_array('about', $homeModules, true) && ($isSuper || $user->can('sobre nos.visualizar')))
+                @if (in_array('about', $homeModules, true) && ($isSuper || $user->can('sobre nos.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.about.index'),
                         'icon' => 'mdi-information-outline',
@@ -632,7 +632,7 @@
                     ])
                 @endif
 
-                @if (in_array('advantage', $homeModules, true) && ($isSuper || $user->can('vantagens.visualizar')))
+                @if (in_array('advantage', $homeModules, true) && ($isSuper || $user->can('vantagens.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.advantage.index'),
                         'icon' => 'mdi-thumb-up-outline',
@@ -640,7 +640,7 @@
                     ])
                 @endif
 
-                @if (in_array('benefits', $homeModules, true) && ($isSuper || $user->can('parametro.visualizar')))
+                @if (in_array('benefits', $homeModules, true) && ($isSuper || $user->can('parametro.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.benefitTopic.index'),
                         'icon' => 'mdi-tune',
@@ -648,7 +648,7 @@
                     ])
                 @endif
 
-                @if (in_array('mission', $homeModules, true) && ($isSuper || $user->can('missao visao e valores.visualizar')))
+                @if (in_array('mission', $homeModules, true) && ($isSuper || $user->can('missao visao e valores.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.report.index'),
                         'icon' => 'mdi-target',
@@ -656,7 +656,7 @@
                     ])
                 @endif
 
-                @if (in_array('planNetworkCategory', $homeModules, true) && ($isSuper || $user->can('categorias do plano.visualizar')))
+                @if (in_array('planNetworkCategory', $homeModules, true) && ($isSuper || $user->can('categorias do plano.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.planNetworkCategory.index'),
                         'icon' => 'mdi-shape',
@@ -664,7 +664,7 @@
                     ])
                 @endif
 
-                @if (in_array('planNetwork', $homeModules, true) && ($isSuper || $user->can('plano.visualizar')))
+                @if (in_array('planNetwork', $homeModules, true) && ($isSuper || $user->can('plano.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.planNetwork.index'),
                         'icon' => 'mdi-wifi',
@@ -672,7 +672,7 @@
                     ])
                 @endif
 
-                @if (in_array('representatives', $homeModules, true) && ($isSuper || $user->can('representantes.visualizar')))
+                @if (in_array('representatives', $homeModules, true) && ($isSuper || $user->can('representantes.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.direction.index'),
                         'icon' => 'mdi-account-group',
@@ -680,7 +680,7 @@
                     ])
                 @endif
 
-                @if (in_array('videos', $homeModules, true) && ($isSuper || $user->can('video.visualizar')))
+                @if (in_array('videos', $homeModules, true) && ($isSuper || $user->can('video.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.video.index'),
                         'icon' => 'mdi-play-circle',
@@ -688,7 +688,7 @@
                     ])
                 @endif
 
-                @if (in_array('service_locations', $homeModules, true) && ($isSuper || $user->can('onde atendemos.visualizar')))
+                @if (in_array('service_locations', $homeModules, true) && ($isSuper || $user->can('onde atendemos.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.serviceLocation.index'),
                         'icon' => 'mdi-map-marker',
@@ -704,7 +704,7 @@
                     ])
                 @endif
 
-                @if (in_array('product_categories', $homeModules, true) && ($isSuper || $user->can('categorias de produtos.visualizar')))
+                @if (in_array('product_categories', $homeModules, true) && ($isSuper || $user->can('categorias de produtos.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.productCategory.index'),
                         'icon' => 'mdi-tag-multiple',
@@ -712,7 +712,7 @@
                     ])
                 @endif
 
-                @if (in_array('products', $homeModules, true) && ($isSuper || $user->can('produtos.visualizar')))
+                @if (in_array('products', $homeModules, true) && ($isSuper || $user->can('produtos.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.product.index'),
                         'icon' => 'mdi-package-variant',
@@ -720,7 +720,7 @@
                     ])
                 @endif
 
-                @if (in_array('partner', $homeModules, true) && ($isSuper || $user->can('parceiro.visualizar')))
+                @if (in_array('partner', $homeModules, true) && ($isSuper || $user->can('parceiro.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.partner.index'),
                         'icon' => 'mdi-handshake-outline',
@@ -728,7 +728,7 @@
                     ])
                 @endif
 
-                @if (in_array('blog_categories', $homeModules, true) && ($isSuper || $user->can('categorias de noticias.visualizar')))
+                @if (in_array('blog_categories', $homeModules, true) && ($isSuper || $user->can('categorias de noticias.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.blogCategory.index'),
                         'icon' => 'mdi-tag-multiple',
@@ -736,7 +736,7 @@
                     ])
                 @endif
 
-                @if (in_array('blog', $homeModules, true) && ($isSuper || $user->can('noticias.visualizar')))
+                @if (in_array('blog', $homeModules, true) && ($isSuper || $user->can('noticias.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.blog.index'),
                         'icon' => 'mdi-newspaper-variant',
@@ -744,7 +744,7 @@
                     ])
                 @endif
 
-                @if (in_array('contact', $homeModules, true) && ($isSuper || $user->can('contato.visualizar')))
+                @if (in_array('contact', $homeModules, true) && ($isSuper || $user->can('contato.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.contact.index'),
                         'icon' => 'mdi-card-account-mail-outline',
@@ -752,7 +752,7 @@
                     ])
                 @endif
 
-                @if (in_array('contact_leads', $homeModules, true) && ($isSuper || $user->can('lead contato.visualizar')))
+                @if (in_array('contact_leads', $homeModules, true) && ($isSuper || $user->can('lead contato.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.formIndex.index'),
                         'icon' => 'mdi-account-box-outline',
@@ -760,7 +760,7 @@
                     ])
                 @endif
 
-                @if (in_array('download_leads', $homeModules, true) && ($isSuper || $user->can('usuario.tornar usuario master')))
+                @if (in_array('download_leads', $homeModules, true) && ($isSuper || $user->can('usuario.tornar usuario master') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.leadDownload.index'),
                         'icon' => 'mdi-download',
@@ -795,7 +795,7 @@
 
                 <div class="row g-2">
 
-                    @if (in_array('about', $aboutModules, true) && ($isSuper || $user->can('sobre nos.visualizar')))
+                    @if (in_array('about', $aboutModules, true) && ($isSuper || $user->can('sobre nos.visualizar') || $user->can('usuario.tornar usuario master')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.about.index'),
                             'icon' => 'mdi-information-outline',
@@ -803,7 +803,7 @@
                         ])
                     @endif
 
-                    @if (in_array('benefits', $aboutModules, true) && ($isSuper || $user->can('parametro.visualizar')))
+                    @if (in_array('benefits', $aboutModules, true) && ($isSuper || $user->can('parametro.visualizar') || $user->can('usuario.tornar usuario master')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.benefitTopic.index'),
                             'icon' => 'mdi-tune',
@@ -811,7 +811,7 @@
                         ])
                     @endif
 
-                    @if (in_array('mission', $aboutModules, true) && ($isSuper || $user->can('missao visao e valores.visualizar')))
+                    @if (in_array('mission', $aboutModules, true) && ($isSuper || $user->can('missao visao e valores.visualizar') || $user->can('usuario.tornar usuario master')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.report.index'),
                             'icon' => 'mdi-target',
@@ -819,7 +819,7 @@
                         ])
                     @endif
 
-                    @if (in_array('planNetworkCategory', $aboutModules, true) && ($isSuper || $user->can('categorias do plano.visualizar')))
+                    @if (in_array('planNetworkCategory', $aboutModules, true) && ($isSuper || $user->can('categorias do plano.visualizar') || $user->can('usuario.tornar usuario master')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.planNetworkCategory.index'),
                             'icon' => 'mdi-shape',
@@ -827,7 +827,7 @@
                         ])
                     @endif
 
-                    @if (in_array('planNetwork', $aboutModules, true) && ($isSuper || $user->can('plano.visualizar')))
+                    @if (in_array('planNetwork', $aboutModules, true) && ($isSuper || $user->can('plano.visualizar') || $user->can('usuario.tornar usuario master')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.planNetwork.index'),
                             'icon' => 'mdi-wifi',
@@ -835,7 +835,7 @@
                         ])
                     @endif
 
-                    @if (in_array('representatives', $aboutModules, true) && ($isSuper || $user->can('representantes.visualizar')))
+                    @if (in_array('representatives', $aboutModules, true) && ($isSuper || $user->can('representantes.visualizar') || $user->can('usuario.tornar usuario master')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.direction.index'),
                             'icon' => 'mdi-account-group',
@@ -843,7 +843,7 @@
                         ])
                     @endif
 
-                    @if (in_array('videos', $aboutModules, true) && ($isSuper || $user->can('video.visualizar')))
+                    @if (in_array('videos', $aboutModules, true) && ($isSuper || $user->can('video.visualizar') || $user->can('usuario.tornar usuario master')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.video.index'),
                             'icon' => 'mdi-play-circle',
@@ -851,7 +851,7 @@
                         ])
                     @endif
 
-                    @if (in_array('service_locations', $aboutModules, true) && ($isSuper || $user->can('onde atendemos.visualizar')))
+                    @if (in_array('service_locations', $aboutModules, true) && ($isSuper || $user->can('onde atendemos.visualizar') || $user->can('usuario.tornar usuario master')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.serviceLocation.index'),
                             'icon' => 'mdi-map-marker',
@@ -881,7 +881,7 @@
 
                 <div class="row g-2">
 
-                    @if (in_array('brands', $productModules, true) && ($isSuper || $user->can('marcas.visualizar')))
+                    @if (in_array('brands', $productModules, true) && ($isSuper || $user->can('marcas.visualizar') || $user->can('usuario.tornar usuario master')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.brand.index'),
                             'icon' => 'mdi-tag-multiple',
@@ -889,7 +889,7 @@
                         ])
                     @endif
 
-                    @if (in_array('product_categories', $productModules, true) && ($isSuper || $user->can('categorias de produtos.visualizar')))
+                    @if (in_array('product_categories', $productModules, true) && ($isSuper || $user->can('categorias de produtos.visualizar') || $user->can('usuario.tornar usuario master')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.productCategory.index'),
                             'icon' => 'mdi-tag-multiple',
@@ -897,7 +897,7 @@
                         ])
                     @endif
 
-                    @if (in_array('products', $productModules, true) && ($isSuper || $user->can('produtos.visualizar')))
+                    @if (in_array('products', $productModules, true) && ($isSuper || $user->can('produtos.visualizar') || $user->can('usuario.tornar usuario master')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.product.index'),
                             'icon' => 'mdi-package-variant',
@@ -927,7 +927,7 @@
 
                 <div class="row g-2">
 
-                    @if (in_array('blog_categories', $blogModules, true) && ($isSuper || $user->can('categorias de noticias.visualizar')))
+                    @if (in_array('blog_categories', $blogModules, true) && ($isSuper || $user->can('categorias de noticias.visualizar') || $user->can('usuario.tornar usuario master')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.blogCategory.index'),
                             'icon' => 'mdi-tag-multiple',
@@ -935,7 +935,7 @@
                         ])
                     @endif
 
-                    @if (in_array('blog', $blogModules, true) && ($isSuper || $user->can('noticias.visualizar')))
+                    @if (in_array('blog', $blogModules, true) && ($isSuper || $user->can('noticias.visualizar') || $user->can('usuario.tornar usuario master')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.blog.index'),
                             'icon' => 'mdi-newspaper-variant',
@@ -965,7 +965,7 @@
 
                 <div class="row g-2">
 
-                    @if (in_array('partner', $partnerModules, true) && ($isSuper || $user->can('parceiro.visualizar')))
+                    @if (in_array('partner', $partnerModules, true) && ($isSuper || $user->can('parceiro.visualizar') || $user->can('usuario.tornar usuario master')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.partner.index'),
                             'icon' => 'mdi-handshake-outline',
@@ -995,7 +995,7 @@
 
                 <div class="row g-2">
 
-                    @if (in_array('contact', $contactModules, true) && ($isSuper || $user->can('contato.visualizar')))
+                    @if (in_array('contact', $contactModules, true) && ($isSuper || $user->can('contato.visualizar') || $user->can('usuario.tornar usuario master')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.contact.index'),
                             'icon' => 'mdi-card-account-mail-outline',
@@ -1003,7 +1003,7 @@
                         ])
                     @endif
 
-                    @if (in_array('contact_leads', $contactModules, true) && ($isSuper || $user->can('lead contato.visualizar')))
+                    @if (in_array('contact_leads', $contactModules, true) && ($isSuper || $user->can('lead contato.visualizar') || $user->can('usuario.tornar usuario master')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.formIndex.index'),
                             'icon' => 'mdi-account-box-outline',
@@ -1011,7 +1011,7 @@
                         ])
                     @endif
 
-                    @if (in_array('download_leads', $contactModules, true) && ($isSuper || $user->can('usuario.tornar usuario master')))
+                    @if (in_array('download_leads', $contactModules, true) && ($isSuper || $user->can('usuario.tornar usuario master') || $user->can('usuario.tornar usuario master')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.leadDownload.index'),
                             'icon' => 'mdi-download',
@@ -1081,7 +1081,7 @@
 
                 <div class="row g-2">
 
-                    @if ($theme->hasModule('audit') && ($isSuper || $user->can('auditoria.visualizar')))
+                    @if ($theme->hasModule('audit') && ($isSuper || $user->can('auditoria.visualizar') || $user->can('usuario.tornar usuario master')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.audit.index'),
                             'icon' => 'mdi-clipboard-text',
@@ -1089,7 +1089,7 @@
                         ])
                     @endif
 
-                    @if ($theme->hasModule('permissions') && ($isSuper || $user->can('grupo.visualizar')))
+                    @if ($theme->hasModule('permissions') && ($isSuper || $user->can('grupo.visualizar') || $user->can('usuario.tornar usuario master')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.group.index'),
                             'icon' => 'mdi-account-group',
@@ -1097,7 +1097,7 @@
                         ])
                     @endif
 
-                    @if ($theme->hasModule('users') && ($isSuper || $user->can('usuario.visualizar')))
+                    @if ($theme->hasModule('users') && ($isSuper || $user->can('usuario.visualizar') || $user->can('usuario.tornar usuario master')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.user.index'),
                             'icon' => 'mdi-account-multiple',
@@ -1118,7 +1118,7 @@
     @if (
         $theme->hasModule('config_theme') &&
         (
-            $isSuper ||
+            $isSuper || $user->can('usuario.tornar usuario master') ||
             $user->can('usuario.tornar usuario master') ||
             $user->can('configuracao do tema.visualizar')
         )
@@ -1148,7 +1148,7 @@
     {{-- ============================================================
         SEO E PLANOS
     ============================================================ --}}
-    @if ($isSuper)
+    @if ($isSuper || $user->can('usuario.tornar usuario master'))
 
         <div class="mb-2">
             <div class="d-flex align-items-center gap-2 mb-2">
