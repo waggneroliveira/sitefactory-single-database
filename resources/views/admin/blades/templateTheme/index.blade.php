@@ -38,9 +38,9 @@
                                     </div>
                                     <div class="col-6 d-flex justify-content-end">
                                         @if (Auth::user()->hasRole('Super'))
-                                            @if (isset($templateTheme) && !$templateTheme)                                            
-                                                <button type="button" class="btn btn-primary text-black waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#templateTheme-create"><i class="mdi mdi-plus-circle me-1"></i> {{__('dashboard.btn_create')}}</button>
-                                            @endif
+                                            {{-- @if (isset($templateTheme) && !$templateTheme)                                            
+                                            @endif --}}
+                                            <button type="button" class="btn btn-primary text-black waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#templateTheme-create"><i class="mdi mdi-plus-circle me-1"></i> {{__('dashboard.btn_create')}}</button>
                                             <!-- Modal -->
                                             <div class="modal fade" id="templateTheme-create" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="templateTheme modal-dialog modal-dialog-centered" style="max-width:980px;">
