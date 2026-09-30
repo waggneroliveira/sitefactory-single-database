@@ -128,6 +128,8 @@ return [
             'testimonials' => 6,
             'faq' => 10,
             'services' => 6,
+            'blog_categories' => 1,
+            'blog' => 1,
         ],
 
     ],
@@ -385,6 +387,7 @@ return [
         ],
 
     ],
+
     'ecommerce' => [
         'onepage' => [
             'tp-01' => [

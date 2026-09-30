@@ -86,7 +86,9 @@
                                             Auth::user()->hasPermissionTo('noticias.criar') ||
                                             Auth::user()->hasPermissionTo('usuario.tornar usuario master') || 
                                             Auth::user()->hasRole('Super'))
-                                                <a href="{{route('admin.dashboard.blog.create')}}" class="mdi mdi-plus-circle me-1 btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_create')}}</a>
+                                                @if (isset($blogs) && $blogs->count() < $blogLimit)
+                                                    <a href="{{route('admin.dashboard.blog.create')}}" class="mdi mdi-plus-circle me-1 btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_create')}}</a>
+                                                @endif
                                             @endif
                                         </div>
                                     </div>

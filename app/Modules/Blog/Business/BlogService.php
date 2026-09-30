@@ -62,8 +62,10 @@ class BlogService
         }
         $theme = $themeManager;
         $themeData = $themeManager->theme();
-        return compact('blogs', 'categories', 'blogCategory', 'settingTheme', 'theme', 'themeData', 'commentCount');
+        $blogLimit = $themeManager->getLimit('blog', 0);
+        return compact('blogs', 'blogLimit', 'categories', 'blogCategory', 'settingTheme', 'theme', 'themeData', 'commentCount');
     }
+
 
     public function getCreateData(ThemeManager $themeManager): array
     {

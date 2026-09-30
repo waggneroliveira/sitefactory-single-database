@@ -43,7 +43,8 @@ class BlogCategoryController extends Controller
         $blogCategories = BlogCategory::sorting()->get();
         $theme = $themeManager;
         $themeData = $themeManager->theme();
-        return view('admin.blades.blogCategory.index', compact('blogCategories', 'theme', 'themeData'));
+        $blogCategoriesLimit = $themeManager->getLimit('blog_categories', 0);
+        return view('admin.blades.blogCategory.index', compact('blogCategories', 'blogCategoriesLimit', 'theme', 'themeData'));
     }
 
     public function store(BlogCategoryRequest $request)
