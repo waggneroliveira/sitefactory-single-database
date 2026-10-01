@@ -43,7 +43,7 @@
                           @endif
 
                           <a href="#plans" class="btn d-flex align-items-center btn-outline-light px-lg-5 px-3 py-lg-3 py-1 font-15 font-medium">
-                              Serviços avulso
+                            Conhecer Planos
                           </a>
                       </div>
 
