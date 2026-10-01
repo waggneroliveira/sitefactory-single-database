@@ -573,7 +573,7 @@
             <div class="col-lg-8">
               <span class="pricing-badge">Planos e Preços</span>
               <h2 class="pricing-title">Escolha o plano ideal para escalar o seu negócio</h2>
-              <p class="pricing-subtitle">Um serviço completo, com preço transparente, sem taxas escondidas e condições claras de contratação.</p>
+              <p class="pricing-subtitle mb-4">Um serviço completo, com preço transparente, sem taxas escondidas e condições claras de contratação.</p>
               
               <!-- Toggle Mensal / Anual (Desabilitado) -->
               <div class="pricing-toggle-wrapper flex-wrap opacity-75 opacity-100-hover d-none">
