@@ -49,13 +49,15 @@
 
                       <div class="hero-stats">
                           <div class="hero-stats-item">
-                              <div class="number text-white-50">Pronto</div>
-                              <div class="label">Templates profissionais</div>
+                              <div class="number text-white-50">Completo</div>
+                              <div class="label">Site + hospedagem + suporte</div>
                           </div>
+
                           <div class="hero-stats-item">
-                              <div class="number text-white-50">24/7</div>
-                              <div class="label">Seu site online</div>
+                              <div class="number text-white-50">SEO</div>
+                              <div class="label">Estrutura otimizada para o Google</div>
                           </div>
+
                           <div class="hero-stats-item">
                               <div class="number text-white-50">Fácil</div>
                               <div class="label">Gestão simplificada</div>
