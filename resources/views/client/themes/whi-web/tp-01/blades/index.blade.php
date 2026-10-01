@@ -626,7 +626,7 @@
                 @endphp
 
                 <div class="col-lg-4 col-md-6">
-                  <div class="plan-card px-3 {{ $plan->popular == 1 ? 'popular' : '' }}">
+                  <div class="plan-card px-4 {{ $plan->popular == 1 ? 'popular' : '' }}">
                     @if ($plan->popular == 1)                  
                       <span class="popular-badge">Mais Popular</span>
                     @endif
