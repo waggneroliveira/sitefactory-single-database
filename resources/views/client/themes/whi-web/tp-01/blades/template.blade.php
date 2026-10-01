@@ -177,26 +177,19 @@
 
                         <div class="d-flex justify-content-between align-items-center py-2 border-bottom border-dark-custom">
                             <span class="text-white-50">Total de Páginas</span>
-                            <span class="fw-semibold text-white">{{ $countPreviews }} PNGs inclusos</span>
+                            <span class="fw-semibold text-white">{{ $countPreviews }}</span>
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center py-2 border-bottom border-dark-custom">
                             <span class="text-white-50">Layout</span>
-                            <span class="fw-semibold text-white">{{ $templateThemeInner->layout_type }}</span>
-                        </div>
-
-                        <div class="d-flex justify-content-between align-items-center py-2 border-bottom border-dark-custom">
-                            <span class="text-white-50">Atualizado em</span>
                             <span class="fw-semibold text-white">
-                                {{ $templateThemeInner->updated_at->format('d/m/Y') }}
-                            </span>
+                            {{ match ($templateThemeInner->layout_type) {
+                                'onepage' => 'Página Única',
+                                'multipage' => 'Múltiplas Páginas',
+                                default => $templateThemeInner->layout_type,
+                            } }}
+                        </span>
                         </div>
-
-                        <div class="d-flex justify-content-between align-items-center py-2">
-                            <span class="text-white-50">Licença</span>
-                            <span class="fw-semibold text-primary">Uso Comercial</span>
-                        </div>
-
                     </div>
 
                     @if ($templateThemeInner->technology <> null)

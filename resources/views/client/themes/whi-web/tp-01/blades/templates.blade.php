@@ -5,10 +5,10 @@
         <!-- Hero & Filter Section -->
         <section class="hero-section mx-auto my-5 col-12 col-lg-8">
             <h1 class="fw-bold text-white text-center display-5 tracking-tight">
-                Explore Nossos Templates de Elite
+                Escolha o modelo ideal para o seu negócio
             </h1>
             <p class="text-white-50 text-center mt-3 fs-6">
-                Selecione interfaces de alta performance, totalmente responsivas e prontas para integração no seu projeto Laravel.
+                Explore nossos modelos profissionais e prontos para o Google. Escolha o seu favorito ou peça para nossa equipe recomendar a melhor estrutura para a sua empresa.
             </p>
     
             <!-- Category Pills -->
@@ -40,7 +40,7 @@
 
                             $previewImage = $previews[0] ?? null;
                             $countPreviews = count($previews);
-                            $themeName = is_object($templateTheme) ? $templateTheme->name : $templateTheme['name'];
+                            $themeName = is_object($templateTheme) ? $templateTheme->title : $templateTheme['title'];
                             
                             // Obtém o slug real do registro ou gera a partir do nome
                             $themeSlug = is_object($templateTheme) 
@@ -53,7 +53,13 @@
                             <article class="tpl-card h-100">
                                 <div class="tpl-card-topbar">
                                     <div class="tpl-dots"><span></span><span></span><span></span></div>
-                                    <span class="tpl-tag">{{ is_object($templateTheme) ? $templateTheme->layout_type : $templateTheme['layout_type'] }}</span>
+                                    <span class="tpl-tag">
+                                        {{ match (is_object($templateTheme) ? $templateTheme->layout_type : $templateTheme['layout_type']) {
+                                            'onepage' => 'Página Única',
+                                            'multipage' => 'Múltiplas Páginas',
+                                            default => is_object($templateTheme) ? $templateTheme->layout_type : $templateTheme['layout_type'],
+                                        } }}
+                                    </span>
                                 </div>
                                 <div class="tpl-preview">
                                     <img src="{{ asset('storage/' . $previewImage) }}" alt="{{ $themeName }}" loading="lazy">
@@ -70,7 +76,7 @@
                                             @if ($countPreviews)                                                
                                                 <span class="d-flex align-items-center gap-1">
                                                     <i data-lucide="layers" style="width: 14px; height: 14px;"></i>
-                                                    {{ $countPreviews }} Páginas PNG
+                                                    {{ $countPreviews }} Páginas
                                                 </span>
                                             @endif
                                             @if ($templateTheme->technology <> null)                                                

@@ -36,16 +36,13 @@
 
                       <div class="mt-3 d-flex justify-content-center justify-content-lg-start flex-wrap gap-3">
                           @if ($slide->link <> null)                                    
-                              <a href="{{$slide->link}}" target="_blank" rel="noopener noreferrer" class="rounded-1 d-flex align-items-center btn-one py-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none">
+                              <a href="{{$slide->link}}" class="rounded-1 d-flex align-items-center btn-one py-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none">
                                   {{$slide->btn_title}}
                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>  
                               </a>
                           @endif
-                          @php
-                              $phone = preg_replace('/\D/', '', $contact->whatsapp);
-                              $mensagem = "Olá! Encontrei seu site e gostaria de conhecer mais sobre as condições para serviços avulso.";
-                          @endphp
-                          <a href="https://wa.me/55{{ $phone }}?text={{ $mensagem }}" target="_blank" rel="noopener noreferrer" class="btn d-flex align-items-center btn-outline-light px-lg-5 px-3 py-lg-3 py-1 font-15 font-medium">
+
+                          <a href="#plans" class="btn d-flex align-items-center btn-outline-light px-lg-5 px-3 py-lg-3 py-1 font-15 font-medium">
                               Serviços avulso
                           </a>
                       </div>
@@ -150,7 +147,7 @@
             <!-- section title -->
             <div class="section_title">
                 <span class="title_badge">Personalize do seu jeito</span>
-                <h2 class="trhee-step">Seu site com<br><span>a sua identidade</span></h2>
+                <h2 class="trhee-step">A forma mais rápida de colocar <br><span>seu negócio no ar</span></h2>
             </div>
 
             <div class="dtat_box">
@@ -166,8 +163,8 @@
                     </div>
                     <!-- text -->
                     <div class="text col-12 col-md-10">
-                        <div class="font-semibold font-15 font-changa">Escolha seu template</div>
-                        <p>Escolha o modelo que mais combina com o seu negócio e comece a personalizar seu site.</p>
+                        <div class="font-semibold font-15 font-changa">Definição do modelo do seu site</div>
+                        <p>Nós recomendamos o modelo perfeito para o seu segmento ou você escolhe o seu favorito em nosso catálogo de templates.</p>
                     </div>
                   </div>
 
@@ -179,8 +176,8 @@
                     </div>
                     <!-- text -->
                     <div class="text col-12 col-md-10">
-                      <div class="font-semibold font-15 font-changa">Acesse seu painel</div>
-                      <p>Entre na sua conta e tenha acesso a todas as opções de personalização do seu site.</p>
+                      <div class="font-semibold font-15 font-changa">Personalização com a sua identidade visual</div>
+                      <p>Nossa equipe configura suas cores, logomarca, textos e informações para que o site reflita exatamente a identidade da sua empresa.</p>
                     </div>
                   </div>
 
@@ -192,8 +189,8 @@
                     </div>
                     <!-- text -->
                     <div class="text col-12 col-md-10">
-                      <div class="font-semibold font-15 font-changa">Personalize seu tema</div>
-                      <p>Altere cores, textos, imagens e outros elementos para deixar o site com a identidade da sua marca.</p>
+                      <div class="font-semibold font-15 font-changa">Você aprova e nós publicamos!</div>
+                      <p>Você valida o resultado e nós cuidamos de toda a parte técnica: publicação, hospedagem, certificado de segurança e presença no Google</p>
                     </div>
                   </div>
 
@@ -205,8 +202,8 @@
                     </div>
                     <!-- text -->
                     <div class="text col-12 col-md-10">
-                      <div class="font-semibold font-15 font-changa">Salve e veja a mudança</div>
-                      <p>Salve suas alterações e confira seu site personalizado em poucos instantes.</p>
+                      <div class="font-semibold font-15 font-changa">Autonomia total no painel</div>
+                      <p>Você recebe seu login e tem total liberdade para alterar fotos, textos, serviços ou anúncios em tempo real, sempre que precisar.</p>
                     </div>
                   </div>
 
@@ -352,15 +349,15 @@
       <div class="container">
         <!-- Div de topo (Sem tag header para não colidir) -->
         <div class="tpl-header-block">
-          <div class="tpl-header-left">
+          <div class="tpl-header-left col-12 col-lg-8">
             <div class="tpl-badge">
               <i class="bi bi-intersect"></i> Modelos Prontos
             </div>
-            <h2>Um template para começar.<br><span>Uma identidade única.</span></h2>
+            <h2>Modelos prontos pensados para o seu segmento. <br><span>Adaptados com a cara do seu negócio. </span></h2>
           </div>
 
-          <div class="tpl-header-right">
-            <p>Escolha uma estrutura profissional e passe o mouse sobre os cards para navegar no modelo completo.</p>
+          <div class="tpl-header-right col-12 col-lg-4">
+            <p>Escolha a estrutura ideal para sua empresa ou deixe que nossa equipe recomende o modelo perfeito. Navegue pelos cards para ver os detalhes de cada um.</p>
             <a href="{{ route('templates') }}">
             <div class="tpl-scroll-hint">
                 Ver todos os templates<i class="bi bi-arrow-right"></i>
@@ -391,7 +388,13 @@
             <article class="tpl-card">
               <div class="tpl-card-topbar">
                 <div class="tpl-dots"><span></span><span></span><span></span></div>
-                <span class="tpl-tag">{{ $templateTheme->layout_type }}</span>
+                <span class="tpl-tag">                  
+                  {{ match ($templateTheme->layout_type) {
+                      'onepage' => 'Página Única',
+                      'multipage' => 'Múltiplas Páginas',
+                      default => $templateThemeInner->layout_type,
+                  } }}
+                </span>
               </div>
               <div class="tpl-preview">
                 <img src="{{ asset('storage') .'/'. $previewImage }}" alt="{{ $templateTheme->name }}" loading="lazy">
@@ -401,12 +404,12 @@
               </div>
               <div class="tpl-card-body">
                 <div>
-                    <span class="tpl-category">{{ is_object($templateTheme) ? $templateTheme->name : $templateTheme['name'] }}</span>
+                    <span class="tpl-category">{{ is_object($templateTheme) ? $templateTheme->title : $templateTheme['title'] }}</span>
                     <div class="d-flex align-items-center gap-2 text-secondary" style="font-size: 0.75rem;">
                         @if ($countPreviews )                          
                           <span class="d-flex align-items-center gap-1">
                               <i data-lucide="layers" style="width: 14px; height: 14px;"></i>
-                              {{ $countPreviews }} Páginas PNG
+                              {{ $countPreviews }} Páginas
                           </span>
                         @endif
                         @if ($templateTheme->technology <> null)                          
@@ -427,8 +430,8 @@
         <!-- Banner Inferior -->
         <div class="tpl-cta">
           <div class="tpl-cta-text">
-            <h4>Quer algo 100% exclusivo?</h4>
-            <p>Criamos um design personalizado do zero para atender às necessidades específicas do seu negócio.</p>
+            <h4>Sua empresa precisa de um site sob medida do zero?</h4>
+            <p>Conheça os serviços de desenvolvimento exclusivo da Agência WHI e crie um projeto único para o seu negócio.</p>
           </div>
           @php
               $phone = preg_replace('/\D/', '', $contact->whatsapp);
