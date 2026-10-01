@@ -64,7 +64,11 @@
     </head>
 
     <body class="loading">
-
+        <style>
+            .swal2-styled.swal2-confirm{
+                background-color: #8b5cf6 !important;
+            }
+        </style>
         <!-- Begin page -->
         <div id="wrapper">
 

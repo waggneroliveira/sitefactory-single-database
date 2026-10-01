@@ -4471,7 +4471,6 @@ div.dataTables_scrollBody > table > :not(:first-child) {
     box-shadow: none;
 }
 .swal2-modal .swal2-confirm {
-    background-color: rgb(255 255 255 / 80%) !important;
     font-size: 0.875rem !important;
 }
 .swal2-modal .swal2-cancel.btn-cancel {
