@@ -101,7 +101,7 @@
                                   <!-- blok -->
                                   @foreach ($topics as $topic)
                                       <div class="af_block col-lg-3 col-md-6 col-sm-6 p-1">
-                                          <div class="text d-flex justify-content-center gap-3 align-items-start flex-column" style="min-height: 223px;">
+                                          <div class="text d-flex justify-content-center gap-3 align-items-start flex-column" style="min-height: 267px;">
                                               <div class="d-flex justify-content-between align-items-start flex-column mb-2">
                                                   
                                                   <a @if($topic->link) href="{{ $topic->link }}" target="_blank" rel="noopener noreferrer" @endif class="topic-item d-block">
