@@ -69,7 +69,7 @@
                   <!-- banner image start -->
                   <div class="col-lg-5 col-md-12 mt-4 mt-lg-0">
                       <div class="hero_img">
-                      <img src="{{ asset('storage/' . $slide->path_image_mobile) }}" alt="image">
+                        <img src="{{ asset('storage/' . $slide->path_image_mobile) }}" alt="image">
                       </div>
                   </div>
                   <!-- banner image end -->
