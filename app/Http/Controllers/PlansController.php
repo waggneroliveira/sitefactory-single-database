@@ -226,9 +226,8 @@ class PlansController extends Controller
                 'description' => $validated['description'],
                 'text' => $validated['text'],
                 'active' => $request->boolean('active', true),
-                'popular' => $request->boolean('popular', true),
+                'popular' => $request->boolean('popular', false),
             ]);
-            
 
             /*
             |--------------------------------------------------------------------------
