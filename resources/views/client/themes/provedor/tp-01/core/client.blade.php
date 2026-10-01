@@ -174,6 +174,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="theme-color" content="#0d0d0d">
 
+    @include('client/script-seo-google/script-head')
+
     {{-- ============================================================
     SEO
     ============================================================ --}}
@@ -306,6 +308,11 @@
 </head>
 <body>
     <div id="organization" hidden></div>
+
+    @include('client/script-seo-google/script-body-nocript')
+
+    @include('client/themes/provedor/tp-01/includes/lgpd/lgpd')
+
     <style>
         :root {
             --primary-color: {{ $tenantTheme->primary_color ? $tenantTheme->primary_color : '#10513D' }};

@@ -171,6 +171,8 @@
 
     <title>{{ isset($blogInner) && !empty($blogInner->title) ? $blogInner->title : $seoTitle }}</title>
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+
+    @include('client/script-seo-google/script-head')
     
     @if(isset($blogInner))
 
@@ -304,6 +306,8 @@
 <body>
     <div id="organization" hidden></div>
 
+    @include('client/script-seo-google/script-body-nocript')
+    
     {{-- @include('client/themes/petshop/tp-01/includes/lgpd/lgpd') --}}
 
     @if (isset($contact) && $contact->phone_one <> null)
