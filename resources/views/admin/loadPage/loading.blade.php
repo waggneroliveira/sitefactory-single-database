@@ -5,7 +5,7 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-color: #7C3AED;
+        background-color: #021127;
         display: flex;
         justify-content: center;
         align-items: center;

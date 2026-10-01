@@ -41,7 +41,7 @@ html[data-bs-theme="dark"] {
     --ct-gray-800: #f7f7f7;
     --ct-gray-900: #f3f7f9;
     --ct-light: #424e5a;
-    --ct-light-rgb: #000f25;
+    --ct-light-rgb: #021127;
     --ct-dark: #f3f7f9;
     --ct-dark-rgb: 243, 247, 249;
     --ct-gray: #8c98a5;
@@ -60,7 +60,7 @@ html[data-menu-color="light"] {
 }
 html[data-bs-theme="dark"][data-menu-color="light"],
 html[data-menu-color="dark"] {
-    --ct-menu-bg: #000f25;
+    --ct-menu-bg: #021127;
     --ct-menu-item-color: rgb(255 255 255 / 80%);
     --ct-menu-item-hover-color: #c8cddc;
     --ct-menu-item-active-color: rgb(255 255 255 / 80%);
@@ -68,7 +68,7 @@ html[data-menu-color="dark"] {
     --ct-menu-item-active-bg: rgba(102, 88, 221, 0.2);
 }
 html[data-menu-color="brand"] {
-    --ct-menu-bg: #7c3aed;
+    --ct-menu-bg: #0073FA;
     --ct-menu-item-color: #cedce4;
     --ct-menu-item-hover-color: #ffffff;
     --ct-menu-item-active-color: #ffffff;
@@ -97,7 +97,7 @@ html[data-two-column-color="light"] {
 }
 html[data-bs-theme="dark"][data-two-column-color="light"],
 html[data-two-column-color="dark"] {
-    --ct-twocolumn-iconview-bg: #000f25;
+    --ct-twocolumn-iconview-bg: #021127;
     --ct-twocolumn-iconview-item-color: rgb(255 255 255 / 80%);
     --ct-twocolumn-iconview-item-hover-color: #c8cddc;
     --ct-twocolumn-iconview-item-active-color: #fff;
@@ -125,13 +125,13 @@ html[data-topbar-color="light"] {
 }
 html[data-bs-theme="dark"][data-topbar-color="light"],
 html[data-topbar-color="dark"] {
-    --ct-topbar-bg: #000f25;
+    --ct-topbar-bg: #021127;
     --ct-topbar-item-color: rgba(255, 255, 255, 0.6);
     --ct-topbar-item-hover-color: #bccee4;
     --ct-topbar-search-bg: #464f5b;
 }
 html[data-topbar-color="brand"] {
-    --ct-topbar-bg: #7c3aed;
+    --ct-topbar-bg: #0073FA;
     --ct-topbar-item-color: rgba(255, 255, 255, 0.7);
     --ct-topbar-item-hover-color: #ffffff;
     --ct-topbar-search-bg: rgba(255, 255, 255, 0.1);
@@ -1901,7 +1901,7 @@ html[data-layout="horizontal"] .menu-title {
     background-size: cover;
 }
 body.authentication-bg {
-    background-color: #000f25;
+    background-color: #021127;
     background-size: cover;
     background-position: center;
 }

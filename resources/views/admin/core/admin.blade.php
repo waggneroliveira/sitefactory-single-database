@@ -66,7 +66,7 @@
     <body class="loading">
         <style>
             .swal2-styled.swal2-confirm{
-                background-color: #8b5cf6 !important;
+                background-color: #005af9 !important;
             }
         </style>
         <!-- Begin page -->
@@ -428,11 +428,13 @@
                             @endif
                         </ul>
                         <ul class="topbar-menu d-flex align-items-center">
-                            <li class="d-none d-md-inline-block">
-                                <a class="nav-link waves-effect waves-light" href="" data-toggle="fullscreen">
-                                    <i class="fe-maximize font-22"></i>
-                                </a>
-                            </li>
+                            @if (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can(['configuracao do tema.visualizar', 'configuracao do tema.editar']))
+                                <li class="d-none d-md-inline-block">
+                                    <a class="nav-link waves-effect waves-light" href="" data-toggle="fullscreen">
+                                        <i class="fe-maximize font-22"></i>
+                                    </a>
+                                </li>
+                            @endif
 
                             <!-- Search Dropdown (for Mobile/Tablet) -->
                             <li class="dropdown d-lg-none">
@@ -586,10 +588,12 @@
                                     @endif
 
                                     <!-- item-->
-                                    <a href="#theme-settings-offcanvas" class="dropdown-item notify-item"  data-bs-toggle="offcanvas" >
-                                        <i class="fe-settings"></i>
-                                        <span>{{__('dashboard.setting')}}</span>
-                                    </a>
+                                    @if (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can(['configuracao do tema.visualizar', 'configuracao do tema.editar']))
+                                        <a href="#theme-settings-offcanvas" class="dropdown-item notify-item"  data-bs-toggle="offcanvas" >
+                                            <i class="fe-settings"></i>
+                                            <span>{{__('dashboard.setting')}}</span>
+                                        </a>configuracao do tema
+                                    @endif
 
                                     <div class="dropdown-divider"></div>
 
@@ -603,11 +607,13 @@
                             </li>
 
                             <!-- Right Bar offcanvas button (Theme Customization Panel) -->
-                            <li>
-                                <a class="nav-link waves-effect waves-light" data-bs-toggle="offcanvas" href="#theme-settings-offcanvas">
-                                    <i class="fe-settings font-22"></i>
-                                </a>
-                            </li>
+                            @if (Auth::user()->hasRole('Super') || Auth::user()->can('usuario.tornar usuario master') || Auth::user()->can(['configuracao do tema.visualizar', 'configuracao do tema.editar']))
+                                <li>
+                                    <a class="nav-link waves-effect waves-light" data-bs-toggle="offcanvas" href="#theme-settings-offcanvas">
+                                        <i class="fe-settings font-22"></i>
+                                    </a>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                 </div>

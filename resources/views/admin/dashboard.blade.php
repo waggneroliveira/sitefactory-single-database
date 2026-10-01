@@ -222,9 +222,9 @@
 
         /* Geral */
         .announcement-general {
-            background: #f0f7ff;
-            border-color: #cfe2ff;
-            color: #084298;
+            background: #eef5ff;
+            border-color: #a8ccff;
+            color: #021127;
         }
 
         .announcement-general .announcement-icon {
@@ -270,9 +270,9 @@
 
         /* Promoção */
         .announcement-promotion {
-            background: #f8f0ff;
-            border-color: #d8b4fe;
-            color: #581c87;
+            background: #eef5ff;
+            border-color: #a8ccff;
+            color: #021127;
         }
 
         .announcement-promotion .announcement-icon {
@@ -280,7 +280,7 @@
         }
 
         .announcement-promotion .announcement-button {
-            background: #8b5cf6;
+            background: #005af9;
             color: #fff;
         }
 
