@@ -576,7 +576,7 @@
               <p class="pricing-subtitle">Um serviço completo, com preço transparente, sem taxas escondidas e condições claras de contratação.</p>
               
               <!-- Toggle Mensal / Anual (Desabilitado) -->
-              <div class="pricing-toggle-wrapper flex-wrap opacity-75 opacity-100-hover">
+              <div class="pricing-toggle-wrapper flex-wrap opacity-75 opacity-100-hover d-none">
                 <span class="toggle-label text-muted" id="label-monthly" style="cursor: not-allowed;">Cobrança Mensal</span>
                 <div class="form-check form-switch p-0 m-0">
                   <input 
