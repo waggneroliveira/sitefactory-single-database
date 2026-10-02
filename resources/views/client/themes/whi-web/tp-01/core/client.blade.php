@@ -225,7 +225,7 @@
 
     @include('client/script-seo-google/script-body-nocript')
 
-    @include('client/themes/petshop/tp-01/includes/lgpd/lgpd')
+    @include('client/themes/whi-web/tp-01/includes/lgpd/lgpd')
 
     {{-- Preloader --}}
     <div id="preloader">

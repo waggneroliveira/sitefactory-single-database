@@ -528,14 +528,6 @@
 
             <div class="row g-2">
 
-                @if (in_array('announcement', $homeModules, true) && ($isSuper || $user->can('slide.visualizar') || $user->can('usuario.tornar usuario master')))
-                    @include('admin.components.dashboard-card', [
-                        'route' => route('admin.dashboard.announcement.index'),
-                        'icon' => 'mdi-image-size-select-actual',
-                        'title' => 'Anúncios'
-                    ])
-                @endif
-
                 @if (in_array('slides', $homeModules, true) && ($isSuper || $user->can('slide.visualizar') || $user->can('usuario.tornar usuario master')))
                     @include('admin.components.dashboard-card', [
                         'route' => route('admin.dashboard.slide.index'),
@@ -1033,7 +1025,7 @@
 
         <div class="mb-2">
             <div class="d-flex align-items-center gap-2 mb-2">
-                <span class="badge bg-secondary bg-opacity-10 text-secondary p-2">
+                <span class="badge bg-primary bg-opacity-10 text-primary p-2">
                     <i class="mdi mdi-email-edit fs-5"></i>
                 </span>
                 <h5 class="mb-0 fw-semibold">
@@ -1071,7 +1063,7 @@
 
             <div class="mb-2">
                 <div class="d-flex align-items-center gap-2 mb-2">
-                    <span class="badge bg-dark bg-opacity-10 text-dark p-2">
+                    <span class="badge bg-primary bg-opacity-10 text-primary p-2">
                         <i class="mdi mdi-security fs-5"></i>
                     </span>
                     <h5 class="mb-0 fw-semibold">
@@ -1126,7 +1118,7 @@
 
         <div class="mb-2">
             <div class="d-flex align-items-center gap-2 mb-2">
-                <span class="badge bg-purple bg-opacity-10 text-purple p-2">
+                <span class="badge bg-primary bg-opacity-10 text-primary p-2">
                     <i class="mdi mdi-palette fs-5"></i>
                 </span>
                 <h5 class="mb-0 fw-semibold">
@@ -1152,11 +1144,77 @@
 
         <div class="mb-2">
             <div class="d-flex align-items-center gap-2 mb-2">
-                <span class="badge bg-purple bg-opacity-10 text-purple p-2">
+                <span class="badge bg-primary bg-opacity-10 text-primary p-2">
+                    <i class="mdi mdi-google fs-5"></i>
+                </span>
+                <h5 class="mb-0 fw-semibold">
+                    SEO e Google
+                </h5>
+            </div>
+
+            <div class="row g-2">
+
+                @include('admin.components.dashboard-card', [
+                    'route' => route('admin.dashboard.seoGoogle.index'),
+                    'icon' => 'mdi-google',
+                    'title' => 'SEO Google'
+                ])
+
+                @include('admin.components.dashboard-card', [
+                    'route' => route('google.search-console.client.index'),
+                    'icon' => 'mdi-account-search',
+                    'title' => 'Clientes do Google Search Console'
+                ])
+
+                @include('admin.components.dashboard-card', [
+                    'route' => route('google.search-console.index'),
+                    'icon' => 'mdi-chart-line',
+                    'title' => 'Google Search Console'
+                ])
+
+            </div>
+        </div>
+
+    @endif
+
+    <div class="mb-2">
+        <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge bg-primary bg-opacity-10 text-primary p-2">
+                <i class="mdi mdi-bullhorn fs-5"></i>
+            </span>
+            <h5 class="mb-0 fw-semibold">
+                Anúncios                    
+            </h5>
+        </div>
+
+        <div class="row g-2">
+            @if ($isSuper || $user->can('usuario.tornar usuario master'))
+                @include('admin.components.dashboard-card', [
+                    'route' => route('admin.dashboard.adSlot.index'),
+                    'icon' => 'mdi-billboard',
+                    'title' => 'Áreas do anúncio'
+                ])
+            @endif
+
+            @if ($isSuper || in_array('announcement', $homeModules, true) && ($isSuper || $user->can('slide.visualizar') || $user->can('usuario.tornar usuario master')))
+                @include('admin.components.dashboard-card', [
+                    'route' => route('admin.dashboard.announcement.index'),
+                    'icon' => 'mdi-image-size-select-actual',
+                    'title' => 'Anúncios'
+                ])
+            @endif
+        </div>
+    </div>
+
+    @if ($isSuper || $user->can('usuario.tornar usuario master'))
+
+        <div class="mb-2">
+            <div class="d-flex align-items-center gap-2 mb-2">
+                <span class="badge bg-primary bg-opacity-10 text-primary p-2">
                     <i class="mdi mdi-google-analytics fs-5"></i>
                 </span>
                 <h5 class="mb-0 fw-semibold">
-                    SEO e Planos
+                    Planos e Clientes
                 </h5>
             </div>
 
@@ -1169,18 +1227,6 @@
                 ])
 
                 @include('admin.components.dashboard-card', [
-                    'route' => route('admin.dashboard.seoGoogle.index'),
-                    'icon' => 'mdi-google',
-                    'title' => 'SEO Google'
-                ])
-
-                @include('admin.components.dashboard-card', [
-                    'route' => route('google.search-console.index'),
-                    'icon' => 'mdi-chart-line',
-                    'title' => 'Google Search Console'
-                ])
-
-                @include('admin.components.dashboard-card', [
                     'route' => route('admin.dashboard.plans.index'),
                     'icon' => 'mdi-credit-card-outline',
                     'title' => 'Plano contratado'
@@ -1190,12 +1236,6 @@
                     'route' => route('admin.dashboard.tenants.index'),
                     'icon' => 'mdi-account-multiple-outline',
                     'title' => 'Cliente/Tenant'
-                ])
-
-                @include('admin.components.dashboard-card', [
-                    'route' => route('admin.dashboard.adSlot.index'),
-                    'icon' => 'mdi-billboard',
-                    'title' => 'Áreas do anúncio'
                 ])
 
             </div>

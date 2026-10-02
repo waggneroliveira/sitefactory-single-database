@@ -41,4 +41,9 @@ class TenantGoogleSearchConsole extends Model
         return LogOptions::defaults()
             ->logOnly($activityLogService->getLoggableAttributes());
     }
+
+    public function tenant()
+    {
+        return $this->belongsTo(Tenant::class);
+    }
 }

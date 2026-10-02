@@ -20,6 +20,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FormIndexController;
 use App\Http\Controllers\GalleryImageController;
+use App\Http\Controllers\GoogleSearchConsoleController;
 use App\Http\Controllers\ImpactSectionController;
 use App\Http\Controllers\ImpactSectionMetricController;
 use App\Http\Controllers\LetsgoController;
@@ -46,6 +47,7 @@ use App\Http\Controllers\StatuteController;
 use App\Http\Controllers\SystemClientController;
 use App\Http\Controllers\TemplateThemeController;
 use App\Http\Controllers\TenantController;
+use App\Http\Controllers\TenantGoogleSearchConsoleController;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\VideoController;
 use App\Http\Middleware\Authenticate;
@@ -61,7 +63,6 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
-use App\Http\Controllers\GoogleSearchConsoleController;
 
 Route::prefix('painel/')->group(function () {
     Route::get('/', function () {
@@ -146,6 +147,10 @@ Route::prefix('painel/')->group(function () {
                 'google/search-console/ajuda',
                 [GoogleSearchConsoleController::class, 'help']
             )->name('google.search-console.help');
+
+            Route::resource('cliente-google', TenantGoogleSearchConsoleController::class)
+            ->names('google.search-console.client')
+            ->parameters(['cliente-google'=>'tenantGoogleSearchConsole']);
         });
         
         Route::get('documentation', function () {
