@@ -266,6 +266,7 @@ return [
                     'service_locations',
                     'contact_leads',
                     'download_leads',
+                    'announcement',
                 ],
 
                 'templates' => [

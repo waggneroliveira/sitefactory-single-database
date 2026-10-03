@@ -31,7 +31,7 @@ class AnnouncementController extends Controller
 
         $check = checkPermission(
             'announcement',
-            'anuncios.visualizar',
+            'anuncio.visualizar',
             $settingTheme
         );
 
@@ -39,15 +39,90 @@ class AnnouncementController extends Controller
             return $check;
         }
 
+        $user = Auth::user();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Permissões
+        |--------------------------------------------------------------------------
+        */
+
+        $isSuper = $user?->hasRole('Super') ?? false;
+
+        $isUsuarioMaster = $user?->can('usuario.tornar usuario master') ?? false;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Pode gerenciar anúncios de todos os clientes
+        |--------------------------------------------------------------------------
+        */
+
+        $canManageAllAnnouncements = $isSuper || $isUsuarioMaster;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Tema
+        |--------------------------------------------------------------------------
+        */
+
         $theme = $themeManager;
+
         $themeData = $themeManager->theme();
 
-        $announcements = Announcement::with([
+        /*
+        |--------------------------------------------------------------------------
+        | Anúncios
+        |--------------------------------------------------------------------------
+        |
+        | Super/Master:
+        | - Visualizam todos os anúncios.
+        |
+        | Usuário comum:
+        | - Visualiza somente anúncios vinculados ao tenant atual.
+        |
+        */
+
+        $announcementsQuery = Announcement::with([
             'tenants',
             'adSlots',
-        ])->get();
+        ]);
 
-        $tenants = Tenant::get();
+        if (!$canManageAllAnnouncements) {
+            $currentTenant = Tenant::current();
+
+            $announcementsQuery->whereHas('tenants', function ($query) use ($currentTenant) {
+                $query->where('tenants.id', $currentTenant->id);
+            });
+        }
+
+        $announcements = $announcementsQuery->get();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Clientes
+        |--------------------------------------------------------------------------
+        |
+        | Super/Master:
+        | - Podem selecionar qualquer cliente.
+        |
+        | Usuário comum:
+        | - Recebe somente o próprio tenant.
+        |
+        */
+
+        if ($canManageAllAnnouncements) {
+            $tenants = Tenant::get();
+        } else {
+            $tenants = collect([
+                Tenant::current(),
+            ]);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Espaços de anúncio
+        |--------------------------------------------------------------------------
+        */
 
         $adSlots = AdSlot::where(
             'template_theme_id',
@@ -56,18 +131,26 @@ class AnnouncementController extends Controller
             ->where('active', true)
             ->orderBy('sorting')
             ->orderBy('name')
-        ->get();
+            ->get();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Limites
+        |--------------------------------------------------------------------------
+        */
 
         $aboutLimit = $themeManager->getLimit('about', 0);
 
-        return view('admin.blades.announcement.index',
+        return view(
+            'admin.blades.announcement.index',
             compact(
                 'tenants',
                 'announcements',
                 'adSlots',
                 'theme',
                 'themeData',
-                'aboutLimit'
+                'aboutLimit',
+                'canManageAllAnnouncements'
             )
         );
     }

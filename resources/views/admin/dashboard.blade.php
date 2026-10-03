@@ -1177,34 +1177,36 @@
 
     @endif
 
-    <div class="mb-2">
-        <div class="d-flex align-items-center gap-2 mb-2">
-            <span class="badge bg-primary bg-opacity-10 text-primary p-2">
-                <i class="mdi mdi-bullhorn fs-5"></i>
-            </span>
-            <h5 class="mb-0 fw-semibold">
-                Anúncios                    
-            </h5>
-        </div>
+    @if ($isSuper || $user->can('usuario.tornar usuario master') || $user->can('anuncio.visualizar'))
+        <div class="mb-2">
+            <div class="d-flex align-items-center gap-2 mb-2">
+                <span class="badge bg-primary bg-opacity-10 text-primary p-2">
+                    <i class="mdi mdi-bullhorn fs-5"></i>
+                </span>
+                <h5 class="mb-0 fw-semibold">
+                    Anúncios                    
+                </h5>
+            </div>
 
-        <div class="row g-2">
-            @if ($isSuper || $user->can('usuario.tornar usuario master'))
-                @include('admin.components.dashboard-card', [
-                    'route' => route('admin.dashboard.adSlot.index'),
-                    'icon' => 'mdi-billboard',
-                    'title' => 'Áreas do anúncio'
-                ])
-            @endif
+            <div class="row g-2">
+                @if ($isSuper || $user->can('usuario.tornar usuario master'))
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.adSlot.index'),
+                        'icon' => 'mdi-billboard',
+                        'title' => 'Áreas do anúncio'
+                    ])
+                @endif
 
-            @if ($isSuper || in_array('announcement', $homeModules, true) && ($isSuper || $user->can('slide.visualizar') || $user->can('usuario.tornar usuario master')))
-                @include('admin.components.dashboard-card', [
-                    'route' => route('admin.dashboard.announcement.index'),
-                    'icon' => 'mdi-image-size-select-actual',
-                    'title' => 'Anúncios'
-                ])
-            @endif
+                @if ($isSuper || in_array('announcement', $homeModules, true) && ($isSuper || $user->can('anuncio.visualizar') || $user->can('usuario.tornar usuario master')))
+                    @include('admin.components.dashboard-card', [
+                        'route' => route('admin.dashboard.announcement.index'),
+                        'icon' => 'mdi-image-size-select-actual',
+                        'title' => 'Anúncios'
+                    ])
+                @endif
+            </div>
         </div>
-    </div>
+    @endif
 
     @if ($isSuper || $user->can('usuario.tornar usuario master'))
 
