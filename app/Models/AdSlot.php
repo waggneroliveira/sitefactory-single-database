@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Tenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -35,6 +36,14 @@ class AdSlot extends Model
         return $this->belongsToMany(
             Announcement::class,
             'announcement_ad_slots'
+        );
+    }
+
+    public function tenants()
+    {
+        return $this->belongsToMany(
+            Tenant::class,
+            'tenant_ad_slot'
         );
     }
 }

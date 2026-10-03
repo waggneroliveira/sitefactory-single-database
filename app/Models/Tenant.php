@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\AdSlot;
 use App\Models\TenantGoogleSearchConsole;
 use App\Models\TenantModuleLimit;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -78,8 +79,17 @@ class Tenant extends BaseTenant
     {
         return $this->belongsToMany(Announcement::class, 'announcement_tenants');
     }
+    
     public function googleSearchConsole(): HasOne
     {
         return $this->hasOne(TenantGoogleSearchConsole::class);
+    }
+
+    public function adSlots()
+    {
+        return $this->belongsToMany(
+            AdSlot::class,
+            'tenant_ad_slot'
+        );
     }
 }

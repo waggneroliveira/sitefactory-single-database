@@ -38,6 +38,24 @@
         'active',
         $adSlot?->active ?? true
     );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Tenants autorizados
+    |--------------------------------------------------------------------------
+    */
+
+    $currentTenantIds = old(
+        'tenant_ids',
+        $adSlot
+            ? $adSlot->tenants->pluck('id')->toArray()
+            : []
+    );
+
+    $currentTenantIds = array_map(
+        'intval',
+        (array) $currentTenantIds
+    );
 @endphp
 
 <div class="row">
@@ -183,9 +201,71 @@
         </small>
     </div>
 
+    {{-- Tenants autorizados --}}
+    <div class="col-12 mb-3">
+
+        <label class="form-label">
+            Clientes autorizados
+        </label>
+
+        <div class="border rounded p-3">
+
+            @if($tenants->isNotEmpty())
+
+                <div class="row">
+
+                    @foreach($tenants as $tenant)
+
+                        <div class="col-12 col-md-6 col-lg-4 mb-2">
+
+                            <div class="form-check">
+
+                                <input
+                                    type="checkbox"
+                                    name="tenant_ids[]"
+                                    value="{{ $tenant->id }}"
+                                    id="tenant-{{ $uid }}-{{ $tenant->id }}"
+                                    class="form-check-input"
+                                    @checked(in_array($tenant->id, $currentTenantIds))
+                                >
+
+                                <label
+                                    class="form-check-label"
+                                    for="tenant-{{ $uid }}-{{ $tenant->id }}"
+                                >
+                                    {{ $tenant->name }}
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    @endforeach
+
+                </div>
+
+            @else
+
+                <div class="text-muted">
+                    Nenhum cliente disponível para autorização.
+                </div>
+
+            @endif
+
+        </div>
+
+        <small class="text-muted">
+            Selecione quais clientes poderão utilizar este espaço de anúncio.
+            Somente os clientes selecionados poderão visualizar e vincular anúncios a este espaço.
+        </small>
+
+    </div>
+
     {{-- Ativo --}}
     <div class="col-12 mb-3">
+
         <div class="form-check">
+
             <input
                 type="hidden"
                 name="active"
@@ -207,7 +287,9 @@
             >
                 {{ __('dashboard.active') }}?
             </label>
+
         </div>
+
     </div>
 
 </div>

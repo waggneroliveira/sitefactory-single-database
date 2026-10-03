@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\AdSlot;
+use App\Models\Tenant;
 use App\Repositories\SettingThemeRepository;
 use App\Services\ThemeManager;
 use Illuminate\Http\Request;
@@ -32,10 +33,13 @@ class AdSlotController extends Controller
             'template_theme_id',
             $themeData->id
         )
-            ->withCount('announcements')
-            ->orderBy('sorting')
-            ->orderBy('name')
-            ->get();
+        ->withCount([
+            'announcements',
+            'tenants',
+        ])
+        ->orderBy('sorting')
+        ->orderBy('name')
+        ->get();
 
         return view('admin.blades.adSlot.index',
             compact(
@@ -59,12 +63,12 @@ class AdSlotController extends Controller
         if ($check !== true) {
             return $check;
         }
-
+        $tenants = Tenant::orderBy('name')->get();
         $themeData = $themeManager->theme();
 
-        return view(
-            'admin.blades.adSlot.create',
+        return view('admin.blades.adSlot.create',
             compact(
+                'tenants',
                 'themeData',
                 'themeManager'
             )
@@ -127,6 +131,17 @@ class AdSlotController extends Controller
                 'nullable',
                 'boolean',
             ],
+
+            // Tenants autorizados a utilizar este espaço
+            'tenant_ids' => [
+                'nullable',
+                'array',
+            ],
+
+            'tenant_ids.*' => [
+                'integer',
+                'exists:tenants,id',
+            ],
         ]);
 
         $slug = $validated['slug'] ?? $validated['name'];
@@ -134,8 +149,8 @@ class AdSlotController extends Controller
         $slug = Str::slug($slug);
 
         /*
-         * Garante que o slug seja único dentro do template.
-         */
+        * Garante que o slug seja único dentro do template.
+        */
         $originalSlug = $slug;
         $counter = 1;
 
@@ -147,7 +162,7 @@ class AdSlotController extends Controller
             $slug = $originalSlug . '-' . $counter++;
         }
 
-        AdSlot::create([
+        $adSlot = AdSlot::create([
             'template_theme_id' => $themeData->id,
             'name' => $validated['name'],
             'slug' => $slug,
@@ -156,6 +171,13 @@ class AdSlotController extends Controller
             'sorting' => $validated['sorting'] ?? 0,
             'active' => $request->boolean('active'),
         ]);
+
+        /*
+        * Define quais tenants possuem acesso ao espaço.
+        */
+        $adSlot->tenants()->sync(
+            $validated['tenant_ids'] ?? []
+        );
 
         return redirect()
             ->route('admin.dashboard.adSlot.index')
@@ -222,10 +244,15 @@ class AdSlotController extends Controller
             $adSlot,
             $themeData->id
         );
+        
+        $tenants = Tenant::orderBy('name')->get();
+
+        $adSlot->load('tenants');
 
         return view(
             'admin.blades.adSlot.edit',
             compact(
+                'tenants',
                 'adSlot',
                 'themeData',
                 'themeManager'
@@ -298,6 +325,17 @@ class AdSlotController extends Controller
                 'nullable',
                 'boolean',
             ],
+
+            // Tenants autorizados a utilizar este espaço
+            'tenant_ids' => [
+                'nullable',
+                'array',
+            ],
+
+            'tenant_ids.*' => [
+                'integer',
+                'exists:tenants,id',
+            ],
         ]);
 
         $slug = $validated['slug'] ?? $validated['name'];
@@ -324,6 +362,16 @@ class AdSlotController extends Controller
             'sorting' => $validated['sorting'] ?? 0,
             'active' => $request->boolean('active'),
         ]);
+
+        /*
+        * Atualiza os tenants autorizados.
+        *
+        * O sync() adiciona os novos, mantém os existentes
+        * e remove os que foram desmarcados.
+        */
+        $adSlot->tenants()->sync(
+            $validated['tenant_ids'] ?? []
+        );
 
         return redirect()
             ->route('admin.dashboard.adSlot.index')

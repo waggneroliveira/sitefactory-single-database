@@ -288,6 +288,7 @@ return [
                     'representatives',
                     'contact',
                     'contact_leads',
+                    'announcement',
                 ],
 
                 'products' => [

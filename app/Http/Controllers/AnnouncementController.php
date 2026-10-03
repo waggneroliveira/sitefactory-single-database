@@ -51,12 +51,6 @@ class AnnouncementController extends Controller
 
         $isUsuarioMaster = $user?->can('usuario.tornar usuario master') ?? false;
 
-        /*
-        |--------------------------------------------------------------------------
-        | Pode gerenciar anúncios de todos os clientes
-        |--------------------------------------------------------------------------
-        */
-
         $canManageAllAnnouncements = $isSuper || $isUsuarioMaster;
 
         /*
@@ -71,6 +65,18 @@ class AnnouncementController extends Controller
 
         /*
         |--------------------------------------------------------------------------
+        | Tenant atual
+        |--------------------------------------------------------------------------
+        */
+
+        $currentTenant = null;
+
+        if (!$canManageAllAnnouncements) {
+            $currentTenant = Tenant::current();
+        }
+
+        /*
+        |--------------------------------------------------------------------------
         | Anúncios
         |--------------------------------------------------------------------------
         |
@@ -78,7 +84,8 @@ class AnnouncementController extends Controller
         | - Visualizam todos os anúncios.
         |
         | Usuário comum:
-        | - Visualiza somente anúncios vinculados ao tenant atual.
+        | - Visualiza anúncios destinados a todos.
+        | - Visualiza anúncios específicos do tenant atual.
         |
         */
 
@@ -89,47 +96,63 @@ class AnnouncementController extends Controller
         ]);
 
         if (!$canManageAllAnnouncements) {
-            $currentTenant = Tenant::current();
-
-            $announcementsQuery->whereHas('tenants', function ($query) use ($currentTenant) {
-                $query->where('tenants.id', $currentTenant->id);
+            $announcementsQuery->where(function ($query) use ($currentTenant) {
+                $query->where('target', 'all')
+                    ->orWhereHas('tenants', function ($tenantQuery) use ($currentTenant) {
+                        $tenantQuery->where(
+                            'tenants.id',
+                            $currentTenant->id
+                        );
+                    });
             });
         }
 
-        $announcements = $announcementsQuery->get();
+        $announcements = $announcementsQuery
+            ->orderByDesc('created_at')
+            ->get();
 
         /*
         |--------------------------------------------------------------------------
         | Clientes
         |--------------------------------------------------------------------------
-        |
-        | Super/Master:
-        | - Podem selecionar qualquer cliente.
-        |
-        | Usuário comum:
-        | - Recebe somente o próprio tenant.
-        |
         */
 
         if ($canManageAllAnnouncements) {
-            $tenants = Tenant::get();
+            $tenants = Tenant::orderBy('name')->get();
         } else {
             $tenants = collect([
-                Tenant::current(),
+                $currentTenant,
             ]);
         }
 
         /*
         |--------------------------------------------------------------------------
-        | Espaços de anúncio
+        | AdSlots
         |--------------------------------------------------------------------------
+        |
+        | O acesso ao AdSlot é definido exclusivamente pelo
+        | relacionamento tenant_ad_slot.
+        |
+        | Super/Master:
+        | - Todos os AdSlots ativos.
+        |
+        | Usuário comum:
+        | - Somente AdSlots autorizados para o Tenant atual.
+        |
         */
 
-        $adSlots = AdSlot::where(
-            'template_theme_id',
-            $themeData->id
-        )
-            ->where('active', true)
+        $adSlotsQuery = AdSlot::where('active', true);
+
+        if (!$canManageAllAnnouncements) {
+            $adSlotsQuery->whereHas('tenants', function ($query) use ($currentTenant) {
+                $query->where(
+                    'tenants.id',
+                    $currentTenant->id
+                );
+            });
+        }
+
+        $adSlots = $adSlotsQuery
             ->orderBy('sorting')
             ->orderBy('name')
             ->get();
@@ -141,6 +164,12 @@ class AnnouncementController extends Controller
         */
 
         $aboutLimit = $themeManager->getLimit('about', 0);
+
+        /*
+        |--------------------------------------------------------------------------
+        | View
+        |--------------------------------------------------------------------------
+        */
 
         return view(
             'admin.blades.announcement.index',
@@ -175,6 +204,39 @@ class AnnouncementController extends Controller
         $data['ends_at'] = $request->filled('ends_at')
             ? Carbon::createFromFormat('Y-m-d\TH:i', $request->ends_at)
             : null;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Validação dos AdSlots
+        |--------------------------------------------------------------------------
+        */
+
+        $user = Auth::user();
+
+        $isSuper = $user->hasRole('Super');
+        $isMaster = $user->can('usuario.tornar usuario master');
+
+        if (!$isSuper && !$isMaster) {
+            $tenant = Tenant::current();
+
+            $allowedAdSlotIds = $tenant
+                ->adSlots()
+                ->whereIn('ad_slots.id', $adSlotIds)
+                ->pluck('ad_slots.id')
+                ->toArray();
+
+            if (count($allowedAdSlotIds) !== count($adSlotIds)) {
+                abort(403);
+            }
+
+            $adSlotIds = $allowedAdSlotIds;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Imagens
+        |--------------------------------------------------------------------------
+        */
 
         $manager = new ImageManager(new ImagickDriver());
 
@@ -276,7 +338,7 @@ class AnnouncementController extends Controller
 
             $announcement = Announcement::create($data);
 
-            // Vincula os slots de anúncio ao anúncio.
+            // Vincula os slots autorizados ao anúncio.
             $announcement->adSlots()->sync($adSlotIds);
 
             // Se for para clientes específicos, salva na tabela pivot.
@@ -324,6 +386,39 @@ class AnnouncementController extends Controller
         $data['ends_at'] = $request->filled('ends_at')
             ? Carbon::createFromFormat('Y-m-d\TH:i', $request->ends_at)
             : null;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Validação dos AdSlots
+        |--------------------------------------------------------------------------
+        */
+
+        $user = Auth::user();
+
+        $isSuper = $user->hasRole('Super');
+        $isMaster = $user->can('usuario.tornar usuario master');
+
+        if (!$isSuper && !$isMaster) {
+            $tenant = Tenant::current();
+
+            $allowedAdSlotIds = $tenant
+                ->adSlots()
+                ->whereIn('ad_slots.id', $adSlotIds)
+                ->pluck('ad_slots.id')
+                ->toArray();
+
+            if (count($allowedAdSlotIds) !== count($adSlotIds)) {
+                abort(403);
+            }
+
+            $adSlotIds = $allowedAdSlotIds;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Imagens
+        |--------------------------------------------------------------------------
+        */
 
         $manager = new ImageManager(new ImagickDriver());
 
@@ -448,15 +543,13 @@ class AnnouncementController extends Controller
         }
 
         $data['active'] = $request->boolean('active');
-        $data['created_by'] = Auth::id();
-        
+
         try {
             DB::beginTransaction();
 
             $announcement->fill($data)->save();
 
             // Atualiza os slots vinculados ao anúncio.
-            // O sync() também remove os slots que foram desmarcados.
             $announcement->adSlots()->sync($adSlotIds);
 
             // Atualiza os tenants relacionados.
