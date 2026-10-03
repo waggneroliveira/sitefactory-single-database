@@ -83,6 +83,7 @@ class AnnouncementController extends Controller
         */
 
         $announcementsQuery = Announcement::with([
+            'creator',
             'tenants',
             'adSlots',
         ]);
@@ -268,6 +269,7 @@ class AnnouncementController extends Controller
         }
 
         $data['active'] = $request->boolean('active');
+        $data['created_by'] = Auth::id();
 
         try {
             DB::beginTransaction();
@@ -446,7 +448,8 @@ class AnnouncementController extends Controller
         }
 
         $data['active'] = $request->boolean('active');
-
+        $data['created_by'] = Auth::id();
+        
         try {
             DB::beginTransaction();
 

@@ -27,6 +27,7 @@ class Announcement extends Model
         'type',
         'starts_at',
         'ends_at',
+        'created_by'
     ];
     
     protected $casts = [
@@ -64,5 +65,10 @@ class Announcement extends Model
             AdSlot::class,
             'announcement_ad_slots'
         );
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }
