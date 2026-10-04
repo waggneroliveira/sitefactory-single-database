@@ -485,4 +485,47 @@ return [
         ],
 
     ],
+
+    'blog' => [
+        'multipage' => [
+            'tp-01' => [
+                'blog' => [
+                    'blog_categories',
+                    'blog',
+                ],
+
+                'contact' => [
+                    'contact',
+                    'contact_leads',
+                    'download_leads',
+                ],
+
+            ],
+        ],
+
+        'smtp' => [
+            'config_smtp',
+        ],
+
+        'security_and_access_control' => [
+            'audit',
+            'permissions',
+            'users',
+        ],
+
+        'config_theme' => [
+            'config_theme',
+        ],
+
+        'limits' => [
+            'slides' => 3,
+            'topics' => 6,
+            'testimonials' => 6,
+            'faq' => 10,
+            'services' => 6,
+            'blog_categories' => 1,
+            'blog' => 1,
+        ],
+
+    ],
 ];
