@@ -98,7 +98,6 @@ class HomePageService
         $depoiments = Depoiment::active()->sorting()->get();
         $contact = Contact::first();
         $statute = Statute::active()->first();
-        $blogHighlights = Blog::with('category')->active()->highlightOnly()->limit(3)->get();
         $faqs = Faq::active()->sorting()->get();
         $sessaoFaq = SessaoFaq::active()->first();
         $services = ServiceItem::active()->get();
@@ -132,7 +131,73 @@ class HomePageService
         $lineOfTimes = LineOfTime::active()->get();
         $impactSections = ImpactSection::with('metrics')->active()->get();
 
+        $blogSuperHighlights = Blog::whereHas('category', function($active){
+            $active->where('active', 1);
+        })->superHighlightOnly()->active()->sorting()->limit(6)->get();
+        $blogHighlights = Blog::with('category')->active()->highlightOnly()->limit(3)->get();
+        // Obter as 5 categorias mais recentes das últimas notícias
+        $recentCategories = BlogCategory::whereHas('blogs', function($query) {
+            $query->active()->whereHas('category', function($active) {
+                $active->where('active', 1);
+            });
+        })
+        ->withCount(['blogs' => function($query) {
+            $query->active();
+        }])
+        ->where('active', 1)
+        ->orderBy('created_at', 'DESC')
+        ->take(5)
+        ->get();
+        // Obter as próximas 9 notícias (excluindo o destaque)
+        $latestNews = Blog::whereHas('category', function($active) {
+                $active->where('active', 1);
+            })
+            ->with(['category' => function($query) {
+                $query->select('id', 'title', 'slug');
+            }])
+            ->orderBy('created_at', 'DESC')
+            ->active()
+            ->limit(12)
+            ->get();
+
+        // Pegando os IDs para excluir
+        $excludedIds = $recentCategories->pluck('id');
+        $blogRelacionados = Blog::whereHas('category')
+        ->whereNotIn('blog_category_id', $excludedIds)
+        ->active()
+        ->sorting()
+        ->take(10)
+        ->get();
+        $blogCategories = BlogCategory::whereHas('blogs')->active()->sorting()->get();
+
+        $blogNoBairros = Blog::whereHas('category', function($query) {
+            $query->where('id', 1)
+            ->where('active', 1);
+        })
+        ->with(['category' => function($query) {
+            $query->select('id', 'title', 'slug');
+        }])
+        ->orderBy('created_at', 'DESC')
+        ->active()
+        ->limit(10)
+        ->get();
+        $events = Event::active()
+        ->whereMonth('date', now()->month)
+        ->orderBy('date', 'asc')
+        ->get();
+        // $tempo = cache()->remember(
+        //     'weather_lauro_de_freitas',
+        //     now()->addMinutes(30),
+        //     fn () => $weather->current(-12.8944, -38.3272)
+        // );
         return compact(
+            'events',
+            'blogNoBairros',
+            'blogCategories',
+            'latestNews',
+            'blogRelacionados',
+            'recentCategories',
+            'blogSuperHighlights',
             'announcements',
             'impactSections',
             'lineOfTimes',
