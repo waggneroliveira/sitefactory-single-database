@@ -142,80 +142,77 @@
 
     });
 
-    // Máscara de telefone
-    document.addEventListener("shown.bs.modal", function (event) {
-        const phoneInput = event.target.querySelector("#whatsapp");
+    // Máscara de WhatsApp / telefone
+document.addEventListener("shown.bs.modal", function (event) {
+    const phoneInput = event.target.querySelector("#whatsapp");
 
-        if (!phoneInput || phoneInput.dataset.masked) {
+    if (!phoneInput || phoneInput.dataset.masked) {
+        return;
+    }
+
+    phoneInput.addEventListener("input", function (e) {
+        let numbers = e.target.value.replace(/\D/g, "");
+
+        // Limita a 11 dígitos
+        numbers = numbers.substring(0, 11);
+
+        // Se estiver vazio, deixa vazio
+        if (!numbers) {
+            e.target.value = "";
             return;
         }
 
-        // Controla se o usuário está apagando
-        phoneInput.addEventListener("keydown", function (e) {
-            if (e.key === "Backspace" || e.key === "Delete") {
-                this.dataset.deleting = "true";
-            } else {
-                this.dataset.deleting = "false";
-            }
-        });
-
-        phoneInput.addEventListener("input", function (e) {
-            let numbers = e.target.value.replace(/\D/g, "");
-
-            // Se apagou tudo
-            if (numbers.length === 0) {
-                e.target.value = "";
-                return;
-            }
-
-            // Se está apagando, NÃO força o 71
-            if (e.target.dataset.deleting === "true") {
-                formatPhone(e.target, numbers);
-                return;
-            }
-
-            // Ao digitar, força o DDD 71
-            if (!numbers.startsWith("71")) {
-                numbers = "71" + numbers;
-            }
-
-            // Máximo 11 dígitos
-            numbers = numbers.substring(0, 11);
-
-            formatPhone(e.target, numbers);
-        });
-
-        phoneInput.dataset.masked = "true";
+        e.target.value = formatPhone(numbers);
     });
 
+    phoneInput.dataset.masked = "true";
+});
 
-    // Formata telefone
-    function formatPhone(input, numbers) {
 
-        let formatted = "";
+// Formata telefone
+function formatPhone(numbers) {
 
-        if (numbers.length > 0) {
-            formatted = "(" + numbers.substring(0, 2);
-        }
-
-        if (numbers.length >= 2) {
-            formatted += ")";
-
-            if (numbers.length >= 3) {
-                formatted += " " + numbers.substring(2, 3);
-            }
-
-            if (numbers.length >= 4) {
-                formatted += " " + numbers.substring(3, 7);
-            }
-
-            if (numbers.length >= 8) {
-                formatted += "-" + numbers.substring(7, 11);
-            }
-        }
-
-        input.value = formatted;
+    // Apenas DDD
+    if (numbers.length <= 2) {
+        return "(" + numbers;
     }
+
+    const ddd = numbers.substring(0, 2);
+    const number = numbers.substring(2);
+
+    // Celular: (XX) 9 9999-9999
+    if (number.length >= 9 || number.startsWith("9")) {
+
+        let formatted = "(" + ddd + ") ";
+
+        if (number.length > 0) {
+            formatted += number.substring(0, 1);
+        }
+
+        if (number.length > 1) {
+            formatted += " " + number.substring(1, 5);
+        }
+
+        if (number.length > 5) {
+            formatted += "-" + number.substring(5, 9);
+        }
+
+        return formatted;
+    }
+
+    // Fixo: (XX) 9999-9999
+    let formatted = "(" + ddd + ") ";
+
+    if (number.length > 0) {
+        formatted += number.substring(0, 4);
+    }
+
+    if (number.length > 4) {
+        formatted += "-" + number.substring(4, 8);
+    }
+
+    return formatted;
+}
 </script>
 
 
