@@ -55,11 +55,13 @@
                                                                     @csrf
 
                                                                     @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.blogCategory.form", ['textareaId' => 'textarea-create', 'blogCategory', 'themeData'])
- 
-                                                                    <div class="d-flex justify-content-end gap-2">
-                                                                        <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">{{__('dashboard.btn_cancel')}}</button>
-                                                                        <button type="submit" class="btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_create')}}</button>
-                                                                    </div>                                                 
+                                                                    
+                                                                    @if (isset($blogCategories) && $blogCategories->count() < $blogCategoriesLimit)
+                                                                        <div class="d-flex justify-content-end gap-2">
+                                                                            <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal">{{__('dashboard.btn_cancel')}}</button>
+                                                                            <button type="submit" class="btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_create')}}</button>
+                                                                        </div>                                                 
+                                                                    @endif
                                                                 </form>
                                                             </div>
                                                         </div><!-- /.modal-content -->

@@ -779,7 +779,7 @@
 
             <div class="mb-2">
                 <div class="d-flex align-items-center gap-2 mb-2">
-                    <span class="badge bg-info bg-opacity-10 text-info p-2">
+                    <span class="badge bg-primary bg-opacity-10 text-primary p-2">
                         <i class="mdi mdi-information-outline fs-5"></i>
                     </span>
                     <h5 class="mb-0 fw-semibold">Sobre Nós</h5>
@@ -911,7 +911,7 @@
 
             <div class="mb-2">
                 <div class="d-flex align-items-center gap-2 mb-2">
-                    <span class="badge btn-green-whi bg-opacity-10 text-success p-2">
+                    <span class="badge bg-primary bg-opacity-10 text-primary p-2">
                         <i class="mdi mdi-newspaper-variant fs-5"></i>
                     </span>
                     <h5 class="mb-0 fw-semibold">Notícias</h5>
@@ -979,7 +979,7 @@
 
             <div class="mb-2">
                 <div class="d-flex align-items-center gap-2 mb-2">
-                    <span class="badge bg-danger bg-opacity-10 text-danger p-2">
+                    <span class="badge bg-primary bg-opacity-10 text-primary p-2">
                         <i class="mdi mdi-card-account-mail-outline fs-5"></i>
                     </span>
                     <h5 class="mb-0 fw-semibold">Contato</h5>

@@ -27,10 +27,12 @@
                     <div class="row">
                         @includeIf("admin.templates.{$themeData->slug}.{$themeData->template_variation}.blog.form", ['textareaId' => 'textarea-create', 'blog', 'themeData'])
                     </div>
-                    <div class="d-flex justify-content-end gap-2">
-                        <a href="{{route('admin.dashboard.blog.index')}}" class="btn btn-danger waves-effect waves-light">{{__('dashboard.btn_cancel')}}</a>
-                        <button type="submit" class="btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_create')}}</button>
-                    </div> 
+                    @if (isset($blogs) && $blogs->count() < $blogLimit)
+                        <div class="d-flex justify-content-end gap-2">
+                            <a href="{{route('admin.dashboard.blog.index')}}" class="btn btn-danger waves-effect waves-light">{{__('dashboard.btn_cancel')}}</a>
+                            <button type="submit" class="btn btn-primary text-black waves-effect waves-light">{{__('dashboard.btn_create')}}</button>
+                        </div> 
+                    @endif
                 </form> 
             </div> <!-- fecha a row aberta -->
 

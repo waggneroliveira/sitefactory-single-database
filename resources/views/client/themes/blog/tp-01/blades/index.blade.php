@@ -240,7 +240,7 @@
                         </nav>
 
                         <div id="news-container" class="mt-5 border p-5 bg-white rounded-2">
-                            @include('client.ajax.filter-blog-homePage', [
+                            @include('client.themes.blog.tp-01.ajax.filter-blog-homePage', [
                                 'latestNews' => $latestNews
                             ])
                         </div>

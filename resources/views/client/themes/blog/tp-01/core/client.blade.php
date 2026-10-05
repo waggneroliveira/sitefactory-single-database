@@ -287,8 +287,8 @@
 
     <link rel="preload" href="{{ asset('build/client/bootstrap-icons/bootstrap-icons.css') }}" as="style" onload="this.rel='stylesheet'">
 
-    <link href="{{ asset('build/client/themes/petshop/tp-01/css/style.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('build/client/themes/petshop/tp-01/css/responsivo.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('build/client/themes/blog/tp-01/css/style.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('build/client/themes/blog/tp-01/css/responsivo.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('build/client/css/default.css') }}" rel="stylesheet" type="text/css">
 
 
@@ -306,7 +306,7 @@
 
     @include('client/script-seo-google/script-body-nocript')
 
-    @include('client/themes/petshop/tp-01/includes/lgpd/lgpd')
+    @include('client/themes/blog/tp-01/includes/lgpd/lgpd')
 
      @if (isset($contact) && $contact->phone_one <> null)
         @php
@@ -464,226 +464,594 @@
         }
     </style>
 
-    <header class="shadow-sm bg-header">
-        <nav class="navbar navbar-expand-lg navbar-light container py-3 px-3 px-lg-0">            
-            <!-- Logo -->
-            <a class="navbar-brand d-flex align-items-center" href="{{route('index')}}">
-                <img src="{{asset('storage/' .$tenantTheme->path_image_logo_header)}}" alt="{{ config('app.name') }}" height="40">
-            </a>
+    <div id="newsMediaOrganization" hidden></div>
+    <header id="header" class="w-100 d-flex flex-column position p-0">   
+        <div class="w-100 py-0">
+            <div class="header-top py-2 mb-0 header-color">
+                <div class="container d-flex flex-wrap justify-content-center justify-content-lg-between align-items-center">    
+                    <div class="logo-img d-block d-lg-none px-0 py-2 rounded-2 d-flex justify-content-start align-items-center w-auto">
+                        <a class="navbar-brand logo-header" href="{{ route('index') }}" style="max-width: 200px;">
+                            @if(!empty($tenantTheme->path_image_logo_header))
+                                {{-- Pegar tamanho/proporção da logo --}}
+                                @php
+                                    $logoPath = storage_path('app/public/' . $tenantTheme->path_image_logo_header);
+                                    $dimensions = file_exists($logoPath) ? @getimagesize($logoPath) : null;
+                                @endphp
 
-            <!-- Toggle mobile -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                                <img src="{{ asset('storage/' . $tenantTheme->path_image_logo_header) }}" alt="{{ $tenantTheme->name }}" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
+                            @else
+                                <span class="fw-bold">{{ $seoGoogle->organization_name ?? config('app.name') }}</span>
+                            @endif
+                        </a>
+                    </div>
 
-            <!-- Menu -->
-            <div class="collapse navbar-collapse" id="mainNavbar">
-                <ul class="navbar-nav mx-auto m-auto me-4 mb-2 mb-lg-0 gap-lg-3">
-                    <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header active" href="{{route('index')}}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{route('about')}}">Sobre Nós</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}">Depoimentos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{ request()->routeIs('about') ? '#team-section' : route('about') . '#team-section' }}">Representantes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{route('products')}}">Produtos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link font-changa font-18 font-semibold font-header text-color-header" href="{{route('contact')}}">Contato</a>
-                    </li>
-                </ul>
+                    <p class="text-white poppins-regular text-center text-lg-start font-14 mb-0 col-12 col-lg-6">
+                        Lauro de Freitas, BA | {{ \Carbon\Carbon::now()->translatedFormat('l, d \d\e F \d\e Y') }}
+                    </p>
 
-                <!-- Botão -->
-                <div class="d-flex justify-content-center gap-2 align-items-center btn-header bg-button-one rounded-pill py-2 px-4 hover-zoom">
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M11.6741 10.0755C11.5016 9.96226 11.3291 9.90566 11.1565 10.1321L10.4665 11.0377C10.2939 11.1509 10.1789 11.2075 9.94888 11.0943C9.08626 10.6415 7.87859 10.1321 6.84345 8.43396C6.78594 8.20755 6.90096 8.09434 7.01597 7.98113L7.53355 7.18868C7.64856 7.07547 7.59105 6.96226 7.53355 6.84906L6.84345 5.20755C6.67093 4.75472 6.4984 4.81132 6.32588 4.81132H5.86581C5.7508 4.81132 5.52077 4.86792 5.29073 5.09434C4.02556 6.33962 4.54313 8.09434 5.46326 9.22642C5.63578 9.45283 6.78594 11.4906 9.25879 12.566C11.099 13.3585 11.5016 13.2453 12.0192 13.1321C12.6518 13.0755 13.2843 12.566 13.5719 12.0566C13.6294 11.8868 13.9169 11.1509 13.6869 11.0377M9.14377 16.3585C6.78594 16.3585 5.00319 15.1132 5.00319 15.1132L2.1853 15.8491L2.8754 13.1321C2.8754 13.1321 1.72524 11.3774 1.72524 9.16981C1.72524 5.09434 5.11821 1.69811 9.31629 1.69811C13.2268 1.69811 16.5623 4.69811 16.5623 8.88679C16.5623 12.9623 13.2268 16.3019 9.14377 16.3585ZM0 18L4.77316 16.6981C6.15555 17.3947 7.69626 17.7309 9.24823 17.6747C10.8002 17.6184 12.3116 17.1715 13.6382 16.3768C14.9648 15.582 16.0622 14.4658 16.8259 13.1347C17.5895 11.8037 17.9937 10.3022 18 8.77359C18 3.90566 14.0895 0 9.14377 0C7.55639 0.00399723 5.99777 0.417245 4.62313 1.19859C3.24848 1.97993 2.10579 3.10211 1.30885 4.45336C0.511907 5.80461 0.0885224 7.33778 0.0808596 8.9002C0.0731969 10.4626 0.481524 11.9997 1.26518 13.3585" fill="var(--color-button-one)"/>
-                    </svg>
-
-                    <a class="font-changa font-15 font-medium text-decoration-none color-button-one">
-                        {{ $tenantTheme->text_button_one ?? 'Botão 1' }}
-                    </a>
+                    <div class="col-12 col-lg-6 text-center d-none d-lg-block"> 
+                        <div class="d-flex flex-wrap justify-content-center justify-content-lg-end align-items-center">
+                            <div class="dark-background p-0">
+                                <nav class="site-navigation position-relative redes-sociais">
+                                    <ul class="p-0 d-flex justify-content-center gap-3 flex-row mb-0">
+                                        @if (isset($contact) && $contact->link_insta)
+                                            <li class="li d-flex justify-content-center align-items-center rounded-circle">
+                                                <a href="{{$contact->link_insta}}" rel="nofollow noopener noreferrer" target="_blank">
+                                                    <img src="{{asset('build/client/images/insta.svg')}}" alt="Instagram">
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (isset($contact) && $contact->link_x)
+                                            <li class="li d-flex justify-content-center align-items-center rounded-circle">
+                                                <a href="{{$contact->link_x}}" rel="nofollow noopener noreferrer" target="_blank">
+                                                    <img src="{{asset('build/client/images/x.svg')}}" alt="X">
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (isset($contact) && $contact->link_youtube)
+                                            <li class="li d-flex justify-content-center align-items-center rounded-circle">
+                                                <a href="{{$contact->link_youtube}}" rel="nofollow noopener noreferrer" target="_blank">
+                                                    <img src="{{asset('build/client/images/youtube.svg')}}" alt="Youtube">
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (isset($contact) && $contact->link_face)
+                                            <li class="li d-flex justify-content-center align-items-center rounded-circle">
+                                                <a href="{{$contact->link_face}}" rel="nofollow noopener noreferrer" target="_blank">
+                                                    <img src="{{asset('build/client/images/face.svg')}}" alt="Facebook">
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (isset($contact) && $contact->link_tik_tok)
+                                            <li class="li d-flex justify-content-center align-items-center rounded-circle">
+                                                <a href="{{$contact->link_tik_tok}}" rel="nofollow noopener noreferrer" target="_blank">
+                                                    <img src="{{asset('build/client/images/tiktok.svg')}}" alt="Tiktok">
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </nav>
-    </header>
+            <div class="container m-auto d-none d-lg-flex align-items-center justify-content-between flex-column">
+                <div class="d-flex col-12 justify-content-between align-items-center wrap-logo-and-login">
+                    <div class="logo-img px-0 py-2 rounded-2 d-flex justify-content-start align-items-center w-auto">
+                        <a class="navbar-brand logo-header" href="{{ route('index') }}" style="max-width: 200px;">
+                            @if(!empty($tenantTheme->path_image_logo_header))
+                                {{-- Pegar tamanho/proporção da logo --}}
+                                @php
+                                    $logoPath = storage_path('app/public/' . $tenantTheme->path_image_logo_header);
+                                    $dimensions = file_exists($logoPath) ? @getimagesize($logoPath) : null;
+                                @endphp
 
-    <div class="modal fade" id="modalDownloadFicha" tabindex="-1">
-        <div class="modal-dialog">
+                                <img src="{{ asset('storage/' . $tenantTheme->path_image_logo_header) }}" alt="{{ $tenantTheme->name }}" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" style="max-width:100%;height:auto;">
+                            @else
+                                <span class="fw-bold">{{ $seoGoogle->organization_name ?? config('app.name') }}</span>
+                            @endif
+                        </a>
+                    </div>
+
+                    @if ($announcements->count())                        
+                        <div class="mb-0 col-8">
+                            @include('client.includes.announcement')
+                        </div>
+                    @endif
+                </div>       
+            </div>
+            <div class="container-fluid header-color mt-0 h-60 d-flex align-items-center py-0">
+                <div class="container d-flex justify-content-between align-items-center w-100 h-100">
+                    <div class="social-links d-flex justify-content-center align-items-center gap-4 text-center col-12 col-lg-auto">
+                        <nav class="none site-navigation ul position-relative text-end width-75 h-60">
+                            <ul class="d-flex flex-row justify-content-start align-items-center gap-3 mb-0 list-unstyled h-100">
+                                <li class="h-100 d-flex align-items-center px-2"><a href="{{route('index')}}" class="nav-link poppins-bold text-center font-12 text-uppercase">Home</a></li>                                                   
+                                <li class="h-100 d-flex align-items-center px-2"><a href="{{route('about')}}" class="nav-link poppins-bold text-center font-12 text-uppercase">Sobre</a></li>                                                   
+
+                                <li class="nav-item dropdown h-100 d-flex align-items-center px-2">
+                                    <a class="nav-link dropdown-toggle poppins-bold text-center font-12 text-uppercase" 
+                                        href="{{ route('blog') }}" 
+                                        id="noticiasDropdown" 
+                                        role="button" 
+                                        data-bs-toggle="dropdown" 
+                                        aria-expanded="false">
+                                        Notícias <i class="bi bi-chevron-down"></i>
+                                    </a>
+
+                                    <ul class="dropdown-menu" aria-labelledby="noticiasDropdown">
+                                        @if ($blogCategories->count())
+                                            @foreach ($blogCategories as $category)
+                                                @php
+                                                    // Corrige acentuação manualmente
+                                                    $title = match(strtolower($category->title)) {
+                                                        'justica' => 'Justiça',
+                                                        'saude'   => 'Saúde',
+                                                        default   => $category->title,
+                                                    };
+                                                @endphp
+                                                <li>
+                                                    <a class="dropdown-item poppins-medium text-start font-15" 
+                                                    href="{{ route('blog', ['category' => $category->slug]) }}#news">
+                                                        {{ $title }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        @endif
+
+                                    </ul>
+                                </li>
+                                <li class="h-100 d-flex align-items-center px-2"><a href="{{route('contact')}}" class="nav-link poppins-bold text-center font-12 text-uppercase {{ request()->routeIs('contact') ? 'active' : '' }}">Contato</a></li>
+                            </ul>                      
+                        </nav>
+
+                        <div class="d-flex justify-content-between gap-3 flex-wrap align-items-center d-lg-none">
+                           <form action="{{route('blog-search')}}#news" class="search col-12 col-lg-10" method="post">
+                              @csrf
+                              <div class="input-group input-group-lg">
+                                 <input type="search" name="search" class="rounded-0 form-control border-end-0 text-color poppins-regular bg-white py-0" placeholder="Pesquise aqui">
+                                 <button type="submit" title="search" class="btn-reset input-group-text bg-white border rounded-0">
+                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M6.99989 0C3.13331 0 0 3.13427 0 6.99979C0 10.8663 3.13351 14.0004 6.99989 14.0004C8.49916 14.0004 9.88877 13.5285 11.0281 12.7252L15.9512 17.6491C16.4199 18.117 17.1798 18.117 17.6485 17.6491C18.1172 17.1804 18.1172 16.4205 17.6485 15.9518L12.7254 11.0288C13.5279 9.88936 13.9998 8.4997 13.9998 6.99983C13.9998 3.13411 10.8655 0 6.99989 0ZM2.39962 6.99979C2.39962 4.45981 4.45907 2.40019 6.99989 2.40019C9.54072 2.40019 11.6002 4.45961 11.6002 6.99979C11.6002 9.54058 9.54072 11.6 6.99989 11.6C4.45907 11.6 2.39962 9.54058 2.39962 6.99979Z" fill="#31404B"/>
+                                    </svg>                                    
+                                 </button>
+                              </div>
+                           </form>
+                        </div>
+                        <!-- Botão menu sandwich -->
+                        <button id="menu-toggle" class="d-lg-none btn btn-link p-0 ms-2" aria-label="Abrir menu" type="button">
+                            <span class="menu-icon" style="display:inline-block;width:32px;height:32px;">
+                                <span class="d-block w-100 rounded-1" style="height:4px;background:#FFF;margin:6px 0;"></span>
+                                <span class="d-block w-100 rounded-1" style="height:4px;background:#FFF;margin:6px 0;"></span>
+                                <span class="d-block w-100 rounded-1" style="height:4px;background:#FFF;margin:6px 0;"></span>
+                            </span>
+                        </button>                        
+                    </div>
+
+                    <div class="d-none d-lg-flex d-flex justify-content-end align-items-center gap-2 login-desktop col-auto col-lg-8">   
+                        <div class="d-flex justify-content-between gap-3 flex-wrap align-items-center col-8 col-sm-5 col-md-6 col-lg-7">
+                           <form action="{{route('blog-search')}}#news" class="search col-12" method="post">
+                              @csrf
+                              <div class="input-group input-group-lg">
+                                 <input type="search" name="search" class="rounded-0 form-control border-end-0 text-color poppins-regular bg-white py-0" placeholder="Pesquise aqui">
+                                 <button type="submit" title="search" class="btn-reset input-group-text bg-white border rounded-0">
+                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M6.99989 0C3.13331 0 0 3.13427 0 6.99979C0 10.8663 3.13351 14.0004 6.99989 14.0004C8.49916 14.0004 9.88877 13.5285 11.0281 12.7252L15.9512 17.6491C16.4199 18.117 17.1798 18.117 17.6485 17.6491C18.1172 17.1804 18.1172 16.4205 17.6485 15.9518L12.7254 11.0288C13.5279 9.88936 13.9998 8.4997 13.9998 6.99983C13.9998 3.13411 10.8655 0 6.99989 0ZM2.39962 6.99979C2.39962 4.45981 4.45907 2.40019 6.99989 2.40019C9.54072 2.40019 11.6002 4.45961 11.6002 6.99979C11.6002 9.54058 9.54072 11.6 6.99989 11.6C4.45907 11.6 2.39962 9.54058 2.39962 6.99979Z" fill="#31404B"/>
+                                    </svg>                                    
+                                 </button>
+                              </div>
+                           </form>
+                        </div>                     
+                        @if (!Auth::guard('client')->check())                            
+                            <div class="d-flex justify-content-end align-items-center gap-2 col-3 ms-3">
+                                <svg width="24" height="28" viewBox="0 0 24 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M23.5294 27.2432C23.5294 27.657 23.2026 28 22.7994 28H0.72999C0.332619 28 0 27.6612 0 27.2432C0 20.5561 5.26724 15.1351 11.7647 15.1351C18.2622 15.1351 23.5294 20.5561 23.5294 27.2432ZM11.7647 13.6216C8.10988 13.6216 5.14706 10.5723 5.14706 6.81081C5.14706 3.0493 8.10988 0 11.7647 0C15.4195 0 18.3824 3.0493 18.3824 6.81081C18.3824 10.5723 15.4195 13.6216 11.7647 13.6216Z" fill="white"/>
+                                </svg>
+
+                                <div class="d-flex gap-1 flex-column">
+                                    <h2 class="off-login m-0 poppins-medium font-14 text-start" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#loginModal">
+                                        Acesse sua conta
+                                    </h2>
+                                    <h3 class="off-login m-0 poppins-medium font-14 text-start" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#loginModal">
+                                        <a href="#" class="text-decoration-none poppins-medium" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#registerModal">Cadastre-se</a>
+                                    </h3>
+                                </div>
+                            </div>
+                        @else
+                            @php
+                                $user = Auth::guard('client')->user();
+                                $defaultImage = $user && $user->path_image ? url($user->path_image) : '';
+                            @endphp
+                            <div class="image-profile">
+                                <picture>
+                                    <source srcset="{{ isset($defaultImage) && $defaultImage <> null ?$defaultImage:asset('build/client/images/user.jpg') }}" type="image/svg+xml">
+                                    <img src="{{ isset($defaultImage) && $defaultImage <> null ?$defaultImage:asset('build/client/images/user.jpg') }}"
+                                        alt="Imagem de Login"
+                                        class="img-fluid rounded-circle">
+                                </picture>
+                            </div>
+                            <div class="d-flex flex-column align-items-start gap-1">
+                                <div class="d-flex justify-content-start align-items-center gap-2 lh-0">
+                                    <h2 class="loginOn m-0 poppins-medium font-10 text-start">Bem vindo,</h2>   
+                                    <h3 class="m-0 poppins-medium font-12 text-start">{{$names = collect(explode(' ', Auth::guard('client')->user()->name))->slice(0, 1)->implode(' ')}}!</h3>      
+                                    <a class="nav-link waves-effect waves-light" href="#" data-bs-toggle="modal" data-bs-target="#editClientModal-{{Auth::guard('client')->user()->id}}">
+                                        <i class="bi bi-gear font-15"></i>
+                                    </a>                 
+                                </div>  
+                                <a href="{{route('client.user.logout')}}" class="d-flex justify-content-start align-items-center gap-2 text-decoration-none lh-0">
+                                    <i class="bi bi-box-arrow-right font-15"></i>
+                                    <h4 class="poppins-medium font-12 m-0">Sair</h4>
+                                </a>                                               
+                            </div>
+                        @endif
+                    </div>   
+                </div>
+            </div>
+        </div>     
+        
+    </header>
+    <!-- Modal de Login -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 
-                <form id="formDownloadFicha">
-                    @csrf
+                <!-- Header -->
+                <div class="modal-header background-red text-white">
+                    <h5 class="modal-title poppins-medium font-22" id="loginModalLabel">Login</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
 
-                    <div class="modal-header flex-column">
-                        <div class="d-flex justify-content-end col-12">
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                        </div>
-                        <img src="{{asset('build/client/themes/petshop/tp-01/images/girollato-footer.svg')}}" alt="{{ config('app.name') }}" height="40">
-                        <h5 class="modal-title text-white font-changa font-20 font-medium mt-3">Preencha o formulário para baixar o arquivo</h5>
-                    </div>
-
-                    <div class="modal-body">
+                <!-- Body -->
+                <div class="modal-body">
+                    <form action="{{ route('client.user.authenticate') }}" method="POST">
+                        @csrf
 
                         <div class="mb-3">
-                            <label class="form-label text-white font-changa font-15 font-regular">Nome</label>
-                            <input type="text" name="name" class="form-control" required>
+                            <label for="email" class="form-label poppins-medium title-blue font-15">E-mail</label>
+                            <input type="email" class="form-control poppins-regular font-15" id="email" name="email" required>
                         </div>
 
-                        <div class="row">
-                            <div class="mb-3 col-12 col-lg-6">
-                                <label class="form-label text-white font-changa font-15 font-regular">CNPJ</label>
-                                <input type="text" inputmode="numeric" name="cnpj" id="cnpj" class="form-control" required>
-                            </div>
-    
-                            <div class="mb-3 col-12 col-lg-6">
-                                <label class="form-label text-white font-changa font-15 font-regular">Telefone</label>
-                                <input type="text" inputmode="numeric" name="phone" id="phone" class="form-control" required>
-                            </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label poppins-medium title-blue font-15">Senha</label>
+                            <input type="password" class="form-control poppins-regular font-15" id="password" name="password" required>
                         </div>
 
-                    </div>
+                        <div class="d-flex justify-content-center my-3">
+                            <button type="submit" class="btn background-red text-white px-5 rounded-3 text-white poppins-medium font-15 background-red">
+                                Entrar
+                            </button>
+                        </div>
 
-                    <div class="modal-footer">
-                        <button type="submit" class="btn bg-yellow border">
-                            Baixar arquivo
-                        </button>
-                    </div>
+                        <div class="text-center mt-3">
 
-                </form>
+                            <p class="poppins-regular font-15 text-muted">
+                                Ainda não tem uma conta?
+                                <a href="#"
+                                    class="text-decoration-underline poppins-bold ms-1 under"
+                                    data-bs-dismiss="modal"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#registerModal">
+                                    Registre-se
+                                </a>
+                            </p>
+
+                            <p class="poppins-regular font-15 text-muted mb-0">
+                                <a href="#"
+                                    class="text-decoration-underline poppins-bold under"
+                                    data-bs-dismiss="modal"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#forgotPasswordModal">
+                                    Esqueceu sua senha?
+                                </a>
+                            </p>
+
+                        </div>
+
+                    </form>
+                </div>
 
             </div>
         </div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
 
-            const modal = new bootstrap.Modal(document.getElementById('modalDownloadFicha'));
-            const form = document.getElementById('formDownloadFicha');
+    
+    <!-- Modal de Cadastro -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
 
-            let currentFile = null;
+                <!-- Header -->
+                <div class="modal-header background-red text-white">
+                    <h5 class="modal-title poppins-medium font-22" id="registerModalLabel">Cadastro</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
 
-            document.querySelectorAll('.btn-download-ficha').forEach(button => {
+                <!-- Body -->
+                <div class="modal-body">
+                    <form action="{{ route('register-client') }}" method="POST">
+                        @csrf
 
-                button.addEventListener('click', function(e){
+                        <div class="mb-3">
+                            <label for="name" class="form-label poppins-medium title-blue font-15">Nome</label>
+                            <input type="text" class="form-control poppins-regular font-15" id="name" name="name" required>
+                        </div>
 
-                    e.preventDefault();
+                        <div class="mb-3">
+                            <label for="emailRegister" class="form-label poppins-medium title-blue font-15">E-mail</label>
+                            <input type="email" class="form-control poppins-regular font-15" id="emailRegister" name="email" required>
+                        </div>
 
-                    currentFile = this.getAttribute('href');
+                        <div class="mb-3">
+                            <label for="passwordRegister" class="form-label poppins-medium title-blue font-15">Senha</label>
+                            <input type="password" class="form-control poppins-regular font-15" id="passwordRegister" name="password" required>
+                        </div>
 
-                    modal.show();
+                        <div class="d-flex justify-content-center my-3">
+                            <button type="submit" class="btn background-red px-4 rounded-3 text-white poppins-medium font-15 background-red">
+                                Cadastrar
+                            </button>
+                        </div>
 
-                });
+                        <div class="text-center">
+                            <p class="poppins-regular font-15 text-muted">
+                                Já tem uma conta?
+                                <a href="#" 
+                                    class="text-decoration-underline poppins-bold ms-1 under"
+                                    data-bs-dismiss="modal"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#loginModal">
+                                    Fazer login
+                                </a>
+                            </p>
+                        </div>
 
-            });
+                    </form>
+                </div>
 
-            form.addEventListener('submit', function(e){
-
-                e.preventDefault();
-
-                const formData = new FormData(form);
-
-                fetch("{{ route('download.ficha.store') }}", {
-                    method: "POST",
-                    headers: {
-                        "X-CSRF-TOKEN": document.querySelector('input[name=_token]').value
-                    },
-                    body: formData
-                })
-                .then(res => res.json())
-                .then(res => {
-
-                    if(res.success){
-
-                        modal.hide();
-
-                        // FORÇA DOWNLOAD
-                        const link = document.createElement('a');
-                        link.href = currentFile;
-                        link.setAttribute('download', '');
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-
-                        form.reset();
-
-                    }
-
-                });
-
-            });
-
-        });
-
-        // mascara CNPJ
-        function maskCNPJ(value) {
-
-            value = value.replace(/\D/g, '');
-
-            value = value.replace(/^(\d{2})(\d)/, '$1.$2');
-            value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
-            value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
-            value = value.replace(/(\d{4})(\d)/, '$1-$2');
-
-            return value.substring(0, 18);
-        }
+            </div>
+        </div>
+    </div>
 
 
-        // mascara celular
-        function maskPhone(value) {
+    @if (Auth::guard('client')->check())
+        @php
+            $user = Auth::guard('client')->user();
+            $defaultImage = $user && $user->path_image ? url('storage/'.$user->path_image) : '';
+        @endphp
+        <!-- Modal de Edição -->
+        <div class="modal fade" id="editClientModal-{{ Auth::guard('client')->user()->id }}" tabindex="-1" aria-labelledby="editClientModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
 
-            value = value.replace(/\D/g, '');
+                    <!-- Header -->
+                    <div class="modal-header background-red text-white">
+                        <h5 class="modal-title poppins-medium font-22" id="editClientModalLabel">Editar Informações</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
 
-            value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
-            value = value.replace(/(\d{5})(\d)/, '$1-$2');
+                    <!-- Body -->
+                    <div class="modal-body">
+                        <form action="{{ route('client.update') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @method('PUT')
 
-            return value.substring(0, 15);
-        }
+                            <div class="mb-3">
+                                <label for="name" class="form-label title-blue poppins-medium font-15">Nome</label>
+                                <input type="text" class="form-control poppins-regular font-15" id="name" name="name" value="{{ Auth::guard('client')->user()->name }}" required>
+                            </div>
 
+                            <div class="mb-3">
+                                <label for="emailRegister" class="form-label title-blue poppins-medium font-15">E-mail</label>
+                                <input type="email" class="form-control poppins-regular font-15" id="emailRegister" name="email" value="{{ Auth::guard('client')->user()->email }}" required>
+                            </div>
 
-        // aplicar máscaras
-        document.addEventListener('DOMContentLoaded', function () {
+                            <div class="mb-3">
+                                <label for="passwordRegister" class="form-label title-blue poppins-medium font-15">Senha</label>
+                                <input type="password" class="form-control poppins-regular font-15" id="passwordRegister" name="password">
+                            </div>
 
-            const cnpj = document.getElementById('cnpj');
-            const phone = document.getElementById('phone');
+                            <div class="mb-3">
+                                <label class="form-label poppins-medium title-blue font-15">Imagem de perfil</label>
+                                <input 
+                                    type="file" 
+                                    name="path_image" 
+                                    data-plugins="dropify" 
+                                    data-default-file="{{ $defaultImage }}"
+                                >
+                                <p class="poppins-regular text-muted font-12 mt-2 mb-0">
+                                    {{ __('dashboard.text_img_size') }} <b class="text-danger">2 MB</b>.
+                                </p>
+                            </div>
 
-            if(cnpj){
-                cnpj.addEventListener('input', function(){
-                    this.value = maskCNPJ(this.value);
-                });
-            }
+                            <!-- Footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger poppins-medium font-15" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn background-red text-white px-4 poppins-medium font-15">Salvar alterações</button>
+                            </div>
 
-            if(phone){
-                phone.addEventListener('input', function(){
-                    this.value = maskPhone(this.value);
-                });
-            }
+                        </form>
+                    </div>
 
-        });
-    </script>
+                </div>
+            </div>
+        </div>
+
+    @endif
+
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header background-red">
+                    <h5 class="modal-title poppins-medium font-22 text-white" id="forgotPasswordModalLabel">
+                        Recuperar Senha
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form action="{{ route('client.password.email') }}" method="POST">
+                        @csrf
+
+                        <div class="mb-3">
+                            <label for="recover_email" class="form-label poppins-medium title-blue font-15">Digite seu e-mail</label>
+                            <input type="email" class="form-control poppins-regular font-15" id="recover_email" name="email" required>
+                        </div>
+
+                        <div class="d-flex justify-content-center mt-3 mb-4">
+                            <button type="submit" class="btn px-5 background-red rounded-3 text-white poppins-medium font-15">
+                                Enviar link de recuperação
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="menu-mobile" class="menu-mobile d-flex flex-column justify-content-start align-items-center">
+        <div class="d-flex justify-content-end align-items-start w-100">    
+            <button id="menu-close" aria-label="Fechar menu" class="col-2 btn-close-menu p-0 bg-transparent" type="button">&times;</button>
+        </div>
+        <div class="col-10 logo-img p-0 mb-2 rounded-2 d-flex justify-content-center align-items-center">
+            <img src="{{asset('build/client/images/logo-blog.png')}}" alt="Expresso Vida Nova" title="Expresso Vida Nova" class="img-fluid" style="width: 100px;">
+        </div>
+        <div class="row justify-content-center gap-5">
+            <nav class="mt-3">
+                <ul class="list-unstyled text-center">
+                    <li class="poppins-regular font-18 mb-3 font-mob"><a href="{{route('index')}}" class="text-white">Home</a></li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle poppins-regular font-18 font-mob mb-3 text-white" 
+                            href="{{ route('blog') }}" 
+                            id="noticiasDropdown" 
+                            role="button" 
+                            data-bs-toggle="dropdown" 
+                            aria-expanded="false">
+                            Notícias <i class="bi bi-chevron-down"></i>
+                        </a>
+
+                        <ul class="dropdown-menu" aria-labelledby="noticiasDropdown">
+                            @if ($blogCategories->count())
+                                @foreach ($blogCategories as $category)
+                                    <li class="m-0">
+                                        <a class="dropdown-item poppins-regular font-15 font-mob" 
+                                        href="{{ route('blog', ['category' => $category->slug]) }}#news">
+                                            {{ $category->title }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            @endif
+                        </ul>
+                    </li>
+                    <li class="poppins-regular font-18 mb-3 font-mob"><a href="{{route('contact')}}" class="text-white">Contato</a></li>
+                    <li class="poppins-regular font-18 mb-3 font-mob"><a href="https://policies.google.com/privacy?hl=pt-BR" target="_blank" rel="noopener noreferrer" class="text-white">Política de Privacidade</a></li>
+                </ul>
+            </nav>
+            <div class="d-none justify-content-center align-items-center gap-2 mt-0 login-middle-mobile">                        
+                @if (!Auth::guard('client')->check())                            
+                    <div class="d-flex justify-content-start align-items-center gap-2">
+                        <svg width="20" height="20" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M46.793 8.62893C44.5547 8.62893 42.7344 6.81253 42.7344 4.57423C42.7344 2.33593 44.5547 0.519531 46.793 0.519531L80.57 0.503906C88.8044 0.503906 95.5 7.20311 95.5 15.4339V80.5789C95.5 88.8055 88.8008 95.5089 80.57 95.5089H46.793C44.5469 95.5089 42.7266 93.6847 42.7266 91.4386C42.7266 89.1886 44.5469 87.3683 46.793 87.3683H80.57C84.3083 87.3683 87.3591 84.3136 87.3591 80.5831V15.4311C87.3591 11.7006 84.3083 8.63031 80.57 8.63031L46.793 8.62893ZM49.6914 68.2459L66.5504 51.0619C67.398 50.3158 67.9332 49.2181 67.9332 47.9994C67.9332 46.7807 67.398 45.683 66.5504 44.9408L49.6914 27.7568C48.1133 26.1591 45.543 26.1357 43.9492 27.71C42.3515 29.2803 42.3281 31.8545 43.9062 33.4522L54.1792 43.9322L4.5742 43.9283C2.3281 43.9283 0.5 45.7525 0.5 47.9986C0.5 50.2486 2.3281 52.0689 4.5742 52.0689H54.1762L43.9032 62.5459C42.3251 64.1436 42.3524 66.7138 43.9462 68.288C45.5439 69.8583 48.1103 69.8389 49.6884 68.2412L49.6914 68.2459Z" fill="white"/>
+                        </svg>
+
+                        <h2 class="off-login m-0 poppins-medium font-14 text-start" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#loginModal">Login</h2>
+                    </div>
+                @else
+                    @php
+                        $user = Auth::guard('client')->user();
+                        $defaultImage = $user && $user->path_image ? url($user->path_image) : '';
+                    @endphp
+                    <div class="image-profile">
+                        <picture>
+                            <source srcset="{{ isset($defaultImage) && $defaultImage <> null ?$defaultImage:asset('build/client/images/user.jpg') }}" type="image/svg+xml">
+                            <img src="{{ isset($defaultImage) && $defaultImage <> null ?$defaultImage:asset('build/client/images/user.jpg') }}"
+                                alt="Imagem de Login"
+                                class="img-fluid rounded-circle">
+                        </picture>
+                    </div>
+                    <div class="d-flex flex-column align-items-start gap-1">
+                        <div class="d-flex justify-content-start align-items-center gap-2 lh-0">
+                            <h2 class="loginOn m-0 poppins-medium font-10 text-start">Bem vindo,</h2>   
+                            <h3 class="m-0 poppins-medium font-12 text-start">{{$names = collect(explode(' ', Auth::guard('client')->user()->name))->slice(0, 1)->implode(' ')}}!</h3>      
+                            <a class="nav-link waves-effect waves-light" href="#" data-bs-toggle="modal" data-bs-target="#editClientModal-{{Auth::guard('client')->user()->id}}">
+                                <i class="bi bi-gear font-15"></i>
+                            </a>                 
+                        </div>  
+                        <a href="{{route('client.user.logout')}}" class="d-flex justify-content-start align-items-center gap-2 text-decoration-none lh-0">
+                            <i class="bi bi-box-arrow-right font-15"></i>
+                            <h4 class="poppins-medium font-12 m-0">Sair</h4>
+                        </a>                                               
+                    </div>
+                @endif
+            </div> 
+            <nav class="site-navigation position-relative text-end w-auto redes-sociais">
+                <ul class="p-0 d-flex justify-content-start gap-4 flex-row mb-0">
+                    @if (isset($contact) && $contact->link_insta)
+                        <li class="li d-flex justify-content-start align-items-center rounded-circle">
+                            <a href="{{$contact->link_insta}}" rel="nofollow noopener noreferrer" target="_blank">
+                                <img src="{{asset('build/client/images/insta.svg')}}" alt="Instagram">
+                            </a>
+                        </li>
+                    @endif
+                    @if (isset($contact) && $contact->link_x)
+                        <li class="li d-flex justify-content-start align-items-center rounded-circle">
+                            <a href="{{$contact->link_x}}" rel="nofollow noopener noreferrer" target="_blank">
+                                <img src="{{asset('build/client/images/x.svg')}}" alt="X">
+                            </a>
+                        </li>
+                    @endif
+                    @if (isset($contact) && $contact->link_youtube)
+                        <li class="li d-flex justify-content-start align-items-center rounded-circle">
+                            <a href="{{$contact->link_youtube}}" rel="nofollow noopener noreferrer" target="_blank">
+                                <img src="{{asset('build/client/images/youtube.svg')}}" alt="Youtube">
+                            </a>
+                        </li>
+                    @endif
+                    @if (isset($contact) && $contact->link_face)
+                        <li class="li d-flex justify-content-start align-items-center rounded-circle">
+                            <a href="{{$contact->link_face}}" rel="nofollow noopener noreferrer" target="_blank">
+                                <img src="{{asset('build/client/images/face.svg')}}" alt="Facebook">
+                            </a>
+                        </li>
+                    @endif
+                    @if (isset($contact) && $contact->link_tik_tok)
+                        <li class="li d-flex justify-content-start align-items-center rounded-circle">
+                            <a href="{{$contact->link_tik_tok}}a" rel="nofollow noopener noreferrer" target="_blank">
+                                <img src="{{asset('build/client/images/tiktok.svg')}}" alt="Tiktok">
+                            </a>
+                        </li>
+                    @endif
+                </ul> 
+            </nav>
+        </div>
+    </div>
 
     <main>
         @yield('content') 
     </main>
 
-    <footer class="bg-footer text-white pt-5 pb-3">
+    {{-- Footer --}}
+    <footer class="bg-footer border-top pt-3 pt-lg-5 pb-3">
         <div class="container">
 
             <!-- Linha principal -->
-            <div class="row align-items-start">
+            <div class="row align-items-start justify-content-between">
 
                 <!-- Logo + botão -->
-                <div class="col-lg-4 mb-4 mb-lg-0">
-                    <img src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ config('app.name') }}" height="40">
+                <div class="col-lg-3 mb-4 mb-lg-0">
+                    {{-- Pegar tamanho/proporção da logo --}}
+                    @php
+                        $logoPath = storage_path('app/public/' . $tenantTheme->path_image_logo_footer);
+                        $dimensions = file_exists($logoPath) ? @getimagesize($logoPath) : null;
+                    @endphp
+
+                    <img src="{{asset('storage/' .$tenantTheme->path_image_logo_footer)}}" alt="{{ $tenantTheme->name }}" width="{{ $dimensions[0] ?? 200 }}" height="{{ $dimensions[1] ?? 60 }}" loading="lazy" style="max-width:100%;height:auto;">
 
                     @if ($tenantTheme->link <> null)                        
                         <div class="mt-3 mt-lg-5">
-                            <a href="{{ $tenantTheme->link }}" target="_blank" rel="noopener noreferrer" class="bg-button-one color-button-one px-4 py-2 font-changa font-16 font-medium text-decoration-none hover-zoom">
+                            <a href="{{ $tenantTheme->link }}" target="_blank" rel="noopener noreferrer" class="bg-button-two color-button-two px-4 py-2 font-changa font-16 font-medium text-decoration-none hover-zoom">
                                 {{$tenantTheme->btn_title}}
                                 <i class="bi bi-arrow-right"></i>
                             </a>
@@ -692,92 +1060,161 @@
                 </div>
 
                 <!-- Mapa do site -->
-                <div class="col-lg-6 mb-4 mb-lg-0">
-                    <h6 class="font-changa text-color-footer font-16 font-bold mb-3 position-relative d-inline-block font-changa font-16 font-medium">
+                <div class="col-lg-4 mb-4 mb-0 text-start">
+                    <div class="text-color-footer mb-3 position-relative d-inline-block font-changa font-16 font-bold map-footer">
                         Mapa do Site
                         <span class="d-block bg-yellow mt-1" style="height:3px; width:40px;"></span>
-                    </h6>
+                    </div>
 
                     <div class="row">
                         <div class="col-6">
                             <ul class="list-unstyled">
-                                <li><a href="{{route('index')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Início</a></li>
-                                <li><a href="{{route('about')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Quem Somos</a></li>
-                                <li><a href="{{ request()->routeIs('index') ? '#stats-section' : route('index') . '#stats-section' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Diferenciais</a></li>
-                                <li><a href="{{route('blogAll')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Blog</a></li>
-                                <li><a href="{{route('products')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Produtos</a></li>
+                                <li><a href="{{route('index')}}" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Início</a></li>
+                                <li><a href="{{route('index')}}#why_sec" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Como funciona</a></li>
+                                <li><a href="{{route('index')}}#plans" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Planos</a></li>
                             </ul>
                         </div>
 
                         <div class="col-6">
                             <ul class="list-unstyled">
-                                <li><a href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Depoimentos</a></li>
-                                <li><a href="{{ request()->routeIs('index') ? '#faq' : route('index') . '#faq' }}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">FAQ</a></li>
-                                <li><a href="{{route('contact')}}" class="text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Contato</a></li>
+                                <li><a href="{{route('index')}}#templates" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Modelos</a></li>
+                                <li><a href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Depoimentos</a></li>
+                                <li><a href="{{ request()->routeIs('index') ? '#faq' : route('index') . '#faq' }}" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">FAQ</a></li>
+                                <li><a href="{{route('index')}}#contact_sec" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Contato</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
+                
+                <div class="col-lg-3 col-md-6 col-12 text-start">
 
-                <!-- Redes sociais -->
-                @if (isset($contact) && (
-                $contact->link_insta ||
-                $contact->link_face ||
-                $contact->link_tik_tok
-                ))                    
-                    <div class="col-lg-2 text-lg-end">
-                        <div class="d-flex gap-3 justify-content-lg-end">
-                            @if ($contact->link_insta <> null)                            
-                                <a href="{{$contact->link_insta}}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5">
-                                    <i class="bi bi-instagram"></i>
-                                </a>
-                            @endif
-                            @if ($contact->link_face <> null)                            
-                                <a href="{{$contact->link_face}}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5">
-                                    <i class="bi bi-facebook"></i>
-                                </a>
-                            @endif
-                            @if ($contact->link_tik_tok <> null)                            
-                                <a href="{{$contact->link_tik_tok}}" target="_blank" rel="noopener noreferrer" class="text-color-footer fs-5">
-                                    <i class="bi bi-linkedin"></i>
-                                </a>
-                            @endif
-                        </div>
+                    <div class="h5 text-color-footer mb-1 font-changa font-16 font-bold map-footer">Newsletter</div>
+                    <div class="news_letter">
+                        <p class="text-color-footer font-15">Inscreva-se e seja o primeiro a receber promoções incríveis</p>
+                        
+                        <form id="newsletter-form" action="{{ route('send-newsletter') }}" method="POST">
+                            @csrf
+
+                            <div class="form-group">
+                                <input type="email" id="email" name="email" class="form-control" placeholder="Informe seu email" required>
+
+                                <button type="submit" class="btn" aria-label="subscribe">
+                                    <i class="bi bi-send-fill"></i>
+                                </button>
+                            </div>
+
+                            <label class="text-color-footer font-12 d-flex justify-content-start gap-1 align-items-center mt-2">
+                                <input name="term_privacy" type="checkbox" id="privacy-policy" required>
+                                Concordo com a Política de Privacidade da Whiweb.
+                            </label>
+                        </form>
                     </div>
-                @endif
 
+                </div>
             </div>
 
             <!-- Linha inferior -->
-            <hr class="border-light opacity-25 my-4">
+            <hr class="border-light opacity-25 my-0 mb-3 my-lg-4 border-color-footer">
 
             <div class="row align-items-center">
+                @php
+                    $cnpj = !empty($tenantTheme->cnpj) ? preg_replace('/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/', '$1.$2.$3/$4-$5', preg_replace('/\D/', '', $tenantTheme->cnpj)) : '';
+                @endphp
 
-                <div class="col-md-10 small">
-                    <div class="d-flex flex-wrap col-12 font-changa font-16 font-regular text-center text-lg-end justify-content-center justify-content-lg-end">
-                        <p id="footer-text" class="text-color-footer"></p>                        
+                <div class="row align-items-center g-4 m-0">
+                    <div class="col-12 col-lg-5 text-center text-lg-start small text-color-footer m-0 p-0">
+                        <p id="footer-text" class="mb-0 text-color-footer"></p>
                     </div>
 
-                    <script defer>
-                        const currentYeaar = (new Date).getFullYear();
-                        document.getElementById("footer-text").innerHTML = `© ${currentYeaar} <span> {{$tenantTheme->copyright}}
-                    Todos os direitos reservados.</span> <a href="https://policies.google.com/privacy?hl=pt-BR" target="_blank" class="text-color-footer font-semibold">| Política de Privacidade</a>`
-                    </script>
+                    <div class="col-12 col-lg-3 text-center small text-color-footer mt-0">
+                        @if ($tenantTheme->privacy_policy <> null)                            
+                            <a href="#" class="text-color-footer text-decoration-none" data-bs-toggle="modal" data-bs-target="#privacyModal">Política de Privacidade</a>
+                            <span class="mx-1">|</span>
+                        @endif
+                        @if ($tenantTheme->terms_of_use <> null)                            
+                            <a href="#" class="text-color-footer text-decoration-none" data-bs-toggle="modal" data-bs-target="#termsModal">Termos de Uso</a>
+                        @endif
+                    </div>
+
+                    <div class="col-12 col-lg-4 m-0 p-0">
+                        <div class="d-flex justify-content-center justify-content-lg-end align-items-center gap-3">
+                            <a href="http://whiweb.com.br/" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
+                                <span class="font-13">Sistema</span>
+                                <img src="{{asset('build/client/themes/default/images/whi-web.png')}}" title="Whi Web" alt="WHI Web" height="50" class="logo-system" loading="lazy">
+                            </a>
+
+                            <span class="text-color-footer opacity-50">|</span>
+
+                            <a href="https://www.whi.dev.br/" target="_blank" rel="noopener noreferrer" class="text-color-footer text-decoration-none d-flex align-items-center gap-2">
+                                <span class="font-13">Desenvolvido por</span>
+                                <img src="{{asset('build/client/themes/default/images/whi.png')}}" title="Agência WHI" alt="WHI" height="25" class="logo-system" loading="lazy">
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="col-12 col-md-2 text-center text-md-end mt-3 mt-md-0">
-                    <a href="http://www.whi.dev.br" target="_blank" rel="noopener noreferrer">
-                        <img src="{{asset('build/client/themes/petshop/tp-01/images/whi.svg')}}" alt="Agência WHI" style="height:35px;">
-                    </a>
-                </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const currentYear = new Date().getFullYear();
+                        const footerText = document.getElementById('footer-text');
 
+                        if (footerText) {
+                            footerText.innerHTML = `© ${currentYear} <span>{{ $tenantTheme->copyright }} - Todos os direitos reservados{{ $cnpj ? ' | ' . $cnpj : '' }}.</span>`;
+                        }
+                    });
+                </script>
             </div>
 
         </div>
     </footer>
 
-    <a href="#" id="scroll-top" class="scroll-top bg-scroll d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-    
+    <!-- Modal Política de Privacidade -->
+    <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="privacyModalLabel">Política de Privacidade</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    {!! $tenantTheme->privacy_policy !!}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Termos de Uso -->
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="termsModalLabel">Termos de Uso</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    {!! $tenantTheme->terms_of_use !!}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentYear = new Date().getFullYear();
+            const footerText = document.getElementById('footer-text');
+
+            if (footerText) {
+                footerText.innerHTML = `© ${currentYear} <span>{{ $tenantTheme->copyright }} - Todos os direitos reservados{{ $cnpj ? ' | ' . $cnpj : '' }}.</span>`;
+            }
+        });
+    </script>
+
     <script src="https://cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
@@ -785,7 +1222,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('build/client/bootstrap/js/bootstrap.bundle.js') }}"></script>
     <script src="{{ asset('build/client/lgpd/script.js') }}"></script>
-    <script src="{{ asset('build/client/themes/petshop/tp-01/js/default.js') }}"></script>
+    <script src="{{ asset('build/client/themes/blog/tp-01/js/default.js') }}"></script>
     <script src="{{ asset('build/client/js/default.js') }}"></script>
 
     {{-- Modais alert --}}

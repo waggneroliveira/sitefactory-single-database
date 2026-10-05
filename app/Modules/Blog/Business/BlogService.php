@@ -70,10 +70,16 @@ class BlogService
     public function getCreateData(ThemeManager $themeManager): array
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
+
+        $blogsQuery = Blog::with(['category']);
+        $blogs = $blogsQuery->sorting()->paginate(60)->withQueryString();
+        $blogLimit = $themeManager->getLimit('blog', 0);
+        
         /** @var \App\Models\User $user */
         $user = Auth::user();
-
-        if (!$user->hasRole('Super') && !$user->can('usuario.tornar usuario master') && !($user->hasPermissionTo('noticias.visualizar') && $user->hasPermissionTo('noticias.criar'))) {
+        
+        if (!$user->hasRole('Super') && !$user->can('usuario.tornar usuario master') && 
+        !($user->hasPermissionTo('noticias.visualizar') && $user->hasPermissionTo('noticias.criar') && $blogs->count() < $blogLimit)) {
             return ['forbidden' => view('admin.error.403', compact('settingTheme'))];
         }
 
@@ -84,7 +90,7 @@ class BlogService
         }
         $theme = $themeManager;
         $themeData = $themeManager->theme();
-        return compact('categories', 'blogCategory', 'theme', 'themeData');
+        return compact('blogs', 'blogLimit', 'categories', 'blogCategory', 'theme', 'themeData');
     }
 
     public function getEditData(Blog $blog, ThemeManager $themeManager): array
