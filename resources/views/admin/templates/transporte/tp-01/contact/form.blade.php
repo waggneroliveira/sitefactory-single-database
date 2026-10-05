@@ -142,34 +142,80 @@
 
     });
 
-    //Mascara de telefone
-document.addEventListener("shown.bs.modal", function (event) {
-    // procura o input dentro do modal que abriu
-    const phoneInput = event.target.querySelector("#whatsapp");
+    // Máscara de telefone
+    document.addEventListener("shown.bs.modal", function (event) {
+        const phoneInput = event.target.querySelector("#whatsapp");
 
-    if (phoneInput && !phoneInput.dataset.masked) {
-        phoneInput.addEventListener("input", function (e) {
-            let t = e.target.value.replace(/\D/g, ""); // só dígitos
+        if (!phoneInput || phoneInput.dataset.masked) {
+            return;
+        }
 
-            // força prefixo 71
-            if (!t.startsWith("71")) {
-                t = "71" + t;
+        // Controla se o usuário está apagando
+        phoneInput.addEventListener("keydown", function (e) {
+            if (e.key === "Backspace" || e.key === "Delete") {
+                this.dataset.deleting = "true";
+            } else {
+                this.dataset.deleting = "false";
             }
-            if (t.length > 11) t = t.slice(0, 11);
-
-            // aplica máscara (71) 9 9999-9999
-            let formatado = "(" + t.slice(0, 2) + ")";
-            if (t.length > 2) formatado += " " + t.slice(2, 3);
-            if (t.length > 3) formatado += " " + t.slice(3, 7);
-            if (t.length > 7) formatado += "-" + t.slice(7);
-
-            e.target.value = formatado;
         });
 
-        // marca como inicializado para não duplicar listeners
+        phoneInput.addEventListener("input", function (e) {
+            let numbers = e.target.value.replace(/\D/g, "");
+
+            // Se apagou tudo
+            if (numbers.length === 0) {
+                e.target.value = "";
+                return;
+            }
+
+            // Se está apagando, NÃO força o 71
+            if (e.target.dataset.deleting === "true") {
+                formatPhone(e.target, numbers);
+                return;
+            }
+
+            // Ao digitar, força o DDD 71
+            if (!numbers.startsWith("71")) {
+                numbers = "71" + numbers;
+            }
+
+            // Máximo 11 dígitos
+            numbers = numbers.substring(0, 11);
+
+            formatPhone(e.target, numbers);
+        });
+
         phoneInput.dataset.masked = "true";
+    });
+
+
+    // Formata telefone
+    function formatPhone(input, numbers) {
+
+        let formatted = "";
+
+        if (numbers.length > 0) {
+            formatted = "(" + numbers.substring(0, 2);
+        }
+
+        if (numbers.length >= 2) {
+            formatted += ")";
+
+            if (numbers.length >= 3) {
+                formatted += " " + numbers.substring(2, 3);
+            }
+
+            if (numbers.length >= 4) {
+                formatted += " " + numbers.substring(3, 7);
+            }
+
+            if (numbers.length >= 8) {
+                formatted += "-" + numbers.substring(7, 11);
+            }
+        }
+
+        input.value = formatted;
     }
-});
 </script>
 
 
