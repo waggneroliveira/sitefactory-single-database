@@ -142,34 +142,77 @@
 
     });
 
-    //Mascara de telefone
+    // Máscara de WhatsApp / telefone
 document.addEventListener("shown.bs.modal", function (event) {
-    // procura o input dentro do modal que abriu
     const phoneInput = event.target.querySelector("#whatsapp");
 
-    if (phoneInput && !phoneInput.dataset.masked) {
-        phoneInput.addEventListener("input", function (e) {
-            let t = e.target.value.replace(/\D/g, ""); // só dígitos
-
-            // força prefixo 71
-            if (!t.startsWith("71")) {
-                t = "71" + t;
-            }
-            if (t.length > 11) t = t.slice(0, 11);
-
-            // aplica máscara (71) 9 9999-9999
-            let formatado = "(" + t.slice(0, 2) + ")";
-            if (t.length > 2) formatado += " " + t.slice(2, 3);
-            if (t.length > 3) formatado += " " + t.slice(3, 7);
-            if (t.length > 7) formatado += "-" + t.slice(7);
-
-            e.target.value = formatado;
-        });
-
-        // marca como inicializado para não duplicar listeners
-        phoneInput.dataset.masked = "true";
+    if (!phoneInput || phoneInput.dataset.masked) {
+        return;
     }
+
+    phoneInput.addEventListener("input", function (e) {
+        let numbers = e.target.value.replace(/\D/g, "");
+
+        // Limita a 11 dígitos
+        numbers = numbers.substring(0, 11);
+
+        // Se estiver vazio, deixa vazio
+        if (!numbers) {
+            e.target.value = "";
+            return;
+        }
+
+        e.target.value = formatPhone(numbers);
+    });
+
+    phoneInput.dataset.masked = "true";
 });
+
+
+// Formata telefone
+function formatPhone(numbers) {
+
+    // Apenas DDD
+    if (numbers.length <= 2) {
+        return "(" + numbers;
+    }
+
+    const ddd = numbers.substring(0, 2);
+    const number = numbers.substring(2);
+
+    // Celular: (XX) 9 9999-9999
+    if (number.length >= 9 || number.startsWith("9")) {
+
+        let formatted = "(" + ddd + ") ";
+
+        if (number.length > 0) {
+            formatted += number.substring(0, 1);
+        }
+
+        if (number.length > 1) {
+            formatted += " " + number.substring(1, 5);
+        }
+
+        if (number.length > 5) {
+            formatted += "-" + number.substring(5, 9);
+        }
+
+        return formatted;
+    }
+
+    // Fixo: (XX) 9999-9999
+    let formatted = "(" + ddd + ") ";
+
+    if (number.length > 0) {
+        formatted += number.substring(0, 4);
+    }
+
+    if (number.length > 4) {
+        formatted += "-" + number.substring(4, 8);
+    }
+
+    return formatted;
+}
 </script>
 
 
