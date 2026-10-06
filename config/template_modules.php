@@ -489,9 +489,14 @@ return [
     'blog' => [
         'multipage' => [
             'tp-01' => [
+                'home' => [
+                    'videos',    
+                ],
+
                 'blog' => [
                     'blog_categories',
                     'blog',
+                    'videos',
                 ],
 
                 'contact' => [
@@ -524,7 +529,8 @@ return [
             'faq' => 10,
             'services' => 6,
             'blog_categories' => 10,
-            'blog' => 18,
+            'blog' => 35,
+            'videos' => 15,
         ],
 
     ],

@@ -45,151 +45,256 @@
 
 @if (isset($blogSuperHighlights) && $blogSuperHighlights <> null)
     <section class="blog mb-0 mt-4">
-        <div class="container">
+        <div class="container-fluid p-0">
             <div class="row g-3 g-lg-4">
-                <div class="col-lg-8 px-2 pe-lg-0">
+                <div class="col-lg-7 px-0 pe-lg-0 m-0">
                     <!-- Swiper Main Carousel -->
                     <div class="swiper main-swiper">
                         <div class="swiper-wrapper">
+
                             @foreach($blogSuperHighlights as $blogSuperHighlight)
+
                                 @php
                                     \Carbon\Carbon::setLocale('pt_BR');
-                                    $dataFormatada = \Carbon\Carbon::parse($blogSuperHighlight->date)->translatedFormat('d \d\e F \d\e Y');
-                                    
-                                    // Verifica se a imagem é do RSS (URL externa) ou manual (storage)
+
+                                    $dataFormatada = \Carbon\Carbon::parse($blogSuperHighlight->date)
+                                        ->translatedFormat('d \d\e F \d\e Y');
+
                                     if ($blogSuperHighlight->path_image_thumbnail) {
                                         if (Str::startsWith($blogSuperHighlight->path_image_thumbnail, ['http://', 'https://'])) {
-                                            // Já é uma URL completa (RSS ou manual com URL externa)
                                             $imagemSuperHighlightUrl = $blogSuperHighlight->path_image_thumbnail;
                                         } else {
-                                            // Precisa do asset() para o storage
                                             $imagemSuperHighlightUrl = asset('storage/' . $blogSuperHighlight->path_image_thumbnail);
                                         }
                                     } else {
                                         $imagemSuperHighlightUrl = 'https://placehold.co/600x400?text=Sem+imagem&font=poppins';
                                     }
                                 @endphp
+
                                 <div class="swiper-slide">
-                                    <article>
-                                        <div class="position-relative overflow-hidden" style="height: 500px;">
-                                            <img class="img-fluid h-100 w-100"
-                                            src="{{ $imagemSuperHighlightUrl }}"
-                                            alt="{{ $blogSuperHighlight->path_image_thumbnail ? 'Notícia super destaque' : 'Sem imagem'}}"
-                                            style="object-fit: cover; aspect-ratio: 1.91/1;">
+                                    <article class="w-100">
+                                        <div
+                                            class="position-relative overflow-hidden"  
+                                            style="height: 500px;"                                          
+                                        >
+
+                                            <img
+                                                class="img-fluid h-100 w-100"
+                                                src="{{ $imagemSuperHighlightUrl }}"
+                                                alt="{{ $blogSuperHighlight->title ?: 'Sem imagem' }}"
+                                                style="object-fit: cover;"
+                                            >
 
                                             <div class="overlay">
+
                                                 <div class="mb-3 d-flex justify-content-center align-items-center gap-1 flex-wrap">
-                                                    <span class="badge rounded-0 background-red poppins-semiBold font-12 text-uppercase py-2 px-2 me-2">{{$blogSuperHighlight->category->title}}</span>                                   
+                                                    <span class="badge rounded-0 background-red poppins-semiBold font-12 text-uppercase py-2 px-2 me-2">
+                                                        {{ $blogSuperHighlight->category->title }}
+                                                    </span>
                                                 </div>
-                                                <a href="{{route('blog-inner', ['slug' => $blogSuperHighlight->slug])}}">
-                                                    <h1 class="h2 m-0 text-white poppins-bold font-32 d-block">{{$blogSuperHighlight->title}}</h1>
+
+                                                <a href="{{ route('blog-inner', ['slug' => $blogSuperHighlight->slug]) }}">
+                                                    <h1 class="h2 m-0 text-white poppins-bold font-32 d-block">
+                                                        {{ $blogSuperHighlight->title }}
+                                                    </h1>
                                                 </a>
-                                                <div class="description-blog mt-2">{!!substr(strip_tags($blogSuperHighlight->text), 0, 400)!!}...</div>
+
+                                                <div class="description-blog mt-2">
+                                                    {!! substr(strip_tags($blogSuperHighlight->text), 0, 400) !!}...
+                                                </div>
 
                                                 <div class="d-flex justify-content-between gap-2 align-items-center w-100">
-                                                    <p class="text-white mt-3 poppins-regular font-15 col-8 col-lg-10">{{$dataFormatada}}</p>
 
-                                                    <div id="socialLinks-{{$blogSuperHighlight->id}}" class="social-links home opacity-0">
+                                                    <p class="text-white mt-3 poppins-regular font-15 col-8 col-lg-10">
+                                                        {{ $dataFormatada }}
+                                                    </p>
+
+                                                    <div
+                                                        id="socialLinks-{{ $blogSuperHighlight->id }}"
+                                                        class="social-links home opacity-0"
+                                                    >
                                                         <div class="d-flex gap-2">
-                                                            <a href="https://api.whatsapp.com/send?text={{ urlencode($blogSuperHighlight->title . ' ' . route('blog-inner', ['slug' => $blogSuperHighlight->slug])) }}" 
-                                                            target="_blank" 
-                                                            class="rounded-circle btn btn-sm bg-whatsapp bg-transparent p-0">
+
+                                                            <a
+                                                                href="https://api.whatsapp.com/send?text={{ urlencode($blogSuperHighlight->title . ' ' . route('blog-inner', ['slug' => $blogSuperHighlight->slug])) }}"
+                                                                target="_blank"
+                                                                class="rounded-circle btn btn-sm bg-whatsapp bg-transparent p-0"
+                                                            >
                                                                 <i class="fab fa-whatsapp text-white"></i>
                                                             </a>
 
-                                                            <a href="https://twitter.com/intent/tweet?url={{ urlencode(route('blog-inner', ['slug' => $blogSuperHighlight->slug])) }}&text={{ urlencode($blogSuperHighlight->title) }}" 
-                                                            target="_blank" 
-                                                            class="rounded-circle btn btn-sm btn-twiter bg-transparent p-0">
+                                                            <a
+                                                                href="https://twitter.com/intent/tweet?url={{ urlencode(route('blog-inner', ['slug' => $blogSuperHighlight->slug])) }}&text={{ urlencode($blogSuperHighlight->title) }}"
+                                                                target="_blank"
+                                                                class="rounded-circle btn btn-sm btn-twiter bg-transparent p-0"
+                                                            >
                                                                 <i class="fab fa-x-twitter text-white"></i>
                                                             </a>
 
-                                                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('blog-inner', ['slug' => $blogSuperHighlight->slug])) }}" 
-                                                            target="_blank" 
-                                                            class="rounded-circle btn btn-facebook btn-sm bg-transparent p-0">
+                                                            <a
+                                                                href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('blog-inner', ['slug' => $blogSuperHighlight->slug])) }}"
+                                                                target="_blank"
+                                                                class="rounded-circle btn btn-facebook btn-sm bg-transparent p-0"
+                                                            >
                                                                 <i class="fab fa-facebook-f text-white"></i>
                                                             </a>
-                                                        </div>
-                                                    </div>  
 
-                                                    <button id="shareBtn-{{$blogSuperHighlight->id}}" 
-                                                            data-target="socialLinks-{{$blogSuperHighlight->id}}"
-                                                            class="share-button d-flex">
-                                                        <svg width="24" height="26" viewBox="0 0 24 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M4.28845 8.58841C1.92459 8.58841 0 10.5692 0 13.002C0 15.4348 1.92459 17.4155 4.28845 17.4155C5.68567 17.4155 6.92779 16.7195 7.70969 15.6506L15.6837 20.0897C15.5186 20.5571 15.4231 21.0603 15.4231 21.5864C15.4231 24.0193 17.3477 26 19.7115 26C22.0754 26 24 24.0193 24 21.5864C24 19.1536 22.0754 17.1729 19.7115 17.1729C18.3143 17.1729 17.0722 17.8689 16.2903 18.9378L8.31633 14.4987C8.48136 14.0313 8.57691 13.5281 8.57691 12.9982C8.57691 12.4682 8.47516 11.9356 8.3002 11.4554L16.2033 6.94346C16.9789 8.08134 18.262 8.82714 19.71 8.82714C22.0739 8.82714 23.9985 6.84639 23.9985 4.41357C23.9985 1.98074 22.0739 0 19.71 0C17.3462 0 15.4216 1.98074 15.4216 4.41357C15.4216 4.88736 15.4973 5.34584 15.6313 5.77367L7.67731 10.3151C6.89306 9.26915 5.66339 8.58848 4.28466 8.58848L4.28845 8.58841ZM19.7148 18.4846C21.3788 18.4846 22.7326 19.8779 22.7326 21.5905C22.7326 23.303 21.3788 24.6963 19.7148 24.6963C18.0508 24.6963 16.697 23.303 16.697 21.5905C16.697 21.0605 16.8273 20.5611 17.0556 20.1231C17.0556 20.1231 17.0594 20.1167 17.0618 20.1167C17.0618 20.1129 17.0618 20.1065 17.068 20.1039C17.583 19.1397 18.5732 18.4859 19.7136 18.4859L19.7148 18.4846ZM19.7148 1.30799C21.3788 1.30799 22.7326 2.70127 22.7326 4.41383C22.7326 6.12639 21.3788 7.51967 19.7148 7.51967C18.0508 7.51967 16.697 6.12639 16.697 4.41383C16.697 2.70127 18.0508 1.30799 19.7148 1.30799ZM4.28845 16.1081C2.62444 16.1081 1.27065 14.7149 1.27065 13.0023C1.27065 11.2897 2.62444 9.89646 4.28845 9.89646C5.95247 9.89646 7.30626 11.2897 7.30626 13.0023C7.30626 13.5348 7.17596 14.0355 6.94393 14.4735C6.94393 14.4735 6.94393 14.4773 6.94021 14.4799C6.94021 14.4799 6.94021 14.4863 6.93648 14.4863C6.42524 15.4504 5.42758 16.1081 4.28724 16.1081L4.28845 16.1081Z" fill="white"/>
+                                                        </div>
+                                                    </div>
+
+                                                    <button
+                                                        id="shareBtn-{{ $blogSuperHighlight->id }}"
+                                                        data-target="socialLinks-{{ $blogSuperHighlight->id }}"
+                                                        class="share-button d-flex"
+                                                    >
+                                                        <svg
+                                                            width="24"
+                                                            height="26"
+                                                            viewBox="0 0 24 26"
+                                                            fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                        >
+                                                            <path
+                                                                d="M4.28845 8.58841C1.92459 8.58841 0 10.5692 0 13.002C0 15.4348 1.92459 17.4155 4.28845 17.4155C5.68567 17.4155 6.92779 16.7195 7.70969 15.6506L15.6837 20.0897C15.5186 20.5571 15.4231 21.0603 15.4231 21.5864C15.4231 24.0193 17.3477 26 19.7115 26C22.0754 26 24 24.0193 24 21.5864C24 19.1536 22.0754 17.1729 19.7115 17.1729C18.3143 17.1729 17.0722 17.8689 16.2903 18.9378L8.31633 14.4987C8.48136 14.0313 8.57691 13.5281 8.57691 12.9982C8.57691 12.4682 8.47516 11.9356 8.3002 11.4554L16.2033 6.94346C16.9789 8.08134 18.262 8.82714 19.71 8.82714C22.0739 8.82714 23.9985 6.84639 23.9985 4.41357C23.9985 1.98074 22.0739 0 19.71 0C17.3462 0 15.4216 1.98074 15.4216 4.41357C15.4216 4.88736 15.4973 5.34584 15.6313 5.77367L7.67731 10.3151C6.89306 9.26915 5.66339 8.58848 4.28466 8.58848L4.28845 8.58841ZM19.7148 18.4846C21.3788 18.4846 22.7326 19.8779 22.7326 21.5905C22.7326 23.303 21.3788 24.6963 19.7148 24.6963C18.0508 24.6963 16.697 23.303 16.697 21.5905C16.697 21.0605 16.8273 20.5611 17.0556 20.1231C17.0556 20.1231 17.0594 20.1167 17.0618 20.1167C17.0618 20.1129 17.0618 20.1065 17.068 20.1039C17.583 19.1397 18.5732 18.4859 19.7136 18.4859L19.7148 18.4846ZM19.7148 1.30799C21.3788 1.30799 22.7326 2.70127 22.7326 4.41383C22.7326 6.12639 21.3788 7.51967 19.7148 7.51967C18.0508 7.51967 16.697 6.12639 16.697 4.41383C16.697 2.70127 18.0508 1.30799 19.7148 1.30799ZM4.28845 16.1081C2.62444 16.1081 1.27065 14.7149 1.27065 13.0023C1.27065 11.2897 2.62444 9.89646 4.28845 9.89646C5.95247 9.89646 7.30626 11.2897 7.30626 13.0023C7.30626 13.5348 7.17596 14.0355 6.94393 14.4735C6.94393 14.4735 6.94393 14.4773 6.94021 14.4799C6.94021 14.4799 6.94021 14.4863 6.93648 14.4863C6.42524 15.4504 5.42758 16.1081 4.28724 16.1081L4.28845 16.1081Z"
+                                                                fill="white"
+                                                            />
                                                         </svg>
-                                                    </button>   
+                                                    </button>
+
                                                 </div>
+
                                             </div>
+
                                         </div>
                                     </article>
                                 </div>
-                            @endforeach                    
+
+                            @endforeach
+
                         </div>
-                        <!-- Swiper pagination & navigation (optional) -->
+
                         <div class="swiper-pagination news"></div>
                     </div>
                 </div>
 
-                @if ($blogHighlights->count())            
-                    <div class="col-lg-4 ps-2">
-                        <div class="row g-2">
-                            <!-- Static small boxes as before -->
-                            @foreach($blogHighlights as $blogHighlight)
+                @if ($blogHighlights->count())
+                    <div class="col-lg-5 p-0 m-0">
+                        <div class="row g-0">
+
+                            @foreach($blogHighlights->take(4) as $blogHighlight)
+
                                 @php
                                     \Carbon\Carbon::setLocale('pt_BR');
-                                    $dataFormatada = \Carbon\Carbon::parse($blogHighlight->date)->translatedFormat('d \d\e F \d\e Y');
-                                    
-                                    // Verifica se a imagem é do RSS (URL externa) ou manual (storage)
+
+                                    $dataFormatada = \Carbon\Carbon::parse($blogHighlight->date)
+                                        ->translatedFormat('d \d\e F \d\e Y');
+
                                     if ($blogHighlight->path_image_thumbnail) {
                                         if (Str::startsWith($blogHighlight->path_image_thumbnail, ['http://', 'https://'])) {
-                                            // Já é uma URL completa (RSS ou manual com URL externa)
                                             $imagemHighlightUrl = $blogHighlight->path_image_thumbnail;
                                         } else {
-                                            // Precisa do asset() para o storage
                                             $imagemHighlightUrl = asset('storage/' . $blogHighlight->path_image_thumbnail);
                                         }
                                     } else {
                                         $imagemHighlightUrl = 'https://placehold.co/600x400?text=Sem+imagem&font=poppins';
                                     }
                                 @endphp
-                                <div class="col-md-12 box-small">
-                                    <article>
-                                        <div class="position-relative overflow-hidden" style="height: 246px;">
-                                            <img class="img-fluid h-100 w-100"
-                                            src="{{ $imagemHighlightUrl }}"
-                                            alt="{{ $blogHighlight->title ? $blogHighlight->title : 'Sem imagem'}}"
-                                            style="object-fit: cover; aspect-ratio: 1 / 1;">
-                                            <div class="overlay">
-                                                <div class="mb-2 d-flex justify-content-start align-items-center gap-1 flex-wrap">
-                                                    <span class="badge rounded-0 background-red text-uppercase poppins-semiBold font-12 py-2 px-2 me-2">{{$blogHighlight->category->title}}</span>
-                                                </div>
-                                                <a href="{{route('blog-inner', ['slug' => $blogHighlight->slug])}}">                              
-                                                    <h2 class="h6 m-0 text-white poppins-bold font-20 d-block">{{$blogHighlight->title}}</h2>
-                                                </a>
-                                                <div class="d-flex justify-content-between align-items-center w-100">
-                                                    <p class="text-white mt-3 poppins-regular font-14 col-8">{{$dataFormatada}}</p>
-                                                    
-                                                    <div id="socialLinks-{{$blogHighlight->id}}" class="social-links home opacity-0">
-                                                        <div class="d-flex gap-2">
-                                                            <a href="https://api.whatsapp.com/send?text={{ urlencode($blogHighlight->title . ' ' . url()->current()) }}" target="_blank" class="rounded-circle btn btn-sm bg-whatsapp bg-transparent p-0"><i class="fab fa-whatsapp text-white"></i></a>    
-                                                            <a href="https://twitter.com/intent/tweet?url={{ urlencode(url()->current()) }}&text={{ urlencode($blogHighlight->title) }}" target="_blank" class="rounded-circle btn btn-sm btn-twiter bg-transparent p-0"><i class="fab fa-x-twitter text-white"></i></a>
-                                                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" target="_blank" class="rounded-circle btn btn-facebook btn-sm bg-transparent p-0"><i class="fab fa-facebook-f text-white"></i></a>
-                                                        </div>
-                                                    </div>  
 
-                                                    <button id="shareBtn-{{$blogHighlight->id}}" 
-                                                            data-target="socialLinks-{{$blogHighlight->id}}"
-                                                            class="share-button d-flex">
-                                                        <svg width="18" height="20" viewBox="0 0 24 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M4.28845 8.58841C1.92459 8.58841 0 10.5692 0 13.002C0 15.4348 1.92459 17.4155 4.28845 17.4155C5.68567 17.4155 6.92779 16.7195 7.70969 15.6506L15.6837 20.0897C15.5186 20.5571 15.4231 21.0603 15.4231 21.5864C15.4231 24.0193 17.3477 26 19.7115 26C22.0754 26 24 24.0193 24 21.5864C24 19.1536 22.0754 17.1729 19.7115 17.1729C18.3143 17.1729 17.0722 17.8689 16.2903 18.9378L8.31633 14.4987C8.48136 14.0313 8.57691 13.5281 8.57691 12.9982C8.57691 12.4682 8.47516 11.9356 8.3002 11.4554L16.2033 6.94346C16.9789 8.08134 18.262 8.82714 19.71 8.82714C22.0739 8.82714 23.9985 6.84639 23.9985 4.41357C23.9985 1.98074 22.0739 0 19.71 0C17.3462 0 15.4216 1.98074 15.4216 4.41357C15.4216 4.88736 15.4973 5.34584 15.6313 5.77367L7.67731 10.3151C6.89306 9.26915 5.66339 8.58848 4.28466 8.58848L4.28845 8.58841ZM19.7148 18.4846C21.3788 18.4846 22.7326 19.8779 22.7326 21.5905C22.7326 23.303 21.3788 24.6963 19.7148 24.6963C18.0508 24.6963 16.697 23.303 16.697 21.5905C16.697 21.0605 16.8273 20.5611 17.0556 20.1231C17.0556 20.1231 17.0594 20.1167 17.0618 20.1167C17.0618 20.1129 17.0618 20.1065 17.068 20.1039C17.583 19.1397 18.5732 18.4859 19.7136 18.4859L19.7148 18.4846ZM19.7148 1.30799C21.3788 1.30799 22.7326 2.70127 22.7326 4.41383C22.7326 6.12639 21.3788 7.51967 19.7148 7.51967C18.0508 7.51967 16.697 6.12639 16.697 4.41383C16.697 2.70127 18.0508 1.30799 19.7148 1.30799ZM4.28845 16.1081C2.62444 16.1081 1.27065 14.7149 1.27065 13.0023C1.27065 11.2897 2.62444 9.89646 4.28845 9.89646C5.95247 9.89646 7.30626 11.2897 7.30626 13.0023C7.30626 13.5348 7.17596 14.0355 6.94393 14.4735C6.94393 14.4735 6.94393 14.4773 6.94021 14.4799C6.94021 14.4799 6.94021 14.4863 6.93648 14.4863C6.42524 15.4504 5.42758 16.1081 4.28724 16.1081L4.28845 16.1081Z" fill="white"/>
-                                                        </svg>
-                                                    </button>                                                                                                      
+                                <div class="col-6 box-small">
+                                    <article>
+
+                                        <div class="position-relative overflow-hidden" style="height: 250px;">
+
+                                            <img
+                                                class="img-fluid h-100 w-100"
+                                                src="{{ $imagemHighlightUrl }}"
+                                                alt="{{ $blogHighlight->title ?: 'Sem imagem' }}"
+                                                style="object-fit: cover;"
+                                            >
+
+                                            <div class="overlay">
+
+                                                <div class="mb-2 d-flex justify-content-start align-items-center gap-1 flex-wrap">
+                                                    <span class="badge rounded-0 background-red text-uppercase poppins-semiBold font-12 py-2 px-2 me-2">
+                                                        {{ $blogHighlight->category->title }}
+                                                    </span>
                                                 </div>
+
+                                                <a href="{{ route('blog-inner', ['slug' => $blogHighlight->slug]) }}">
+                                                    <h2 class="h6 m-0 text-white poppins-semiBold font-18 d-block">
+                                                        {{ $blogHighlight->title }}
+                                                    </h2>
+                                                </a>
+
+                                                <div class="d-flex justify-content-between align-items-center w-100">
+
+                                                    <p class="text-white mt-3 poppins-regular font-14 col-8">
+                                                        {{ $dataFormatada }}
+                                                    </p>
+
+                                                    <div
+                                                        id="socialLinks-{{ $blogHighlight->id }}"
+                                                        class="social-links home opacity-0"
+                                                    >
+                                                        <div class="d-flex gap-2">
+
+                                                            <a
+                                                                href="https://api.whatsapp.com/send?text={{ urlencode($blogHighlight->title . ' ' . url()->current()) }}"
+                                                                target="_blank"
+                                                                class="rounded-circle btn btn-sm bg-whatsapp bg-transparent p-0"
+                                                            >
+                                                                <i class="fab fa-whatsapp text-white"></i>
+                                                            </a>
+
+                                                            <a
+                                                                href="https://twitter.com/intent/tweet?url={{ urlencode(url()->current()) }}&text={{ urlencode($blogHighlight->title) }}"
+                                                                target="_blank"
+                                                                class="rounded-circle btn btn-sm btn-twiter bg-transparent p-0"
+                                                            >
+                                                                <i class="fab fa-x-twitter text-white"></i>
+                                                            </a>
+
+                                                            <a
+                                                                href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}"
+                                                                target="_blank"
+                                                                class="rounded-circle btn btn-facebook btn-sm bg-transparent p-0"
+                                                            >
+                                                                <i class="fab fa-facebook-f text-white"></i>
+                                                            </a>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <button
+                                                        id="shareBtn-{{ $blogHighlight->id }}"
+                                                        data-target="socialLinks-{{ $blogHighlight->id }}"
+                                                        class="share-button d-flex"
+                                                    >
+                                                        <svg
+                                                            width="18"
+                                                            height="20"
+                                                            viewBox="0 0 24 26"
+                                                            fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                        >
+                                                            <path
+                                                                d="M4.28845 8.58841C1.92459 8.58841 0 10.5692 0 13.002C0 15.4348 1.92459 17.4155 4.28845 17.4155C5.68567 17.4155 6.92779 16.7195 7.70969 15.6506L15.6837 20.0897C15.5186 20.5571 15.4231 21.0603 15.4231 21.5864C15.4231 24.0193 17.3477 26 19.7115 26C22.0754 26 24 24.0193 24 21.5864C24 19.1536 22.0754 17.1729 19.7115 17.1729C18.3143 17.1729 17.0722 17.8689 16.2903 18.9378L8.31633 14.4987C8.48136 14.0313 8.57691 13.5281 8.57691 12.9982C8.57691 12.4682 8.47516 11.9356 8.3002 11.4554L16.2033 6.94346C16.9789 8.08134 18.262 8.82714 19.71 8.82714C22.0739 8.82714 23.9985 6.84639 23.9985 4.41357C23.9985 1.98074 22.0739 0 19.71 0C17.3462 0 15.4216 1.98074 15.4216 4.41357C15.4216 4.88736 15.4973 5.34584 15.6313 5.77367L7.67731 10.3151C6.89306 9.26915 5.66339 8.58848 4.28466 8.58848L4.28845 8.58841ZM19.7148 18.4846C21.3788 18.4846 22.7326 19.8779 22.7326 21.5905C22.7326 23.303 21.3788 24.6963 19.7148 24.6963C18.0508 24.6963 16.697 23.303 16.697 21.5905C16.697 21.0605 16.8273 20.5611 17.0556 20.1231C17.0556 20.1231 17.0594 20.1167 17.0618 20.1167C17.0618 20.1129 17.0618 20.1065 17.068 20.1039C17.583 19.1397 18.5732 18.4859 19.7136 18.4859L19.7148 18.4846ZM19.7148 1.30799C21.3788 1.30799 22.7326 2.70127 22.7326 4.41383C22.7326 6.12639 21.3788 7.51967 19.7148 7.51967C18.0508 7.51967 16.697 6.12639 16.697 4.41383C16.697 2.70127 18.0508 1.30799 19.7148 1.30799ZM4.28845 16.1081C2.62444 16.1081 1.27065 14.7149 1.27065 13.0023C1.27065 11.2897 2.62444 9.89646 4.28845 9.89646C5.95247 9.89646 7.30626 11.2897 7.30626 13.0023C7.30626 13.5348 7.17596 14.0355 6.94393 14.4735C6.94393 14.4735 6.94393 14.4773 6.94021 14.4799C6.94021 14.4799 6.94021 14.4863 6.93648 14.4863C6.42524 15.4504 5.42758 16.1081 4.28724 16.1081L4.28845 16.1081Z"
+                                                                fill="white"
+                                                            />
+                                                        </svg>
+                                                    </button>
+
+                                                </div>
+
                                             </div>
+
                                         </div>
+
                                     </article>
                                 </div>
+
                             @endforeach
+
                         </div>
                     </div>
                 @endif
@@ -203,7 +308,7 @@
         <div class="container">
             <div class="row">
                 @if ($recentCategories->count() > 0)                    
-                    <div class="col-12 col-lg-9 animate-on-scroll mb-3" data-aos="fade-right" data-aos-delay="30">
+                    <div class="col-12 col-lg-9 animate-on-scroll mb-3">
                         <div class="border-bottom news mb-0">
                             <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-end">
                                 <h2 class="section-title d-table p-0 w-auto m-0 mb-3 poppins-bold font-28 title-blue">
@@ -253,7 +358,7 @@
                     </div>
                 @endif      
 
-                <div class="col-lg-3 col-12" data-aos="fade-left" data-aos-delay="30">
+                <div class="col-lg-3 col-12">
                     @if ($blogRelacionados->count() > 0)                        
                         <!-- Popular News Start -->
                         <div class="mb-3">
@@ -652,71 +757,248 @@
     });
 </script>
 
-@if (!empty($videos) && $videos->count() > 0)
-    <section class="video mt-0 mb-4">
-        <div class="container">
-            <div class="border-bottom news m-auto ms-lg-0 mb-4 col-lg-8 col-11" data-aos="fade-up" data-aos-delay="30">
-                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-end">
-                    <h2 class="section-title d-table p-0 w-auto m-0 mb-3 poppins-bold font-28 title-blue">
-                        Novidades em vídeo
-                    </h2>                                
-                </div>
-            </div>
-            <div class="content-video d-flex justify-content-center align-items-center">
-                <!-- Player -->
-                <div class="right col-8 bg-black d-flex justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="30">
-                    <iframe id="videoPlayer" class="w-100 h-100"
-                            src=""
-                            title="Vídeo"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe>
-                </div>
 
-                <!-- Lista -->
-                <div class="left col-4 h-100 d-flex justify-content-center align-items-end flex-column position-relative grey-background" data-aos="fade-down" data-aos-delay="30">
-                    <!-- Vídeo ativo fixo -->
-                    <div id="activeVideoBox" class="w-100 shadow-video-current mb-3 d-none">
-                        <div class="d-flex align-items-center justify-content-end">                           
-                            <div class="d-flex">
-                                <div class="pt-2 col-10 px-3">
-                                    <span class="poppins-medium font-14 title-blue">Assistindo</span>
-                                    <h3 id="activeVideoTitle" class="poppins-bold font-16 title-blue"></h3>
-                                </div>
-                                <div class="bg-danger col-2 d-flex justify-content-center align-items-center">
-                                    <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M18 10L0 0V20" fill="white"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="swiper mySwiper position-relative">
-                        <div class="swiper-wrapper py-4 flex-column align-items-start justify-content-start m-auto position-relative">
-                            @foreach($videos as $i => $video)
-                                <div class="swiper-slide align-items-center mb-0 justify-content-start"
+    <!-- Start Youtube -->
+    @if (!empty($videos) && $videos->count() > 0)
+        <div class="youtube-area video-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="video-items-active">
+                            @foreach ($videos as $i => $video)
+                                <div
+                                    class="video-items text-center"
                                     data-id="{{ $i }}"
                                     data-video="{{ $video->link }}">
-
-                                    <img class="video-thumb me-3" src="" alt="thumbnail"
-                                    style="width: 60px; height: 45px; object-fit: cover; border-radius: 4px;">
-                                    <h3 class="title poppins-medium font-16 mb-0 col-10 title-blue">
-
-                                        {{ $video->title ?? 'Vídeo' }}
-                                    </h3>
                                 </div>
                             @endforeach
                         </div>
                     </div>
-                    {{-- <div class="nav-video position-absolute d-flex flex-column align-items-end me-5">
-                        <div class="swiper-button-up">▲</div>
-                        <div class="swiper-button-down">▼</div>
-                    </div> --}}
+                </div>
+
+                <div class="video-info">
+                    <div class="row">
+
+                        <div class="col-lg-6">
+                            <div class="video-caption">
+                                <div class="top-caption">
+                                    <span class="color1">Politics</span>
+                                </div>
+                                <div class="bottom-caption">
+                                    <h2>Welcome To The Best Model Winner Contest At Look of the year</h2>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod ipsum dolor sit. Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod ipsum dolor sit. Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod ipsum dolor sit lorem ipsum dolor sit.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="testmonial-nav text-center">
+                                @foreach ($videos as $i => $video)
+                                    <div
+                                        class="single-video"
+                                        data-id="{{ $i }}"
+                                        data-video="{{ $video->link }}">
+
+                                        <div class="video-thumb">
+                                            <img
+                                                src=""
+                                                alt="{{ $video->title ?? 'Vídeo' }}"
+                                                loading="lazy">
+
+                                            <span class="video-play">
+                                                <i class="fas fa-play"></i>
+                                            </span>
+                                        </div>
+
+                                        <div class="video-intro mt-1">
+                                            <h4>{{ $video->title ?? 'Vídeo' }}</h4>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
-@endif
+    @endif
+    <!-- End Start youtube -->
+
+    <style>
+
+.video-thumb {
+    position: relative;
+    height: 160px;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #000;
+}
+.video-thumb ,.video-intro{
+    width: 95%;
+    margin: 0 auto;
+    margin-right: 0;
+}
+.video-thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 13px;
+    pointer-events: none;
+}
+
+.video-play i {
+    margin-left: 2px;
+}
+        .color1 {
+            background: #ffe7e6;
+        }
+        .youtube-area .video-items iframe{
+            width:100%;
+            height:465px
+        }
+        .youtube-area .video-info{
+            border-bottom:1px solid #ddd
+        }
+        .youtube-area .video-info .video-caption{
+            position:relative;
+            top:-90px
+        }
+        .youtube-area .video-info .video-caption .top-caption{
+            background:#fff;
+            width:60%;
+            border-radius:0 7px 0 0;
+            padding-top:60px;
+            padding-bottom:30px
+        }
+        .youtube-area .video-info .video-caption .top-caption span{
+            padding:7px 30px;
+            line-height:1;
+            color:#000;
+            text-transform:uppercase;
+            font-weight:600;
+            font-size:11px
+        }
+        .youtube-area .video-info .video-caption .bottom-caption h2{
+            font-size:30px;
+            font-weight:700;
+            margin-bottom:27px
+        }
+        .youtube-area .video-info .video-caption .bottom-caption p{
+            color:#777;
+            font-size:14px;
+            line-height:1.7;
+            padding-right:32px
+        }
+        .youtube-area .testmonial-nav{
+            width:100%;
+            margin-top:40px
+        }
+        @media only screen and (min-width: 768px) and (max-width: 991px){
+            .youtube-area .testmonial-nav{
+                margin-top:0px
+            }
+        }
+        @media (max-width: 767px){
+            .youtube-area .testmonial-nav{
+                margin-top:0px
+            }
+        }
+        @media only screen and (min-width: 576px) and (max-width: 767px){
+            .youtube-area .testmonial-nav{
+                margin-top:0px
+            }
+        }
+        .youtube-area .testmonial-nav button{
+            position:absolute;
+            color:#333;
+            border:none;
+            font-size:21px;
+            background:#f3f4f8;
+            width:55px;
+            height:55px;
+            border-radius:10px;
+            color:#bdbdbd;
+            left:-421px;
+            top:-114px;
+            cursor:pointer
+        }
+        @media only screen and (min-width: 992px) and (max-width: 1199px){
+            .youtube-area .testmonial-nav button{
+                left:-348px
+            }
+        }
+        .youtube-area .testmonial-nav button.slick-next{
+            left:-340px;
+            background:red;
+            color:#fff
+        }
+        @media only screen and (min-width: 992px) and (max-width: 1199px){
+            .youtube-area .testmonial-nav button.slick-next{
+                left:-280px
+            }
+        }
+        .youtube-area .single-video iframe{
+            padding:0 5px;
+            width:100%
+        }
+        .youtube-area .single-video .video-intro h4{
+            font-size:14px;
+            font-weight:500;
+            text-align:start;
+            padding:0 5px;
+            line-height:1.3;
+        }
+        @media only screen and (min-width: 992px) and (max-width: 1199px){
+            .youtube-area .single-video .video-intro h4{
+                font-size:14px
+            }
+        }
+        .video-padding{
+            padding-top:100px;
+            padding-bottom:45px
+        }
+        @media only screen and (min-width: 1200px) and (max-width: 1600px){
+            .video-padding{
+                padding-top:100px;
+                padding-bottom:45px
+            }
+        }
+        @media only screen and (min-width: 992px) and (max-width: 1199px){
+            .video-padding{
+                padding-top:100px;
+                padding-bottom:45px
+            }
+        }
+        @media only screen and (min-width: 768px) and (max-width: 991px){
+            .video-padding{
+                padding-top:100px;
+                padding-bottom:45px
+            }
+        }
+        @media only screen and (min-width: 576px) and (max-width: 767px){
+            .video-padding{
+                padding-top:100px;
+                padding-bottom:45px
+            }
+        }
+    </style>
 
 @if ($events->count() > 0)                    
     <div class="container mt-5" data-aos="fade-left" data-aos-delay="30">
@@ -772,198 +1054,296 @@
 @endif
 
 <script defer>
-    const section = document.querySelector('section.video');
-    if (section) {
-        const wrapper = section.querySelector('.mySwiper .swiper-wrapper');
-        const slides  = Array.from(section.querySelectorAll(".mySwiper .swiper-slide"));
-        const player  = section.querySelector("#videoPlayer");
+    document.addEventListener("DOMContentLoaded", function () {
+        const section = document.querySelector(".youtube-area");
 
-        let currentIndex = 0;
-        let firstLoad = true;
+        if (!section) return;
 
-        // Normaliza URL (adiciona protocolo se vier //)
+        const mainVideos = Array.from(
+            section.querySelectorAll(".video-items-active .video-items")
+        );
+
+        const navVideos = Array.from(
+            section.querySelectorAll(".testmonial-nav .single-video")
+        );
+
+        if (!mainVideos.length || !navVideos.length) return;
+
+        /**
+         * Normaliza URL
+         */
         function norm(url) {
             if (!url) return "";
-            return url.startsWith("//") ? window.location.protocol + url : url;
+
+            return url.startsWith("//")
+                ? window.location.protocol + url
+                : url;
         }
 
-        // Converte para URL de embed (YouTube / Vimeo)
+        /**
+         * Converte URL para URL de embed
+         * YouTube / Vimeo
+         */
         function toEmbed(rawUrl) {
             const urlStr = norm(rawUrl);
+
             if (!urlStr) return "";
 
             let u;
-            try { u = new URL(urlStr); } catch { return urlStr; }
+
+            try {
+                u = new URL(urlStr);
+            } catch {
+                return urlStr;
+            }
 
             const host = u.hostname.replace(/^www\./, "");
 
-            // YouTube
+            /**
+             * YouTube
+             */
             if (host.includes("youtube.com") || host.includes("youtu.be")) {
-                // Se já for /embed/ mantém
-                if (u.pathname.startsWith("/embed/")) return u.toString();
 
-                // youtu.be/<id>
+                // Já é embed
+                if (u.pathname.startsWith("/embed/")) {
+                    return u.toString();
+                }
+
+                // youtu.be/ID
                 if (host === "youtu.be" && u.pathname.length > 1) {
                     const id = u.pathname.split("/")[1];
+
                     return `https://www.youtube.com/embed/${id}`;
                 }
 
-                // shorts -> converte para embed
+                // Shorts
                 if (u.pathname.startsWith("/shorts/")) {
                     const id = u.pathname.split("/")[2] || u.pathname.split("/")[1];
+
                     return `https://www.youtube.com/embed/${id}`;
                 }
 
-                // watch?v=<id>
+                // watch?v=ID
                 const v = u.searchParams.get("v");
-                if (v) return `https://www.youtube.com/embed/${v}`;
 
-                // /live/<id> ou /v/<id> etc.
-                const parts = u.pathname.split("/").filter(Boolean);
+                if (v) {
+                    return `https://www.youtube.com/embed/${v}`;
+                }
+
+                // /live/ID, /v/ID etc.
+                const parts = u.pathname
+                    .split("/")
+                    .filter(Boolean);
+
                 if (parts.length >= 2) {
                     const id = parts.pop();
+
                     return `https://www.youtube.com/embed/${id}`;
                 }
             }
 
-            // Vimeo
+            /**
+             * Vimeo
+             */
             if (host.includes("vimeo.com")) {
-                // Se já for player.vimeo.com
-                if (host === "player.vimeo.com") return u.toString();
 
-                // Extrai o último segmento numérico como ID
-                const parts = u.pathname.split("/").filter(Boolean);
+                // Já é player.vimeo.com
+                if (host === "player.vimeo.com") {
+                    return u.toString();
+                }
+
+                const parts = u.pathname
+                    .split("/")
+                    .filter(Boolean);
+
                 const last = parts[parts.length - 1];
+
                 if (/^\d+$/.test(last)) {
                     return `https://player.vimeo.com/video/${last}`;
                 }
             }
 
-            // Desconhecido: retorna original
+            // Desconhecido
             return urlStr;
         }
 
-        function setActiveByIndex(index, userTriggered = false) {
-            if (index < 0 || index >= slides.length) return;
-
-            slides.forEach(s => s.classList.remove("active"));
-            const slide = slides[index];
-            slide.classList.add("active");
-
-            const raw = slide.getAttribute("data-video");
-            const embedUrl = toEmbed(raw);
-            if (embedUrl) player.src = embedUrl;
-
-            currentIndex = index;
-
-            if (!firstLoad || userTriggered) {
-                slide.scrollIntoView({ behavior: "smooth", block: "nearest" });
-            }
-        }
-
-        // Função para extrair ID do YouTube
+        /**
+         * ID do YouTube
+         */
         function getYouTubeID(url) {
             try {
-                const u = new URL(url);
-                if (u.hostname.includes("youtu.be")) return u.pathname.slice(1);
-                if (u.searchParams.get("v")) return u.searchParams.get("v");
+                const u = new URL(norm(url));
 
-                const parts = u.pathname.split("/");
-                return parts.pop();
+                const host = u.hostname.replace(/^www\./, "");
+
+                if (host === "youtu.be") {
+                    return u.pathname.split("/").filter(Boolean)[0] || null;
+                }
+
+                if (u.searchParams.get("v")) {
+                    return u.searchParams.get("v");
+                }
+
+                const parts = u.pathname.split("/").filter(Boolean);
+
+                if (parts.includes("embed")) {
+                    return parts[parts.indexOf("embed") + 1] || null;
+                }
+
+                if (parts.includes("shorts")) {
+                    return parts[parts.indexOf("shorts") + 1] || null;
+                }
+
+                return parts.pop() || null;
+
             } catch {
                 return null;
             }
         }
 
-        // Função para extrair ID do Vimeo
+        /**
+         * ID do Vimeo
+         */
         function getVimeoID(url) {
             try {
-                const u = new URL(url);
-                const parts = u.pathname.split("/").filter(Boolean);
-                return parts.pop();
+                const u = new URL(norm(url));
+
+                const parts = u.pathname
+                    .split("/")
+                    .filter(Boolean);
+
+                return parts.pop() || null;
+
             } catch {
                 return null;
             }
         }
 
-        // Aplica a thumbnail automaticamente
-        slides.forEach(slide => {
-            const raw = slide.getAttribute("data-video");
-            const thumb = slide.querySelector(".video-thumb");
+        /**
+         * Cria os iframes dos vídeos principais
+         */
+        mainVideos.forEach(video => {
+            const rawUrl = video.getAttribute("data-video");
 
-            if (!raw || !thumb) return;
+            if (!rawUrl) return;
 
-            let url = null;
+            const embedUrl = toEmbed(rawUrl);
 
-            // Detecta YouTube
-            const ytID = getYouTubeID(raw);
-            if (ytID) {
-                thumb.src = `https://img.youtube.com/vi/${ytID}/hqdefault.jpg`;
+            if (!embedUrl) return;
+
+            const iframe = document.createElement("iframe");
+
+            iframe.src = embedUrl;
+            iframe.title = "Vídeo";
+            iframe.frameBorder = "0";
+            iframe.allow =
+                "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+            iframe.allowFullscreen = true;
+
+            video.appendChild(iframe);
+        });
+
+        /**
+         * Cria as thumbnails
+         */
+        navVideos.forEach(video => {
+            const rawUrl = video.getAttribute("data-video");
+
+            if (!rawUrl) return;
+
+            const thumb = video.querySelector(".video-thumb img");
+
+            if (!thumb) return;
+
+            /**
+             * YouTube
+             */
+            const youtubeID = getYouTubeID(rawUrl);
+
+            if (youtubeID) {
+                thumb.src =
+                    `https://img.youtube.com/vi/${youtubeID}/hqdefault.jpg`;
+
                 return;
             }
 
-            // Detecta Vimeo
-            const vimeoID = getVimeoID(raw);
+            /**
+             * Vimeo
+             */
+            const vimeoID = getVimeoID(rawUrl);
+
             if (vimeoID) {
-                fetch(`https://vimeo.com/api/v2/video/${vimeoID}.json`)
-                    .then(res => res.json())
+                fetch(
+                    `https://vimeo.com/api/v2/video/${vimeoID}.json`
+                )
+                    .then(response => response.json())
                     .then(data => {
-                        thumb.src = data[0].thumbnail_medium;
+                        if (data?.[0]?.thumbnail_medium) {
+                            thumb.src = data[0].thumbnail_medium;
+                        }
                     })
                     .catch(() => {
-                        thumb.src = "/images/placeholder.jpg"; // opcional
+                        thumb.src = "/images/placeholder.jpg";
                     });
+
                 return;
             }
 
-            // Caso não identifique (opcional)
             thumb.src = "/images/placeholder.jpg";
         });
 
-        // Clique em um item
-        slides.forEach((slide, idx) => {
-            slide.addEventListener("click", () => {
-                setActiveByIndex(idx, true);
+        /**
+         * Inicializa o Slick
+         */
+        if (
+            typeof jQuery !== "undefined" &&
+            typeof jQuery.fn.slick !== "undefined"
+        ) {
+            const $main = jQuery(".video-items-active");
+            const $nav = jQuery(".testmonial-nav");
 
-                const activeBox = document.getElementById("activeVideoBox");
-                const activeTitle = document.getElementById("activeVideoTitle");
-
-                // Atualiza título no box fixo
-                const title = slide.querySelector("h3")?.innerText ?? "Vídeo";
-                activeTitle.textContent = title;
-
-                // Exibe box fixo
-                activeBox.classList.remove("d-none");
-
-                // Reordena a lista: move slide clicado para o topo do wrapper
-                wrapper.prepend(slide);
-
-                // Atualiza array de slides após reorder
-                currentIndex = 0;
-                slides.length = 0;
-                slides.push(...section.querySelectorAll(".swiper-slide"));
+            $main.slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: false,
+                fade: true,
+                asNavFor: ".testmonial-nav"
             });
-        });
 
-        // Inicia no primeiro (sem rolagem)
-        if (slides.length > 0) setActiveByIndex(0);
-
-        // Libera rolagem depois do load
-        window.addEventListener("load", () => {
-            setTimeout(() => { firstLoad = false; }, 500);
-        });
-
-        // Navegação ↑ ↓
-        const btnUp = section.querySelector(".swiper-button-up");
-        const btnDown = section.querySelector(".swiper-button-down");
-
-        btnUp && btnUp.addEventListener("click", () => {
-            if (currentIndex > 0) setActiveByIndex(currentIndex - 1, true);
-        });
-        btnDown && btnDown.addEventListener("click", () => {
-            if (currentIndex < slides.length - 1) setActiveByIndex(currentIndex + 1, true);
-        });
-    }
+            $nav.slick({
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                asNavFor: ".video-items-active",
+                dots: false,
+                focusOnSelect: true,
+                arrows: true,
+                prevArrow:
+                    '<button type="button" class="slick-prev"><i class="fas fa-chevron-left"></i></button>',
+                nextArrow:
+                    '<button type="button" class="slick-next"><i class="fas fa-chevron-right"></i></button>',
+                responsive: [
+                    {
+                        breakpoint: 992,
+                        settings: {
+                            slidesToShow: 3
+                        }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 2
+                        }
+                    },
+                    {
+                        breakpoint: 576,
+                        settings: {
+                            slidesToShow: 1
+                        }
+                    }
+                ]
+            });
+        }
+    });
 </script>
 
 <script defer>
@@ -1044,7 +1424,7 @@
         // Inicializa o Swiper
         const mainSwiper = new Swiper('.main-swiper', {
             slidesPerView: 1,
-            spaceBetween: 20,
+            spaceBetween: 0,
             loop: true,
             autoHeight: true,
             pagination: {

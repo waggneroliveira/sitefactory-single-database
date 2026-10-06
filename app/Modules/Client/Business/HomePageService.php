@@ -134,7 +134,7 @@ class HomePageService
         $blogSuperHighlights = Blog::whereHas('category', function($active){
             $active->where('active', 1);
         })->superHighlightOnly()->active()->sorting()->limit(6)->get();
-        $blogHighlights = Blog::with('category')->active()->highlightOnly()->limit(3)->get();
+        $blogHighlights = Blog::with('category')->active()->highlightOnly()->limit(4)->get();
         // Obter as 5 categorias mais recentes das últimas notícias
         $recentCategories = BlogCategory::whereHas('blogs', function($query) {
             $query->active()->whereHas('category', function($active) {

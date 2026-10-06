@@ -287,7 +287,11 @@
 
     <link rel="preload" href="{{ asset('build/client/bootstrap-icons/bootstrap-icons.css') }}" as="style" onload="this.rel='stylesheet'">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"> --}}
+
     <link href="{{ asset('build/client/themes/blog/tp-01/css/style.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('build/client/themes/blog/tp-01/css/themify-icons.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('build/client/themes/blog/tp-01/css/responsivo.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('build/client/css/default.css') }}" rel="stylesheet" type="text/css">
 
@@ -462,12 +466,15 @@
         .border-color-footer{
             border-color: var(--text-color-footer) !important;
         }
+        .border-end-1 {
+            border-right: 1px solid #ffffff30 !important;
+        }
     </style>
 
     <div id="newsMediaOrganization" hidden></div>
     <header id="header" class="w-100 d-flex flex-column position p-0">   
         <div class="w-100 py-0">
-            <div class="header-top py-2 mb-0 header-color">
+            <div class="header-top py-0 mb-0 header-color">
                 <div class="container d-flex flex-wrap justify-content-center justify-content-lg-between align-items-center">    
                     <div class="logo-img d-block d-lg-none px-0 py-2 rounded-2 d-flex justify-content-start align-items-center w-auto">
                         <a class="navbar-brand logo-header" href="{{ route('index') }}" style="max-width: 200px;">
@@ -485,10 +492,90 @@
                         </a>
                     </div>
 
-                    <p class="text-white poppins-regular text-center text-lg-start font-14 mb-0 col-12 col-lg-6">
-                        Lauro de Freitas, BA | {{ \Carbon\Carbon::now()->translatedFormat('l, d \d\e F \d\e Y') }}
-                    </p>
+                    <nav class="navbar navbar-expand-sm p-0 mb-0 col-12 col-lg-6">
+                        <ul class="navbar-nav ml-n2">
 
+                            <li class="nav-item border-right border-end-1">
+                                <a class="nav-link text-white font-14 poppins-regular" href="#">
+                                    {{ ucfirst(\Carbon\Carbon::now()->translatedFormat('l, j \d\e F \d\e Y')) }}
+                                </a>
+                            </li>
+
+                            <li class="nav-item border-right border-end-1">
+                                <a class="nav-link text-white font-14 poppins-regular" href="#">
+                                    Advertise
+                                </a>
+                            </li>
+
+                            <li class="nav-item border-right border-end-1">
+                                <a class="nav-link text-white font-14 poppins-regular" href="#">
+                                    Contact
+                                </a>
+                            </li>
+
+                            @if (!Auth::guard('client')->check())
+
+                                {{-- LOGIN --}}
+                                <li class="nav-item">
+                                    <a class="nav-link text-white font-14 poppins-regular"
+                                    href="#"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#loginModal">
+                                        Login
+                                    </a>
+                                </li>
+
+                            @else
+
+                                {{-- USUÁRIO LOGADO --}}
+                                @php
+                                    $user = Auth::guard('client')->user();
+                                    $firstName = collect(explode(' ', $user->name))
+                                        ->filter()
+                                        ->first();
+                                @endphp
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link text-white font-14 poppins-regular dropdown-toggle"
+                                    href="#"
+                                    role="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                        Olá, {{ $firstName }}
+                                    </a>
+
+                                    <ul class="dropdown-menu dropdown-menu-end">
+
+                                        <li>
+                                            <a class="dropdown-item"
+                                            href="#"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editClientModal-{{ $user->id }}">
+                                                <i class="bi bi-gear me-2"></i>
+                                                Minha conta
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item"
+                                            href="{{ route('client.user.logout') }}">
+                                                <i class="bi bi-box-arrow-right me-2"></i>
+                                                Sair
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+
+                            @endif
+
+                        </ul>
+                    </nav>
+                
                     <div class="col-12 col-lg-6 text-center d-none d-lg-block"> 
                         <div class="d-flex flex-wrap justify-content-center justify-content-lg-end align-items-center">
                             <div class="dark-background p-0">
@@ -496,36 +583,40 @@
                                     <ul class="p-0 d-flex justify-content-center gap-3 flex-row mb-0">
                                         @if (isset($contact) && $contact->link_insta)
                                             <li class="li d-flex justify-content-center align-items-center rounded-circle">
-                                                <a href="{{$contact->link_insta}}" rel="nofollow noopener noreferrer" target="_blank">
-                                                    <img src="{{asset('build/client/images/insta.svg')}}" alt="Instagram">
+                                                <a href="{{ $contact->link_insta }}" rel="nofollow noopener noreferrer" target="_blank">
+                                                    <i class="bi bi-instagram"></i>
                                                 </a>
                                             </li>
                                         @endif
+
                                         @if (isset($contact) && $contact->link_x)
                                             <li class="li d-flex justify-content-center align-items-center rounded-circle">
-                                                <a href="{{$contact->link_x}}" rel="nofollow noopener noreferrer" target="_blank">
-                                                    <img src="{{asset('build/client/images/x.svg')}}" alt="X">
+                                                <a href="{{ $contact->link_x }}" rel="nofollow noopener noreferrer" target="_blank">
+                                                    <i class="bi bi-twitter-x"></i>
                                                 </a>
                                             </li>
                                         @endif
+
                                         @if (isset($contact) && $contact->link_youtube)
                                             <li class="li d-flex justify-content-center align-items-center rounded-circle">
-                                                <a href="{{$contact->link_youtube}}" rel="nofollow noopener noreferrer" target="_blank">
-                                                    <img src="{{asset('build/client/images/youtube.svg')}}" alt="Youtube">
+                                                <a href="{{ $contact->link_youtube }}" rel="nofollow noopener noreferrer" target="_blank">
+                                                    <i class="bi bi-youtube"></i>
                                                 </a>
                                             </li>
                                         @endif
+
                                         @if (isset($contact) && $contact->link_face)
                                             <li class="li d-flex justify-content-center align-items-center rounded-circle">
-                                                <a href="{{$contact->link_face}}" rel="nofollow noopener noreferrer" target="_blank">
-                                                    <img src="{{asset('build/client/images/face.svg')}}" alt="Facebook">
+                                                <a href="{{ $contact->link_face }}" rel="nofollow noopener noreferrer" target="_blank">
+                                                    <i class="bi bi-facebook"></i>
                                                 </a>
                                             </li>
                                         @endif
+
                                         @if (isset($contact) && $contact->link_tik_tok)
                                             <li class="li d-flex justify-content-center align-items-center rounded-circle">
-                                                <a href="{{$contact->link_tik_tok}}" rel="nofollow noopener noreferrer" target="_blank">
-                                                    <img src="{{asset('build/client/images/tiktok.svg')}}" alt="Tiktok">
+                                                <a href="{{ $contact->link_tik_tok }}" rel="nofollow noopener noreferrer" target="_blank">
+                                                    <i class="bi bi-tiktok"></i>
                                                 </a>
                                             </li>
                                         @endif
@@ -641,49 +732,7 @@
                                  </button>
                               </div>
                            </form>
-                        </div>                     
-                        @if (!Auth::guard('client')->check())                            
-                            <div class="d-flex justify-content-end align-items-center gap-2 col-3 ms-3">
-                                <svg width="24" height="28" viewBox="0 0 24 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M23.5294 27.2432C23.5294 27.657 23.2026 28 22.7994 28H0.72999C0.332619 28 0 27.6612 0 27.2432C0 20.5561 5.26724 15.1351 11.7647 15.1351C18.2622 15.1351 23.5294 20.5561 23.5294 27.2432ZM11.7647 13.6216C8.10988 13.6216 5.14706 10.5723 5.14706 6.81081C5.14706 3.0493 8.10988 0 11.7647 0C15.4195 0 18.3824 3.0493 18.3824 6.81081C18.3824 10.5723 15.4195 13.6216 11.7647 13.6216Z" fill="white"/>
-                                </svg>
-
-                                <div class="d-flex gap-1 flex-column">
-                                    <h2 class="off-login m-0 poppins-medium font-14 text-start" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#loginModal">
-                                        Acesse sua conta
-                                    </h2>
-                                    <h3 class="off-login m-0 poppins-medium font-14 text-start" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#loginModal">
-                                        <a href="#" class="text-decoration-none poppins-medium" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#registerModal">Cadastre-se</a>
-                                    </h3>
-                                </div>
-                            </div>
-                        @else
-                            @php
-                                $user = Auth::guard('client')->user();
-                                $defaultImage = $user && $user->path_image ? url($user->path_image) : '';
-                            @endphp
-                            <div class="image-profile">
-                                <picture>
-                                    <source srcset="{{ isset($defaultImage) && $defaultImage <> null ?$defaultImage:asset('build/client/images/user.jpg') }}" type="image/svg+xml">
-                                    <img src="{{ isset($defaultImage) && $defaultImage <> null ?$defaultImage:asset('build/client/images/user.jpg') }}"
-                                        alt="Imagem de Login"
-                                        class="img-fluid rounded-circle">
-                                </picture>
-                            </div>
-                            <div class="d-flex flex-column align-items-start gap-1">
-                                <div class="d-flex justify-content-start align-items-center gap-2 lh-0">
-                                    <h2 class="loginOn m-0 poppins-medium font-10 text-start">Bem vindo,</h2>   
-                                    <h3 class="m-0 poppins-medium font-12 text-start">{{$names = collect(explode(' ', Auth::guard('client')->user()->name))->slice(0, 1)->implode(' ')}}!</h3>      
-                                    <a class="nav-link waves-effect waves-light" href="#" data-bs-toggle="modal" data-bs-target="#editClientModal-{{Auth::guard('client')->user()->id}}">
-                                        <i class="bi bi-gear font-15"></i>
-                                    </a>                 
-                                </div>  
-                                <a href="{{route('client.user.logout')}}" class="d-flex justify-content-start align-items-center gap-2 text-decoration-none lh-0">
-                                    <i class="bi bi-box-arrow-right font-15"></i>
-                                    <h4 class="poppins-medium font-12 m-0">Sair</h4>
-                                </a>                                               
-                            </div>
-                        @endif
+                        </div>  
                     </div>   
                 </div>
             </div>
@@ -915,7 +964,7 @@
             <button id="menu-close" aria-label="Fechar menu" class="col-2 btn-close-menu p-0 bg-transparent" type="button">&times;</button>
         </div>
         <div class="col-10 logo-img p-0 mb-2 rounded-2 d-flex justify-content-center align-items-center">
-            <img src="{{asset('build/client/images/logo-blog.png')}}" alt="Expresso Vida Nova" title="Expresso Vida Nova" class="img-fluid" style="width: 100px;">
+            <img src="" alt="Expresso Vida Nova" title="Expresso Vida Nova" class="img-fluid" style="width: 100px;">
         </div>
         <div class="row justify-content-center gap-5">
             <nav class="mt-3">
@@ -991,35 +1040,35 @@
                     @if (isset($contact) && $contact->link_insta)
                         <li class="li d-flex justify-content-start align-items-center rounded-circle">
                             <a href="{{$contact->link_insta}}" rel="nofollow noopener noreferrer" target="_blank">
-                                <img src="{{asset('build/client/images/insta.svg')}}" alt="Instagram">
+                                <img src="" alt="Instagram">
                             </a>
                         </li>
                     @endif
                     @if (isset($contact) && $contact->link_x)
                         <li class="li d-flex justify-content-start align-items-center rounded-circle">
                             <a href="{{$contact->link_x}}" rel="nofollow noopener noreferrer" target="_blank">
-                                <img src="{{asset('build/client/images/x.svg')}}" alt="X">
+                                <img src="" alt="X">
                             </a>
                         </li>
                     @endif
                     @if (isset($contact) && $contact->link_youtube)
                         <li class="li d-flex justify-content-start align-items-center rounded-circle">
                             <a href="{{$contact->link_youtube}}" rel="nofollow noopener noreferrer" target="_blank">
-                                <img src="{{asset('build/client/images/youtube.svg')}}" alt="Youtube">
+                                <img src="" alt="Youtube">
                             </a>
                         </li>
                     @endif
                     @if (isset($contact) && $contact->link_face)
                         <li class="li d-flex justify-content-start align-items-center rounded-circle">
                             <a href="{{$contact->link_face}}" rel="nofollow noopener noreferrer" target="_blank">
-                                <img src="{{asset('build/client/images/face.svg')}}" alt="Facebook">
+                                <img src="" alt="Facebook">
                             </a>
                         </li>
                     @endif
                     @if (isset($contact) && $contact->link_tik_tok)
                         <li class="li d-flex justify-content-start align-items-center rounded-circle">
                             <a href="{{$contact->link_tik_tok}}a" rel="nofollow noopener noreferrer" target="_blank">
-                                <img src="{{asset('build/client/images/tiktok.svg')}}" alt="Tiktok">
+                                <img src="" alt="Tiktok">
                             </a>
                         </li>
                     @endif
@@ -1224,6 +1273,63 @@
     <script src="{{ asset('build/client/lgpd/script.js') }}"></script>
     <script src="{{ asset('build/client/themes/blog/tp-01/js/default.js') }}"></script>
     <script src="{{ asset('build/client/js/default.js') }}"></script>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $('.video-items-active').slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: false,
+                fade: true,
+                asNavFor: '.testmonial-nav'
+            });
+
+            $('.testmonial-nav').slick({
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                asNavFor: '.video-items-active',
+                dots: false,
+
+                prevArrow: '<button type="button" class="slick-prev"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>',
+
+                nextArrow: '<button type="button" class="slick-next"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>',
+
+                centerMode: true,
+                focusOnSelect: true,
+                centerPadding: '0px',
+
+                responsive: [
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 3,
+                            infinite: true,
+                            dots: false
+                        }
+                    },
+                    {
+                        breakpoint: 991,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+                ]
+            });
+
+        });
+    </script>
 
     {{-- Modais alert --}}
     <script>
