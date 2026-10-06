@@ -1,17 +1,62 @@
 <div class="col-12 col-lg-6">
     <div class="row">
         <div class="mb-3 col-12 col-lg-6 d-flex align-items-start flex-column">
-            <label for="category-select" class="form-label">Categoria(s) <span class="text-danger">*</span></label>
+            <label for="category-select" class="form-label">
+                Categoria <span class="text-danger">*</span>
+            </label>
+
             @php
                 $currentCategory = isset($blog) ? $blog->blog_category_id : null;
+                $currentSubcategory = isset($blog) ? $blog->blog_subcategory_id : null;
             @endphp
-        
-            <select name="blog_category_id" class="form-select" id="category-select" required>
-                <option value="" disabled selected>Selecione o Cliente</option>
-                @foreach ($blogCategory as $categoryValue => $categoryLabel)
-                    <option value="{{ $categoryValue }}" {{ $categoryValue == $currentCategory ? 'selected' : '' }}>
-                        {{ $categoryLabel }}
+
+            <select
+                name="blog_category_id"
+                class="form-select"
+                id="category-select"
+                required
+            >
+                <option value="" disabled {{ !$currentCategory ? 'selected' : '' }}>
+                    Selecione a categoria
+                </option>
+
+                @foreach ($categories as $category)
+                    <option
+                        value="{{ $category->id }}"
+                        {{ $category->id == $currentCategory ? 'selected' : '' }}
+                    >
+                        {{ $category->title }}
                     </option>
+                @endforeach
+            </select>
+        </div>
+
+
+        <div class="mb-3 col-12 col-lg-6 d-flex align-items-start flex-column">
+            <label for="subcategory-select" class="form-label">
+                Subcategoria
+            </label>
+
+            <select
+                name="blog_subcategory_id"
+                class="form-select"
+                id="subcategory-select"
+                {{ !$currentCategory ? 'disabled' : '' }}
+            >
+                <option value="">
+                    Sem subcategoria
+                </option>
+
+                @foreach ($categories as $category)
+                    @foreach ($category->subcategories as $subcategory)
+                        <option
+                            value="{{ $subcategory->id }}"
+                            data-category="{{ $category->id }}"
+                            {{ $subcategory->id == $currentSubcategory ? 'selected' : '' }}
+                        >
+                            {{ $subcategory->name }}
+                        </option>
+                    @endforeach
                 @endforeach
             </select>
         </div>
@@ -162,6 +207,46 @@
             CKEDITOR.replace(element.id, getEditorConfig(true));
         });
 
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const categorySelect = document.getElementById('category-select');
+        const subcategorySelect = document.getElementById('subcategory-select');
+
+        function updateSubcategories() {
+            const categoryId = categorySelect.value;
+
+            let hasSubcategories = false;
+
+            Array.from(subcategorySelect.options).forEach(option => {
+                if (!option.value) {
+                    option.hidden = false;
+                    return;
+                }
+
+                const belongsToCategory = option.dataset.category === categoryId;
+
+                option.hidden = !belongsToCategory;
+
+                if (belongsToCategory) {
+                    hasSubcategories = true;
+                }
+            });
+
+            if (!categoryId || !hasSubcategories) {
+                subcategorySelect.value = '';
+                subcategorySelect.disabled = true;
+            } else {
+                subcategorySelect.disabled = false;
+            }
+        }
+
+        categorySelect.addEventListener('change', function () {
+            subcategorySelect.value = '';
+            updateSubcategories();
+        });
+
+        updateSubcategories();
     });
 </script>
 <style>

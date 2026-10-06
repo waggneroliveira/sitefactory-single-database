@@ -31,13 +31,19 @@ class BlogService
     public function getIndexData(Request $request, ThemeManager $themeManager): array
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
+
         $check = checkPermission('blog', 'noticias.visualizar', $settingTheme);
+
         if ($check !== true) {
             return ['forbidden' => $check];
         }
 
-        $categories = BlogCategory::active()->sorting()->get();
-        $blogsQuery = Blog::with(['category']);
+        $categories = BlogCategory::with('subcategories')
+            ->active()
+            ->sorting()
+            ->get();
+
+        $blogsQuery = Blog::with(['category', 'subcategory']);
 
         if ($request->filled('title')) {
             $blogsQuery->where('title', 'like', '%' . $request->title . '%');
@@ -51,21 +57,35 @@ class BlogService
             $blogsQuery->where('blog_category_id', $request->blog_category_id);
         }
 
-        $blogs = $blogsQuery->sorting()->paginate(60)->withQueryString();
+        $blogs = $blogsQuery->sorting()
+            ->paginate(60)
+            ->withQueryString();
+
         $commentCount = Blog::with(['comments' => function ($query) {
             $query->where('active', 0);
         }])->get();
 
         $blogCategory = [];
+
         foreach ($categories as $category) {
             $blogCategory[$category->id] = $category->title;
         }
+
         $theme = $themeManager;
         $themeData = $themeManager->theme();
         $blogLimit = $themeManager->getLimit('blog', 0);
-        return compact('blogs', 'blogLimit', 'categories', 'blogCategory', 'settingTheme', 'theme', 'themeData', 'commentCount');
-    }
 
+        return compact(
+            'blogs',
+            'blogLimit',
+            'categories',
+            'blogCategory',
+            'settingTheme',
+            'theme',
+            'themeData',
+            'commentCount'
+        );
+    }
 
     public function getCreateData(ThemeManager $themeManager): array
     {
@@ -119,6 +139,7 @@ class BlogService
         $data['active'] = $request->active ? 1 : 0;
         $data['super_highlight'] = $request->super_highlight ? 1 : 0;
         $data['highlight'] = $request->highlight ? 1 : 0;
+        $data['blog_subcategory_id'] = $request->blog_subcategory_id;
         $data['slug'] = Str::slug($request->title);
         $pathUpload = $this->getPathUpload();
 
@@ -260,6 +281,7 @@ class BlogService
         $data['active'] = $request->active ? 1 : 0;
         $data['super_highlight'] = $request->super_highlight ? 1 : 0;
         $data['highlight'] = $request->highlight ? 1 : 0;
+        $data['blog_subcategory_id'] = $request->blog_subcategory_id;
         $data['slug'] = Str::slug($request->title);
         $pathUpload = $this->getPathUpload();
 

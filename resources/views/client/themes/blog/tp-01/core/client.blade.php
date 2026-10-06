@@ -1331,6 +1331,81 @@
         });
     </script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            document.querySelectorAll('.tab01').forEach(function (categoryContainer) {
+
+                const filters = categoryContainer.querySelectorAll('.category-filter');
+                const featuredBlogs = categoryContainer.querySelectorAll('.featured-blog');
+                const blogItems = categoryContainer.querySelectorAll('.blog-item');
+
+                filters.forEach(function (filter) {
+
+                    filter.addEventListener('click', function (e) {
+                        e.preventDefault();
+
+                        const subcategoryId = this.dataset.subcategoryId;
+
+                        // Ativa o botão
+                        filters.forEach(function (item) {
+                            item.classList.remove('active');
+                        });
+
+                        this.classList.add('active');
+
+
+                        // =========================
+                        // DESTAQUE
+                        // =========================
+
+                        featuredBlogs.forEach(function (blog) {
+                            blog.classList.add('d-none');
+                        });
+
+                        const matchingFeatured = Array.from(featuredBlogs).find(function (blog) {
+
+                            if (!subcategoryId) {
+                                return true;
+                            }
+
+                            return blog.dataset.subcategoryId === subcategoryId;
+                        });
+
+                        if (matchingFeatured) {
+                            matchingFeatured.classList.remove('d-none');
+                        }
+
+
+                        // =========================
+                        // LISTA
+                        // =========================
+
+                        blogItems.forEach(function (blog) {
+
+                            const blogSubcategoryId = blog.dataset.subcategoryId;
+
+                            if (!subcategoryId) {
+                                blog.classList.remove('d-none');
+                                return;
+                            }
+
+                            if (blogSubcategoryId === subcategoryId) {
+                                blog.classList.remove('d-none');
+                            } else {
+                                blog.classList.add('d-none');
+                            }
+                        });
+
+                    });
+
+                });
+
+            });
+
+        });
+    </script>
+
     {{-- Modais alert --}}
     <script>
         document.addEventListener('DOMContentLoaded', function () {

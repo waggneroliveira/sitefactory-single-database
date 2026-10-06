@@ -168,7 +168,7 @@ class HomePageService
                 $query->select('id', 'title', 'slug');
             },
             'subcategory' => function ($query) {
-                $query->select('id', 'title', 'slug');
+                $query->select('id', 'name', 'slug');
             }
         ])
         ->active()

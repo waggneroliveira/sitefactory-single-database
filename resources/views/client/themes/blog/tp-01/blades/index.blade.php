@@ -408,47 +408,6 @@
             <div class="row">
                 @if ($recentCategories->count() > 0)                    
                     <div class="col-12 col-lg-9 animate-on-scroll mb-3">
-                        {{-- <div class="border-bottom news mb-0">
-                            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-end">
-                                <h2 class="section-title d-table p-0 w-auto m-0 mb-3 poppins-bold font-28 title-blue">
-                                    Últimas notícias
-                                </h2>                                
-                            </div>
-                        </div>
-                        <nav class="mt-3">
-                            <ul class="list-unstyled d-flex flex-row flex-wrap gap-2 gap-md-3 justify-content-start mb-0">
-                                <li class="py-0 py-sm-2 px-2 px-sm-3 poppins-semiBold font-14 text-white bg-blue-light background-red active">
-                                    <a href="#" class="text-decoration-none text-white category-filter font-15 font-mob" data-category="todas">
-                                        Todas
-                                    </a>
-                                </li>
-                                
-                                @foreach($recentCategories as $index => $category)
-                                    @php
-                                        $title = match(strtolower($category->title)) {
-                                            'justica' => 'Justiça',
-                                            'saude'   => 'Saúde',
-                                            default   => $category->title,
-                                        };
-                                    @endphp
-                                    <li class="py-0 px-1 px-sm-3 poppins-semiBold font-14 text-black bg-blue-light d-flex align-items-center justify-content-center">
-                                        <a href="#" 
-                                        class="text-decoration-none text-black category-filter font-15 font-mob" 
-                                        data-category="{{ $category->slug }}">
-                                            {{ $title }}
-                                        </a>
-                                    </li>
-                                @endforeach
-
-                            </ul>
-                        </nav>
-
-                        <div id="news-container" class="mt-5 border p-5 bg-white rounded-2">
-                            @include('client.themes.blog.tp-01.ajax.filter-blog-homePage', [
-                                'latestNews' => $latestNews
-                            ])
-                        </div> --}}
-
                         @foreach($blogCategories as $category)                            
                             <div class="tab01 pb-5 {{$category->slug}}">
                                 <div class="tab01-head d-flex justify-content-between">
@@ -459,14 +418,25 @@
                             
                                     <!-- Nav tabs -->
                                     <ul class="nav nav-tabs" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link poppins-semiBold text-decoration-none text-black category-filter font-15 font-mob active" data-toggle="tab" href="#tab1-1" role="tab">Todos</a>
-                                        </li>
+                                        <button type="button" class="nav-link poppins-semiBold text-decoration-none text-black category-filter font-15 font-mob active"
+                                        data-category-id="{{ $category->id }}"
+                                        data-subcategory-id=""
+                                        href="#"
+                                        role="tab"
+                                        >
+                                            Todos
+                                        </button>
 
-                                        @foreach($category->subcategories as $subcategory)                                           
-                                            <li class="nav-item">
-                                                <a class="nav-link poppins-semiBold text-decoration-none text-black category-filter font-15 font-mob" data-toggle="tab" href="#tab1-2" role="tab">{{$subcategory->name}}</a>
-                                            </li>
+                                        @foreach($category->subcategories as $subcategory)
+                                            <button type="button"
+                                                class="nav-link poppins-semiBold text-decoration-none text-black category-filter font-15 font-mob"
+                                                data-category-id="{{ $category->id }}"
+                                                data-subcategory-id="{{ $subcategory->id }}"
+                                                href="#"
+                                                role="tab"
+                                            >
+                                                {{ $subcategory->name }}
+                                            </button>                                            
                                         @endforeach
                             
                                         <li class="nav-item-more dropdown d-none">
@@ -494,65 +464,85 @@
                                     <div class="tab-pane fade show active" id="tab1-{{$category->id}}" role="tabpanel">
                                         <div class="row">
                                             <div class="col-sm-6 p-r-25 p-r-15-sr991">
-                                                @php
-                                                    $featuredBlog = $category->blogs->first();
-                                                @endphp
 
-                                                @if ($featuredBlog)
-                                                    <div class="m-b-30">
-                                                        <a href="#" class="wrap-pic-w hov1 trans-03">
-                                                            <img
-                                                                src="{{ $featuredBlog->path_image ? asset('storage/' . $featuredBlog->path_image) : 'https://placehold.co/600x400?text=Sem+imagem&font=poppins' }}"
-                                                                alt="{{ $featuredBlog->title }}"
-                                                                width="470"
-                                                                height="290"
-                                                                style="object-fit: cover;"
-                                                            >
-                                                        </a>
+                                                <div class="featured-blog-container">
+                                                    @foreach($category->blogs as $blog)
+                                                        <div
+                                                            class="featured-blog m-b-30 {{ $loop->first ? '' : 'd-none' }}"
+                                                            data-blog-id="{{ $blog->id }}"
+                                                            data-subcategory-id="{{ $blog->blog_subcategory_id }}"
+                                                        >
+                                                            <a href="#" class="wrap-pic-w hov1 trans-03">
+                                                                <img
+                                                                    src="{{ $blog->path_image ? asset('storage/' . $blog->path_image) : 'https://placehold.co/600x400?text=Sem+imagem&font=poppins' }}"
+                                                                    alt="{{ $blog->title }}"
+                                                                    width="470"
+                                                                    height="290"
+                                                                    style="object-fit: cover;"
+                                                                >
+                                                            </a>
 
-                                                        <div class="p-t-20">
-                                                            <h5 class="p-b-5">
-                                                                <a href="#" class="f1-m-3 cl2 hov-cl10 trans-03">
-                                                                    {{ $featuredBlog->title }}
-                                                                </a>
-                                                            </h5>
+                                                            <div class="p-t-20">
+                                                                <h5 class="p-b-5">
+                                                                    <a href="#" class="f1-m-3 cl2 hov-cl10 trans-03">
+                                                                        {{ $blog->title }}
+                                                                    </a>
+                                                                </h5>
 
-                                                            <span class="cl8">
-                                                                <span class="f1-s-3">
-                                                                    {{ \Carbon\Carbon::parse($featuredBlog->date)->locale('pt_BR')->translatedFormat('d \d\e F \d\e Y') }}
+                                                                <span class="cl8">
+                                                                    <span class="f1-s-3">
+                                                                        {{ \Carbon\Carbon::parse($blog->date)->locale('pt_BR')->translatedFormat('d \d\e F \d\e Y') }}
+                                                                    </span>
                                                                 </span>
-                                                            </span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                @endif
+                                                    @endforeach
+                                                </div>
+
                                             </div>
-                            
+
+
                                             <div class="col-sm-6 p-r-25 p-r-15-sr991">
-                                                <!-- Item post -->	
-                                                @foreach($category->blogs->skip(1) as $blog)                                                 
-                                                    <div class="d-flex gap-3 mb-3">
-                                                        <a href="blog-detail-01.html" class="size-w-1 wrap-pic-w hov1 trans-03">
-                                                            <img loading="lazy"
-                                                            src="{{ $blog->path_image ? asset('storage/' . $blog->path_image) : 'https://placehold.co/600x400?text=Sem+imagem&font=poppins' }}"
-                                                            alt="{{ $blog->title }}"
-                                                            width="100" height="75"
-                                                            style="object-fit: cover;">
-                                                        </a>
-                                
-                                                        <div class="size-w-2">
-                                                            <h5 class="p-b-5">
-                                                                <a href="blog-detail-01.html" class="poppins-bold font-14">
-                                                                    {{$blog->title}}
-                                                                </a>
-                                                            </h5>
-                                                                
-                                                            <span class="cl8">                                
-                                                                {{ \Carbon\Carbon::parse($blog->date)->locale('pt_BR')->translatedFormat('d \d\e F \d\e Y') }}
-                                                            </span>
+
+                                                <div class="blog-list-container">
+
+                                                    @foreach($category->blogs as $blog)
+                                                        <div
+                                                            class="blog-item d-flex gap-3 mb-3 {{ $loop->first ? 'd-none' : '' }}"
+                                                            data-blog-id="{{ $blog->id }}"
+                                                            data-subcategory-id="{{ $blog->blog_subcategory_id }}"
+                                                        >
+
+                                                            <a href="#" class="size-w-1 wrap-pic-w hov1 trans-03">
+                                                                <img
+                                                                    loading="lazy"
+                                                                    src="{{ $blog->path_image ? asset('storage/' . $blog->path_image) : 'https://placehold.co/600x400?text=Sem+imagem&font=poppins' }}"
+                                                                    alt="{{ $blog->title }}"
+                                                                    width="100"
+                                                                    height="75"
+                                                                    style="object-fit: cover;"
+                                                                >
+                                                            </a>
+
+                                                            <div class="size-w-2">
+                                                                <h5 class="p-b-5">
+                                                                    <a href="#" class="poppins-bold font-14">
+                                                                        {{ $blog->title }}
+                                                                    </a>
+                                                                </h5>
+
+                                                                <span class="cl8">
+                                                                    {{ \Carbon\Carbon::parse($blog->date)->locale('pt_BR')->translatedFormat('d \d\e F \d\e Y') }}
+                                                                </span>
+                                                            </div>
+
                                                         </div>
-                                                    </div>
-                                                @endforeach
+                                                    @endforeach
+
+                                                </div>
+
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>

@@ -21,6 +21,7 @@ class Blog extends Model
 
     protected $fillable = [
         'blog_category_id',
+        'blog_subcategory_id',
         'title',
         'slug',
         'date',
