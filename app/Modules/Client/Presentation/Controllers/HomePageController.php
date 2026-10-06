@@ -25,7 +25,7 @@ class HomePageController
     public function filterByCategory($categorySlug = null): JsonResponse
     {
         $data = $this->service->filterByCategory($categorySlug);
-        $html = view('client.ajax.filter-blog-homePage', [
+        $html = view('client.themes.blog.tp-01.ajax.filter-blog-homePage', [
             'latestNews' => $data['latestNews'],
         ])->render();
 
