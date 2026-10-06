@@ -483,7 +483,7 @@
                                                             </a>
 
                                                             <div class="p-t-20">
-                                                                <h5 class="p-b-5">
+                                                                <h5 class="p-b-5">                                                                    
                                                                     <a href="#" class="f1-m-3 cl2 hov-cl10 trans-03">
                                                                         {{ $blog->title }}
                                                                     </a>
@@ -525,14 +525,20 @@
                                                             </a>
 
                                                             <div class="size-w-2">
-                                                                <h5 class="p-b-5">
+                                                                <h5 class="p-b-5">                                                                    
                                                                     <a href="#" class="poppins-bold font-14">
                                                                         {{ $blog->title }}
                                                                     </a>
                                                                 </h5>
 
                                                                 <span class="cl8">
-                                                                    {{ \Carbon\Carbon::parse($blog->date)->locale('pt_BR')->translatedFormat('d \d\e F \d\e Y') }}
+                                                                    <small class="font-12">
+                                                                        {{isset($blog->subcategory->name)?$blog->subcategory->name.' - ':""}}                                                                        
+                                                                        
+                                                                        {{ \Carbon\Carbon::parse($blog->date)->format('d') }}
+                                                                        {{ ucfirst(mb_substr(\Carbon\Carbon::parse($blog->date)->locale('pt_BR')->translatedFormat('F'), 0, 3)) }}
+                                                                        {{ \Carbon\Carbon::parse($blog->date)->format('Y') }}
+                                                                    </small>
                                                                 </span>
                                                             </div>
 

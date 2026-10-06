@@ -104,6 +104,7 @@
                                                 {{-- <th>Link</th> --}}
                                                 <th>Título</th>
                                                 <th>Categoria</th>
+                                                <th>Sub Categoria</th>
                                                 <th>Imagem</th>
                                                 <th>Publicado</th>
                                                 <th>Status</th>
@@ -129,6 +130,7 @@
                                                     </td>
                                                     <td>{{substr(strip_tags($blog->title), 0, 40)}}...</td>
                                                     <td>{{$categoria}}</td>
+                                                    <td>{{isset($blog->subcategory->name)?$blog->subcategory->name:"Nenhuma sub categoria"}}</td>
                                                     <td class="table-user text-center">
                                                         @if ($blog->path_image_thumbnail)
                                                             <img src="{{ asset('storage/'.$blog->path_image_thumbnail) }}" name="path_image_thumbnail" alt="table-user" class="me-2 rounded-circle">
