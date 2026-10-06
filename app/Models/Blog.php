@@ -40,6 +40,10 @@ class Blog extends Model
     public function category(){
         return $this->belongsTo(BlogCategory::class, 'blog_category_id');
     }
+    public function subcategory()
+    {
+        return $this->belongsTo(BlogSubcategory::class, 'blog_subcategory_id');
+    }
 
     public function scopeActive($query){
         return $query->where('active', 1);

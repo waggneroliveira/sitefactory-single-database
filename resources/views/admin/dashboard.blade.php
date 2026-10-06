@@ -927,6 +927,14 @@
                         ])
                     @endif
 
+                    @if (in_array('blog_sub_categories', $blogModules, true) && ($isSuper || $user->can('sub categorias de noticias.visualizar') || $user->can('usuario.tornar usuario master')))
+                        @include('admin.components.dashboard-card', [
+                            'route' => route('admin.dashboard.blogSubCategory.index'),
+                            'icon' => 'mdi-tag-multiple',
+                            'title' => 'Sub Categorias das Notícias'
+                        ])
+                    @endif
+
                     @if (in_array('blog', $blogModules, true) && ($isSuper || $user->can('noticias.visualizar') || $user->can('usuario.tornar usuario master')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.blog.index'),

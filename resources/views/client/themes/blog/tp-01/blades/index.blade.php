@@ -302,6 +302,105 @@
         </div>
     </section>
 @endif
+<style>
+    .tab01 .nav-tabs {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  border: none;
+  flex-grow: 1;
+  height: 100%;
+}
+
+.tab01 .nav-tabs .nav-item-more,
+.tab01 .nav-tabs .nav-item {
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
+}
+
+.tab01 .nav-link {
+  line-height: 1.7;
+  
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 5px 12px;
+  border-radius: 0px;
+  border: none;
+  position: relative;
+
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.tab01 .nav-link.active::after {
+  content: "";
+  display: block;
+  position: absolute;
+  background-color: #fff;
+  width: 7px;
+  height: 7px;
+  border-left: 1px solid #d5d5d5;
+  border-bottom: 1px solid #d5d5d5;
+  left: calc(50% - 5px);
+  bottom: -5px;
+  
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.tab01 .nav-link:hover {
+  color: #17b978 !important;
+}
+
+
+/*---------------------------------------------*/
+.tab01-link {
+  padding-left: 10px;
+  white-space: nowrap;
+}
+
+.tab01-title {
+  padding-right: 25px;
+}
+
+/*---------------------------------------------*/
+.tab01 .nav-link.dropdown-toggle::after {
+  display: none;
+}
+
+.tab01 .dropdown-menu {
+  min-width: 135px;
+  border-radius: 0px;
+  padding: 5px 0;
+}
+
+.tab01 .dropdown-menu .nav-link {
+  width: 100%;
+}
+
+.tab01 .dropdown-menu .nav-link.active {
+  color: #17b978;
+}
+
+.tab01 .dropdown-menu .nav-link.active::after {
+  display: none;
+}
+</style>
 
 @if (isset($recentCategories) || isset($events))
     <section class="py-5">
@@ -309,7 +408,7 @@
             <div class="row">
                 @if ($recentCategories->count() > 0)                    
                     <div class="col-12 col-lg-9 animate-on-scroll mb-3">
-                        <div class="border-bottom news mb-0">
+                        {{-- <div class="border-bottom news mb-0">
                             <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-end">
                                 <h2 class="section-title d-table p-0 w-auto m-0 mb-3 poppins-bold font-28 title-blue">
                                     Últimas notícias
@@ -348,7 +447,117 @@
                             @include('client.themes.blog.tp-01.ajax.filter-blog-homePage', [
                                 'latestNews' => $latestNews
                             ])
-                        </div>
+                        </div> --}}
+
+                        @foreach($blogCategories as $category)                            
+                            <div class="tab01 pb-5 {{$category->slug}}">
+                                <div class="tab01-head d-flex justify-content-between">
+                                    <!-- Brand tab -->
+                                    <h3 class="f1-m-2 cl12 tab01-title">
+                                        {{$category->title}}
+                                    </h3>
+                            
+                                    <!-- Nav tabs -->
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link poppins-semiBold text-decoration-none text-black category-filter font-15 font-mob active" data-toggle="tab" href="#tab1-1" role="tab">Todos</a>
+                                        </li>
+
+                                        @foreach($category->subcategories as $subcategory)                                           
+                                            <li class="nav-item">
+                                                <a class="nav-link poppins-semiBold text-decoration-none text-black category-filter font-15 font-mob" data-toggle="tab" href="#tab1-2" role="tab">{{$subcategory->name}}</a>
+                                            </li>
+                                        @endforeach
+                            
+                                        <li class="nav-item-more dropdown d-none">
+                                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+                                                <i class="fa fa-ellipsis-h"></i>
+                                            </a>
+                            
+                                            <ul class="dropdown-menu">
+                                                
+                                            </ul>
+                                        </li>
+                                    </ul>
+                            
+                                    <!--  -->
+                                    <a href="category-01.html" class="tab01-link f1-s-1 cl9 hov-cl10 trans-03">
+                                        Ver todos
+                                        <i class="fs-12 m-l-5 fa fa-caret-right"></i>
+                                    </a>
+                                </div>
+                                    
+                            
+                                <!-- Tab panes -->
+                                <div class="tab-content mt-3">
+                                    <!-- - -->
+                                    <div class="tab-pane fade show active" id="tab1-{{$category->id}}" role="tabpanel">
+                                        <div class="row">
+                                            <div class="col-sm-6 p-r-25 p-r-15-sr991">
+                                                @php
+                                                    $featuredBlog = $category->blogs->first();
+                                                @endphp
+
+                                                @if ($featuredBlog)
+                                                    <div class="m-b-30">
+                                                        <a href="#" class="wrap-pic-w hov1 trans-03">
+                                                            <img
+                                                                src="{{ $featuredBlog->path_image ? asset('storage/' . $featuredBlog->path_image) : 'https://placehold.co/600x400?text=Sem+imagem&font=poppins' }}"
+                                                                alt="{{ $featuredBlog->title }}"
+                                                                width="470"
+                                                                height="290"
+                                                                style="object-fit: cover;"
+                                                            >
+                                                        </a>
+
+                                                        <div class="p-t-20">
+                                                            <h5 class="p-b-5">
+                                                                <a href="#" class="f1-m-3 cl2 hov-cl10 trans-03">
+                                                                    {{ $featuredBlog->title }}
+                                                                </a>
+                                                            </h5>
+
+                                                            <span class="cl8">
+                                                                <span class="f1-s-3">
+                                                                    {{ \Carbon\Carbon::parse($featuredBlog->date)->locale('pt_BR')->translatedFormat('d \d\e F \d\e Y') }}
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            </div>
+                            
+                                            <div class="col-sm-6 p-r-25 p-r-15-sr991">
+                                                <!-- Item post -->	
+                                                @foreach($category->blogs->skip(1) as $blog)                                                 
+                                                    <div class="d-flex gap-3 mb-3">
+                                                        <a href="blog-detail-01.html" class="size-w-1 wrap-pic-w hov1 trans-03">
+                                                            <img loading="lazy"
+                                                            src="{{ $blog->path_image ? asset('storage/' . $blog->path_image) : 'https://placehold.co/600x400?text=Sem+imagem&font=poppins' }}"
+                                                            alt="{{ $blog->title }}"
+                                                            width="100" height="75"
+                                                            style="object-fit: cover;">
+                                                        </a>
+                                
+                                                        <div class="size-w-2">
+                                                            <h5 class="p-b-5">
+                                                                <a href="blog-detail-01.html" class="poppins-bold font-14">
+                                                                    {{$blog->title}}
+                                                                </a>
+                                                            </h5>
+                                                                
+                                                            <span class="cl8">                                
+                                                                {{ \Carbon\Carbon::parse($blog->date)->locale('pt_BR')->translatedFormat('d \d\e F \d\e Y') }}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
 
                         @if ($announcements->count())                        
                             <div class="mt-4">
@@ -623,6 +832,8 @@
         </div>
     </section>
 @endif
+
+
 @if ($blogNoBairros->count() > 0) 
     <section id="no-bairro" data-aos="fade-up" data-aos-delay="30">
         <div class="container border-bottom news mb-0 p-0">

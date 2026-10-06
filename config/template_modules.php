@@ -495,6 +495,7 @@ return [
 
                 'blog' => [
                     'blog_categories',
+                    'blog_sub_categories',
                     'blog',
                     'videos',
                 ],
