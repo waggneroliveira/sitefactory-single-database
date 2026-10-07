@@ -22,6 +22,9 @@ class BlogCategory extends Model
         'active',
         'path_image',
         'sorting',
+        'color',
+        'highlight',
+        'show_in_header',
     ];
 
     public function blogs(){

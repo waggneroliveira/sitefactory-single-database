@@ -304,102 +304,105 @@
 @endif
 <style>
     .tab01 .nav-tabs {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  border: none;
-  flex-grow: 1;
-  height: 100%;
-}
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border: none;
+    flex-grow: 1;
+    height: 100%;
+    }
 
-.tab01 .nav-tabs .nav-item-more,
-.tab01 .nav-tabs .nav-item {
-  height: 100%;
-  padding: 0px;
-  margin: 0px;
-}
+    .tab01 .nav-tabs .nav-item-more,
+    .tab01 .nav-tabs .nav-item {
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    }
 
-.tab01 .nav-link {
-  line-height: 1.7;
-  
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  align-items: center;
-  height: 100%;
-  padding: 5px 12px;
-  border-radius: 0px;
-  border: none;
-  position: relative;
+    .tab01 .nav-link {
+    line-height: 1.7;
+    
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 5px 12px;
+    border-radius: 0px;
+    border: none;
+    position: relative;
 
-  -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  transition: all 0.3s;
-}
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    }
 
-.tab01 .nav-link.active::after {
-  content: "";
-  display: block;
-  position: absolute;
-  background-color: #fff;
-  width: 7px;
-  height: 7px;
-  border-left: 1px solid #d5d5d5;
-  border-bottom: 1px solid #d5d5d5;
-  left: calc(50% - 5px);
-  bottom: -5px;
-  
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-}
-
-.tab01 .nav-link:hover {
-  color: #17b978 !important;
-}
+    .tab01 .nav-link.active::after {
+    content: "";
+    display: block;
+    position: absolute;
+    background-color: #fff;
+    width: 9px;
+    height: 9px;
+    border-left: 1px solid #d5d5d5;
+    border-bottom: 1px solid #d5d5d5;
+    left: calc(50% - 5px);
+    bottom: -11px;
+    
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    }
 
 
-/*---------------------------------------------*/
-.tab01-link {
-  padding-left: 10px;
-  white-space: nowrap;
-}
+    /*---------------------------------------------*/
+    .tab01-link {
+    padding-left: 10px;
+    white-space: nowrap;
+    }
 
-.tab01-title {
-  padding-right: 25px;
-}
+    .tab01-title {
+    padding-right: 25px;
+    }
 
-/*---------------------------------------------*/
-.tab01 .nav-link.dropdown-toggle::after {
-  display: none;
-}
+    /*---------------------------------------------*/
+    .tab01 .nav-link.dropdown-toggle::after {
+    display: none;
+    }
 
-.tab01 .dropdown-menu {
-  min-width: 135px;
-  border-radius: 0px;
-  padding: 5px 0;
-}
+    .tab01 .dropdown-menu {
+    min-width: 135px;
+    border-radius: 0px;
+    padding: 5px 0;
+    }
 
-.tab01 .dropdown-menu .nav-link {
-  width: 100%;
-}
+    .tab01 .dropdown-menu .nav-link {
+    width: 100%;
+    }
 
-.tab01 .dropdown-menu .nav-link.active {
-  color: #17b978;
-}
+    .tab01 .dropdown-menu .nav-link.active {
+    color: #17b978;
+    }
 
-.tab01 .dropdown-menu .nav-link.active::after {
-  display: none;
-}
+    .tab01 .dropdown-menu .nav-link.active::after {
+        display: none;
+    }
+    .tab01 .nav-link:hover {
+        color: var(--category-color) !important;
+    }
+    .nav-tabs .nav-link.category-filter.active{
+        background: transparent !important;
+        color: var(--category-color) !important;
+    }
 </style>
 
 @if (isset($recentCategories) || isset($events))
@@ -408,17 +411,21 @@
             <div class="row">
                 @if ($recentCategories->count() > 0)                    
                     <div class="col-12 col-lg-9 animate-on-scroll mb-3">
-                        @foreach($blogCategories as $category)                            
-                            <div class="tab01 pb-5 {{$category->slug}}">
-                                <div class="tab01-head d-flex justify-content-between">
+                        @foreach($blogCategories as $category)                                                    
+                            <div class="tab01 pb-5 {{$category->slug}}" style="--category-color: {{ $category->color }};">
+                                <div class="tab01-head d-flex justify-content-center align-items-center" style="border: 1px solid #e6e6e6;">
+                                    @if ($category->color <> null)                                        
+                                        <span class="border-left me-3" style="width:4px; height: 45px; background: {{$category->color}}"></span>
+                                    @endif
+
                                     <!-- Brand tab -->
-                                    <h3 class="f1-m-2 cl12 tab01-title">
+                                    <h3 class="poppins-semiBold font-18 mb-0" style="color: {{$category->color}}">
                                         {{$category->title}}
                                     </h3>
                             
                                     <!-- Nav tabs -->
-                                    <ul class="nav nav-tabs" role="tablist">
-                                        <button type="button" class="nav-link poppins-semiBold text-decoration-none text-black category-filter font-15 font-mob active"
+                                    <ul class="ms-0 ms-lg-5 nav nav-tabs justify-content-start" role="tablist">
+                                        <button type="button" class="nav-link poppins-semiBold text-decoration-none text-black category-filter font-14 font-mob active"
                                         data-category-id="{{ $category->id }}"
                                         data-subcategory-id=""
                                         href="#"
@@ -451,7 +458,7 @@
                                     </ul>
                             
                                     <!--  -->
-                                    <a href="category-01.html" class="tab01-link f1-s-1 cl9 hov-cl10 trans-03">
+                                    <a href="category-01.html" class="tab01-link pe-3">
                                         Ver todos
                                         <i class="fs-12 m-l-5 fa fa-caret-right"></i>
                                     </a>

@@ -1,7 +1,7 @@
-<div class="tab-content mt-3">
+<div class="tab-content">
     <!-- - -->
     <div class="tab-pane fade show active" id="tab1-{{$category->id}}" role="tabpanel">
-        <div class="row">
+        <div class="row mt-5">
             <div class="col-sm-6 p-r-25 p-r-15-sr991">
 
                 <div class="featured-blog-container">
@@ -22,9 +22,9 @@
                                 >
                             </a>
 
-                            <div class="p-t-20">
+                            <div class="mt-2">
                                 <h5 class="p-b-5">
-                                    <a href="#" class="f1-m-3 cl2 hov-cl10 trans-03">
+                                    <a href="#" class="poppins-semiBold font-18">
                                         {{ $blog->title }}
                                     </a>
                                 </h5>
