@@ -456,101 +456,9 @@
                                         <i class="fs-12 m-l-5 fa fa-caret-right"></i>
                                     </a>
                                 </div>
-                                    
-                            
-                                <!-- Tab panes -->
-                                <div class="tab-content mt-3">
-                                    <!-- - -->
-                                    <div class="tab-pane fade show active" id="tab1-{{$category->id}}" role="tabpanel">
-                                        <div class="row">
-                                            <div class="col-sm-6 p-r-25 p-r-15-sr991">
-
-                                                <div class="featured-blog-container">
-                                                    @foreach($category->blogs as $blog)
-                                                        <div
-                                                            class="featured-blog m-b-30 {{ $loop->first ? '' : 'd-none' }}"
-                                                            data-blog-id="{{ $blog->id }}"
-                                                            data-subcategory-id="{{ $blog->blog_subcategory_id }}"
-                                                        >
-                                                            <a href="#" class="wrap-pic-w hov1 trans-03">
-                                                                <img
-                                                                    src="{{ $blog->path_image ? asset('storage/' . $blog->path_image) : 'https://placehold.co/600x400?text=Sem+imagem&font=poppins' }}"
-                                                                    alt="{{ $blog->title }}"
-                                                                    width="470"
-                                                                    height="290"
-                                                                    style="object-fit: cover;"
-                                                                >
-                                                            </a>
-
-                                                            <div class="p-t-20">
-                                                                <h5 class="p-b-5">                                                                    
-                                                                    <a href="#" class="f1-m-3 cl2 hov-cl10 trans-03">
-                                                                        {{ $blog->title }}
-                                                                    </a>
-                                                                </h5>
-
-                                                                <span class="cl8">
-                                                                    <span class="f1-s-3">
-                                                                        {{ \Carbon\Carbon::parse($blog->date)->locale('pt_BR')->translatedFormat('d \d\e F \d\e Y') }}
-                                                                    </span>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    @endforeach
-                                                </div>
-
-                                            </div>
-
-
-                                            <div class="col-sm-6 p-r-25 p-r-15-sr991">
-
-                                                <div class="blog-list-container">
-
-                                                    @foreach($category->blogs as $blog)
-                                                        <div
-                                                            class="blog-item d-flex gap-3 mb-3 {{ $loop->first ? 'd-none' : '' }}"
-                                                            data-blog-id="{{ $blog->id }}"
-                                                            data-subcategory-id="{{ $blog->blog_subcategory_id }}"
-                                                        >
-
-                                                            <a href="#" class="size-w-1 wrap-pic-w hov1 trans-03">
-                                                                <img
-                                                                    loading="lazy"
-                                                                    src="{{ $blog->path_image ? asset('storage/' . $blog->path_image) : 'https://placehold.co/600x400?text=Sem+imagem&font=poppins' }}"
-                                                                    alt="{{ $blog->title }}"
-                                                                    width="100"
-                                                                    height="75"
-                                                                    style="object-fit: cover;"
-                                                                >
-                                                            </a>
-
-                                                            <div class="size-w-2">
-                                                                <h5 class="p-b-5">                                                                    
-                                                                    <a href="#" class="poppins-bold font-14">
-                                                                        {{ $blog->title }}
-                                                                    </a>
-                                                                </h5>
-
-                                                                <span class="cl8">
-                                                                    <small class="font-12">
-                                                                        {{isset($blog->subcategory->name)?$blog->subcategory->name.' - ':""}}                                                                        
-                                                                        
-                                                                        {{ \Carbon\Carbon::parse($blog->date)->format('d') }}
-                                                                        {{ ucfirst(mb_substr(\Carbon\Carbon::parse($blog->date)->locale('pt_BR')->translatedFormat('F'), 0, 3)) }}
-                                                                        {{ \Carbon\Carbon::parse($blog->date)->format('Y') }}
-                                                                    </small>
-                                                                </span>
-                                                            </div>
-
-                                                        </div>
-                                                    @endforeach
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
+                                
+                                <div class="blog-filter-content" id="blog-filter-{{ $category->id }}">
+                                    @include('client.themes.blog.tp-01.ajax.filter-blog-homePage')
                                 </div>
                             </div>
                         @endforeach
@@ -1553,7 +1461,7 @@
     });
 </script>
 
-<script defer>
+{{-- <script defer>
     document.addEventListener('DOMContentLoaded', function() {
         const categoryLinks = document.querySelectorAll('.category-filter');
         const newsContainer = document.getElementById('news-container');
@@ -1614,7 +1522,86 @@
             });
         });
     });
+</script> --}}
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        document.addEventListener('click', function (e) {
+
+            const filter = e.target.closest('.category-filter');
+
+            if (!filter) {
+                return;
+            }
+
+            e.preventDefault();
+
+            const categoryId = filter.dataset.categoryId;
+            const subcategoryId = filter.dataset.subcategoryId;
+
+            console.log('Filtro clicado');
+            console.log('Categoria:', categoryId);
+            console.log('Subcategoria:', subcategoryId);
+
+            const categoryContainer = filter.closest('.tab01');
+
+            const filterContent = categoryContainer.querySelector(
+                '#blog-filter-' + categoryId
+            );
+
+            if (!filterContent) {
+                console.error(
+                    'Container do filtro não encontrado:',
+                    '#blog-filter-' + categoryId
+                );
+                return;
+            }
+
+            const filters = categoryContainer.querySelectorAll('.category-filter');
+
+            filters.forEach(function (item) {
+                item.classList.remove('active');
+            });
+
+            filter.classList.add('active');
+
+            $.ajax({
+                url: '{{ route("blog.filter.subcategory") }}',
+                type: 'GET',
+                data: {
+                    category_id: categoryId,
+                    subcategory_id: subcategoryId
+                },
+
+                beforeSend: function () {
+                    console.log('Enviando AJAX...');
+                },
+
+                success: function (response) {
+
+                    console.log('Resposta AJAX:', response);
+
+                    if (response.success) {
+                        filterContent.innerHTML = response.html;
+                    }
+                },
+
+                error: function (xhr) {
+
+                    console.error('Erro AJAX');
+                    console.error('Status:', xhr.status);
+                    console.error('Resposta:', xhr.responseText);
+                }
+            });
+
+        });
+
+    });
 </script>
+
+
 <script defer>
     document.addEventListener("DOMContentLoaded", function () {
         const btn = document.getElementById("btn-ver-mais");

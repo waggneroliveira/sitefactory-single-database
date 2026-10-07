@@ -1331,7 +1331,7 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function () {
 
             document.querySelectorAll('.tab01').forEach(function (categoryContainer) {
@@ -1404,7 +1404,7 @@
             });
 
         });
-    </script>
+    </script> --}}
 
     {{-- Modais alert --}}
     <script>

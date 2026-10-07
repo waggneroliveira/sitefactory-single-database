@@ -9,6 +9,7 @@ use App\Models\Announcement;
 use App\Models\BenefitTopic;
 use App\Models\Blog;
 use App\Models\BlogCategory;
+use App\Models\BlogSubcategory;
 use App\Models\Contact;
 use App\Models\Depoiment;
 use App\Models\Direction;
@@ -37,6 +38,7 @@ use App\Models\Tenant;
 use App\Models\Topic;
 use App\Models\Video;
 use App\Services\ThemeManager;
+use Illuminate\Support\Facades\Request;
 
 class HomePageService
 {
@@ -297,6 +299,35 @@ class HomePageService
         return [
             'allNews' => $allNews,
             'latestNews' => $latestNews,
+        ];
+    }
+
+    public function filterBySubCategory($categoryId, $subcategoryId = null)
+    {   
+        $category = BlogCategory::query()
+            ->with([
+                'blogs' => function ($query) use ($subcategoryId) {
+                    $query->with('subcategory')
+                        ->when($subcategoryId, function ($query) use ($subcategoryId) {
+                            $query->where('blog_subcategory_id', $subcategoryId);
+                        })
+                        ->orderByDesc('date')
+                        ->limit(5);
+                }
+            ])
+            ->findOrFail($categoryId);
+
+        $allNews = Blog::query()
+            ->where('blog_category_id', $categoryId)
+            ->when($subcategoryId, function ($query) use ($subcategoryId) {
+                $query->where('blog_subcategory_id', $subcategoryId);
+            })
+            ->get();
+
+        return [
+            'category' => $category,
+            'allNews' => $allNews,
+            'latestNews' => $category->blogs,
         ];
     }
 }

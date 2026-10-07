@@ -7,6 +7,7 @@ use App\Models\PlanNetwork;
 use App\Modules\Client\Business\HomePageService;
 use App\Services\ThemeManager;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class HomePageController
@@ -29,6 +30,25 @@ class HomePageController
             'latestNews' => $data['latestNews'],
         ])->render();
 
+        return response()->json([
+            'success' => true,
+            'html' => $html,
+            'count' => $data['allNews']->count(),
+            'latest_count' => $data['latestNews']->count(),
+        ]);
+    }
+    public function filterBySubCategory(Request $request): JsonResponse
+    {
+
+        $data = $this->service->filterBySubCategory(
+            $request->category_id,
+            $request->subcategory_id
+        );
+
+        $html = view('client.themes.blog.tp-01.ajax.filter-blog-homePage', [
+            'category' => $data['category'],
+        ])->render();
+        
         return response()->json([
             'success' => true,
             'html' => $html,

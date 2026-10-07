@@ -1,4 +1,4 @@
-@extends('client.core.client')
+@extends($theme->core('client'))
 
 @section('content')
 

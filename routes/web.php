@@ -118,6 +118,10 @@ Route::middleware([NeedsTenant::class])->group(function () {
         ->name('send-contact');
 
 
+    Route::get('blog/filter', [HomePageController::class, 'filterBySubCategory'])
+        ->name('blog.filter.subcategory');
+
+
     Route::get('blog/{slug}', [BlogPageController::class, 'blogInner'])
         ->name('blog-inner');
 
@@ -152,9 +156,8 @@ Route::middleware([NeedsTenant::class])->group(function () {
     Route::get('client-documentation', [DocumentationController::class, 'index'])
         ->name('client.documentation');
 
-    Route::get('blog/filter/{category?}', [HomePageController::class, 'filterByCategory'])
-        ->name('blog.filter');
-
+    // Route::get('blog/filter/{category?}', [HomePageController::class, 'filterByCategory'])
+    //     ->name('blog.filter');
 
     Route::post('/download-ficha/store', [DownloadFichaController::class, 'store'])
         ->name('download.ficha.store');
@@ -169,7 +172,7 @@ Route::middleware([NeedsTenant::class])->group(function () {
 // View Composer
 // =============================
 
-View::composer('client.themes.whi-web.tp-01.core.client', function ($view) {
+View::composer('client.themes.blog.tp-01.core.client', function ($view) {
     $contact = Contact::first();
     $blogInner = Blog::with('category')->where('slug', request()->route('slug'))->first();
     $templateThemeInner = TemplateTheme::where('slug', request()->route('slug'))
