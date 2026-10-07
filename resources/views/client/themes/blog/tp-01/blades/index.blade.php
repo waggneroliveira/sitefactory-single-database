@@ -302,108 +302,6 @@
         </div>
     </section>
 @endif
-<style>
-    .tab01 .nav-tabs {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    border: none;
-    flex-grow: 1;
-    height: 100%;
-    }
-
-    .tab01 .nav-tabs .nav-item-more,
-    .tab01 .nav-tabs .nav-item {
-    height: 100%;
-    padding: 0px;
-    margin: 0px;
-    }
-
-    .tab01 .nav-link {
-    line-height: 1.7;
-    
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    align-items: center;
-    height: 100%;
-    padding: 5px 12px;
-    border-radius: 0px;
-    border: none;
-    position: relative;
-
-    -webkit-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    transition: all 0.3s;
-    }
-
-    .tab01 .nav-link.active::after {
-    content: "";
-    display: block;
-    position: absolute;
-    background-color: #fff;
-    width: 9px;
-    height: 9px;
-    border-left: 1px solid #d5d5d5;
-    border-bottom: 1px solid #d5d5d5;
-    left: calc(50% - 5px);
-    bottom: -11px;
-    
-    -webkit-transform: rotate(-45deg);
-    -moz-transform: rotate(-45deg);
-    -ms-transform: rotate(-45deg);
-    -o-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-    }
-
-
-    /*---------------------------------------------*/
-    .tab01-link {
-    padding-left: 10px;
-    white-space: nowrap;
-    }
-
-    .tab01-title {
-    padding-right: 25px;
-    }
-
-    /*---------------------------------------------*/
-    .tab01 .nav-link.dropdown-toggle::after {
-    display: none;
-    }
-
-    .tab01 .dropdown-menu {
-    min-width: 135px;
-    border-radius: 0px;
-    padding: 5px 0;
-    }
-
-    .tab01 .dropdown-menu .nav-link {
-    width: 100%;
-    }
-
-    .tab01 .dropdown-menu .nav-link.active {
-    color: #17b978;
-    }
-
-    .tab01 .dropdown-menu .nav-link.active::after {
-        display: none;
-    }
-    .tab01 .nav-link:hover {
-        color: var(--category-color) !important;
-    }
-    .nav-tabs .nav-link.category-filter.active{
-        background: transparent !important;
-        color: var(--category-color) !important;
-    }
-</style>
 
 @if (isset($recentCategories) || isset($events))
     <section class="py-5">
@@ -880,247 +778,72 @@
 </script>
 
 
-    <!-- Start Youtube -->
-    @if (!empty($videos) && $videos->count() > 0)
-        <div class="youtube-area video-padding">
-            <div class="container">
+<!-- Start Youtube -->
+@if (!empty($videos) && $videos->count() > 0)
+    <div class="youtube-area video-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="video-items-active">
+                        @foreach ($videos as $i => $video)
+                            <div
+                                class="video-items text-center"
+                                data-id="{{ $i }}"
+                                data-video="{{ $video->link }}">
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-info">
                 <div class="row">
-                    <div class="col-12">
-                        <div class="video-items-active">
+
+                    <div class="col-lg-6">
+                        <div class="video-caption">
+                            <div class="top-caption">
+                                <span class="color1">Politics</span>
+                            </div>
+                            <div class="bottom-caption">
+                                <h2>Welcome To The Best Model Winner Contest At Look of the year</h2>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod ipsum dolor sit. Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod ipsum dolor sit. Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod ipsum dolor sit lorem ipsum dolor sit.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="testmonial-nav text-center">
                             @foreach ($videos as $i => $video)
                                 <div
-                                    class="video-items text-center"
+                                    class="single-video"
                                     data-id="{{ $i }}"
                                     data-video="{{ $video->link }}">
+
+                                    <div class="video-thumb">
+                                        <img
+                                            src=""
+                                            alt="{{ $video->title ?? 'Vídeo' }}"
+                                            loading="lazy">
+
+                                        <span class="video-play">
+                                            <i class="fas fa-play"></i>
+                                        </span>
+                                    </div>
+
+                                    <div class="video-intro mt-1">
+                                        <h4>{{ $video->title ?? 'Vídeo' }}</h4>
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
                     </div>
-                </div>
 
-                <div class="video-info">
-                    <div class="row">
-
-                        <div class="col-lg-6">
-                            <div class="video-caption">
-                                <div class="top-caption">
-                                    <span class="color1">Politics</span>
-                                </div>
-                                <div class="bottom-caption">
-                                    <h2>Welcome To The Best Model Winner Contest At Look of the year</h2>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod ipsum dolor sit. Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod ipsum dolor sit. Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod ipsum dolor sit lorem ipsum dolor sit.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="testmonial-nav text-center">
-                                @foreach ($videos as $i => $video)
-                                    <div
-                                        class="single-video"
-                                        data-id="{{ $i }}"
-                                        data-video="{{ $video->link }}">
-
-                                        <div class="video-thumb">
-                                            <img
-                                                src=""
-                                                alt="{{ $video->title ?? 'Vídeo' }}"
-                                                loading="lazy">
-
-                                            <span class="video-play">
-                                                <i class="fas fa-play"></i>
-                                            </span>
-                                        </div>
-
-                                        <div class="video-intro mt-1">
-                                            <h4>{{ $video->title ?? 'Vídeo' }}</h4>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-
-                    </div>
                 </div>
             </div>
         </div>
-    @endif
-    <!-- End Start youtube -->
-
-    <style>
-
-.video-thumb {
-    position: relative;
-    height: 160px;
-    overflow: hidden;
-    border-radius: 4px;
-    background: #000;
-}
-.video-thumb ,.video-intro{
-    width: 95%;
-    margin: 0 auto;
-    margin-right: 0;
-}
-.video-thumb img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.video-play {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.65);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-size: 13px;
-    pointer-events: none;
-}
-
-.video-play i {
-    margin-left: 2px;
-}
-        .color1 {
-            background: #ffe7e6;
-        }
-        .youtube-area .video-items iframe{
-            width:100%;
-            height:465px
-        }
-        .youtube-area .video-info{
-            border-bottom:1px solid #ddd
-        }
-        .youtube-area .video-info .video-caption{
-            position:relative;
-            top:-90px
-        }
-        .youtube-area .video-info .video-caption .top-caption{
-            background:#fff;
-            width:60%;
-            border-radius:0 7px 0 0;
-            padding-top:60px;
-            padding-bottom:30px
-        }
-        .youtube-area .video-info .video-caption .top-caption span{
-            padding:7px 30px;
-            line-height:1;
-            color:#000;
-            text-transform:uppercase;
-            font-weight:600;
-            font-size:11px
-        }
-        .youtube-area .video-info .video-caption .bottom-caption h2{
-            font-size:30px;
-            font-weight:700;
-            margin-bottom:27px
-        }
-        .youtube-area .video-info .video-caption .bottom-caption p{
-            color:#777;
-            font-size:14px;
-            line-height:1.7;
-            padding-right:32px
-        }
-        .youtube-area .testmonial-nav{
-            width:100%;
-            margin-top:40px
-        }
-        @media only screen and (min-width: 768px) and (max-width: 991px){
-            .youtube-area .testmonial-nav{
-                margin-top:0px
-            }
-        }
-        @media (max-width: 767px){
-            .youtube-area .testmonial-nav{
-                margin-top:0px
-            }
-        }
-        @media only screen and (min-width: 576px) and (max-width: 767px){
-            .youtube-area .testmonial-nav{
-                margin-top:0px
-            }
-        }
-        .youtube-area .testmonial-nav button{
-            position:absolute;
-            color:#333;
-            border:none;
-            font-size:21px;
-            background:#f3f4f8;
-            width:55px;
-            height:55px;
-            border-radius:10px;
-            color:#bdbdbd;
-            left:-421px;
-            top:-114px;
-            cursor:pointer
-        }
-        @media only screen and (min-width: 992px) and (max-width: 1199px){
-            .youtube-area .testmonial-nav button{
-                left:-348px
-            }
-        }
-        .youtube-area .testmonial-nav button.slick-next{
-            left:-340px;
-            background:red;
-            color:#fff
-        }
-        @media only screen and (min-width: 992px) and (max-width: 1199px){
-            .youtube-area .testmonial-nav button.slick-next{
-                left:-280px
-            }
-        }
-        .youtube-area .single-video iframe{
-            padding:0 5px;
-            width:100%
-        }
-        .youtube-area .single-video .video-intro h4{
-            font-size:14px;
-            font-weight:500;
-            text-align:start;
-            padding:0 5px;
-            line-height:1.3;
-        }
-        @media only screen and (min-width: 992px) and (max-width: 1199px){
-            .youtube-area .single-video .video-intro h4{
-                font-size:14px
-            }
-        }
-        .video-padding{
-            padding-top:100px;
-            padding-bottom:45px
-        }
-        @media only screen and (min-width: 1200px) and (max-width: 1600px){
-            .video-padding{
-                padding-top:100px;
-                padding-bottom:45px
-            }
-        }
-        @media only screen and (min-width: 992px) and (max-width: 1199px){
-            .video-padding{
-                padding-top:100px;
-                padding-bottom:45px
-            }
-        }
-        @media only screen and (min-width: 768px) and (max-width: 991px){
-            .video-padding{
-                padding-top:100px;
-                padding-bottom:45px
-            }
-        }
-        @media only screen and (min-width: 576px) and (max-width: 767px){
-            .video-padding{
-                padding-top:100px;
-                padding-bottom:45px
-            }
-        }
-    </style>
+    </div>
+@endif
+<!-- End Start youtube -->
 
 @if ($events->count() > 0)                    
     <div class="container mt-5" data-aos="fade-left" data-aos-delay="30">
