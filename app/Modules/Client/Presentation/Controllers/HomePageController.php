@@ -5,7 +5,9 @@ namespace App\Modules\Client\Presentation\Controllers;
 use App\Models\Contact;
 use App\Models\PlanNetwork;
 use App\Modules\Client\Business\HomePageService;
+use App\Services\FootballDataService;
 use App\Services\ThemeManager;
+use App\Services\WeatherService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -16,9 +18,9 @@ class HomePageController
     {
     }
 
-    public function index(ThemeManager $theme): View
+    public function index(ThemeManager $theme, WeatherService $weather, FootballDataService $footballDataService): View
     {
-        $data = $this->service->getIndexData($theme);
+        $data = $this->service->getIndexData($theme, $weather, $footballDataService);
 
         return view($theme->view('index'), $data);
     }

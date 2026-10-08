@@ -474,7 +474,7 @@
                         <div class="section-title mb-0 rounded-top-left">
                             <h4 class="mb-3 poppins-bold font-18 border-bottom pb-3 title-blue text-start news">Newsletter</h4>
                         </div>
-                        {{-- @include('client.includes.newsletter') --}}
+                        @include('client.themes.blog.tp-01.includes.newsletter')
                     </div>
                     <!-- Newsletter End -->
 
@@ -533,7 +533,7 @@
                         <!-- Newsletter End -->
                     @endif
 
-                    {{-- @if($tempo)
+                    @if($tempo)
                         <div class="card border-0 shadow-sm col-12 mb-4">
                             <div class="card-body d-flex align-items-center gap-3 py-2">
         
@@ -554,28 +554,28 @@
         
                             </div>
                         </div>
-                    @endif --}}
+                    @endif
                     <div class="mb-4">
                         <table class="table table-striped table-sm align-middle">
                             <thead>
                                 <tr>
-                                    <th class="py-2 m-0 poppins-semiBold font-15 title-blue">#</th>
-                                    <th class="py-2 m-0 poppins-semiBold font-15 title-blue">Time</th>
-                                    <th class="py-2 m-0 poppins-semiBold font-15 title-blue">P</th>
-                                    <th class="py-2 m-0 poppins-semiBold font-15 title-blue">J</th>
-                                    <th class="py-2 m-0 poppins-semiBold font-15 title-blue">V</th>
-                                    <th class="py-2 m-0 poppins-semiBold font-15 title-blue">E</th>
-                                    <th class="py-2 m-0 poppins-semiBold font-15 title-blue">D</th>
-                                    <th class="py-2 m-0 poppins-semiBold font-15 title-blue">SG</th>
+                                    <th class="py-2 m-0 poppins-semiBold font-14 title-blue">#</th>
+                                    <th class="py-2 m-0 poppins-semiBold font-14 title-blue">Time</th>
+                                    <th class="py-2 m-0 poppins-semiBold font-14 title-blue">P</th>
+                                    <th class="py-2 m-0 poppins-semiBold font-14 title-blue">J</th>
+                                    <th class="py-2 m-0 poppins-semiBold font-14 title-blue">V</th>
+                                    <th class="py-2 m-0 poppins-semiBold font-14 title-blue">E</th>
+                                    <th class="py-2 m-0 poppins-semiBold font-14 title-blue">D</th>
+                                    <th class="py-2 m-0 poppins-semiBold font-14 title-blue">SG</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                {{-- @foreach($standings as $team)
+                                @foreach($standings as $team)
                                     <tr>
-                                        <td class="p-2 m-0 poppins-regular font-15 title-blue">{{ $team['position'] ?? '-' }}</td>
+                                        <td class="p-2 m-0 poppins-regular font-12 title-blue">{{ $team['position'] ?? '-' }}</td>
 
-                                        <td class="py-2 d-flex align-items-center gap-2 m-0 poppins-regular font-15 title-blue">
+                                        <td class="py-2 d-flex align-items-center gap-2 m-0 poppins-regular font-12 title-blue">
                                             <img 
                                                 src="{{ $team['team']['crest'] ?? '' }}" 
                                                 width="20" 
@@ -587,19 +587,19 @@
                                             {{ $team['team']['shortName'] ?? $team['team']['name'] ?? '-' }}
                                         </td>
 
-                                        <td class="py-2 m-0 poppins-semiBold font-15 title-blue">{{ $team['points'] ?? 0 }}</td>
+                                        <td class="py-2 m-0 poppins-semiBold font-12 title-blue">{{ $team['points'] ?? 0 }}</td>
 
-                                        <td class="py-2 m-0 poppins-regular font-15 title-blue">{{ $team['playedGames'] ?? 0 }}</td>
+                                        <td class="py-2 m-0 poppins-regular font-12 title-blue">{{ $team['playedGames'] ?? 0 }}</td>
 
-                                        <td class="py-2 m-0 poppins-regular font-15 title-blue">{{ $team['won'] ?? 0 }}</td>
+                                        <td class="py-2 m-0 poppins-regular font-12 title-blue">{{ $team['won'] ?? 0 }}</td>
 
-                                        <td class="py-2 m-0 poppins-regular font-15 title-blue">{{ $team['draw'] ?? 0 }}</td>
+                                        <td class="py-2 m-0 poppins-regular font-12 title-blue">{{ $team['draw'] ?? 0 }}</td>
 
-                                        <td class="py-2 m-0 poppins-regular font-15 title-blue">{{ $team['lost'] ?? 0 }}</td>
+                                        <td class="py-2 m-0 poppins-regular font-12 title-blue">{{ $team['lost'] ?? 0 }}</td>
 
-                                        <td class="py-2 m-0 poppins-regular font-15 title-blue">{{ $team['goalDifference'] ?? 0 }}</td>
+                                        <td class="py-2 m-0 poppins-regular font-12 title-blue">{{ $team['goalDifference'] ?? 0 }}</td>
                                     </tr>
-                                @endforeach                                 --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

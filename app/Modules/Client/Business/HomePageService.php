@@ -37,12 +37,17 @@ use App\Models\TemplateTheme;
 use App\Models\Tenant;
 use App\Models\Topic;
 use App\Models\Video;
+use App\Services\FootballDataService;
 use App\Services\ThemeManager;
+use App\Services\WeatherService;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 
 class HomePageService
 {
-    public function getIndexData(ThemeManager $themeManager): array
+    public function getIndexData(ThemeManager $themeManager, WeatherService $weather, FootballDataService $footballDataService): array
     {
         $templateThemes = TemplateTheme::active()->get();
         $tenantTheme = Tenant::current();
@@ -227,12 +232,17 @@ class HomePageService
         ->whereMonth('date', now()->month)
         ->orderBy('date', 'asc')
         ->get();
-        // $tempo = cache()->remember(
-        //     'weather_lauro_de_freitas',
-        //     now()->addMinutes(30),
-        //     fn () => $weather->current(-12.8944, -38.3272)
-        // );
+        $tempo = cache()->remember(
+            'weather_lauro_de_freitas',
+            now()->addMinutes(30),
+            fn () => $weather->current(-12.8944, -38.3272)
+        );
+            
+        $standings = $footballDataService->getBrasileiraoStandings();
+        // dd($standings);
         return compact(
+            'tempo',
+            'standings',
             'events',
             'blogNoBairros',
             'blogCategories',
