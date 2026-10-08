@@ -1191,70 +1191,6 @@
     });
 </script>
 
-{{-- <script defer>
-    document.addEventListener('DOMContentLoaded', function() {
-        const categoryLinks = document.querySelectorAll('.category-filter');
-        const newsContainer = document.getElementById('news-container');
-
-        categoryLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                // Ativar/desativar classes visuais
-                categoryLinks.forEach(l => {
-                    l.parentElement.classList.remove('active', 'text-white', 'background-red');
-                    l.parentElement.classList.add('text-black');
-                    l.classList.remove('text-white');
-                    l.classList.add('text-black');
-                });
-
-                this.parentElement.classList.add('active', 'text-white', 'background-red');
-                this.parentElement.classList.remove('text-black');
-                this.classList.add('text-white');
-                this.classList.remove('text-black');
-
-                const categorySlug = this.getAttribute('data-category');
-                
-                // Loading indicator
-                newsContainer.innerHTML = `
-                    <div class="col-12 text-center py-5">
-                        <div class="spinner-border text-blue" role="status">
-                            <span class="visually-hidden poppins-semiBold font-15">Carregando...</span>
-                        </div>
-                        <p class="mt-2 poppins-semiBold font-15">Carregando notícias...</p>
-                    </div>
-                `;
-
-                // Fazer requisição AJAX
-                fetch(`blog/filter/${categorySlug}`)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Erro na rede');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data.success) {
-                            newsContainer.innerHTML = data.html;
-                        } else {
-                            throw new Error(data.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        newsContainer.innerHTML = `
-                            <div class="col-12 text-center py-5">
-                                <p class="text-danger poppins-semiBold font-15">Erro ao carregar notícias: ${error.message}</p>
-                            </div>
-                        `;
-                    });
-            });
-        });
-    });
-</script> --}}
-
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
 
@@ -1331,7 +1267,6 @@
     });
 </script>
 
-
 <script defer>
     document.addEventListener("DOMContentLoaded", function () {
         const btn = document.getElementById("btn-ver-mais");
@@ -1343,6 +1278,7 @@
         });
     });
 </script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Inicializa o Swiper
