@@ -25,8 +25,9 @@ class BlogSubcategory extends Model
         return $this->belongsTo(BlogCategory::class, 'blog_category_id');
     }
 
-    public function blogs(){
-        return $this->hasMany(Blog::class, 'blog_category_id');
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class, 'blog_subcategory_id', 'id');
     }
 
     public function scopeActive($query){

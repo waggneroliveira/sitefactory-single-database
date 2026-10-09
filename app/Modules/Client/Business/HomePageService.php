@@ -211,12 +211,12 @@ class HomePageService
                     ->limit(5);
             }
         ])
-        ->whereHas('blogs')
+        ->whereHas('blogs')        
+        ->where('highlight', 1)
         ->active()
         ->sorting()
         ->get();
 
-        // dd($blogCategories);
         $blogNoBairros = Blog::whereHas('category', function($query) {
             $query->where('id', 1)
             ->where('active', 1);

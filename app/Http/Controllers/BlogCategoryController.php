@@ -58,7 +58,8 @@ class BlogCategoryController extends Controller
         ]);
 
         $data['active'] = $request->active ? 1 : 0;
-
+        $data['show_in_header'] = $request->show_in_header ? 1 : 0;
+        $data['highlight'] = $request->highlight ? 1 : 0;
         $data['slug'] = Str::slug($request->title);
 
         $pathUpload = $this->getPathUpload();
@@ -138,7 +139,8 @@ class BlogCategoryController extends Controller
         ]);
 
         $data['active'] = $request->active ? 1 : 0;
-
+        $data['show_in_header'] = $request->show_in_header ? 1 : 0;
+        $data['highlight'] = $request->highlight ? 1 : 0;
         $data['slug'] = Str::slug($request->title);
 
         $pathUpload = $this->getPathUpload();

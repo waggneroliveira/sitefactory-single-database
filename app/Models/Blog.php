@@ -38,12 +38,14 @@ class Blog extends Model
     {
         return $this->hasMany(Comment::class);
     }
-    public function category(){
-        return $this->belongsTo(BlogCategory::class, 'blog_category_id');
+    public function category()
+    {
+        return $this->belongsTo(BlogCategory::class, 'blog_category_id', 'id');
     }
+
     public function subcategory()
     {
-        return $this->belongsTo(BlogSubcategory::class, 'blog_subcategory_id');
+        return $this->belongsTo(BlogSubcategory::class, 'blog_subcategory_id', 'id');
     }
 
     public function scopeActive($query){

@@ -43,11 +43,418 @@
     </script>
 @endif
 
+{{-- @if($tempo)
+    <div class="container my-5">
+
+        <div class="weather-horizontal-banner">
+            <!-- Efeitos Atmosféricos de Fundo -->
+            <div class="weather-bg-glow glow-1"></div>
+            <div class="weather-bg-glow glow-2"></div>
+            <div class="weather-shimmer"></div>
+
+            <div class="weather-banner-container">
+                
+                <!-- 1. Bloco Principal: Local, Condição e Temperatura -->
+                <div class="weather-banner-primary">
+                    <div class="weather-hero-icon" aria-hidden="true">
+                        <div class="sun-rays"></div>
+                        <i class="bi bi-sun-fill icon-sun"></i>
+                        <i class="bi bi-cloud-fill icon-cloud-front"></i>
+                    </div>
+
+                    <div class="weather-temp-block">
+                        <div class="temp-value">{{ $tempo['temperature'] }}<span>°C</span></div>
+                    </div>
+
+                    <div class="weather-info-block">
+                        <div class="weather-location">
+                            <i class="bi bi-geo-alt-fill"></i>
+                            <span>Lauro de Freitas</span>
+                        </div>
+                        <div class="weather-condition-text">
+                            {{ $tempo['condition'] ?? 'Ensolarado' }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="banner-divider"></div>
+
+                <!-- 2. Bloco Secundário: Métricas Rápidas -->
+                <div class="weather-banner-metrics">
+                    
+                    <div class="metric-pill">
+                        <i class="bi bi-thermometer-half"></i>
+                        <div class="pill-data">
+                            <span class="pill-label">Min / Max</span>
+                            <span class="pill-val">{{ $tempo['min'] ?? '22' }}° / {{ $tempo['max'] ?? '31' }}°</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-pill">
+                        <i class="bi bi-wind"></i>
+                        <div class="pill-data">
+                            <span class="pill-label">Vento</span>
+                            <span class="pill-val">{{ $tempo['windspeed'] }} <small>km/h</small></span>
+                        </div>
+                    </div>
+
+                    <div class="metric-pill desktop-only">
+                        <i class="bi bi-droplet-half"></i>
+                        <div class="pill-data">
+                            <span class="pill-label">Umidade</span>
+                            <span class="pill-val">{{ $tempo['humidity'] ?? '78' }}%</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-pill desktop-only">
+                        <i class="bi bi-sun"></i>
+                        <div class="pill-data">
+                            <span class="pill-label">Índice UV</span>
+                            <span class="pill-val">{{ $tempo['uv_index'] ?? '8' }} <small>Alto</small></span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 3. Bloco Direita: Status Ao Vivo -->
+                <div class="weather-banner-status">
+                    <div class="weather-live-badge">
+                        <span class="live-pulse"></span>
+                        <span class="live-text">Ao vivo</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+@endif
+
+<style>
+    .weather-horizontal-banner {
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+        width: 100%;
+        margin-bottom: 24px;
+        border-radius: 18px;
+        padding: 12px 20px;
+        background: linear-gradient(95deg, #1677e8 0%, #1554b5 50%, #0f3078 100%);
+        color: #ffffff;
+        box-shadow: 0 8px 24px -6px rgba(21, 84, 181, 0.35),
+                    inset 0 1px 1px rgba(255, 255, 255, 0.25);
+        animation: bannerSlideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .weather-banner-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Camadas de Efeito Visual */
+    .weather-bg-glow {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(40px);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .glow-1 {
+        width: 160px;
+        height: 160px;
+        top: -60px;
+        left: 10%;
+        background: rgba(255, 214, 10, 0.2);
+        animation: floatGlow 8s ease-in-out infinite alternate;
+    }
+
+    .glow-2 {
+        width: 140px;
+        height: 140px;
+        bottom: -50px;
+        right: 15%;
+        background: rgba(80, 200, 255, 0.22);
+        animation: floatGlow 6s ease-in-out infinite alternate-reverse;
+    }
+
+    .weather-shimmer {
+        position: absolute;
+        top: 0; left: -100%;
+        width: 40%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+        transform: skewX(-20deg);
+        animation: shimmer 6s infinite;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    /* 1. Bloco Principal */
+    .weather-banner-primary {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-shrink: 0;
+    }
+
+    .weather-hero-icon {
+        position: relative;
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .icon-sun {
+        position: absolute;
+        top: 0; right: 0;
+        font-size: 26px;
+        color: #ffd60a;
+        filter: drop-shadow(0 0 8px rgba(255, 214, 10, 0.6));
+        animation: spinSlow 20s linear infinite;
+    }
+
+    .icon-cloud-front {
+        position: absolute;
+        bottom: 0; left: 0;
+        font-size: 26px;
+        color: #ffffff;
+        filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.2));
+        animation: cloudFloat 3s ease-in-out infinite alternate;
+    }
+
+    .weather-temp-block .temp-value {
+        font-size: 34px;
+        font-weight: 300;
+        line-height: 1;
+        letter-spacing: -1.5px;
+    }
+
+    .weather-temp-block .temp-value span {
+        font-size: 16px;
+        font-weight: 600;
+        margin-left: 2px;
+        vertical-align: top;
+        opacity: 0.85;
+    }
+
+    .weather-info-block {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .weather-location {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: -0.2px;
+    }
+
+    .weather-location i {
+        color: #ff5252;
+        font-size: 13px;
+    }
+
+    .weather-condition-text {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: 500;
+    }
+
+    /* Divisor */
+    .banner-divider {
+        width: 1px;
+        height: 32px;
+        background: rgba(255, 255, 255, 0.18);
+        flex-shrink: 0;
+    }
+
+    /* 2. Bloco de Métricas */
+    .weather-banner-metrics {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex: 1;
+        justify-content: flex-start;
+    }
+
+    .metric-pill {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 12px;
+        white-space: nowrap;
+    }
+
+    .metric-pill i {
+        font-size: 15px;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .pill-data {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .pill-label {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.1;
+    }
+
+    .pill-val {
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1.1;
+    }
+
+    .pill-val small {
+        font-size: 9px;
+        font-weight: 400;
+        opacity: 0.8;
+    }
+
+    /* 3. Status Ao Vivo */
+    .weather-banner-status {
+        flex-shrink: 0;
+    }
+
+    .weather-live-badge {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 12px;
+        background: rgba(46, 213, 115, 0.15);
+        border: 1px solid rgba(46, 213, 115, 0.3);
+        border-radius: 20px;
+    }
+
+    .live-pulse {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #2ed573;
+        box-shadow: 0 0 6px #2ed573;
+        animation: livePulse 1.8s infinite;
+    }
+
+    .live-text {
+        font-size: 11px;
+        font-weight: 700;
+        color: #7bed9f;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+    }
+
+    /* Keyframe Animações */
+    @keyframes bannerSlideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-12px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes cloudFloat {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-3px); }
+    }
+
+    @keyframes spinSlow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    @keyframes livePulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    @keyframes floatGlow {
+        0% { transform: translate(0, 0); }
+        100% { transform: translate(-10px, 10px); }
+    }
+
+    @keyframes shimmer {
+        0% { left: -100%; }
+        20%, 100% { left: 200%; }
+    }
+
+    /* Responsividade Mobile e Tablet */
+    @media (max-width: 992px) {
+        .desktop-only {
+            display: none;
+        }
+    }
+
+    @media (max-width: 680px) {
+        .weather-horizontal-banner {
+            padding: 10px 14px;
+            border-radius: 14px;
+        }
+
+        .banner-divider, 
+        .weather-banner-metrics,
+        .weather-condition-text {
+            display: none;
+        }
+
+        .weather-banner-container {
+            justify-content: space-between;
+        }
+
+        .weather-temp-block .temp-value {
+            font-size: 28px;
+        }
+    }
+
+    /* Acessibilidade */
+    @media (prefers-reduced-motion: reduce) {
+        .weather-horizontal-banner,
+        .icon-sun,
+        .icon-cloud-front,
+        .live-pulse,
+        .glow-1, .glow-2,
+        .weather-shimmer {
+            animation: none !important;
+            transition: none !important;
+        }
+    }
+</style> --}}
+
 @if (isset($blogSuperHighlights) && $blogSuperHighlights <> null)
     <section class="blog mb-0 mt-4">
-        <div class="container-fluid p-0">
+        <div class="container">
             <div class="row g-3 g-lg-4">
                 <div class="col-lg-7 px-0 pe-lg-0 m-0">
+                    <div class="d-flex justify-content-start align-items-center my-3 position-relative">
+                                                                            
+                        <span class="border-left me-3" style="width:4px; height: 35px; background: var(--primary-color)"></span>
+                        
+                        <!-- Brand tab -->
+                        <h3 class="poppins-semiBold font-20 mb-0 text-dark">
+                            Destaque principal
+                        </h3>
+                        
+                        <div class="navigation-destaque position-relative col-8 d-flex justify-content-end">
+                            <div class="swiper-button-prev news"></div>
+                            <div class="swiper-button-next news"></div>
+                        </div>
+                    </div>
                     <!-- Swiper Main Carousel -->
                     <div class="swiper main-swiper">
                         <div class="swiper-wrapper">
@@ -171,16 +578,22 @@
 
                             @endforeach
 
-                        </div>
-
-                        <div class="swiper-pagination news"></div>
+                        </div>                        
                     </div>
                 </div>
 
                 @if ($blogHighlights->count())
                     <div class="col-lg-5 p-0 m-0">
                         <div class="row g-0">
-
+                            <div class="d-flex justify-content-start align-items-center my-3">
+                                                                            
+                                <span class="border-left me-3" style="width:4px; height: 35px; background: var(--primary-color)"></span>
+                                
+                                <!-- Brand tab -->
+                                <h3 class="poppins-semiBold font-20 mb-0 text-dark">
+                                    Destaques
+                                </h3>
+                            </div>
                             @foreach($blogHighlights->take(4) as $blogHighlight)
 
                                 @php
@@ -401,23 +814,23 @@
                                     @endphp
                                     
                                     <article class="{{ $index >= 5 ? 'rel-item d-none' : '' }}">
-                                        <div class="d-flex align-items-center bg-white mb-3" style="height: 110px;">
+                                        <div class="d-flex align-items-center bg-white mb-3" style="height: 60px;">
 
-                                            <div class="h-100 pe-2 d-flex flex-column justify-content-center" style="flex: 1;">
-                                                <a href="{{ route('blog-inner', ['slug' => $relacionado->slug]) }}" class="underline">
-                                                    <h3 class="h6 m-0 poppins-semiBold font-15 title-blue">
-                                                        {{ substr(strip_tags($relacionado->title), 0, 70) }}...
-                                                    </h3>
-                                                </a>
-                                            </div>
-
-                                            <div class="position-relative" style="width:94px; height:94px; flex-shrink:0;">
+                                            <div class="position-relative" style="width:50px; height:50px; flex-shrink:0;">
                                                 <img loading="lazy"
                                                     class="rounded-1 img-fluid w-100 h-100"
                                                     style="object-fit: cover; aspect-ratio: 1/1;"
                                                     src="{{ $imagemRelacionadoUrl }}"
                                                     alt="{{ $relacionado->title ?? 'Sem imagem' }}">
                                             </div>
+                                            
+                                            <div class="h-100 ps-2 d-flex flex-column justify-content-center" style="flex: 1;">
+                                                <a href="{{ route('blog-inner', ['slug' => $relacionado->slug]) }}" class="underline">
+                                                    <h3 class="h6 m-0 poppins-semiBold font-14 title-blue">
+                                                        {{ substr(strip_tags($relacionado->title), 0, 70) }}...
+                                                    </h3>
+                                                </a>
+                                            </div>                                           
 
                                         </div>
                                     </article>
@@ -441,18 +854,10 @@
                             </div>
                             <ul class="ps-0 d-flex flex-wrap m-n1">
                                 @foreach ($blogCategories as $category)
-                                    @php
-                                        $title = match(strtolower($category->title)) {
-                                            'justica' => 'Justiça',
-                                            'saude'   => 'Saúde',
-                                            'economia'=> 'Economia',
-                                            default   => $category->title,
-                                        };
-                                    @endphp
                                     <li class="nav-link">
                                         <a href="{{ route('blog', ['category' => $category->slug]) }}#news"
                                         class="btn btn-sm title-blue rounded-0 poppins-semiBold font-12 m-1 bg-blue-light">
-                                            {{ $title }}
+                                            {{ $category->title }}
                                         </a>
                                     </li>
                                 @endforeach
@@ -533,28 +938,486 @@
                         <!-- Newsletter End -->
                     @endif
 
+     
                     @if($tempo)
-                        <div class="card border-0 shadow-sm col-12 mb-4">
-                            <div class="card-body d-flex align-items-center gap-3 py-2">
-        
-                                <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center"
-                                        style="width:42px;height:42px;">
-                                    <i class="bi bi-cloud-sun fs-5"></i>
-                                </div>
-        
-                                <div class="flex-grow-1">
-                                    <small class="m-0 poppins-bold font-15 title-blue">Lauro de Freitas</small>
-                                    <div class="m-0 poppins-bold font-15 title-blue">
-                                        {{ $tempo['temperature'] }}°C
-                                        <span class="m-0 poppins-regular font-15 text-muted">
-                                            • Vento {{ $tempo['windspeed'] }} km/h
-                                        </span>
+                        <div class="col-12 mb-4">
+                            <div class="weather-card" data-condition="{{ strtolower($tempo['condition_code'] ?? 'sunny') }}">
+                                <!-- Efeitos Atmosféricos de Fundo -->
+                                <div class="weather-bg-glow glow-primary"></div>
+                                <div class="weather-bg-glow glow-secondary"></div>
+                                <div class="weather-shimmer"></div>
+
+                                <div class="weather-card-body">
+                                    <!-- Cabeçalho: Localização e Horário/Condição -->
+                                    <div class="weather-header">
+                                        <div>
+                                            <div class="weather-location">
+                                                <i class="bi bi-geo-alt-fill"></i>
+                                                <span>Lauro de Freitas</span>
+                                            </div>
+                                            <div class="weather-condition-text">
+                                                {{ $tempo['condition'] ?? 'Ensolarado com poucas nuvens' }}
+                                            </div>
+                                        </div>
+
+                                        <!-- Ícone Animado em Camadas -->
+                                        <div class="weather-hero-icon" aria-hidden="true">
+                                            <div class="sun-rays"></div>
+                                            <i class="bi bi-sun-fill icon-sun"></i>
+                                            <i class="bi bi-cloud-fill icon-cloud-back"></i>
+                                            <i class="bi bi-cloud-fill icon-cloud-front"></i>
+                                        </div>
                                     </div>
+
+                                    <!-- Bloco Principal de Temperatura -->
+                                    <div class="weather-main-temp">
+                                        <div class="temp-value">
+                                            {{ $tempo['temperature'] }}
+                                        </div>
+                                        <div class="temp-unit-group">
+                                            <span class="temp-degree">°</span>
+                                            <span class="temp-scale">C</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Variação Térmica Diária -->
+                                    <div class="weather-range-bar">
+                                        <span class="temp-min">{{ $tempo['min'] ?? '22' }}°</span>
+                                        <div class="range-track">
+                                            <div class="range-fill" style="left: 30%; width: 50%;"></div>
+                                        </div>
+                                        <span class="temp-max">{{ $tempo['max'] ?? '31' }}°</span>
+                                    </div>
+
+                                    <div class="weather-divider"></div>
+
+                                    <!-- Grid de Métricas Secundárias -->
+                                    <div class="weather-metrics-grid">
+                                        <div class="metric-chip">
+                                            <div class="metric-icon">
+                                                <i class="bi bi-wind"></i>
+                                            </div>
+                                            <div class="metric-data">
+                                                <span class="metric-label">Vento</span>
+                                                <span class="metric-value">{{ $tempo['windspeed'] }} <small>km/h</small></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="metric-chip">
+                                            <div class="metric-icon">
+                                                <i class="bi bi-droplet-half"></i>
+                                            </div>
+                                            <div class="metric-data">
+                                                <span class="metric-label">Umidade</span>
+                                                <span class="metric-value">{{ $tempo['humidity'] ?? '78' }}<small>%</small></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="metric-chip">
+                                            <div class="metric-icon">
+                                                <i class="bi bi-thermometer-half"></i>
+                                            </div>
+                                            <div class="metric-data">
+                                                <span class="metric-label">Sensação</span>
+                                                <span class="metric-value">{{ $tempo['feels_like'] ?? $tempo['temperature'] }}<small>°C</small></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="metric-chip">
+                                            <div class="metric-icon">
+                                                <i class="bi bi-sun"></i>
+                                            </div>
+                                            <div class="metric-data">
+                                                <span class="metric-label">Índice UV</span>
+                                                <span class="metric-value">{{ $tempo['uv_index'] ?? '8' }} <small>Alto</small></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Footer / Status em Tempo Real -->
+                                    <div class="weather-footer">
+                                        <div class="weather-live-badge">
+                                            <span class="live-pulse"></span>
+                                            <span class="live-text">Atualizado ao vivo</span>
+                                        </div>
+                                        <span class="weather-update-time">Hoje, {{ date('H:i') }}</span>
+                                    </div>
+
                                 </div>
-        
                             </div>
                         </div>
                     @endif
+
+                    <style>
+
+                        .weather-card {
+                            position: relative;
+                            overflow: hidden;
+                            isolation: isolate;
+                            border-radius: 28px;
+                            padding: 26px 24px 20px;
+                            background: linear-gradient(145deg, #1d72eb 0%, #134dae 50%, #0d2a6a 100%);
+                            color: #ffffff;
+                            box-shadow: 0 20px 40px -12px rgba(18, 64, 148, 0.45),
+                                        inset 0 1px 1px rgba(255, 255, 255, 0.3);
+                            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+                            will-change: transform;
+                        }
+
+                        .weather-card:hover {
+                            transform: translateY(-4px);
+                            box-shadow: 0 26px 50px -12px rgba(18, 64, 148, 0.55),
+                                        inset 0 1px 1px rgba(255, 255, 255, 0.4);
+                        }
+
+                        /* Camadas de Efeito Visual no Fundo */
+                        .weather-bg-glow {
+                            position: absolute;
+                            border-radius: 50%;
+                            filter: blur(50px);
+                            pointer-events: none;
+                            z-index: -1;
+                        }
+
+                        .glow-primary {
+                            width: 220px;
+                            height: 220px;
+                            top: -80px;
+                            right: -40px;
+                            background: rgba(255, 214, 10, 0.22);
+                            animation: floatGlow 10s ease-in-out infinite alternate;
+                        }
+
+                        .glow-secondary {
+                            width: 180px;
+                            height: 180px;
+                            bottom: -60px;
+                            left: -20px;
+                            background: rgba(80, 200, 255, 0.25);
+                            animation: floatGlow 8s ease-in-out infinite alternate-reverse;
+                        }
+
+                        .weather-shimmer {
+                            position: absolute;
+                            top: 0; left: -100%;
+                            width: 50%; height: 100%;
+                            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+                            transform: skewX(-25deg);
+                            animation: shimmer 7s infinite;
+                            pointer-events: none;
+                        }
+
+                        /* Cabeçalho */
+                        .weather-header {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: flex-start;
+                        }
+
+                        .weather-location {
+                            display: flex;
+                            align-items: center;
+                            gap: 6px;
+                            font-size: 17px;
+                            font-weight: 700;
+                            letter-spacing: -0.2px;
+                            color: #ffffff;
+                        }
+
+                        .weather-location i {
+                            color: #ff5252;
+                            font-size: 16px;
+                            animation: locationBounce 3s ease infinite;
+                        }
+
+                        .weather-condition-text {
+                            margin-top: 4px;
+                            font-size: 13px;
+                            font-weight: 500;
+                            color: rgba(255, 255, 255, 0.8);
+                        }
+
+                        /* Ícone Animado Multicamadas */
+                        .weather-hero-icon {
+                            position: relative;
+                            width: 64px;
+                            height: 64px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+
+                        .icon-sun {
+                            position: absolute;
+                            top: 2px;
+                            right: 4px;
+                            font-size: 38px;
+                            color: #ffd60a;
+                            filter: drop-shadow(0 0 12px rgba(255, 214, 10, 0.6));
+                            animation: spinSlow 20s linear infinite;
+                        }
+
+                        .icon-cloud-back {
+                            position: absolute;
+                            bottom: 6px;
+                            left: 2px;
+                            font-size: 36px;
+                            color: rgba(255, 255, 255, 0.5);
+                            animation: cloudFloat 4s ease-in-out infinite alternate;
+                        }
+
+                        .icon-cloud-front {
+                            position: absolute;
+                            bottom: 2px;
+                            right: 2px;
+                            font-size: 34px;
+                            color: #ffffff;
+                            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+                            animation: cloudFloat 3s ease-in-out infinite alternate-reverse;
+                        }
+
+                        /* Bloco Principal de Temperatura */
+                        .weather-main-temp {
+                            display: flex;
+                            align-items: flex-start;
+                            margin-top: 10px;
+                        }
+
+                        .temp-value {
+                            font-size: 76px;
+                            font-weight: 200;
+                            line-height: 0.9;
+                            letter-spacing: -4px;
+                            background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.75) 100%);
+                            -webkit-background-clip: text;
+                            -webkit-text-fill-color: transparent;
+                        }
+
+                        .temp-unit-group {
+                            display: flex;
+                            margin-top: 6px;
+                            margin-left: 2px;
+                        }
+
+                        .temp-degree {
+                            font-size: 40px;
+                            font-weight: 300;
+                            line-height: 1;
+                        }
+
+                        .temp-scale {
+                            font-size: 20px;
+                            font-weight: 600;
+                            margin-top: 6px;
+                            color: rgba(255, 255, 255, 0.75);
+                        }
+
+                        /* Barra de Variação de Temperatura */
+                        .weather-range-bar {
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+                            margin-top: 14px;
+                            font-size: 12px;
+                            font-weight: 600;
+                            color: rgba(255, 255, 255, 0.85);
+                        }
+
+                        .range-track {
+                            flex: 1;
+                            height: 5px;
+                            background: rgba(255, 255, 255, 0.2);
+                            border-radius: 10px;
+                            position: relative;
+                            overflow: hidden;
+                        }
+
+                        .range-fill {
+                            position: absolute;
+                            top: 0; bottom: 0;
+                            background: linear-gradient(90deg, #ffbe0b, #ff006e);
+                            border-radius: 10px;
+                        }
+
+                        /* Divisor Glassmorphism */
+                        .weather-divider {
+                            height: 1px;
+                            margin: 18px 0;
+                            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+                        }
+
+                        /* Grid de Métricas Secundárias */
+                        .weather-metrics-grid {
+                            display: grid;
+                            grid-template-columns: repeat(2, 1fr);
+                            gap: 12px;
+                        }
+
+                        .metric-chip {
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+                            padding: 10px 12px;
+                            background: rgba(255, 255, 255, 0.12);
+                            backdrop-filter: blur(12px);
+                            -webkit-backdrop-filter: blur(12px);
+                            border: 1px solid rgba(255, 255, 255, 0.15);
+                            border-radius: 16px;
+                            transition: background 0.2s ease, transform 0.2s ease;
+                        }
+
+                        .metric-chip:hover {
+                            background: rgba(255, 255, 255, 0.2);
+                            transform: translateY(-2px);
+                        }
+
+                        .metric-icon {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            width: 34px;
+                            height: 34px;
+                            border-radius: 10px;
+                            background: rgba(255, 255, 255, 0.18);
+                            font-size: 16px;
+                            color: #ffffff;
+                        }
+
+                        .metric-data {
+                            display: flex;
+                            flex-direction: column;
+                        }
+
+                        .metric-label {
+                            font-size: 11px;
+                            color: rgba(255, 255, 255, 0.72);
+                            font-weight: 500;
+                        }
+
+                        .metric-value {
+                            font-size: 14px;
+                            font-weight: 700;
+                            line-height: 1.2;
+                        }
+
+                        .metric-value small {
+                            font-size: 10px;
+                            font-weight: 400;
+                            opacity: 0.8;
+                        }
+
+                        /* Footer / Live Indicator */
+                        .weather-footer {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            margin-top: 16px;
+                            padding-top: 4px;
+                        }
+
+                        .weather-live-badge {
+                            display: flex;
+                            align-items: center;
+                            gap: 6px;
+                            padding: 4px 10px;
+                            background: rgba(46, 213, 115, 0.18);
+                            border: 1px solid rgba(46, 213, 115, 0.3);
+                            border-radius: 20px;
+                        }
+
+                        .live-pulse {
+                            width: 6px;
+                            height: 6px;
+                            border-radius: 50%;
+                            background: #2ed573;
+                            box-shadow: 0 0 8px #2ed573;
+                            animation: livePulse 1.8s infinite;
+                        }
+
+                        .live-text {
+                            font-size: 10px;
+                            font-weight: 600;
+                            color: #7bed9f;
+                            text-transform: uppercase;
+                            letter-spacing: 0.4px;
+                        }
+
+                        .weather-update-time {
+                            font-size: 11px;
+                            color: rgba(255, 255, 255, 0.65);
+                        }
+
+                        /* Keyframes de Animações Organizadas */
+                        @keyframes floatGlow {
+                            0% { transform: translate(0, 0) scale(1); }
+                            100% { transform: translate(-20px, 20px) scale(1.15); }
+                        }
+
+                        @keyframes cloudFloat {
+                            0% { transform: translateY(0); }
+                            100% { transform: translateY(-4px); }
+                        }
+
+                        @keyframes spinSlow {
+                            from { transform: rotate(0deg); }
+                            to { transform: rotate(360deg); }
+                        }
+
+                        @keyframes locationBounce {
+                            0%, 100% { transform: translateY(0); }
+                            50% { transform: translateY(-3px); }
+                        }
+
+                        @keyframes livePulse {
+                            0%, 100% { opacity: 1; transform: scale(1); }
+                            50% { opacity: 0.4; transform: scale(0.8); }
+                        }
+
+                        @keyframes shimmer {
+                            0% { left: -100%; }
+                            20%, 100% { left: 200%; }
+                        }
+
+                        /* Adaptabilidade Mobile */
+                        @media (max-width: 480px) {
+                            .weather-card {
+                                border-radius: 24px;
+                                padding: 20px 18px 16px;
+                            }
+
+                            .temp-value {
+                                font-size: 64px;
+                            }
+
+                            .weather-metrics-grid {
+                                grid-template-columns: repeat(2, 1fr);
+                                gap: 8px;
+                            }
+
+                            .metric-chip {
+                                padding: 8px 10px;
+                            }
+                        }
+
+                        /* Suporte a Acessibilidade */
+                        @media (prefers-reduced-motion: reduce) {
+                            .weather-card,
+                            .glow-primary,
+                            .glow-secondary,
+                            .icon-sun,
+                            .icon-cloud-back,
+                            .icon-cloud-front,
+                            .weather-location i,
+                            .live-pulse,
+                            .weather-shimmer {
+                                animation: none !important;
+                                transition: none !important;
+                            }
+                        }
+                    </style>
+
+
+
                     <div class="mb-4">
                         <table class="table table-striped table-sm align-middle">
                             <thead>
@@ -1287,13 +2150,13 @@
             spaceBetween: 0,
             loop: true,
             autoHeight: true,
-            pagination: {
-                el: '.swiper-pagination.news',
-                clickable: true,
-            },
+            // pagination: {
+            //     el: '.swiper-pagination.news',
+            //     clickable: true,
+            // },
             navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
+                nextEl: '.swiper-button-next.news',
+                prevEl: '.swiper-button-prev.news',
             },
             breakpoints: {
                 768: {

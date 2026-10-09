@@ -469,6 +469,18 @@
         .border-end-1 {
             border-right: 1px solid #ffffff30 !important;
         }
+
+        .site-navigation.ul .subcategorylist:hover {
+            background-color: var(--primary-color);
+            
+            transition: all 0.3s ease;
+        }
+        .site-navigation.ul .subcategorylist:hover a{
+            color: var(--text-color-header);
+        }
+        .w-20{
+            width: 20%;
+        }
     </style>
 
     <div id="newsMediaOrganization" hidden></div>
@@ -654,45 +666,238 @@
             </div>
             <div class="container-fluid header-color mt-0 h-60 d-flex align-items-center py-0">
                 <div class="container d-flex justify-content-between align-items-center w-100 h-100">
-                    <div class="social-links d-flex justify-content-center align-items-center gap-4 text-center col-12 col-lg-auto">
+                    <div class="social-links d-flex justify-content-start align-items-center gap-4 text-center col-12 col-lg-8">
                         <nav class="none site-navigation ul position-relative text-end width-75 h-60">
-                            <ul class="d-flex flex-row justify-content-start align-items-center gap-3 mb-0 list-unstyled h-100">
-                                <li class="h-100 d-flex align-items-center px-2"><a href="{{route('index')}}" class="nav-link poppins-bold text-center font-12 text-uppercase">Home</a></li>                                                   
-                                <li class="h-100 d-flex align-items-center px-2"><a href="{{route('about')}}" class="nav-link poppins-bold text-center font-12 text-uppercase">Sobre</a></li>                                                   
+                            <ul class="d-flex flex-row justify-content-start align-items-center gap-2 mb-0 list-unstyled h-100">
+                                <li class="h-100 d-flex align-items-center px-2"><a href="{{route('index')}}" class="nav-link text-color-header poppins-bold text-center font-12 text-uppercase">Home</a></li>                                                   
+                                <li class="h-100 d-flex align-items-center px-2"><a href="{{route('about')}}" class="nav-link text-color-header poppins-bold text-center font-12 text-uppercase">Sobre</a></li>                                                   
 
-                                <li class="nav-item dropdown h-100 d-flex align-items-center px-2">
-                                    <a class="nav-link dropdown-toggle poppins-bold text-center font-12 text-uppercase" 
-                                        href="{{ route('blog') }}" 
-                                        id="noticiasDropdown" 
-                                        role="button" 
-                                        data-bs-toggle="dropdown" 
-                                        aria-expanded="false">
-                                        Notícias <i class="bi bi-chevron-down"></i>
-                                    </a>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        const menuItems = document.querySelectorAll('.mega-menu-item');
 
-                                    <ul class="dropdown-menu" aria-labelledby="noticiasDropdown">
-                                        @if ($blogCategories->count())
-                                            @foreach ($blogCategories as $category)
-                                                @php
-                                                    // Corrige acentuação manualmente
-                                                    $title = match(strtolower($category->title)) {
-                                                        'justica' => 'Justiça',
-                                                        'saude'   => 'Saúde',
-                                                        default   => $category->title,
-                                                    };
-                                                @endphp
-                                                <li>
-                                                    <a class="dropdown-item poppins-medium text-start font-15" 
-                                                    href="{{ route('blog', ['category' => $category->slug]) }}#news">
-                                                        {{ $title }}
-                                                    </a>
-                                                </li>
-                                            @endforeach
-                                        @endif
+                                        menuItems.forEach(function (menuItem) {
+                                            const menu = menuItem.querySelector('.mega-menu-content');
+                                            const categoryLink = menuItem.querySelector('.mega-category-link');
 
-                                    </ul>
-                                </li>
-                                <li class="h-100 d-flex align-items-center px-2"><a href="{{route('contact')}}" class="nav-link poppins-bold text-center font-12 text-uppercase {{ request()->routeIs('contact') ? 'active' : '' }}">Contato</a></li>
+                                            if (!menu || !categoryLink) return;
+
+                                            const subcategories = menu.querySelectorAll('.mega-subcategory');
+                                            const blogCards = menu.querySelectorAll('.mega-blog-card');
+                                            const emptyMessage = menu.querySelector('.mega-no-blogs');
+
+                                            function filterBlogs(subcategoryId) {
+                                                let visibleCount = 0;
+
+                                                blogCards.forEach(function (card) {
+                                                    const blogSubcategory = card.dataset.blogSubcategory;
+
+                                                    const show = subcategoryId === 'all'
+                                                    ? blogSubcategory === 'all'
+                                                    : blogSubcategory === String(subcategoryId);
+
+                                                    card.classList.toggle('d-none', !show);
+
+                                                    if (show) visibleCount++;
+                                                });
+
+                                                if (emptyMessage) {
+                                                    emptyMessage.classList.toggle('d-none', visibleCount > 0);
+                                                }
+                                            }
+
+                                            function selectSubcategory(selected) {
+                                                subcategories.forEach(function (subcategory) {
+                                                    subcategory.classList.remove('active');
+                                                });
+
+                                                selected.classList.add('active');
+                                                filterBlogs(selected.dataset.subcategoryId);
+                                            }
+
+                                            function openMenu() {
+                                                menuItems.forEach(function (item) {
+                                                    item.classList.remove('is-open');
+
+                                                    const link = item.querySelector('.mega-category-link');
+
+                                                    if (link) {
+                                                        link.setAttribute('aria-expanded', 'false');
+                                                    }
+                                                });
+
+                                                menuItem.classList.add('is-open');
+                                                categoryLink.setAttribute('aria-expanded', 'true');
+
+                                                const allSubcategory = menu.querySelector(
+                                                    '.mega-subcategory[data-subcategory-id="all"]'
+                                                );
+
+                                                if (allSubcategory) {
+                                                    selectSubcategory(allSubcategory);
+                                                }
+                                            }
+
+                                            menuItem.addEventListener('mouseenter', openMenu);
+
+                                            menuItem.addEventListener('focusin', openMenu);
+
+                                            menuItem.addEventListener('mouseleave', function () {
+                                                menuItem.classList.remove('is-open');
+                                                categoryLink.setAttribute('aria-expanded', 'false');
+                                            });
+
+                                            subcategories.forEach(function (subcategory) {
+                                                subcategory.addEventListener('mouseenter', function () {
+                                                    selectSubcategory(this);
+                                                });
+
+                                                subcategory.addEventListener('focus', function () {
+                                                    selectSubcategory(this);
+                                                });
+                                            });
+                                        });
+                                    });
+                                </script>
+
+                                @if ($blogCategoriesHeader->count())
+                                    @foreach ($blogCategoriesHeader as $category)
+                                        <li class="mega-menu-item h-100 d-flex align-items-center px-2"
+                                            data-category-id="{{ $category->id }}">
+
+                                            {{-- CATEGORIA PRINCIPAL --}}
+                                            <a class="nav-link poppins-bold text-center text-color-header font-12 text-uppercase mega-category-link"
+                                            href="{{ route('blog', ['category' => $category->slug]) }}#news"
+                                            aria-expanded="false">
+                                                {{ $category->title }}
+                                                {{-- <i class="bi bi-chevron-down"></i> --}}
+                                            </a>
+
+                                            {{-- MEGA MENU DA CATEGORIA --}}
+                                            <div class="mega-menu-content bg-white shadow"
+                                                data-mega-category="{{ $category->id }}">
+
+                                                <div class="row g-0 h-100" style="min-height: 295px;">
+
+                                                    {{-- COLUNA ESQUERDA: SUBCATEGORIAS --}}
+                                                    <div class="col-2 border-end mega-subcategories">
+
+                                                        <ul class="list-unstyled mb-0 text-start d-flex flex-column justify-content-star py-4 h-100">
+
+                                                            {{-- MOSTRAR TODOS OS BLOGS DA CATEGORIA --}}
+                                                            <li class="subcategorylist">
+                                                                <a href="{{ route('blog', ['category' => $category->slug]) }}#news"
+                                                                class="mega-subcategory active text-color-header poppins-semibold font-15"
+                                                                data-subcategory-id="all">
+                                                                    Todas
+                                                                </a>
+                                                            </li>
+
+                                                            @foreach ($category->subcategories as $subCategory)
+                                                                <li class="subcategorylist">
+                                                                    <a href="{{ route('blog', ['category' => $category->slug]) }}#news"
+                                                                    class="mega-subcategory poppins-semibold font-15 text-color-header"
+                                                                    data-subcategory-id="{{ $subCategory->id }}">
+                                                                        {{ $subCategory->name }}
+                                                                    </a>
+                                                                </li>
+                                                            @endforeach
+
+                                                        </ul>
+                                                    </div>
+
+                                                    {{-- COLUNA DIREITA: BLOGS --}}
+                                                    <div class="col-10 mega-blogs">
+                                                        <div class="row g-4 h-100 justify-content-start align-items-start">
+                                                            <h3 class="poppins-semibold text-start pt-3 font-15">Notícias mais recentes</h3>
+                                                            {{-- 4 BLOGS DA CATEGORIA --}}
+                                                            @foreach ($category->blogs as $blog)
+                                                                <div class="w-20 mega-blog-card mt-0"
+                                                                    data-blog-subcategory="all">
+
+                                                                    <a href="#"
+                                                                    class="mega-blog-link text-decoration-none">
+                                                                        <img
+                                                                            src="{{ $blog->path_image
+                                                                                ? asset('storage/' . $blog->path_image)
+                                                                                : 'https://placehold.co/600x400?text=Sem+imagem&font=poppins' }}"
+                                                                            alt="{{ $blog->title }}"
+                                                                            class="mega-blog-image"
+                                                                            width="200"
+                                                                            height="133"
+                                                                            loading="lazy">
+
+                                                                        <h5 class="mega-blog-title poppins-regular font-12 text-start">
+                                                                            {{ $blog->title }}
+                                                                        </h5>
+                                                                    </a>
+
+                                                                    <div class="mega-blog-meta poppins-regular font-10 text-start">
+                                                                        {{ ucfirst(\Carbon\Carbon::parse($blog->date)->locale('pt_BR')->translatedFormat('M')) . \Carbon\Carbon::parse($blog->date)->format(' d') }}
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
+
+                                                            {{-- 4 BLOGS DE CADA SUBCATEGORIA --}}
+                                                            @foreach ($category->subcategories as $subCategory)
+                                                                @foreach ($subCategory->blogs as $blog)
+                                                                    <div class="w-20 mega-blog-card d-none mt-0"
+                                                                        data-blog-subcategory="{{ $subCategory->id }}">
+
+                                                                        <a href="#"
+                                                                        class="mega-blog-link text-decoration-none">
+                                                                            <img
+                                                                                src="{{ $blog->path_image
+                                                                                    ? asset('storage/' . $blog->path_image)
+                                                                                    : 'https://placehold.co/600x400?text=Sem+imagem&font=poppins' }}"
+                                                                                alt="{{ $blog->title }}"
+                                                                                class="mega-blog-image"
+                                                                                width="200"
+                                                                                height="133"
+                                                                                loading="lazy">
+
+                                                                            <h5 class="mega-blog-title poppins-regular font-12 text-start">
+                                                                                {{ $blog->title }}
+                                                                            </h5>
+                                                                        </a>
+
+                                                                        <div class="mega-blog-meta poppins-regular font-10 text-start">
+                                                                            <span>{{ $subCategory->name }}</span>
+                                                                            <span class="mx-1">-</span>
+                                                                            {{ ucfirst(\Carbon\Carbon::parse($blog->date)->locale('pt_BR')->translatedFormat('M')) . \Carbon\Carbon::parse($blog->date)->format(' d') }}
+                                                                        </div>
+                                                                    </div>
+                                                                @endforeach
+                                                            @endforeach
+
+                                                            {{-- MENSAGEM QUANDO NÃO EXISTIR BLOG --}}                                                            
+                                                            <div class="col-12 mega-no-blogs d-none">
+                                                                <div class="d-flex flex-column align-items-center justify-content-center py-4 text-center">
+                                                                    <i class="bi bi-newspaper font-30 text-secondary mb-3"></i>
+                                                                    <p class="poppins-regular font-12 mb-0">
+                                                                        Nenhuma notícia encontrada nesta subcategoria.
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="view-more col-12 mb-3">
+                                                                <a class="nav-link poppins-bold text-start text-color-header font-12 text-uppercase mega-category-link"
+                                                                href="{{ route('blog', ['category' => $category->slug]) }}#news">
+                                                                    Ver mais
+
+                                                                    <svg class="ms-2" width="5" height="9" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="#0E523E"></path>
+                                                                    </svg>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                @endif
                             </ul>                      
                         </nav>
 
@@ -719,14 +924,14 @@
                         </button>                        
                     </div>
 
-                    <div class="d-none d-lg-flex d-flex justify-content-end align-items-center gap-2 login-desktop col-auto col-lg-8">   
-                        <div class="d-flex justify-content-between gap-3 flex-wrap align-items-center col-8 col-sm-5 col-md-6 col-lg-7">
+                    <div class="d-none d-lg-flex d-flex justify-content-end align-items-center gap-2 login-desktop col-auto col-lg-3">   
+                        <div class="d-flex justify-content-between gap-3 flex-wrap align-items-center col-11">
                            <form action="{{route('blog-search')}}#news" class="search col-12" method="post">
                               @csrf
                               <div class="input-group input-group-lg">
-                                 <input type="search" name="search" class="rounded-0 form-control border-end-0 text-color poppins-regular bg-white py-0" placeholder="Pesquise aqui">
-                                 <button type="submit" title="search" class="btn-reset input-group-text bg-white border rounded-0">
-                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <input type="search" name="search" class="rounded-0 form-control border-end-0 text-color poppins-regular bg-white py-0" placeholder="Pesquisar" height="50">
+                                 <button type="submit" title="search" class="btn-reset input-group-text bg-white border rounded-0 py-0 px-2">
+                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 15px">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M6.99989 0C3.13331 0 0 3.13427 0 6.99979C0 10.8663 3.13351 14.0004 6.99989 14.0004C8.49916 14.0004 9.88877 13.5285 11.0281 12.7252L15.9512 17.6491C16.4199 18.117 17.1798 18.117 17.6485 17.6491C18.1172 17.1804 18.1172 16.4205 17.6485 15.9518L12.7254 11.0288C13.5279 9.88936 13.9998 8.4997 13.9998 6.99983C13.9998 3.13411 10.8655 0 6.99989 0ZM2.39962 6.99979C2.39962 4.45981 4.45907 2.40019 6.99989 2.40019C9.54072 2.40019 11.6002 4.45961 11.6002 6.99979C11.6002 9.54058 9.54072 11.6 6.99989 11.6C4.45907 11.6 2.39962 9.54058 2.39962 6.99979Z" fill="#31404B"/>
                                     </svg>                                    
                                  </button>
