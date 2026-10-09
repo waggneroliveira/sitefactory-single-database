@@ -43,398 +43,232 @@
     </script>
 @endif
 
-{{-- @if($tempo)
-    <div class="container my-5">
 
-        <div class="weather-horizontal-banner">
-            <!-- Efeitos Atmosféricos de Fundo -->
-            <div class="weather-bg-glow glow-1"></div>
-            <div class="weather-bg-glow glow-2"></div>
-            <div class="weather-shimmer"></div>
+<div class="container-fluid my-0 mb-5 p-0">
+    <div class="row g-3">
+        <div class="col-12">
+            <div class="matches-widget">
+                <div class="matches-widget-content">
 
-            <div class="weather-banner-container">
-                
-                <!-- 1. Bloco Principal: Local, Condição e Temperatura -->
-                <div class="weather-banner-primary">
-                    <div class="weather-hero-icon" aria-hidden="true">
-                        <div class="sun-rays"></div>
-                        <i class="bi bi-sun-fill icon-sun"></i>
-                        <i class="bi bi-cloud-fill icon-cloud-front"></i>
-                    </div>
-
-                    <div class="weather-temp-block">
-                        <div class="temp-value">{{ $tempo['temperature'] }}<span>°C</span></div>
-                    </div>
-
-                    <div class="weather-info-block">
-                        <div class="weather-location">
-                            <i class="bi bi-geo-alt-fill"></i>
-                            <span>Lauro de Freitas</span>
+                    {{-- Cabeçalho do Widget com Navegação --}}
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="matches-title">
+                            <i class="bi bi-trophy-fill me-2 text-warning"></i> Próximos Jogos
                         </div>
-                        <div class="weather-condition-text">
-                            {{ $tempo['condition'] ?? 'Ensolarado' }}
+
+                        <div class="d-flex align-items-center gap-2">
+                            @if(!empty($proximosJogos) && isset($proximosJogos[0]['matchday']))
+                                <span class="matches-badge">
+                                    {{ $proximosJogos[0]['matchday'] }}ª Rodada
+                                </span>
+                            @endif
+
+                            {{-- Botões do Carrossel --}}
+                            <div class="swiper-navigation-btn matches-prev"><i class="bi bi-chevron-left"></i></div>
+                            <div class="swiper-navigation-btn matches-next"><i class="bi bi-chevron-right"></i></div>
                         </div>
                     </div>
+
+                    {{-- Container Swiper --}}
+                    @if(!empty($proximosJogos))
+                        <div class="swiper matches-swiper">
+                            <div class="swiper-wrapper">
+                                @foreach($proximosJogos as $jogo)
+                                    <div class="swiper-slide">
+                                        <div class="match-card-vertical">
+                                            {{-- Time Mandante --}}
+                                            <div class="match-team-row">
+                                                <img src="{{ $jogo['homeTeam']['crest'] }}" alt="{{ $jogo['homeTeam']['name'] }}" class="team-crest" loading="lazy">
+                                                <span class="team-name text-truncate" title="{{ $jogo['homeTeam']['name'] }}">
+                                                    {{ $jogo['homeTeam']['tla'] ?? $jogo['homeTeam']['shortName'] ?? $jogo['homeTeam']['name'] }}
+                                                </span>
+                                            </div>
+
+                                            {{-- Separador VS e Horário --}}
+                                            <div class="match-info-center">
+                                                <span class="vs-badge">VS</span>
+                                                <span class="match-datetime">
+                                                    <i class="bi bi-calendar3 me-1"></i>
+                                                    {{ \Carbon\Carbon::parse($jogo['utcDate'])->setTimezone('America/Sao_Paulo')->format('d/m') }}
+
+                                                    <i class="bi bi-clock ms-1 me-1"></i>
+                                                    {{ \Carbon\Carbon::parse($jogo['utcDate'])->setTimezone('America/Sao_Paulo')->format('H:i') }}
+                                                </span>
+                                            </div>
+
+                                            {{-- Time Visitante --}}
+                                            <div class="match-team-row">
+                                                <img src="{{ $jogo['awayTeam']['crest'] }}" alt="{{ $jogo['awayTeam']['name'] }}" class="team-crest" loading="lazy">
+                                                <span class="team-name text-truncate" title="{{ $jogo['awayTeam']['name'] }}">
+                                                    {{ $jogo['awayTeam']['tla'] ?? $jogo['awayTeam']['shortName'] ?? $jogo['awayTeam']['name'] }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @else
+                        <div class="text-center w-100 py-4 text-white-50">
+                            <i class="bi bi-calendar-x fs-3 d-block mb-2"></i>
+                            Nenhum jogo agendado para a próxima rodada.
+                        </div>
+                    @endif
+
                 </div>
-
-                <div class="banner-divider"></div>
-
-                <!-- 2. Bloco Secundário: Métricas Rápidas -->
-                <div class="weather-banner-metrics">
-                    
-                    <div class="metric-pill">
-                        <i class="bi bi-thermometer-half"></i>
-                        <div class="pill-data">
-                            <span class="pill-label">Min / Max</span>
-                            <span class="pill-val">{{ $tempo['min'] ?? '22' }}° / {{ $tempo['max'] ?? '31' }}°</span>
-                        </div>
-                    </div>
-
-                    <div class="metric-pill">
-                        <i class="bi bi-wind"></i>
-                        <div class="pill-data">
-                            <span class="pill-label">Vento</span>
-                            <span class="pill-val">{{ $tempo['windspeed'] }} <small>km/h</small></span>
-                        </div>
-                    </div>
-
-                    <div class="metric-pill desktop-only">
-                        <i class="bi bi-droplet-half"></i>
-                        <div class="pill-data">
-                            <span class="pill-label">Umidade</span>
-                            <span class="pill-val">{{ $tempo['humidity'] ?? '78' }}%</span>
-                        </div>
-                    </div>
-
-                    <div class="metric-pill desktop-only">
-                        <i class="bi bi-sun"></i>
-                        <div class="pill-data">
-                            <span class="pill-label">Índice UV</span>
-                            <span class="pill-val">{{ $tempo['uv_index'] ?? '8' }} <small>Alto</small></span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- 3. Bloco Direita: Status Ao Vivo -->
-                <div class="weather-banner-status">
-                    <div class="weather-live-badge">
-                        <span class="live-pulse"></span>
-                        <span class="live-text">Ao vivo</span>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
-@endif
+</div>
 
 <style>
-    .weather-horizontal-banner {
+    /* ===================================
+       ESTILOS DOS JOGOS (SWIPER CAROUSEL)
+    =================================== */
+    .matches-widget {
         position: relative;
         overflow: hidden;
-        isolation: isolate;
-        width: 100%;
-        margin-bottom: 24px;
-        border-radius: 18px;
-        padding: 12px 20px;
-        background: linear-gradient(95deg, #1677e8 0%, #1554b5 50%, #0f3078 100%);
-        color: #ffffff;
-        box-shadow: 0 8px 24px -6px rgba(21, 84, 181, 0.35),
-                    inset 0 1px 1px rgba(255, 255, 255, 0.25);
-        animation: bannerSlideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-    }
-
-    .weather-banner-container {
+        background: #252a34;
+        color: #fff;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, .20);
+        height: 100%;
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        position: relative;
-        z-index: 2;
+        flex-direction: column;
     }
 
-    /* Camadas de Efeito Visual */
-    .weather-bg-glow {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(40px);
-        pointer-events: none;
-        z-index: 1;
-    }
-
-    .glow-1 {
-        width: 160px;
-        height: 160px;
-        top: -60px;
-        left: 10%;
-        background: rgba(255, 214, 10, 0.2);
-        animation: floatGlow 8s ease-in-out infinite alternate;
-    }
-
-    .glow-2 {
-        width: 140px;
-        height: 140px;
-        bottom: -50px;
-        right: 15%;
-        background: rgba(80, 200, 255, 0.22);
-        animation: floatGlow 6s ease-in-out infinite alternate-reverse;
-    }
-
-    .weather-shimmer {
-        position: absolute;
-        top: 0; left: -100%;
-        width: 40%; height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
-        transform: skewX(-20deg);
-        animation: shimmer 6s infinite;
-        pointer-events: none;
-        z-index: 1;
-    }
-
-    /* 1. Bloco Principal */
-    .weather-banner-primary {
+    .matches-widget-content {
+        padding: 18px 20px;
+        height: 100%;
         display: flex;
-        align-items: center;
-        gap: 14px;
-        flex-shrink: 0;
+        flex-direction: column;
     }
 
-    .weather-hero-icon {
-        position: relative;
-        width: 42px;
-        height: 42px;
+    .matches-title {
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .matches-badge {
+        background: rgba(255, 255, 255, .1);
+        border: 1px solid rgba(255, 255, 255, .15);
+        padding: 3px 10px;
+        border-radius: 10px;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    /* Botões de Navegação Personalizados */
+    .swiper-navigation-btn {
+        width: 26px;
+        height: 26px;
+        background: rgba(255, 255, 255, .08);
+        border: 1px solid rgba(255, 255, 255, .12);
+        border-radius: 6px;
         display: flex;
         align-items: center;
         justify-content: center;
+        color: #fff;
+        font-size: 12px;
+        cursor: pointer;
+        transition: background .2s ease;
     }
 
-    .icon-sun {
-        position: absolute;
-        top: 0; right: 0;
-        font-size: 26px;
-        color: #ffd60a;
-        filter: drop-shadow(0 0 8px rgba(255, 214, 10, 0.6));
-        animation: spinSlow 20s linear infinite;
+    .swiper-navigation-btn:hover {
+        background: rgba(255, 255, 255, .2);
     }
 
-    .icon-cloud-front {
-        position: absolute;
-        bottom: 0; left: 0;
-        font-size: 26px;
-        color: #ffffff;
-        filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.2));
-        animation: cloudFloat 3s ease-in-out infinite alternate;
+    .swiper-button-disabled {
+        opacity: .3;
+        cursor: not-allowed;
     }
 
-    .weather-temp-block .temp-value {
-        font-size: 34px;
-        font-weight: 300;
-        line-height: 1;
-        letter-spacing: -1.5px;
+    /* Swiper Container */
+    .matches-swiper {
+        width: 100%;
+        padding: 4px 2px;
     }
 
-    .weather-temp-block .temp-value span {
-        font-size: 16px;
-        font-weight: 600;
-        margin-left: 2px;
-        vertical-align: top;
-        opacity: 0.85;
+    .swiper-slide {
+        width: auto; /* Permite tamanho dinâmico do card */
     }
 
-    .weather-info-block {
+    /* Card Individual */
+    .match-card-vertical {
+        width: 210px;
+        background: #2f3644;
+        border-radius: 10px;
+        padding: 14px;
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        gap: 8px;
+        border: 1px solid rgba(255, 255, 255, .04);
+        transition: transform .2s ease, background .2s ease;
     }
 
-    .weather-location {
+    .match-card-vertical:hover {
+        background: #363e4e;
+        transform: translateY(-2px);
+    }
+
+    .match-team-row {
         display: flex;
         align-items: center;
-        gap: 4px;
-        font-size: 14px;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .team-crest {
+        width: 28px !important;
+        height: 28px !important;
+        object-fit: contain;
+        flex-shrink: 0;
+    }
+
+    .team-name {
+        font-size: 13px;
         font-weight: 700;
+        color: #ffffff;
         letter-spacing: -0.2px;
     }
 
-    .weather-location i {
-        color: #ff5252;
-        font-size: 13px;
-    }
-
-    .weather-condition-text {
-        font-size: 12px;
-        color: rgba(255, 255, 255, 0.8);
-        font-weight: 500;
-    }
-
-    /* Divisor */
-    .banner-divider {
-        width: 1px;
-        height: 32px;
-        background: rgba(255, 255, 255, 0.18);
-        flex-shrink: 0;
-    }
-
-    /* 2. Bloco de Métricas */
-    .weather-banner-metrics {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        flex: 1;
-        justify-content: flex-start;
-    }
-
-    .metric-pill {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 6px 12px;
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border: 1px solid rgba(255, 255, 255, 0.14);
-        border-radius: 12px;
-        white-space: nowrap;
-    }
-
-    .metric-pill i {
-        font-size: 15px;
-        color: rgba(255, 255, 255, 0.9);
-    }
-
-    .pill-data {
+    .match-info-center {
         display: flex;
         flex-direction: column;
-    }
-
-    .pill-label {
-        font-size: 10px;
-        color: rgba(255, 255, 255, 0.7);
-        line-height: 1.1;
-    }
-
-    .pill-val {
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 1.1;
-    }
-
-    .pill-val small {
-        font-size: 9px;
-        font-weight: 400;
-        opacity: 0.8;
-    }
-
-    /* 3. Status Ao Vivo */
-    .weather-banner-status {
-        flex-shrink: 0;
-    }
-
-    .weather-live-badge {
-        display: flex;
         align-items: center;
-        gap: 6px;
-        padding: 5px 12px;
-        background: rgba(46, 213, 115, 0.15);
-        border: 1px solid rgba(46, 213, 115, 0.3);
-        border-radius: 20px;
+        margin: 2px 0;
     }
 
-    .live-pulse {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: #2ed573;
-        box-shadow: 0 0 6px #2ed573;
-        animation: livePulse 1.8s infinite;
+    .vs-badge {
+        color: #ffb703;
+        font-weight: 900;
+        font-size: 13px;
+        letter-spacing: .5px;
+        line-height: 1;
     }
 
-    .live-text {
+    .match-datetime {
         font-size: 11px;
-        font-weight: 700;
-        color: #7bed9f;
-        text-transform: uppercase;
-        letter-spacing: 0.3px;
+        color: #9aa4b2;
+        font-weight: 500;
+        margin-top: 4px;
     }
+</style>
 
-    /* Keyframe Animações */
-    @keyframes bannerSlideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-12px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes cloudFloat {
-        0% { transform: translateY(0); }
-        100% { transform: translateY(-3px); }
-    }
-
-    @keyframes spinSlow {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-    }
-
-    @keyframes livePulse {
-        0%, 100% { opacity: 1; transform: scale(1); }
-        50% { opacity: 0.4; transform: scale(0.85); }
-    }
-
-    @keyframes floatGlow {
-        0% { transform: translate(0, 0); }
-        100% { transform: translate(-10px, 10px); }
-    }
-
-    @keyframes shimmer {
-        0% { left: -100%; }
-        20%, 100% { left: 200%; }
-    }
-
-    /* Responsividade Mobile e Tablet */
-    @media (max-width: 992px) {
-        .desktop-only {
-            display: none;
-        }
-    }
-
-    @media (max-width: 680px) {
-        .weather-horizontal-banner {
-            padding: 10px 14px;
-            border-radius: 14px;
-        }
-
-        .banner-divider, 
-        .weather-banner-metrics,
-        .weather-condition-text {
-            display: none;
-        }
-
-        .weather-banner-container {
-            justify-content: space-between;
-        }
-
-        .weather-temp-block .temp-value {
-            font-size: 28px;
-        }
-    }
-
-    /* Acessibilidade */
-    @media (prefers-reduced-motion: reduce) {
-        .weather-horizontal-banner,
-        .icon-sun,
-        .icon-cloud-front,
-        .live-pulse,
-        .glow-1, .glow-2,
-        .weather-shimmer {
-            animation: none !important;
-            transition: none !important;
-        }
-    }
-</style> --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new Swiper('.matches-swiper', {
+            slidesPerView: 'auto',
+            spaceBetween: 14,
+            freeMode: true,
+            grabCursor: true,
+            navigation: {
+                nextEl: '.matches-next',
+                prevEl: '.matches-prev',
+            },
+        });
+    });
+</script>
 
 @if (isset($blogSuperHighlights) && $blogSuperHighlights <> null)
     <section class="blog mb-0 mt-4">
@@ -1038,7 +872,7 @@
                                     <div class="weather-footer">
                                         <div class="weather-live-badge">
                                             <span class="live-pulse"></span>
-                                            <span class="live-text">Atualizado ao vivo</span>
+                                            <span class="live-text">Ao vivo</span>
                                         </div>
                                         <span class="weather-update-time">Hoje, {{ date('H:i') }}</span>
                                     </div>
@@ -1319,15 +1153,12 @@
                             display: flex;
                             align-items: center;
                             gap: 6px;
-                            padding: 4px 10px;
-                            background: rgba(46, 213, 115, 0.18);
-                            border: 1px solid rgba(46, 213, 115, 0.3);
                             border-radius: 20px;
                         }
 
                         .live-pulse {
-                            width: 6px;
-                            height: 6px;
+                            width: 7px;
+                            height: 7px;
                             border-radius: 50%;
                             background: #2ed573;
                             box-shadow: 0 0 8px #2ed573;
@@ -1336,9 +1167,8 @@
 
                         .live-text {
                             font-size: 10px;
-                            font-weight: 600;
-                            color: #7bed9f;
-                            text-transform: uppercase;
+                            font-weight: 300;
+                            color: rgba(255, 255, 255, .85);
                             letter-spacing: 0.4px;
                         }
 

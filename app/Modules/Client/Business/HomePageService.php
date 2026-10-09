@@ -239,8 +239,13 @@ class HomePageService
         );
             
         $standings = $footballDataService->getBrasileiraoStandings();
-        // dd($standings);
+
+        $proximosJogos = $footballDataService->getBrasileiraoNextMatchday();
+
+        // dd($proximosJogos);
+     
         return compact(
+            'proximosJogos',
             'tempo',
             'standings',
             'events',
