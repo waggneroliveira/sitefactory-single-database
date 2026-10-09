@@ -471,8 +471,7 @@
         }
 
         .site-navigation.ul .subcategorylist:hover {
-            background-color: var(--primary-color);
-            
+            background-color: var(--primary-color);            
             transition: all 0.3s ease;
         }
         .site-navigation.ul .subcategorylist:hover a{
@@ -481,12 +480,21 @@
         .w-20{
             width: 20%;
         }
+        .swiper-button-prev.news:hover,
+        .swiper-button-next.news:hover {
+            background: var(--primary-color) !important; 
+        }
+        .swiper-button-prev.news::after,
+        .swiper-button-next.news::after {
+            color: var(--primary-color); 
+        }
     </style>
 
     <div id="newsMediaOrganization" hidden></div>
+
     <header id="header" class="w-100 d-flex flex-column position p-0">   
         <div class="w-100 py-0">
-            <div class="header-top py-0 mb-0 header-color">
+            <div class="header-top py-0 mb-0 bg-header">
                 <div class="container d-flex flex-wrap justify-content-center justify-content-lg-between align-items-center">    
                     <div class="logo-img d-block d-lg-none px-0 py-2 rounded-2 d-flex justify-content-start align-items-center w-auto">
                         <a class="navbar-brand logo-header" href="{{ route('index') }}" style="max-width: 200px;">
@@ -508,19 +516,19 @@
                         <ul class="navbar-nav ml-n2">
 
                             <li class="nav-item border-right border-end-1">
-                                <a class="nav-link text-white font-14 poppins-regular" href="#">
+                                <a class="nav-link text-color-header font-14 poppins-regular" href="#">
                                     {{ ucfirst(\Carbon\Carbon::now()->translatedFormat('l, j \d\e F \d\e Y')) }}
                                 </a>
                             </li>
 
                             <li class="nav-item border-right border-end-1">
-                                <a class="nav-link text-white font-14 poppins-regular" href="#">
+                                <a class="nav-link text-color-header font-14 poppins-regular" href="#">
                                     Advertise
                                 </a>
                             </li>
 
                             <li class="nav-item border-right border-end-1">
-                                <a class="nav-link text-white font-14 poppins-regular" href="#">
+                                <a class="nav-link text-color-header font-14 poppins-regular" href="#">
                                     Contact
                                 </a>
                             </li>
@@ -529,7 +537,7 @@
 
                                 {{-- LOGIN --}}
                                 <li class="nav-item">
-                                    <a class="nav-link text-white font-14 poppins-regular"
+                                    <a class="nav-link text-color-header font-14 poppins-regular"
                                     href="#"
                                     data-bs-toggle="modal"
                                     data-bs-target="#loginModal">
@@ -548,7 +556,7 @@
                                 @endphp
 
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link text-white font-14 poppins-regular dropdown-toggle"
+                                    <a class="nav-link text-color-header font-14 poppins-regular dropdown-toggle"
                                     href="#"
                                     role="button"
                                     data-bs-toggle="dropdown"
@@ -590,13 +598,13 @@
                 
                     <div class="col-12 col-lg-6 text-center d-none d-lg-block"> 
                         <div class="d-flex flex-wrap justify-content-center justify-content-lg-end align-items-center">
-                            <div class="dark-background p-0">
+                            <div class="p-0">
                                 <nav class="site-navigation position-relative redes-sociais">
                                     <ul class="p-0 d-flex justify-content-center gap-3 flex-row mb-0">
                                         @if (isset($contact) && $contact->link_insta)
                                             <li class="li d-flex justify-content-center align-items-center rounded-circle">
                                                 <a href="{{ $contact->link_insta }}" rel="nofollow noopener noreferrer" target="_blank">
-                                                    <i class="bi bi-instagram"></i>
+                                                    <i class="bi bi-instagram text-color-header"></i>
                                                 </a>
                                             </li>
                                         @endif
@@ -604,7 +612,7 @@
                                         @if (isset($contact) && $contact->link_x)
                                             <li class="li d-flex justify-content-center align-items-center rounded-circle">
                                                 <a href="{{ $contact->link_x }}" rel="nofollow noopener noreferrer" target="_blank">
-                                                    <i class="bi bi-twitter-x"></i>
+                                                    <i class="bi bi-twitter-x text-color-header"></i>
                                                 </a>
                                             </li>
                                         @endif
@@ -612,7 +620,7 @@
                                         @if (isset($contact) && $contact->link_youtube)
                                             <li class="li d-flex justify-content-center align-items-center rounded-circle">
                                                 <a href="{{ $contact->link_youtube }}" rel="nofollow noopener noreferrer" target="_blank">
-                                                    <i class="bi bi-youtube"></i>
+                                                    <i class="bi bi-youtube text-color-header"></i>
                                                 </a>
                                             </li>
                                         @endif
@@ -620,7 +628,7 @@
                                         @if (isset($contact) && $contact->link_face)
                                             <li class="li d-flex justify-content-center align-items-center rounded-circle">
                                                 <a href="{{ $contact->link_face }}" rel="nofollow noopener noreferrer" target="_blank">
-                                                    <i class="bi bi-facebook"></i>
+                                                    <i class="bi bi-facebook text-color-header"></i>
                                                 </a>
                                             </li>
                                         @endif
@@ -628,7 +636,7 @@
                                         @if (isset($contact) && $contact->link_tik_tok)
                                             <li class="li d-flex justify-content-center align-items-center rounded-circle">
                                                 <a href="{{ $contact->link_tik_tok }}" rel="nofollow noopener noreferrer" target="_blank">
-                                                    <i class="bi bi-tiktok"></i>
+                                                    <i class="bi bi-tiktok text-color-header"></i>
                                                 </a>
                                             </li>
                                         @endif
@@ -664,7 +672,7 @@
                     @endif
                 </div>       
             </div>
-            <div class="container-fluid header-color mt-0 h-60 d-flex align-items-center py-0">
+            <div class="container-fluid bg-header mt-0 h-60 d-flex align-items-center py-0">
                 <div class="container d-flex justify-content-between align-items-center w-100 h-100">
                     <div class="social-links d-flex justify-content-start align-items-center gap-4 text-center col-12 col-lg-8">
                         <nav class="none site-navigation ul position-relative text-end width-75 h-60">
@@ -1286,6 +1294,100 @@
         @yield('content') 
     </main>
 
+    @if (isset($contact) && ($contact->link_face || $contact->link_x || $contact->link_insta || $contact->link_youtube))
+        <!-- Seção de Redes Sociais Start -->
+        <section class="social-networks-section py-5 my-4">
+            <div class="container">
+                <div class="social-card-wrapper position-relative overflow-hidden rounded-4 p-4 p-md-5 text-center">
+                    
+                    {{-- Elementos decorativos de fundo (Glow Effects) --}}
+                    <div class="social-glow glow-1"></div>
+                    <div class="social-glow glow-2"></div>
+
+                    <div class="position-relative z-2">
+                        {{-- Título e Subtítulo --}}
+                        <div class="row justify-content-center mb-4">
+                            <div class="col-lg-8">
+                                <span class="badge bg-primary-soft text-primary rounded-pill px-3 py-2 font-12 fw-bold text-uppercase mb-2">
+                                    <i class="bi bi-share-fill me-1"></i> Conecte-se Conosco
+                                </span>
+                                <h3 class="poppins-bold font-28 title-main mb-2">
+                                    Siga-nos nas redes sociais
+                                </h3>
+                                <p class="text-muted poppins-regular font-14 mb-0">
+                                    Acompanhe as notícias, bastidores e atualizações de toda a cidade em tempo real através das nossas plataformas oficiais.
+                                </p>
+                            </div>
+                        </div>
+
+                        {{-- Grid de Redes Sociais --}}
+                        <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 mt-4">
+                            
+                            {{-- Facebook --}}
+                            @if ($contact->link_face)
+                                <a href="{{ $contact->link_face }}" rel="nofollow noopener noreferrer" target="_blank" class="social-box facebook" title="Siga no Facebook">
+                                    <div class="social-icon">
+                                        <i class="bi bi-facebook"></i>
+                                    </div>
+                                    <div class="social-text">
+                                        <span class="social-name">Facebook</span>
+                                        <span class="social-action">Curtir página</span>
+                                    </div>
+                                    <i class="bi bi-arrow-up-right-short social-arrow"></i>
+                                </a>
+                            @endif
+
+                            {{-- Instagram --}}
+                            @if ($contact->link_insta)
+                                <a href="{{ $contact->link_insta }}" rel="nofollow noopener noreferrer" target="_blank" class="social-box instagram" title="Siga no Instagram">
+                                    <div class="social-icon">
+                                        <i class="bi bi-instagram"></i>
+                                    </div>
+                                    <div class="social-text">
+                                        <span class="social-name">Instagram</span>
+                                        <span class="social-action">Seguir perfil</span>
+                                    </div>
+                                    <i class="bi bi-arrow-up-right-short social-arrow"></i>
+                                </a>
+                            @endif
+
+                            {{-- X (Twitter) --}}
+                            @if ($contact->link_x)
+                                <a href="{{ $contact->link_x }}" rel="nofollow noopener noreferrer" target="_blank" class="social-box twitter-x" title="Siga no X">
+                                    <div class="social-icon">
+                                        <i class="bi bi-twitter-x"></i>
+                                    </div>
+                                    <div class="social-text">
+                                        <span class="social-name">X / Twitter</span>
+                                        <span class="social-action">Acompanhar</span>
+                                    </div>
+                                    <i class="bi bi-arrow-up-right-short social-arrow"></i>
+                                </a>
+                            @endif
+
+                            {{-- YouTube --}}
+                            @if ($contact->link_youtube)
+                                <a href="{{ $contact->link_youtube }}" rel="nofollow noopener noreferrer" target="_blank" class="social-box youtube" title="Inscreva-se no YouTube">
+                                    <div class="social-icon">
+                                        <i class="bi bi-youtube"></i>
+                                    </div>
+                                    <div class="social-text">
+                                        <span class="social-name">YouTube</span>
+                                        <span class="social-action">Inscrever-se</span>
+                                    </div>
+                                    <i class="bi bi-arrow-up-right-short social-arrow"></i>
+                                </a>
+                            @endif
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!-- Seção de Redes Sociais End -->
+    @endif
+
     {{-- Footer --}}
     <footer class="bg-footer border-top pt-3 pt-lg-5 pb-3">
         <div class="container">
@@ -1342,27 +1444,8 @@
                 
                 <div class="col-lg-3 col-md-6 col-12 text-start">
 
-                    <div class="h5 text-color-footer mb-1 font-changa font-16 font-bold map-footer">Newsletter</div>
-                    <div class="news_letter">
-                        <p class="text-color-footer font-15">Inscreva-se e seja o primeiro a receber promoções incríveis</p>
-                        
-                        <form id="newsletter-form" action="{{ route('send-newsletter') }}" method="POST">
-                            @csrf
-
-                            <div class="form-group">
-                                <input type="email" id="email" name="email" class="form-control" placeholder="Informe seu email" required>
-
-                                <button type="submit" class="btn" aria-label="subscribe">
-                                    <i class="bi bi-send-fill"></i>
-                                </button>
-                            </div>
-
-                            <label class="text-color-footer font-12 d-flex justify-content-start gap-1 align-items-center mt-2">
-                                <input name="term_privacy" type="checkbox" id="privacy-policy" required>
-                                Concordo com a Política de Privacidade da Whiweb.
-                            </label>
-                        </form>
-                    </div>
+                    <!-- Todas as emergências em um único bloco -->
+                    @include('client.themes.blog.tp-01.includes.public-interest')
 
                 </div>
             </div>

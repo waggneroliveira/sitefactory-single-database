@@ -1,3 +1,513 @@
+/* ===================================
+    TEmpo
+=================================== */
+.weather-card {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    border-radius: 28px;
+    padding: 26px 24px 20px;
+    background: linear-gradient(145deg, #1d72eb 0%, #134dae 50%, #0d2a6a 100%);
+    color: #ffffff;
+    box-shadow: 0 20px 40px -12px rgba(18, 64, 148, 0.45),
+                inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+    will-change: transform;
+}
+
+.weather-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 26px 50px -12px rgba(18, 64, 148, 0.55),
+                inset 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+/* Camadas de Efeito Visual no Fundo */
+.weather-bg-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(50px);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.glow-primary {
+    width: 220px;
+    height: 220px;
+    top: -80px;
+    right: -40px;
+    background: rgba(255, 214, 10, 0.22);
+    animation: floatGlow 10s ease-in-out infinite alternate;
+}
+
+.glow-secondary {
+    width: 180px;
+    height: 180px;
+    bottom: -60px;
+    left: -20px;
+    background: rgba(80, 200, 255, 0.25);
+    animation: floatGlow 8s ease-in-out infinite alternate-reverse;
+}
+
+.weather-shimmer {
+    position: absolute;
+    top: 0; left: -100%;
+    width: 50%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+    transform: skewX(-25deg);
+    animation: shimmer 7s infinite;
+    pointer-events: none;
+}
+
+/* Cabeçalho */
+.weather-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.weather-location {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    color: #ffffff;
+}
+
+.weather-location i {
+    color: #ff5252;
+    font-size: 16px;
+    animation: locationBounce 3s ease infinite;
+}
+
+.weather-condition-text {
+    margin-top: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Ícone Animado Multicamadas */
+.weather-hero-icon {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-sun {
+    position: absolute;
+    top: 2px;
+    right: 4px;
+    font-size: 38px;
+    color: #ffd60a;
+    filter: drop-shadow(0 0 12px rgba(255, 214, 10, 0.6));
+    animation: spinSlow 20s linear infinite;
+}
+
+.icon-cloud-back {
+    position: absolute;
+    bottom: 6px;
+    left: 2px;
+    font-size: 36px;
+    color: rgba(255, 255, 255, 0.5);
+    animation: cloudFloat 4s ease-in-out infinite alternate;
+}
+
+.icon-cloud-front {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    font-size: 34px;
+    color: #ffffff;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+    animation: cloudFloat 3s ease-in-out infinite alternate-reverse;
+}
+
+/* Bloco Principal de Temperatura */
+.weather-main-temp {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 10px;
+}
+
+.temp-value {
+    font-size: 76px;
+    font-weight: 200;
+    line-height: 0.9;
+    letter-spacing: -4px;
+    background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.75) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.temp-unit-group {
+    display: flex;
+    margin-top: 6px;
+    margin-left: 2px;
+}
+
+.temp-degree {
+    font-size: 40px;
+    font-weight: 300;
+    line-height: 1;
+}
+
+.temp-scale {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 6px;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* Barra de Variação de Temperatura */
+.weather-range-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.range-track {
+    flex: 1;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.range-fill {
+    position: absolute;
+    top: 0; bottom: 0;
+    background: linear-gradient(90deg, #ffbe0b, #ff006e);
+    border-radius: 10px;
+}
+
+/* Divisor Glassmorphism */
+.weather-divider {
+    height: 1px;
+    margin: 18px 0;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+}
+
+/* Grid de Métricas Secundárias */
+.weather-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.metric-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.metric-chip:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.metric-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.18);
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.metric-data {
+    display: flex;
+    flex-direction: column;
+}
+
+.metric-label {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.72);
+    font-weight: 500;
+}
+
+.metric-value {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.metric-value small {
+    font-size: 10px;
+    font-weight: 400;
+    opacity: 0.8;
+}
+
+/* Footer / Live Indicator */
+.weather-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    padding-top: 4px;
+}
+
+.weather-live-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 20px;
+}
+
+.live-pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #2ed573;
+    box-shadow: 0 0 8px #2ed573;
+    animation: livePulse 1.8s infinite;
+}
+
+.live-text {
+    font-size: 10px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, .85);
+    letter-spacing: 0.4px;
+}
+
+.weather-update-time {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+/* Keyframes de Animações Organizadas */
+@keyframes floatGlow {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-20px, 20px) scale(1.15); }
+}
+
+@keyframes cloudFloat {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-4px); }
+}
+
+@keyframes spinSlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes locationBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+@keyframes livePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    20%, 100% { left: 200%; }
+}
+
+/* Adaptabilidade Mobile */
+@media (max-width: 480px) {
+    .weather-card {
+        border-radius: 24px;
+        padding: 20px 18px 16px;
+    }
+
+    .temp-value {
+        font-size: 64px;
+    }
+
+    .weather-metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .metric-chip {
+        padding: 8px 10px;
+    }
+}
+
+/* Suporte a Acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+    .weather-card,
+    .glow-primary,
+    .glow-secondary,
+    .icon-sun,
+    .icon-cloud-back,
+    .icon-cloud-front,
+    .weather-location i,
+    .live-pulse,
+    .weather-shimmer {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+/* ===================================
+    ESTILOS DA SEÇÃO DE REDES SOCIAIS
+=================================== */
+.social-card-wrapper {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
+    isolation: isolate;
+}
+
+.bg-primary-soft {
+    background-color: rgba(13, 110, 253, 0.1);
+}
+
+.title-main {
+    color: #0f172a;
+    letter-spacing: -0.5px;
+}
+
+/* Brilhos sutis no fundo (Glows) */
+.social-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.glow-1 {
+    width: 180px;
+    height: 180px;
+    top: -40px;
+    left: -40px;
+    background: rgba(13, 110, 253, 0.15);
+}
+
+.glow-2 {
+    width: 200px;
+    height: 200px;
+    bottom: -50px;
+    right: -50px;
+    background: rgba(225, 48, 108, 0.12);
+}
+
+/* Card Individual de Rede Social */
+.social-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 12px 18px;
+    border-radius: 14px;
+    text-decoration: none !important;
+    color: #1e293b;
+    min-width: 200px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+}
+
+.social-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    background: #f1f5f9;
+    color: #475569;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.social-text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.social-name {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.social-action {
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+.social-arrow {
+    font-size: 18px;
+    margin-left: auto;
+    color: #94a3b8;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* Efeitos ao passar o mouse (Hover) com cores oficiais */
+.social-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+.social-box:hover .social-arrow {
+    transform: translate(2px, -2px);
+}
+
+/* Facebook Hover */
+.social-box.facebook:hover {
+    border-color: #1877f2;
+}
+.social-box.facebook:hover .social-icon {
+    background: #1877f2;
+    color: #ffffff;
+}
+
+/* Instagram Hover */
+.social-box.instagram:hover {
+    border-color: #e1306c;
+}
+.social-box.instagram:hover .social-icon {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: #ffffff;
+}
+
+/* X (Twitter) Hover */
+.social-box.twitter-x:hover {
+    border-color: #000000;
+}
+.social-box.twitter-x:hover .social-icon {
+    background: #000000;
+    color: #ffffff;
+}
+
+/* YouTube Hover */
+.social-box.youtube:hover {
+    border-color: #ff0000;
+}
+.social-box.youtube:hover .social-icon {
+    background: #ff0000;
+    color: #ffffff;
+}
+
+
 .tab01 .nav-tabs {
     display: -webkit-box;
     display: -webkit-flex;
@@ -538,7 +1048,7 @@ aside .img-fluid.annun {
     position: absolute;
     width: 100%;
     height: 100%;
-    padding: 10px 30px;
+    padding: 10px 20px;
     top: 0;
     left: 0;
     display: flex;
@@ -575,13 +1085,8 @@ aside .img-fluid.annun {
 .swiper-button-next.news::after {
     font-size: 14px !important;
     font-weight: bold;
-    color: #1C58A6 !important;
 }
 
-.swiper-button-prev.news:hover,
-.swiper-button-next.news:hover {
-    background: #1C58A6 !important;
-}
 
 .swiper-button-prev.news:hover::after,
 .swiper-button-next.news:hover::after {
@@ -1339,10 +1844,7 @@ p {
 .dark-background-medium {
     background-color: var(--background-color-dark) 
 }
-.dark-background {
-    background-color: var(--background-blue);
-    color: var(--default-color) 
-}
+
 .max-width {
     max-width: 1200px 
 }
@@ -1530,9 +2032,7 @@ h1, h2, h3, h4, h5, h6 {
     max-width: 285px;
     border-radius: 10px;
 }
-.border-bottom.news {
-    border-bottom: 2px solid var(--background-red) !important;
-}
+
 .hero picture {
     height: 70vh;
     width: 100vw;
@@ -1592,9 +2092,7 @@ h1, h2, h3, h4, h5, h6 {
     left: 0;
     z-index: 10;
 }
-.header-color {
-    background: var(--background-blue);
-}
+
 .swiper-container-wrapper {
     display: flex;
     flex-direction: column;
@@ -1736,7 +2234,12 @@ h1, h2, h3, h4, h5, h6 {
         padding: 20px 
     }
 }
+
 @media (max-width:576px) {
+    .social-box {
+        width: 100%;
+        min-width: 100%;
+    }
     .hero picture {
         height: 440px;
     }

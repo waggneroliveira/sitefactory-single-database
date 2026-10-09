@@ -44,236 +44,10 @@
 @endif
 
 
-<div class="container-fluid my-0 mb-5 p-0">
-    <div class="row g-3">
-        <div class="col-12">
-            <div class="matches-widget">
-                <div class="matches-widget-content">
-
-                    {{-- Cabeçalho do Widget com Navegação --}}
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="matches-title">
-                            <i class="bi bi-trophy-fill me-2 text-warning"></i> Próximos Jogos
-                        </div>
-
-                        <div class="d-flex align-items-center gap-2">
-                            @if(!empty($proximosJogos) && isset($proximosJogos[0]['matchday']))
-                                <span class="matches-badge">
-                                    {{ $proximosJogos[0]['matchday'] }}ª Rodada
-                                </span>
-                            @endif
-
-                            {{-- Botões do Carrossel --}}
-                            <div class="swiper-navigation-btn matches-prev"><i class="bi bi-chevron-left"></i></div>
-                            <div class="swiper-navigation-btn matches-next"><i class="bi bi-chevron-right"></i></div>
-                        </div>
-                    </div>
-
-                    {{-- Container Swiper --}}
-                    @if(!empty($proximosJogos))
-                        <div class="swiper matches-swiper">
-                            <div class="swiper-wrapper">
-                                @foreach($proximosJogos as $jogo)
-                                    <div class="swiper-slide">
-                                        <div class="match-card-vertical">
-                                            {{-- Time Mandante --}}
-                                            <div class="match-team-row">
-                                                <img src="{{ $jogo['homeTeam']['crest'] }}" alt="{{ $jogo['homeTeam']['name'] }}" class="team-crest" loading="lazy">
-                                                <span class="team-name text-truncate" title="{{ $jogo['homeTeam']['name'] }}">
-                                                    {{ $jogo['homeTeam']['tla'] ?? $jogo['homeTeam']['shortName'] ?? $jogo['homeTeam']['name'] }}
-                                                </span>
-                                            </div>
-
-                                            {{-- Separador VS e Horário --}}
-                                            <div class="match-info-center">
-                                                <span class="vs-badge">VS</span>
-                                                <span class="match-datetime">
-                                                    <i class="bi bi-calendar3 me-1"></i>
-                                                    {{ \Carbon\Carbon::parse($jogo['utcDate'])->setTimezone('America/Sao_Paulo')->format('d/m') }}
-
-                                                    <i class="bi bi-clock ms-1 me-1"></i>
-                                                    {{ \Carbon\Carbon::parse($jogo['utcDate'])->setTimezone('America/Sao_Paulo')->format('H:i') }}
-                                                </span>
-                                            </div>
-
-                                            {{-- Time Visitante --}}
-                                            <div class="match-team-row">
-                                                <img src="{{ $jogo['awayTeam']['crest'] }}" alt="{{ $jogo['awayTeam']['name'] }}" class="team-crest" loading="lazy">
-                                                <span class="team-name text-truncate" title="{{ $jogo['awayTeam']['name'] }}">
-                                                    {{ $jogo['awayTeam']['tla'] ?? $jogo['awayTeam']['shortName'] ?? $jogo['awayTeam']['name'] }}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    @else
-                        <div class="text-center w-100 py-4 text-white-50">
-                            <i class="bi bi-calendar-x fs-3 d-block mb-2"></i>
-                            Nenhum jogo agendado para a próxima rodada.
-                        </div>
-                    @endif
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<style>
-    /* ===================================
-       ESTILOS DOS JOGOS (SWIPER CAROUSEL)
-    =================================== */
-    .matches-widget {
-        position: relative;
-        overflow: hidden;
-        background: #252a34;
-        color: #fff;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, .20);
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .matches-widget-content {
-        padding: 18px 20px;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .matches-title {
-        font-size: 15px;
-        font-weight: 700;
-    }
-
-    .matches-badge {
-        background: rgba(255, 255, 255, .1);
-        border: 1px solid rgba(255, 255, 255, .15);
-        padding: 3px 10px;
-        border-radius: 10px;
-        font-size: 11px;
-        font-weight: 600;
-    }
-
-    /* Botões de Navegação Personalizados */
-    .swiper-navigation-btn {
-        width: 26px;
-        height: 26px;
-        background: rgba(255, 255, 255, .08);
-        border: 1px solid rgba(255, 255, 255, .12);
-        border-radius: 6px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #fff;
-        font-size: 12px;
-        cursor: pointer;
-        transition: background .2s ease;
-    }
-
-    .swiper-navigation-btn:hover {
-        background: rgba(255, 255, 255, .2);
-    }
-
-    .swiper-button-disabled {
-        opacity: .3;
-        cursor: not-allowed;
-    }
-
-    /* Swiper Container */
-    .matches-swiper {
-        width: 100%;
-        padding: 4px 2px;
-    }
-
-    .swiper-slide {
-        width: auto; /* Permite tamanho dinâmico do card */
-    }
-
-    /* Card Individual */
-    .match-card-vertical {
-        width: 210px;
-        background: #2f3644;
-        border-radius: 10px;
-        padding: 14px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 8px;
-        border: 1px solid rgba(255, 255, 255, .04);
-        transition: transform .2s ease, background .2s ease;
-    }
-
-    .match-card-vertical:hover {
-        background: #363e4e;
-        transform: translateY(-2px);
-    }
-
-    .match-team-row {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-    }
-
-    .team-crest {
-        width: 28px !important;
-        height: 28px !important;
-        object-fit: contain;
-        flex-shrink: 0;
-    }
-
-    .team-name {
-        font-size: 13px;
-        font-weight: 700;
-        color: #ffffff;
-        letter-spacing: -0.2px;
-    }
-
-    .match-info-center {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 2px 0;
-    }
-
-    .vs-badge {
-        color: #ffb703;
-        font-weight: 900;
-        font-size: 13px;
-        letter-spacing: .5px;
-        line-height: 1;
-    }
-
-    .match-datetime {
-        font-size: 11px;
-        color: #9aa4b2;
-        font-weight: 500;
-        margin-top: 4px;
-    }
-</style>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        new Swiper('.matches-swiper', {
-            slidesPerView: 'auto',
-            spaceBetween: 14,
-            freeMode: true,
-            grabCursor: true,
-            navigation: {
-                nextEl: '.matches-next',
-                prevEl: '.matches-prev',
-            },
-        });
-    });
-</script>
-
 @if (isset($blogSuperHighlights) && $blogSuperHighlights <> null)
     <section class="blog mb-0 mt-4">
         <div class="container">
-            <div class="row g-3 g-lg-4">
+            <div class="row g-3 g-lg-4 mt-4">
                 <div class="col-lg-7 px-0 pe-lg-0 m-0">
                     <div class="d-flex justify-content-start align-items-center my-3 position-relative">
                                                                             
@@ -281,7 +55,7 @@
                         
                         <!-- Brand tab -->
                         <h3 class="poppins-semiBold font-20 mb-0 text-dark">
-                            Destaque principal
+                            Principais Destaques
                         </h3>
                         
                         <div class="navigation-destaque position-relative col-8 d-flex justify-content-end">
@@ -329,7 +103,7 @@
                                             <div class="overlay">
 
                                                 <div class="mb-3 d-flex justify-content-center align-items-center gap-1 flex-wrap">
-                                                    <span class="badge rounded-0 background-red poppins-semiBold font-12 text-uppercase py-2 px-2 me-2">
+                                                    <span class="badge rounded-0 bg-primary-color poppins-semiBold font-12 text-uppercase py-2 px-2 me-2">
                                                         {{ $blogSuperHighlight->category->title }}
                                                     </span>
                                                 </div>
@@ -389,8 +163,8 @@
                                                         class="share-button d-flex"
                                                     >
                                                         <svg
-                                                            width="24"
-                                                            height="26"
+                                                            width="18"
+                                                            height="20"
                                                             viewBox="0 0 24 26"
                                                             fill="none"
                                                             xmlns="http://www.w3.org/2000/svg"
@@ -462,20 +236,20 @@
                                             <div class="overlay">
 
                                                 <div class="mb-2 d-flex justify-content-start align-items-center gap-1 flex-wrap">
-                                                    <span class="badge rounded-0 background-red text-uppercase poppins-semiBold font-12 py-2 px-2 me-2">
+                                                    <span class="badge rounded-0 bg-primary-color text-uppercase poppins-semiBold font-12 py-2 px-2 me-2">
                                                         {{ $blogHighlight->category->title }}
                                                     </span>
                                                 </div>
 
                                                 <a href="{{ route('blog-inner', ['slug' => $blogHighlight->slug]) }}">
-                                                    <h2 class="h6 m-0 text-white poppins-semiBold font-18 d-block">
+                                                    <h2 class="h6 m-0 text-white poppins-semiBold font-16 d-block">
                                                         {{ $blogHighlight->title }}
                                                     </h2>
                                                 </a>
 
                                                 <div class="d-flex justify-content-between align-items-center w-100">
 
-                                                    <p class="text-white mt-3 poppins-regular font-14 col-8">
+                                                    <p class="text-white mt-3 poppins-regular font-12 col-8">
                                                         {{ $dataFormatada }}
                                                     </p>
 
@@ -490,7 +264,7 @@
                                                                 target="_blank"
                                                                 class="rounded-circle btn btn-sm bg-whatsapp bg-transparent p-0"
                                                             >
-                                                                <i class="fab fa-whatsapp text-white"></i>
+                                                                <i class="fab fa-whatsapp text-white font-12"></i>
                                                             </a>
 
                                                             <a
@@ -498,7 +272,7 @@
                                                                 target="_blank"
                                                                 class="rounded-circle btn btn-sm btn-twiter bg-transparent p-0"
                                                             >
-                                                                <i class="fab fa-x-twitter text-white"></i>
+                                                                <i class="fab fa-x-twitter text-white font-12"></i>
                                                             </a>
 
                                                             <a
@@ -506,7 +280,7 @@
                                                                 target="_blank"
                                                                 class="rounded-circle btn btn-facebook btn-sm bg-transparent p-0"
                                                             >
-                                                                <i class="fab fa-facebook-f text-white"></i>
+                                                                <i class="fab fa-facebook-f text-white font-12"></i>
                                                             </a>
 
                                                         </div>
@@ -518,8 +292,8 @@
                                                         class="share-button d-flex"
                                                     >
                                                         <svg
-                                                            width="18"
-                                                            height="20"
+                                                            width="14"
+                                                            height="16"
                                                             viewBox="0 0 24 26"
                                                             fill="none"
                                                             xmlns="http://www.w3.org/2000/svg"
@@ -624,81 +398,25 @@
                 @endif      
 
                 <div class="col-lg-3 col-12">
-                    @if ($blogRelacionados->count() > 0)                        
-                        <!-- Popular News Start -->
-                        <div class="mb-3">
-                            <div class="bg-white border p-3 rounded-1">
-                                <div class="section-title mb-4 rounded-top-left">
-                                    <h3 class="mb-3 poppins-bold font-18 pb-3 border-bottom title-blue news">Veja também</h3>
-                                </div>
-                                @foreach($blogRelacionados as $index => $relacionado)
-                                    @php
-                                        // Verifica se a imagem é do RSS (URL externa) ou manual (storage)
-                                        if ($relacionado->path_image_thumbnail) {
-                                            if (Str::startsWith($relacionado->path_image_thumbnail, ['http://', 'https://'])) {
-                                                // Já é uma URL completa (RSS ou manual com URL externa)
-                                                $imagemRelacionadoUrl = $relacionado->path_image_thumbnail;
-                                            } else {
-                                                // Precisa do asset() para o storage
-                                                $imagemRelacionadoUrl = asset('storage/' . $relacionado->path_image_thumbnail);
-                                            }
-                                        } else {
-                                            $imagemRelacionadoUrl = 'https://placehold.co/600x400?text=Sem+imagem&font=poppins';
-                                        }
-                                    @endphp
-                                    
-                                    <article class="{{ $index >= 5 ? 'rel-item d-none' : '' }}">
-                                        <div class="d-flex align-items-center bg-white mb-3" style="height: 60px;">
-
-                                            <div class="position-relative" style="width:50px; height:50px; flex-shrink:0;">
-                                                <img loading="lazy"
-                                                    class="rounded-1 img-fluid w-100 h-100"
-                                                    style="object-fit: cover; aspect-ratio: 1/1;"
-                                                    src="{{ $imagemRelacionadoUrl }}"
-                                                    alt="{{ $relacionado->title ?? 'Sem imagem' }}">
-                                            </div>
-                                            
-                                            <div class="h-100 ps-2 d-flex flex-column justify-content-center" style="flex: 1;">
-                                                <a href="{{ route('blog-inner', ['slug' => $relacionado->slug]) }}" class="underline">
-                                                    <h3 class="h6 m-0 poppins-semiBold font-14 title-blue">
-                                                        {{ substr(strip_tags($relacionado->title), 0, 70) }}...
-                                                    </h3>
-                                                </a>
-                                            </div>                                           
-
-                                        </div>
-                                    </article>
-                                @endforeach
-
-                                @if(count($blogRelacionados) > 5)
-                                    <div class="text-center mt-2">
-                                        <p id="btn-ver-mais" class="poppins-bold font-15" style="cursor: pointer;">Ver mais</p>                                        
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                        <!-- Popular News End -->
-                    @endif
-
                     <!-- Tags Start -->
-                    <div class="mb-3">
-                        <div class="bg-white border rounded-1 p-3">
-                            <div class="section-title mb-0 rounded-top-left cat-mt">
-                                <h4 class="mb-3 poppins-bold font-18 border-bottom title-blue pb-3 news">Categorias</h4>
-                            </div>
-                            <ul class="ps-0 d-flex flex-wrap m-n1">
-                                @foreach ($blogCategories as $category)
-                                    <li class="nav-link">
-                                        <a href="{{ route('blog', ['category' => $category->slug]) }}#news"
-                                        class="btn btn-sm title-blue rounded-0 poppins-semiBold font-12 m-1 bg-blue-light">
-                                            {{ $category->title }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
+                        @include('client.themes.blog.tp-01.includes.category-aside')  
                     <!-- Tags End -->
+
+                    <!-- Popular News Start -->
+                        @include('client.themes.blog.tp-01.includes.view-more')                    
+                    <!-- Popular News End -->
+
+                    <!-- Tabela brasileirao Start -->
+                        @include('client.themes.blog.tp-01.includes.brasileirao-table')                    
+                    <!-- Tabela brasileirao News End -->  
+     
+                    <!-- brasileirao-next-play Start -->
+                        @include('client.themes.blog.tp-01.includes.brasileirao-next-play')
+                    <!-- brasileirao-next-play End -->
+
+                    <!-- Previsao tempo Start -->
+                        @include('client.themes.blog.tp-01.includes.weather')                    
+                    <!-- Previsao tempo News End -->  
 
                     <!-- Ads Start -->
                     @if ($announcements->count())                        
@@ -709,626 +427,9 @@
                     <!-- Ads End -->
 
                     <!-- Newsletter Start -->
-                    <div class="mb-4 bg-white text-center border p-3 rounded-1">
-                        <div class="section-title mb-0 rounded-top-left">
-                            <h4 class="mb-3 poppins-bold font-18 border-bottom pb-3 title-blue text-start news">Newsletter</h4>
-                        </div>
-                        @include('client.themes.blog.tp-01.includes.newsletter')
-                    </div>
+                    @include('client.themes.blog.tp-01.includes.newsletter')
                     <!-- Newsletter End -->
-
-                    @if (isset($contact) && $contact->link_face || isset($contact) && $contact->link_x || isset($contact) && $contact->link_insta || isset($contact) && $contact->link_youtube)
-                        <!-- Rede sociais Start -->
-                        <div class="mb-4 bg-white text-center border p-3 rounded-1">
-                            <div class="section-title mb-0 rounded-top-left">
-                                <h4 class="mb-3 poppins-bold font-18 border-bottom pb-3 title-blue text-start news">Siga-nos nas redes sociais</h4>
-                                    <p class="text-color poppins-regular font-12 text-start">
-                                        Acompanhe as notícias de toda a cidade através das nossas redes sociais
-                                    </p>
-                            </div>
-                            <div class="p-0 m-auto me-0 mt-4">
-                                <nav class="site-navigation position-relative text-end w-100 redes-sociais">
-                                    <ul class="p-0 d-flex justify-content-start justify-content-lg-center align-items-center gap-3 flex-row mb-0 w-100">
-                                        @if (isset($contact) && $contact->link_face)
-                                            <li class="li d-flex justify-content-start align-items-center">
-                                                <a href="{{$contact->link_face}}" rel="nofollow noopener noreferrer" target="_blank">
-                                                    <svg width="20" height="30" viewBox="0 0 22 43" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M22 0.310097V7.13221H18.0023C16.5424 7.13221 15.5579 7.44231 15.0486 8.0625C14.5394 8.68269 14.2847 9.61298 14.2847 10.8534V15.7374H21.7454L20.7523 23.3864H14.2847V43H6.49306V23.3864H0V15.7374H6.49306V10.104C6.49306 6.89964 7.37577 4.41456 9.1412 2.64874C10.9066 0.882912 13.2577 0 16.1944 0C18.6898 0 20.625 0.103367 22 0.310097Z" fill="black"/>
-                                                    </svg>
-                                                </a>
-                                            </li>
-                                        @endif
-                                        @if (isset($contact) && $contact->link_x)
-                                            <li class="li d-flex justify-content-start align-items-center">
-                                                <a href="{{$contact->link_x}}" rel="nofollow noopener noreferrer" target="_blank">
-                                                    <svg width="30" height="30" viewBox="0 0 33 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M26.0074 0H31.0372L19.9963 12.6639L33 30H22.8178L14.8439 19.5492L5.64312 30H0.613383L12.513 16.3525L0 0H10.4275L17.6654 9.59016L26.0074 0ZM24.29 26.9262H26.9888L8.95539 2.95082H5.88848L24.29 26.9262Z" fill="black"/>
-                                                    </svg>
-                                                </a>
-                                            </li>
-                                        @endif
-                                        @if (isset($contact) && $contact->link_insta)
-                                            <li class="li d-flex justify-content-start align-items-center">
-                                                <a href="{{$contact->link_insta}}" rel="nofollow noopener noreferrer" target="_blank">
-                                                    <svg width="30" height="30" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M22.86 22.86C22.86 22.86 23.1611 22.5589 23.7633 21.9567C24.3656 21.3545 24.6667 20.2023 24.6667 18.5C24.6667 16.7977 24.0645 15.3444 22.86 14.14C21.6556 12.9355 20.2023 12.3333 18.5 12.3333C16.7977 12.3333 15.3444 12.9355 14.14 14.14C12.9355 15.3444 12.3333 16.7977 12.3333 18.5C12.3333 20.2023 12.9355 21.6556 14.14 22.86C15.3444 24.0645 16.7977 24.6667 18.5 24.6667C20.2023 24.6667 21.6556 24.0645 22.86 22.86ZM25.2207 11.7793C25.2207 11.7793 25.6824 12.241 26.6058 13.1644C27.5292 14.0878 27.9909 15.8663 27.9909 18.5C27.9909 21.1337 27.0675 23.3739 25.2207 25.2207C23.3739 27.0675 21.1337 27.9909 18.5 27.9909C15.8663 27.9909 13.6261 27.0675 11.7793 25.2207C9.93251 23.3739 9.00911 21.1337 9.00911 18.5C9.00911 15.8663 9.93251 13.6261 11.7793 11.7793C13.6261 9.93251 15.8663 9.00912 18.5 9.00912C21.1337 9.00912 23.3739 9.93251 25.2207 11.7793ZM29.9421 7.05794C29.9421 7.05794 30.0505 7.16634 30.2673 7.38314C30.484 7.59994 30.5924 8.01346 30.5924 8.6237C30.5924 9.23394 30.3757 9.75586 29.9421 10.1895C29.5085 10.623 28.9865 10.8398 28.3763 10.8398C27.7661 10.8398 27.2441 10.623 26.8105 10.1895C26.377 9.75586 26.1602 9.23394 26.1602 8.6237C26.1602 8.01346 26.377 7.49154 26.8105 7.05794C27.2441 6.62435 27.7661 6.40755 28.3763 6.40755C28.9865 6.40755 29.5085 6.62435 29.9421 7.05794ZM20.3428 3.31218C20.3428 3.31218 20.0637 3.31418 19.5057 3.3182C18.9476 3.32221 18.6124 3.32422 18.5 3.32422C18.3876 3.32422 17.7733 3.32021 16.6572 3.31218C15.5411 3.30415 14.694 3.30415 14.1159 3.31218C13.5378 3.32021 12.7629 3.34429 11.7913 3.38444C10.8198 3.42459 9.99273 3.50488 9.31022 3.62533C8.62771 3.74577 8.0536 3.89431 7.58789 4.07096C6.78494 4.39214 6.07834 4.85786 5.4681 5.4681C4.85786 6.07834 4.39214 6.78494 4.07096 7.58789C3.89431 8.0536 3.74577 8.62771 3.62533 9.31022C3.50488 9.99273 3.42459 10.8198 3.38444 11.7913C3.34429 12.7629 3.3202 13.5378 3.31217 14.1159C3.30414 14.694 3.30414 15.5411 3.31217 16.6572C3.3202 17.7733 3.32422 18.3876 3.32422 18.5C3.32422 18.6124 3.3202 19.2267 3.31217 20.3428C3.30414 21.4589 3.30414 22.306 3.31217 22.8841C3.3202 23.4622 3.34429 24.2371 3.38444 25.2087C3.42459 26.1802 3.50488 27.0073 3.62533 27.6898C3.74577 28.3723 3.89431 28.9464 4.07096 29.4121C4.39214 30.2151 4.85786 30.9217 5.4681 31.5319C6.07834 32.1421 6.78494 32.6079 7.58789 32.929C8.0536 33.1057 8.62771 33.2542 9.31022 33.3747C9.99273 33.4951 10.8198 33.5754 11.7913 33.6156C12.7629 33.6557 13.5378 33.6798 14.1159 33.6878C14.694 33.6959 15.5411 33.6959 16.6572 33.6878C17.7733 33.6798 18.3876 33.6758 18.5 33.6758C18.6124 33.6758 19.2267 33.6798 20.3428 33.6878C21.4589 33.6959 22.306 33.6959 22.8841 33.6878C23.4622 33.6798 24.2371 33.6557 25.2087 33.6156C26.1802 33.5754 27.0073 33.4951 27.6898 33.3747C28.3723 33.2542 28.9464 33.1057 29.4121 32.929C30.2151 32.6079 30.9217 32.1421 31.5319 31.5319C32.1421 30.9217 32.6079 30.2151 32.929 29.4121C33.1057 28.9464 33.2542 28.3723 33.3747 27.6898C33.4951 27.0073 33.5754 26.1802 33.6156 25.2087C33.6557 24.2371 33.6798 23.4622 33.6878 22.8841C33.6959 22.306 33.6959 21.4589 33.6878 20.3428C33.6798 19.2267 33.6758 18.6124 33.6758 18.5C33.6758 18.3876 33.6798 17.7733 33.6878 16.6572C33.6959 15.5411 33.6959 14.694 33.6878 14.1159C33.6798 13.5378 33.6557 12.7629 33.6156 11.7913C33.5754 10.8198 33.4951 9.99273 33.3747 9.31022C33.2542 8.62771 33.1057 8.0536 32.929 7.58789C32.6079 6.78494 32.1421 6.07834 31.5319 5.4681C30.9217 4.85786 30.2151 4.39214 29.4121 4.07096C28.9464 3.89431 28.3723 3.74577 27.6898 3.62533C27.0073 3.50488 26.1802 3.42459 25.2087 3.38444C24.2371 3.34429 23.4622 3.32021 22.8841 3.31218C22.306 3.30415 21.4589 3.30415 20.3428 3.31218ZM36.8796 10.8639C36.9599 12.2771 37 14.8225 37 18.5C37 22.1775 36.9599 24.7229 36.8796 26.1361C36.719 29.4763 35.7233 32.0618 33.8926 33.8926C32.0618 35.7233 29.4763 36.719 26.1361 36.8796C24.7229 36.9599 22.1775 37 18.5 37C14.8225 37 12.2771 36.9599 10.8639 36.8796C7.52365 36.719 4.93815 35.7233 3.10742 33.8926C1.27669 32.0618 0.281033 29.4763 0.120443 26.1361C0.0401476 24.7229 0 22.1775 0 18.5C0 14.8225 0.0401476 12.2771 0.120443 10.8639C0.281033 7.52365 1.27669 4.93815 3.10742 3.10742C4.93815 1.2767 7.52365 0.281033 10.8639 0.120445C12.2771 0.0401497 14.8225 0 18.5 0C22.1775 0 24.7229 0.0401497 26.1361 0.120445C29.4763 0.281033 32.0618 1.2767 33.8926 3.10742C35.7233 4.93815 36.719 7.52365 36.8796 10.8639Z" fill="black"/>
-                                                    </svg>
-                                                </a>
-                                            </li>
-                                        @endif
-                                        @if (isset($contact) && $contact->link_youtube)
-                                            <li class="li d-flex justify-content-start align-items-center">
-                                                <a href="{{$contact->link_youtube}}" rel="nofollow noopener noreferrer" target="_blank">
-                                                    <svg width="45" height="30" viewBox="0 0 52 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M20.632 24.6286L34.6759 17.4857L20.632 10.2571V24.6286ZM26 0C29.2498 0 32.3884 0.0428581 35.4158 0.128571C38.4431 0.214287 40.6629 0.30476 42.075 0.400002L44.1932 0.514286C44.2125 0.514286 44.377 0.528572 44.6865 0.557144C44.996 0.585712 45.2184 0.614285 45.3538 0.642857C45.4892 0.671429 45.7165 0.714287 46.0357 0.771427C46.3549 0.828571 46.6305 0.904762 46.8627 1C47.0948 1.09524 47.3656 1.21905 47.6751 1.37143C47.9846 1.52381 48.2845 1.70952 48.5746 1.92857C48.8648 2.14762 49.1453 2.4 49.4161 2.68571C49.5322 2.8 49.6821 2.97619 49.8659 3.21429C50.0496 3.45238 50.3301 4.00952 50.7073 4.88571C51.0845 5.7619 51.3408 6.72381 51.4763 7.77143C51.631 8.99048 51.7519 10.2905 51.839 11.6714C51.926 13.0524 51.9792 14.1333 51.9986 14.9143V16.0571V19.9429C52.0179 22.7048 51.8438 25.4667 51.4763 28.2286C51.3408 29.2762 51.099 30.2238 50.7509 31.0714C50.4027 31.919 50.0932 32.5048 49.8223 32.8286L49.4161 33.3143C49.1453 33.6 48.8648 33.8524 48.5746 34.0714C48.2845 34.2905 47.9846 34.4714 47.6751 34.6143C47.3656 34.7571 47.0948 34.8762 46.8627 34.9714C46.6305 35.0667 46.3549 35.1429 46.0357 35.2C45.7165 35.2571 45.4844 35.3 45.3393 35.3286C45.1942 35.3571 44.9718 35.3857 44.672 35.4143C44.3721 35.4429 44.2125 35.4571 44.1932 35.4571C39.3378 35.819 33.2734 36 26 36C21.9958 35.9619 18.5186 35.9 15.5687 35.8143C12.6187 35.7286 10.6794 35.6571 9.75091 35.6L8.32911 35.4857L7.28453 35.3714C6.58814 35.2762 6.06101 35.181 5.70314 35.0857C5.34527 34.9905 4.852 34.7905 4.22331 34.4857C3.59463 34.181 3.04816 33.7905 2.5839 33.3143C2.46783 33.2 2.31791 33.0238 2.13414 32.7857C1.95037 32.5476 1.66988 31.9905 1.29267 31.1143C0.915462 30.2381 0.659152 29.2762 0.523743 28.2286C0.36899 27.0095 0.248089 25.7095 0.16104 24.3286C0.0739914 22.9476 0.020795 21.8667 0.00145081 21.0857V19.9429V16.0571C-0.0178933 13.2952 0.156204 10.5333 0.523743 7.77143C0.659152 6.72381 0.900954 5.77619 1.24915 4.92857C1.59734 4.08095 1.90685 3.49524 2.17767 3.17143L2.5839 2.68571C2.85471 2.4 3.1352 2.14762 3.42537 1.92857C3.71553 1.70952 4.01536 1.52381 4.32487 1.37143C4.63438 1.21905 4.9052 1.09524 5.13732 1C5.36945 0.904762 5.64511 0.828571 5.96429 0.771427C6.28347 0.714287 6.51076 0.671429 6.64617 0.642857C6.78158 0.614285 7.00404 0.585712 7.31354 0.557144C7.62305 0.528572 7.78747 0.514286 7.80682 0.514286C12.6622 0.171429 18.7266 0 26 0Z" fill="black"/>
-                                                    </svg>
-                                                </a>
-                                            </li>
-                                        @endif                                    
-                                    </ul> 
-                                </nav>
-                            </div>
-                        </div>
-                        <!-- Newsletter End -->
-                    @endif
-
-     
-                    @if($tempo)
-                        <div class="col-12 mb-4">
-                            <div class="weather-card" data-condition="{{ strtolower($tempo['condition_code'] ?? 'sunny') }}">
-                                <!-- Efeitos Atmosféricos de Fundo -->
-                                <div class="weather-bg-glow glow-primary"></div>
-                                <div class="weather-bg-glow glow-secondary"></div>
-                                <div class="weather-shimmer"></div>
-
-                                <div class="weather-card-body">
-                                    <!-- Cabeçalho: Localização e Horário/Condição -->
-                                    <div class="weather-header">
-                                        <div>
-                                            <div class="weather-location">
-                                                <i class="bi bi-geo-alt-fill"></i>
-                                                <span>Lauro de Freitas</span>
-                                            </div>
-                                            <div class="weather-condition-text">
-                                                {{ $tempo['condition'] ?? 'Ensolarado com poucas nuvens' }}
-                                            </div>
-                                        </div>
-
-                                        <!-- Ícone Animado em Camadas -->
-                                        <div class="weather-hero-icon" aria-hidden="true">
-                                            <div class="sun-rays"></div>
-                                            <i class="bi bi-sun-fill icon-sun"></i>
-                                            <i class="bi bi-cloud-fill icon-cloud-back"></i>
-                                            <i class="bi bi-cloud-fill icon-cloud-front"></i>
-                                        </div>
-                                    </div>
-
-                                    <!-- Bloco Principal de Temperatura -->
-                                    <div class="weather-main-temp">
-                                        <div class="temp-value">
-                                            {{ $tempo['temperature'] }}
-                                        </div>
-                                        <div class="temp-unit-group">
-                                            <span class="temp-degree">°</span>
-                                            <span class="temp-scale">C</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Variação Térmica Diária -->
-                                    <div class="weather-range-bar">
-                                        <span class="temp-min">{{ $tempo['min'] ?? '22' }}°</span>
-                                        <div class="range-track">
-                                            <div class="range-fill" style="left: 30%; width: 50%;"></div>
-                                        </div>
-                                        <span class="temp-max">{{ $tempo['max'] ?? '31' }}°</span>
-                                    </div>
-
-                                    <div class="weather-divider"></div>
-
-                                    <!-- Grid de Métricas Secundárias -->
-                                    <div class="weather-metrics-grid">
-                                        <div class="metric-chip">
-                                            <div class="metric-icon">
-                                                <i class="bi bi-wind"></i>
-                                            </div>
-                                            <div class="metric-data">
-                                                <span class="metric-label">Vento</span>
-                                                <span class="metric-value">{{ $tempo['windspeed'] }} <small>km/h</small></span>
-                                            </div>
-                                        </div>
-
-                                        <div class="metric-chip">
-                                            <div class="metric-icon">
-                                                <i class="bi bi-droplet-half"></i>
-                                            </div>
-                                            <div class="metric-data">
-                                                <span class="metric-label">Umidade</span>
-                                                <span class="metric-value">{{ $tempo['humidity'] ?? '78' }}<small>%</small></span>
-                                            </div>
-                                        </div>
-
-                                        <div class="metric-chip">
-                                            <div class="metric-icon">
-                                                <i class="bi bi-thermometer-half"></i>
-                                            </div>
-                                            <div class="metric-data">
-                                                <span class="metric-label">Sensação</span>
-                                                <span class="metric-value">{{ $tempo['feels_like'] ?? $tempo['temperature'] }}<small>°C</small></span>
-                                            </div>
-                                        </div>
-
-                                        <div class="metric-chip">
-                                            <div class="metric-icon">
-                                                <i class="bi bi-sun"></i>
-                                            </div>
-                                            <div class="metric-data">
-                                                <span class="metric-label">Índice UV</span>
-                                                <span class="metric-value">{{ $tempo['uv_index'] ?? '8' }} <small>Alto</small></span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Footer / Status em Tempo Real -->
-                                    <div class="weather-footer">
-                                        <div class="weather-live-badge">
-                                            <span class="live-pulse"></span>
-                                            <span class="live-text">Ao vivo</span>
-                                        </div>
-                                        <span class="weather-update-time">Hoje, {{ date('H:i') }}</span>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-                    <style>
-
-                        .weather-card {
-                            position: relative;
-                            overflow: hidden;
-                            isolation: isolate;
-                            border-radius: 28px;
-                            padding: 26px 24px 20px;
-                            background: linear-gradient(145deg, #1d72eb 0%, #134dae 50%, #0d2a6a 100%);
-                            color: #ffffff;
-                            box-shadow: 0 20px 40px -12px rgba(18, 64, 148, 0.45),
-                                        inset 0 1px 1px rgba(255, 255, 255, 0.3);
-                            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
-                            will-change: transform;
-                        }
-
-                        .weather-card:hover {
-                            transform: translateY(-4px);
-                            box-shadow: 0 26px 50px -12px rgba(18, 64, 148, 0.55),
-                                        inset 0 1px 1px rgba(255, 255, 255, 0.4);
-                        }
-
-                        /* Camadas de Efeito Visual no Fundo */
-                        .weather-bg-glow {
-                            position: absolute;
-                            border-radius: 50%;
-                            filter: blur(50px);
-                            pointer-events: none;
-                            z-index: -1;
-                        }
-
-                        .glow-primary {
-                            width: 220px;
-                            height: 220px;
-                            top: -80px;
-                            right: -40px;
-                            background: rgba(255, 214, 10, 0.22);
-                            animation: floatGlow 10s ease-in-out infinite alternate;
-                        }
-
-                        .glow-secondary {
-                            width: 180px;
-                            height: 180px;
-                            bottom: -60px;
-                            left: -20px;
-                            background: rgba(80, 200, 255, 0.25);
-                            animation: floatGlow 8s ease-in-out infinite alternate-reverse;
-                        }
-
-                        .weather-shimmer {
-                            position: absolute;
-                            top: 0; left: -100%;
-                            width: 50%; height: 100%;
-                            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
-                            transform: skewX(-25deg);
-                            animation: shimmer 7s infinite;
-                            pointer-events: none;
-                        }
-
-                        /* Cabeçalho */
-                        .weather-header {
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: flex-start;
-                        }
-
-                        .weather-location {
-                            display: flex;
-                            align-items: center;
-                            gap: 6px;
-                            font-size: 17px;
-                            font-weight: 700;
-                            letter-spacing: -0.2px;
-                            color: #ffffff;
-                        }
-
-                        .weather-location i {
-                            color: #ff5252;
-                            font-size: 16px;
-                            animation: locationBounce 3s ease infinite;
-                        }
-
-                        .weather-condition-text {
-                            margin-top: 4px;
-                            font-size: 13px;
-                            font-weight: 500;
-                            color: rgba(255, 255, 255, 0.8);
-                        }
-
-                        /* Ícone Animado Multicamadas */
-                        .weather-hero-icon {
-                            position: relative;
-                            width: 64px;
-                            height: 64px;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                        }
-
-                        .icon-sun {
-                            position: absolute;
-                            top: 2px;
-                            right: 4px;
-                            font-size: 38px;
-                            color: #ffd60a;
-                            filter: drop-shadow(0 0 12px rgba(255, 214, 10, 0.6));
-                            animation: spinSlow 20s linear infinite;
-                        }
-
-                        .icon-cloud-back {
-                            position: absolute;
-                            bottom: 6px;
-                            left: 2px;
-                            font-size: 36px;
-                            color: rgba(255, 255, 255, 0.5);
-                            animation: cloudFloat 4s ease-in-out infinite alternate;
-                        }
-
-                        .icon-cloud-front {
-                            position: absolute;
-                            bottom: 2px;
-                            right: 2px;
-                            font-size: 34px;
-                            color: #ffffff;
-                            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
-                            animation: cloudFloat 3s ease-in-out infinite alternate-reverse;
-                        }
-
-                        /* Bloco Principal de Temperatura */
-                        .weather-main-temp {
-                            display: flex;
-                            align-items: flex-start;
-                            margin-top: 10px;
-                        }
-
-                        .temp-value {
-                            font-size: 76px;
-                            font-weight: 200;
-                            line-height: 0.9;
-                            letter-spacing: -4px;
-                            background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.75) 100%);
-                            -webkit-background-clip: text;
-                            -webkit-text-fill-color: transparent;
-                        }
-
-                        .temp-unit-group {
-                            display: flex;
-                            margin-top: 6px;
-                            margin-left: 2px;
-                        }
-
-                        .temp-degree {
-                            font-size: 40px;
-                            font-weight: 300;
-                            line-height: 1;
-                        }
-
-                        .temp-scale {
-                            font-size: 20px;
-                            font-weight: 600;
-                            margin-top: 6px;
-                            color: rgba(255, 255, 255, 0.75);
-                        }
-
-                        /* Barra de Variação de Temperatura */
-                        .weather-range-bar {
-                            display: flex;
-                            align-items: center;
-                            gap: 10px;
-                            margin-top: 14px;
-                            font-size: 12px;
-                            font-weight: 600;
-                            color: rgba(255, 255, 255, 0.85);
-                        }
-
-                        .range-track {
-                            flex: 1;
-                            height: 5px;
-                            background: rgba(255, 255, 255, 0.2);
-                            border-radius: 10px;
-                            position: relative;
-                            overflow: hidden;
-                        }
-
-                        .range-fill {
-                            position: absolute;
-                            top: 0; bottom: 0;
-                            background: linear-gradient(90deg, #ffbe0b, #ff006e);
-                            border-radius: 10px;
-                        }
-
-                        /* Divisor Glassmorphism */
-                        .weather-divider {
-                            height: 1px;
-                            margin: 18px 0;
-                            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
-                        }
-
-                        /* Grid de Métricas Secundárias */
-                        .weather-metrics-grid {
-                            display: grid;
-                            grid-template-columns: repeat(2, 1fr);
-                            gap: 12px;
-                        }
-
-                        .metric-chip {
-                            display: flex;
-                            align-items: center;
-                            gap: 10px;
-                            padding: 10px 12px;
-                            background: rgba(255, 255, 255, 0.12);
-                            backdrop-filter: blur(12px);
-                            -webkit-backdrop-filter: blur(12px);
-                            border: 1px solid rgba(255, 255, 255, 0.15);
-                            border-radius: 16px;
-                            transition: background 0.2s ease, transform 0.2s ease;
-                        }
-
-                        .metric-chip:hover {
-                            background: rgba(255, 255, 255, 0.2);
-                            transform: translateY(-2px);
-                        }
-
-                        .metric-icon {
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            width: 34px;
-                            height: 34px;
-                            border-radius: 10px;
-                            background: rgba(255, 255, 255, 0.18);
-                            font-size: 16px;
-                            color: #ffffff;
-                        }
-
-                        .metric-data {
-                            display: flex;
-                            flex-direction: column;
-                        }
-
-                        .metric-label {
-                            font-size: 11px;
-                            color: rgba(255, 255, 255, 0.72);
-                            font-weight: 500;
-                        }
-
-                        .metric-value {
-                            font-size: 14px;
-                            font-weight: 700;
-                            line-height: 1.2;
-                        }
-
-                        .metric-value small {
-                            font-size: 10px;
-                            font-weight: 400;
-                            opacity: 0.8;
-                        }
-
-                        /* Footer / Live Indicator */
-                        .weather-footer {
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                            margin-top: 16px;
-                            padding-top: 4px;
-                        }
-
-                        .weather-live-badge {
-                            display: flex;
-                            align-items: center;
-                            gap: 6px;
-                            border-radius: 20px;
-                        }
-
-                        .live-pulse {
-                            width: 7px;
-                            height: 7px;
-                            border-radius: 50%;
-                            background: #2ed573;
-                            box-shadow: 0 0 8px #2ed573;
-                            animation: livePulse 1.8s infinite;
-                        }
-
-                        .live-text {
-                            font-size: 10px;
-                            font-weight: 300;
-                            color: rgba(255, 255, 255, .85);
-                            letter-spacing: 0.4px;
-                        }
-
-                        .weather-update-time {
-                            font-size: 11px;
-                            color: rgba(255, 255, 255, 0.65);
-                        }
-
-                        /* Keyframes de Animações Organizadas */
-                        @keyframes floatGlow {
-                            0% { transform: translate(0, 0) scale(1); }
-                            100% { transform: translate(-20px, 20px) scale(1.15); }
-                        }
-
-                        @keyframes cloudFloat {
-                            0% { transform: translateY(0); }
-                            100% { transform: translateY(-4px); }
-                        }
-
-                        @keyframes spinSlow {
-                            from { transform: rotate(0deg); }
-                            to { transform: rotate(360deg); }
-                        }
-
-                        @keyframes locationBounce {
-                            0%, 100% { transform: translateY(0); }
-                            50% { transform: translateY(-3px); }
-                        }
-
-                        @keyframes livePulse {
-                            0%, 100% { opacity: 1; transform: scale(1); }
-                            50% { opacity: 0.4; transform: scale(0.8); }
-                        }
-
-                        @keyframes shimmer {
-                            0% { left: -100%; }
-                            20%, 100% { left: 200%; }
-                        }
-
-                        /* Adaptabilidade Mobile */
-                        @media (max-width: 480px) {
-                            .weather-card {
-                                border-radius: 24px;
-                                padding: 20px 18px 16px;
-                            }
-
-                            .temp-value {
-                                font-size: 64px;
-                            }
-
-                            .weather-metrics-grid {
-                                grid-template-columns: repeat(2, 1fr);
-                                gap: 8px;
-                            }
-
-                            .metric-chip {
-                                padding: 8px 10px;
-                            }
-                        }
-
-                        /* Suporte a Acessibilidade */
-                        @media (prefers-reduced-motion: reduce) {
-                            .weather-card,
-                            .glow-primary,
-                            .glow-secondary,
-                            .icon-sun,
-                            .icon-cloud-back,
-                            .icon-cloud-front,
-                            .weather-location i,
-                            .live-pulse,
-                            .weather-shimmer {
-                                animation: none !important;
-                                transition: none !important;
-                            }
-                        }
-                    </style>
-
-
-
-                    <div class="mb-4">
-                        <table class="table table-striped table-sm align-middle">
-                            <thead>
-                                <tr>
-                                    <th class="py-2 m-0 poppins-semiBold font-14 title-blue">#</th>
-                                    <th class="py-2 m-0 poppins-semiBold font-14 title-blue">Time</th>
-                                    <th class="py-2 m-0 poppins-semiBold font-14 title-blue">P</th>
-                                    <th class="py-2 m-0 poppins-semiBold font-14 title-blue">J</th>
-                                    <th class="py-2 m-0 poppins-semiBold font-14 title-blue">V</th>
-                                    <th class="py-2 m-0 poppins-semiBold font-14 title-blue">E</th>
-                                    <th class="py-2 m-0 poppins-semiBold font-14 title-blue">D</th>
-                                    <th class="py-2 m-0 poppins-semiBold font-14 title-blue">SG</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                @foreach($standings as $team)
-                                    <tr>
-                                        <td class="p-2 m-0 poppins-regular font-12 title-blue">{{ $team['position'] ?? '-' }}</td>
-
-                                        <td class="py-2 d-flex align-items-center gap-2 m-0 poppins-regular font-12 title-blue">
-                                            <img 
-                                                src="{{ $team['team']['crest'] ?? '' }}" 
-                                                width="20" 
-                                                height="20"
-                                                style="object-fit: contain;"
-                                                alt="{{ $team['team']['shortName'] ?? $team['team']['name'] }}"
-                                            >
-
-                                            {{ $team['team']['shortName'] ?? $team['team']['name'] ?? '-' }}
-                                        </td>
-
-                                        <td class="py-2 m-0 poppins-semiBold font-12 title-blue">{{ $team['points'] ?? 0 }}</td>
-
-                                        <td class="py-2 m-0 poppins-regular font-12 title-blue">{{ $team['playedGames'] ?? 0 }}</td>
-
-                                        <td class="py-2 m-0 poppins-regular font-12 title-blue">{{ $team['won'] ?? 0 }}</td>
-
-                                        <td class="py-2 m-0 poppins-regular font-12 title-blue">{{ $team['draw'] ?? 0 }}</td>
-
-                                        <td class="py-2 m-0 poppins-regular font-12 title-blue">{{ $team['lost'] ?? 0 }}</td>
-
-                                        <td class="py-2 m-0 poppins-regular font-12 title-blue">{{ $team['goalDifference'] ?? 0 }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Todas as emergências em um único bloco -->
-                    <div class="mb-4">
-                        <div class="bg-white border rounded-1 p-3">
-                            <div class="section-title mb-0 rounded-top-left cat-mt">
-                                <h4 class="mb-3 poppins-bold font-18 border-bottom title-blue pb-3 news">Emergência e Serviços</h4>
-                            </div>
-                            <div class="d-flex flex-wrap m-n1">
-                                <li class="nav-link">
-                                    <a href="tel:190" class="btn btn-sm title-blue rounded-0 poppins-semiBold font-12 m-1 bg-blue-light">Polícia Militar – 190</a>
-                                </li>
-                                <li class="nav-link">
-                                    <a href="tel:192" rel="noopener noreferrer" class="btn btn-sm title-blue rounded-0 poppins-semiBold font-12 m-1 bg-blue-light">SAMU – 192</a>
-                                </li>
-                                <li class="nav-link">
-                                    <a href="tel:193" rel="noopener noreferrer" class="btn btn-sm title-blue rounded-0 poppins-semiBold font-12 m-1 bg-blue-light">Bombeiros – 193</a>
-                                </li>
-                                <li class="nav-link">
-                                    <a href="tel:181" rel="noopener noreferrer" class="btn btn-sm title-blue rounded-0 poppins-semiBold font-12 m-1 bg-blue-light">Disque Denúncia – 181</a>
-                                </li>
-                                <li class="nav-link">
-                                    <a href="tel:180" rel="noopener noreferrer" class="btn btn-sm title-blue rounded-0 poppins-semiBold font-12 m-1 bg-blue-light">Violência Doméstica – 180</a>
-                                </li>
-                                <li class="nav-link">
-                                    <a href="https://delegaciavirtual.sinesp.gov.br/portal/" rel="noopener noreferrer" target="_blank" class="btn btn-sm title-blue rounded-0 poppins-semiBold font-12 m-1 bg-blue-light">Delegacia Online</a>
-                                </li>
-                                <li class="nav-link">
-                                    <a href="https://www.consumidor.gov.br/pages/principal/?1458674034017" rel="noopener noreferrer" target="_blank" class="btn btn-sm title-blue rounded-0 poppins-semiBold font-12 m-1 bg-blue-light">Procon</a>
-                                </li>
-                            </div>
-                        </div>
-                    </div>
-
+                 
                 </div>
             </div>
         </div>
@@ -1957,18 +1058,6 @@
 
         });
 
-    });
-</script>
-
-<script defer>
-    document.addEventListener("DOMContentLoaded", function () {
-        const btn = document.getElementById("btn-ver-mais");
-        if (!btn) return;
-
-        btn.addEventListener("click", function () {
-            document.querySelectorAll(".rel-item").forEach(el => el.classList.remove("d-none"));
-            btn.style.display = "none"; // remove o botão após expandir
-        });
     });
 </script>
 
