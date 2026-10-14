@@ -949,6 +949,36 @@
         @endif
 
         {{-- ========================================================
+            AGENDA
+        ======================================================== --}}
+        @if ($hasPageModules('event'))
+
+            @php $blogModules = $pageModules['event']; @endphp
+
+            <div class="mb-2">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <span class="badge bg-primary bg-opacity-10 text-primary p-2">
+                        <i class="mdi mdi-newspaper-variant fs-5"></i>
+                    </span>
+                    <h5 class="mb-0 fw-semibold">Agenda</h5>
+                </div>
+
+                <div class="row g-2">
+
+                    @if (in_array('event', $blogModules, true) && ($isSuper || $user->can('agenda.visualizar') || $user->can('usuario.tornar usuario master')))
+                        @include('admin.components.dashboard-card', [
+                            'route' => route('admin.dashboard.event.index'),
+                            'icon' => 'mdi-tag-multiple',
+                            'title' => 'Agenda'
+                        ])
+                    @endif
+
+                </div>
+            </div>
+
+        @endif
+
+        {{-- ========================================================
             PARCEIROS
         ======================================================== --}}
         @if ($hasPageModules('partner'))

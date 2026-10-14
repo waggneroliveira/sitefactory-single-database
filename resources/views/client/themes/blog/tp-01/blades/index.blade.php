@@ -406,13 +406,9 @@
                         @include('client.themes.blog.tp-01.includes.view-more')                    
                     <!-- Popular News End -->
 
-                    <!-- Tabela brasileirao Start -->
-                        @include('client.themes.blog.tp-01.includes.brasileirao-table')                    
-                    <!-- Tabela brasileirao News End -->  
-     
-                    <!-- brasileirao-next-play Start -->
-                        @include('client.themes.blog.tp-01.includes.brasileirao-next-play')
-                    <!-- brasileirao-next-play End -->
+                    <!-- Eventos Start -->
+                        @include('client.themes.blog.tp-01.includes.event-aside')                   
+                    <!-- Eventos End -->      
 
                     <!-- Previsao tempo Start -->
                         @include('client.themes.blog.tp-01.includes.weather')                    
@@ -429,7 +425,7 @@
                     <!-- Newsletter Start -->
                     @include('client.themes.blog.tp-01.includes.newsletter')
                     <!-- Newsletter End -->
-                 
+                    
                 </div>
             </div>
         </div>
@@ -639,7 +635,7 @@
 <!-- End Start youtube -->
 
 @if ($events->count() > 0)                    
-    <div class="container mt-5" data-aos="fade-left" data-aos-delay="30">
+    <div class="container mt-5">
         <div class="border-bottom news mb-0">
             <div class="d-flex flex-row justify-content-between align-items-start align-items-md-center">
                 <h2 class="section-title d-table p-0 w-auto m-0 mb-3 poppins-bold font-28 title-blue">

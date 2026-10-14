@@ -505,6 +505,9 @@ return [
                     'contact_leads',
                     'download_leads',
                 ],
+                'event' => [
+                    'event',
+                ],
 
             ],
         ],
