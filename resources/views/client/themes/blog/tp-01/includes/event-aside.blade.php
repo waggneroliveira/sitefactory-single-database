@@ -25,11 +25,11 @@
                     <!-- Detalhes do Evento -->
                     <div>
                        <span class="badge bg-primary-subtle text-primary mb-2 font-10 rounded-0">Workshop</span>
-                       <h6 class="mb-1 font-12">
+                       <h6 class="mb-1 font-12 position-relative">
                           @if($event->link)
                              <a href="{{ $event->link }}" target="_blank" class="text-dark text-decoration-none poppins-semiBold stretched-link" title="{{ $event->title }}">
                           @else
-                             <a href="{{ route('client.event') }}?event_id={{ $event->id }}&scroll=true" class="text-dark text-decoration-none poppins-semiBold stretched-link" title="{{ $event->title }}">
+                             <a href="{{ route('client.event', ['slug' => $event->slug]) }}" class="text-dark text-decoration-none poppins-semiBold stretched-link" title="{{ $event->title }}">
                           @endif
                              {{ substr(strip_tags($event->title),0 ,50) }}
                           </a>

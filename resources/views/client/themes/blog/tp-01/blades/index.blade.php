@@ -103,7 +103,7 @@
                                             <div class="overlay">
 
                                                 <div class="mb-3 d-flex justify-content-center align-items-center gap-1 flex-wrap">
-                                                    <span class="badge rounded-0    poppins-semiBold font-12 text-uppercase py-2 px-2 me-2">
+                                                    <span class="badge rounded-0 bg-accent-color text-dark poppins-semiBold font-12 text-uppercase py-2 px-2 me-2">
                                                         {{ $blogSuperHighlight->category->title }}
                                                     </span>
                                                 </div>
@@ -633,59 +633,6 @@
     </div>
 @endif
 <!-- End Start youtube -->
-
-@if ($events->count() > 0)                    
-    <div class="container mt-5">
-        <div class="border-bottom news mb-0">
-            <div class="d-flex flex-row justify-content-between align-items-start align-items-md-center">
-                <h2 class="section-title d-table p-0 w-auto m-0 mb-3 poppins-bold font-28 title-blue">
-                    Próximos Eventos
-                </h2>        
-                <div class="btn-about">
-                    <a href="{{route('client.event')}}" class="font-mob background-red poppins-semiBold font-18 py-1 py-lg-2 px-2 px-lg-4 rounded-0">Ver todos</a>
-                </div>                         
-            </div>
-        </div>
-
-        <div class="py-3 mt-5 row row-cols-4 g-2">      
-            @foreach($events as $event)                        
-                <article class="col-12 col-sm-6 col-lg-3">
-                    <div class="d-flex align-items-center bg-white mb-3 overflow-hidden shadow-video-current" style="height: 80px;">
-                        <div class="background-red date col-4 h-100 d-flex justify-content-center align-items-center">
-                            <span class="poppins-bold col-9 h-100 d-flex justify-content-center align-items-center font-20 text-white">
-                                {{ \Carbon\Carbon::parse($event->date)->format('d') }}
-                            </span>
-                            <span class="border-start vertical-letters poppins-medium col-3 h-100 d-flex justify-content-center align-items-center font-14 title-blue text-white">
-                                {{ strtoupper(substr(\Carbon\Carbon::parse($event->date)->translatedFormat('F'), 0, 3)) }}
-                            </span>
-
-                        </div>
-                        <div class="col-8 h-100 px-2 d-flex flex-row justify-content-center align-items-center border border-left-0">
-                            @if($event->link)
-                                <a href="{{ $event->link }}" class="underline col-11">
-                            @else
-                                <a href="{{ route('client.event') }}?event_id={{ $event->id }}&scroll=true" class="underline col-11">
-                            @endif
-                                <h3 class="h6 m-0 poppins-bold font-14 title-blue font-mob" title="{{$event->title}}">
-                                    {{ substr(strip_tags($event->title), 0, 50) }}...
-                                </h3>
-                            </a>
-                            <svg width="17" height="25" viewBox="0 0 17 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M3.59467 25L16.2613 12.5L3.59467 0L0 3.54737L9.07467 12.5L0 21.4526L3.59467 25Z" fill="black"/>
-                            </svg>
-                        </div>
-                    </div>
-                </article>
-            @endforeach                                   
-        </div>
-
-        @if ($announcements->count())                        
-            <div class="my-5">
-                @include('client.includes.announcement')
-            </div>
-        @endif
-    </div>
-@endif
 
 <script defer>
     document.addEventListener("DOMContentLoaded", function () {
