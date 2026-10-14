@@ -329,10 +329,10 @@
         <div class="container">
             <div class="row">
                 @if ($recentCategories->count() > 0)                    
-                    <div class="col-12 col-lg-9 animate-on-scroll mb-3">
+                    <div class="col-12 col-lg-9 mb-3" style="border-right: 1px solid #dee2e6;">
                         @foreach($blogCategories as $category)                                                    
                             <div class="tab01 pb-5 {{$category->slug}}" style="--category-color: {{ $category->color }};">
-                                <div class="tab01-head d-flex justify-content-center align-items-center" style="border: 1px solid #e6e6e6;">
+                                <div class="tab01-head d-flex justify-content-center align-items-center" style="border: 1px solid #dee2e6;">
                                     @if ($category->color <> null)                                        
                                         <span class="border-left me-3" style="width:4px; height: 45px; background: {{$category->color}}"></span>
                                     @endif

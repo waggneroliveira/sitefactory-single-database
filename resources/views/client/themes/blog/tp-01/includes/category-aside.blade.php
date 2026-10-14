@@ -1,7 +1,7 @@
 @if (isset($blogCategories) && $blogCategories->count() > 0)
     <!-- Categories Widget Start -->
-    <div class="categories-aside-widget mb-4 overflow-hidden">
-        <div class="categories-card p-4">
+    <div class="categories-aside-widget mb-0 overflow-hidden">
+        <div class="categories-card p-4 pt-0">
 
             {{-- Cabeçalho do Widget --}}
             <div class="categories-header pb-3 mb-3 border-bottom d-flex align-items-center gap-2">
@@ -33,10 +33,6 @@
     /* ===================================
        ESTILOS DO WIDGET DE CATEGORIAS
     =================================== */
-    .categories-aside-widget {
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
-    }
 
     .categories-icon-badge {
         display: flex;
@@ -50,7 +46,7 @@
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        border: 1px solid #e2e8f0;
+        border: 1px solid #d4cabd;
         padding: 6px 14px;
         transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }

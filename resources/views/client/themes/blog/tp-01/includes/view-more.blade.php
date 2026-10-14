@@ -1,12 +1,12 @@
 @if ($blogRelacionados->count() > 0)
     <!-- Veja Também / Posts Relacionados Start -->
-    <div class="related-posts-widget mb-4 overflow-hidden">
+    <div class="related-posts-widget mb-0 overflow-hidden">
         <div class="related-posts-card p-4">
 
             {{-- Cabeçalho do Widget --}}
             <div class="related-posts-header pb-3 mb-3 border-bottom d-flex align-items-center gap-2">
                 <div class="related-icon-badge">
-                    <i class="bi bi-newspaper primary-color"></i>
+                    <i class="bi bi-newspaper text-dark"></i>
                 </div>
                 <h4 class="m-0 poppins-bold font-18 title-aside">Veja também</h4>
             </div>
@@ -55,7 +55,7 @@
             {{-- Botão Expandir / Ver Mais --}}
             @if(count($blogRelacionados) > 5)
                 <div class="text-center mt-3 pt-2 border-top">
-                    <button type="button" id="btn-ver-mais" class="btn btn-ver-mais w-100 poppins-medium font-13">
+                    <button type="button" id="btn-ver-mais" class="btn btn-ver-mais bg-button-one color-button-one w-100 poppins-medium font-13">
                         <span>Ver mais conteúdos</span>
                         <i class="bi bi-chevron-down ms-1"></i>
                     </button>
@@ -71,11 +71,6 @@
     /* ===================================
        ESTILOS DO WIDGET VEJA TAMBÉM
     =================================== */
-    .related-posts-widget {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
-    }
 
     .related-icon-badge {
         display: flex;
@@ -91,13 +86,12 @@
         gap: 12px;
         padding: 8px;
         text-decoration: none !important;
-        background: #f8fafc;
+        background: rgb(254 245 240);
         border: 1px solid #e2e8f0;
         transition: all 0.25s ease;
     }
 
     .related-post-link:hover {
-        background: #ffffff;
         border-color: #cbd5e1;
         transform: translateX(3px);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
@@ -144,10 +138,6 @@
         overflow: hidden;
     }
 
-    .related-post-link:hover .related-post-title {
-        color: #0d6efd;
-    }
-
     .related-post-date {
         font-size: 11px;
         color: #94a3b8;
@@ -156,10 +146,7 @@
 
     /* Botão Ver Mais */
     .btn-ver-mais {
-        background: transparent;
-        color: #64748b;
-        border: 1px solid #e2e8f0;
-        border-radius: 10px;
+        border-radius: 0px;
         padding: 8px 16px;
         transition: all 0.2s ease;
     }

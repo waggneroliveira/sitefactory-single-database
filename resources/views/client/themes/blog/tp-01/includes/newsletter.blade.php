@@ -5,7 +5,7 @@
         <div class="newsletter-header pb-3 mb-3 border-bottom">
             <div class="d-flex align-items-center gap-2 mb-1">
                 <div class="newsletter-icon-badge">
-                    <i class="bi bi-envelope-paper-heart-fill primary-color"></i>
+                    <i class="bi bi-envelope-paper-heart-fill text-dark"></i>
                 </div>
                 <h4 class="m-0 poppins-bold font-18 title-aside">Newsletter</h4>
             </div>
@@ -53,9 +53,6 @@
        ESTILOS DO WIDGET DE NEWSLETTER
     =================================== */
     .newsletter-aside-widget {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
         position: relative;
     }
 
@@ -75,13 +72,13 @@
     .newsletter-input-wrapper .input-group {
         background: #f8fafc;
         border: 1px solid #cbd5e1;
-        border-radius: 12px;
+        border-radius: 0px;
         overflow: hidden;
         transition: all 0.2s ease;
     }
 
     .newsletter-input-wrapper .input-group:focus-within {
-        border-color: #dc2626;
+        border-color: #272a33;
         background: #ffffff;
         box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
     }
@@ -108,8 +105,8 @@
     }
 
     .custom-checkbox .form-check-input:checked {
-        background-color: #dc2626;
-        border-color: #dc2626;
+        background-color: #272a33;
+        border-color: #272a33;
     }
 
     .cursor-pointer {
@@ -121,7 +118,7 @@
         color: #ffffff;
         border: none;
         height: 44px;
-        border-radius: 12px;
+        border-radius: 0px;
         transition: all 0.25s ease;
     }
 

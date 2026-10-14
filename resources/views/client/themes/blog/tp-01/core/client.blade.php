@@ -481,11 +481,14 @@
         }
         .swiper-button-prev.news:hover,
         .swiper-button-next.news:hover {
-            background: var(--primary-color) !important; 
+            background: #272a33 !important; 
         }
         .swiper-button-prev.news::after,
         .swiper-button-next.news::after {
             color: var(--primary-color); 
+        }
+        .tab01 .nav-link.active::after {
+            background: var(--primary-color);
         }
     </style>
 

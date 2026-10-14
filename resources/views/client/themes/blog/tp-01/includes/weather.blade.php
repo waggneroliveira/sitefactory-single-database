@@ -1,6 +1,6 @@
 @if($tempo)
     <div class="col-12 mb-4">
-        <div class="weather-card" data-condition="{{ strtolower($tempo['condition_code'] ?? 'sunny') }}">
+        <div class="weather-card col-12 col-lg-11 m-auto" data-condition="{{ strtolower($tempo['condition_code'] ?? 'sunny') }}">
             <!-- Efeitos Atmosféricos de Fundo -->
             <div class="weather-bg-glow glow-primary"></div>
             <div class="weather-bg-glow glow-secondary"></div>

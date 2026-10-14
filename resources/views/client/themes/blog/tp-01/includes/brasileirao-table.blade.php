@@ -1,6 +1,6 @@
 @if (!empty($standings))
     <!-- Tabela do Brasileirão Widget Start -->
-    <div class="standings-aside-widget mb-4 overflow-hidden rounded-4">
+    <div class="standings-aside-widget mb-0 overflow-hidden">
         <div class="standings-card p-4">
 
             {{-- Cabeçalho do Widget --}}
@@ -98,12 +98,9 @@
     /* ===================================
        ESTILOS DO WIDGET DE CLASSIFICAÇÃO
     =================================== */
-    .standings-aside-widget {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+    .table>:not(caption)>*>*{
+        background-color: rgb(254 245 240) !important;
     }
-
     .standings-icon-badge {
         color: #d97706;
         display: flex;
@@ -120,11 +117,12 @@
     }
 
     .standings-table-wrapper::-webkit-scrollbar {
-        width: 4px;
+        width: 5px;
+        height: 5px;
     }
 
     .standings-table-wrapper::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
+        background: var(--accent-color);
         border-radius: 4px;
     }
 

@@ -1,4 +1,4 @@
-<div class="col-12 mb-4">
+<div class="col-12 mb-0">
     <div class="matches-widget rounded-4">
         <div class="matches-widget-content">
 
@@ -83,9 +83,6 @@
         height: 100%;
         display: flex;
         flex-direction: column;
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
     }
 
     .matches-widget-content {
@@ -113,7 +110,7 @@
     .swiper-navigation-btn {
         width: 26px;
         height: 26px;
-        background: color-mix(in srgb, var(--primary-color) 8%, transparent);
+        background: #272a33;
         border: 1px solid rgba(255, 255, 255, .12);
         border-radius: 6px;
         display: flex;
@@ -126,7 +123,7 @@
     }
 
     .swiper-navigation-btn:hover {
-        background: var(--primary-color);
+        background: #272a33;
         color: #FFF;
     }
 
