@@ -293,6 +293,9 @@
     <script type="application/ld+json">
     {!! json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
     </script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7246726033156934"
+     crossorigin="anonymous"></script>
 </head>
 
 <body>
