@@ -51,7 +51,7 @@
                 <div class="col-lg-7 px-0 pe-lg-0 m-0">
                     <div class="d-flex justify-content-start align-items-center my-3 position-relative">
                                                                             
-                        <span class="border-left me-3" style="width:4px; height: 35px; background: var(--primary-color)"></span>
+                        <span class="border-left me-3 bg-dark" style="width:4px; height: 35px;"></span>
                         
                         <!-- Brand tab -->
                         <h3 class="poppins-semiBold font-20 mb-0 text-dark">
@@ -103,7 +103,7 @@
                                             <div class="overlay">
 
                                                 <div class="mb-3 d-flex justify-content-center align-items-center gap-1 flex-wrap">
-                                                    <span class="badge rounded-0 bg-primary-color poppins-semiBold font-12 text-uppercase py-2 px-2 me-2">
+                                                    <span class="badge rounded-0    poppins-semiBold font-12 text-uppercase py-2 px-2 me-2">
                                                         {{ $blogSuperHighlight->category->title }}
                                                     </span>
                                                 </div>
@@ -195,7 +195,7 @@
                         <div class="row g-0">
                             <div class="d-flex justify-content-start align-items-center my-3">
                                                                             
-                                <span class="border-left me-3" style="width:4px; height: 35px; background: var(--primary-color)"></span>
+                                <span class="border-left me-3 bg-dark" style="width:4px; height: 35px;"></span>
                                 
                                 <!-- Brand tab -->
                                 <h3 class="poppins-semiBold font-20 mb-0 text-dark">
@@ -236,7 +236,7 @@
                                             <div class="overlay">
 
                                                 <div class="mb-2 d-flex justify-content-start align-items-center gap-1 flex-wrap">
-                                                    <span class="badge rounded-0 bg-primary-color text-uppercase poppins-semiBold font-12 py-2 px-2 me-2">
+                                                    <span class="badge rounded-0 text-dark bg-accent-color text-uppercase poppins-semiBold font-12 py-2 px-2 me-2">
                                                         {{ $blogHighlight->category->title }}
                                                     </span>
                                                 </div>
@@ -436,7 +436,6 @@
     </section>
 @endif
 
-
 @if ($blogNoBairros->count() > 0) 
     <section id="no-bairro" data-aos="fade-up" data-aos-delay="30">
         <div class="container border-bottom news mb-0 p-0">
@@ -540,7 +539,7 @@
 <style>
 .swiper-button-prev-one,
 .swiper-button-next-one {
-    position: relative; /* mantém o botão no topo, onde você colocou */
+    position: relative; 
     color: #003366;
     width: 32px;
     height: 32px;

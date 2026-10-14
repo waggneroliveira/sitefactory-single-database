@@ -105,10 +105,6 @@
     }
 
     .standings-icon-badge {
-        width: 34px;
-        height: 34px;
-        border-radius: 10px;
-        background: rgba(255, 193, 7, 0.15); /* Amarelo troféu */
         color: #d97706;
         display: flex;
         align-items: center;

@@ -2,19 +2,14 @@
 
 @extends($theme->core('client'))
 @section('content')
-   <div class="banner-inner blog container-fluid d-flex justify-content-center align-items-center flex-column position-relative" style="--banner-bg: url('../images/banner-blog.png');">
-      <span class="color-yellow font-changa font-16 font-bold position-relative z-3 text-center">Blog </span>
-      <h1 class="font-mobi font-changa font-40 font-bold text-white position-relative z-3 mt-2">Artigo Animal</h1>
-      <p class="font-changa font-15 font-regular text-white position-relative z-3">Conheça um pouco sobre a gente aqui!</p>
-   </div>
    <section id="news" >
       <div class="container p-3 p-lg-0">
          <div class="row mt-0 mt-lg-5 justify-content-between flex-column-reverse flex-lg-row">
-            <div class="blog-content col-12 col-lg-8 mt-5 mt-lg-0">
+            <div class="blog-content col-12 col-lg-9 mt-5 mt-lg-0">
                <div class="row g-4">
                   <div class="position-relative mb-3">
                      <article>
-                           <img class="img-fluid rounded-3 w-100 image-inner d-flex justify-content-center align-items-center mb-4" src="{{asset('storage/' . $blogInner->path_image)}}" alt="{{$blogInner->title}}" loading="lazy">
+                           <img class="img-fluid rounded-3 w-100 image-inner d-flex justify-content-center align-items-center mb-4" src="{{asset('storage/' . $blogInner->path_image)}}" alt="{{$blogInner->title}}" loading="lazy" style="max-height: 480px; object-fit: cover;">
                            <h2 class="mb-3 font-changa font-30 font-bold">{{$blogInner->title}}</h2>
 
                            <div class="color-grey font-changa font-16 font-regular">
@@ -39,9 +34,9 @@
                               </a>
                               <div id="socialLinks" class="socialLinks mt-2 opacity-0">
                                  <div class="d-flex gap-2">
-                                       <a href="" target="_blank" class="d-flex justify-content-center align-items-center p-0 btn btn-sm bg-whatsapp"><i class="fab fa-whatsapp text-white"></i></a>    
-                                       <a href="" target="_blank" class="d-flex justify-content-center align-items-center p-0 btn btn-sm btn-twiter"><i class="fab fa-x-twitter text-white"></i></a>
-                                       <a href="" target="_blank" class="d-flex justify-content-center align-items-center p-0 btn btn-facebook btn-sm"><i class="fab fa-facebook-f text-white"></i></a>
+                                    <a href="" target="_blank" class="d-flex justify-content-center align-items-center rounded-pill p-0 btn btn-sm bg-whatsapp"><i class="fab fa-whatsapp text-white"></i></a>    
+                                    <a href="" target="_blank" class="d-flex justify-content-center align-items-center rounded-pill p-0 btn btn-sm btn-twiter"><i class="fab fa-x-twitter text-white"></i></a>
+                                    <a href="" target="_blank" class="d-flex justify-content-center align-items-center rounded-pill p-0 btn btn-facebook btn-sm"><i class="fab fa-facebook-f text-white"></i></a>
                                  </div>
                               </div>
                            </div>
@@ -52,71 +47,27 @@
       
             </div>
       
-            <aside class="col-12 col-lg-4 mb-3 mb-lg-0 d-flex justify-content-baseline align-items-end flex-column">
+            <aside class="col-12 col-lg-3 mb-3 mb-lg-0 d-flex justify-content-baseline align-items-end flex-column">
       
-               <!-- Busca -->
-               <div class="card border-0 shadow-sm mb-4 bg-grey-light col-12 col-lg-10">
-                  <div class="card-body p-4">
-                        <form class="position-relative">
-                           <input
-                              type="text"
-                              class="form-control rounded-3 ps-4 pe-5"
-                              placeholder="Pesquise aqui..."
-                           >
-                           <button
-                              type="submit"
-                              class="btn position-absolute top-50 end-0 translate-middle-y me-3 p-0 border-0 bg-transparent"
-                           >
-                              <i class="bi bi-search"></i>
-                           </button>
-                        </form>
-                  </div>
-               </div>
+               <!-- Busca Start -->
+                  @include('client.themes.blog.tp-01.includes.search-aside')  
+               <!-- Busca End -->
       
-               <!-- Categorias -->
-               @if ($blogCategories->count())               
-                  <div class="card border-0 shadow-sm mb-4 bg-grey-light px-3 col-12 col-lg-10">
-                     <div class="card-body">
-                           <h5 class="font-changa font-24 font-bold mb-3 color-green">Categories</h5>
-         
-                           <ul class="list-unstyled mb-0">
-                              @foreach ($blogCategories as $blogCategory)                           
-                                 <li class="py-2 border-bottom">
-                                    <a href="{{route('blog', ['category' => $blogCategory->slug])}}" class="d-flex justify-content-between text-decoration-none text-reset">
-                                       <span class="font-changa font-16 font-semibold">{{$blogCategory->title}}</span>
-                                       <span class="color-yellow font-changa font-16 font-semibold">{{$blogCategory->blogs->count()}}</span>
-                                    </a>
-                                 </li>
-                              @endforeach
-                           </ul>
-                     </div>
+               <!-- Popular News Start -->
+                  @include('client.themes.blog.tp-01.includes.view-more')                    
+               <!-- Popular News End -->  
+
+               <!-- Ads Start -->
+               @if ($announcements->count())                        
+                  <div class="mb-4">
+                        @include('client.includes.announcementVertical')
                   </div>
                @endif
-      
-               <!-- Relacionados -->
-               @if ($blogRelacionados->count())               
-                  <div class="card border-0 shadow-sm col-12 col-lg-10 relacionados bg-grey-light">
-                     <div class="card-body">
-                           <h5 class="font-changa font-24 font-bold mb-3 color-green">Relacionados</h5>
-         
-                           @foreach ($blogRelacionados as $relacionado)  
-                              <div class="mb-3">
-                                 <a href="{{route('blog-inner', ['slug' => $relacionado->slug])}}" class="d-flex text-decoration-none text-reset">
-                                    <div class="image me-2 rounded">
-                                       <img src="{{asset('storage/' . $relacionado->path_image)}}" class="me-3" alt="{{$relacionado->title}}">
-                                    </div>
-                                    <div class="col-9">
-                                       <h6 class="font-changa font-16 font-semibold">
-                                          {{$relacionado->title}}
-                                       </h6>
-                                       <small class="color-grey font-changa font-16 font-regular">{{ $relacionado->date->translatedFormat('d M Y') }}</small>
-                                    </div>
-                                 </a>
-                              </div>
-                           @endforeach
-                     </div>
-                  </div>
-               @endif   
+               <!-- Ads End -->
+
+               <!-- Newsletter Start -->
+               @include('client.themes.blog.tp-01.includes.newsletter')
+               <!-- Newsletter End -->
             </aside>
          </div>
       </div>

@@ -5,11 +5,11 @@
         <div class="newsletter-header pb-3 mb-3 border-bottom">
             <div class="d-flex align-items-center gap-2 mb-1">
                 <div class="newsletter-icon-badge">
-                    <i class="bi bi-envelope-paper-heart-fill"></i>
+                    <i class="bi bi-envelope-paper-heart-fill primary-color"></i>
                 </div>
                 <h4 class="m-0 poppins-bold font-18 title-aside">Newsletter</h4>
             </div>
-            <p class="text-muted poppins-regular font-13 m-0 mt-2">
+            <p class="text-muted poppins-regular font-12 m-0 mt-2">
                 Inscreva-se e receba as principais notícias da cidade direto no seu e-mail.
             </p>
         </div>
@@ -60,11 +60,6 @@
     }
 
     .newsletter-icon-badge {
-        width: 34px;
-        height: 34px;
-        border-radius: 10px;
-        background: color-mix(in srgb, var(--bg-button-one) 10%, transparent); 
-        color: var(--bg-button-one);
         display: flex;
         align-items: center;
         justify-content: center;

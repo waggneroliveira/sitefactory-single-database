@@ -658,7 +658,7 @@ color: #17b978;
     font-weight: bold;
     width: 100%;
     text-align: left;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Merriweather', serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 700;
@@ -680,7 +680,7 @@ color: #17b978;
     padding: 5px 10px 5px 10px;
     border-radius: 5px;
     cursor: pointer;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Merriweather', serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 600;
@@ -700,7 +700,7 @@ color: #17b978;
 }
 #calendar .header span {
     color: var(--background-blue);
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Merriweather', serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 600;
@@ -708,7 +708,7 @@ color: #17b978;
 }
 .event-item strong, .event-item span {
     color: var(--background-color-dark);
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Merriweather', serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 600;
@@ -724,7 +724,7 @@ color: #17b978;
 }
 .event-item h4 {
     color: var(--background-blue);
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Merriweather', serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 600;
@@ -732,7 +732,7 @@ color: #17b978;
 }
 .event-item a {
     color: var(--background-blue);
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Merriweather', serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 600;
@@ -740,7 +740,7 @@ color: #17b978;
 }
 .event-item .description {
     color: var(--text-color);
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Merriweather', serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 500;
@@ -797,14 +797,14 @@ color: #17b978;
     font-weight: bold;
     text-align: center;
     padding: 5px 0;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Merriweather', serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 600;
     color: var(--text-color);
 }
 .holiday-month {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Merriweather', serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 700;
@@ -822,7 +822,7 @@ color: #17b978;
 .holiday-item, #events-list p {
     padding: 0;
     margin: 0;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Merriweather', serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 400;
@@ -874,6 +874,9 @@ html, body {
 *, *::before, *::after {
     box-sizing: border-box;
 }
+p{
+    font-family: 'Merriweather', serif !important;
+}
 .swiper-button-next, .swiper-button-prev {
     color: var(--text-color-blog-inner);
     width: 30px;
@@ -908,7 +911,7 @@ html, body {
 .comment-text {
     color: var(--text-color);
     font-size: 1rem;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Merriweather', serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 300;
@@ -988,7 +991,7 @@ aside .img-fluid.annun {
 .text-color.poppins-regular.font-16 p {
     font-size: 1rem;
     color: #9A9DA2;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Merriweather', serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 300;
@@ -1130,7 +1133,7 @@ body .uwy.userway_p1 .userway_buttons_wrapper {
     object-position: center 
 }
 .swal2-html-container, .poppins-ExtraBold, .poppins-bold, .poppins-medium, .poppins-regular, .poppins-semiBold {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Merriweather', serif;
     font-optical-sizing: auto;
     font-style: normal 
 }
@@ -1265,7 +1268,7 @@ body .uwy.userway_p1 .userway_buttons_wrapper {
 }
 body {
     overflow-x: hidden;
-    font-family: var(--default-font) var(--background-color) 
+    font-family: var(--default-font) var(--background-color);
 }
 aside .img-fluid {
     max-width: 110px;
@@ -1290,9 +1293,9 @@ p {
 }
 :root {
     --default-font: "poppins", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    --heading-font: 'Poppins', sans-serif;
-    --nav-font: 'Poppins', sans-serif;
-    --background-color: #F9F9F9;
+    --heading-font: 'Merriweather', serif;
+    --nav-font: 'Merriweather', serif;
+    --background-color: #FCFCFC;
     --background-red: #1C58A6;
     --primary-color: #1C58A6;
     --background-blue: #1C58A6;
@@ -1774,7 +1777,7 @@ p {
 }
 .text-blog-inner.poppins-regular.font-16 p, .description-blog {
     color: var(--text-color-blog-inner);
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Merriweather', serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 400;
@@ -1958,7 +1961,7 @@ h1, h2, h3, h4, h5, h6 {
 .text-address p {
     color: var(--text-color);
     font-size: 0.938rem;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Merriweather', serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 300;
@@ -1982,6 +1985,10 @@ h1, h2, h3, h4, h5, h6 {
 .socialLinks {
     max-height: 0;
     transition: max-height 0.4s ease, opacity 0.4s ease;
+}
+.socialLinks a{
+    width: 25px;
+    height: 25px;
 }
 .btn-insta {
     background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
@@ -2061,7 +2068,7 @@ h1, h2, h3, h4, h5, h6 {
 .hero p {
     margin: 5px 0 0;
     font-size: 26px;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Merriweather', serif;
     font-optical-sizing: auto;
     font-style: normal;
     color: #FFF;

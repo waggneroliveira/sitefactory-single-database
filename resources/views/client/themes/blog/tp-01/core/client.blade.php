@@ -258,10 +258,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Changa:wght@200..800&display=swap" onload='this.onload=null,this.rel="stylesheet"'>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap" onload='this.onload=null;this.rel="stylesheet"'>
 
     <noscript>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Changa:wght@200..800&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap">
     </noscript>
 
 
@@ -288,7 +288,6 @@
     <link rel="preload" href="{{ asset('build/client/bootstrap-icons/bootstrap-icons.css') }}" as="style" onload="this.rel='stylesheet'">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"> --}}
 
     <link href="{{ asset('build/client/themes/blog/tp-01/css/style.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('build/client/themes/blog/tp-01/css/themify-icons.css') }}" rel="stylesheet" type="text/css">
@@ -305,7 +304,7 @@
     </script>
 </head>
 
-<body>
+<body class="bg-primary-color">
     <div id="organization" hidden></div>
 
     @include('client/script-seo-google/script-body-nocript')
@@ -835,7 +834,7 @@
                                                                             height="133"
                                                                             loading="lazy">
 
-                                                                        <h5 class="mega-blog-title poppins-regular font-12 text-start">
+                                                                        <h5 class="mega-blog-title poppins-regular font-12 text-start border-bottom pb-3">
                                                                             {{ $blog->title }}
                                                                         </h5>
                                                                     </a>
@@ -864,7 +863,7 @@
                                                                                 height="133"
                                                                                 loading="lazy">
 
-                                                                            <h5 class="mega-blog-title poppins-regular font-12 text-start">
+                                                                            <h5 class="mega-blog-title poppins-regular font-12 text-start border-bottom pb-3">
                                                                                 {{ $blog->title }}
                                                                             </h5>
                                                                         </a>
@@ -1195,7 +1194,7 @@
                         </a>
 
                         <ul class="dropdown-menu" aria-labelledby="noticiasDropdown">
-                            @if ($blogCategories->count())
+                            {{-- @if ($blogCategories->count())
                                 @foreach ($blogCategories as $category)
                                     <li class="m-0">
                                         <a class="dropdown-item poppins-regular font-15 font-mob" 
@@ -1204,7 +1203,7 @@
                                         </a>
                                     </li>
                                 @endforeach
-                            @endif
+                            @endif --}}
                         </ul>
                     </li>
                     <li class="poppins-regular font-18 mb-3 font-mob"><a href="{{route('contact')}}" class="text-white">Contato</a></li>
@@ -1407,7 +1406,7 @@
 
                     @if ($tenantTheme->link <> null)                        
                         <div class="mt-3 mt-lg-5">
-                            <a href="{{ $tenantTheme->link }}" target="_blank" rel="noopener noreferrer" class="bg-button-two color-button-two px-4 py-2 font-changa font-16 font-medium text-decoration-none hover-zoom">
+                            <a href="{{ $tenantTheme->link }}" target="_blank" rel="noopener noreferrer" class="bg-button-two color-button-two px-4 py-2 poppins-regular font-16 font-medium text-decoration-none hover-zoom">
                                 {{$tenantTheme->btn_title}}
                                 <i class="bi bi-arrow-right"></i>
                             </a>
@@ -1417,7 +1416,7 @@
 
                 <!-- Mapa do site -->
                 <div class="col-lg-4 mb-4 mb-0 text-start">
-                    <div class="text-color-footer mb-3 position-relative d-inline-block font-changa font-16 font-bold map-footer">
+                    <div class="text-color-footer mb-3 position-relative d-inline-block poppins-regular font-16 font-bold map-footer">
                         Mapa do Site
                         <span class="d-block bg-yellow mt-1" style="height:3px; width:40px;"></span>
                     </div>
@@ -1425,18 +1424,18 @@
                     <div class="row">
                         <div class="col-6">
                             <ul class="list-unstyled">
-                                <li><a href="{{route('index')}}" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Início</a></li>
-                                <li><a href="{{route('index')}}#why_sec" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Como funciona</a></li>
-                                <li><a href="{{route('index')}}#plans" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Planos</a></li>
+                                <li><a href="{{route('index')}}" class="text-start text-color-footer poppins-regular font-16 font-regular text-decoration-none d-block mb-2">Início</a></li>
+                                <li><a href="{{route('index')}}#why_sec" class="text-start text-color-footer poppins-regular font-16 font-regular text-decoration-none d-block mb-2">Como funciona</a></li>
+                                <li><a href="{{route('index')}}#plans" class="text-start text-color-footer poppins-regular font-16 font-regular text-decoration-none d-block mb-2">Planos</a></li>
                             </ul>
                         </div>
 
                         <div class="col-6">
                             <ul class="list-unstyled">
-                                <li><a href="{{route('index')}}#templates" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Modelos</a></li>
-                                <li><a href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Depoimentos</a></li>
-                                <li><a href="{{ request()->routeIs('index') ? '#faq' : route('index') . '#faq' }}" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">FAQ</a></li>
-                                <li><a href="{{route('index')}}#contact_sec" class="text-start text-color-footer font-changa font-16 font-regular text-decoration-none d-block mb-2">Contato</a></li>
+                                <li><a href="{{route('index')}}#templates" class="text-start text-color-footer poppins-regular font-16 font-regular text-decoration-none d-block mb-2">Modelos</a></li>
+                                <li><a href="{{ request()->routeIs('index') ? '#depoiment' : route('index') . '#depoiment' }}" class="text-start text-color-footer poppins-regular font-16 font-regular text-decoration-none d-block mb-2">Depoimentos</a></li>
+                                <li><a href="{{ request()->routeIs('index') ? '#faq' : route('index') . '#faq' }}" class="text-start text-color-footer poppins-regular font-16 font-regular text-decoration-none d-block mb-2">FAQ</a></li>
+                                <li><a href="{{route('index')}}#contact_sec" class="text-start text-color-footer poppins-regular font-16 font-regular text-decoration-none d-block mb-2">Contato</a></li>
                             </ul>
                         </div>
                     </div>

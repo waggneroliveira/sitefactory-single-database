@@ -163,7 +163,10 @@
         background: #363e4e;
         transform: translateY(-2px);
     }
-
+    
+    .match-card-vertical:hover .team-name.text-truncate, .match-card-vertical:hover .vs-badge{
+        color: #FFF;
+    }
     .match-team-row {
         display: flex;
         align-items: center;

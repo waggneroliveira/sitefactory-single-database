@@ -1,12 +1,12 @@
 @if ($blogRelacionados->count() > 0)
     <!-- Veja Também / Posts Relacionados Start -->
-    <div class="related-posts-widget mb-4 overflow-hidden rounded-4">
+    <div class="related-posts-widget mb-4 overflow-hidden">
         <div class="related-posts-card p-4">
 
             {{-- Cabeçalho do Widget --}}
             <div class="related-posts-header pb-3 mb-3 border-bottom d-flex align-items-center gap-2">
                 <div class="related-icon-badge">
-                    <i class="bi bi-newspaper"></i>
+                    <i class="bi bi-newspaper primary-color"></i>
                 </div>
                 <h4 class="m-0 poppins-bold font-18 title-aside">Veja também</h4>
             </div>
@@ -78,11 +78,6 @@
     }
 
     .related-icon-badge {
-        width: 34px;
-        height: 34px;
-        border-radius: 10px;
-        background: rgba(13, 110, 253, 0.1); /* Azul suave */
-        color: #0d6efd;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -95,7 +90,6 @@
         align-items: center;
         gap: 12px;
         padding: 8px;
-        border-radius: 12px;
         text-decoration: none !important;
         background: #f8fafc;
         border: 1px solid #e2e8f0;
@@ -113,7 +107,6 @@
     .related-post-thumb {
         width: 54px;
         height: 54px;
-        border-radius: 10px;
         overflow: hidden;
         flex-shrink: 0;
         background: #cbd5e1;
