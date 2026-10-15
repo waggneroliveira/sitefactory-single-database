@@ -101,12 +101,7 @@
       
             </div>
       
-            <aside class="col-lg-3 col-12">
-      
-               <!-- Busca Start -->
-                  @include('client.themes.blog.tp-01.includes.search-aside')  
-               <!-- Busca End -->
-      
+            <aside class="col-lg-3 col-12">      
                <!-- Popular News Start -->
                   @include('client.themes.blog.tp-01.includes.view-more')                    
                <!-- Popular News End -->  
