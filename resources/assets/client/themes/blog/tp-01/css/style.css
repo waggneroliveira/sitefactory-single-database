@@ -5,7 +5,7 @@
     position: relative;
     overflow: hidden;
     isolation: isolate;
-    border-radius: 28px;
+    border-radius: 5px;
     padding: 15px 15px 15px;
     background: linear-gradient(
         145deg,
@@ -933,7 +933,7 @@ p{
     color: #262626 !important;
     margin: 0 5px !important;
     padding: 0px !important;
-    border-radius: 100%;
+    border-radius: 0;
 }
 .hidden div a, .hidden div span span[aria-current="page"] span, .relative.inline-flex.items-center.px-2.py-2.-ml-px.text-sm.font-medium.text-gray-500.bg-white.border.border-gray-300.cursor-default.rounded-r-md.leading-5 {
     width: 25px;
@@ -946,17 +946,16 @@ p{
     font-family: "Ubuntu", sans-serif;
     font-size: 0.87rem !important;
     color: #262626 !important;
-    border-radius: 100%;
+    border-radius: 0;
 }
 .hidden div span span[aria-current="page"] span {
-    background: #1C58A6 !important;
     color: #FFF !important;
-    border-radius: 100%;
+    border-radius: 0;
 }
 .relative.inline-flex.items-center.px-2.py-2.-ml-px.text-sm.font-medium.text-gray-500.bg-white.border.border-gray-300.cursor-default.rounded-r-md.leading-5 {
-    background-color: var(--background-blue) !important;
-    border-radius: 100%;
+    border-radius: 0;
     color: #FFF !important;
+    margin: 0 !important;
 }
 .flex.justify-between.flex-1 {
     display: none;
@@ -1105,6 +1104,10 @@ body .uwy.userway_p1 .userway_buttons_wrapper {
     right: -36px !important;
     left: inherit !important;
 }
+.ad-placeholder.top-right img{
+    height: 115px !important;
+    object-fit: contain;
+}
 .site-navigation.ul li a {
     position: relative;
 }
@@ -1113,7 +1116,6 @@ body .uwy.userway_p1 .userway_buttons_wrapper {
 }
 
 .site-navigation.ul li:hover a {
-    color: #000;
     transition: all 0.3s ease;
 }
 .site-navigation.ul li:nth-of-type(2) a::after, .site-navigation.ul li:nth-of-type(3) a::after, .site-navigation.ul li:nth-of-type(4) a::after {

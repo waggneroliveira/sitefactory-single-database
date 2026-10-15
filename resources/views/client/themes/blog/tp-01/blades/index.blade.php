@@ -389,9 +389,15 @@
                             </div>
                         @endforeach
 
-                        @if ($announcements->count())                        
-                            <div class="mt-4">
-                                @include('client.includes.announcement')
+                        @if (isset($announcements['center-bottom']) && $announcements['center-bottom']->isNotEmpty())
+                            <div class="ad-container mt-3 mb-0 bg-transparent border-0">
+                                <div class="ad-placeholder overflow-hidden bg-transparent">
+                                    <!-- Espaço para Banner Adsense -->
+                                    @includeIf('client.components.announcement.all-announcement',[
+                                            'announcements' => $announcements['center-bottom'] ?? collect()
+                                        ]
+                                    )
+                                </div>
                             </div>
                         @endif
                     </div>
@@ -416,14 +422,20 @@
 
                     <!-- Ads Start -->
                     @if ($announcements->count())                        
-                        <div class="mb-4">
-                            @include('client.includes.announcementVertical')
+                        <div class="mb-0">
+                            <div class="ad-placeholder overflow-hidden px-3" style="min-height: 250px">
+                                <!-- Anúncio 300x250 -->  
+                                @includeIf('client.components.announcement.all-announcement',[
+                                        'announcements' => $announcements['sidebar-right'] ?? collect()
+                                    ]
+                                )
+                            </div>
                         </div>
                     @endif
                     <!-- Ads End -->
 
                     <!-- Newsletter Start -->
-                    @include('client.themes.blog.tp-01.includes.newsletter')
+                        @include('client.themes.blog.tp-01.includes.newsletter')
                     <!-- Newsletter End -->
                     
                 </div>

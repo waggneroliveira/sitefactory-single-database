@@ -6,7 +6,8 @@ use App\Models\Tenant;
 use App\Modules\Client\Business\BlogPageService;
 use App\Services\ThemeManager;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\View as ViewFacade;
+use Illuminate\View\View;
 
 class BlogPageController
 {
@@ -44,7 +45,7 @@ class BlogPageController
         // Página interna do produto
         $viewName = $this->theme->view('blog-inner');
         
-        if (View::exists($viewName)) {
+        if (ViewFacade::exists($viewName)) {
             return view($viewName, $data)->with('theme', $this->theme)->with('tenantTheme', $tenantTheme);
         }
 

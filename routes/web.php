@@ -118,23 +118,23 @@ Route::middleware([NeedsTenant::class])->group(function () {
         ->name('send-contact');
 
 
-    Route::get('blog/filter', [HomePageController::class, 'filterBySubCategory'])
+    Route::get('noticias/filter', [HomePageController::class, 'filterBySubCategory'])
         ->name('blog.filter.subcategory');
 
 
-    Route::get('blog/{slug}', [BlogPageController::class, 'blogInner'])
+    Route::get('noticia/{slug}', [BlogPageController::class, 'blogInner'])
         ->name('blog-inner');
 
 
-    Route::get('blog', [BlogPageController::class, 'index'])
+    Route::get('noticias', [BlogPageController::class, 'index'])
         ->name('blogAll');
 
 
-    Route::get('blog/categoria/{category?}', [BlogPageController::class, 'index'])
+    Route::get('noticias/categoria/{category?}', [BlogPageController::class, 'index'])
         ->name('blog');
 
 
-    Route::post('blog/search', [BlogPageController::class, 'index'])
+    Route::post('noticias/search', [BlogPageController::class, 'index'])
         ->name('blog-search');
 
 
@@ -156,7 +156,7 @@ Route::middleware([NeedsTenant::class])->group(function () {
     Route::get('client-documentation', [DocumentationController::class, 'index'])
         ->name('client.documentation');
 
-    // Route::get('blog/filter/{category?}', [HomePageController::class, 'filterByCategory'])
+    // Route::get('noticia/filter/{category?}', [HomePageController::class, 'filterByCategory'])
     //     ->name('blog.filter');
 
     Route::post('/download-ficha/store', [DownloadFichaController::class, 'store'])

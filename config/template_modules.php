@@ -491,6 +491,7 @@ return [
             'tp-01' => [
                 'home' => [
                     'videos',    
+                    'announcement',
                 ],
 
                 'blog' => [
@@ -498,6 +499,9 @@ return [
                     'blog_sub_categories',
                     'blog',
                     'videos',
+                ],
+                'about' => [
+                    'about',
                 ],
 
                 'contact' => [
@@ -527,6 +531,7 @@ return [
         ],
 
         'limits' => [
+            'about' => 1,
             'slides' => 3,
             'topics' => 6,
             'testimonials' => 6,

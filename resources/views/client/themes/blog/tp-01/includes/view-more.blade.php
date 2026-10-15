@@ -1,7 +1,7 @@
 @if ($blogRelacionados->count() > 0)
     <!-- Veja Também / Posts Relacionados Start -->
     <div class="related-posts-widget mb-0 overflow-hidden">
-        <div class="related-posts-card p-4">
+        <div class="related-posts-card p-3">
 
             {{-- Cabeçalho do Widget --}}
             <div class="related-posts-header pb-3 mb-3 border-bottom d-flex align-items-center gap-2">
@@ -40,10 +40,10 @@
                                 <h5 class="related-post-title poppins-semiBold">
                                     {{ \Illuminate\Support\Str::limit(strip_tags($relacionado->title), 65) }}
                                 </h5>
-                                @if(isset($relacionado->created_at))
+                                @if(isset($relacionado->date))
                                     <span class="related-post-date">
                                         <i class="bi bi-clock me-1"></i>
-                                        {{ \Carbon\Carbon::parse($relacionado->created_at)->format('d/m/Y') }}
+                                        {{ \Carbon\Carbon::parse($relacionado->date)->format('d/m/Y') }}
                                     </span>
                                 @endif
                             </div>

@@ -473,15 +473,19 @@
             background-color: var(--primary-color);            
             transition: all 0.3s ease;
         }
-        .site-navigation.ul .subcategorylist:hover a{
-            color: var(--text-color-header);
+        .site-navigation.ul li:hover a, .header-top li:hover a{
+            color: var(--accent-color);
         }
         .w-20{
             width: 20%;
         }
         .swiper-button-prev.news:hover,
-        .swiper-button-next.news:hover {
+        .swiper-button-next.news:hover,
+        .btn.bg-button-one.color-button-one:hover {
             background: #272a33 !important; 
+        }
+        .btn.bg-button-one.color-button-one:hover{
+            color: var(--color-button-one);
         }
         .swiper-button-prev.news::after,
         .swiper-button-next.news::after {
@@ -524,14 +528,14 @@
                             </li>
 
                             <li class="nav-item border-right border-end-1">
-                                <a class="nav-link text-color-header font-14 poppins-regular" href="#">
-                                    Advertise
+                                <a class="nav-link text-color-header font-14 poppins-regular" href="{{route('client.event')}}">
+                                    Eventos
                                 </a>
                             </li>
 
                             <li class="nav-item border-right border-end-1">
-                                <a class="nav-link text-color-header font-14 poppins-regular" href="#">
-                                    Contact
+                                <a class="nav-link text-color-header font-14 poppins-regular" href="{{route('contact')}}">
+                                    Contato
                                 </a>
                             </li>
 
@@ -666,10 +670,16 @@
                             @endif
                         </a>
                     </div>
-
-                    @if ($announcements->count())                        
-                        <div class="mb-0 col-8">
-                            @include('client.includes.announcement')
+                    
+                    @if (isset($announcements['top-right']) && $announcements['top-right']->isNotEmpty())
+                        <div class="col-9 ad-container mb-0 overflow-hidden bg-transparent border-0 m-0 py-3">
+                            <div class="ad-placeholder bg-transparent top-right">
+                                <!-- Espaço para Banner Adsense -->
+                                @includeIf('client.components.announcement.all-announcement', [
+                                        'announcements' => $announcements['top-right'] ?? collect()
+                                    ]
+                                )
+                            </div>
                         </div>
                     @endif
                 </div>       
@@ -681,6 +691,7 @@
                             <ul class="d-flex flex-row justify-content-start align-items-center gap-2 mb-0 list-unstyled h-100">
                                 <li class="h-100 d-flex align-items-center px-2"><a href="{{route('index')}}" class="nav-link text-color-header poppins-bold text-center font-12 text-uppercase">Home</a></li>                                                   
                                 <li class="h-100 d-flex align-items-center px-2"><a href="{{route('about')}}" class="nav-link text-color-header poppins-bold text-center font-12 text-uppercase">Sobre</a></li>                                                   
+                                <li class="h-100 d-flex align-items-center px-2"><a href="{{route('blogAll')}}" class="nav-link text-color-header poppins-bold text-center font-12 text-uppercase">Todas Notícias </a></li>                                                   
 
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function () {
@@ -797,7 +808,7 @@
                                                             {{-- MOSTRAR TODOS OS BLOGS DA CATEGORIA --}}
                                                             <li class="subcategorylist">
                                                                 <a href="{{ route('blog', ['category' => $category->slug]) }}#news"
-                                                                class="mega-subcategory active text-color-header poppins-semibold font-15"
+                                                                class="mega-subcategory active text-dark poppins-semibold font-15"
                                                                 data-subcategory-id="all">
                                                                     Todas
                                                                 </a>
@@ -806,7 +817,7 @@
                                                             @foreach ($category->subcategories as $subCategory)
                                                                 <li class="subcategorylist">
                                                                     <a href="{{ route('blog', ['category' => $category->slug]) }}#news"
-                                                                    class="mega-subcategory poppins-semibold font-15 text-color-header"
+                                                                    class="mega-subcategory poppins-semibold font-15 text-dark"
                                                                     data-subcategory-id="{{ $subCategory->id }}">
                                                                         {{ $subCategory->name }}
                                                                     </a>
@@ -837,7 +848,7 @@
                                                                             height="133"
                                                                             loading="lazy">
 
-                                                                        <h5 class="mega-blog-title poppins-regular font-12 text-start border-bottom pb-3">
+                                                                        <h5 class="mega-blog-title text-dark poppins-regular font-12 text-start border-bottom pb-3">
                                                                             {{ $blog->title }}
                                                                         </h5>
                                                                     </a>
@@ -866,7 +877,7 @@
                                                                                 height="133"
                                                                                 loading="lazy">
 
-                                                                            <h5 class="mega-blog-title poppins-regular font-12 text-start border-bottom pb-3">
+                                                                            <h5 class="mega-blog-title text-dark poppins-regular font-12 text-start border-bottom pb-3">
                                                                                 {{ $blog->title }}
                                                                             </h5>
                                                                         </a>
@@ -891,7 +902,7 @@
                                                             </div>
 
                                                             <div class="view-more col-12 mb-3">
-                                                                <a class="nav-link poppins-bold text-start text-color-header font-12 text-uppercase mega-category-link"
+                                                                <a class="nav-link poppins-bold text-start text-dark font-12 text-uppercase mega-category-link"
                                                                 href="{{ route('blog', ['category' => $category->slug]) }}#news">
                                                                     Ver mais
 
@@ -957,58 +968,58 @@
     <!-- Modal de Login -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+            <div class="modal-content border-0 shadow-lg rounded-0 overflow-hidden">
 
-                <!-- Header -->
-                <div class="modal-header background-red text-white">
-                    <h5 class="modal-title poppins-medium font-22" id="loginModalLabel">Login</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                <!-- Header Clean com Fundo Suave -->
+                <div class="modal-header border-0 pb-0 px-4 pt-4">
+                    <div>
+                        <h4 class="modal-title poppins-medium font-24 fw-bold text-dark mb-1" id="loginModalLabel">Bem-vindo de volta!</h4>
+                        <p class="text-muted font-14 mb-0">Entre com sua conta para continuar.</p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
 
                 <!-- Body -->
-                <div class="modal-body">
+                <div class="modal-body p-4 pt-3">
                     <form action="{{ route('client.user.authenticate') }}" method="POST">
                         @csrf
 
                         <div class="mb-3">
-                            <label for="email" class="form-label poppins-medium title-blue font-15">E-mail</label>
-                            <input type="email" class="form-control poppins-regular font-15" id="email" name="email" required>
+                            <label for="email" class="form-label poppins-medium font-14 text-dark mb-1">E-mail</label>
+                            <input type="email" class="form-control poppins-regular font-15 py-2 px-3 bg-light border-light rounded-0" id="email" name="email" placeholder="seu@email.com" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="password" class="form-label poppins-medium title-blue font-15">Senha</label>
-                            <input type="password" class="form-control poppins-regular font-15" id="password" name="password" required>
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <label for="password" class="form-label poppins-medium font-14 text-dark mb-0">Senha</label>
+                                <a href="#" 
+                                class="font-13 text-muted text-decoration-none hover-primary"
+                                data-bs-dismiss="modal"
+                                data-bs-toggle="modal"
+                                data-bs-target="#forgotPasswordModal">
+                                    Esqueceu a senha?
+                                </a>
+                            </div>
+                            <input type="password" class="form-control poppins-regular font-15 py-2 px-3 bg-light border-light rounded-0" id="password" name="password" placeholder="••••••••" required>
                         </div>
 
-                        <div class="d-flex justify-content-center my-3">
-                            <button type="submit" class="btn background-red text-white px-5 rounded-3 text-white poppins-medium font-15 background-red">
-                                Entrar
+                        <div class="d-grid my-4">
+                            <button type="submit" class="btn bg-button-one color-button-one py-2.5 rounded-0 fw-semibold poppins-medium font-15 shadow-sm border-0">
+                                Entrar na conta
                             </button>
                         </div>
 
-                        <div class="text-center mt-3">
-
-                            <p class="poppins-regular font-15 text-muted">
-                                Ainda não tem uma conta?
+                        <div class="text-center pt-2 border-top">
+                            <p class="poppins-regular font-14 text-muted mb-0">
+                                Ainda não tem uma conta? 
                                 <a href="#"
-                                    class="text-decoration-underline poppins-bold ms-1 under"
+                                    class="text-primary text-decoration-none fw-semibold ms-1"
                                     data-bs-dismiss="modal"
                                     data-bs-toggle="modal"
                                     data-bs-target="#registerModal">
-                                    Registre-se
+                                    Registre-se agora
                                 </a>
                             </p>
-
-                            <p class="poppins-regular font-15 text-muted mb-0">
-                                <a href="#"
-                                    class="text-decoration-underline poppins-bold under"
-                                    data-bs-dismiss="modal"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#forgotPasswordModal">
-                                    Esqueceu sua senha?
-                                </a>
-                            </p>
-
                         </div>
 
                     </form>
@@ -1022,45 +1033,48 @@
     <!-- Modal de Cadastro -->
     <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+            <div class="modal-content border-0 shadow-lg rounded-0 overflow-hidden">
 
-                <!-- Header -->
-                <div class="modal-header background-red text-white">
-                    <h5 class="modal-title poppins-medium font-22" id="registerModalLabel">Cadastro</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                <!-- Header Clean com Fundo Suave -->
+                <div class="modal-header border-0 pb-0 px-4 pt-4">
+                    <div>
+                        <h4 class="modal-title poppins-medium font-24 fw-bold text-dark mb-1" id="registerModalLabel">Crie sua conta</h4>
+                        <p class="text-muted font-14 mb-0">Preencha os dados abaixo para começar.</p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
 
                 <!-- Body -->
-                <div class="modal-body">
+                <div class="modal-body p-4 pt-3">
                     <form action="{{ route('register-client') }}" method="POST">
                         @csrf
 
                         <div class="mb-3">
-                            <label for="name" class="form-label poppins-medium title-blue font-15">Nome</label>
-                            <input type="text" class="form-control poppins-regular font-15" id="name" name="name" required>
+                            <label for="name" class="form-label poppins-medium font-14 text-dark mb-1">Nome Completo</label>
+                            <input type="text" class="form-control poppins-regular font-15 py-2 px-3 bg-light border-light rounded-0" id="name" name="name" placeholder="Seu nome" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="emailRegister" class="form-label poppins-medium title-blue font-15">E-mail</label>
-                            <input type="email" class="form-control poppins-regular font-15" id="emailRegister" name="email" required>
+                            <label for="emailRegister" class="form-label poppins-medium font-14 text-dark mb-1">E-mail</label>
+                            <input type="email" class="form-control poppins-regular font-15 py-2 px-3 bg-light border-light rounded-0" id="emailRegister" name="email" placeholder="seu@email.com" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="passwordRegister" class="form-label poppins-medium title-blue font-15">Senha</label>
-                            <input type="password" class="form-control poppins-regular font-15" id="passwordRegister" name="password" required>
+                            <label for="passwordRegister" class="form-label poppins-medium font-14 text-dark mb-1">Senha</label>
+                            <input type="password" class="form-control poppins-regular font-15 py-2 px-3 bg-light border-light rounded-0" id="passwordRegister" name="password" placeholder="••••••••" required>
                         </div>
 
-                        <div class="d-flex justify-content-center my-3">
-                            <button type="submit" class="btn background-red px-4 rounded-3 text-white poppins-medium font-15 background-red">
-                                Cadastrar
+                        <div class="d-grid my-4">
+                            <button type="submit" class="btn bg-button-one color-button-one py-2.5 rounded-0 fw-semibold poppins-medium font-15 shadow-sm border-0">
+                                Cadastrar conta
                             </button>
                         </div>
 
-                        <div class="text-center">
-                            <p class="poppins-regular font-15 text-muted">
-                                Já tem uma conta?
-                                <a href="#" 
-                                    class="text-decoration-underline poppins-bold ms-1 under"
+                        <div class="text-center pt-2 border-top">
+                            <p class="poppins-regular font-14 text-muted mb-0">
+                                Já tem uma conta? 
+                                <a href="#"
+                                    class="text-primary text-decoration-none fw-semibold ms-1"
                                     data-bs-dismiss="modal"
                                     data-bs-toggle="modal"
                                     data-bs-target="#loginModal">
@@ -1144,29 +1158,46 @@
 
     <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+            <div class="modal-content border-0 shadow-lg rounded-0 overflow-hidden">
 
-                <div class="modal-header background-red">
-                    <h5 class="modal-title poppins-medium font-22 text-white" id="forgotPasswordModalLabel">
-                        Recuperar Senha
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                <!-- Header Clean com Cantos Retos -->
+                <div class="modal-header border-0 pb-0 px-4 pt-4">
+                    <div>
+                        <h4 class="modal-title poppins-medium font-24 fw-bold text-dark mb-1" id="forgotPasswordModalLabel">Recuperar Senha</h4>
+                        <p class="text-muted font-14 mb-0">Digite seu e-mail para receber o link de redefinição.</p>
+                    </div>
+                    <button type="button" class="btn-close rounded-0" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
 
-                <div class="modal-body">
+                <!-- Body -->
+                <div class="modal-body p-4 pt-3">
                     <form action="{{ route('client.password.email') }}" method="POST">
                         @csrf
 
                         <div class="mb-3">
-                            <label for="recover_email" class="form-label poppins-medium title-blue font-15">Digite seu e-mail</label>
-                            <input type="email" class="form-control poppins-regular font-15" id="recover_email" name="email" required>
+                            <label for="recover_email" class="form-label poppins-medium font-14 text-dark mb-1">E-mail cadastrado</label>
+                            <input type="email" class="form-control poppins-regular font-15 py-2 px-3 bg-light border-light rounded-0" id="recover_email" name="email" placeholder="seu@email.com" required>
                         </div>
 
-                        <div class="d-flex justify-content-center mt-3 mb-4">
-                            <button type="submit" class="btn px-5 background-red rounded-3 text-white poppins-medium font-15">
+                        <div class="d-grid my-4">
+                            <button type="submit" class="btn bg-button-one color-button-one py-2.5 rounded-0 fw-semibold poppins-medium font-15 shadow-sm border-0">
                                 Enviar link de recuperação
                             </button>
                         </div>
+
+                        <div class="text-center pt-2 border-top">
+                            <p class="poppins-regular font-14 text-muted mb-0">
+                                Lembrou a senha? 
+                                <a href="#"
+                                    class="text-primary text-decoration-none fw-semibold ms-1"
+                                    data-bs-dismiss="modal"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#loginModal">
+                                    Voltar para o login
+                                </a>
+                            </p>
+                        </div>
+
                     </form>
                 </div>
 

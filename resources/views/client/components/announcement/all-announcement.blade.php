@@ -14,7 +14,7 @@
                         >
                     @endif
 
-                    <picture class="d-block w-100">
+                    <picture class="d-block w-100 h-100">
                         @if ($item->path_image_mobile)
                             <source
                                 media="(max-width: 767.98px)"

@@ -10,6 +10,7 @@ use App\Models\TemplateTheme;
 use App\Models\Tenant;
 use App\Modules\Client\Contracts\ClientRepositoryInterface;
 use App\Modules\Client\Data\EloquentClientRepository;
+use App\Services\ThemeManager;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -53,10 +54,11 @@ class AppServiceProvider extends ServiceProvider
             ->when(request()->route('templateVariation'), fn ($query) => $query->where('template_variation', request()->route('templateVariation')))
             ->active()
             ->first();
-            
             $tenantTheme = Tenant::current();
 
-            $themeData = $templateThemeInner?->theme();
+            $themeManager = new ThemeManager();
+            
+            $themeData = $themeManager?->theme();
 
             $adSlots = collect();
 
@@ -103,7 +105,7 @@ class AppServiceProvider extends ServiceProvider
                     $adSlot->slug => $adSlot->announcements,
                 ];
             });
-
+            
             $blogCategoriesHeader = BlogCategory::with([
                 'subcategories' => function ($query) {
                     $query->active()
