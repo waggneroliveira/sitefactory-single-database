@@ -432,7 +432,7 @@
     </section>
 @endif
 
-@if ($blogNoBairros->count() > 0) 
+{{-- @if ($blogNoBairros->count() > 0) 
     <section id="no-bairro" data-aos="fade-up" data-aos-delay="30">
         <div class="container border-bottom news mb-0 p-0">
             <div class="px-0 d-flex flex-row justify-content-between align-items-center w-100">
@@ -530,7 +530,7 @@
             </div>
         </div>
     </section>
-@endif
+@endif --}}
 
 <style>
 .swiper-button-prev-one,
@@ -633,6 +633,10 @@
     </div>
 @endif
 <!-- End Start youtube -->
+
+<!-- Colunista Start -->
+    @include('client.themes.blog.tp-01.includes.colunista')                    
+<!-- Colunista End -->  
 
 <script defer>
     document.addEventListener("DOMContentLoaded", function () {

@@ -215,19 +215,9 @@ class HomePageService
         ->where('highlight', 1)
         ->active()
         ->sorting()
+        ->limit(4)
         ->get();
 
-        $blogNoBairros = Blog::whereHas('category', function($query) {
-            $query->where('id', 1)
-            ->where('active', 1);
-        })
-        ->with(['category' => function($query) {
-            $query->select('id', 'title', 'slug');
-        }])
-        ->orderBy('created_at', 'DESC')
-        ->active()
-        ->limit(10)
-        ->get();
         $events = Event::active()
         ->whereMonth('date', now()->month)
         ->orderBy('date', 'asc')
@@ -249,7 +239,6 @@ class HomePageService
             'tempo',
             'standings',
             'events',
-            'blogNoBairros',
             'blogCategories',
             'latestNews',
             'blogRelacionados',

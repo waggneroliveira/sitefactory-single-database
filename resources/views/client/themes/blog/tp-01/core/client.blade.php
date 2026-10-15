@@ -1296,102 +1296,105 @@
         @yield('content') 
     </main>
 
-    @if (isset($contact) && ($contact->link_face || $contact->link_x || $contact->link_insta || $contact->link_youtube))
-        <!-- Seção de Redes Sociais Start -->
-        <section class="social-networks-section py-5 my-4">
-            <div class="container">
-                <div class="social-card-wrapper position-relative overflow-hidden rounded-4 p-4 p-md-5 text-center">
-                    
-                    {{-- Elementos decorativos de fundo (Glow Effects) --}}
-                    <div class="social-glow glow-1"></div>
-                    <div class="social-glow glow-2"></div>
-
-                    <div class="position-relative z-2">
-                        {{-- Título e Subtítulo --}}
-                        <div class="row justify-content-center mb-4">
-                            <div class="col-lg-8">
-                                <span class="badge bg-primary-soft text-primary rounded-pill px-3 py-2 font-12 fw-bold text-uppercase mb-2">
-                                    <i class="bi bi-share-fill me-1"></i> Conecte-se Conosco
-                                </span>
-                                <h3 class="poppins-bold font-28 title-main mb-2">
-                                    Siga-nos nas redes sociais
-                                </h3>
-                                <p class="text-muted poppins-regular font-14 mb-0">
-                                    Acompanhe as notícias, bastidores e atualizações de toda a cidade em tempo real através das nossas plataformas oficiais.
-                                </p>
+    
+    {{-- Footer --}}
+    <footer class="bg-footer pt-3 pt-lg-5 pb-3">
+        @if (isset($contact) && ($contact->link_face || $contact->link_x || $contact->link_insta || $contact->link_youtube))
+            <!-- Seção de Redes Sociais Start -->
+            <div class="social-networks-section pt-0 mt-0">
+                <div class="container-fluid p-0">
+                    <div class="social-card-wrapper position-relative overflow-hidden p-4 p-md-5 pt-md-0 text-center">
+                        
+                        {{-- Elementos decorativos de fundo (Glow Effects) --}}
+                        <div class="social-glow glow-1"></div>
+                        <div class="social-glow glow-2"></div>
+    
+                        <div class="position-relative z-2">
+                            {{-- Título e Subtítulo --}}
+                            <div class="row justify-content-center mb-4">
+                                <div class="col-lg-8">
+                                    <span class="badge bg-accent-color text-dark rounded-0 px-3 py-2 font-12 fw-bold text-uppercase mb-2">
+                                        <i class="bi bi-share-fill me-1"></i> Conecte-se Conosco
+                                    </span>
+                                    <h3 class="poppins-bold font-28 text-color-footer mb-2">
+                                        Siga-nos nas redes sociais
+                                    </h3>
+                                    <p class="text-color-footer poppins-regular font-14 mb-0">
+                                        Acompanhe as notícias, bastidores e atualizações de toda a cidade em tempo real através das nossas plataformas oficiais.
+                                    </p>
+                                </div>
+                            </div>
+    
+                            {{-- Grid de Redes Sociais --}}
+                            <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 mt-4">
+                                
+                                {{-- Facebook --}}
+                                @if ($contact->link_face)
+                                    <a href="{{ $contact->link_face }}" rel="nofollow noopener noreferrer" target="_blank" class="social-box facebook" title="Siga no Facebook">
+                                        <div class="social-icon">
+                                            <i class="bi bi-facebook"></i>
+                                        </div>
+                                        <div class="social-text">
+                                            <span class="social-name">Facebook</span>
+                                            <span class="social-action">Curtir página</span>
+                                        </div>
+                                        <i class="bi bi-arrow-up-right-short social-arrow"></i>
+                                    </a>
+                                @endif
+    
+                                {{-- Instagram --}}
+                                @if ($contact->link_insta)
+                                    <a href="{{ $contact->link_insta }}" rel="nofollow noopener noreferrer" target="_blank" class="social-box instagram" title="Siga no Instagram">
+                                        <div class="social-icon">
+                                            <i class="bi bi-instagram"></i>
+                                        </div>
+                                        <div class="social-text">
+                                            <span class="social-name">Instagram</span>
+                                            <span class="social-action">Seguir perfil</span>
+                                        </div>
+                                        <i class="bi bi-arrow-up-right-short social-arrow"></i>
+                                    </a>
+                                @endif
+    
+                                {{-- X (Twitter) --}}
+                                @if ($contact->link_x)
+                                    <a href="{{ $contact->link_x }}" rel="nofollow noopener noreferrer" target="_blank" class="social-box twitter-x" title="Siga no X">
+                                        <div class="social-icon">
+                                            <i class="bi bi-twitter-x"></i>
+                                        </div>
+                                        <div class="social-text">
+                                            <span class="social-name">X / Twitter</span>
+                                            <span class="social-action">Acompanhar</span>
+                                        </div>
+                                        <i class="bi bi-arrow-up-right-short social-arrow"></i>
+                                    </a>
+                                @endif
+    
+                                {{-- YouTube --}}
+                                @if ($contact->link_youtube)
+                                    <a href="{{ $contact->link_youtube }}" rel="nofollow noopener noreferrer" target="_blank" class="social-box youtube" title="Inscreva-se no YouTube">
+                                        <div class="social-icon">
+                                            <i class="bi bi-youtube"></i>
+                                        </div>
+                                        <div class="social-text">
+                                            <span class="social-name">YouTube</span>
+                                            <span class="social-action">Inscrever-se</span>
+                                        </div>
+                                        <i class="bi bi-arrow-up-right-short social-arrow"></i>
+                                    </a>
+                                @endif
+    
                             </div>
                         </div>
-
-                        {{-- Grid de Redes Sociais --}}
-                        <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 mt-4">
-                            
-                            {{-- Facebook --}}
-                            @if ($contact->link_face)
-                                <a href="{{ $contact->link_face }}" rel="nofollow noopener noreferrer" target="_blank" class="social-box facebook" title="Siga no Facebook">
-                                    <div class="social-icon">
-                                        <i class="bi bi-facebook"></i>
-                                    </div>
-                                    <div class="social-text">
-                                        <span class="social-name">Facebook</span>
-                                        <span class="social-action">Curtir página</span>
-                                    </div>
-                                    <i class="bi bi-arrow-up-right-short social-arrow"></i>
-                                </a>
-                            @endif
-
-                            {{-- Instagram --}}
-                            @if ($contact->link_insta)
-                                <a href="{{ $contact->link_insta }}" rel="nofollow noopener noreferrer" target="_blank" class="social-box instagram" title="Siga no Instagram">
-                                    <div class="social-icon">
-                                        <i class="bi bi-instagram"></i>
-                                    </div>
-                                    <div class="social-text">
-                                        <span class="social-name">Instagram</span>
-                                        <span class="social-action">Seguir perfil</span>
-                                    </div>
-                                    <i class="bi bi-arrow-up-right-short social-arrow"></i>
-                                </a>
-                            @endif
-
-                            {{-- X (Twitter) --}}
-                            @if ($contact->link_x)
-                                <a href="{{ $contact->link_x }}" rel="nofollow noopener noreferrer" target="_blank" class="social-box twitter-x" title="Siga no X">
-                                    <div class="social-icon">
-                                        <i class="bi bi-twitter-x"></i>
-                                    </div>
-                                    <div class="social-text">
-                                        <span class="social-name">X / Twitter</span>
-                                        <span class="social-action">Acompanhar</span>
-                                    </div>
-                                    <i class="bi bi-arrow-up-right-short social-arrow"></i>
-                                </a>
-                            @endif
-
-                            {{-- YouTube --}}
-                            @if ($contact->link_youtube)
-                                <a href="{{ $contact->link_youtube }}" rel="nofollow noopener noreferrer" target="_blank" class="social-box youtube" title="Inscreva-se no YouTube">
-                                    <div class="social-icon">
-                                        <i class="bi bi-youtube"></i>
-                                    </div>
-                                    <div class="social-text">
-                                        <span class="social-name">YouTube</span>
-                                        <span class="social-action">Inscrever-se</span>
-                                    </div>
-                                    <i class="bi bi-arrow-up-right-short social-arrow"></i>
-                                </a>
-                            @endif
-
-                        </div>
+    
                     </div>
-
                 </div>
             </div>
-        </section>
-        <!-- Seção de Redes Sociais End -->
-    @endif
-
-    {{-- Footer --}}
-    <footer class="bg-footer border-top pt-3 pt-lg-5 pb-3">
+            <!-- Seção de Redes Sociais End -->
+        @endif
+    
+        <hr class="opacity-50 my-0 pb-4 mb-4 border-color-footer">
+        
         <div class="container">
 
             <!-- Linha principal -->
@@ -1421,7 +1424,7 @@
                 <div class="col-lg-4 mb-4 mb-0 text-start">
                     <div class="text-color-footer mb-3 position-relative d-inline-block poppins-regular font-16 font-bold map-footer">
                         Mapa do Site
-                        <span class="d-block bg-yellow mt-1" style="height:3px; width:40px;"></span>
+                        <span class="d-block bg-accent-color mt-1" style="height:3px; width:40px;"></span>
                     </div>
 
                     <div class="row">

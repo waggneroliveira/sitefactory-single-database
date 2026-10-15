@@ -372,18 +372,10 @@
     ESTILOS DA SEÇÃO DE REDES SOCIAIS
 =================================== */
 .social-card-wrapper {
-    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
     isolation: isolate;
 }
 
-.bg-primary-soft {
-    background-color: rgba(13, 110, 253, 0.1);
-}
-
 .title-main {
-    color: #0f172a;
     letter-spacing: -0.5px;
 }
 
@@ -418,10 +410,9 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    background: #ffffff;
+    background: rgb(254 245 240);
     border: 1px solid #e2e8f0;
     padding: 12px 18px;
-    border-radius: 14px;
     text-decoration: none !important;
     color: #1e293b;
     min-width: 200px;
@@ -432,7 +423,6 @@
 .social-icon {
     width: 42px;
     height: 42px;
-    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1514,9 +1504,7 @@ p {
     width:100%;
     height:465px
 }
-.youtube-area .video-info{
-    border-bottom:1px solid #ddd
-}
+
 .youtube-area .video-info .video-caption{
     position:relative;
     top:-90px
