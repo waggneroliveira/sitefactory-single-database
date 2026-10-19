@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\BlogSubcategoryController;
 use App\Http\Controllers\AdSlotController;
 use App\Http\Controllers\AdvantageController;
 use App\Http\Controllers\AnnouncementController;
@@ -253,6 +254,14 @@ Route::prefix('painel/')->group(function () {
         ->name('admin.dashboard.blogCategory.destroySelected');
         Route::post('categoria-do-blog/sorting', [BlogCategoryController::class, 'sorting'])
         ->name('admin.dashboard.blogCategory.sorting');
+        //SUB CATEGORIA BLOG
+        Route::resource('sub-categoria-do-blog', BlogSubcategoryController::class)
+        ->parameters(['sub-categoria-do-blog' => 'blogSubCategory'])
+        ->names('admin.dashboard.blogSubCategory');
+        Route::post('sub-categoria-do-blog/delete', [BlogSubcategoryController::class, 'destroySelected'])
+        ->name('admin.dashboard.blogSubCategory.destroySelected');
+        Route::post('sub-categoria-do-blog/sorting', [BlogSubcategoryController::class, 'sorting'])
+        ->name('admin.dashboard.blogSubCategory.sorting');
         //REPORT
         Route::resource('missao-visao-e-valores', ReportController::class)
         ->names('admin.dashboard.report')

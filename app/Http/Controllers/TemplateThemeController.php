@@ -52,6 +52,7 @@ class TemplateThemeController extends Controller
 
     public function store(Request $request)
     {
+        $data = $request->all();
         $pathUpload = $this->getPathUpload();
 
         $manager = new ImageManager(
@@ -129,7 +130,7 @@ class TemplateThemeController extends Controller
             );
 
         } catch (\Exception $e) {
-            
+
             DB::rollBack();
 
             report($e);

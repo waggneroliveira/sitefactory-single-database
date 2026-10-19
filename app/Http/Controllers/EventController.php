@@ -18,15 +18,18 @@ class EventController extends Controller
     public function index()
     {
         $settingTheme = (new SettingThemeRepository())->settingTheme();
-        if(!Auth::user()->hasRole('Super') && 
-          !Auth::user()->can('usuario.tornar usuario master') && 
-          !Auth::user()->hasPermissionTo('agenda.visualizar')){
-            return view('admin.error.403', compact('settingTheme'));
+
+        // 'slides' → é o módulo definido no template_modules.php.
+        // 'slide.visualizar' → é a permissão definida no module_permissions.php.
+        $check = checkPermission('event', 'agenda.visualizar', $settingTheme);
+
+        if ($check !== true) {
+            return $check;
         }
 
         $events = Event::sorting()->get();
 
-        return view('admin.blades.event.index', compact('events'));
+        return view('admin.blades.event.index', compact('events', 'settingTheme'));
     }
 
    public function create(){
@@ -41,7 +44,7 @@ class EventController extends Controller
 
         try {
             DB::beginTransaction();
-                event::create($data);
+                Event::create($data);
             DB::commit();
             session()->flash('success', __('dashboard.response_item_create'));
             return redirect()->route('admin.dashboard.event.index');
@@ -60,7 +63,7 @@ class EventController extends Controller
 
         try {
             DB::beginTransaction();
-                event::create($data);
+                Event::create($data);
             DB::commit();
             session()->flash('success', __('dashboard.response_item_create'));
             return redirect()->route('admin.dashboard.blog.index');

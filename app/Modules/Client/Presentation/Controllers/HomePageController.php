@@ -5,8 +5,11 @@ namespace App\Modules\Client\Presentation\Controllers;
 use App\Models\Contact;
 use App\Models\PlanNetwork;
 use App\Modules\Client\Business\HomePageService;
+use App\Services\FootballDataService;
 use App\Services\ThemeManager;
+use App\Services\WeatherService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class HomePageController
@@ -15,9 +18,9 @@ class HomePageController
     {
     }
 
-    public function index(ThemeManager $theme): View
+    public function index(ThemeManager $theme, WeatherService $weather, FootballDataService $footballDataService): View
     {
-        $data = $this->service->getIndexData($theme);
+        $data = $this->service->getIndexData($theme, $weather, $footballDataService);
 
         return view($theme->view('index'), $data);
     }
@@ -25,10 +28,29 @@ class HomePageController
     public function filterByCategory($categorySlug = null): JsonResponse
     {
         $data = $this->service->filterByCategory($categorySlug);
-        $html = view('client.ajax.filter-blog-homePage', [
+        $html = view('client.themes.blog.tp-01.ajax.filter-blog-homePage', [
             'latestNews' => $data['latestNews'],
         ])->render();
 
+        return response()->json([
+            'success' => true,
+            'html' => $html,
+            'count' => $data['allNews']->count(),
+            'latest_count' => $data['latestNews']->count(),
+        ]);
+    }
+    public function filterBySubCategory(Request $request): JsonResponse
+    {
+
+        $data = $this->service->filterBySubCategory(
+            $request->category_id,
+            $request->subcategory_id
+        );
+
+        $html = view('client.themes.blog.tp-01.ajax.filter-blog-homePage', [
+            'category' => $data['category'],
+        ])->render();
+        
         return response()->json([
             'success' => true,
             'html' => $html,

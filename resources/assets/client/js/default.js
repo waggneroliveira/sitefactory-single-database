@@ -20,3 +20,31 @@ document.addEventListener('DOMContentLoaded', function () {
         footer.classList.add('footer-light');
     }
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    if (typeof Swiper === 'undefined') {
+        return;
+    }
+
+    document.querySelectorAll('.announcement-swiper').forEach(function (element) {
+        const slides = element.querySelectorAll('.swiper-slide');
+
+        new Swiper(element, {
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true,
+            },
+            slidesPerView: 1,
+            spaceBetween: 0,
+            loop: false,
+
+            allowTouchMove: false,
+            simulateTouch: false,
+
+            autoplay: slides.length > 1 ? {
+                delay: 7000,
+                disableOnInteraction: false,
+            } : false,
+        });
+    });
+});

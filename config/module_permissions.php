@@ -280,8 +280,26 @@ return [
         ],
     ],
 
+    'event' => [
+        'permission' => 'agenda',
+        'actions' => [
+            'criar',
+            'editar',
+            'visualizar',
+            'remover',
+        ],
+    ],
     'blog_categories' => [
         'permission' => 'categorias de noticias',
+        'actions' => [
+            'criar',
+            'editar',
+            'visualizar',
+            'remover',
+        ],
+    ],
+    'blog_sub_categories' => [
+        'permission' => 'sub categorias de noticias',
         'actions' => [
             'criar',
             'editar',

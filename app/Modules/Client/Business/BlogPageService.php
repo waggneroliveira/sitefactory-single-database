@@ -2,7 +2,7 @@
 
 namespace App\Modules\Client\Business;
 
-use App\Models\Announcement;
+use App\Models\AdSlot;
 use App\Models\Blog;
 use App\Models\BlogCategory;
 use App\Models\Contact;
@@ -37,6 +37,48 @@ class BlogPageService
             $blogAll = $blogAll->whereHas('category')->where('title', 'like', '%' . $search . '%');
         }
 
+        $adSlots = AdSlot::query()
+            ->where('template_theme_id', $themeData->id)
+            ->where('active', true)
+            ->with([
+                'announcements' => function ($query) use ($tenantTheme) {
+                    $query
+                        ->where('active', true)
+                        ->whereIn('display_location', ['web', 'both'])
+                        ->where(function ($query) use ($tenantTheme) {
+                            $query
+                                ->where('target', 'all')
+                                ->orWhere(function ($query) use ($tenantTheme) {
+                                    $query
+                                        ->where('target', 'specific')
+                                        ->whereHas('tenants', function ($query) use ($tenantTheme) {
+                                            $query->where('tenants.id', $tenantTheme->id);
+                                        });
+                                });
+                        })
+                        ->where(function ($query) {
+                            $query
+                                ->whereNull('starts_at')
+                                ->orWhere('starts_at', '<=', now());
+                        })
+                        ->where(function ($query) {
+                            $query
+                                ->whereNull('ends_at')
+                                ->orWhere('ends_at', '>=', now());
+                        })
+                        ->latest();
+                },
+            ])
+            ->orderBy('sorting')
+            ->orderBy('name')
+            ->get();
+
+        $announcements = $adSlots->mapWithKeys(function ($adSlot) {
+            return [
+                $adSlot->slug => $adSlot->announcements,
+            ];
+        });
+
         $blogAll = $blogAll->active()->sorting()->paginate(15);
 
         $blogSeeAlso = Blog::with('category')
@@ -46,12 +88,12 @@ class BlogPageService
             ->whereNotIn('id', $blogAll->pluck('id'))
             ->active()
             ->inRandomOrder()
-            ->limit(4)
+            ->limit(15)
             ->get();
 
         $popUp = PopUp::active()->first();
-       
-        return compact('blogCategories', 'blogAll', 'blogSeeAlso', 'popUp', 'tenantTheme','theme', 'themeData');
+
+        return compact('announcements', 'blogCategories', 'blogAll', 'blogSeeAlso', 'popUp', 'tenantTheme','theme', 'themeData');
     }
 
     public function getInnerData($slug = null, ThemeManager $themeManager): array
@@ -87,49 +129,60 @@ class BlogPageService
         $viewMores = Blog::whereHas('category', function ($query) use ($blogInner) {
             $query->where('id', '<>', $blogInner->category->id);
         })
-            ->active()
-            ->sorting()
+        ->active()
+        ->sorting()
+        ->get();
+
+        $adSlots = AdSlot::query()
+            ->where('template_theme_id', $themeData->id)
+            ->where('active', true)
+            ->with([
+                'announcements' => function ($query) use ($tenantTheme) {
+                    $query
+                        ->where('active', true)
+                        ->whereIn('display_location', ['web', 'both'])
+                        ->where(function ($query) use ($tenantTheme) {
+                            $query
+                                ->where('target', 'all')
+                                ->orWhere(function ($query) use ($tenantTheme) {
+                                    $query
+                                        ->where('target', 'specific')
+                                        ->whereHas('tenants', function ($query) use ($tenantTheme) {
+                                            $query->where('tenants.id', $tenantTheme->id);
+                                        });
+                                });
+                        })
+                        ->where(function ($query) {
+                            $query
+                                ->whereNull('starts_at')
+                                ->orWhere('starts_at', '<=', now());
+                        })
+                        ->where(function ($query) {
+                            $query
+                                ->whereNull('ends_at')
+                                ->orWhere('ends_at', '>=', now());
+                        })
+                        ->latest();
+                },
+            ])
+            ->orderBy('sorting')
+            ->orderBy('name')
             ->get();
 
-        $blogCategories = BlogCategory::whereHas('blogs')->active()->sorting()->get();
-
-        $announcements = Announcement::select(
-            'exhibition',
-            'link',
-            'exhibition',
-            'path_image',
-            'active',
-            'sorting',
-        )
-            ->where('exhibition', '=', 'mobile')
-            ->orWhere('exhibition', '=', 'horizontal')
-            ->active()
-            ->sorting()
-            ->get();
-
-        $announcementVerticals = Announcement::select(
-            'exhibition',
-            'link',
-            'exhibition',
-            'path_image',
-            'active',
-            'sorting',
-        )
-            ->where('exhibition', '=', 'vertical')
-            ->active()
-            ->sorting()
-            ->get();
+        $announcements = $adSlots->mapWithKeys(function ($adSlot) {
+            return [
+                $adSlot->slug => $adSlot->announcements,
+            ];
+        });
 
         $contact = Contact::first();
 
         return compact(
             'contact',
             'viewMores',
-            'announcementVerticals',
             'announcements',
             'blogInner',
             'slug',
-            'blogCategories',
             'blogRelacionados', 
             'theme', 
             'themeData',

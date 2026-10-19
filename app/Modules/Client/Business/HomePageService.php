@@ -9,6 +9,7 @@ use App\Models\Announcement;
 use App\Models\BenefitTopic;
 use App\Models\Blog;
 use App\Models\BlogCategory;
+use App\Models\BlogSubcategory;
 use App\Models\Contact;
 use App\Models\Depoiment;
 use App\Models\Direction;
@@ -36,11 +37,17 @@ use App\Models\TemplateTheme;
 use App\Models\Tenant;
 use App\Models\Topic;
 use App\Models\Video;
+use App\Services\FootballDataService;
 use App\Services\ThemeManager;
+use App\Services\WeatherService;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Request;
 
 class HomePageService
 {
-    public function getIndexData(ThemeManager $themeManager): array
+    public function getIndexData(ThemeManager $themeManager, WeatherService $weather, FootballDataService $footballDataService): array
     {
         $templateThemes = TemplateTheme::active()->get();
         $tenantTheme = Tenant::current();
@@ -98,7 +105,6 @@ class HomePageService
         $depoiments = Depoiment::active()->sorting()->get();
         $contact = Contact::first();
         $statute = Statute::active()->first();
-        $blogHighlights = Blog::with('category')->active()->highlightOnly()->limit(3)->get();
         $faqs = Faq::active()->sorting()->get();
         $sessaoFaq = SessaoFaq::active()->first();
         $services = ServiceItem::active()->get();
@@ -132,7 +138,112 @@ class HomePageService
         $lineOfTimes = LineOfTime::active()->get();
         $impactSections = ImpactSection::with('metrics')->active()->get();
 
+        $blogSuperHighlights = Blog::whereHas('category', function($active){
+            $active->where('active', 1);
+        })->superHighlightOnly()->active()->sorting()->limit(6)->get();
+        $blogHighlights = Blog::with('category')->active()->highlightOnly()->limit(4)->get();
+        // Obter as 5 categorias mais recentes das últimas notícias
+        $recentCategories = BlogCategory::where('active', 1)
+            ->whereHas('blogs', function ($query) {
+                $query->active();
+            })
+            ->with([
+                'subcategories' => function ($query) {
+                    $query->where('active', 1)
+                        ->orderBy('order')
+                        ->orderBy('name');
+                },
+                'blogs' => function ($query) {
+                    $query->active()
+                        ->orderBy('created_at', 'DESC');
+                }
+            ])
+            ->withCount([
+                'blogs' => function ($query) {
+                    $query->active();
+                }
+            ])
+            ->orderBy('created_at', 'DESC')
+            ->take(5)
+        ->get();
+        // Obter as próximas 9 notícias (excluindo o destaque)
+        $latestNews = Blog::whereHas('category', function ($query) {
+            $query->where('active', 1);
+        })
+        ->with([
+            'category' => function ($query) {
+                $query->select('id', 'title', 'slug');
+            },
+            'subcategory' => function ($query) {
+                $query->select('id', 'name', 'slug');
+            }
+        ])
+        ->active()
+        ->orderBy('created_at', 'DESC')
+        ->limit(12)
+        ->get();
+
+        // Pegando os IDs para excluir
+        $excludedIds = $recentCategories->pluck('id');
+
+        $blogRelacionados = Blog::whereHas('category')
+        ->whereNotIn('blog_category_id', $excludedIds)
+        ->active()
+        ->sorting()
+        ->take(10)
+        ->get();
+
+        $blogCategories = BlogCategory::with([
+            'subcategories' => function ($query) {
+                $query->active()
+                    ->with([
+                        'blogs' => function ($query) {
+                            $query->active()
+                                ->sorting()
+                                ->limit(4);
+                        }
+                    ])
+                    ->limit(4);
+            },
+            'blogs' => function ($query) {
+                $query->active()
+                    ->orderByDesc('date')
+                    ->limit(5);
+            }
+        ])
+        ->whereHas('blogs')        
+        ->where('highlight', 1)
+        ->active()
+        ->sorting()
+        ->limit(4)
+        ->get();
+
+        $events = Event::active()
+        ->whereMonth('date', now()->month)
+        ->orderBy('date', 'asc')
+        ->get();
+        $tempo = cache()->remember(
+            'weather_lauro_de_freitas',
+            now()->addMinutes(30),
+            fn () => $weather->current(-12.8944, -38.3272)
+        );
+            
+        $standings = $footballDataService->getBrasileiraoStandings();
+
+        $proximosJogos = $footballDataService->getBrasileiraoNextMatchday();
+
+        // dd($proximosJogos);
+     
         return compact(
+            'proximosJogos',
+            'tempo',
+            'standings',
+            'events',
+            'blogCategories',
+            'latestNews',
+            'blogRelacionados',
+            'recentCategories',
+            'blogSuperHighlights',
             'announcements',
             'impactSections',
             'lineOfTimes',
@@ -192,6 +303,35 @@ class HomePageService
         return [
             'allNews' => $allNews,
             'latestNews' => $latestNews,
+        ];
+    }
+
+    public function filterBySubCategory($categoryId, $subcategoryId = null)
+    {   
+        $category = BlogCategory::query()
+            ->with([
+                'blogs' => function ($query) use ($subcategoryId) {
+                    $query->with('subcategory')
+                        ->when($subcategoryId, function ($query) use ($subcategoryId) {
+                            $query->where('blog_subcategory_id', $subcategoryId);
+                        })
+                        ->orderByDesc('date')
+                        ->limit(5);
+                }
+            ])
+            ->findOrFail($categoryId);
+
+        $allNews = Blog::query()
+            ->where('blog_category_id', $categoryId)
+            ->when($subcategoryId, function ($query) use ($subcategoryId) {
+                $query->where('blog_subcategory_id', $subcategoryId);
+            })
+            ->get();
+
+        return [
+            'category' => $category,
+            'allNews' => $allNews,
+            'latestNews' => $category->blogs,
         ];
     }
 }

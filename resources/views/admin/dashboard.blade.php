@@ -779,7 +779,7 @@
 
             <div class="mb-2">
                 <div class="d-flex align-items-center gap-2 mb-2">
-                    <span class="badge bg-info bg-opacity-10 text-info p-2">
+                    <span class="badge bg-primary bg-opacity-10 text-primary p-2">
                         <i class="mdi mdi-information-outline fs-5"></i>
                     </span>
                     <h5 class="mb-0 fw-semibold">Sobre Nós</h5>
@@ -911,7 +911,7 @@
 
             <div class="mb-2">
                 <div class="d-flex align-items-center gap-2 mb-2">
-                    <span class="badge btn-green-whi bg-opacity-10 text-success p-2">
+                    <span class="badge bg-primary bg-opacity-10 text-primary p-2">
                         <i class="mdi mdi-newspaper-variant fs-5"></i>
                     </span>
                     <h5 class="mb-0 fw-semibold">Notícias</h5>
@@ -927,11 +927,49 @@
                         ])
                     @endif
 
+                    @if (in_array('blog_sub_categories', $blogModules, true) && ($isSuper || $user->can('sub categorias de noticias.visualizar') || $user->can('usuario.tornar usuario master')))
+                        @include('admin.components.dashboard-card', [
+                            'route' => route('admin.dashboard.blogSubCategory.index'),
+                            'icon' => 'mdi-tag-multiple',
+                            'title' => 'Sub Categorias das Notícias'
+                        ])
+                    @endif
+
                     @if (in_array('blog', $blogModules, true) && ($isSuper || $user->can('noticias.visualizar') || $user->can('usuario.tornar usuario master')))
                         @include('admin.components.dashboard-card', [
                             'route' => route('admin.dashboard.blog.index'),
                             'icon' => 'mdi-newspaper-variant',
                             'title' => 'Notícias'
+                        ])
+                    @endif
+
+                </div>
+            </div>
+
+        @endif
+
+        {{-- ========================================================
+            AGENDA
+        ======================================================== --}}
+        @if ($hasPageModules('event'))
+
+            @php $blogModules = $pageModules['event']; @endphp
+
+            <div class="mb-2">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <span class="badge bg-primary bg-opacity-10 text-primary p-2">
+                        <i class="mdi mdi-newspaper-variant fs-5"></i>
+                    </span>
+                    <h5 class="mb-0 fw-semibold">Agenda</h5>
+                </div>
+
+                <div class="row g-2">
+
+                    @if (in_array('event', $blogModules, true) && ($isSuper || $user->can('agenda.visualizar') || $user->can('usuario.tornar usuario master')))
+                        @include('admin.components.dashboard-card', [
+                            'route' => route('admin.dashboard.event.index'),
+                            'icon' => 'mdi-tag-multiple',
+                            'title' => 'Agenda'
                         ])
                     @endif
 
@@ -979,7 +1017,7 @@
 
             <div class="mb-2">
                 <div class="d-flex align-items-center gap-2 mb-2">
-                    <span class="badge bg-danger bg-opacity-10 text-danger p-2">
+                    <span class="badge bg-primary bg-opacity-10 text-primary p-2">
                         <i class="mdi mdi-card-account-mail-outline fs-5"></i>
                     </span>
                     <h5 class="mb-0 fw-semibold">Contato</h5>

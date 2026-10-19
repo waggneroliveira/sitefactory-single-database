@@ -485,4 +485,62 @@ return [
         ],
 
     ],
+
+    'blog' => [
+        'multipage' => [
+            'tp-01' => [
+                'home' => [
+                    'videos',    
+                    'announcement',
+                ],
+
+                'blog' => [
+                    'blog_categories',
+                    'blog_sub_categories',
+                    'blog',
+                    'videos',
+                ],
+                'about' => [
+                    'about',
+                ],
+
+                'contact' => [
+                    'contact',
+                    'contact_leads',
+                    'download_leads',
+                ],
+                'event' => [
+                    'event',
+                ],
+
+            ],
+        ],
+
+        'smtp' => [
+            'config_smtp',
+        ],
+
+        'security_and_access_control' => [
+            'audit',
+            'permissions',
+            'users',
+        ],
+
+        'config_theme' => [
+            'config_theme',
+        ],
+
+        'limits' => [
+            'about' => 1,
+            'slides' => 3,
+            'topics' => 6,
+            'testimonials' => 6,
+            'faq' => 10,
+            'services' => 6,
+            'blog_categories' => 10,
+            'blog' => 35,
+            'videos' => 15,
+        ],
+
+    ],
 ];
