@@ -3,81 +3,230 @@
 @section('content')
     <!-- Banner-Section-Start -->
     @if (isset($slides) && $slides->count())
-      <section class="banner_section" id="home_sec">
-          @foreach ($slides as $slide)
-              <!-- hero bg -->
-              <div id="hero" class="hero_bg">
-                  <img src="{{ asset('storage/' . $slide->path_image) }}" alt="image">
+      <section class="banner_section hero-sales-section position-relative overflow-hidden py-5" id="home_sec">
+          <!-- Background Glow & Mesh Gradient -->
+          <div class="hero-bg-glow"></div>
+
+          <div class="container position-relative z-2 py-lg-4">
+              <div class="row align-items-center gy-5" style="height: 100vh">
+                  <!-- COLUNA DA ESQUERDA: COPY DE ALTO IMPACTO -->
+                  @foreach ($slides as $slide)
+                    <div class="col-lg-6 text-center text-lg-start">
+                        <!-- Título Principal com Tipografia Forte -->
+                        <h1 class="hero-main-title font-changa text-white font-medium lh-sm mb-3">
+                            {{$slide->title}}
+                            <span class="d-block text-gradient-accent secondary-color font-bold">{{$slide->subtitle}}</span>
+                        </h1>
+
+                        <!-- Subtítulo Persuasivo -->
+                        <div class="hero-subtext text-white-50 font-18 mb-4 pe-lg-4">
+                            {!!$slide->description!!}
+                        </div>
+
+                        <!-- CTAs de Conversão -->
+                        <div class="d-flex flex-column flex-sm-row justify-content-center justify-content-lg-start gap-3 mb-4">
+                            <a
+                                href="#plans"
+                                class="rounded-1 d-flex align-items-center btn-one py-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-bold text-decoration-none"
+                            >
+                                <span class="">Começar Agora por R$ 59,90</span>
+                                <i class="ms-2 bi bi-arrow-right font-20"></i>
+                            </a>
+                            <a
+                                href="https://wa.me/SEUNUMERO"
+                                target="_blank"
+                                class="btn d-flex align-items-center btn-outline-light px-lg-5 px-3 py-lg-3 py-1 font-15 font-medium"
+                            >
+                                <i class="bi bi-whatsapp color-whatsapp me-2 font-16"></i>
+                                <span>Falar no WhatsApp</span>
+                            </a>
+                        </div>
+
+                        <!-- Social Proof & Garantias -->
+                        <div
+                            class="d-flex align-items-center justify-content-center justify-content-lg-start gap-4 pt-2 text-white-50 font-13"
+                        >
+                            <div class="d-flex align-items-center gap-1.5">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i> Sem taxa de adesão
+                            </div>
+                            <div class="d-flex align-items-center gap-1.5">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i> Suporte incluso
+                            </div>
+                            <div class="d-flex align-items-center gap-1.5">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i> Setup Rápido
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COLUNA DA DIREITA: MOCKUP INTERATIVO REPLICADO EM HTML/CSS -->
+                    <div class="col-lg-6 m-0">
+                        <div class="hero-mockup-wrapper position-relative mx-auto">
+                            <!-- TABLET CONTAINER (REPLICAÇÃO DA IMAGEM) -->
+                            <div class="tablet-device shadow-lg">
+                                <!-- Tablet Top Bar -->
+                                <div class="tablet-header d-flex align-items-center justify-content-between px-3 py-2">
+                                    <span class="tablet-time font-11 text-white-50">agosto quinta-feira às 19:04</span>
+                                    <div class="tablet-browser-bar d-flex align-items-center px-2 py-0.5 rounded-3">
+                                        <i class="bi bi-lock-fill font-10 text-success me-1"></i>
+                                        <span class="font-11 text-white-50">whiweb.com.br</span>
+                                    </div>
+                                    <div class="tablet-status font-11 text-white-50">
+                                        <i class="bi bi-wifi me-1"></i> 100% <i class="bi bi-battery-full ms-1"></i>
+                                    </div>
+                                </div>
+  
+                                <!-- Tablet Screen / Admin Dashboard -->
+                                <div class="tablet-body p-3">
+                                    <!-- App Top Bar -->
+                                    <div
+                                        class="app-navbar d-flex align-items-center justify-content-between p-2 rounded-3 mb-3"
+                                    >
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="app-logo fw-bold text-white-50">W</div>
+                                            <i class="bi bi-list text-white font-18 ms-2"></i>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <i class="bi bi-aspect-ratio text-white-50 font-14"></i>
+                                            <i class="bi bi-search text-white-50 font-14"></i>
+                                            <div class="position-relative">
+                                                <i class="bi bi-bell text-white-50 font-14"></i>
+                                                <span class="badge-dot">2</span>
+                                            </div>
+                                            <i class="bi bi-moon text-white-50 font-14"></i>
+                                            <div class="d-flex align-items-center gap-1 text-white font-10 fw-medium">                                              
+                                                Wagner Oliveira <i class="bi bi-chevron-down font-10"></i>
+                                            </div>
+                                            <i class="bi bi-gear text-white-50 font-12"></i>
+                                        </div>
+                                    </div>
+  
+                                    <!-- Dashboard Title -->
+                                    <div class="mb-3 text-start">
+                                        <h5 class="fw-bold text-dark mb-0 font-16 d-flex align-items-center gap-2">
+                                            <i class="bi bi-grid-fill text-primary"></i> Painel Gerenciador
+                                        </h5>
+                                        <p class="text-muted font-11 mb-0">Gerencie todos os módulos do seu site</p>
+                                    </div>
+  
+                                    <!-- Dashboard Grid Modules -->
+                                    <div class="dashboard-grid">
+                                        <div class="module-card">
+                                            <i class="bi bi-image text-primary font-16"></i>
+                                            <span class="font-10">Sliders</span>
+                                            <i class="bi bi-chevron-right font-8 text-muted ms-auto"></i>
+                                        </div>
+                                        <div class="module-card">
+                                            <i class="bi bi-list-ul text-primary font-16"></i>
+                                            <span class="font-10">Tópicos</span>
+                                            <i class="bi bi-chevron-right font-8 text-muted ms-auto"></i>
+                                        </div>
+                                        <div class="module-card">
+                                            <i class="bi bi-person-lines-fill text-primary font-16"></i>
+                                            <span class="font-10">Serviços</span>
+                                            <i class="bi bi-chevron-right font-8 text-muted ms-auto"></i>
+                                        </div>
+                                        <div class="module-card">
+                                            <i class="bi bi-images text-primary font-16"></i>
+                                            <span class="font-10">Galeria</span>
+                                            <i class="bi bi-chevron-right font-8 text-muted ms-auto"></i>
+                                        </div>
+                                        <div class="module-card">
+                                            <i class="bi bi-question-circle-fill text-primary font-16"></i>
+                                            <span class="font-10">Sobre Nós</span>
+                                            <i class="bi bi-chevron-right font-8 text-muted ms-auto"></i>
+                                        </div>
+                                        <div class="module-card">
+                                            <i class="bi bi-display text-primary font-16"></i>
+                                            <span class="font-10">Contato</span>
+                                            <i class="bi bi-chevron-right font-8 text-muted ms-auto"></i>
+                                        </div>
+                                        <div class="module-card">
+                                            <i class="bi bi-person-badge-fill text-primary font-16"></i>
+                                            <span class="font-10">Lead Contato</span>
+                                            <i class="bi bi-chevron-right font-8 text-muted ms-auto"></i>
+                                        </div>
+                                    </div>
+  
+                                    <!-- Config Section Title -->
+                                    <div class="section-title-sm text-start mt-2 mb-1 text-muted font-11 fw-bold">
+                                        <i class="bi bi-envelope-gear"></i> Configuração SMTP
+                                    </div>
+                                    <div class="module-card mb-2">
+                                        <i class="bi bi-envelope text-primary font-16"></i>
+                                        <span class="font-10">Configuração de e-mail</span>
+                                        <i class="bi bi-chevron-right font-8 text-muted ms-auto"></i>
+                                    </div>
+  
+                                    <div class="section-title-sm text-start mt-2 mb-1 text-muted font-11 fw-bold">
+                                        <i class="bi bi-shield-lock"></i> Segurança e Controle de Acesso
+                                    </div>
+                                    <div class="row g-2">
+                                        <div class="col-6">
+                                            <div class="module-card">
+                                                <i class="bi bi-clipboard-data text-primary font-16"></i>
+                                                <span class="font-10">Auditoria</span>
+                                                <i class="bi bi-chevron-right font-8 text-muted ms-auto"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="module-card">
+                                                <i class="bi bi-people-fill text-primary font-16"></i>
+                                                <span class="font-10">Grupos de permissões</span>
+                                                <i class="bi bi-chevron-right font-8 text-muted ms-auto"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+  
+                            <!-- CARDS FLUTUANTES COM EFEITO DE HOVER/FLUTUAÇÃO (Skins Flutuantes da Imagem) -->
+                            <div class="floating-badge badge-seo shadow-lg animate-float-1">
+                                <div class="icon-wrap bg-primary-soft">
+                                    <i class="bi bi-rocket-takeoff-fill text-primary font-22"></i>
+                                </div>
+                                <div class="text-start">
+                                    <strong class="d-block font-13 text-dark">SEO Google Otimizado</strong>
+                                    <small class="text-muted font-11">Apareça no topo</small>
+                                </div>
+                            </div>
+  
+                            <div class="floating-badge badge-templates shadow-lg animate-float-2">
+                                <div class="icon-wrap bg-primary-soft">
+                                    <i class="bi bi-bar-chart-line-fill text-primary font-22"></i>
+                                </div>
+                                <div class="text-start">
+                                    <strong class="d-block font-13 text-dark">Templates Otimizados</strong>
+                                    <small class="text-muted font-11">Layouts de alta conversão</small>
+                                </div>
+                            </div>
+  
+                            <div class="floating-badge badge-audit shadow-lg animate-float-3">
+                                <div class="icon-wrap bg-primary-soft">
+                                    <i class="bi bi-shield-check text-primary font-22"></i>
+                                </div>
+                                <div class="text-start">
+                                    <strong class="d-block font-13 text-dark">Auditoria Completa</strong>
+                                    <small class="text-muted font-11">Segurança em tempo real</small>
+                                </div>
+                            </div>
+  
+                            <div class="floating-badge badge-permissions shadow-lg animate-float-4">
+                                <div class="icon-wrap bg-primary-soft">
+                                    <i class="bi bi-people-fill text-primary font-22"></i>
+                                </div>
+                                <div class="text-start">
+                                    <strong class="d-block font-13 text-dark">Grupos & Permissões</strong>
+                                    <small class="text-muted font-11">Gestão de equipe</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  @endforeach
               </div>
-
-              <!-- container start -->
-              <div class="container">
-                  <!-- row start -->
-                  <div class="row">
-                  <div class="col-lg-7 col-md-12">
-                      <!-- banner text -->
-                      <div class="banner_text">
-                          <span class="hero-badge mb-3 d-inline-block secondary-color">
-                              <i class="bi bi-rocket-takeoff me-1"></i> Lançamento 2026
-                          </span>
-                          <!-- typed text -->
-                          <div class="type-wrap">
-                              <!-- add static words/sentences here (i.e. text that you don't want to be removed)-->
-                              <span id="typed" style="white-space:pre;" class="typed secondary-color">
-                              </span>
-                          </div>
-                          <!-- h1 -->
-                          <h1 class="hero-title font-changa font-40 font-bold text-white"> {{$slide->title}} <span class="secondary-color">{{$slide->subtitle}}</span></h1>
-                          <!-- p -->
-                          <div class="description text-white">
-                              {!! $slide->description !!}
-                          </div>
-                      </div>
-
-                      <div class="mt-3 d-flex justify-content-center justify-content-lg-start flex-wrap gap-3">
-                          @if ($slide->link <> null)                                    
-                              <a href="{{$slide->link}}" class="rounded-1 d-flex align-items-center btn-one py-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none">
-                                  {{$slide->btn_title}}
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>  
-                              </a>
-                          @endif
-
-                          <a href="#plans" class="btn d-flex align-items-center btn-outline-light px-lg-5 px-3 py-lg-3 py-1 font-15 font-medium">
-                            Conhecer Planos
-                          </a>
-                      </div>
-
-                      <div class="hero-stats">
-                          <div class="hero-stats-item">
-                              <div class="number text-white-50">Completo</div>
-                              <div class="label">Site + hospedagem + suporte</div>
-                          </div>
-
-                          <div class="hero-stats-item">
-                              <div class="number text-white-50">SEO</div>
-                              <div class="label">Estrutura otimizada para o Google</div>
-                          </div>
-
-                          <div class="hero-stats-item">
-                              <div class="number text-white-50">Fácil</div>
-                              <div class="label">Gestão simplificada</div>
-                          </div>
-                      </div>
-                  </div>
-
-                  <!-- banner image start -->
-                  <div class="col-lg-5 col-md-12 mt-4 mt-lg-0">
-                      <div class="hero_img">
-                        <img src="{{ asset('storage/' . $slide->path_image_mobile) }}" alt="image">
-                      </div>
-                  </div>
-                  <!-- banner image end -->
-                  <!-- row end -->
-              </div>
-              <!-- container end -->
-          @endforeach
+          </div>
       </section>
     @endif
+
     <!-- Banner-Section-end -->
     @if ($topics->count() > 0)
       <!-- How it Works Section Start -->
@@ -213,12 +362,7 @@
               </div>
 
               <div class="col-lg-6 col-md-12 position-relative">
-                <img src="{{asset('build/client/images/themes/whi-web/tablet.png')}}" class="position-absolute tablet" loading="lazy" alt="image" style="height: 250px; bottom: 15px; right: 11px;z-index: 1;">
-                <img src="{{asset('build/client/images/themes/whi-web/phone-login.png')}}" class="position-absolute phone-img" loading="lazy" alt="image" style="height: 220px; bottom: 15px; left: 0px; z-index: 1;">
-                <!-- why us new image -->
-                <div class="why_us_new_img position-relative">
-                  <img src="{{asset('build/client/images/themes/whi-web/gif-paine-one.gif')}}" loading="lazy" alt="image">
-                </div>
+
               </div>
             </div>
 
