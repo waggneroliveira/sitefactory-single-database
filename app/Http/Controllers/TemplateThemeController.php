@@ -79,17 +79,11 @@ class TemplateThemeController extends Controller
 
                     $image = $manager
                         ->read($file)
-                        ->resize(
-                            null,
-                            null,
-                            function ($constraint) {
-
-                                $constraint->aspectRatio();
-
-                                $constraint->upsize();
-                            }
+                        ->scaleDown(
+                            width: 1200,
+                            height: 4000
                         )
-                        ->toAvif(quality: 95)
+                        ->toAvif(quality: 80)
                         ->toString();
 
                     Storage::disk('public')->put(
@@ -251,15 +245,11 @@ class TemplateThemeController extends Controller
 
                     $image = $manager
                         ->read($file)
-                        ->resize(
-                            null,
-                            null,
-                            function ($constraint) {
-                                $constraint->aspectRatio();
-                                $constraint->upsize();
-                            }
+                        ->scaleDown(
+                            width: 1200,
+                            height: 4000
                         )
-                        ->toAvif(quality: 95)
+                        ->toAvif(quality: 80)
                         ->toString();
 
                     Storage::disk('public')->put(
