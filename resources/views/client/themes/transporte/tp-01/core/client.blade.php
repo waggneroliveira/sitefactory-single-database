@@ -451,7 +451,7 @@
             border-color: var(--text-color-footer) !important;
         }
         .list-service ul li{
-            font-size: 0.983rem;
+            font-size: 0.75rem;
         }
     </style>
 
