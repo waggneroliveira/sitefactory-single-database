@@ -450,6 +450,9 @@
         .border-color-footer{
             border-color: var(--text-color-footer) !important;
         }
+        .list-service ul li{
+            font-size: 0.983rem;
+        }
     </style>
 
     <header class="shadow-sm bg-header">
