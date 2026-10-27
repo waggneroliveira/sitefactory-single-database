@@ -371,6 +371,9 @@
             .whiweb-showcase-section .ww-macbook {
                 width: 100% !important;
             }
+            .hero-sales-section {
+                height: 1335px;
+            }
         }
     </style>
 
