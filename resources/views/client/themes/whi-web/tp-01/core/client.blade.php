@@ -362,19 +362,6 @@
         .bg-scroll { background: var(--bg-scroll); }
         .bg-button-one { background: var(--bg-button-one); }
         .bg-button-two { background: var(--bg-button-two); }
-        @media screen and (max-width: 992px) {
-            .hero-main-title {
-                margin-top: 100px;
-            }
-        }
-        @media (max-width: 575.98px) {
-            .whiweb-showcase-section .ww-macbook {
-                width: 100% !important;
-            }
-            .hero-sales-section {
-                height: 1335px;
-            }
-        }
     </style>
 
     {{-- Header --}}
