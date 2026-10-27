@@ -109,17 +109,17 @@
                                             <div class="app-logo fw-bold text-white-50">W</div>
                                             <i class="bi bi-list text-white font-18 ms-2"></i>
                                         </div>
-                                        <div class="d-flex align-items-center gap-3">
-                                            <i class="bi bi-search text-white-50 font-14"></i>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="bi bi-search text-white-50 font-10 me-1"></i>
                                             <div class="position-relative">
-                                                <i class="bi bi-bell text-white-50 font-14"></i>
+                                                <i class="bi bi-bell text-white-50 font-10 me-1"></i>
                                                 <span class="badge-dot">2</span>
                                             </div>
-                                            <i class="bi bi-moon text-white-50 font-14"></i>
+                                            <i class="bi bi-moon text-white-50 font-10 me-1"></i>
                                             <div class="d-flex align-items-center gap-1 text-white-50 font-10 fw-medium">                                              
-                                                Wagner Oliveira <i class="bi bi-chevron-down font-10"></i>
+                                                Wagner Oliveira <i class="bi bi-chevron-down" style="font-size: 0.375rem !important;"></i>
                                             </div>
-                                            <i class="bi bi-gear text-white-50 font-12"></i>
+                                            <i class="bi bi-gear text-white-50 font-10"></i>
                                         </div>
                                     </div>
   

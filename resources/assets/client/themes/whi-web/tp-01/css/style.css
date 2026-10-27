@@ -131,14 +131,14 @@
 }
 
 .badge-dot {
-  position: absolute;
-  top: -4px;
-  right: -6px;
-  background: #cbff4d;
-  color: #000;
-  font-size: 8px;
-  border-radius: 50%;
-  padding: 1px 4px;
+    position: absolute;
+    top: 2px;
+    right: -2px;
+    background: #cbff4d;
+    color: #000;
+    font-size: 6px;
+    border-radius: 50%;
+    padding: 1px 4px;
 }
 
 .dashboard-grid {
@@ -192,13 +192,13 @@
 
 /* Posicionamento dos Badges na Tela */
 .badge-seo {
-  top: 15%;
-  left: -12%;
+  top: 16%;
+  left: -15%;
 }
 
 .badge-templates {
-  top: 10%;
-  right: -10%;
+  top: 23%;
+  right: -15%;
 }
 
 .badge-audit {
@@ -5101,7 +5101,9 @@ body.modal-open {
     h5 {
         font-size: 18px;
     }
-
+    .font-6{
+        font-size: 0.375rem !important;
+    }
     .font-16.map-footer{
         font-size: 20px !important;
     }
