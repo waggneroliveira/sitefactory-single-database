@@ -10,6 +10,25 @@
     font-weight: <weight>;
     font-style: normal;
 }
+.border-white-50 {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.points {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.points span {
+    width: 3px;
+    height: 3px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+}
 /* --- HERO CONFIGURATIONS --- */
 .hero-sales-section {
   background: #0B0F19; /* Dark Navy profundo focado em SaaS */
@@ -76,14 +95,14 @@
 
 /* --- REPLICAÇÃO DO TABLET MOCKUP EM HTML --- */
 .hero-mockup-wrapper {
-  max-width: 440px;
+  max-width: 415px;
   perspective: 1000px;
 }
 
 .tablet-device {
   background: #000000;
   border: 10px solid #1e293b;
-  border-radius: 32px;
+  border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
   transition: transform 0.5s ease;
@@ -144,17 +163,17 @@
 
 /* --- CARDS FLUTUANTES (Efeito Floating) --- */
 .floating-badge {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  padding: 10px 16px;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  z-index: 10;
-  transition: transform 0.3s ease;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    padding: 10px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    z-index: 10;
+    transition: transform 0.3s ease;
 }
 
 .floating-badge:hover {
@@ -1022,11 +1041,11 @@ iframe#youtubevideo {
     padding: 40px 0 0 0;
     align-items: center;
 }
-.why_new_section .why_new_section_inner .why_new_left_data {
+.why_new_section .why_new_section_inner {
     position: relative;
     padding: 0 40px 0 0;
 }
-.why_new_section .why_new_section_inner .why_new_left_data .why_data_block {
+.why_new_section .why_new_section_inner {
     border-radius: 20px;
     padding: 20px;
     display: flex;
@@ -1192,15 +1211,7 @@ iframe#youtubevideo {
 .advance_feature_section .title_badge {
     color: var(--primery);
 }
-.advance_feature_section .af_innner {
-    margin: 0 auto;
-    padding: 100px 0 150px 0;
-    position: relative;
-}
-.advance_feature_section .af_innner{
-    padding: 0px 0 150px 0;
-    position: relative;
-}
+
 .advance_feature_section .af_listing .row {
     align-items: flex-start;
 }

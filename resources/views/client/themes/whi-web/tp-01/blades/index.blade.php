@@ -13,7 +13,7 @@
                   @foreach ($slides as $slide)
                     <div class="col-lg-6 text-center text-lg-start">
                         <!-- Título Principal com Tipografia Forte -->
-                        <h1 class="hero-main-title font-changa text-white font-medium lh-sm mb-3">
+                        <h1 class="hero-main-title font-changa font-semibold text-white font-medium mb-3">
                             {{$slide->title}}
                             <span class="d-block text-gradient-accent secondary-color font-bold">{{$slide->subtitle}}</span>
                         </h1>
@@ -47,7 +47,7 @@
                             class="d-flex align-items-center justify-content-center justify-content-lg-start gap-4 pt-2 text-white-50 font-13"
                         >
                             <div class="d-flex align-items-center gap-1.5">
-                                <i class="bi bi-check-circle-fill text-success me-2"></i> Sem taxa de adesão
+                                <i class="bi bi-check-circle-fill text-success me-2"></i> Taxa de implantação única
                             </div>
                             <div class="d-flex align-items-center gap-1.5">
                                 <i class="bi bi-check-circle-fill text-success me-2"></i> Suporte incluso
@@ -64,14 +64,38 @@
                             <!-- TABLET CONTAINER (REPLICAÇÃO DA IMAGEM) -->
                             <div class="tablet-device shadow-lg">
                                 <!-- Tablet Top Bar -->
-                                <div class="tablet-header d-flex align-items-center justify-content-between px-3 py-2">
-                                    <span class="tablet-time font-11 text-white-50">agosto quinta-feira às 19:04</span>
-                                    <div class="tablet-browser-bar d-flex align-items-center px-2 py-0.5 rounded-3">
-                                        <i class="bi bi-lock-fill font-10 text-success me-1"></i>
-                                        <span class="font-11 text-white-50">whiweb.com.br</span>
-                                    </div>
-                                    <div class="tablet-status font-11 text-white-50">
+                                <div class="tablet-header d-flex align-items-center justify-content-between flex-column gap-2 px-3 py-2">
+                                    <div class="col-12 d-flex align-items-center justify-content-between">
+                                      <span class="tablet-time font-11 text-white-50">agosto quinta-feira às 19:04</span>
+                                      <div class="tablet-status font-11 text-white-50">
                                         <i class="bi bi-wifi me-1"></i> 100% <i class="bi bi-battery-full ms-1"></i>
+                                      </div>
+                                    </div>
+                                    <div class="col-12 d-flex align-items-center justify-content-center gap-1">
+                                      <svg xmlns="http://www.w3.org/2000/svg"
+                                          class="text-white-50"
+                                          width="20"
+                                          height="20"
+                                          viewBox="0 0 24 24"
+                                          fill="none"
+                                          stroke="currentColor"
+                                          stroke-width="1.8"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          aria-label="Página inicial">
+                                          <path d="M3 11.5L12 4l9 7.5"/>
+                                          <path d="M5 10v10h14V10"/>
+                                      </svg>
+                                      <div class="tablet-browser-bar d-flex align-items-center px-2 py-0.5 rounded-3 col-10">
+                                          <i class="bi bi-lock-fill font-10 text-success me-1"></i>
+                                          <span class="font-11 text-white-50">whiweb.com.br</span>
+                                      </div>
+                                      <span class="border-white-50 text-white-50 font-10 rounded-1 px-1">1</span>
+                                      <div class="points">
+                                          <span></span>
+                                          <span></span>
+                                          <span></span>
+                                      </div>
                                     </div>
                                 </div>
   
@@ -86,14 +110,13 @@
                                             <i class="bi bi-list text-white font-18 ms-2"></i>
                                         </div>
                                         <div class="d-flex align-items-center gap-3">
-                                            <i class="bi bi-aspect-ratio text-white-50 font-14"></i>
                                             <i class="bi bi-search text-white-50 font-14"></i>
                                             <div class="position-relative">
                                                 <i class="bi bi-bell text-white-50 font-14"></i>
                                                 <span class="badge-dot">2</span>
                                             </div>
                                             <i class="bi bi-moon text-white-50 font-14"></i>
-                                            <div class="d-flex align-items-center gap-1 text-white font-10 fw-medium">                                              
+                                            <div class="d-flex align-items-center gap-1 text-white-50 font-10 fw-medium">                                              
                                                 Wagner Oliveira <i class="bi bi-chevron-down font-10"></i>
                                             </div>
                                             <i class="bi bi-gear text-white-50 font-12"></i>
@@ -105,7 +128,7 @@
                                         <h5 class="fw-bold text-dark mb-0 font-16 d-flex align-items-center gap-2">
                                             <i class="bi bi-grid-fill text-primary"></i> Painel Gerenciador
                                         </h5>
-                                        <p class="text-muted font-11 mb-0">Gerencie todos os módulos do seu site</p>
+                                        <p class="text-muted font-10 mb-0">Gerencie todos os módulos do seu site</p>
                                     </div>
   
                                     <!-- Dashboard Grid Modules -->
@@ -148,7 +171,7 @@
                                     </div>
   
                                     <!-- Config Section Title -->
-                                    <div class="section-title-sm text-start mt-2 mb-1 text-muted font-11 fw-bold">
+                                    <div class="section-title-sm text-start mt-2 mb-1 text-muted font-10 fw-bold">
                                         <i class="bi bi-envelope-gear"></i> Configuração SMTP
                                     </div>
                                     <div class="module-card mb-2">
@@ -157,7 +180,7 @@
                                         <i class="bi bi-chevron-right font-8 text-muted ms-auto"></i>
                                     </div>
   
-                                    <div class="section-title-sm text-start mt-2 mb-1 text-muted font-11 fw-bold">
+                                    <div class="section-title-sm text-start mt-2 mb-1 text-muted font-10 fw-bold">
                                         <i class="bi bi-shield-lock"></i> Segurança e Controle de Acesso
                                     </div>
                                     <div class="row g-2">
@@ -185,8 +208,8 @@
                                     <i class="bi bi-rocket-takeoff-fill text-primary font-22"></i>
                                 </div>
                                 <div class="text-start">
-                                    <strong class="d-block font-13 text-dark">SEO Google Otimizado</strong>
-                                    <small class="text-muted font-11">Apareça no topo</small>
+                                    <strong class="d-block font-10 text-dark">SEO Google Otimizado</strong>
+                                    <small class="text-muted font-10">Apareça no topo</small>
                                 </div>
                             </div>
   
@@ -195,8 +218,8 @@
                                     <i class="bi bi-bar-chart-line-fill text-primary font-22"></i>
                                 </div>
                                 <div class="text-start">
-                                    <strong class="d-block font-13 text-dark">Templates Otimizados</strong>
-                                    <small class="text-muted font-11">Layouts de alta conversão</small>
+                                    <strong class="d-block font-10 text-dark">Templates Otimizados</strong>
+                                    <small class="text-muted font-10">Layouts de alta conversão</small>
                                 </div>
                             </div>
   
@@ -205,8 +228,8 @@
                                     <i class="bi bi-shield-check text-primary font-22"></i>
                                 </div>
                                 <div class="text-start">
-                                    <strong class="d-block font-13 text-dark">Auditoria Completa</strong>
-                                    <small class="text-muted font-11">Segurança em tempo real</small>
+                                    <strong class="d-block font-10 text-dark">Auditoria Completa</strong>
+                                    <small class="text-muted font-10">Segurança em tempo real</small>
                                 </div>
                             </div>
   
@@ -215,8 +238,8 @@
                                     <i class="bi bi-people-fill text-primary font-22"></i>
                                 </div>
                                 <div class="text-start">
-                                    <strong class="d-block font-13 text-dark">Grupos & Permissões</strong>
-                                    <small class="text-muted font-11">Gestão de equipe</small>
+                                    <strong class="d-block font-10 text-dark">Grupos & Permissões</strong>
+                                    <small class="text-muted font-10">Gestão de equipe</small>
                                 </div>
                             </div>
                         </div>
@@ -226,154 +249,74 @@
           </div>
       </section>
     @endif
-
     <!-- Banner-Section-end -->
+
+    <!-- How it Works Section Start -->
+    <section class="advance_feature_section white_text" id="how_sec" style="background: #0B0F19;">
+        <div class="af_innner">
+
+        </div>
+
+        <!-- device image -->
+        <div class="device">
+            <img src="{{asset('build/client/images/themes/whi-web/device.png')}}" alt="image" height="250" loading="lazy">
+        </div>
+
+    </section>
+    <!-- How it Works Section End -->
+
+
     @if ($topics->count() > 0)
-      <!-- How it Works Section Start -->
-      <section class="advance_feature_section white_text" id="how_sec">
-          <div class="af_innner">
+      <!-- why us new section start -->
+      <section class="why_new_section bg-white position-relative" id="why_sec">
+          <!-- inner section start -->
+          <div class="why_new_section_inner">
+          <!-- container start -->
+          <div class="container">
+            <!-- row start -->
+            <div class="row justify-content-center">
 
-              <!-- background blure shapes -->
-              <div class="blure_shape bg-secondary-color bs_1"> </div>
-              <div class="blure_shape bg-secondary-color bs_2"> </div>
+              <!-- section title -->
+              <div class="section_title">
+                  <span class="title_badge">Personalize do seu jeito</span>
+                  <h2 class="trhee-step">A forma mais rápida de colocar <br><span>seu negócio no ar</span></h2>
+              </div>
 
-              <!-- container -->
-              <div class="container">
-                  <!-- listing -->
-                  <div class="af_listing">
-                      <!-- row -->
-                      <div class="row">
-                          <!-- collom -->
-                          <div class="col-md-12">
-                              <!-- inner section -->
-                              <div class="row listing_inner align-items-center">
-                                  <!-- blok -->
-                                  @foreach ($topics as $topic)
-                                      <div class="af_block col-lg-3 col-md-6 col-sm-6 p-1">
-                                          <div class="text d-flex justify-content-center gap-3 align-items-start flex-column" style="min-height: 267px;">
-                                              <div class="d-flex justify-content-between align-items-start flex-column mb-2">
-                                                  
-                                                  <a @if($topic->link) href="{{ $topic->link }}" target="_blank" rel="noopener noreferrer" @endif class="topic-item d-block">
-                                                      @if ($topic->path_image)
-                                                          <div class="bg-icon bg-secondary-color">
-                                                              <img src="{{ asset('storage/' . $topic->path_image) }}" height="30" alt="{{ $topic->title }}" class="img-fluid d-block m-auto" loading="lazy">
-                                                          </div>
-                                                      @endif
-                                                  </a>
+              <div class="dtat_box">
+                <div class="col-lg-12">
+                  <!-- why us new box left -->
+                  <div class="why_new_left_data row g-3">
 
-                                                  <div class="h5 mt-2">{{ $topic->title }}</div>
-                                              </div>
-                                              <p>{{ $topic->description }}</p>
-                                          </div>
-                                      </div>
-                                  @endforeach
-                              </div>
-
+                    @foreach ($topics as $index => $topic)
+                    {{-- {{dd($index)}} --}}
+                      <!-- block 1 -->
+                      <div class="col-12 col-lg-3">
+                        <div class="why_data_block p-3 rounded-3">
+                          <!-- icon -->
+                          <div class="number text-white">
+                          {{$index + 1}}                   
                           </div>
+                          <!-- text -->
+                          <div class="text col-12 mt-2">
+                              <div class="font-semibold font-15 font-changa mb-2">{{$topic->title}}</div>
+                              <p> {{$topic->description}} </p>
+                          </div>
+                        </div>
                       </div>
-                      <!-- row -->
+                    @endforeach
                   </div>
-                  <!-- listing -->
-
-              </div>            
-          </div>
-
-          <!-- device image -->
-          <div class="device">
-              <img src="{{asset('build/client/images/themes/whi-web/device.png')}}" alt="image" height="250" loading="lazy">
-          </div>
-
-      </section>
-      <!-- How it Works Section End -->
-    @endif
-    <!-- why us new section start -->
-    <section class="why_new_section bg-white position-relative" id="why_sec">
-        <!-- inner section start -->
-        <div class="why_new_section_inner">
-        <!-- container start -->
-        <div class="container">
-          <!-- row start -->
-          <div class="row justify-content-center">
-
-            <!-- section title -->
-            <div class="section_title">
-                <span class="title_badge">Personalize do seu jeito</span>
-                <h2 class="trhee-step">A forma mais rápida de colocar <br><span>seu negócio no ar</span></h2>
-            </div>
-
-            <div class="dtat_box">
-              <div class="col-lg-6 col-md-12">
-                <!-- why us new box left -->
-                <div class="why_new_left_data">
-
-                  <!-- block 1 -->
-                  <div class="why_data_block">
-                    <!-- icon -->
-                    <div class="number text-white">
-                    01                    
-                    </div>
-                    <!-- text -->
-                    <div class="text col-12 col-md-10">
-                        <div class="font-semibold font-15 font-changa">Definição do modelo do seu site</div>
-                        <p>Nós recomendamos o modelo perfeito para o seu segmento ou você escolhe o seu favorito em nosso catálogo de templates.</p>
-                    </div>
-                  </div>
-
-                  <!-- block 2 -->
-                  <div class="why_data_block">
-                    <!-- icon -->
-                    <div class="number text-white">
-                    02                    
-                    </div>
-                    <!-- text -->
-                    <div class="text col-12 col-md-10">
-                      <div class="font-semibold font-15 font-changa">Personalização com a sua identidade visual</div>
-                      <p>Nossa equipe configura suas cores, logomarca, textos e informações para que o site reflita exatamente a identidade da sua empresa.</p>
-                    </div>
-                  </div>
-
-                  <!-- block 3 -->
-                  <div class="why_data_block">
-                    <!-- number -->
-                    <div class="number text-white">
-                      03
-                    </div>
-                    <!-- text -->
-                    <div class="text col-12 col-md-10">
-                      <div class="font-semibold font-15 font-changa">Você aprova e nós publicamos!</div>
-                      <p>Você valida o resultado e nós cuidamos de toda a parte técnica: publicação, hospedagem, certificado de segurança e presença no Google</p>
-                    </div>
-                  </div>
-
-                  <!-- block 4 -->
-                  <div class="why_data_block">
-                    <!-- number -->
-                    <div class="number text-white">
-                      04
-                    </div>
-                    <!-- text -->
-                    <div class="text col-12 col-md-10">
-                      <div class="font-semibold font-15 font-changa">Autonomia total no painel</div>
-                      <p>Você recebe seu login e tem total liberdade para alterar fotos, textos, serviços ou anúncios em tempo real, sempre que precisar.</p>
-                    </div>
-                  </div>
-
                 </div>
               </div>
 
-              <div class="col-lg-6 col-md-12 position-relative">
-
-              </div>
             </div>
-
+            <!-- row end -->
           </div>
-          <!-- row end -->
+          <!-- container end -->
         </div>
-        <!-- container end -->
-      </div>
-      
-    </section>
-    <!-- why us new section end -->
+        
+      </section>
+      <!-- why us new section end -->
+    @endif
 
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
