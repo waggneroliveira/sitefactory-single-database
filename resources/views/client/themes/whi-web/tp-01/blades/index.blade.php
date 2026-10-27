@@ -47,10 +47,10 @@
                             class="d-flex align-items-center justify-content-center justify-content-lg-start gap-4 pt-2 text-white-50 font-13"
                         >
                             <div class="d-flex align-items-center gap-1.5">
-                                <i class="bi bi-check-circle-fill text-success me-2"></i> Taxa de implantação única
+                                <i class="bi bi-check-circle-fill text-success me-2"></i> Site + hospedagem + suporte
                             </div>
                             <div class="d-flex align-items-center gap-1.5">
-                                <i class="bi bi-check-circle-fill text-success me-2"></i> Suporte incluso
+                                <i class="bi bi-check-circle-fill text-success me-2"></i> Estrutura otimizada para o Google
                             </div>
                             <div class="d-flex align-items-center gap-1.5">
                                 <i class="bi bi-check-circle-fill text-success me-2"></i> Setup Rápido
