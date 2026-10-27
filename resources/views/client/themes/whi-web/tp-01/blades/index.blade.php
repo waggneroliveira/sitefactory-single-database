@@ -27,19 +27,28 @@
                         <div class="d-flex flex-column flex-sm-row justify-content-center justify-content-lg-start gap-3 mb-4">
                             <a
                                 href="#plans"
-                                class="rounded-1 d-flex align-items-center btn-one py-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-bold text-decoration-none"
+                                class="rounded-1 d-flex align-items-center justify-content-center btn-one py-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-bold text-decoration-none"
                             >
                                 <span class="">Começar Agora por R$ 59,90</span>
                                 <i class="ms-2 bi bi-arrow-right font-20"></i>
                             </a>
-                            <a
-                                href="https://wa.me/SEUNUMERO"
-                                target="_blank"
-                                class="btn d-flex align-items-center btn-outline-light px-lg-5 px-3 py-lg-3 py-1 font-15 font-medium"
-                            >
-                                <i class="bi bi-whatsapp color-whatsapp me-2 font-16"></i>
-                                <span>Falar no WhatsApp</span>
-                            </a>
+                            @if (isset($contact) && $contact->whatsapp <> null)
+                              @php
+                                  // Remove caracteres não numéricos do telefone
+                                  $phone = preg_replace('/\D/', '', $contact->whatsapp);
+
+                                  // Monta mensagem com ícones e quebras de linha
+                                  $mensagem = "Olá! Encontrei seu site e gostaria de conhecer mais sobre os planos disponíveis.%0A";
+                              @endphp
+                              <a
+                                  href="https://wa.me/55{{ $phone }}?text={{ $mensagem }}"
+                                  target="_blank"
+                                  class="btn d-flex align-items-center justify-content-center btn-outline-light py-2 px-3 px-lg-5 font-15 font-medium"
+                              >
+                                  <i class="bi bi-whatsapp color-whatsapp me-2 font-16"></i>
+                                  <span>Falar no WhatsApp</span>
+                              </a>
+                            @endif
                         </div>
 
                         <!-- Social Proof & Garantias -->
@@ -59,7 +68,7 @@
                     </div>
 
                     <!-- COLUNA DA DIREITA: MOCKUP INTERATIVO REPLICADO EM HTML/CSS -->
-                    <div class="col-lg-6 m-0">
+                    <div class="col-lg-6 m-0 mt-3 mt-lg-0">
                         <div class="hero-mockup-wrapper position-relative mx-auto">
                             <!-- TABLET CONTAINER (REPLICAÇÃO DA IMAGEM) -->
                             <div class="tablet-device shadow-lg">
@@ -100,7 +109,7 @@
                                 </div>
   
                                 <!-- Tablet Screen / Admin Dashboard -->
-                                <div class="tablet-body p-3">
+                                <div class="tablet-body py-2 px-3">
                                     <!-- App Top Bar -->
                                     <div
                                         class="app-navbar d-flex align-items-center justify-content-between p-2 rounded-3 mb-3"
@@ -204,7 +213,7 @@
   
                             <!-- CARDS FLUTUANTES COM EFEITO DE HOVER/FLUTUAÇÃO (Skins Flutuantes da Imagem) -->
                             <div class="floating-badge badge-seo shadow-lg animate-float-1">
-                                <div class="icon-wrap bg-primary-soft">
+                                <div class="icon-wrap bg-primary-soft d-none d-lg-block">
                                     <i class="bi bi-rocket-takeoff-fill text-primary font-22"></i>
                                 </div>
                                 <div class="text-start">
@@ -214,7 +223,7 @@
                             </div>
   
                             <div class="floating-badge badge-templates shadow-lg animate-float-2">
-                                <div class="icon-wrap bg-primary-soft">
+                                <div class="icon-wrap bg-primary-soft d-none d-lg-block">
                                     <i class="bi bi-bar-chart-line-fill text-primary font-22"></i>
                                 </div>
                                 <div class="text-start">
@@ -224,7 +233,7 @@
                             </div>
   
                             <div class="floating-badge badge-audit shadow-lg animate-float-3">
-                                <div class="icon-wrap bg-primary-soft">
+                                <div class="icon-wrap bg-primary-soft d-none d-lg-block">
                                     <i class="bi bi-shield-check text-primary font-22"></i>
                                 </div>
                                 <div class="text-start">
@@ -234,7 +243,7 @@
                             </div>
   
                             <div class="floating-badge badge-permissions shadow-lg animate-float-4">
-                                <div class="icon-wrap bg-primary-soft">
+                                <div class="icon-wrap bg-primary-soft d-none d-lg-block">
                                     <i class="bi bi-people-fill text-primary font-22"></i>
                                 </div>
                                 <div class="text-start">
@@ -327,9 +336,6 @@
 
 <style>
   .whiweb-showcase-section {
-    --ww-bg: #0b0f19;
-    --ww-muted: #94a3b8;
-    --ww-indigo: #4f46e5;
     position: relative;
     isolation: isolate;
     overflow: hidden;
@@ -337,17 +343,11 @@
     padding: 2rem clamp(1rem, 4vw, 3rem);
     color: #f1f5f9;
     font-family: Inter, sans-serif;
-    background: var(--ww-bg);
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 1.5rem;
-    box-shadow: 0 25px 50px -12px rgba(0,0,0,.5);
   }
   .whiweb-showcase-section *, .whiweb-showcase-section *::before, .whiweb-showcase-section *::after { box-sizing: border-box; }
   .whiweb-showcase-section .ww-glow {
     position: absolute; inset: 0; z-index: -1; pointer-events: none;
-    background: radial-gradient(circle at 50% 30%,rgba(99,102,241,.25),rgba(14,165,233,.1) 40%,transparent 70%);
   }
-  .whiweb-showcase-section h2, .whiweb-showcase-section .ww-brand { font-family: Changa, sans-serif; }
   .whiweb-showcase-section .ww-kicker {
     display: inline-flex; align-items: center; gap: .5rem; margin-bottom: .75rem;
     padding: .35rem .85rem; color: #a5b4fc; background: rgba(99,102,241,.1);
@@ -392,6 +392,10 @@
     border: 1px solid rgba(51,65,85,.7); border-radius: .75rem .75rem 0 0;
     font-size: .75rem; user-select: none;
   }
+  .ww-tabletbar img, .ww-brand-row img{
+    filter: brightness(0) invert(1);
+    opacity: 0.5;
+  }
   .whiweb-showcase-section .ww-browserbar, .whiweb-showcase-section .ww-tabletbar, .whiweb-showcase-section .ww-phonebar {
     display: flex; align-items: center; justify-content: space-between; gap: .5rem;
     padding: .5rem .75rem; background: #111625; border-bottom: 1px solid #1e293b;
@@ -403,28 +407,34 @@
   .whiweb-showcase-section .ww-dots i:nth-child(3) { background: #10b981; }
   .whiweb-showcase-section .ww-url { display: flex; align-items: center; justify-content: center; gap: .5rem; flex: 1; max-width: 34rem; padding: .3rem .75rem; color: #cbd5e1; background: #090d16; border: 1px solid #334155; border-radius: .5rem; font: .7rem monospace; }
   .whiweb-showcase-section .ww-browser-icons { display: flex; justify-content: flex-end; gap: .7rem; flex: 0 0 4rem; color: #94a3b8; }
-  .whiweb-showcase-section .ww-app { display: flex; flex: 1; min-height: 0; overflow: hidden; background: #0f1422; }
+  .whiweb-showcase-section .ww-app { display: flex; flex: 1; min-height: 0; overflow: hidden; background: #FFF; }
+  .ww-dots.tablet i{
+    width: 5px;
+    height: 5px;
+  }
+  .ww-dots.tablet, .ww-browser-icons.tablet{
+    flex: inherit;
+  }
   .whiweb-showcase-section .ww-sidebar {
     display: flex; flex: 0 0 14rem; flex-direction: column; justify-content: space-between;
-    padding: .85rem; color: #94a3b8; background: #070a12; border-right: 1px solid #1e293b;
+    padding: .85rem; color: #94a3b8;
+  }
+  .ww-sidebar-bg{
+    background: #0f172a;
+    border-radius: 5px;
+    padding: 10px;
+    height: 100%;
   }
   .whiweb-showcase-section .ww-brand-row { display: flex; align-items: center; gap: .6rem; padding: .35rem .5rem .8rem; margin-bottom: 1rem; border-bottom: 1px solid #1e293b; }
-  .whiweb-showcase-section .ww-logo {
-    display: inline-flex; align-items: center; justify-content: center; width: 1.8rem; height: 1.8rem;
-    color: white; background: #4f46e5; border-radius: .5rem; font-weight: 800;
-    box-shadow: 0 5px 15px rgba(79,70,229,.35);
-  }
+
   .whiweb-showcase-section .ww-brand { color: #fff; font-size: .85rem; font-weight: 800; letter-spacing: .08em; line-height: 1; }
   .whiweb-showcase-section .ww-brand-sub { color: #64748b; font-size: .55rem; letter-spacing: .15em; text-transform: uppercase; }
   .whiweb-showcase-section .ww-nav-label { margin: .75rem .5rem .35rem; color: #64748b; font-size: .6rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
   .whiweb-showcase-section .ww-nav-link { display: flex; align-items: center; justify-content: space-between; padding: .4rem .55rem; margin-bottom: .15rem; color: #94a3b8; text-decoration: none; border-radius: .5rem; transition: .2s; }
   .whiweb-showcase-section .ww-nav-link:hover { color: #e2e8f0; background: #1e293b; }
   .whiweb-showcase-section .ww-nav-link.active { color: #c7d2fe; background: rgba(79,70,229,.22); border: 1px solid rgba(99,102,241,.3); }
-  .whiweb-showcase-section .ww-user { display: flex; align-items: center; gap: .55rem; padding-top: .7rem; border-top: 1px solid #1e293b; }
-  .whiweb-showcase-section .ww-avatar { display: inline-flex; align-items: center; justify-content: center; width: 1.6rem; height: 1.6rem; flex: 0 0 auto; color: white; background: linear-gradient(45deg,#6366f1,#38bdf8); border-radius: 50%; font-size: .6rem; font-weight: 800; }
-  .whiweb-showcase-section .ww-dashboard { position: relative; display: flex; flex: 1; flex-direction: column; justify-content: space-between; min-width: 0; padding: 1rem; overflow-y: auto; color: #1e293b; background: #f8fafc; }
-  .whiweb-showcase-section .ww-dash-nav, .whiweb-showcase-section .ww-dash-card { background: #fff; border: 1px solid #e2e8f0; border-radius: .75rem; box-shadow: 0 1px 3px rgba(15,23,42,.08); }
-  .whiweb-showcase-section .ww-dash-nav { display: flex; align-items: center; justify-content: space-between; padding: .6rem .75rem; margin-bottom: 1rem; }
+  .whiweb-showcase-section .ww-dashboard { position: relative; display: flex; flex: 1; flex-direction: column; justify-content: space-between; min-width: 0; padding: 13.86px 13px 13.86px 0px; overflow-y: auto; color: #1e293b; background: #f8fafc; }
+  .whiweb-showcase-section .ww-dash-card { background: #fff; border: 1px solid #e2e8f0; border-radius: .75rem; box-shadow: 0 1px 3px rgba(15,23,42,.08); }
   .whiweb-showcase-section .ww-dash-card { display: flex; align-items: center; gap: .7rem; padding: .75rem; cursor: pointer; transition: border-color .2s, background .2s, box-shadow .2s; }
   .whiweb-showcase-section .ww-card-icon { display: inline-flex; align-items: center; justify-content: center; width: 2.3rem; height: 2.3rem; flex: 0 0 auto; color: #4f46e5; background: #eef2ff; border-radius: .6rem; font-size: 1rem; }
   .whiweb-showcase-section .ww-card-title { margin: 0; color: #1e293b; font-size: .75rem; font-weight: 800; }
@@ -433,7 +443,6 @@
   .whiweb-showcase-section .ww-dashboard-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .65rem; }
   .whiweb-showcase-section .ww-module-theme { animation: ww-highlight-theme 12s infinite; }
   .whiweb-showcase-section .ww-module-slider { animation: ww-highlight-slider 12s infinite; }
-  .whiweb-showcase-section .ww-dashboard-footer { display: flex; justify-content: space-between; padding-top: 1rem; margin-top: 1.5rem; color: #94a3b8; border-top: 1px solid #e2e8f0; font-size: .6rem; }
   .whiweb-showcase-section .ww-toast {
     position: absolute; right: 1rem; bottom: 1rem; z-index: 5; display: flex; align-items: center; gap: .6rem;
     padding: .6rem .8rem; color: white; background: #10b981; border: 1px solid #34d399;
@@ -443,7 +452,7 @@
   .whiweb-showcase-section .ww-hinge { width: 7rem; height: .25rem; margin-bottom: .25rem; background: #0d121d; border-radius: 1rem; }
   .whiweb-showcase-section .ww-laptop-name { position: absolute; bottom: 0; color: #64748b; font-size: .55rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
   .whiweb-showcase-section .ww-phone, .whiweb-showcase-section .ww-tablet { position: absolute; z-index: 2; transition: transform .4s, z-index .4s; }
-  .whiweb-showcase-section .ww-phone { bottom: -1rem; left: 0; width: 230px; }
+  .whiweb-showcase-section .ww-phone { bottom: 0rem; left: 40px; width: 250px; }
   .whiweb-showcase-section .ww-tablet { right: 0; bottom: -.5rem; width: 270px; }
   .whiweb-showcase-section .ww-phone:hover, .whiweb-showcase-section .ww-tablet:hover { z-index: 4; transform: scale(1.04); }
   .whiweb-showcase-section .ww-device-frame { padding: .6rem; background: #181e29; border: 4px solid #2d3748; border-radius: 2.7rem; box-shadow: 0 20px 40px rgba(0,0,0,.8); }
@@ -459,7 +468,19 @@
   .whiweb-showcase-section .ww-tablet-screen { min-height: 380px; padding: .55rem; overflow: hidden; color: #e2e8f0; background: #0b0f19; border: 1px solid #1e293b; border-radius: 1.4rem; font-size: .65rem; }
   .whiweb-showcase-section .ww-tablet-content { padding: .65rem; color: #1e293b; background: #f8fafc; border-radius: .75rem; }
   .whiweb-showcase-section .ww-mini-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .4rem; }
-  .whiweb-showcase-section .ww-mini-card { display: flex; align-items: center; gap: .4rem; min-width: 0; padding: .4rem; color: #475569; background: #fff; border: 1px solid #e2e8f0; border-radius: .5rem; font-size: .6rem; font-weight: 700; }
+  .whiweb-showcase-section .ww-mini-card {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    min-width: 0;
+    padding: .4rem;
+    color: #475569;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: .3rem;
+    font-size: .5rem;
+    font-weight: 700;
+}
   .whiweb-showcase-section .ww-footer { max-width: 64rem; padding: 1.5rem; margin: 1rem auto 0; }
   .whiweb-showcase-section .ww-feature-icon { display: inline-flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; flex: 0 0 auto; border-radius: .75rem; font-size: 1.15rem; }
   .whiweb-showcase-section .ww-cursor { position: absolute; z-index: 6; pointer-events: none; filter: drop-shadow(0 2px 4px rgba(0,0,0,.4)); animation: ww-cursor 12s infinite cubic-bezier(.4,0,.2,1); }
@@ -496,116 +517,372 @@
 </style>
 
 <section class="whiweb-showcase-section container-fluid mx-auto" aria-labelledby="whiweb-showcase-title">
-  <div class="ww-glow"></div>
-  <header class="position-relative text-center mb-4">
-    <div class="ww-kicker"><span class="ww-live-dot"></span>Sistema WhiWeb 2026 • Live Interactive Demo</div>
-    <h2 id="whiweb-showcase-title" class="ww-title">Gerenciamento Multiplataforma <span class="ww-gradient-text">Em Tempo Real</span></h2>
-    <p class="ww-intro">Interface responsiva replicada em HTML/CSS/JS. Veja a interação simulada entre MacBook, iPhone e Tablet do ecossistema WhiWeb.</p>
-  </header>
+    <div class="ww-glow"></div>
+    <header class="position-relative text-center mb-4">
+        <div class="ww-kicker"><span class="ww-live-dot"></span>Sistema WhiWeb 2026 • Live Interactive Demo</div>
+        <h2 id="whiweb-showcase-title" class="ww-title">
+            Gerenciamento Multiplataforma <span class="ww-gradient-text">Centralizado</span>
+        </h2>
+        <p class="ww-intro">
+            Veja a interação simulada entre MacBook, iPhone e Tablet do
+            ecossistema WhiWeb.
+        </p>
+    </header>
 
-  <div class="ww-controls ww-glass d-flex align-items-center justify-content-between gap-2">
-    <button type="button" id="btnToggleAnim" class="ww-control-btn primary"><i id="animIcon" class="bi bi-pause-fill"></i><span id="animStatusText">Pausar Animações</span></button>
-    <div class="d-flex align-items-center gap-2">
-      <button type="button" id="btnTriggerToast" class="ww-control-btn"><i class="bi bi-bell-fill text-success"></i>Disparar Login</button>
-      <button type="button" id="btnReset" class="ww-control-btn" title="Reiniciar fluxo" aria-label="Reiniciar fluxo"><i class="bi bi-arrow-clockwise"></i></button>
+    <div class="ww-controls ww-glass d-flex align-items-center justify-content-between gap-2">
+        <button type="button" id="btnToggleAnim" class="ww-control-btn primary">
+            <i id="animIcon" class="bi bi-pause-fill"></i><span id="animStatusText">Pausar Animações</span>
+        </button>
+        <div class="d-flex align-items-center gap-2">
+            <button type="button" id="btnTriggerToast" class="ww-control-btn">
+                <i class="bi bi-bell-fill text-success"></i>Disparar Login
+            </button>
+            <button
+                type="button"
+                id="btnReset"
+                class="ww-control-btn"
+                title="Reiniciar fluxo"
+                aria-label="Reiniciar fluxo"
+            >
+                <i class="bi bi-arrow-clockwise"></i>
+            </button>
+        </div>
     </div>
-  </div>
 
-  <div class="ww-scene">
-    <div class="ww-macbook">
-      <div class="ww-laptop-bezel">
-        <span class="ww-webcam"></span>
-        <div class="ww-screen">
-          <div class="ww-cursor" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 3L10.07 19.97L12.58 12.58L19.97 10.07L3 3Z" fill="#6366F1" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg></div>
-          <div class="ww-browserbar">
-            <div class="ww-dots"><i></i><i></i><i></i></div>
-            <div class="d-flex align-items-center gap-2 flex-grow-1 justify-content-center">
-              <div class="d-flex gap-2 text-secondary"><i class="bi bi-chevron-left"></i><i class="bi bi-chevron-right"></i><i class="bi bi-sidebar-reverse"></i></div>
-              <div class="ww-url"><i class="bi bi-lock-fill text-success"></i><span>whi.localhost</span><i class="bi bi-arrow-clockwise ms-auto text-secondary"></i></div>
+    <div class="ww-scene">
+        <div class="ww-macbook">
+            <div class="ww-laptop-bezel">
+                <span class="ww-webcam"></span>
+                <div class="ww-screen">
+                    <div class="ww-cursor" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M3 3L10.07 19.97L12.58 12.58L19.97 10.07L3 3Z"
+                                fill="#6366F1"
+                                stroke="#fff"
+                                stroke-width="2"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                    </div>
+                    <div class="ww-browserbar">
+                        <div class="ww-dots"><i></i><i></i><i></i></div>
+                        <div class="d-flex align-items-center gap-2 flex-grow-1 justify-content-center">
+                            <div class="d-flex gap-2 text-secondary">
+                                <i class="bi bi-chevron-left"></i><i class="bi bi-chevron-right"></i
+                                ><i class="bi bi-sidebar-reverse"></i>
+                            </div>
+                            <div class="ww-url">
+                                <i class="bi bi-lock-fill text-success"></i><span>whiweb.com.br</span
+                                ><i class="bi bi-arrow-clockwise ms-auto text-secondary"></i>
+                            </div>
+                        </div>
+                        <div class="ww-browser-icons">
+                            <i class="bi bi-share"></i><i class="bi bi-plus-lg"></i><i class="bi bi-square-stack"></i>
+                        </div>
+                    </div>
+                    <div class="ww-app">
+                        <aside class="ww-sidebar">
+                            <div class="ww-sidebar-bg">
+                                <div class="ww-brand-row justify-content-center">
+                                    <img src="{{asset('build/client/images/themes/whi-web/whi-black-horizontal.png')}}" alt="Whi web" height="40">
+                                </div>
+                                <div class="ww-nav-label">Listagem</div>
+                                <a href="#" class="ww-nav-link active"
+                                    ><span><i class="bi bi-house-door-fill me-2"></i>Home</span><span>3</span></a
+                                >
+                                <a href="#" class="ww-nav-link"
+                                    ><span><i class="bi bi-info-circle me-2"></i>Sobre Nós</span><span>3</span></a
+                                >
+                                <a href="#" class="ww-nav-link"
+                                    ><span><i class="bi bi-envelope me-2"></i>Contato</span><span>2</span></a
+                                >
+                                <div class="ww-nav-label">Segurança e Acesso</div>
+                                <a href="#" class="ww-nav-link"
+                                    ><span><i class="bi bi-shield-check me-2"></i>Controle</span><span>2</span></a
+                                >
+                            </div>
+                        </aside>
+                        <main class="ww-dashboard">
+                            <div>
+                                <div
+                                    class="app-navbar d-flex align-items-center justify-content-between p-2 rounded-1 mb-3"
+                                >
+                                    <div class="d-flex align-items-center gap-2">
+                                        <i class="bi bi-list text-white font-18 ms-2"></i>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <i class="bi bi-search text-white-50 font-10 me-1"></i>
+                                        <div class="position-relative">
+                                            <i class="bi bi-bell text-white-50 font-10 me-1"></i>
+                                            <span class="badge-dot" style="top: -4px">2</span>
+                                        </div>
+                                        <i class="bi bi-moon text-white-50 font-10 me-1"></i>
+                                        <div class="d-flex align-items-center gap-1 text-white-50 font-10 fw-medium">
+                                            Wagner Oliveira
+                                            <i class="bi bi-chevron-down" style="font-size: 0.375rem !important"></i>
+                                        </div>
+                                        <i class="bi bi-gear text-white-50 font-10"></i>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <div>
+                                        <div class="fw-bold text-dark">Módulos do Sistema</div>
+                                        <small class="text-secondary">Gerencie o conteúdo da sua plataforma</small>
+                                    </div>
+                                    <span class="badge text-bg-primary">Visão geral</span>
+                                </div>
+                                <section class="mb-3">
+                                    <h3 class="ww-section-title">
+                                        <i class="bi bi-grid-fill text-primary me-1"></i>Conteúdo do Site
+                                    </h3>
+                                    <div class="ww-dashboard-grid">
+                                        <div class="ww-dash-card ww-module-slider">
+                                            <span class="ww-card-icon"><i class="bi bi-images"></i></span>
+                                            <div>
+                                                <h4 class="ww-card-title">Sliders</h4>
+                                            </div>
+                                            <i class="bi bi-chevron-right text-primary ms-auto"></i>
+                                        </div>
+                                        <div class="ww-dash-card">
+                                            <span class="ww-card-icon"><i class="bi bi-list-ul"></i></span>
+                                            <div>
+                                                <h4 class="ww-card-title">Tópicos</h4>
+                                            </div>
+                                            <i class="bi bi-chevron-right text-secondary ms-auto"></i>
+                                        </div>
+                                        <div class="ww-dash-card">
+                                            <span class="ww-card-icon"><i class="bi bi-person-lines-fill"></i></span>
+                                            <div>
+                                                <h4 class="ww-card-title">Serviços</h4>
+                                            </div>
+                                            <i class="bi bi-chevron-right text-secondary ms-auto"></i>
+                                        </div>
+                                        <div class="ww-dash-card">
+                                            <span class="ww-card-icon"><i class="bi bi-grid-fill"></i></span>
+                                            <div>
+                                                <h4 class="ww-card-title">Galeria</h4>
+                                            </div>
+                                            <i class="bi bi-chevron-right text-secondary ms-auto"></i>
+                                        </div>
+                                        <div class="ww-dash-card">
+                                            <span class="ww-card-icon"><i class="bi bi-question-circle-fill"></i></span>
+                                            <div>
+                                                <h4 class="ww-card-title">Sobre Nós</h4>
+                                            </div>
+                                            <i class="bi bi-chevron-right text-secondary ms-auto"></i>
+                                        </div>
+                                        <div class="ww-dash-card">
+                                            <span class="ww-card-icon"><i class="bi bi-display"></i></span>
+                                            <div>
+                                                <h4 class="ww-card-title">Contato</h4>
+                                            </div>
+                                            <i class="bi bi-chevron-right text-secondary ms-auto"></i>
+                                        </div>
+                                    </div>
+                                </section>
+                                <section class="mb-3">
+                                    <h3 class="ww-section-title">
+                                        <i class="bi bi-shield-lock text-primary me-1"></i>Segurança e Controle de
+                                        Acesso
+                                    </h3>
+                                    <div class="ww-dashboard-grid">
+                                        <div class="ww-dash-card">
+                                            <span class="ww-card-icon"><i class="bi bi-people-fill"></i></span>
+                                            <div>
+                                                <h4 class="ww-card-title">Usuários</h4>
+                                            </div>
+                                            <i class="bi bi-chevron-right text-secondary ms-auto"></i>
+                                        </div>
+                                    </div>
+                                </section>
+                                <section>
+                                    <h3 class="ww-section-title">
+                                        <i class="bi bi-palette-fill text-primary me-1"></i>Configuração do Tema
+                                    </h3>
+                                    <div class="ww-dashboard-grid">
+                                        <div class="ww-dash-card ww-module-theme">
+                                            <span class="ww-card-icon"><i class="bi bi-paint-bucket"></i></span>
+                                            <div>
+                                                <h4 class="ww-card-title">Configuração do Tema</h4>
+                                            </div>
+                                            <i class="bi bi-chevron-right text-primary ms-auto"></i>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div id="macToast" class="ww-toast">
+                                <span class="rounded-circle bg-white bg-opacity-25 px-2 py-1"
+                                    ><i class="bi bi-check-lg"></i></span
+                                ><span
+                                    ><strong class="d-block">Sucesso</strong
+                                    ><small>Login realizado com êxito!</small></span
+                                >
+                            </div>
+                        </main>
+                    </div>
+                </div>
             </div>
-            <div class="ww-browser-icons"><i class="bi bi-share"></i><i class="bi bi-plus-lg"></i><i class="bi bi-square-stack"></i></div>
-          </div>
-          <div class="ww-app">
-            <aside class="ww-sidebar">
-              <div>
-                <div class="ww-brand-row"><span class="ww-logo">W<span class="text-info">+</span></span><div><span class="ww-brand d-block">WHIWEB</span><span class="ww-brand-sub">Plataforma</span></div></div>
-                <div class="ww-nav-label">Listagem</div>
-                <a href="#" class="ww-nav-link active"><span><i class="bi bi-house-door-fill me-2"></i>Home</span><span>3</span></a>
-                <a href="#" class="ww-nav-link"><span><i class="bi bi-info-circle me-2"></i>Sobre Nós</span><span>3</span></a>
-                <a href="#" class="ww-nav-link"><span><i class="bi bi-envelope me-2"></i>Contato</span><span>2</span></a>
-                <div class="ww-nav-label">Segurança e Acesso</div>
-                <a href="#" class="ww-nav-link"><span><i class="bi bi-shield-check me-2"></i>Controle</span><span>2</span></a>
-              </div>
-              <div class="ww-user"><span class="ww-avatar">WO</span><div><div class="text-light">Wagner Oliveira</div><small class="text-success">● Admin Online</small></div></div>
-            </aside>
-            <main class="ww-dashboard">
-              <div>
-                <div class="ww-dash-nav"><div><strong class="text-dark">Painel Gerenciador</strong><small class="d-block text-secondary">Bem-vindo de volta, Wagner</small></div><div class="d-flex align-items-center gap-3 text-secondary"><i class="bi bi-search"></i><i class="bi bi-bell"></i><span class="ww-avatar">WO</span></div></div>
-                <div class="d-flex align-items-center justify-content-between mb-3"><div><div class="fw-bold text-dark">Módulos do Sistema</div><small class="text-secondary">Gerencie o conteúdo da sua plataforma</small></div><span class="badge text-bg-primary">Visão geral</span></div>
-                <section class="mb-3"><h3 class="ww-section-title"><i class="bi bi-grid-fill text-primary me-1"></i>Conteúdo do Site</h3><div class="ww-dashboard-grid">
-                  <div class="ww-dash-card ww-module-slider"><span class="ww-card-icon"><i class="bi bi-images"></i></span><div><h4 class="ww-card-title">Sliders</h4><p class="ww-card-copy">Banners e destaques</p></div><i class="bi bi-chevron-right text-primary ms-auto"></i></div>
-                  <div class="ww-dash-card"><span class="ww-card-icon"><i class="bi bi-list-ul"></i></span><div><h4 class="ww-card-title">Tópicos</h4><p class="ww-card-copy">Conteúdo principal</p></div><i class="bi bi-chevron-right text-secondary ms-auto"></i></div>
-                  <div class="ww-dash-card"><span class="ww-card-icon"><i class="bi bi-person-lines-fill"></i></span><div><h4 class="ww-card-title">Serviços</h4><p class="ww-card-copy">Serviços oferecidos</p></div><i class="bi bi-chevron-right text-secondary ms-auto"></i></div>
-                  <div class="ww-dash-card"><span class="ww-card-icon"><i class="bi bi-grid-fill"></i></span><div><h4 class="ww-card-title">Galeria</h4><p class="ww-card-copy">Imagens e projetos</p></div><i class="bi bi-chevron-right text-secondary ms-auto"></i></div>
-                  <div class="ww-dash-card"><span class="ww-card-icon"><i class="bi bi-question-circle-fill"></i></span><div><h4 class="ww-card-title">Sobre Nós</h4><p class="ww-card-copy">Nossa história</p></div><i class="bi bi-chevron-right text-secondary ms-auto"></i></div>
-                  <div class="ww-dash-card"><span class="ww-card-icon"><i class="bi bi-display"></i></span><div><h4 class="ww-card-title">Contato</h4><p class="ww-card-copy">Canais de atendimento</p></div><i class="bi bi-chevron-right text-secondary ms-auto"></i></div>
-                </div></section>
-                <section class="mb-3"><h3 class="ww-section-title"><i class="bi bi-shield-lock text-primary me-1"></i>Segurança e Controle de Acesso</h3><div class="ww-dashboard-grid"><div class="ww-dash-card"><span class="ww-card-icon"><i class="bi bi-people-fill"></i></span><div><h4 class="ww-card-title">Usuários</h4><p class="ww-card-copy">Permissões de equipe</p></div><i class="bi bi-chevron-right text-secondary ms-auto"></i></div></div></section>
-                <section><h3 class="ww-section-title"><i class="bi bi-palette-fill text-primary me-1"></i>Configuração do Tema</h3><div class="ww-dashboard-grid"><div class="ww-dash-card ww-module-theme"><span class="ww-card-icon"><i class="bi bi-paint-bucket"></i></span><div><h4 class="ww-card-title">Configuração do Tema</h4><p class="ww-card-copy">Cores, fontes e logo</p></div><i class="bi bi-chevron-right text-primary ms-auto"></i></div></div></section>
-              </div>
-              <div class="ww-dashboard-footer"><span>2026 © WHI - Web de Alta Inspiração</span><strong class="text-primary">v3.42 Pro</strong></div>
-              <div id="macToast" class="ww-toast"><span class="rounded-circle bg-white bg-opacity-25 px-2 py-1"><i class="bi bi-check-lg"></i></span><span><strong class="d-block">Sucesso</strong><small>Login realizado com êxito!</small></span></div>
-            </main>
-          </div>
+            <div class="ww-laptop-base">
+                <span class="ww-hinge"></span><span class="ww-laptop-name">MacBook Air</span>
+            </div>
         </div>
-      </div>
-      <div class="ww-laptop-base"><span class="ww-hinge"></span><span class="ww-laptop-name">MacBook Air</span></div>
+
+        <div class="ww-phone d-none d-lg-block">
+            <div class="ww-device-frame">
+                <div class="ww-device-screen">
+                    <div class="ww-notch">
+                        <span>12:16</span
+                        ><span><i class="bi bi-wifi"></i> <i class="bi bi-battery-full text-success"></i></span>
+                    </div>
+                    <div class="ww-login-card">
+                        <div class="d-flex align-items-center justify-content-center gap-2 mb-2">
+                            <div class="justify-content-center">
+                                <img src="{{asset('build/client/images/themes/whi-web/whi-black-horizontal.png')}}" alt="Whi web" height="40">
+                            </div>
+                        </div>
+                        <strong class="d-block">Acessar conta</strong
+                        ><small class="text-secondary font-8">Informe seus dados para continuar</small>
+                        <div class="my-3">
+                            <label class="ww-login-label">E-mail</label>
+                            <div class="ww-login-field"><span class="ww-typing-email">seu@email.com</span></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="ww-login-label">Senha</label>
+                            <div class="ww-login-field d-flex justify-content-between">
+                                <span class="ww-typing-pass">••••••••</span><i class="bi bi-eye"></i>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3 text-secondary">
+                            <span class="font-8">☑ Manter conectado</span>
+                            <a href="#" class="text-primary text-decoration-none font-8">Esqueceu a senha?</a>
+                        </div>
+                        <button class="ww-login-button">Entrar <i class="bi bi-arrow-right"></i></button>
+                        <div class="ww-success">
+                            <i class="bi bi-check-circle-fill fs-3"></i><strong>Login Efetuado!</strong
+                            ><small>Redirecionando ao painel...</small>
+                        </div>
+                        <div class="mt-3 text-secondary font-8">
+                            <i class="bi bi-shield-lock-fill text-success"></i> Ambiente seguro
+                        </div>
+                    </div>
+                    <div class="ww-phonebar">
+                        <span>whiweb.com.br</span
+                        ><span><i class="bi bi-book me-2"></i><i class="bi bi-square-stack"></i></span>
+                    </div>
+                    <span
+                        class="d-block mx-auto mt-2 bg-secondary rounded-pill"
+                        style="width: 4rem; height: 4px"
+                    ></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="ww-tablet d-none d-lg-block">
+            <div class="ww-tablet-frame">
+              <div class="ww-browserbar flex-column gap-0 p-0 rounded-3 overflow-hidden">
+                <div class="ww-tablet-screen w-100 d-flex justify-content-between align-items-center p-2 gap-1" style="min-height: inherit;border-radius:12px 12px 0 0;">
+                      <div class="ww-dots tablet gap-1"><i></i><i></i><i></i></div>
+                        <div class="d-flex align-items-center gap-1 flex-grow-1 justify-content-center">
+                            <div class="ww-url">
+                                <i class="bi bi-lock-fill text-success"></i><span>whiweb.com.br</span
+                                ><i class="bi bi-arrow-clockwise ms-auto text-secondary"></i>
+                            </div>
+                        </div>
+                        <div class="ww-browser-icons tablet gap-1">
+                            <i class="bi bi-share font-8 mx-1"></i><i class="bi bi-plus-lg"></i><i class="bi bi-square-stack"></i>
+                        </div>
+                    </div> 
+                     
+                    <div class="ww-tablet-content w-100" style="border-radius: 0px 0px 12px 12px">
+                        <div
+                            class="app-navbar d-flex align-items-center justify-content-between py-1 px-2 rounded-1 mb-2"
+                        >
+                            <div class="ww-tabletbar p-0 d-flex align-items-center gap-2">
+                              <img src="{{asset('build/client/images/themes/whi-web/favicon-whi.png')}}" alt="Whi web" height="20">
+                                <i class="bi bi-list text-white font-18 ms-2"></i>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-search text-white-50 font-10 me-1"></i>
+                                <div class="position-relative">
+                                    <i class="bi bi-bell text-white-50 font-10 me-1"></i>
+                                    <span class="badge-dot" style="top:3px">2</span>
+                                </div>
+                                <i class="bi bi-moon text-white-50 font-10 me-1"></i>
+                                <i class="bi bi-gear text-white-50 font-10"></i>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <div class="d-flex flex-column">
+                                <strong class="col-12 font-10">Módulos do Sistema</strong>
+                                <small class="col-12 text-secondary font-8">Visão otimizada em Tablet</small>
+                            </div>
+                        </div>
+                        <small class="d-block text-dark fw-bold mb-1 font-8"><i class="bi bi-grid-fill text-primary me-1"></i>Conteúdo do Site</small>
+
+                        <div class="ww-mini-grid mb-2">
+                            <div class="ww-mini-card"><i class="bi bi-images text-primary"></i>Sliders</div>
+                            <div class="ww-mini-card"><i class="bi bi-list-ul text-primary"></i>Tópicos</div>
+                            <div class="ww-mini-card"><i class="bi bi-person-lines-fill text-primary"></i>Serviços</div>
+                            <div class="ww-mini-card"><i class="bi bi-grid-fill text-primary"></i>Galeria</div>
+                            <div class="ww-mini-card">
+                                <i class="bi bi-question-circle-fill text-primary"></i>Sobre Nós
+                            </div>
+                            <div class="ww-mini-card"><i class="bi bi-display text-primary"></i>Contato</div>
+                        </div>
+                        <small class="d-block text-dark fw-bold mb-1 font-8"><i class="bi bi-shield-lock text-primary me-1"></i>Segurança e controle de acesso</small>
+                        <div class="ww-mini-grid mb-2">
+                            <div class="ww-mini-card"><i class="bi bi-clipboard-data text-primary"></i>Auditoria</div>
+                            <div class="ww-mini-card"><i class="bi bi-people-fill text-primary"></i>Permissões</div>
+                        </div>
+                        <div class="ww-mini-card bg-primary-subtle border-primary-subtle text-primary-emphasis">
+                            <i class="bi bi-paint-bucket text-primary"></i>Configuração do Tema
+                        </div>
+                    </div>
+                    <span
+                        class="d-block mx-auto mt-0 bg-secondary rounded-pill"
+                        style="width: 5rem; height: 4px"
+                    ></span>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="ww-phone">
-      <div class="ww-device-frame"><div class="ww-device-screen">
-        <div class="ww-notch"><span>12:16</span><span><i class="bi bi-wifi"></i> <i class="bi bi-battery-full text-success"></i></span></div>
-        <div class="ww-login-card">
-          <div class="d-flex align-items-center justify-content-center gap-2 mb-2"><span class="ww-logo">W</span><span class="ww-brand text-dark">WHIWEB</span></div>
-          <strong class="d-block">Acessar conta</strong><small class="text-secondary">Informe seus dados para continuar</small>
-          <div class="my-3"><label class="ww-login-label">E-mail</label><div class="ww-login-field"><span class="ww-typing-email">seu@email.com</span></div></div>
-          <div class="mb-3"><label class="ww-login-label">Senha</label><div class="ww-login-field d-flex justify-content-between"><span class="ww-typing-pass">••••••••</span><i class="bi bi-eye"></i></div></div>
-          <div class="d-flex justify-content-between mb-3 text-secondary" style="font-size:.55rem"><span>☑ Manter conectado</span><a href="#" class="text-primary text-decoration-none">Esqueceu a senha?</a></div>
-          <button class="ww-login-button">Entrar <i class="bi bi-arrow-right"></i></button>
-          <div class="ww-success"><i class="bi bi-check-circle-fill fs-3"></i><strong>Login Efetuado!</strong><small>Redirecionando ao painel...</small></div>
-          <div class="mt-3 text-secondary"><i class="bi bi-shield-lock-fill text-success"></i> Ambiente seguro</div>
+    <footer class="ww-footer ww-glass">
+        <div class="row g-4 text-center text-md-start">
+            <div class="col-12 col-md-4 d-flex align-items-start gap-3">
+                <span class="ww-feature-icon text-primary bg-primary bg-opacity-10"><i class="bi bi-laptop"></i></span>
+                <div>
+                    <h3 class="h6 fw-bold text-white">Totalmente Responsivo</h3>
+                    <p class="small text-secondary mb-0">
+                        Layout adapta-se a qualquer resolução de tela mantendo a mesma facilidade de uso.
+                    </p>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 d-flex align-items-start gap-3">
+                <span class="ww-feature-icon text-info bg-info bg-opacity-10"
+                    ><i class="bi bi-lightning-charge-fill"></i
+                ></span>
+                <div>
+                    <h3 class="h6 fw-bold text-white">Animações de Navegação</h3>
+                    <p class="small text-secondary mb-0">
+                        Simulação interativa de cliques, digitação e avisos com transição suave.
+                    </p>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 d-flex align-items-start gap-3">
+                <span class="ww-feature-icon text-success bg-success bg-opacity-10"
+                    ><i class="bi bi-shield-check"></i
+                ></span>
+                <div>
+                    <h3 class="h6 fw-bold text-white">Painel WhiWeb 2026</h3>
+                    <p class="small text-secondary mb-0">
+                        Pronto para ser integrado à sua landing page ou documentação de produto.
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="ww-phonebar"><span>whi.localhost</span><span><i class="bi bi-book me-2"></i><i class="bi bi-square-stack"></i></span></div>
-        <span class="d-block mx-auto mt-2 bg-secondary rounded-pill" style="width:4rem;height:4px"></span>
-      </div></div>
-    </div>
-
-    <div class="ww-tablet">
-      <div class="ww-tablet-frame"><div class="ww-tablet-screen">
-        <div class="ww-tabletbar rounded-3 border mb-2"><span><span class="ww-logo">W</span> <i class="bi bi-list ms-2"></i></span><span><i class="bi bi-search me-2"></i>🇧🇷 <i class="bi bi-bell text-info ms-2"></i> <span class="ww-avatar">WO</span></span></div>
-        <div class="ww-tablet-content">
-          <div class="d-flex justify-content-between align-items-center mb-2"><div><strong class="d-block">Painel Gerenciador</strong><small class="text-secondary">Visão otimizada em Tablet</small></div><span class="badge text-bg-primary">Pro</span></div>
-          <div class="ww-mini-grid mb-2">
-            <div class="ww-mini-card"><i class="bi bi-images text-primary"></i>Sliders</div><div class="ww-mini-card"><i class="bi bi-list-ul text-primary"></i>Tópicos</div>
-            <div class="ww-mini-card"><i class="bi bi-person-lines-fill text-primary"></i>Serviços</div><div class="ww-mini-card"><i class="bi bi-grid-fill text-primary"></i>Galeria</div>
-            <div class="ww-mini-card"><i class="bi bi-question-circle-fill text-primary"></i>Sobre Nós</div><div class="ww-mini-card"><i class="bi bi-display text-primary"></i>Contato</div>
-          </div>
-          <small class="d-block text-secondary fw-bold text-uppercase mb-1">Segurança</small>
-          <div class="ww-mini-grid mb-2"><div class="ww-mini-card"><i class="bi bi-clipboard-data text-primary"></i>Auditoria</div><div class="ww-mini-card"><i class="bi bi-people-fill text-primary"></i>Permissões</div></div>
-          <div class="ww-mini-card bg-primary-subtle border-primary-subtle text-primary-emphasis"><i class="bi bi-paint-bucket text-primary"></i>Configuração do Tema</div>
-        </div>
-        <span class="d-block mx-auto mt-2 bg-secondary rounded-pill" style="width:5rem;height:4px"></span>
-      </div></div>
-    </div>
-  </div>
-
-  <footer class="ww-footer ww-glass">
-    <div class="row g-4 text-center text-md-start">
-      <div class="col-12 col-md-4 d-flex align-items-start gap-3"><span class="ww-feature-icon text-primary bg-primary bg-opacity-10"><i class="bi bi-laptop"></i></span><div><h3 class="h6 fw-bold text-white">Totalmente Responsivo</h3><p class="small text-secondary mb-0">Layout adapta-se a qualquer resolução de tela mantendo a mesma facilidade de uso.</p></div></div>
-      <div class="col-12 col-md-4 d-flex align-items-start gap-3"><span class="ww-feature-icon text-info bg-info bg-opacity-10"><i class="bi bi-lightning-charge-fill"></i></span><div><h3 class="h6 fw-bold text-white">Animações de Navegação</h3><p class="small text-secondary mb-0">Simulação interativa de cliques, digitação e avisos com transição suave.</p></div></div>
-      <div class="col-12 col-md-4 d-flex align-items-start gap-3"><span class="ww-feature-icon text-success bg-success bg-opacity-10"><i class="bi bi-shield-check"></i></span><div><h3 class="h6 fw-bold text-white">Painel WhiWeb 2026</h3><p class="small text-secondary mb-0">Pronto para ser integrado à sua landing page ou documentação de produto.</p></div></div>
-    </div>
-  </footer>
+    </footer>
 </section>
 
 <script>
