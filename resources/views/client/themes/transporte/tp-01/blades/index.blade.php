@@ -182,11 +182,11 @@
                                         </div>
                                     @endif
 
-                                    <h3 class="fw-bold mb-2 {{ $service->path_icon != null ? 'mt-3' : 'mt-1' }}">
+                                    <h3 class="fw-bold mb-2 font-18 {{ $service->path_icon != null ? 'mt-3' : 'mt-1' }}">
                                         {{ $service->title }}
                                     </h3>
 
-                                    <p class="text-muted small flex-grow-1">
+                                    <p class="text-muted small flex-grow-1 font-15">
                                         {{substr(strip_tags($service->description), 0, 100)}}...
                                     </p>
 
