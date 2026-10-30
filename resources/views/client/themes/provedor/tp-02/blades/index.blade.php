@@ -2,61 +2,61 @@
 @section('content')
     @if (isset($slides) && $slides->count() > 0)
         <section class="hero">
-        <div class="swiper main-swiper">
+            <div class="swiper main-swiper">
 
-            <div class="swiper-wrapper">
-                @foreach ($slides as $slide)
-                    <!-- Slide -->
-                    <div class="swiper-slide">
-                        <div class="hero-slide">
+                <div class="swiper-wrapper">
+                    @foreach ($slides as $slide)
+                        <!-- Slide -->
+                        <div class="swiper-slide">
+                            <div class="hero-slide">
 
-                            <!-- Imagem full -->
-                            <div class="hero-bg">
-                                <picture>
-                                    <source srcset="{{ asset('storage/' . $slide->path_image_mobile) }}" media="(max-width: 530px)">
-                                    <img src="{{ asset('storage/' . $slide->path_image) }}" alt="Distribuição PET" title="Distribuição PET">
-                                </picture>
-                            </div>
+                                <!-- Imagem full -->
+                                <div class="hero-bg">
+                                    <picture>
+                                        <source srcset="{{ asset('storage/' . $slide->path_image_mobile) }}" media="(max-width: 530px)">
+                                        <img src="{{ asset('storage/' . $slide->path_image) }}" alt="Distribuição PET" title="Distribuição PET">
+                                    </picture>
+                                </div>
 
-                            <!-- Conteúdo -->
-                            <div class="hero-content mt-0">
-                                <div class="container">
-                                <div class="row">
-                                    <div class="col-lg-6">
+                                <!-- Conteúdo -->
+                                <div class="hero-content mt-0">
+                                    <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-6">
 
-                                        <span class="hero-subtitle font-changa font-15 font-regular" data-aos="fade-up" data-aos-delay="200">
-                                            {!!$slide->description!!}
-                                        </span>
+                                            <h1 class="hero-title font-changa font-40 font-bold mb-3" data-aos="fade-up" data-aos-delay="300">
+                                                {{$slide->title}}
+                                            </h1>
 
-                                        <h1 class="hero-title font-changa font-40 font-bold" data-aos="fade-up" data-aos-delay="300">
-                                            {{$slide->title}}
-                                        </h1>
+                                            <span class="hero-subtitle font-changa font-15 font-regular" data-aos="fade-up" data-aos-delay="200">
+                                                {!!$slide->description!!}
+                                            </span>                                        
 
-                                        <div class="hero-actions d-flex" data-aos="fade-up" data-aos-delay="400">
-                                            @if ($slide->link <> null)                                    
-                                                <a href="{{$slide->link}}" target="_blank" rel="noopener noreferrer" class="btn-one col-auto py-1 py-lg-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
-                                                    {{$slide->btn_title}}
-                                                    <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"/>
-                                                    </svg>
-                                                </a>
-                                            @endif
+                                            <div class="hero-actions d-flex mt-5" data-aos="fade-up" data-aos-delay="400">
+                                                @if ($slide->link <> null)                                    
+                                                    <a href="{{$slide->link}}" target="_blank" rel="noopener noreferrer" class="btn-one rounded-pill col-auto py-1 py-lg-2 px-3 px-lg-5 btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none hover-zoom">
+                                                        {{$slide->btn_title}}
+                                                        <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"/>
+                                                        </svg>
+                                                    </a>
+                                                @endif
+                                            </div>
+
                                         </div>
-
+                                    </div>
                                     </div>
                                 </div>
-                                </div>
+                                <div class="overlay"></div>
                             </div>
-                            <div class="overlay"></div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
 
+                </div>
+
+                <!-- Paginação -->
+                <div class="swiper-pagination news"></div>
             </div>
-
-            <!-- Paginação -->
-            <div class="swiper-pagination news"></div>
-        </div>
         </section>
     @endif
 
@@ -81,277 +81,146 @@
             </div>
         </section>
     @endif
+    @if (isset($sections['service']) && $sections <> null || $services->count()) 
+        <section id="services" class="services-section py-5 position-relative">
+            <img src="{{asset('build/client/images/themes/provedor/provedor-left-tp-02.png')}}" alt="Firula Left" class="position-absolute start-0 top-0" loading="lazy">
+            <img src="{{asset('build/client/images/themes/provedor/provedor-right-tp-02.png')}}" alt="Firula Right" class="position-absolute end-0 top-0" loading="lazy">
+            
+            <div class="container-fluid px-3 px-lg-4">
+                @if (isset($sections['service']) && $sections <> null) 
+                    <!-- Cabeçalho -->
+                    <div class="row justify-content-center text-center mb-4">
+                        <div class="col-lg-8">
+                            <span class="services-badge border rounded-pill text-secondary font-15 font-semibold py-2 px-3">
+                                <svg class="me-1" width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 5.78362C4.65685 5.78362 6 4.48891 6 2.89181C6 1.29471 4.65685 0 3 0C1.34315 0 0 1.29471 0 2.89181C0 4.48891 1.34315 5.78362 3 5.78362Z" fill="var(--accent-color)"/>
+                                </svg>
 
-    <section class="services-section py-5">
-        <div class="container px-3 px-lg-4">
-            <!-- Cabeçalho -->
-            <div class="row justify-content-center text-center mb-5">
-                <div class="col-lg-8">
-                    <h2 class="services-title font-38 font-bold">{{ $sections['service']->title }}</h2>
-                    <h3 class="services-subtitle font-38 font-bold accent-color">{{ $sections['service']->subtitle }}</h3>
-                </div>
-            </div>
-
-            <div class="row g-4">
-
-                <!-- Card 01 -->
-                @foreach($services as $service)                    
-                    <div class="col-12 col-sm-6 col-xl-3">
-                        <div class="service-card">
-                            <div class="service-content">
-                                <h3 class="font-changa font-bold font-18 text-uppercase">{{$service->title}}</h3>
-
-                                <div class="service-list">
-                                    {!!$service->text!!}
-                                </div>
-
-                                <div class="service-number">01</div>
-                            </div>
-
-                            <div class="service-image">
-                                <img
-                                    src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=85"
-                                    alt="Desenvolvimento web"
-                                >
-
-                                <span class="image-indicator"></span>
-                            </div>
+                                {{ $sections['service']->tag }}
+                            </span>
+                            <h2 class="services-title font-38 font-bold mt-3">{{ $sections['service']->title }}</h2>
+                            <h3 class="services-subtitle font-38 font-bold accent-color">{{ $sections['service']->subtitle }}</h3>
+                            <p class="font-15 font-regular text-secondary">{{ $sections['service']->description }}</p>
                         </div>
                     </div>
-                @endforeach
+                @endif
 
+                @if ($services->count())
+                    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 text-center g-4 py-3">
+
+                        <!-- Card 01 -->
+                        @foreach($services as $index => $service)                    
+                            <div class="col px-2">
+                                <div class="service-card rounded-3">
+                                    <div class="service-content align-items-start">
+                                        <h3 class="font-changa font-bold font-18 text-uppercase">{{$service->title}}</h3>
+
+                                        <div class="service-list">
+                                            {!!$service->text!!}
+                                        </div>
+
+                                        <div class="service-number w-100 text-start font-50 font-bold">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</div>
+                                    </div>
+
+                                    <div class="service-image">
+                                        <img
+                                            src="{{asset('storage/' . $service->path_image)}}"
+                                            alt="{{$service->title}}"
+                                        >
+
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+
+                    </div>
+                @endif
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
-    <style>
-        /* Seção */
-        .services-section {
-            background-color: #fff;
-        }
+    @if ($topics->count() > 0 || (isset($sections['pilar']) && $sections['pilar'] !== null))
+        @php
+            $hasPilar = isset($sections['pilar']) && $sections['pilar'] !== null;
+            $hasTopics = $topics->count() > 0;
+        @endphp
 
-        /* Card */
-        .service-card {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            height: 575px;
-            overflow: hidden;
+        <section id="topic" class="topics py-5 bg-primary-color">
+            <div class="container">
+                <div class="row justify-content-center align-items-center">
 
-            background-color: #fff;
-            border: 1px solid #dedfe5;
-            border-radius: 25px;
+                    {{-- Conteúdo da esquerda --}}
+                    @if ($hasPilar)
+                        <div class="content-left {{ $hasTopics ? 'col-12 col-lg-6' : 'col-12' }}">
+                            <h3 class="about-title font-changa font-40 font-bold text-white mb-3">
+                                {{ $sections['pilar']->title }}
+                            </h3>
 
-            transition:
-                border-color 0.35s ease,
-                box-shadow 0.35s ease,
-                transform 0.35s ease;
-        }
+                            @if ($sections['pilar']->link != null)
+                                <div class="step-actions gap-3 d-flex mt-4 flex-wrap justify-content-center justify-content-lg-start">
+                                    <a href="{{ $sections['pilar']->link }}"
+                                    class="rounded-pill py-2 px-4 hover-zoom btn-hero font-changa bg-button-one color-button-one font-15 font-medium text-decoration-none"
+                                    rel="noopener noreferrer">
 
-        /* Conteúdo */
-        .service-content {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            min-height: 0;
+                                        {{ $sections['pilar']->btn_title }}
 
-            padding: 42px 36px 0;
-        }
+                                        <svg class="ms-2"
+                                            width="31"
+                                            height="13"
+                                            viewBox="0 0 31 13"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
 
-        /* Título */
-        .service-content h3 {
-            margin: 0 0 34px;
-            color: #202124;
-            line-height: 1.35;
-            letter-spacing: -1px;
-        }
+                                            <path d="M24.1708 12.4741L30.4078 6.23712L24.1708 0.000120163L22.4036 1.76727L26.8527 6.23712L22.3828 10.707L24.1708 12.4741Z"
+                                                fill="var(--color-button-one)"/>
 
-        /* Lista */
-        .service-list ul {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+                                            <path d="M0 5H27V7.2H0V5Z"
+                                                fill="var(--color-button-one)"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
+                    @endif
 
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
+                    {{-- Conteúdo da direita --}}
+                    @if ($hasTopics)
+                        <div class="content-right {{ $hasPilar ? 'col-12 col-lg-6' : 'col-12' }}">
+                            <div class="row g-2 justify-content-start">
 
-        .service-list li {
-            position: relative;
-            padding-left: 19px;
+                                @foreach ($topics as $topic)
+                                    <div class="{{ $hasPilar ? 'col-12 col-lg-4' : 'col-6 col-md-4 col-lg' }} mb-2">
 
-            color: #81838a;
-            font-family: Arial, sans-serif;
-            font-size: 19px;
-            line-height: 1.4;
-        }
+                                        @if ($topic->link != null)
+                                            <a href="{{ $topic->link }}"
+                                            class="topic-item d-block"
+                                            rel="noopener noreferrer">
 
-        .service-list li::before {
-            position: absolute;
-            top: 10px;
-            left: 0;
+                                                <img src="{{ asset('storage/' . $topic->path_image) }}"
+                                                    alt="Tópico"
+                                                    class="img-fluid d-block m-auto"
+                                                    loading="lazy">
+                                            </a>
+                                        @else
+                                            <div class="topic-item d-block">
+                                                <img src="{{ asset('storage/' . $topic->path_image) }}"
+                                                    alt="Tópico"
+                                                    class="img-fluid d-block m-auto"
+                                                    loading="lazy">
+                                            </div>
+                                        @endif
 
-            width: 6px;
-            height: 6px;
+                                    </div>
+                                @endforeach
 
-            background-color: var(--accent-color);
-            content: "";
-        }
+                            </div>
+                        </div>
+                    @endif
 
-        /* Numeração */
-        .service-number {
-            margin-top: auto;
-            padding: 32px 0 50px;
-
-            border-top: 1px solid #dedfe5;
-
-            color: var(--accent-color);
-            font-family: Arial, sans-serif;
-            font-size: 64px;
-            font-weight: 700;
-            line-height: 1;
-        }
-
-        /* Imagem na base */
-        .service-image {
-            position: relative;
-            flex-shrink: 0;
-
-            height: 36px;
-            overflow: hidden;
-
-            transition: height 0.45s cubic-bezier(.22, 1, .36, 1);
-        }
-
-        .service-image img {
-            display: block;
-            width: 100%;
-            height: 100%;
-
-            object-fit: cover;
-            object-position: center;
-
-            filter: grayscale(100%);
-            transform: scale(1.02);
-
-            transition:
-                filter 0.45s ease,
-                transform 0.65s cubic-bezier(.22, 1, .36, 1);
-        }
-
-        /* Indicador circular */
-        .image-indicator {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-
-            width: 32px;
-            height: 32px;
-
-            border: 1px solid var(--accent-color);
-            border-radius: 50%;
-
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(.6);
-
-            transition:
-                opacity 0.3s ease,
-                transform 0.3s ease;
-        }
-
-        .image-indicator::after {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-
-            width: 13px;
-            height: 13px;
-
-            background-color: var(--accent-color);
-            border-radius: 50%;
-
-            content: "";
-            transform: translate(-50%, -50%);
-        }
-
-        /* Estado ativo e hover */
-        .service-card:hover,
-        .service-card.active {
-            border-color: var(--accent-color);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.09);
-        }
-
-        .service-card:hover .service-image,
-        .service-card.active .service-image {
-            height: 198px;
-        }
-
-        .service-card:hover .service-image img,
-        .service-card.active .service-image img {
-            filter: grayscale(0%);
-            transform: scale(1.08);
-        }
-
-        .service-card:hover .image-indicator,
-        .service-card.active .image-indicator {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        /* Responsividade */
-        @media (max-width: 1399.98px) {
-            .service-content {
-                padding: 35px 26px 0;
-            }
-
-            .service-content h3 {
-                font-size: 24px;
-            }
-
-            .service-list li {
-                font-size: 17px;
-            }
-
-            .service-number {
-                font-size: 56px;
-            }
-        }
-
-        @media (max-width: 575.98px) {
-            .service-card {
-                height: 530px;
-            }
-
-            .service-content {
-                padding: 30px 24px 0;
-            }
-
-            .service-content h3 {
-                font-size: 23px;
-                margin-bottom: 28px;
-            }
-
-            .service-list li {
-                font-size: 16px;
-            }
-
-            .service-card:hover .service-image,
-            .service-card.active .service-image {
-                height: 160px;
-            }
-        }
-
-        /* Respeita a preferência por menos animações */
-        @media (prefers-reduced-motion: reduce) {
-            .service-card,
-            .service-image,
-            .service-image img,
-            .image-indicator {
-                transition: none;
-            }
-        }
-    </style>
+                </div>
+            </div>
+        </section>
+    @endif
 
     @if (isset($abouts) && $abouts->count())
         <section id="about" class="about bg-light">
@@ -403,173 +272,6 @@
             </div>
         </section>
     @endif
-
-    <section id="services" class="py-5 service-bg position-relative {{ empty($sections['service']->path_image) ? 'bg-secondary-color' : '' }}"
-        @if (!empty($sections['service']->path_image))
-            style="background-image: url('{{ asset('storage/' . $sections['service']->path_image) }}');"
-        @endif>
-
-        <div class="container">
-            @if (isset($sections['service']) && $sections <> null) 
-                <!-- Cabeçalho -->
-                <div class="row align-items-end mb-4 position-relative z-index-10" data-aos="fade" data-aos-delay="200">
-
-                    <div class="col-lg-4">
-                        <span class="rounded-2 col-5 col-lg-4 px-2 m-lg-0 py-2 text-dark text-center font-changa font-16 font-bold d-block badge bg-white shadow-sm">
-                            {{$sections['service']->tag}}
-                        </span>
-
-                        <h2 class="text-white fw-bold mt-3 font-changa">
-                            {{$sections['service']->title}}
-                        </h2>
-                    </div>
-
-                    <div class="col-lg-5 mt-3 mt-lg-0">
-                        <p class="text-white small mb-0 font-changa">
-                            {{$sections['service']->description}}
-                        </p>
-                    </div>
-
-                    <div class="col-lg-3 mt-3 mt-lg-0">
-                        <div class="d-flex justify-content-lg-end gap-2">
-                            <button class="btn btn-outline-light rounded-circle swiper-button-prev-custom"
-                                    type="button">
-                                <i class="bi bi-chevron-left"></i>
-                            </button>
-
-                            <button class="btn btn-outline-light rounded-circle swiper-button-next-custom"
-                                    type="button">
-                                <i class="bi bi-chevron-right"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-            @endif
-
-            <!-- Swiper -->
-            <div class="swiper servicesSwiper">
-                <div class="swiper-wrapper">
-
-                    <!-- Serviço 1 -->
-                    @foreach ($services as $index => $service)
-                        <div class="swiper-slide">
-                            <div class="card h-100 border-0 rounded-4 overflow-hidden" data-aos="fade-left" data-aos-delay="{{ ($index + 1) * 100 }}">
-
-                                @if ($service->path_image <> null)                                    
-                                    <div class="p-3">
-                                        <img loading="lazy" src="{{asset('storage/' . $service->path_image)}}"
-                                            class="card-img-top rounded-4"
-                                            alt="{{$service->title}}" height="200">
-                                    </div>
-                                @endif
-
-                                <div class="card-body d-flex flex-column pt-0 px-4">
-                                    @if ($service->path_icon <> null)                                        
-                                        <div class="mb-2 position-relative">
-                                            <span class="position-absolute icon-service d-inline-flex align-items-center justify-content-center bg-primary-color rounded-3 p-2">
-                                                <img loading="lazy" src="{{asset('storage/' . $service->path_icon)}}"
-                                                class="card-img-top rounded-4"
-                                                alt="{{$service->title}}" height="25">
-                                            </span>
-                                        </div>
-                                    @endif
-
-                                    <h3 class="fw-bold mb-2 font-18 {{ $service->path_icon != null ? 'mt-3' : 'mt-1' }}">
-                                        {{ $service->title }}
-                                    </h3>
-
-                                    <p class="text-muted small flex-grow-1 font-15">
-                                        {{substr(strip_tags($service->description), 0, 100)}}...
-                                    </p>
-
-                                    <button type="button"
-                                            class="btn btn-outline-dark rounded-pill w-100 d-flex align-items-center justify-content-between service-modal-btn"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modalServico"
-                                            data-servico-titulo="{{ $service->title }}"
-                                            data-servico-desc="{{ $service->text ?? '' }}"
-                                            data-servico-link="{{ $service->link ?? '' }}"
-                                            data-servico-scroll="{{ $service->scroll_section ?? '' }}"
-                                            data-servico-icon="{{ $service->path_icon ? asset('storage/' . $service->path_icon) : '' }}">
-                                        <span>Explore Mais</span>
-                                        <i class="bi bi-chevron-right"></i>
-                                    </button>
-
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Modal Serviço -->
-    <div class="modal fade" id="modalServico" tabindex="-1" aria-labelledby="modalServicoLabel">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content rounded-4 border-0 shadow">
-
-                <div class="modal-header bg-warning bg-opacity-10 border-0">
-
-                    <div class="d-flex align-items-center">
-
-                        <span class="d-inline-flex align-items-center justify-content-center bg-primary-color rounded-3 p-2 me-2">
-                            <img loading="lazy"
-                                id="modalIcon"
-                                src=""
-                                alt=""
-                                class="d-none"
-                                height="25"
-                            >
-                        </span>
-
-                        <h5 class="modal-title fw-bold" id="modalServicoLabel">
-                            <span id="modalTitulo">Serviço</span>
-                        </h5>
-
-                    </div>
-
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Fechar">
-                    </button>
-
-                </div>
-
-                <div class="modal-body">
-
-                    <div id="modalDescricao" class="fs-6 text-secondary"></div>
-
-                </div>
-
-                <div class="modal-footer bg-light">
-
-                    <a
-                        href="#"
-                        id="modalSolicitar"
-                        class="btn btn-warning bg-button-two color-button-two rounded-pill px-4 d-none"
-                    >
-                        Solicitar serviço
-                    </a>
-
-                    <button
-                        type="button"
-                        class="btn btn-outline-secondary rounded-pill"
-                        data-bs-dismiss="modal"
-                    >
-                        Fechar
-                    </button>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
 
     @if (isset($sessaoFaq) && $sessaoFaq <> null || isset($faqs) && $faqs->count())
         <section id="faq" class="faq-section pt-5 bg-grey-light pb-4 pb-lg-0">

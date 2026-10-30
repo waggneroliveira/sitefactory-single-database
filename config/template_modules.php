@@ -392,7 +392,7 @@ return [
             'about' => 1,
             'planNetworkCategory' => 20,
             'planNetwork' => 20,
-            'topics' => 3,
+            'topics' => 6,
             'benefits' => 5,
             'testimonials' => 6,
             'faq' => 10,

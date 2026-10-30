@@ -10,63 +10,6 @@
             <input type="text" name="title" class="form-control" id="{{$titleInputId}}" value="{{isset($serviceItem)?$serviceItem->title:''}}" placeholder="Título">
         </div>
 
-        <div class="mb-3">
-            <label for="description" class="form-label">Descrição breve </label>
-            <input type="text" name="description" class="form-control" id="description{{isset($serviceItem->id)?$serviceItem->id:''}}" value="{{isset($serviceItem)?$serviceItem->description:''}}" placeholder="Descrição">
-        </div>
-
-        <div class="row">
-            <div class="col-12 col-md-6 mb-3">
-                <label for="action_type{{ isset($serviceItem->id) ? $serviceItem->id : '' }}" class="form-label">
-                    Ação do botão
-                </label>
-
-                <select
-                    name="action_type"
-                    id="action_type{{ isset($serviceItem->id) ? $serviceItem->id : '' }}"
-                    class="form-select action-type"
-                >
-                    <option value="">Selecione uma ação</option>
-
-                    <option
-                        value="link"
-                        {{ isset($serviceItem) && !empty($serviceItem->link) ? 'selected' : '' }}
-                    >
-                        Link
-                    </option>
-
-                    {{-- <option
-                        value="scroll"
-                        {{ isset($serviceItem) && $serviceItem->scroll_section === 'contato' ? 'selected' : '' }}
-                    >
-                        Rolar para Contato
-                    </option> --}}
-                </select>
-            </div>
-
-            <div class="col-12 col-md-6 mb-3 link-field d-none">
-                <label for="link{{ isset($serviceItem->id) ? $serviceItem->id : '' }}" class="form-label">
-                    Link
-                </label>
-
-                <input
-                    type="url"
-                    name="link"
-                    id="link{{ isset($serviceItem->id) ? $serviceItem->id : '' }}"
-                    class="form-control"
-                    value="{{ isset($serviceItem) ? $serviceItem->link : '' }}"
-                    placeholder="https://exemplo.com"
-                >
-            </div>
-
-            <input
-                type="hidden"
-                name="scroll_section"
-                value="{{ isset($serviceItem) ? $serviceItem->scroll_section : '' }}"
-                class="scroll-section-input"
-            >
-        </div>
-
         <div class="row">    
             <div class="mb-3 col-12">
                 <label for="{{$textareaId}}" class="form-label text-white">Texto</label>
@@ -88,13 +31,6 @@
     </div>
     
     <div class="row col-lg-6">
-        <div class="col-lg-12">
-            <div class="mt-3">
-                <label for="title" class="form-label">Icone </label>
-                <input type="file" name="path_icon" data-plugins="dropify" data-default-file="{{isset($serviceItem)?$serviceItem->path_icon<>''?url('storage/'.$serviceItem->path_icon):'':''}}"  />
-                <p class="text-muted text-center mt-2 mb-0">{{__('dashboard.text_img_size')}} <b class="text-danger">2 MB</b>.</p>
-            </div>
-        </div>
         <div class="col-lg-12">
             <div class="mt-3">
                 <label for="title" class="form-label">Imagem </label>

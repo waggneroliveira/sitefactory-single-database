@@ -5,7 +5,7 @@
 <div class="row">
     <input type="hidden" name="section" value="service">
 
-    <div class="mb-3 col-lg-6">
+    <div class="mb-3 col-lg-5">
         <label for="title" class="form-label">Título</label>
         <input type="text"
                name="title"
@@ -15,7 +15,7 @@
                placeholder="Título">
     </div>
 
-    <div class="mb-3 col-lg-6">
+    <div class="mb-3 col-lg-4">
         <label for="subtitle" class="form-label">Subtitulo</label>
         <input type="text"
                name="subtitle"
@@ -23,6 +23,15 @@
                id="subtitle"
                value="{{ $service?->subtitle ?? '' }}"
                placeholder="Subtitulo">
+    </div>
+    <div class="mb-3 col-lg-3">
+        <label for="tag" class="form-label">Tag</label>
+        <input type="text"
+               name="tag"
+               class="form-control"
+               id="tag"
+               value="{{ $service?->tag ?? '' }}"
+               placeholder="Tag">
     </div>
 </div>
 
