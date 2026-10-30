@@ -357,6 +357,16 @@ return [
                     'contact_leads',
                 ],
             ],
+            'tp-02' => [
+                'home' => [
+                    'slides',
+                    'topics',
+                    'letsgo',
+                    'testimonials',
+                    'services',
+                    'benefits',//parametro
+                ],
+            ],
 
         ],
 
@@ -383,6 +393,7 @@ return [
             'planNetworkCategory' => 20,
             'planNetwork' => 20,
             'topics' => 3,
+            'benefits' => 5,
             'testimonials' => 6,
             'faq' => 10,
             'services' => 6,
@@ -481,6 +492,7 @@ return [
             'testimonials' => 6,
             'faq' => 10,
             'services' => 6,
+            'benefits' => 4,
             'videos' => 1,
         ],
 
