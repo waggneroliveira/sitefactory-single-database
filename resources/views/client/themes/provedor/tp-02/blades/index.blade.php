@@ -284,7 +284,10 @@
     @endif
 
     @if (isset($sessaoFaq) && $sessaoFaq <> null || isset($faqs) && $faqs->count())
-        <section id="faq" class="faq-section pt-5 bg-grey-light pb-4 pb-lg-0">
+        <section id="faq" class="faq-section pt-5 bg-grey-light pb-4 pb-lg-0 position-relative">
+            <div class="faq-image absolute mt-4 position-absolute start-0 bottom-0 d-none d-lg-block">
+                <img loading="lazy" src="{{asset('storage/' . $sessaoFaq->path_file)}}" alt="Entrega" class="img-fluid">
+            </div>
             <div class="container">
                 <div class="row align-items-start g-5">
                     @if (isset($sessaoFaq) && $sessaoFaq <> null)
@@ -299,16 +302,16 @@
 
                             @if ($sessaoFaq->btn_title <> null && $sessaoFaq->btn_number <> null)                
                                 <div class="d-flex justify-content-lg-start align-items-center">
-                                    <a href="{{$sessaoFaq->btn_number}}" class="bg-button-two color-button-two btn-product py-1 py-lg-2 px-4 font-15 hover-zoom">
+                                    <a href="{{$sessaoFaq->btn_number}}" class="bg-button-one color-button-one rounded-pill btn-product py-1 py-lg-2 px-4 font-15 hover-zoom">
                                         {{$sessaoFaq->btn_title}}
                                         <svg class="ms-2" width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M1.78794 12.474L8.02494 6.237L1.78794 -1.90735e-06L0.02079 1.76715L4.46985 6.237L0 10.7068L1.78794 12.474Z" fill="var(--color-button-one)"/>
                                         </svg>
                                     </a>
                                 </div>
-                            @endif
-
-                            <div class="faq-image mt-4">
+                            @endif     
+                            
+                            <div class="faq-image mt-4 d-block d-lg-none">
                                 <img loading="lazy" src="{{asset('storage/' . $sessaoFaq->path_file)}}" alt="Entrega" class="img-fluid">
                             </div>
                         </div>

@@ -366,6 +366,8 @@ return [
                     'testimonials',
                     'services',
                     'benefits',//parametro
+                    'faq_session',
+                    'faq',
                 ],
             ],
 
