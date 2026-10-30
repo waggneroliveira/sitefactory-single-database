@@ -223,19 +223,35 @@
     @endif
 
     @if (isset($abouts) && $abouts->count())
-        <section id="about" class="about bg-light">
-            <div class="container-fluid">
+        <section id="about" class="about bg-dark py-4 px-3">
+            <div class="container-fluid position-relative">
+                <svg class="position-absolute top-0 start-0" width="69" height="67" viewBox="0 0 69 67" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.75 56.6583V8.46143H58.75" stroke-width="3" stroke-linecap="round" stroke="#84CC16"/>
+                <path d="M0.75 66.2977V0.75H68.75" stroke-width="1.5" stroke="#4D7C0F"/>
+                <path d="M14.75 8.46143H8.75V14.245H14.75V8.46143Z" fill="#84CC16"/>
+                </svg>
                 @foreach($abouts as $about)                    
-                    <div class="row align-items-center justify-content-center">
-                        <!-- TEXTO (dentro do container) -->
-                        <div class="col-12 col-lg-5 mt-4 mt-md-4 z-3 p-0" data-aos="fade-right" data-aos-delay="100">
-                            <div class="container position-relative">
-                                <span class="rounded-2 col-5 col-lg-4 px-3 m-lg-0 py-2 text-dark text-center font-changa font-16 font-bold d-block badge bg-white shadow-sm">
-                                    Quem Somos?
-                                </span>
+                    <div class="row align-items-center justify-content-center py-4">
 
-                                <h3 class="about-title font-changa font-40 font-bold mt-2 mt-lg-3 mb-3 text-black text-start">
-                                    {{$about->title}} <span class="primary-color">{{$about->subtitle}}</span>
+                        @if (isset($about->path_image) && $about->path_image <> null)                    
+                            <!-- IMAGEM (fora do container) -->
+                            <div class="col-12 col-lg-5 p-0 about-image" data-aos="fade-left" data-aos-delay="100">
+                                <div class="rounded-4 overflow-hidden img-contain m-auto">
+                                    <img
+                                    src="{{asset('storage/'.$about->path_image)}}"
+                                    alt="{{$about->title}}"
+                                    class="img-fluid w-100"
+                                    loading="lazy"
+                                    >
+                                </div>
+                            </div>
+                        @endif
+
+                        <!-- TEXTO (dentro do container) -->
+                        <div class="col-12 col-lg-7 mt-4 mt-lg-0 z-3 p-0" data-aos="fade-right" data-aos-delay="100">
+                            <div class="col-11 col-lg-11 position-relative">
+                                <h3 class="about-title font-changa font-38 font-bold mt-2 mt-lg-3 mb-3 text-white text-start">
+                                    {{$about->title}}
                                 </h3>
 
                                 <!-- Conteúdo adicional opcional -->
@@ -256,19 +272,13 @@
                             </div>
                         </div>
 
-                        @if (isset($about->path_image) && $about->path_image <> null)                    
-                            <!-- IMAGEM (fora do container) -->
-                            <div class="col-12 col-lg-6 p-0 about-image" data-aos="fade-left" data-aos-delay="100">
-                                <img
-                                src="{{asset('storage/'.$about->path_image)}}"
-                                alt="Sobre a Girollato"
-                                class="img-fluid w-100"
-                                loading="lazy"
-                                >
-                            </div>
-                        @endif
                     </div>
                 @endforeach
+                <svg class="position-absolute bottom-0 end-0" width="69" height="67" viewBox="0 0 69 67" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M60 9.6394V57.8363H10" stroke-width="3" stroke-linecap="round" stroke="#84CC16"/>
+                <path d="M68 0V65.5477H0" stroke-width="1.5" stroke="#4D7C0F"/>
+                <path d="M60 52.0525H54V57.8361H60V52.0525Z" fill="#84CC16"/>
+                </svg>
             </div>
         </section>
     @endif

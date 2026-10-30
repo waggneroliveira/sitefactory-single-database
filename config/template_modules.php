@@ -359,6 +359,7 @@ return [
             ],
             'tp-02' => [
                 'home' => [
+                    'about',
                     'slides',
                     'topics',
                     'letsgo',
